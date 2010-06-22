@@ -14,7 +14,7 @@ def getItem(lookfor):
     elif(type(lookfor) == int):
         return session.query(Item).filter(Item.ID == lookfor).one()
     
-def searchItems(nameLike)
+def searchItems(nameLike):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
