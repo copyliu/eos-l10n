@@ -21,7 +21,7 @@ class TestFitBasics(unittest.TestCase):
             self.f.addModule(1302)
         except:
             return
-        self.fail("Added in anvalid module, was expecting a ValueError")
+        self.fail("Added an invalid module, was expecting a ValueError")
         
     def test_addValidModule(self):
         self.f.addModule(Module())
