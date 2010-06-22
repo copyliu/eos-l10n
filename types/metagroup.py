@@ -1,0 +1,2 @@
+class MetaGroup(object):
+    pass

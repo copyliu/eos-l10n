@@ -1,0 +1,2 @@
+class Icon(object):
+    pass
