@@ -6,7 +6,7 @@ session = db.Session()
 
 def getVariations(item):
     if(type(item) == Item.__class__): item = item.ID
-    return session.query(Item).filter(and_(Item.typeID == metatypes_table.c..typeID, metatypes_table.c.parentTypeID == i)).all()
+    return session.query(Item).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == i)).all()
 
 def getItem(lookfor):
     if(type(lookfor) == str):
