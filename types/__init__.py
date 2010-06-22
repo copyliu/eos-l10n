@@ -6,3 +6,6 @@ from icon import Icon
 from item import Item
 from marketgroup import MarketGroup
 from metagroup import MetaGroup
+from fit import Fit
+from character import Character
+from module import Module

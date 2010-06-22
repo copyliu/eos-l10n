@@ -13,16 +13,16 @@ class Fit(object):
     
     @character.setter
     def character(self, char):
-        if(type(char) != Character and char != None): raise ValueError("Expecting a character or None, got " .. type(mod))
+        if(type(char) != Character and char != None): raise ValueError("Expecting a character or None, got " + str(type(char)))
         self.__character = char
         
     def addModule(self, mod):
-        if(type(mod) != Module): raise ValueError("Expecting a module to be passed, got " .. type(mod))
+        if(type(mod) != Module): raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
         self.__modules.append(mod)
         
     def removeModule(self, mod):
-        if(type(mod) != Module): raise ValueError("Expecting a module to be passed, got " .. type(mod))
-        return self.__modules.remove(mod)
+        if(type(mod) != Module): raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
+        self.__modules.remove(mod)
     
     def iterModules(self):
         return self.__modules.__iter__()
