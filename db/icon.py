@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, Table
-from sqlalchemy.orm import mapper
+from sqlalchemy.orm import mapper, synonym
 
 import __init__ as db
 from ..types import Icon
