@@ -1,5 +1,6 @@
 import unittest
 from ..types import Fit, Character, Module
+from .. import db
 
 class TestFitBasics(unittest.TestCase):
     def setUp(self):
@@ -39,3 +40,13 @@ class TestFitBasics(unittest.TestCase):
         
     def test_removeInvalidModule(self):
         self.assertRaises(ValueError, self.f.removeModule, 1302)
+        
+    def test_setNotAShip(self):
+        try:
+            self.f.ship = db.getItem("Gamma L")
+        except ValueError:
+            return
+        self.fail("Set Gamma L as ship, was expecting ValueError")
+        
+    def test_setShip(self):
+        self.f.ship = db.getItem("Rifter")
