@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
-from sqlalchemy.orm import relation, mapper
+from sqlalchemy.orm import relation, mapper, synonym
 
 import __init__ as db
 from ..types import Item, Group, Icon
@@ -14,4 +14,6 @@ groups_table = Table("invgroups", db.meta,
 
 mapper(Group, groups_table, 
        properties = {"items" : relation(Item, backref = "group"),
-                     "icon" : relation(Icon)})
+                     "icon" : relation(Icon),
+                     "ID" : synonym("groupID"),
+                     "name" : synonym("groupName")})

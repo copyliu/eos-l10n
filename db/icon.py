@@ -9,4 +9,5 @@ icons_table = Table("icons", db.meta,
                     Column("description", String),
                     Column("iconFile", String))
 
-mapper(Icon, icons_table)
+mapper(Icon, icons_table,
+       properties = {"ID" : synonym("iconID")})

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
-from sqlalchemy.orm import mapper, join
+from sqlalchemy.orm import mapper, join, synonym
 from ..types import Effect
 import __init__ as db
 
@@ -15,4 +15,6 @@ effects_table = Table("dgmeffects", db.meta,
 
 
 j = join(typeeffects_table, effects_table, typeeffects_table.c.effectID == effects_table.c.effectID)
-mapper(Effect, j)
+mapper(Effect, j,
+       properties = {"ID" : synonym("effectID"),
+                     "name" : synonym("effectName")})

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, Table
-from sqlalchemy.orm import relation, mapper
+from sqlalchemy.orm import relation, mapper, synonym
 
 import __init__ as db
 from ..types import Category, Group, Icon
@@ -13,4 +13,6 @@ categories_table = Table("invcategories", db.meta,
 
 mapper(Category, categories_table,
        properties = {"groups" : relation(Group, backref = "category"),
-                     "icon" : relation(Icon)})
+                     "icon" : relation(Icon),
+                     "ID" : synonym("categoryID"),
+                     "name" : synonym("categoryName")})

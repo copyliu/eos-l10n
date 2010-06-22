@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
-from sqlalchemy.orm import relation, mapper
+from sqlalchemy.orm import relation, mapper, synonym
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
 import __init__ as db
@@ -26,4 +26,6 @@ mapper(Item, items_table,
                                             primaryjoin = items_table.c.typeID == metatypes_table.c.typeID,
                                             secondaryjoin = metatypes_table.c.metaGroupID == metagroups_table.c.metaGroupID,
                                             secondary = metatypes_table,
-                                            uselist = False)})
+                                            uselist = False),
+                     "ID" : synonym("typeID"),
+                     "name" : synonym("typeName")})

@@ -1,5 +1,5 @@
 from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
-from sqlalchemy.orm import relation, mapper, join
+from sqlalchemy.orm import relation, mapper, join, synonym
 from ..types import Attribute, Icon
 import __init__ as db
 
@@ -20,4 +20,6 @@ attributes_table = Table("dgmattribs", db.meta,
 j = join(typeattributes_table, attributes_table, typeattributes_table.c.attributeID == attributes_table.c.attributeID)
 #
 mapper(Attribute, j,
-       properties = {"icon" : relation(Icon)})
+       properties = {"icon" : relation(Icon),
+                     "ID" : synonym("attributeID"),
+                     "name" : synonym("attributeName")})
