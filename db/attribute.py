@@ -6,8 +6,7 @@ import __init__ as db
 typeattributes_table = Table("dgmtypeattribs", db.meta,
                          Column("value", Float),
                          Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key = True),
-                         Column("attributeID", Integer, primary_key = True),
-                         Column("iconID", Integer, ForeignKey("icons.iconID")))
+                         Column("attributeID", Integer, primary_key = True))
 
 attributes_table = Table("dgmattribs", db.meta,
                          Column("attributeID", Integer, primary_key = True),
@@ -15,7 +14,8 @@ attributes_table = Table("dgmattribs", db.meta,
                          Column("description", String),
                          Column("published", Boolean),
                          Column("displayName", String),
-                         Column("highIsGood", Boolean))
+                         Column("highIsGood", Boolean),
+                         Column("iconID", Integer, ForeignKey("icons.iconID")))
 
 j = join(typeattributes_table, attributes_table, typeattributes_table.c.attributeID == attributes_table.c.attributeID)
 #
