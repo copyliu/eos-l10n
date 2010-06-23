@@ -6,7 +6,8 @@ class ModifiedAttributeDict(object):
         self.__original = None
         
     def clear(self):
-        self.__storage.clear()
+        self.__modified.clear()
+        self.__original = None
     
     @property
     def original(self):
@@ -32,7 +33,6 @@ class ModifiedAttributeDict(object):
     def iterkeys(self):
         for key in self:
             yield key
-        return
     
     def itervalues(self):
         for key in self:

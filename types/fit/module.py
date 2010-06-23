@@ -26,6 +26,35 @@ class Module(object):
     @ammo.setter
     def ammo(self, ammo):
         if type(ammo) != Item and ammo != None: raise ValueError("Expecting an item, got a " + str(type(ammo)))
+        if not self.isValidAmmo(ammo): raise ValueError("Ammo does not fit in that slot")
         self.__ammo = ammo
         self.__itemModifiedAttributes.clear()
         self.__ammoModifiedAttributes.clear()
+    
+    def getModifiedAmmoAttr(self, key):
+        if key in self.__ammoModifiedAttributes:
+            return self.__ammoModifiedAttributes[key]
+    
+    def getModifiedItemAttr(self, key):
+        if key in self.__itemModifiedAttributes:
+            return self.__itemModifiedAttributes[key]
+    
+    def isValidAmmo(self, ammo):
+        #Check sizes, if ammo size > module volume it won't fit
+        if ammo == None: return True
+        chargeVolume = self.getModifiedAmmoAttr("volume")
+        moduleCapacity = self.getModifiedItemAttr("capacity")
+        if chargeVolume > moduleCapacity: return False
+        
+        chargeSize = self.getModifiedItemAttr("chargeSize")
+        if chargeSize != None:
+            ammoSize = self.getModifiedAmmoAttr('chargeSize')
+            if chargeSize != ammoSize: return False
+
+        ammoGroup = ammo.groupID
+        for i in xrange(5):
+            chargeGroup = self.getModifiedItemAttr('chargeGroup' + str(i))
+            if chargeGroup == None: continue
+            if ammoGroup == chargeGroup: return True
+            
+        return False
