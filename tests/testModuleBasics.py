@@ -23,10 +23,26 @@ class TestModuleBasics(unittest.TestCase):
             return
         self.fail("Expected a ValueError, didn't get it.")
         
-    def test_setWrongAmmo(self):
+    def test_setWrongAmmoType(self):
         try:
             self.m.item = db.getItem("125mm Gatling AutoCannon I")
             self.m.ammo = db.getItem("Gamma L")
+        except ValueError:
+            return
+        self.fail("Expected a ValueError, didn't get it.")
+        
+    def test_setWrongAmmoSize(self):
+        try:
+            self.m.item = db.getItem("Dual Light Pulse Laser I")
+            self.m.ammo = db.getItem("Gamma M")
+        except ValueError:
+            return
+        self.fail("Expected a ValueError, didn't get it.")
+        
+    def test_setWrongAmmoSubGroup(self):
+        try:
+            self.m.item = db.getItem("Dual Light Pulse Laser I")
+            self.m.ammo = db.getItem("Scorch S")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
