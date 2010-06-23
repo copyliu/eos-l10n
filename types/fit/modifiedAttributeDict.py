@@ -41,5 +41,3 @@ class ModifiedAttributeDict(object):
     def iteritems(self):
         for key in self:
             yield key, self[key]
-            
-        return
