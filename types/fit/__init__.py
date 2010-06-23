@@ -1,7 +1,7 @@
 from ..character import Character
 from ..item import Item
 from module import Module
-
+from modifiedAttributeDict import ModifiedAttributeDict
 class Fit(object):
     """Represents a fitting, with modules, ship and character"""
     shipRequiredAttributes = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
