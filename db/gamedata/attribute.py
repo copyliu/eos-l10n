@@ -1,14 +1,13 @@
 from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relation, mapper, join, synonym
-from ..types import Attribute, Icon
-import __init__ as db
-
-typeattributes_table = Table("dgmtypeattribs", db.meta,
+from model.types import Attribute, Icon
+from .. import gamedata_meta
+typeattributes_table = Table("dgmtypeattribs", gamedata_meta,
                          Column("value", Float),
-                         Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key = True),
-                         Column("attributeID", Integer, primary_key = True))
+                         Column("typeID", Integer, ForeignKey("invtypes.typeID")),
+                         Column("attributeID", Integer))
 
-attributes_table = Table("dgmattribs", db.meta,
+attributes_table = Table("dgmattribs", gamedata_meta,
                          Column("attributeID", Integer, primary_key = True),
                          Column("attributeName", String),
                          Column("description", String),

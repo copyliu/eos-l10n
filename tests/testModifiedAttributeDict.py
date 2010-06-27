@@ -1,11 +1,11 @@
 import unittest
 from ..types.fit import ModifiedAttributeDict
-from .. import db
+from ..db import queries
 
 class TestModifiedAttributeDict(unittest.TestCase):
     def setUp(self):
         self.dict = ModifiedAttributeDict()
-        self.i = db.getItem("125mm Gatling AutoCannon I")
+        self.i = queries.getItem("125mm Gatling AutoCannon I")
         
     def test_setInvalidOriginal(self):
         try:

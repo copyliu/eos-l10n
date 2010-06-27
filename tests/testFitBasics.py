@@ -1,6 +1,6 @@
 import unittest
 from ..types import Fit, Character, Module
-from .. import db
+from ..db import queries
 
 class TestFitBasics(unittest.TestCase):
     def setUp(self):
@@ -43,10 +43,10 @@ class TestFitBasics(unittest.TestCase):
         
     def test_setNotAShip(self):
         try:
-            self.f.ship = db.getItem("Gamma L")
+            self.f.ship = queries.getItem("Gamma L")
         except ValueError:
             return
         self.fail("Set Gamma L as ship, was expecting ValueError")
         
     def test_setShip(self):
-        self.f.ship = db.getItem("Rifter")
+        self.f.ship = queries.getItem("Rifter")

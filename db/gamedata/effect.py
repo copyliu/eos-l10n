@@ -1,13 +1,13 @@
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
 from sqlalchemy.orm import mapper, join, synonym
-from ..types import Effect
-import __init__ as db
+from model.types import Effect
+from .. import gamedata_meta
 
-typeeffects_table = Table("dgmtypeeffects", db.meta,
+typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
                           Column("typeID", Integer, ForeignKey("invtypes.typeID")),
                           Column("effectID", Integer))
 
-effects_table = Table("dgmeffects", db.meta,
+effects_table = Table("dgmeffects", gamedata_meta,
                       Column("effectID", Integer, primary_key = True),
                       Column("effectName", String),
                       Column("description", String),

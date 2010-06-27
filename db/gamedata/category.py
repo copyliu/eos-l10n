@@ -1,10 +1,10 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, Table
 from sqlalchemy.orm import relation, mapper, synonym
 
-import __init__ as db
-from ..types import Category, Group, Icon
+from .. import gamedata_meta
+from model.types import Category, Group, Icon
 
-categories_table = Table("invcategories", db.meta,
+categories_table = Table("invcategories", gamedata_meta,
                          Column("categoryID", Integer, primary_key = True),
                          Column("categoryName", String),
                          Column("description", String),

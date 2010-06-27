@@ -2,10 +2,10 @@ from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relation, mapper, synonym
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
-import __init__ as db
-from ..types import Icon, Attribute, Item, Effect, MetaGroup
+from .. import gamedata_meta
+from model.types import Icon, Attribute, Item, Effect, MetaGroup
 
-items_table = Table("invtypes", db.meta,
+items_table = Table("invtypes", gamedata_meta,
                     Column("typeID", Integer, primary_key = True),
                     Column("typeName", String),
                     Column("description", String),

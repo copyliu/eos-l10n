@@ -1,10 +1,10 @@
 from sqlalchemy import Column, String, Integer, Table
 from sqlalchemy.orm import mapper, synonym
 
-import __init__ as db
-from ..types import Icon
+from .. import gamedata_meta
+from model.types import Icon
 
-icons_table = Table("icons", db.meta, 
+icons_table = Table("icons", gamedata_meta, 
                     Column("iconID", Integer, primary_key = True),
                     Column("description", String),
                     Column("iconFile", String))
