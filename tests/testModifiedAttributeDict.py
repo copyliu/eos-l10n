@@ -1,5 +1,5 @@
 import unittest
-from ..types.fit import ModifiedAttributeDict
+from ..types.saveddata.fit import ModifiedAttributeDict
 from ..db import queries
 
 class TestModifiedAttributeDict(unittest.TestCase):

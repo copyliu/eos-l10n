@@ -1,5 +1,5 @@
-from ..character import Character
-from ..item import Item
+from character import Character
+from ..gamedata.item import Item
 from module import Module
 from modifiedAttributeDict import ModifiedAttributeDict
 class Fit(object):
@@ -29,7 +29,7 @@ class Fit(object):
     @ship.setter
     def ship(self, ship):
         if ship != None:
-            if type(ship) != Item: raise ValueError("Expecting an item to be passed, got " + str(type(mod)))
+            if type(ship) != Item: raise ValueError("Expecting an item to be passed, got " + str(type(ship)))
             #We NEED a few attributes for ships when calculating stuff, make sure they're there
             for requiredAttr in self.shipRequiredAttributes:
                 if not requiredAttr in  ship.attributes:
