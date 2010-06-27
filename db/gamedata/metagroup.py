@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relation, mapper, join, synonym
 from .. import gamedata_meta
-from item import items_table
+from .item import items_table
 from model.types import MetaGroup, Item
 
 metagroups_table = Table("invmetagroups", gamedata_meta,

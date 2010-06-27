@@ -19,7 +19,7 @@ class TestModifiedAttributeDict(unittest.TestCase):
         
     def test_OriginalAttributesMatch(self):
         self.dict.original = self.i.attributes
-        for key,val in self.dict.iteritems():
+        for key,val in self.dict.items():
             self.assertEqual(val, self.i.attributes[key].value)
             
     def test_ModificationWorks(self):

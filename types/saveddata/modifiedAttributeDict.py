@@ -41,3 +41,7 @@ class ModifiedAttributeDict(object):
     def iteritems(self):
         for key in self:
             yield key, self[key]
+            
+    items = iteritems
+    keys = iterkeys
+    values = itervalues

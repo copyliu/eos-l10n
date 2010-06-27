@@ -15,7 +15,7 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("iconID", Integer, ForeignKey("icons.iconID")),
                     Column("groupID", Integer, ForeignKey("invgroups.groupID")))
 
-from metagroup import metagroups_table, metatypes_table
+from .metagroup import metagroups_table, metatypes_table
 
 mapper(Item, items_table, 
        properties = {"icon" : relation(Icon),

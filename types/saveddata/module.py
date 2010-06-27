@@ -44,7 +44,7 @@ class Module(object):
         if ammo == None: return True
         chargeVolume = self.getModifiedAmmoAttr("volume")
         moduleCapacity = self.getModifiedItemAttr("capacity")
-        if chargeVolume > moduleCapacity: return False
+        if chargeVolume != None and moduleCapacity != None and chargeVolume > moduleCapacity: return False
         
         chargeSize = self.getModifiedItemAttr("chargeSize")
         if chargeSize != None:
@@ -52,7 +52,7 @@ class Module(object):
             if chargeSize != ammoSize: return False
 
         ammoGroup = ammo.groupID
-        for i in xrange(5):
+        for i in range(5):
             chargeGroup = self.getModifiedItemAttr('chargeGroup' + str(i))
             if chargeGroup == None: continue
             if ammoGroup == chargeGroup: return True

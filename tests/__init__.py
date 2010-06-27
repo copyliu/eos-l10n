@@ -1,10 +1,10 @@
 from .. import config
 config.debug = False
 
-from testQueries import TestQueries
-from testFitBasics import TestFitBasics
-from testModuleBasics import TestModuleBasics
-from testModifiedAttributeDict import TestModifiedAttributeDict
+from .testQueries import TestQueries
+from .testFitBasics import TestFitBasics
+from .testModuleBasics import TestModuleBasics
+from .testModifiedAttributeDict import TestModifiedAttributeDict
 import unittest
 
 
