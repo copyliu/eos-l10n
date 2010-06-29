@@ -9,3 +9,4 @@ from .gamedata.metagroup import MetaGroup
 from .saveddata.fit import Fit
 from .saveddata.module import Module
 from .saveddata.character import Character
+from .saveddata.user import User

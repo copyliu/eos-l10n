@@ -9,7 +9,3 @@ users_table = Table("users", saveddata_meta,
                          Column("username", String),
                          Column("password", String),
                          Column("admin", Boolean))
-
-
-#mapper(User, users_table, properties =
-#       {"skills" : relation(Integer, primaryjoin = characters_table.c.ID == skills_table.c.characterID, primary = skills_table, foreign_keys = (skills_table.c.skillID,))})

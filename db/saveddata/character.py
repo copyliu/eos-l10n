@@ -13,7 +13,4 @@ characters_table = Table("characters", saveddata_meta,
 skills_table = Table("characterSkills", saveddata_meta,
                      Column("characterID", ForeignKey("characters.ID"), primary_key = True),
                      Column("skillID", Integer, primary_key = True),
-                     Column("level"), Integer)
-
-mapper(Character, characters_table, properties =
-       {"skills" : relation(Integer, primaryjoin = characters_table.c.ID == skills_table.c.characterID, primary = skills_table, foreign_keys = (skills_table.c.skillID,))})
+                     Column("level", Integer))
