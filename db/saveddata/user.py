@@ -6,6 +6,6 @@ from model.types import User
 
 users_table = Table("users", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
-                         Column("username", String),
-                         Column("password", String),
-                         Column("admin", Boolean))
+                         Column("username", String, nullable = False),
+                         Column("password", String, nullable = False),
+                         Column("admin", Boolean, nullable = False))
