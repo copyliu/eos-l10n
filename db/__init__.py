@@ -22,4 +22,4 @@ saveddata_meta = MetaData()
 saveddata_meta.bind = saveddata_engine
 saveddata_session = sessionmaker(bind=saveddata_engine)()
 
-from .gamedata import attribute, category, effect, group, icon, item, marketgroup, metagroup
+from .gamedata import *
