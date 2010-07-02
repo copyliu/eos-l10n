@@ -12,3 +12,5 @@ fits_table = Table("fits", saveddata_meta,
 fitsmodules_table = Table("fitsModules", saveddata_meta,
                           Column("fitID", ForeignKey("fits.ID"), primary_key = True),
                           Column("moduleID", ForeignKey("modules.ID"), primary_key = True))
+
+mapper(Fit, fits_table)

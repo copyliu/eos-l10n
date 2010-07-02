@@ -10,7 +10,4 @@ characters_table = Table("characters", saveddata_meta,
                          Column("apiKey", String),
                          Column("owner", ForeignKey("users.ID"), nullable = False))
 
-skills_table = Table("characterSkills", saveddata_meta,
-                     Column("characterID", ForeignKey("characters.ID"), primary_key = True),
-                     Column("skillID", Integer, primary_key = True),
-                     Column("level", Integer, nullable = False))
+mapper(Character, characters_table)

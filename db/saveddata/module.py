@@ -8,3 +8,5 @@ modules_table = Table("modules", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
                          Column("itemID", Integer, nullable = False),
                          Column("ammoID", Integer, nullable = False))
+
+mapper(Module, modules_table)

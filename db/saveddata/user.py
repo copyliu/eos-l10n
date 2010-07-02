@@ -9,3 +9,5 @@ users_table = Table("users", saveddata_meta,
                          Column("username", String, nullable = False),
                          Column("password", String, nullable = False),
                          Column("admin", Boolean, nullable = False))
+
+mapper(User, users_table)
