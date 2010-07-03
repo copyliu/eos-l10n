@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relation, mapper, synonym
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
-from .. import gamedata_meta
+from model.db import gamedata_meta
 from model.types import Icon, Attribute, Item, Effect, MetaGroup
 
 items_table = Table("invtypes", gamedata_meta,

@@ -1,6 +1,6 @@
 import unittest
 from ..types import Module
-from ..db import queries
+from model import db
 
 class TestModuleBasics(unittest.TestCase):
     def setUp(self):
@@ -14,7 +14,7 @@ class TestModuleBasics(unittest.TestCase):
         self.fail("Expected a value error, didn't get it.")
         
     def test_setItem(self):
-        self.m.item = queries.getItem("Capacitor Flux Coil I")
+        self.m.item = db.getItem("Capacitor Flux Coil I")
         
     def test_setNotAmmo(self):
         try:
@@ -25,24 +25,24 @@ class TestModuleBasics(unittest.TestCase):
         
     def test_setWrongAmmoType(self):
         try:
-            self.m.item = queries.getItem("125mm Gatling AutoCannon I")
-            self.m.ammo = queries.getItem("Gamma L")
+            self.m.item = db.getItem("125mm Gatling AutoCannon I")
+            self.m.ammo = db.getItem("Gamma L")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
         
     def test_setWrongAmmoSize(self):
         try:
-            self.m.item = queries.getItem("Dual Light Pulse Laser I")
-            self.m.ammo = queries.getItem("Gamma M")
+            self.m.item = db.getItem("Dual Light Pulse Laser I")
+            self.m.ammo = db.getItem("Gamma M")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
         
     def test_setWrongAmmoSubGroup(self):
         try:
-            self.m.item = queries.getItem("Dual Light Pulse Laser I")
-            self.m.ammo = queries.getItem("Scorch S")
+            self.m.item = db.getItem("Dual Light Pulse Laser I")
+            self.m.ammo = db.getItem("Scorch S")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")

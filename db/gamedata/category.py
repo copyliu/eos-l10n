@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, Table
 from sqlalchemy.orm import relation, mapper, synonym
 
-from .. import gamedata_meta
+from model.db import gamedata_meta
 from model.types import Category, Group, Icon
 
 categories_table = Table("invcategories", gamedata_meta,

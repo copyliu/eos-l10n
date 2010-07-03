@@ -1,6 +1,6 @@
-from .__init__ import gamedata_session
-from ..types import Item
-from .gamedata.metagroup import metatypes_table
+from model.db import gamedata_session
+from model.types import Item
+from model.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
 
 def getItem(lookfor):

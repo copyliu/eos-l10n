@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
 from sqlalchemy.orm import mapper, join, synonym
 from model.types import Effect
-from .. import gamedata_meta
+from model.db import gamedata_meta
 
 typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
                           Column("typeID", Integer, ForeignKey("invtypes.typeID")),

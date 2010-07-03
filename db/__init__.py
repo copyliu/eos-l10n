@@ -22,5 +22,10 @@ saveddata_meta = MetaData()
 saveddata_meta.bind = saveddata_engine
 saveddata_session = sessionmaker(bind=saveddata_engine)()
 
+#Import all the definitions for all our database stuff
 from .gamedata import *
 from .saveddata import *
+
+#Import queries
+from .gamedata.queries import getItem, searchItems, getVariations
+from .saveddata.queries import getUser, getCharacter

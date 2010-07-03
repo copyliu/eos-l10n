@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, Table
 from sqlalchemy.orm import mapper, synonym
 
-from .. import gamedata_meta
+from model.db import gamedata_meta
 from model.types import Icon
 
 icons_table = Table("icons", gamedata_meta, 

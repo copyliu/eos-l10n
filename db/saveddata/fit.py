@@ -2,15 +2,19 @@ from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolea
 from sqlalchemy.orm import relation, mapper, join, synonym
 
 from model.db import saveddata_meta
-from model.types import Fit
+from model.types import Fit, Module
+from model.db.saveddata.module import modules_table
 
 fits_table = Table("fits", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
-                         Column("character", ForeignKey("users.ID"), nullable = False),
+                         Column("characterID", ForeignKey("users.ID"), nullable = False),
                          Column("shipID", Integer, nullable = False))
 
 fitsmodules_table = Table("fitsModules", saveddata_meta,
                           Column("fitID", ForeignKey("fits.ID"), primary_key = True),
                           Column("moduleID", ForeignKey("modules.ID"), primary_key = True))
 
-mapper(Fit, fits_table)
+mapper(Fit, fits_table,
+       properties = {"__modules" : relation(Module, secondary = modules_table,
+                                             primaryjoin = fits_table.c.ID == fitsmodules_table.c.fitID,
+                                             secondaryjoin = fitsmodules_table.c.moduleID == modules_table.c.ID)})
