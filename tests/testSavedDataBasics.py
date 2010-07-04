@@ -1,15 +1,12 @@
 import unittest
 from model.types import Fit, Character, User
 from model import db
-import hashlib
 
 #Some setup for this test
 db.saveddata_meta.create_all()
         
 #Add some test data
-h = hashlib.new("sha1")
-h.update("test".encode())
-u = User("test", h.hexdigest(), False)
+u = User("test", "testy", False)
 c = Character("TESTY")
 c.owner = u
 db.saveddata_session.add(u)
