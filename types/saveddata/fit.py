@@ -7,6 +7,7 @@ class Fit(object):
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
     def __init__(self):
+        self.__dirtySections = set()
         self.__modules = []
         self.__character = None
         self.__owner = None
