@@ -1,5 +1,5 @@
 import unittest
-from ..types import Module
+from model.types import Module
 from model import db
 
 class TestModuleBasics(unittest.TestCase):
