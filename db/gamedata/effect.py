@@ -16,5 +16,6 @@ effects_table = Table("dgmeffects", gamedata_meta,
 
 j = join(typeeffects_table, effects_table, typeeffects_table.c.effectID == effects_table.c.effectID)
 mapper(Effect, j,
+       primary_key = [typeeffects_table.c.typeID , typeeffects_table.c.effectID],
        properties = {"ID" : synonym("effectID"),
                      "name" : synonym("effectName")})
