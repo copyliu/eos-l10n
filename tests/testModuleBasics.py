@@ -20,7 +20,7 @@ class TestModuleBasics(unittest.TestCase):
         
     def test_setNotAmmo(self):
         try:
-            self.m.ammo = 1302
+            self.m.charge = 1302
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
@@ -28,7 +28,7 @@ class TestModuleBasics(unittest.TestCase):
     def test_setWrongAmmoType(self):
         try:
             self.m.item = db.getItem("125mm Gatling AutoCannon I")
-            self.m.ammo = db.getItem("Gamma L")
+            self.m.charge = db.getItem("Gamma L")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
@@ -36,7 +36,7 @@ class TestModuleBasics(unittest.TestCase):
     def test_setWrongAmmoSize(self):
         try:
             self.m.item = db.getItem("Dual Light Pulse Laser I")
-            self.m.ammo = db.getItem("Gamma M")
+            self.m.charge = db.getItem("Gamma M")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
@@ -44,7 +44,7 @@ class TestModuleBasics(unittest.TestCase):
     def test_setWrongAmmoSubGroup(self):
         try:
             self.m.item = db.getItem("Dual Light Pulse Laser I")
-            self.m.ammo = db.getItem("Scorch S")
+            self.m.charge = db.getItem("Scorch S")
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
@@ -53,6 +53,6 @@ class TestModuleBasics(unittest.TestCase):
         i = db.getItem("Dual Light Pulse Laser I")
         a = db.getItem("Gamma S")
         self.m.item = i
-        self.m.ammo = a
+        self.m.charge = a
         self.assertEquals(self.m.itemID, i.ID)
         self.assertEquals(self.m.ammoID, a.ID)
