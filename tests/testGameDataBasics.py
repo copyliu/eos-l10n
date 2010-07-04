@@ -1,7 +1,7 @@
 import unittest
 from model import db
 
-class TestQueries(unittest.TestCase):
+class TestGameDataBasics(unittest.TestCase):
     def test_getItem(self):
         i = db.getItem("Gamma L")
         self.assertEqual(i.name, "Gamma L")
