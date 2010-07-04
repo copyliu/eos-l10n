@@ -2,38 +2,20 @@ from .. import config
 config.debug = False
 config.saveddata_connectionstring = "sqlite:///:memory:"
 
+__all__ = ["testFitBasics", "testModifiedAttributeDict", "testModuleBasics", "testQueries", "testSavedDataBasics"]
 from model import db
 from model.types import User, Character
+import sys
 import hashlib
-from .testQueries import TestQueries
-from .testFitBasics import TestFitBasics
-from .testModuleBasics import TestModuleBasics
-from .testModifiedAttributeDict import TestModifiedAttributeDict
-from .testSavedDataBasics import TestSavedDataBasics
 import unittest
 
-#Database setup
-#Setup a test db, put some stuff in it
-db.saveddata_meta.create_all()
-
-#Add some test data
-h = hashlib.new("sha1")
-h.update("test".encode())
-u = User("test", h.hexdigest(), False)
-c = Character("TESTY")
-c.owner = u
-db.saveddata_session.add(u)
-db.saveddata_session.add(c)
-db.saveddata_session.flush()
-
-loader = unittest.defaultTestLoader
 suite = unittest.TestSuite()
+loader = unittest.defaultTestLoader
 
-suite.addTest(loader.loadTestsFromTestCase(TestQueries))
-suite.addTest(loader.loadTestsFromTestCase(TestFitBasics))
-suite.addTest(loader.loadTestsFromTestCase(TestModuleBasics))
-suite.addTest(loader.loadTestsFromTestCase(TestModifiedAttributeDict))
-suite.addTest(loader.loadTestsFromTestCase(TestSavedDataBasics))
+for modulename in __all__:
+    n = "model.tests." + modulename
+    module = __import__(n)
+    suite.addTest(loader.loadTestsFromModule(sys.modules[n]))
 
 def test():
     unittest.TextTestRunner().run(suite)

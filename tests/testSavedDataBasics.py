@@ -5,7 +5,20 @@ import hashlib
 
 from model.db.saveddata.user import users_table
 
-class TestSavedDataBasics(unittest.TestCase):
+#Some setup for this test
+db.saveddata_meta.create_all()
+        
+#Add some test data
+h = hashlib.new("sha1")
+h.update("test".encode())
+u = User("test", h.hexdigest(), False)
+c = Character("TESTY")
+c.owner = u
+db.saveddata_session.add(u)
+db.saveddata_session.add(c)
+db.saveddata_session.flush()
+
+class TestSavedDataBasics(unittest.TestCase):        
     def test_1getCharacter(self):
         c = db.getCharacter("TESTY")
         self.assertEquals(c.name, "TESTY")
