@@ -1,5 +1,5 @@
-from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
-from sqlalchemy.orm import relation, mapper, join, synonym
+from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy.orm import relation, mapper
 
 from model.db import saveddata_meta
 from model.types import Fit, Module, User

@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
+from sqlalchemy import Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relation, mapper, join, synonym
 from model.db import gamedata_meta
 from model.db.gamedata.item import items_table
