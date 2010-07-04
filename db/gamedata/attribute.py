@@ -17,19 +17,10 @@ attributes_table = Table("dgmattribs", gamedata_meta,
                          Column("highIsGood", Boolean),
                          Column("iconID", Integer, ForeignKey("icons.iconID")))
 
-class Association_proxy(object):
-    pass
+j = join(typeattributes_table, attributes_table, typeattributes_table.c.attributeID == attributes_table.c.attributeID)
 
-mapper(Association_proxy, attributes_table)
-
-mapper(Attribute, typeattributes_table,
-       primary_key=[typeattributes_table.c.typeID, typeattributes_table.c.attributeID],
-       properties = {#"icon" : relation(Icon),
-                     "attribute_proxy" : relation(Association_proxy)})
-
-Attribute.ID = association_proxy("attribute_proxy", "attributeID")
-Attribute.name = association_proxy("attribute_proxy", "attributeName")
-Attribute.description = association_proxy("attribute_proxy", "description")
-Attribute.published = association_proxy("attribute_proxy", "published")
-Attribute.displayName = association_proxy("attribute_proxy", "displayName")
-Attribute.highIsGood = association_proxy("attribute_proxy", "highIsGood")
+mapper(Attribute, j,
+       primary_key = [typeattributes_table.c.typeID, typeattributes_table.c.attributeID],
+       properties = {"icon" : relation(Icon),
+                     "name" : synonym("attributeName"),
+                     "ID" : synonym("attributeID")})
