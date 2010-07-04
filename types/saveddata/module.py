@@ -1,6 +1,8 @@
 from model.types import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 
+from sqlalchemy.orm import validates
+
 class Module(object):
     """An instance of this class represents a module together with its ammo and modified attributes"""
     def __init__(self):
@@ -63,3 +65,12 @@ class Module(object):
             if ammoGroup == chargeGroup: return True
         
         return False
+    
+    @validates("ID", "itemID", "ammoID")
+    def validator(self, key, val):
+        map = {"ID": lambda val: type(val) == int,
+               "itemID" : lambda val: type(val) == int,
+               "ammoID" : lambda val: type(val) == int}
+        
+        if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
+        else: return val

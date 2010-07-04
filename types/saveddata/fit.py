@@ -1,6 +1,8 @@
 from model.types import Character, Module, User
 from model.types.gamedata.item import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
+
+from sqlalchemy.orm import validates
 class Fit(object):
     """Represents a fitting, with modules, ship and character"""
     shipRequiredAttributes = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
@@ -62,4 +64,14 @@ class Fit(object):
     def iterModules(self):
         return self.__modules.__iter__()
     
+    @validates("ID", "ownerID", "shipID", "_Fit_modules", "_fit__owner")
+    def validator(self, key, val):
+        map = {"ID": lambda val: type(val) == int,
+               "ownerID" : lambda val: type(val) == int,
+               "shipID" : lambda val: type(val) == int,
+               "_Fit__modules" : lambda val: type(val) == Module,
+               "_Fit__owner" : lambda val: type(val) == User}
+        
+        if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
+        else: return val
     

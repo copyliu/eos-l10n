@@ -1,4 +1,5 @@
 from model.types import User
+from sqlalchemy.orm import validates
 
 class Character(object):
     def __init__(self, name):
@@ -17,3 +18,13 @@ class Character(object):
             self.__owner = owner
         else:
             raise ValueError("User should be an owner or None, not " + type(owner))
+        
+    @validates("ID", "name", "apiKey", "ownerID")
+    def validator(self, key, val):
+        map = {"ID": lambda val: type(val) == int,
+               "name" : lambda val: True,
+               "apiKey" : lambda val: val == None or len(val) == 64,
+               "ownerID" : lambda val: type(val) == int}
+        
+        if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
+        else: return val
