@@ -11,7 +11,7 @@ class Fit(object):
        self.__character = None
        self.__owner = None
        self.__ship = None
-       self.__shipModifiedAttributes = {}
+       self.__shipModifiedAttributes = ModifiedAttributeDict()
 
     @property
     def character(self):

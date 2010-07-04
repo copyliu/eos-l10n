@@ -30,6 +30,9 @@ class ModifiedAttributeDict(object):
         all = dict(self.__original, **self.__modified)
         return (key for key in all)
     
+    def __contains__(self, key):
+        return (self.__original != None and key in self.__original) or key in self.__modified
+    
     def iterkeys(self):
         for key in self:
             yield key
@@ -41,7 +44,8 @@ class ModifiedAttributeDict(object):
     def iteritems(self):
         for key in self:
             yield key, self[key]
-            
+
+    iter = __iter__            
     items = iteritems
     keys = iterkeys
     values = itervalues

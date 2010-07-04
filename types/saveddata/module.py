@@ -1,12 +1,13 @@
-from ..gamedata.item import Item
+from model.types import Item
+from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 
 class Module(object):
     """An instance of this class represents a module together with its ammo and modified attributes"""
     def __init__(self):
         self.__item = None
         self.__ammo = None
-        self.__itemModifiedAttributes = {}
-        self.__ammoModifiedAttributes = {}
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__ammoModifiedAttributes = ModifiedAttributeDict()
         
     @property
     def item(self):
