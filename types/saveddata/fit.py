@@ -1,7 +1,7 @@
-from model.types import Character, Module, User
+from model.types import Character, User
+import model.types.saveddata.module
 from model.types.gamedata.item import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-
 from sqlalchemy.orm import validates
 class Fit(object):
     """Represents a fitting, with modules, ship and character"""
@@ -54,11 +54,11 @@ class Fit(object):
             raise ValueError("User should be an owner or None, not " + type(owner))
         
     def addModule(self, mod):
-        if type(mod) != Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
+        if type(mod) != model.types.saveddata.module.Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
         self.__modules.append(mod)
         
     def removeModule(self, mod):
-        if type(mod) != Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
+        if type(mod) != model.types.saveddata.module.Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
         self.__modules.remove(mod)
     
     def iterModules(self):
@@ -75,3 +75,5 @@ class Fit(object):
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
     
+    def calculateModifiedAttributes(self):
+        pass

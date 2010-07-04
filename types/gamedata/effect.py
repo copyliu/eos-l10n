@@ -1,12 +1,12 @@
 from sqlalchemy.orm import reconstructor
 
+nameFilter = dict((ord(char), '') for char in u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
+
 class Effect(object):
-    nameFilter =''.join(c for c in map(chr,range(256)) if not c.isalnum())
-    
     @reconstructor
     def init(self):
         self.__generated = False
-        self.handlerName = self.name.translate(None, nameFilter)
+        self.handlerName = self.name.translate(nameFilter)
         
     @property
     def handler(self):
@@ -36,5 +36,5 @@ class Effect(object):
             self.__handler = None
             self.__runTime = None
             self.__type = ("normal",)
-            
+        
         self.__generated = True
