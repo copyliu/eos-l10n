@@ -14,12 +14,11 @@ import unittest
 
 #Database setup
 #Setup a test db, put some stuff in it
-db.saveddata_meta.drop_all()
 db.saveddata_meta.create_all()
 
 #Add some test data
 h = hashlib.new("sha1")
-h.update("test")  
+h.update("test".encode())
 u = User("test", h.hexdigest(), False)
 c = Character("TESTY")
 c.owner = u
