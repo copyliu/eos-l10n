@@ -1,7 +1,6 @@
-from .character import Character
-from ..gamedata.item import Item
-from .module import Module
-from .modifiedAttributeDict import ModifiedAttributeDict
+from model.types import Character, Module, User
+from model.types.gamedata.item import Item
+from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 class Fit(object):
     """Represents a fitting, with modules, ship and character"""
     shipRequiredAttributes = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
@@ -10,6 +9,7 @@ class Fit(object):
     def __init__(self):
        self.__modules = []
        self.__character = None
+       self.__owner = None
        self.__ship = None
        self.__shipModifiedAttributes = {}
 
@@ -37,7 +37,18 @@ class Fit(object):
         
         self.__ship = ship
         self.__shipModifiedAttributes.clear()
-            
+    
+    @property
+    def owner(self):
+        return self.__owner
+    
+    @owner.setter
+    def owner(self, owner):
+        if owner == None or type(owner) == User:
+            self.__owner = owner
+        else:
+            raise ValueError("User should be an owner or None, not " + type(owner))
+        
     def addModule(self, mod):
         if type(mod) != Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
         self.__modules.append(mod)

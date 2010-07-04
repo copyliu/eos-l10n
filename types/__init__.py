@@ -7,7 +7,7 @@ from .gamedata.item import Item
 from .gamedata.marketgroup import MarketGroup
 from .gamedata.metagroup import MetaGroup
 from .saveddata.user import User
-from .saveddata.fit import Fit
-from .saveddata.module import Module
 from .saveddata.character import Character
+from .saveddata.module import Module
 from .saveddata.skill import Skill
+from .saveddata.fit import Fit

@@ -1,4 +1,7 @@
 from .. import config
+config.debug = False
+config.saveddata_connectionstring = "sqlite:///:memory:"
+
 from model import db
 from model.types import User, Character
 import hashlib
@@ -8,11 +11,10 @@ from .testModuleBasics import TestModuleBasics
 from .testModifiedAttributeDict import TestModifiedAttributeDict
 from .testSavedDataBasics import TestSavedDataBasics
 import unittest
-config.debug = False
 
 #Database setup
-config.saveddata_connectionstring = "sqlite:///:memory:"
 #Setup a test db, put some stuff in it
+db.saveddata_meta.drop_all()
 db.saveddata_meta.create_all()
 
 #Add some test data
@@ -21,10 +23,9 @@ h.update("test")
 u = User("test", h.hexdigest(), False)
 c = Character("TESTY")
 c.owner = u
+db.saveddata_session.add(u)
 db.saveddata_session.add(c)
 db.saveddata_session.flush()
-        
-
 
 loader = unittest.defaultTestLoader
 suite = unittest.TestSuite()

@@ -15,6 +15,5 @@ class Character(object):
     def owner(self, owner):
         if owner == None or type(owner) == User:
             self.__owner = owner
-            self.ownerID = None if owner == None else owner.ID
         else:
             raise ValueError("User should be an owner or None, not " + type(owner))

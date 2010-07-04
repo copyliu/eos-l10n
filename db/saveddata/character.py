@@ -11,4 +11,4 @@ characters_table = Table("characters", saveddata_meta,
                          Column("ownerID", ForeignKey("users.ID"), nullable = False))
 
 mapper(Character, characters_table,
-       properties = {"owner" : relation(User, backref = "characters")})
+       properties = {"_Character__owner" : relation(User, backref = "characters")})
