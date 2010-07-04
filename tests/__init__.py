@@ -6,7 +6,6 @@ __all__ = ["testFitBasics", "testModifiedAttributeDict", "testModuleBasics", "te
 
 from model import db
 from model.types import User, Character
-import sys
 import hashlib
 import unittest
 
@@ -15,8 +14,8 @@ loader = unittest.defaultTestLoader
 
 for modulename in __all__:
     n = "model.tests." + modulename
-    module = __import__(n)
-    suite.addTest(loader.loadTestsFromModule(sys.modules[n]))
+    module = __import__(n, fromlist = True)
+    suite.addTest(loader.loadTestsFromModule(module))
 
 def test():
     unittest.TextTestRunner().run(suite)
