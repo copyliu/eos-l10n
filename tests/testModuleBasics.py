@@ -14,7 +14,9 @@ class TestModuleBasics(unittest.TestCase):
         self.fail("Expected a value error, didn't get it.")
         
     def test_setItem(self):
-        self.m.item = db.getItem("Capacitor Flux Coil I")
+        i = db.getItem("Capacitor Flux Coil I")
+        self.m.item = i
+        self.assertEquals(self.m.itemID, i.ID)
         
     def test_setNotAmmo(self):
         try:
@@ -46,3 +48,11 @@ class TestModuleBasics(unittest.TestCase):
         except ValueError:
             return
         self.fail("Expected a ValueError, didn't get it.")
+        
+    def test_setCorrectAmmo(self):
+        i = db.getItem("Dual Light Pulse Laser I")
+        a = db.getItem("Gamma S")
+        self.m.item = i
+        self.m.ammo = a
+        self.assertEquals(self.m.itemID, i.ID)
+        self.assertEquals(self.m.ammoID, a.ID)
