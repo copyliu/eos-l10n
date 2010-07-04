@@ -20,8 +20,10 @@ class ModifiedAttributeDict(object):
         self.__modified.clear()
         
     def __getitem__(self, key):
-        if key in self.__modified: return self.__modified[key]
-        else: return self.__original[key].value
+        if key in self.__modified:
+            return self.__modified[key]
+        else:
+            return self.__original[key].value
     
     def __setitem__(self, key, val):
         self.__modified[key] = val

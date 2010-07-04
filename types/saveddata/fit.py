@@ -36,7 +36,8 @@ class Fit(object):
                     raise ValueError("Passed item is not a ship")
         
         self.__ship = ship
-        self.__shipModifiedAttributes.clear()
+        self.shipID = ship.ID if ship != None else None
+        self.__shipModifiedAttributes.original = ship.attributes
     
     @property
     def owner(self):
