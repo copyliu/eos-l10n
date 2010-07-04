@@ -19,8 +19,8 @@ from .metagroup import metagroups_table, metatypes_table
 
 mapper(Item, items_table, 
        properties = {"icon" : relation(Icon),
-                     "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('attributeName')),
-                     "effects" : relation(Effect, collection_class = attribute_mapped_collection('effectName')),
+                     "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
+                     "effects" : relation(Effect, collection_class = attribute_mapped_collection('name')),
                      "metaGroup" : relation(MetaGroup,
                                             primaryjoin = items_table.c.typeID == metatypes_table.c.typeID,
                                             secondaryjoin = metatypes_table.c.metaGroupID == metagroups_table.c.metaGroupID,
