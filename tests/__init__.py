@@ -3,6 +3,7 @@ config.debug = False
 config.saveddata_connectionstring = "sqlite:///:memory:"
 
 __all__ = ["testFitBasics", "testModifiedAttributeDict", "testModuleBasics", "testQueries", "testSavedDataBasics"]
+
 from model import db
 from model.types import User, Character
 import sys

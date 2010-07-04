@@ -1,9 +1,7 @@
 import unittest
-from model.types import Fit, Character, Module, User
+from model.types import Fit, Character, User
 from model import db
 import hashlib
-
-from model.db.saveddata.user import users_table
 
 #Some setup for this test
 db.saveddata_meta.create_all()
