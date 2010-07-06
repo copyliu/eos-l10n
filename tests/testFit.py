@@ -2,12 +2,13 @@ import unittest
 from model.types import Fit, Character, Module
 from model import db
 
-class TestFitBasics(unittest.TestCase):
+class TestFit(unittest.TestCase):
     def setUp(self):
-        self.f = Fit()
+        self.m = Module(db.getItem("Heat Sink I"))
         
     def test_setCharacter(self):
-        self.f.character = Character("Testety")
+        f = Fit()
+        f.character = Character("Testety")
 
         
     def test_addNotAModule(self):
@@ -18,25 +19,30 @@ class TestFitBasics(unittest.TestCase):
         self.fail("Added an invalid module, was expecting a ValueError")
         
     def test_addValidModule(self):
-        self.f.addModule(Module())
+        f = Fit()
+        f.addModule(self.m)
             
     def test_removeModuleNotExists(self):
-        self.assertRaises(ValueError, self.f.removeModule, Module())
+        f = Fit()
+        self.assertRaises(ValueError, f.removeModule, self.m)
         
     def test_removeModuleExists(self):
-        m = Module()
-        self.f.addModule(m)
-        self.f.removeModule(m)
+        f = Fit()
+        f.addModule(self.m)
+        f.removeModule(self.m)
         
     def test_removeInvalidModule(self):
-        self.assertRaises(ValueError, self.f.removeModule, 1302)
+        f = Fit()
+        self.assertRaises(ValueError, f.removeModule, 1302)
         
     def test_setNotAShip(self):
+        f = Fit()
         try:
-            self.f.ship = db.getItem("Gamma L")
+            f.ship = db.getItem("Gamma L")
         except ValueError:
             return
         self.fail("Set Gamma L as ship, was expecting ValueError")
         
     def test_setShip(self):
-        self.f.ship = db.getItem("Rifter")
+        f = Fit()
+        f.ship = db.getItem("Rifter")

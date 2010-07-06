@@ -12,8 +12,8 @@ class Fit(object):
     def __init__(self):
         self.__modules = []
         self.__drones = []
-        self.__implants = {}
-        self.__boosters = {}
+        self.__implants = []
+        self.__boosters = []
         self.__blockedItems = set()
         self.__projectedModules = []
         self.__projectedFits = []
@@ -90,7 +90,10 @@ class Fit(object):
             d.item = item
             
         d.amount -= amount
-        
+    
+    def setImplant(self, item):
+        pass
+    
     def iterDrones(self):
         return self.__drones.__iter__()
     
@@ -113,9 +116,10 @@ class Fit(object):
             #Lets start out with the ship's effects
             #We'll be ignoring gang/projected effects for now and focussing on regular ones
             for effect in self.ship.effects:
-                effect.handler(self, self.ship)
+                if effect.runTime == runTime:
+                    effect.handler(self, self.ship)
             #Handle the rest through their respective classes
             for module in self.iterModules():
-                effect.handler(self, module)
+                module.calculateModifiedAttributes(self, runTime)
             for drone in self.iterDrones():
-                pass
+                drone.calculateModifiedAttributes(self, runTime)

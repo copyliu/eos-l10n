@@ -1,21 +1,26 @@
-from .. import config
+import hashlib, unittest, os, os.path, sys
+
+#Add the good path to sys.path
+path = os.path.join(os.path.dirname(__file__), "..", "..")
+sys.path.append(path)
+
+from model import config
+
 config.debug = False
 config.saveddata_connectionstring = "sqlite:///:memory:"
 
-__all__ = ["testDroneBasics", "testFitBasics", "testModifiedAttributeDict", "testModuleBasics", "testGameDataBasics", "testSavedDataBasics", "testEffectHandlerLoading"]
-
 from model import db
 from model.types import User, Character
-import hashlib
-import unittest
 
 suite = unittest.TestSuite()
 loader = unittest.defaultTestLoader
 
-for modulename in __all__:
-    n = "model.tests." + modulename
-    module = __import__(n, fromlist = True)
-    suite.addTest(loader.loadTestsFromModule(module))
+for filename in os.listdir(os.path.dirname(__file__)):
+    moduleName, ext = os.path.splitext(filename)
+    if ext == ".py" and moduleName != "__init__":
+        n = "model.tests." + moduleName
+        module = __import__(n, fromlist = True)
+        suite.addTest(loader.loadTestsFromModule(module))
 
-def test():
+if __name__ == "__main__":
     unittest.TextTestRunner().run(suite)

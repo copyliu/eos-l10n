@@ -17,13 +17,14 @@ class Slot():
 class Module(object):
     """An instance of this class represents a module together with its charge and modified attributes"""
     
-    def __init__(self):
-        self.__fit = None
-        self.__item = None
+    def __init__(self, item):
+        self.__slot = self.__calculateSlot(item)
+        self.__item = item
+        self.itemID = item.ID if item != None else None
         self.__charge = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__itemModifiedAttributes.original = item.attributes
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
-        self.__slot = None
     
     @property
     def itemModifiedAttributes(self):
@@ -34,24 +35,8 @@ class Module(object):
         return self.__chargeModifiedAttributes
     
     @property
-    def fit(self):
-        return self.__fit
-    
-    @fit.setter
-    def fit(self, val):
-        self.__fit = val
-        
-    @property
     def item(self):
         return self.__item
-    
-    @item.setter
-    def item(self, item):
-        self.__slot = self.__calculateSlot(item)
-        self.__item = item
-        self.itemID = item.ID if item != None else None
-        self.__itemModifiedAttributes.original = item.attributes
-        self.__chargeModifiedAttributes.clear()
         
     @property
     def charge(self):
@@ -100,15 +85,15 @@ class Module(object):
         return False
     
     def __calculateSlot(self, item):
-        if self.item == None:
+        if item == None:
             return None
-        elif self.item.category.name == "Drone":
+        elif item.category.name == "Drone":
             return Slot.DRONE
-        elif "loPower" in self.item.effects:
+        elif "loPower" in item.effects:
             return Slot.LOW
-        elif "medPower" in self.item.effects:
+        elif "medPower" in item.effects:
             return Slot.MED
-        elif "hiPower" in self.item.effects:
+        elif "hiPower" in item.effects:
             return Slot.HIGH
         else:
             raise ValueError("Passed item does not fit in a low, med, high or drone slot")
@@ -122,5 +107,10 @@ class Module(object):
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
         
-    def calculateModifiedAttributes(self):
-        pass
+    def calculateModifiedAttributes(self, fit, runTime):
+        for effect in self.item.effects:
+            if effect.runTime == runTime:
+                effect.handler(fit, self)
+        for effect in self.charge.effects:
+            if effect.runTime == runTime:
+                effect.handler(fit, self)

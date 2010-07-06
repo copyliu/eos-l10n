@@ -24,6 +24,9 @@ class Effect(object):
         if not self.__generated: self.__generateHandler()
         return self.__type
     
+    def isType(self, type):
+        return self.type != None and type in self.type
+    
     def __generateHandler(self):
         try:
             effectModule = __import__('model.effects.' + self.name, fromlist=True)

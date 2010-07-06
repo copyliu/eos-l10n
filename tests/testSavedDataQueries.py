@@ -13,7 +13,7 @@ db.saveddata_session.add(u)
 db.saveddata_session.add(c)
 db.saveddata_session.flush()
 
-class TestSavedDataBasics(unittest.TestCase):        
+class TestSavedDataQueries(unittest.TestCase):        
     def test_1getCharacter(self):
         c = db.getCharacter("TESTY")
         self.assertEquals(c.name, "TESTY")

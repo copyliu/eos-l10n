@@ -4,12 +4,16 @@ from model.types.saveddata.module import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 
 class Drone(object):
-    def __init__(self):
+    def __init__(self, item):
+        if item.category.name != "Drone":
+            raise ValueError("Passed item is not a drone")
+        
+        self.__item = item
         self.amount = 0
-        self.__item = None
         self.__charge = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
+        self.itemModifiedAttributes.original = item.attributes
         
     @property
     def itemModifiedAttributes(self):
@@ -22,13 +26,6 @@ class Drone(object):
     @property
     def item(self):
         return self.__item
-    
-    @item.setter
-    def item(self, item):
-        if item.category.name != "Drone":
-            print item.category
-            raise ValueError("Passed item is not a drone")
-        self.__item = item
         
     @property
     def charge(self):
@@ -36,10 +33,10 @@ class Drone(object):
     
     @charge.setter
     def charge(self, charge):
-        print self.item.attributes["entityMissileTypeID"].value, charge.ID, self.getModifiedItemAttr("entityMissileTypeID")
         if charge.ID != self.getModifiedItemAttr("entityMissileTypeID"):
             raise ValueError("Charge does not fit on this drone")
         
+        self.chargeModifiedAttributes.original = charge.attributes
         self.__charge = charge
         
     def getModifiedItemAttr(self, key):
@@ -57,3 +54,11 @@ class Drone(object):
     @validates
     def validator(self, key, val):
         if key == "ID": return isinstance(val, int)
+        
+    def calculateModifiedAttributes(self, fit, runTime):
+        for effect in self.item.effects:
+            if effect.runTime == runTime:
+                effect.handler(fit, self)
+        for effect in self.charge.effects:
+            if effect.runTime == runTime:
+                effect.handler(fit, self)
