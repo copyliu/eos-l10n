@@ -119,7 +119,7 @@ class Fit(object):
                 if effect.runTime == runTime:
                     effect.handler(self, self.ship)
             #Handle the rest through their respective classes
-            for module in self.iterModules():
-                module.calculateModifiedAttributes(self, runTime)
-            for drone in self.iterDrones():
-                drone.calculateModifiedAttributes(self, runTime)
+            for module in self.iterModules(): module.calculateModifiedAttributes(self, runTime)
+            for drone in self.iterDrones(): drone.calculateModifiedAttributes(self, runTime)
+            for booster in self.iterBoosters(): booster.calculateModifiedAttributes(self, runTime)
+            for implant in self.iterImplants(): implant.calculateModifiedAttributes(self, runTime)
