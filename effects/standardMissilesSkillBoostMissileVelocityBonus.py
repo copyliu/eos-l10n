@@ -2,5 +2,5 @@
 from customEffects import boostAmmoListByReq
 def standardMissilesSkillBoostMissileVelocityBonus(self, fitting, level):
     boostAmmoListByReq(fitting.modules, "maxVelocity", "missileVelocityBonus",
-                       lambda ammo: self.item in ammo.requiredSkills,
+                       lambda charge: self.item in charge.requiredSkills,
                        self.item, extraMult = level)

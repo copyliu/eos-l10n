@@ -1,12 +1,11 @@
 from model.db import gamedata_session
-from model.types import Item
 from model.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
-
+from model.types import Item
 def getItem(lookfor):
-    if type(lookfor) == str:
+    if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).filter(Item.name == lookfor).one()
-    elif type(lookfor) == int:
+    elif isinstance(lookfor, int):
         return gamedata_session.query(Item).filter(Item.ID == lookfor).one()
     
 def searchItems(nameLike):
@@ -17,5 +16,5 @@ def searchItems(nameLike):
     return gamedata_session.query(Item).filter(Item.name.like(nameLike)).all()
 
 def getVariations(item):
-    if type(item) == Item: item = item.ID
+    if not isinstance(item, int): item = item.ID
     return gamedata_session.query(Item).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()

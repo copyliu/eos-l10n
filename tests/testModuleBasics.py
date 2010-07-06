@@ -6,24 +6,10 @@ class TestModuleBasics(unittest.TestCase):
     def setUp(self):
         self.m = Module()
         
-    def test_setNotAnItem(self):
-        try:
-            self.m.item = 1302
-        except ValueError:
-            return
-        self.fail("Expected a value error, didn't get it.")
-        
     def test_setItem(self):
         i = db.getItem("Capacitor Flux Coil I")
         self.m.item = i
         self.assertEquals(self.m.itemID, i.ID)
-        
-    def test_setNotAmmo(self):
-        try:
-            self.m.charge = 1302
-        except ValueError:
-            return
-        self.fail("Expected a ValueError, didn't get it.")
         
     def test_setWrongAmmoType(self):
         try:

@@ -1,5 +1,3 @@
-from model.attribute import basicAttribute
-
 def increase(module, attrName, increase, bonusAttrCont = None, useStackingPenalty = False, extraMult = None, extraMultCont = None, position = "pre", addContAsSource = True):
     if module.ID == 0: return
     if useStackingPenalty == True:

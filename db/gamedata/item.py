@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relation, mapper, synonym
+from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
 from model.db import gamedata_meta
@@ -28,3 +29,5 @@ mapper(Item, items_table,
                                             uselist = False),
                      "ID" : synonym("typeID"),
                      "name" : synonym("typeName")})
+
+Item.category = association_proxy("group", "category")

@@ -7,13 +7,6 @@ class TestModifiedAttributeDict(unittest.TestCase):
         self.dict = ModifiedAttributeDict()
         self.i = db.getItem("125mm Gatling AutoCannon I")
         
-    def test_setInvalidOriginal(self):
-        try:
-            self.dict.original = 1302
-        except ValueError:
-            return
-        self.fail("Set original to an invalid value, expected ValueError")
-        
     def test_SetValidOriginal(self):
         self.dict.original = self.i.attributes
         

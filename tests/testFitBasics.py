@@ -6,13 +6,6 @@ class TestFitBasics(unittest.TestCase):
     def setUp(self):
         self.f = Fit()
         
-    def test_setNotACharacter(self):
-        try:
-            self.f.character = 1302
-        except ValueError:
-            return
-        self.fail("Set an invalid character, Was expecting ValueError")
-        
     def test_setCharacter(self):
         self.f.character = Character("Testety")
 
@@ -34,9 +27,6 @@ class TestFitBasics(unittest.TestCase):
         m = Module()
         self.f.addModule(m)
         self.f.removeModule(m)
-        
-    def test_addInvalidModule(self):
-        self.assertRaises(ValueError, self.f.addModule, 1302)
         
     def test_removeInvalidModule(self):
         self.assertRaises(ValueError, self.f.removeModule, 1302)

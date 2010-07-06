@@ -15,7 +15,6 @@ class ModifiedAttributeDict(object):
     
     @original.setter
     def original(self, val):
-        if val != None and type(val) != MappedCollection: raise ValueError("original was not a valid MappedCollection of attributes")
         self.__original = val
         self.__modified.clear()
         

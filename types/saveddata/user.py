@@ -19,10 +19,10 @@ class User(object):
     
     @validates("ID", "username", "password", "admin")
     def validator(self, key, val):
-        map = {"ID": lambda val: type(val) == int,
-               "username" : lambda val: type(val) == str,
-               "password" : lambda val: type(val) == str and len(val) == 64,
-               "admin" : lambda val: type(val) == bool}
+        map = {"ID": lambda val: isinstance(val, int),
+               "username" : lambda val: isinstance(val, basestring),
+               "password" : lambda val: isinstance(val, basestring) and len(val) == 64,
+               "admin" : lambda val: isinstance(val, bool)}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

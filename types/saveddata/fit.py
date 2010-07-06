@@ -1,5 +1,6 @@
 from model.types import Character, User
 import model.types.saveddata.module
+from model.types import Drone
 from model.types.gamedata.item import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates
@@ -9,20 +10,29 @@ class Fit(object):
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
     def __init__(self):
-        self.__dirtySections = set()
         self.__modules = []
+        self.__drones = []
+        self.__implants = {}
+        self.__boosters = {}
+        self.__blockedItems = set()
+        self.__projectedModules = []
+        self.__projectedFits = []
+        self.__gang = None
         self.__character = None
         self.__owner = None
         self.__ship = None
         self.__shipModifiedAttributes = ModifiedAttributeDict()
 
     @property
+    def shipModifiedAttributes(self):
+        return self.__shipModifiedAttributes
+    
+    @property
     def character(self):
         return self.__character;
     
     @character.setter
     def character(self, char):
-        if type(char) != Character and char != None: raise ValueError("Expecting a character or None, got " + str(type(char)))
         self.__character = char
     
     @property
@@ -32,7 +42,6 @@ class Fit(object):
     @ship.setter
     def ship(self, ship):
         if ship != None:
-            if type(ship) != Item: raise ValueError("Expecting an item to be passed, got " + str(type(ship)))
             #We NEED a few attributes for ships when calculating stuff, make sure they're there
             for requiredAttr in self.shipRequiredAttributes:
                 if not requiredAttr in  ship.attributes:
@@ -48,32 +57,65 @@ class Fit(object):
     
     @owner.setter
     def owner(self, owner):
-        if owner == None or type(owner) == User:
-            self.__owner = owner
-        else:
-            raise ValueError("User should be an owner or None, not " + type(owner))
-        
+        self.__owner = owner
+
     def addModule(self, mod):
-        if type(mod) != model.types.saveddata.module.Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
         self.__modules.append(mod)
         
     def removeModule(self, mod):
-        if type(mod) != model.types.saveddata.module.Module: raise ValueError("Expecting a module to be passed, got " + str(type(mod)))
         self.__modules.remove(mod)
     
     def iterModules(self):
         return self.__modules.__iter__()
     
-    @validates("ID", "ownerID", "shipID", "_Fit_modules", "_fit__owner")
+    def findDrone(self, item):
+        for d in self.__drones:
+            if d.item == item:
+                return d
+            
+    def addDrone(self, item, amount = 1):
+        if amount < 1: ValueError("Amount of drones to add should be >= 1")
+        d = self.findDrone(item)
+        if d is None:
+            d = Drone()
+            d.item = item
+            
+        d.amount += amount
+    
+    def removeDrone(self, item, amount):
+        if amount < 1: ValueError("Amount of drones to add should be >= 1")
+        d = self.findDrone(item)
+        if d is None:
+            d = Drone()
+            d.item = item
+            
+        d.amount -= amount
+        
+    def iterDrones(self):
+        return self.__drones.__iter__()
+    
+    @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
-        map = {"ID": lambda val: type(val) == int,
-               "ownerID" : lambda val: type(val) == int,
-               "shipID" : lambda val: type(val) == int,
-               "_Fit__modules" : lambda val: type(val) == Module,
-               "_Fit__owner" : lambda val: type(val) == User}
+        map = {"ID": lambda val: isinstance(val, int),
+               "ownerID" : lambda val: isinstance(val, int),
+               "shipID" : lambda val: isinstance(val, int)}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
     
     def calculateModifiedAttributes(self):
-        pass
+        #There's a few things to keep in mind here
+        #1: Early effects first, then regular ones, then late ones, regardless of anything else
+        #2: Some effects aren't implemented
+        #3: Some effects are implemented poorly and will just explode on us
+        #4: Errors should be handled gracefully and preferably without crashing unless serious
+        for runTime in ("early", "normal", "late"):
+            #Lets start out with the ship's effects
+            #We'll be ignoring gang/projected effects for now and focussing on regular ones
+            for effect in self.ship.effects:
+                effect.handler(self, self.ship)
+            #Handle the rest through their respective classes
+            for module in self.iterModules():
+                effect.handler(self, module)
+            for drone in self.iterDrones():
+                pass

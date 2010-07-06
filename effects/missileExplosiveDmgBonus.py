@@ -8,5 +8,5 @@
 from customEffects import boostAmmoListByReq
 def missileExplosiveDmgBonus(self, fitting, level):
     boostAmmoListByReq(fitting.modules, "explosiveDamage", "damageMultiplierBonus",
-                           lambda ammo: self.item in ammo.requiredSkills,
+                           lambda charge: self.item in charge.requiredSkills,
                            self.item, extraMult = level)

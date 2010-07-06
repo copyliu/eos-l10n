@@ -1,7 +1,18 @@
 from model.types import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-from model.types.saveddata import fit
 from sqlalchemy.orm import validates
+
+class State():
+    OFFLINE = -1
+    ONLINE = 0
+    ACTIVE = 1
+    OVERHEATED = 2
+    
+class Slot():
+    LOW = 1
+    MED = 2
+    HIGH = 3
+    DRONE = 4
     
 class Module(object):
     """An instance of this class represents a module together with its charge and modified attributes"""
@@ -12,6 +23,15 @@ class Module(object):
         self.__charge = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
+        self.__slot = None
+    
+    @property
+    def itemModifiedAttributes(self):
+        return self.__itemModifiedAttributes
+    
+    @property
+    def chargeModifiedAttributes(self):
+        return self.__chargeModifiedAttributes
     
     @property
     def fit(self):
@@ -19,8 +39,7 @@ class Module(object):
     
     @fit.setter
     def fit(self, val):
-        if type(val) == fit.Fit:
-            self.__fit = val
+        self.__fit = val
         
     @property
     def item(self):
@@ -28,7 +47,7 @@ class Module(object):
     
     @item.setter
     def item(self, item):
-        if type(item) != Item and item != None: raise ValueError("Expecting an item, got a " + str(type(item)))
+        self.__slot = self.__calculateSlot(item)
         self.__item = item
         self.itemID = item.ID if item != None else None
         self.__itemModifiedAttributes.original = item.attributes
@@ -40,23 +59,26 @@ class Module(object):
     
     @charge.setter
     def charge(self, charge):
-        if type(charge) != Item and charge != None: raise ValueError("Expecting an item, got a " + str(type(charge)))
         if not self.isValidCharge(charge): raise ValueError("Ammo does not fit in that slot")
         self.__charge = charge
         self.ammoID = charge.ID if charge != None else None
         self.__chargeModifiedAttributes.original = charge.attributes
         self.__itemModifiedAttributes.clear()
     
-    def getModifiedChargeAttr(self, key):
-        if key in self.__chargeModifiedAttributes:
-            return self.__chargeModifiedAttributes[key]
-    
     def getModifiedItemAttr(self, key):
-        if key in self.__itemModifiedAttributes:
-            return self.__itemModifiedAttributes[key]
-    
+        if key in self.itemModifiedAttributes:
+            return self.itemModifiedAttributes[key]
+        else:
+            return None
+        
+    def getModifiedAmmoAttr(self, key):
+        if key in self.ammoModifiedAttributes:
+            return self.ammoModifiedAttributes[key]
+        else:
+            return None
+        
     def isValidCharge(self, charge):
-        #Check sizes, if charge size > module volume it won't fit
+        #Check sizes, if 'charge size > module volume' it won't fit
         if charge == None: return True
         chargeVolume = charge.getAttribute("volume")
         moduleCapacity = self.getModifiedItemAttr("capacity")
@@ -77,11 +99,25 @@ class Module(object):
         
         return False
     
+    def __calculateSlot(self, item):
+        if self.item == None:
+            return None
+        elif self.item.category.name == "Drone":
+            return Slot.DRONE
+        elif "loPower" in self.item.effects:
+            return Slot.LOW
+        elif "medPower" in self.item.effects:
+            return Slot.MED
+        elif "hiPower" in self.item.effects:
+            return Slot.HIGH
+        else:
+            raise ValueError("Passed item does not fit in a low, med, high or drone slot")
+    
     @validates("ID", "itemID", "ammoID")
     def validator(self, key, val):
-        map = {"ID": lambda val: type(val) == int,
-               "itemID" : lambda val: type(val) == int,
-               "ammoID" : lambda val: type(val) == int}
+        map = {"ID": lambda val: isinstance(val, int),
+               "itemID" : lambda val: isinstance(val, int),
+               "ammoID" : lambda val: isinstance(val, int)}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
