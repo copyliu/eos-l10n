@@ -1,0 +1,50 @@
+from sqlalchemy.orm import reconstructor
+
+#Filter to change names of effects to valid python method names
+nameFilter = dict((ord(char), '') for char in u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
+
+class Effect(object):
+    @reconstructor
+    def init(self):
+        self.__generated = False
+        self.handlerName = self.name.translate(nameFilter)
+        
+    @property
+    def handler(self):
+        if not self.__generated: self.__generateHandler()
+        return self.__handler
+    
+    @property
+    def runTime(self):
+        if not self.__generated: self.__generateHandler()
+        return self.__runTime
+    
+    @property
+    def type(self):
+        if not self.__generated: self.__generateHandler()
+        return self.__type
+    
+    def __generateHandler(self):
+        try:
+            effectModule = __import__('model.effects.' + self.name, fromlist=True)
+            self.__handler = getattr(effectModule, self.handlerName)
+            try:
+                self.__runTime = getattr(effectModule, "runTime")
+            except AttributeError:
+                self.__runTime = None
+                
+            try:
+                t = getattr(effectModule, "type")
+            except AttributeError:
+                t = None
+                
+            t =  t if t != None else "normal"
+            t = t if isinstance(t, tuple) else (t,)
+            self.__type = t
+        except ImportError:
+            self.__handler = None
+            self.__runTime = None
+            self.__type = ("normal",)
+        
+        self.__generated = True
+        
