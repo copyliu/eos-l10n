@@ -1,7 +1,7 @@
 import os.path
 
 debug = True
-datafolder = "E:\\"
+datafolder = "/home/cncfanatics/.pyfa"
 
 def getDataFile(*args):
     return os.path.expanduser(os.path.join(datafolder,  *args))

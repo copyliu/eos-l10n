@@ -1,7 +1,7 @@
 import hashlib, unittest, os, os.path, sys
 
 #Add the good path to sys.path
-path = os.path.join(os.path.dirname(__file__), "..", "..")
+path = os.path.realpath(os.path.join(sys.path[0], "..", ".."))
 sys.path.append(path)
 
 from model import config
@@ -13,7 +13,7 @@ suite = unittest.TestSuite()
 loader = unittest.defaultTestLoader
 
 def iteratedir(dir, prefix = []):
-    for filename in os.listdir(dir):
+    for filename in os.listdir(dir or '.'):
         if os.path.isdir(os.path.join(dir, filename)):
             iteratedir(os.path.join(dir, filename), prefix + [filename])
         moduleName, ext = os.path.splitext(filename)

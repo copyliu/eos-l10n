@@ -1,7 +1,6 @@
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 
 from sqlalchemy.orm import reconstructor, validates
-import model.db
 
 class Booster(object):
     def __init__(self, item):
@@ -12,7 +11,8 @@ class Booster(object):
         
     @reconstructor
     def init(self):
-        self.__item = model.db.getItem(self.itemID)
+        from model import db
+        self.__item = db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
         self.build()
         

@@ -53,12 +53,12 @@ class TestDrone(unittest.TestCase):
             self.assertNotEquals(id(f), f1id)
             
             
-            i = 0
+            c = 0
             for d in f.iterDrones():
-                i += 1
+                c += 1
                 self.assertNotEquals(id(d), d1id)
             
-            self.assertEquals(i, 1)
+            self.assertEquals(c, 1)
             self.assertEquals(d.item.ID, i.ID)
             self.assertEquals(d.amount, 5)
             

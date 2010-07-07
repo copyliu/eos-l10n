@@ -10,5 +10,4 @@ drones_table = Table("drones", saveddata_meta,
                      Column("chargeID", Integer),
                      Column("amount", Integer, nullable = False))
 
-mapper(Drone, drones_table,
-       properties = {"_Drone__fit" : relation(Fit)})
+mapper(Drone, drones_table)

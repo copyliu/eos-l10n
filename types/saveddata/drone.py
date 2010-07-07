@@ -1,6 +1,5 @@
 from model.types import Item
 from model.types.saveddata.module import ModifiedAttributeDict
-import model.db
 
 from sqlalchemy.orm import validates, reconstructor
 
@@ -17,6 +16,7 @@ class Drone(object):
         
     @reconstructor
     def init(self):
+        from model import db
         self.__item = db.getItem(self.itemID)
         self.__charge = None if self.chargeID == None else db.getItem(self.chargeID)
         self.build()
