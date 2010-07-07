@@ -1,11 +1,21 @@
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 
+from sqlalchemy.orm import validates, reconstructor
 class Implant(object):
     def __init__(self, item):
         self.__slot = self.__calculateSlot(item)
         self.__item = item
+        self.itemID = item.ID
+    
+    @reconstructor
+    def init(self):
+        from model import db
+        self.__item = db.getItem(self.itemID)
+        self.__slot = self.__calculateSlot(self.__item)
+    
+    def build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__itemModifiedAttributes.original = item.attributes
+        self.__itemModifiedAttributes.original = self.item.attributes
     
     @property
     def itemModifiedAttributes(self):
@@ -29,3 +39,12 @@ class Implant(object):
         for effect in self.item.effects:
             if effect.runTime == runTime:
                 effect.handler(fit, self)
+                
+    @validates("fitID", "itemID")
+    def validator(self, key, val):
+        map = {"fitID": lambda val: isinstance(val, int),
+               "itemID" : lambda val: isinstance(val, int)}
+        
+        if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
+        else: return val
+        

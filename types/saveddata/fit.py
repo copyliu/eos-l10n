@@ -22,6 +22,7 @@ class Fit(object):
         self.__character = None
         self.__owner = None
         self.__ship = None
+        self.name = ""
         self.__shipModifiedAttributes = ModifiedAttributeDict()
 
     @property
@@ -79,7 +80,7 @@ class Fit(object):
         d = self.findDrone(item)
         if d is None:
             d = Drone(item)
-            d.fit = self
+            self.__drones.append(d)
             
         d.amount += amount
         return d
@@ -109,12 +110,27 @@ class Fit(object):
                     raise ValueError("Booster slot already in use, remove the old one first or set replace = True ")
         
         self.__boosters.append(booster)
-        
+    
     def removeBooster(self, booster):
         self.__boosters.remove(booster)
     
     def iterBoosters(self):
         return self.__boosters.__iter__()
+    
+    def addImplant(self, implant, replace = False):
+        for i in self.iterImplants():
+            if implant.slot == i.slot:
+                if replace: self.removeImplant(i)
+                else:
+                    raise ValueError("Implant slot already in use, remove the old one first or set replace to True")
+        
+        self.__implants.append(implant)
+        
+    def removeImplant(self, implant):
+        self.__implants.remove(implant)
+        
+    def iterImplants(self):
+        return self.__implants.__iter__()
     
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):

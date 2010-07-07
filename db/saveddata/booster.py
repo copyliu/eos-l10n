@@ -1,14 +1,14 @@
-from sqlalchemy import Table, Column, ForeignKey, Integer, ForeignKeyConstraint, UniqueConstraint
+from sqlalchemy import Table, Column, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import mapper, relation
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from model.db import saveddata_meta
-from model.types import Booster, Fit
+from model.types import Booster
 
 boosters_table = Table("boosters", saveddata_meta,
                        Column("ID", Integer, primary_key = True),
                        Column("itemID", Integer),
-                       Column("fitID", Integer, ForeignKey("fits.ID")),
+                       Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False),
                        UniqueConstraint("itemID", "fitID"))
 
 activeSideEffects_table = Table("boostersActiveSideEffects", saveddata_meta,

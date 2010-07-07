@@ -62,7 +62,8 @@ class Booster(object):
     @validates("ID", "itemID", "ammoID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
-               "itemID" : lambda val: isinstance(val, int)}
+               "itemID" : lambda val: isinstance(val, int),
+               "ammoID" : lambda val: isinstance(val, int)}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

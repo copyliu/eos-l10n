@@ -6,7 +6,7 @@ from model.types import Module
 
 modules_table = Table("modules", saveddata_meta,
                       Column("ID", Integer, primary_key = True),
-                      Column("fitID", Integer, ForeignKey("fits.ID")),
+                      Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False),
                       Column("itemID", Integer, nullable = False),
                       Column("chargeID", Integer),
                       Column("state", Integer, CheckConstraint("state >= -1"), CheckConstraint("state <= 2")))
