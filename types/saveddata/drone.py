@@ -1,5 +1,6 @@
 from model.types import Item
 from model.types.saveddata.module import ModifiedAttributeDict
+import model.db
 
 from sqlalchemy.orm import validates, reconstructor
 
@@ -9,11 +10,31 @@ class Drone(object):
             raise ValueError("Passed item is not a drone")
         
         self.__item = item
-        self.amount = 0
+        self.itemID = item.ID
         self.__charge = None
+        self.amount = 0
+        self.build()
+        
+    @reconstructor
+    def init(self):
+        self.__item = db.getItem(self.itemID)
+        self.__charge = None if self.chargeID == None else db.getItem(self.chargeID)
+        self.build()
+        
+    def build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
-        self.itemModifiedAttributes.original = item.attributes
+        self.itemModifiedAttributes.original = self.item.attributes
+        if self.charge:
+            self.chargeModifiedAttributes.original = self.charge.attributes
+    
+    @property
+    def fit(self):
+        return self.__fit
+    
+    @fit.setter
+    def fit(self, fit):
+        self.__fit = fit
         
     @property
     def itemModifiedAttributes(self):
@@ -38,6 +59,7 @@ class Drone(object):
         
         self.chargeModifiedAttributes.original = charge.attributes
         self.__charge = charge
+        self.chargeID = charge.ID
         
     def getModifiedItemAttr(self, key):
         if key in self.itemModifiedAttributes:
@@ -50,10 +72,16 @@ class Drone(object):
             return self.ammoModifiedAttributes[key]
         else:
             return None
-        
-    @validates
+    
+    @validates("ID", "itemID", "chargeID", "amount")
     def validator(self, key, val):
-        if key == "ID": return isinstance(val, int)
+        map = {"ID": lambda val: isinstance(val, int),
+               "itemID" : lambda val: isinstance(val, int),
+               "chargeID" : lambda val: isinstance(val, int),
+               "amount" : lambda val: isinstance(val, int)}
+        
+        if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
+        else: return val
         
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:

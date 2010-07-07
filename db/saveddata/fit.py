@@ -2,7 +2,7 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import relation, mapper
 
 from model.db import saveddata_meta
-from model.types import Fit, Module, User
+from model.types import Fit, Module, User, Booster
 from model.db.saveddata.module import modules_table
 
 fits_table = Table("fits", saveddata_meta,
@@ -10,12 +10,7 @@ fits_table = Table("fits", saveddata_meta,
                          Column("ownerID", ForeignKey("users.ID"), nullable = False),
                          Column("shipID", Integer, nullable = False))
 
-fitsmodules_table = Table("fitsModules", saveddata_meta,
-                          Column("fitID", ForeignKey("fits.ID"), primary_key = True),
-                          Column("moduleID", ForeignKey("modules.ID"), primary_key = True))
-
 mapper(Fit, fits_table,
-       properties = {"_Fit__modules" : relation(Module, secondary = modules_table,
-                                             primaryjoin = fits_table.c.ID == fitsmodules_table.c.fitID,
-                                             secondaryjoin = fitsmodules_table.c.moduleID == modules_table.c.ID),
-                     "_Fit__owner" : relation(User, backref = "fits")})
+       properties = {"_Fit__modules" : relation(Module, backref = "fit"),
+                     "_Fit__owner" : relation(User, backref = "fits"),
+                     "_Fit__boosters" : relation(Booster, backref = "fit")})

@@ -12,5 +12,6 @@ from model.types.saveddata.module import Module, State, Slot
 from model.types.saveddata.drone import Drone
 from model.types.saveddata.skill import Skill
 from model.types.saveddata.implant import Implant
+from model.types.saveddata.booster import SideEffect
 from model.types.saveddata.booster import Booster
 from model.types.saveddata.fit import Fit

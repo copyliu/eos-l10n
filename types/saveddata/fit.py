@@ -3,7 +3,8 @@ import model.types.saveddata.module
 from model.types import Drone
 from model.types.gamedata.item import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import validates, reconstructor
+
 class Fit(object):
     """Represents a fitting, with modules, ship and character"""
     shipRequiredAttributes = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
@@ -73,16 +74,17 @@ class Fit(object):
             if d.item == item:
                 return d
             
-    def addDrone(self, item, amount = 1):
+    def addDroneItemAmount(self, item, amount = 1):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
         d = self.findDrone(item)
         if d is None:
-            d = Drone()
-            d.item = item
+            d = Drone(item)
+            d.fit = self
             
         d.amount += amount
+        return d
     
-    def removeDrone(self, item, amount):
+    def removeDroneItemAmount(self, item, amount):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
         d = self.findDrone(item)
         if d is None:
@@ -90,12 +92,29 @@ class Fit(object):
             d.item = item
             
         d.amount -= amount
-    
-    def setImplant(self, item):
-        pass
+        if d.amount <= 0:
+            self.__drones.remove(d)
+            return None
+        
+        return d
     
     def iterDrones(self):
         return self.__drones.__iter__()
+    
+    def addBooster(self, booster, replace = False):
+        for b in self.iterBoosters():
+            if booster.slot == b.slot:
+                if replace: self.removeBooster(b)
+                else:
+                    raise ValueError("Booster slot already in use, remove the old one first or set replace = True ")
+        
+        self.__boosters.append(booster)
+        
+    def removeBooster(self, booster):
+        self.__boosters.remove(booster)
+    
+    def iterBoosters(self):
+        return self.__boosters.__iter__()
     
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
