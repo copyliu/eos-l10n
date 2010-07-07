@@ -1,6 +1,8 @@
 import unittest
-from model.types import Module
+from model.types import Module, Fit, User
 from model import db
+import model.db.saveddata.queries
+import sqlalchemy.orm
 
 class TestModule(unittest.TestCase):
     def setUp(self):
@@ -40,4 +42,47 @@ class TestModule(unittest.TestCase):
         a = db.getItem("Gamma S")
         m.charge = a
         self.assertEquals(m.itemID, i.ID)
-        self.assertEquals(m.ammoID, a.ID)
+        self.assertEquals(m.chargeID, a.ID)
+        
+    def test_DatabaseConsistency(self):
+        oldSession = db.saveddata_session
+        oldSession.commit()
+        try:
+            f = Fit()
+            f.ship = db.getItem("Rifter")
+            f.owner = User("moduletest", "testy", False)
+            
+            item = db.getItem("Dual Light Pulse Laser I")
+            charge = db.getItem("Gamma S")
+            mod = Module(item)
+            mod.charge = charge
+            f.addModule(mod)
+            
+            db.saveddata_session.add(mod)
+            db.saveddata_session.add(f)
+            db.saveddata_session.flush()
+            
+            #Hack our way through changing the session temporarly
+            oldSession = model.db.saveddata.queries.saveddata_session
+            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            
+            newf = db.getFit(f.ID)
+            self.assertNotEquals(id(newf), id(f))
+            
+            i = 0
+            for m in newf.iterModules():
+                i+= 1
+                newmod = m
+            
+            self.assertNotEquals(id(newmod), id(mod))
+            self.assertEquals(i, 1)
+            
+            self.assertEquals(mod.state, newmod.state)
+            self.assertEquals(mod.charge.ID, newmod.charge.ID)
+            self.assertEquals(mod.item.ID, newmod.item.ID)
+        except:
+            db.saveddata_session.rollback()
+            raise
+        finally:
+            #Undo our hack as to not fuck up anything
+            model.db.saveddata.queries.saveddata_session = oldSession

@@ -1,6 +1,6 @@
 from model.types import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import validates, reconstructor
 
 class State():
     OFFLINE = -1
@@ -22,9 +22,22 @@ class Module(object):
         self.__item = item
         self.itemID = item.ID if item != None else None
         self.__charge = None
+        self.build()
+    
+    @reconstructor
+    def init(self):
+        from model import db
+        self.__item = db.getItem(self.itemID)
+        self.__charge = db.getItem(self.chargeID) if self.chargeID != None else None
+        
+        self.build()
+    
+    def build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__itemModifiedAttributes.original = item.attributes
+        self.__itemModifiedAttributes.original = self.item.attributes
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
+        if self.charge != None:
+            self.__chargeModifiedAttributes.original = self.charge.attributes
     
     @property
     def itemModifiedAttributes(self):
@@ -46,7 +59,7 @@ class Module(object):
     def charge(self, charge):
         if not self.isValidCharge(charge): raise ValueError("Ammo does not fit in that slot")
         self.__charge = charge
-        self.ammoID = charge.ID if charge != None else None
+        self.chargeID = charge.ID if charge != None else None
         self.__chargeModifiedAttributes.original = charge.attributes
         self.__itemModifiedAttributes.clear()
     
