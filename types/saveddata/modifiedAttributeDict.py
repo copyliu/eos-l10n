@@ -86,18 +86,17 @@ class ModifiedAttributeDict(object):
             for penalizedMultipliers in penalizedMultiplierGroups.itervalues():
                 #A quick explanation of how this works:
                 #1: Bonusses and penalties are penalized seperatly, so we'll have to filter each of them
-                pos = lambda val: val > 1
-                neg = lambda val: val < 1
-                good = filter(pos if highIsGood else neg, penalizedMultipliers)
-                bad = filter(neg if highIsGood else pos, penalizedMultipliers)
+                l1 = filter(lambda val: val > 1, penalizedMultipliers)
+                l2 = filter(lambda val: val < 1, penalizedMultipliers)
                 #2: The most significant bonusses take the smallest penalty,
-                #This means we'll have to sort
-                good.sort(reverse=highIsGood)
-                bad.sort(reverse=not highIsGood)
+                #This means we'll have to sort 
+                abssort = lambda val: -abs(val -1)
+                l1.sort(key=abssort)
+                l2.sort(key=abssort)
                 #3: The first module doesn't get penaltied at all
                 #Any modul after the first takes penalties according to:
                 #1 + (multplier - 1) * math.exp(- math.pow(i, 2) / 7.1289)
-                for l in (good, bad):
+                for l in (l1, l2):
                     for i in xrange(len(l)):
                         bonus = l[i]
                         val *= 1 + (bonus - 1) * math.exp(- math.pow(i, 2) / 7.1289)
