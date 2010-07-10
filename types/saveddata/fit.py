@@ -59,6 +59,22 @@ class Fit(object):
     def owner(self, owner):
         self.__owner = owner
 
+    @property
+    def drones(self):
+        return self.__drones
+    
+    @property
+    def modules(self):
+        return self.__modules
+    
+    @property
+    def implants(self):
+        return self.__implants
+    
+    @property
+    def boosters(self):
+        return self.__boosters
+    
     def addModule(self, mod):
         self.__modules.append(mod)
         
@@ -97,11 +113,8 @@ class Fit(object):
         
         return d
     
-    def iterDrones(self):
-        return self.__drones.__iter__()
-    
     def addBooster(self, booster, replace = False):
-        for b in self.iterBoosters():
+        for b in self.drones:
             if booster.slot == b.slot:
                 if replace: self.removeBooster(b)
                 else:
@@ -111,10 +124,7 @@ class Fit(object):
     
     def removeBooster(self, booster):
         self.__boosters.remove(booster)
-    
-    def iterBoosters(self):
-        return self.__boosters.__iter__()
-    
+
     def addImplant(self, implant, replace = False):
         for i in self.iterImplants():
             if implant.slot == i.slot:

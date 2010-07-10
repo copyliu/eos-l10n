@@ -1,53 +1,33 @@
-class HandledList(object):
-    def __init__(self):
-        self.__list = []
-        
-    def __getitem__(self, key):
-        return self.__list[key]
-    
-    def __setitem(self, key, val):
-        self.__list[key] = val
-    
-    def __iter__(self):
-        return self.__list.__iter__()
-    
-    iter = __iter__
-    
-    def append(self, val):
-        return self.__list.append(val)
-        
-    def remove(self, val):
-        return self.__list.remove(val)
-    
-    def increaseAllItems(self, filter, *args, **kwargs):
+class HandledList(list):    
+    def filteredItemIncrease(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):
-                element.increaseItem(*args, **kwargs)
+                element.increaseItemAttr(*args, **kwargs)
                 
-    def multiplyAllItems(self, filter, *args, **kwargs):
+    def filteredItemMultiply(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):
-                element.multiplyItem(*args, **kwargs)
+                element.multiplyItemAttr(*args, **kwargs)
                 
-    def boostAllItems(self, filter, *args, **kwargs):
+    def filteredItemBoost(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):
-                element.boostItem(*args, **kwargs)
+                element.boostItemAttr(*args, **kwargs)
                 
-    def increaseAllCharges(self, filter, *args, **kwargs):
+    def filteredChargeIncrease(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):
-                element.increaseCharge(*args, **kwargs)
+                element.increaseChargeAttr(*args, **kwargs)
                 
-    def multiplyAllCharges(self, filter, *args, **kwargs):
+    def filteredChargeMultiply(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):
-                element.multiplyCharge(*args, **kwargs)
+                element.multiplyChargeAttr(*args, **kwargs)
                 
-    def boostAllCharges(self, filter, *args, **kwargs):
+    def filteredChargeBoost(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):
-                element.boostCharge(*args, **kwargs)
+                element.boostChargeAttr(*args, **kwargs)
 
 class HandledItem(object):
     def increaseItemAttr(self, *args, **kwargs):
@@ -64,7 +44,7 @@ class HandledCharge(object):
         self.chargeModifiedAttributes.increase(*args, **kwargs)
         
     def multiplyChargeAttr(self, *args, **kwargs):
-        self.itemModifiedAttributes.multiply(*args, **kwargs)
+        self.chargeModifiedAttributes.multiply(*args, **kwargs)
         
     def boostChargeAttr(self, *args, **kwargs):
-        self.itemModifiedAttributes.boost(*args, **kwargs)
+        self.chargeModifiedAttributes.boost(*args, **kwargs)

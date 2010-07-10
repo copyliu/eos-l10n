@@ -2,7 +2,6 @@ from model.types import Item
 from model.types.saveddata.module import ModifiedAttributeDict
 from model.types.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
-
 class Drone(HandledItem, HandledCharge):
     def __init__(self, item):
         if item.category.name != "Drone":
@@ -10,7 +9,6 @@ class Drone(HandledItem, HandledCharge):
         
         self.__item = item
         self.itemID = item.ID
-        self.__charge = None
         self.amount = 0
         self.build()
         
@@ -22,11 +20,16 @@ class Drone(HandledItem, HandledCharge):
         self.build()
         
     def build(self):
+        from model import db
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         self.itemModifiedAttributes.original = self.item.attributes
-        if self.charge:
-            self.chargeModifiedAttributes.original = self.charge.attributes
+        chargeID = self.getModifiedItemAttr("entityMissileTypeID")
+        if chargeID != None:
+            charge = db.getItem(int(chargeID))
+            self.__charge = charge
+            self.chargeID = charge.ID
+            self.chargeModifiedAttributes.original = charge.attributes
     
     @property
     def fit(self):
@@ -51,15 +54,6 @@ class Drone(HandledItem, HandledCharge):
     @property
     def charge(self):
         return self.__charge
-    
-    @charge.setter
-    def charge(self, charge):
-        if charge.ID != self.getModifiedItemAttr("entityMissileTypeID"):
-            raise ValueError("Charge does not fit on this drone")
-        
-        self.chargeModifiedAttributes.original = charge.attributes
-        self.__charge = charge
-        self.chargeID = charge.ID
         
     def getModifiedItemAttr(self, key):
         if key in self.itemModifiedAttributes:

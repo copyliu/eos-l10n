@@ -60,7 +60,7 @@ class TestBooster(unittest.TestCase):
             f = db.getFit(fitID)
             self.assertNotEquals(f1id, id(f))
             i = 0
-            for b in f.iterBoosters():
+            for b in f.boosters:
                 i += 1
                 booster = b
             

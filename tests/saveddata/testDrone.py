@@ -5,26 +5,6 @@ import model.db.saveddata.queries
 import sqlalchemy.orm
 
 class TestDrone(unittest.TestCase):
-    def test_DroneNoCharges(self):
-        try:
-            d = Drone(db.getItem("Hobgoblin I"))
-            d.charge = db.getItem("Gamma L")
-        except ValueError:
-            return
-        
-        self.fail("Expected a valueError when putting Gamma L in a drone")
-    def test_DroneInvalidCharge(self):
-        try:
-            d = Drone(db.getItem("Cyclops"))
-            d.charge = db.getItem("Gamma L")
-        except ValueError:
-            return
-        self.fail("Expected a ValueError when putting Gamma L in a drone")
-        
-    def test_DroneValidCharge(self):
-        d = Drone(db.getItem("Cyclops"))
-        d.charge = db.getItem("Compact Purgatory Torpedo I")
-        
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
@@ -54,7 +34,7 @@ class TestDrone(unittest.TestCase):
             
             
             c = 0
-            for d in f.iterDrones():
+            for d in f.drones:
                 c += 1
                 self.assertNotEquals(id(d), d1id)
             
