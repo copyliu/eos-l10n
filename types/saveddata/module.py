@@ -1,7 +1,6 @@
-from model.types import Item
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
-
+from model.types.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
 class State():
     OFFLINE = -1
     ONLINE = 0
@@ -14,7 +13,7 @@ class Slot():
     HIGH = 3
     DRONE = 4
     
-class Module(object):
+class Module(HandledItem, HandledCharge):
     """An instance of this class represents a module together with its charge and modified attributes"""
     
     def __init__(self, item):
@@ -123,7 +122,7 @@ class Module(object):
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:
-                effect.handler(fit, self)
+                effect.handler(fit, self, "module")
         for effect in self.charge.effects:
             if effect.runTime == runTime:
-                effect.handler(fit, self)
+                effect.handler(fit, self, "moduleCharge")

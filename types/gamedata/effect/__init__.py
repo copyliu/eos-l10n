@@ -41,13 +41,15 @@ class Effect(object):
             except AttributeError:
                 t = None
                 
-            t =  t if t != None else "normal"
-            t = t if isinstance(t, tuple) else (t,)
+            t = t if isinstance(t, tuple) or t == None else (t,)
             self.__type = t
         except ImportError:
-            self.__handler = None
+            self.__handler = effectDummy
             self.__runTime = None
-            self.__type = ("normal",)
+            self.__type = None
         
         self.__generated = True
-        
+
+
+def effectDummy(*args, **kwargs):
+    pass

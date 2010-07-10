@@ -1,8 +1,8 @@
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-
+from model.types.saveddata.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import reconstructor, validates
 
-class Booster(object):
+class Booster(HandledItem):
     def __init__(self, item):
         self.__slot = self.__calculateSlot(item)
         self.itemID = item.ID
@@ -54,10 +54,10 @@ class Booster(object):
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:
-                effect.handler(fit, self)
+                effect.handler(fit, self, "booster")
         for sideEffect in self.iterSideEffects():
             if sideEffect.active:
-                sideEffect.effect.handler(fit, self)
+                sideEffect.effect.handler(fit, self, "boosterSideEffect")
                 
     @validates("ID", "itemID", "ammoID")
     def validator(self, key, val):

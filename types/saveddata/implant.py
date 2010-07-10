@@ -1,7 +1,7 @@
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-
+from model.types.saveddata.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates, reconstructor
-class Implant(object):
+class Implant(HandledItem):
     def __init__(self, item):
         self.__slot = self.__calculateSlot(item)
         self.__item = item
@@ -38,7 +38,7 @@ class Implant(object):
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:
-                effect.handler(fit, self)
+                effect.handler(fit, self, "implant")
                 
     @validates("fitID", "itemID")
     def validator(self, key, val):

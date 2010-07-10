@@ -1,9 +1,9 @@
 from model.types import Item
 from model.types.saveddata.module import ModifiedAttributeDict
-
+from model.types.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
 
-class Drone(object):
+class Drone(HandledItem, HandledCharge):
     def __init__(self, item):
         if item.category.name != "Drone":
             raise ValueError("Passed item is not a drone")
@@ -86,7 +86,7 @@ class Drone(object):
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:
-                effect.handler(fit, self)
+                effect.handler(fit, self, "drone")
         for effect in self.charge.effects:
             if effect.runTime == runTime:
-                effect.handler(fit, self)
+                effect.handler(fit, self, "droneCharge")

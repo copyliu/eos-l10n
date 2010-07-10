@@ -1,20 +1,25 @@
 from model.types import Item
-
+from model.types.saveddata.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates
 
-class Skill(object):
+class Skill(HandledItem):
     def __init__(self):
-        self.__skill = None
+        self.__item = None
         self.__level = None
         
     @property
-    def skill(self):
-        return self.__skill
+    def item(self):
+        return self.__item
     
-    @skill.setter
-    def skill(self, skill):
-        self.__skill = skill
-        self.skillID = skill.ID if skill != None else None
+    @item.setter
+    def item(self, item):
+        self.__item = item
+        self.itemID = item.ID if item != None else None
+    
+    def calculateModifiedAttributes(self, fit, runTime):
+        for effect in self.item.effects:
+                if effect.runTime == runTime:
+                    effect.handler(fit, runTime, "skill")
     
     @validates("characterID", "skillID", "level")
     def validator(self, key, val):

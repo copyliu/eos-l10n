@@ -15,7 +15,35 @@ class Character(object):
     @owner.setter
     def owner(self, owner):
         self.__owner = owner
+    
+    def setSkill(self, skill):
+        self.__skills[skill.item.ID] = skill
         
+    def getSkill(self, item):
+        return self.__skills[item.ID if hasattr(item, "ID") else item]
+    
+    def iterSkills(self):
+        return self.__skills.itervalues()
+    
+    def increaseAllSkills(self, filter, *args, **kwargs):
+        for element in self.iterSkills():
+            if filter(element):
+                element.increaseItem(*args, **kwargs)
+                
+    def multiplyAllSkills(self, filter, *args, **kwargs):
+        for element in self.iterSkills():
+            if filter(element):
+                element.multiplyItem(*args, **kwargs)
+                
+    def boostAllSkills(self, filter, *args, **kwargs):
+        for element in self.iterSkills():
+            if filter(element):
+                element.boostItem(*args, **kwargs)
+                
+    def calculateModifiedAttributes(self, fit, runTime):
+        for skill in self.iterSkills():
+            skill.calculateModifiedAttributes(fit, runTime)
+                
     @validates("ID", "name", "apiKey", "ownerID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),

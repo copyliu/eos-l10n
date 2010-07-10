@@ -1,7 +1,5 @@
-from model.types import Character, User
-import model.types.saveddata.module
 from model.types import Drone
-from model.types.gamedata.item import Item
+from model.types.saveddata.effectHandlerHelpers import HandledList
 from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 
@@ -11,13 +9,13 @@ class Fit(object):
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
     def __init__(self):
-        self.__modules = []
-        self.__drones = []
-        self.__implants = []
-        self.__boosters = []
+        self.__modules = HandledList()
+        self.__drones = HandledList()
+        self.__implants = HandledList()
+        self.__boosters = HandledList()
         self.__blockedItems = set()
-        self.__projectedModules = []
-        self.__projectedFits = []
+        self.__projectedModules = HandledList()
+        self.__projectedFits = HandledList()
         self.__gang = None
         self.__character = None
         self.__owner = None
@@ -158,3 +156,4 @@ class Fit(object):
             for drone in self.iterDrones(): drone.calculateModifiedAttributes(self, runTime)
             for booster in self.iterBoosters(): booster.calculateModifiedAttributes(self, runTime)
             for implant in self.iterImplants(): implant.calculateModifiedAttributes(self, runTime)
+            self.character.calculateModifiedAttributes(self, runTime)
