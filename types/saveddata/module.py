@@ -21,6 +21,7 @@ class Module(HandledItem, HandledCharge):
         self.__item = item
         self.itemID = item.ID if item != None else None
         self.__charge = None
+        self.state = State.ONLINE
         self.build()
     
     @reconstructor
@@ -110,12 +111,14 @@ class Module(HandledItem, HandledCharge):
         else:
             raise ValueError("Passed item does not fit in a low, med, high or drone slot")
     
-    @validates("ID", "itemID", "ammoID")
-    def validator(self, key, val):
+    @validates("ID", "itemID", "ammoID", "state")
+    def validator(self, key, val):                
         map = {"ID": lambda val: isinstance(val, int),
                "itemID" : lambda val: isinstance(val, int),
+               "state" : lambda val: isinstance(val, int) and val >= -1 and val <= 2 and
+                                     (val < 1 or self.item.isType("active")) and (val < 2 or self.item.isType("overheat")),
                "ammoID" : lambda val: isinstance(val, int)}
-        
+               
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
         
