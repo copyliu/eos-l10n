@@ -16,16 +16,17 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("iconID", Integer, ForeignKey("icons.iconID")),
                     Column("groupID", Integer, ForeignKey("invgroups.groupID")))
 
-from .metagroup import metagroups_table, metatypes_table
-
+from .metagroup import metatypes_table
+from .effect import typeeffects_table, effects_table
 mapper(Item, items_table, 
        properties = {"icon" : relation(Icon),
                      "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
-                     "effects" : relation(Effect, collection_class = attribute_mapped_collection('name')),
+                     "effects" : relation(Effect, collection_class = attribute_mapped_collection('name'),
+                                          primaryjoin = typeeffects_table.c.typeID == items_table.c.typeID,
+                                          secondaryjoin = effects_table.c.effectID == typeeffects_table.c.effectID,
+                                          secondary = typeeffects_table),
                      "metaGroup" : relation(MetaGroup,
-                                            primaryjoin = items_table.c.typeID == metatypes_table.c.typeID,
-                                            secondaryjoin = metatypes_table.c.metaGroupID == metagroups_table.c.metaGroupID,
-                                            secondary = metatypes_table,
+                                            primaryjoin = metatypes_table.c.typeID == items_table.c.typeID,
                                             uselist = False),
                      "ID" : synonym("typeID"),
                      "name" : synonym("typeName")})

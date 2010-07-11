@@ -16,6 +16,9 @@ metatypes_table = Table("invmetatypes", gamedata_meta,
 j = join(metagroups_table, metatypes_table, metatypes_table.c.metaGroupID == metagroups_table.c.metaGroupID)
 
 mapper(MetaGroup, j,
+       primary_key = [metagroups_table.c.metaGroupID, metatypes_table.c.parentTypeID],
        properties = {"ID" : synonym("metaGroupID"),
                      "name" : synonym("metaGroupName"),
-                     "parent" : relation(Item, primaryjoin = metatypes_table.c.parentTypeID == items_table.c.typeID)})
+                     "parent" : relation(Item, primaryjoin = metatypes_table.c.parentTypeID == items_table.c.typeID),
+                     "items" : relation(Item,
+                                        primaryjoin = metatypes_table.c.typeID == items_table.c.typeID)})

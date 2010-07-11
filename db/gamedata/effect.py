@@ -5,7 +5,7 @@ from model.db import gamedata_meta
 
 typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
                           Column("typeID", Integer, ForeignKey("invtypes.typeID")),
-                          Column("effectID", Integer))
+                          Column("effectID", Integer, ForeignKey("dgmeffects.effectID")))
 
 effects_table = Table("dgmeffects", gamedata_meta,
                       Column("effectID", Integer, primary_key = True),
@@ -14,8 +14,6 @@ effects_table = Table("dgmeffects", gamedata_meta,
                       Column("published", Boolean))
 
 
-j = join(typeeffects_table, effects_table, typeeffects_table.c.effectID == effects_table.c.effectID)
-mapper(Effect, j,
-       primary_key = [typeeffects_table.c.typeID , typeeffects_table.c.effectID],
+mapper(Effect, effects_table,
        properties = {"ID" : synonym("effectID"),
                      "name" : synonym("effectName")})
