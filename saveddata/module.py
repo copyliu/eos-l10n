@@ -1,6 +1,6 @@
-from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
+from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
-from model.types.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
+from model.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
 class State():
     OFFLINE = -1
     ONLINE = 0

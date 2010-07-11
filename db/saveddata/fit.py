@@ -3,7 +3,7 @@ from sqlalchemy.orm import relation, mapper
 
 from model.db import saveddata_meta
 from model.types import Fit, Module, User, Booster, Drone, Implant
-from model.types.saveddata.effectHandlerHelpers import HandledList
+from model.saveddata.effectHandlerHelpers import HandledList
 
 fits_table = Table("fits", saveddata_meta,
                          Column("ID", Integer, primary_key = True),

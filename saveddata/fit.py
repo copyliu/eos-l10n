@@ -1,6 +1,6 @@
 from model.types import Drone
-from model.types.saveddata.effectHandlerHelpers import HandledList
-from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
+from model.saveddata.effectHandlerHelpers import HandledList
+from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 
 class Fit(object):

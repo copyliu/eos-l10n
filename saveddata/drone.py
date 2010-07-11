@@ -1,6 +1,6 @@
 from model.types import Item
-from model.types.saveddata.module import ModifiedAttributeDict
-from model.types.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
+from model.saveddata.module import ModifiedAttributeDict
+from model.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
 class Drone(HandledItem, HandledCharge):
     def __init__(self, item):

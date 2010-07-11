@@ -1,5 +1,5 @@
 import unittest
-from model.types.saveddata.fit import ModifiedAttributeDict
+from model.saveddata.fit import ModifiedAttributeDict
 from model import db
 
 class TestModifiedAttributeDict(unittest.TestCase):

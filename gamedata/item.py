@@ -26,7 +26,6 @@ class Item(object):
                 skillID = self.getAttribute('requiredSkill%d' % i)
                 skillLevel = self.getAttribute('requiredSkill%dLevel' % i)
                 if skillID == None or skillLevel == None: continue
-                print skillID
                 item = db.getItem(int(skillID))
                 requiredSkills[item] = skillLevel
             

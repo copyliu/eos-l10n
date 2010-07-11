@@ -1,5 +1,5 @@
 from model.types import Item
-from model.types.saveddata.effectHandlerHelpers import HandledItem
+from model.saveddata.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates
 
 class Skill(HandledItem):

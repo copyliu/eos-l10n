@@ -1,5 +1,5 @@
-from model.types.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-from model.types.saveddata.effectHandlerHelpers import HandledItem
+from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
+from model.saveddata.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import reconstructor, validates
 
 class Booster(HandledItem):
