@@ -1,5 +1,5 @@
 import unittest
-from model.types import Module, Fit, User
+from model.types import Module, Fit, User, State
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -11,6 +11,27 @@ class TestModule(unittest.TestCase):
         
     def test_setItem(self):
         self.assertEquals(self.m.itemID, self.i.ID)
+    
+    def test_setPassiveActive(self):
+        try:
+            self.m.state = State.ACTIVE
+        except ValueError:
+            return
+        
+        self.fail("Expected a ValueError, didn't get it.")
+    
+    def test_setPassiveOverload(self):
+        try:
+            self.m.state = State.OVERHEATED
+        except ValueError:
+            return
+        
+        self.fail("Expected a ValueError, didn't get it.")
+        
+    def test_setActiveOverloadWhenGood(self):
+        m = Module(db.getItem("Heavy Modulated Energy Beam I"))
+        m.state = State.ACTIVE
+        m.state = State.OVERHEATED
         
     def test_setWrongAmmoType(self):
         try:
