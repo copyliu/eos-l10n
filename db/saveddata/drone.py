@@ -6,7 +6,6 @@ from model.types import Drone
 drones_table = Table("drones", saveddata_meta,
                      Column("fitID", Integer, ForeignKey("fits.ID"), primary_key = True),
                      Column("itemID", Integer, primary_key = True),
-                     Column("chargeID", Integer),
                      Column("amount", Integer, nullable = False))
 
 mapper(Drone, drones_table)

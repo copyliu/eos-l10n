@@ -1,6 +1,6 @@
 from model.types import Drone
-from model.saveddata.effectHandlerHelpers import HandledList
-from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
+from model.effectHandlerHelpers import HandledList
+from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 
 class Fit(object):
@@ -19,10 +19,18 @@ class Fit(object):
         self.__gang = None
         self.__character = None
         self.__owner = None
-        self.__ship = None
+        self.shipID = None
         self.name = ""
+    
+    @reconstructor
+    def init(self):
+        self.build()
+    
+    def build(self):
+        from model import db
+        self.__ship = db.getItem(self.shipID) if self.shipID != None else None
         self.__shipModifiedAttributes = ModifiedAttributeDict()
-
+    
     @property
     def shipModifiedAttributes(self):
         return self.__shipModifiedAttributes
@@ -51,6 +59,12 @@ class Fit(object):
         self.shipID = ship.ID if ship != None else None
         self.__shipModifiedAttributes.original = ship.attributes
     
+    def getModifiedShipAttr(self, key):
+        if key in self.shipModifiedAttributes:
+            return self.shipModifiedAttributes[key]
+        else:
+            return None
+        
     @property
     def owner(self):
         return self.__owner

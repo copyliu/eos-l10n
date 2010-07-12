@@ -1,7 +1,7 @@
-from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-from model.saveddata.effectHandlerHelpers import HandledItem
+from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
+from model.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates, reconstructor
-class Implant(HandledItem):
+class Implant(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
         self.__slot = self.__calculateSlot(item)
         self.__item = item

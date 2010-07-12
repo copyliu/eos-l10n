@@ -1,22 +1,22 @@
-from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
-from model.saveddata.effectHandlerHelpers import HandledItem
+from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
+from model.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import reconstructor, validates
 
-class Booster(HandledItem):
+class Booster(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
         self.__slot = self.__calculateSlot(item)
         self.itemID = item.ID
         self.__item = item
-        self.build()
+        self.__build()
         
     @reconstructor
     def init(self):
         from model import db
         self.__item = db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
-        self.build()
+        self.__build()
         
-    def build(self):
+    def __build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = self.__item.attributes
         self.__sideEffects = []
@@ -63,7 +63,8 @@ class Booster(HandledItem):
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "itemID" : lambda val: isinstance(val, int),
-               "ammoID" : lambda val: isinstance(val, int)}
+               "ammoID" : lambda val: isinstance(val, int),
+               "slot" : lambda val: isinstance(val, int) and val >= 1 and val <= 3}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

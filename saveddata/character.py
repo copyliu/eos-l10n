@@ -1,4 +1,4 @@
-from model.types import User
+from model.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates
 
 class Character(object):
@@ -25,20 +25,20 @@ class Character(object):
     def iterSkills(self):
         return self.__skills.itervalues()
     
-    def increaseAllSkills(self, filter, *args, **kwargs):
+    def filteredSkillIncrease(self, filter, *args, **kwargs):
         for element in self.iterSkills():
             if filter(element):
-                element.increaseItem(*args, **kwargs)
+                element.increaseItemAttr(*args, **kwargs)
                 
-    def multiplyAllSkills(self, filter, *args, **kwargs):
+    def filteredSkillMultiply(self, filter, *args, **kwargs):
         for element in self.iterSkills():
             if filter(element):
-                element.multiplyItem(*args, **kwargs)
+                element.multiplyItemAttr(*args, **kwargs)
                 
-    def boostAllSkills(self, filter, *args, **kwargs):
+    def filteredSkillBoost(self, filter, *args, **kwargs):
         for element in self.iterSkills():
             if filter(element):
-                element.boostItem(*args, **kwargs)
+                element.boostItemAttr(*args, **kwargs)
                 
     def calculateModifiedAttributes(self, fit, runTime):
         for skill in self.iterSkills():
@@ -50,6 +50,35 @@ class Character(object):
                "name" : lambda val: True,
                "apiKey" : lambda val: val == None or (isinstance(val, basestring) and len(val) == 64),
                "ownerID" : lambda val: isinstance(val, int)}
+        
+        if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
+        else: return val
+        
+
+class Skill(HandledItem):
+    def __init__(self):
+        self.__item = None
+        self.__level = None
+        
+    @property
+    def item(self):
+        return self.__item
+    
+    @item.setter
+    def item(self, item):
+        self.__item = item
+        self.itemID = item.ID if item != None else None
+    
+    def calculateModifiedAttributes(self, fit, runTime):
+        for effect in self.item.effects:
+                if effect.runTime == runTime:
+                    effect.handler(fit, runTime, "skill")
+    
+    @validates("characterID", "skillID", "level")
+    def validator(self, key, val):
+        map = {"characterID": lambda val: isinstance(val, int),
+               "skillID" : lambda val: isinstance(val, int),
+               "level" : lambda val: isinstance(val, int) and val >= 1 and val <= 5}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

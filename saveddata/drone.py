@@ -1,8 +1,8 @@
 from model.types import Item
-from model.saveddata.module import ModifiedAttributeDict
-from model.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
+from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
+from model.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
-class Drone(HandledItem, HandledCharge):
+class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def __init__(self, item):
         if item.category.name != "Drone":
             raise ValueError("Passed item is not a drone")
@@ -16,7 +16,6 @@ class Drone(HandledItem, HandledCharge):
     def init(self):
         from model import db
         self.__item = db.getItem(self.itemID)
-        self.__charge = None if self.chargeID == None else db.getItem(self.chargeID)
         self.build()
         
     def build(self):
@@ -28,17 +27,8 @@ class Drone(HandledItem, HandledCharge):
         if chargeID != None:
             charge = db.getItem(int(chargeID))
             self.__charge = charge
-            self.chargeID = charge.ID
             self.chargeModifiedAttributes.original = charge.attributes
     
-    @property
-    def fit(self):
-        return self.__fit
-    
-    @fit.setter
-    def fit(self, fit):
-        self.__fit = fit
-        
     @property
     def itemModifiedAttributes(self):
         return self.__itemModifiedAttributes
@@ -54,25 +44,13 @@ class Drone(HandledItem, HandledCharge):
     @property
     def charge(self):
         return self.__charge
-        
-    def getModifiedItemAttr(self, key):
-        if key in self.itemModifiedAttributes:
-            return self.itemModifiedAttributes[key]
-        else:
-            return None
-        
-    def getModifiedAmmoAttr(self, key):
-        if key in self.ammoModifiedAttributes:
-            return self.ammoModifiedAttributes[key]
-        else:
-            return None
     
     @validates("ID", "itemID", "chargeID", "amount")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "itemID" : lambda val: isinstance(val, int),
                "chargeID" : lambda val: isinstance(val, int),
-               "amount" : lambda val: isinstance(val, int)}
+               "amount" : lambda val: isinstance(val, int) and val >= 0}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

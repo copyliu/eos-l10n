@@ -7,10 +7,9 @@ from model.gamedata.item import Item
 from model.gamedata.marketgroup import MarketGroup
 from model.gamedata.metagroup import MetaGroup
 from model.saveddata.user import User
-from model.saveddata.character import Character
+from model.saveddata.character import Character, Skill
 from model.saveddata.module import Module, State, Slot
 from model.saveddata.drone import Drone
-from model.saveddata.skill import Skill
 from model.saveddata.implant import Implant
 from model.saveddata.booster import SideEffect
 from model.saveddata.booster import Booster

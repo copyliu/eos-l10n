@@ -1,5 +1,19 @@
 import math
 
+class ItemAttrShortcut(object):
+    def getModifiedItemAttr(self, key):
+        if key in self.itemModifiedAttributes:
+            return self.itemModifiedAttributes[key]
+        else:
+            return None
+    
+class ChargeAttrShortcut(object):
+    def getModifiedAmmoAttr(self, key):
+        if key in self.ammoModifiedAttributes:
+            return self.ammoModifiedAttributes[key]
+        else:
+            return None
+    
 class ModifiedAttributeDict(object):
     class CalculationPlaceholder():
         pass

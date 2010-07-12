@@ -1,5 +1,5 @@
 import os.path
 
 debug = True
-gamedata_connectionstring = 'sqlite:////home/cncfanatics/.pyfa/eve.db'
+gamedata_connectionstring = 'sqlite:///E:\\eve.db'
 saveddata_connectionstring = 'sqlite:///:memory:'

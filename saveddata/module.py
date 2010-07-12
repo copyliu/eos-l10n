@@ -1,6 +1,6 @@
-from model.saveddata.modifiedAttributeDict import ModifiedAttributeDict
+from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
-from model.saveddata.effectHandlerHelpers import HandledItem, HandledCharge
+from model.effectHandlerHelpers import HandledItem, HandledCharge
 class State():
     OFFLINE = -1
     ONLINE = 0
@@ -11,9 +11,8 @@ class Slot():
     LOW = 1
     MED = 2
     HIGH = 3
-    DRONE = 4
     
-class Module(HandledItem, HandledCharge):
+class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     """An instance of this class represents a module together with its charge and modified attributes"""
     
     def __init__(self, item):
@@ -27,7 +26,9 @@ class Module(HandledItem, HandledCharge):
     @reconstructor
     def init(self):
         from model import db
-        self.__item = db.getItem(self.itemID)
+        item = db.getItem(self.itemID)
+        self.__item = item
+        self.__slot = self.__calculateSlot(item)
         self.__charge = db.getItem(self.chargeID) if self.chargeID != None else None
         
         self.build()
@@ -38,6 +39,11 @@ class Module(HandledItem, HandledCharge):
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         if self.charge != None:
             self.__chargeModifiedAttributes.original = self.charge.attributes
+    
+    @property
+    def slot(self):
+        return self.__slot
+    
     
     @property
     def itemModifiedAttributes(self):
@@ -62,18 +68,6 @@ class Module(HandledItem, HandledCharge):
         self.chargeID = charge.ID if charge != None else None
         self.__chargeModifiedAttributes.original = charge.attributes
         self.__itemModifiedAttributes.clear()
-    
-    def getModifiedItemAttr(self, key):
-        if key in self.itemModifiedAttributes:
-            return self.itemModifiedAttributes[key]
-        else:
-            return None
-        
-    def getModifiedAmmoAttr(self, key):
-        if key in self.ammoModifiedAttributes:
-            return self.ammoModifiedAttributes[key]
-        else:
-            return None
         
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
