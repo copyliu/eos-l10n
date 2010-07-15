@@ -1,5 +1,5 @@
 import unittest
-from model.types import Module, Fit, User, State
+from model.types import Module, Fit, User, State, Ship
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -70,14 +70,14 @@ class TestModule(unittest.TestCase):
         oldSession.commit()
         try:
             f = Fit()
-            f.ship = db.getItem("Rifter")
+            f.ship = Ship(db.getItem("Rifter"))
             f.owner = User("moduletest", "testy", False)
             
             item = db.getItem("Dual Light Pulse Laser I")
             charge = db.getItem("Gamma S")
             mod = Module(item)
             mod.charge = charge
-            f.addModule(mod)
+            f.modules.add(mod)
             
             db.saveddata_session.add(mod)
             db.saveddata_session.add(f)
@@ -91,7 +91,7 @@ class TestModule(unittest.TestCase):
             self.assertNotEquals(id(newf), id(f))
             
             i = 0
-            for m in newf.iterModules():
+            for m in newf.modules:
                 i+= 1
                 newmod = m
             

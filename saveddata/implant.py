@@ -14,12 +14,12 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.__slot = self.__calculateSlot(self.__item)
     
     def build(self):
-        self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__itemModifiedAttributes.original = self.item.attributes
+        self.__modifiedAttributes = ModifiedAttributeDict()
+        self.__modifiedAttributes.original = self.item.attributes
     
     @property
-    def itemModifiedAttributes(self):
-        return self.__itemModifiedAttributes
+    def modifiedAttributes(self):
+        return self.__modifiedAttributes
     
     @property
     def slot(self):

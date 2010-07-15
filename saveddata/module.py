@@ -94,8 +94,6 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def __calculateSlot(self, item):
         if item == None:
             return None
-        elif item.category.name == "Drone":
-            return Slot.DRONE
         elif "loPower" in item.effects:
             return Slot.LOW
         elif "medPower" in item.effects:
@@ -103,7 +101,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         elif "hiPower" in item.effects:
             return Slot.HIGH
         else:
-            raise ValueError("Passed item does not fit in a low, med, high or drone slot")
+            raise ValueError("Passed item does not fit in a low, med or high slot")
     
     @validates("ID", "itemID", "ammoID", "state")
     def validator(self, key, val):                

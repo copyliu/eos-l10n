@@ -13,4 +13,5 @@ from model.saveddata.drone import Drone
 from model.saveddata.implant import Implant
 from model.saveddata.booster import SideEffect
 from model.saveddata.booster import Booster
+from model.saveddata.ship import Ship
 from model.saveddata.fit import Fit

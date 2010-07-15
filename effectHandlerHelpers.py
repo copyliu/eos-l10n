@@ -1,4 +1,4 @@
-class HandledList(list):    
+class HandledSet(set):    
     def filteredItemIncrease(self, filter, *args, **kwargs):
         for element in self:
             if filter(element):

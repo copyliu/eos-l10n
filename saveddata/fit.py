@@ -1,27 +1,26 @@
 from model.types import Drone
-from model.effectHandlerHelpers import HandledList
+from model.effectHandlerHelpers import HandledSet
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 
 class Fit(object):
-    """Represents a fitting, with modules, ship and character"""
-    shipRequiredAttributes = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
-                              "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
-                              "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
+    """Represents a fitting, with modules, ship, implants, etc."""
+    
     def __init__(self):
-        self.__modules = HandledList()
-        self.__drones = HandledList()
-        self.__implants = HandledList()
-        self.__boosters = HandledList()
+        self.__modules = HandledSet()
+        self.__drones = HandledDroneSet()
+        self.__implants = HandledImplantBoosterSet()
+        self.__boosters = HandledImplantBoosterSet()
         self.__blockedItems = set()
-        self.__projectedModules = HandledList()
-        self.__projectedFits = HandledList()
+        self.__projectedModules = HandledSet()
+        self.__projectedFits = HandledSet()
         self.__gang = None
         self.__character = None
         self.__owner = None
         self.shipID = None
         self.name = ""
-    
+        self.build()
+        
     @reconstructor
     def init(self):
         self.build()
@@ -48,22 +47,9 @@ class Fit(object):
         return self.__ship
     
     @ship.setter
-    def ship(self, ship):
-        if ship != None:
-            #We NEED a few attributes for ships when calculating stuff, make sure they're there
-            for requiredAttr in self.shipRequiredAttributes:
-                if not requiredAttr in  ship.attributes:
-                    raise ValueError("Passed item is not a ship")
-        
+    def ship(self, ship):        
         self.__ship = ship
-        self.shipID = ship.ID if ship != None else None
-        self.__shipModifiedAttributes.original = ship.attributes
-    
-    def getModifiedShipAttr(self, key):
-        if key in self.shipModifiedAttributes:
-            return self.shipModifiedAttributes[key]
-        else:
-            return None
+        self.shipID = ship.item.ID if ship != None else None
         
     @property
     def owner(self):
@@ -89,76 +75,11 @@ class Fit(object):
     def boosters(self):
         return self.__boosters
     
-    def addModule(self, mod):
-        self.__modules.append(mod)
-        
-    def removeModule(self, mod):
-        self.__modules.remove(mod)
-    
-    def iterModules(self):
-        return self.__modules.__iter__()
-    
-    def findDrone(self, item):
-        for d in self.__drones:
-            if d.item == item:
-                return d
-            
-    def addDroneItemAmount(self, item, amount = 1):
-        if amount < 1: ValueError("Amount of drones to add should be >= 1")
-        d = self.findDrone(item)
-        if d is None:
-            d = Drone(item)
-            self.__drones.append(d)
-            
-        d.amount += amount
-        return d
-    
-    def removeDroneItemAmount(self, item, amount):
-        if amount < 1: ValueError("Amount of drones to add should be >= 1")
-        d = self.findDrone(item)
-        if d is None:
-            d = Drone()
-            d.item = item
-            
-        d.amount -= amount
-        if d.amount <= 0:
-            self.__drones.remove(d)
-            return None
-        
-        return d
-    
-    def addBooster(self, booster, replace = False):
-        for b in self.drones:
-            if booster.slot == b.slot:
-                if replace: self.removeBooster(b)
-                else:
-                    raise ValueError("Booster slot already in use, remove the old one first or set replace = True ")
-        
-        self.__boosters.append(booster)
-    
-    def removeBooster(self, booster):
-        self.__boosters.remove(booster)
-
-    def addImplant(self, implant, replace = False):
-        for i in self.iterImplants():
-            if implant.slot == i.slot:
-                if replace: self.removeImplant(i)
-                else:
-                    raise ValueError("Implant slot already in use, remove the old one first or set replace to True")
-        
-        self.__implants.append(implant)
-        
-    def removeImplant(self, implant):
-        self.__implants.remove(implant)
-        
-    def iterImplants(self):
-        return self.__implants.__iter__()
-    
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "ownerID" : lambda val: isinstance(val, int),
-               "shipID" : lambda val: isinstance(val, int)}
+               "shipID" : lambda val: isinstance(val, int) or val == None}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
@@ -181,3 +102,60 @@ class Fit(object):
             for booster in self.iterBoosters(): booster.calculateModifiedAttributes(self, runTime)
             for implant in self.iterImplants(): implant.calculateModifiedAttributes(self, runTime)
             self.character.calculateModifiedAttributes(self, runTime)
+            
+class HandledDroneSet(HandledSet):
+    def __init__(self):
+        self.__findCache = {}
+    
+    def find(self, item):
+        if self.__findCache.has_key(item.ID):
+            return self.__findCache[item.ID]
+        else:
+            return None
+        
+    def add(self, drone):
+        if self.__findCache.has_key(drone.item.ID):
+            raise ValueError("Drone already here, cannot add the same one multiple times")
+        
+        set.add(self, drone)
+        self.__findCache[drone.item.ID] = drone
+    
+    def remove(self, drone):
+        if self.__findCache.has_key(drone.item.ID):
+            del self.__findCache[drone.item.ID]
+        else:
+            raise KeyError("Drone is not in the list")
+        
+    def addItem(self, item, amount = 1):
+        if amount < 1: ValueError("Amount of drones to add should be >= 1")
+        d = self.find(item)
+        if d is None:
+            d = Drone(item)
+            self.add(d)
+            
+        d.amount += amount
+        return d
+    
+    def removeItem(self, item, amount):
+        if amount < 1: ValueError("Amount of drones to add should be >= 1")
+        d = self.findDrone(item)
+        if d is None: return            
+        d.amount -= amount
+        if d.amount <= 0:
+            self.remove(d)
+            return None
+        
+        return d
+    
+class HandledImplantBoosterSet(HandledSet):
+    def __init__(self):
+        self.__slotCache = {}
+        
+    def add(self, booster, replace = False):
+        if self.__slotCache.has_key(booster.slot):
+            if replace: self.remove(booster)
+            else: 
+                if replace: self.remove(booster)
+                else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True ")
+        
+        set.add(self, booster)

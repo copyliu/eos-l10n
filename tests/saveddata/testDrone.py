@@ -1,6 +1,6 @@
 import unittest
 from model import db
-from model.types import Drone, Fit, User
+from model.types import Drone, Fit, User, Ship
 import model.db.saveddata.queries
 import sqlalchemy.orm
 
@@ -11,9 +11,9 @@ class TestDrone(unittest.TestCase):
         try:
             f = Fit()
             f.owner = User("dronetest", "testy", False)
-            f.ship = db.getItem("Rifter")
+            f.ship = Ship(db.getItem("Rifter"))
             i = db.getItem("Hobgoblin I")
-            d = f.addDroneItemAmount(i, 5)
+            d = f.drones.addItem(i, 5)
             
             
             f1id = id(f)

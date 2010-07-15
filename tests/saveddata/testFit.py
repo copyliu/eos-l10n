@@ -1,5 +1,5 @@
 import unittest
-from model.types import Fit, Character, Module
+from model.types import Fit, Character, Module, Ship
 from model import db
 
 class TestFit(unittest.TestCase):
@@ -20,29 +20,29 @@ class TestFit(unittest.TestCase):
         
     def test_addValidModule(self):
         f = Fit()
-        f.addModule(self.m)
+        f.modules.add(self.m)
             
     def test_removeModuleNotExists(self):
         f = Fit()
-        self.assertRaises(ValueError, f.removeModule, self.m)
+        self.assertRaises(KeyError, f.modules.remove, self.m)
         
     def test_removeModuleExists(self):
         f = Fit()
-        f.addModule(self.m)
-        f.removeModule(self.m)
+        f.modules.add(self.m)
+        f.modules.remove(self.m)
         
     def test_removeInvalidModule(self):
         f = Fit()
-        self.assertRaises(ValueError, f.removeModule, 1302)
+        self.assertRaises(KeyError, f.modules.remove, 1302)
         
     def test_setNotAShip(self):
         f = Fit()
         try:
-            f.ship = db.getItem("Gamma L")
+            f.ship = Ship(db.getItem("Gamma L"))
         except ValueError:
             return
         self.fail("Set Gamma L as ship, was expecting ValueError")
         
     def test_setShip(self):
         f = Fit()
-        f.ship = db.getItem("Rifter")
+        f.ship = Ship(db.getItem("Rifter"))

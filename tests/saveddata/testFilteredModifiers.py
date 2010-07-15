@@ -8,8 +8,8 @@ class TestFilteredModifiers(unittest.TestCase):
         self.i1 = db.getItem("Cyclops")
         self.i2 = db.getItem("Cyclops")
         self.charge = db.getItem("Compact Purgatory Torpedo I")
-        self.f.addDroneItemAmount(self.i1, 1)
-        self.f.addDroneItemAmount(self.i2, 1)
+        self.f.drones.addItem(self.i1, 1)
+        self.f.drones.addItem(self.i2, 1)
         
     def test_FilteredItemIncrease(self):
         self.f.drones.filteredItemIncrease(lambda d: d.item.ID == self.i1.ID, "hp", 5)

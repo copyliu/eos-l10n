@@ -1,5 +1,5 @@
 import unittest
-from model.types import Implant, Fit, User
+from model.types import Implant, Fit, User, Ship
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -22,9 +22,9 @@ class TestImplant(unittest.TestCase):
         try:
             f = Fit()
             f.owner = User("implanttest", "testy", False)
-            f.ship = db.getItem("Rifter")
+            f.ship = Ship(db.getItem("Rifter"))
             implant = Implant(db.getItem("Halo Omega"))
-            f.addImplant(implant)
+            f.implants.add(implant)
             
             db.saveddata_session.add(f)
             db.saveddata_session.add(implant)
@@ -36,7 +36,7 @@ class TestImplant(unittest.TestCase):
             
             newfit = db.getFit(f.ID)
             i = 0
-            for imp in newfit.iterImplants():
+            for imp in newfit.implants:
                 newimplant = imp
                 i += 1
                 

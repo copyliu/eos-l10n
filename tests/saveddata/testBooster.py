@@ -1,6 +1,6 @@
 import unittest
 from model import db
-from model.types import Booster, Fit, User
+from model.types import Booster, Fit, User, Ship
 import sqlalchemy.orm
 import model.db.saveddata.queries
 
@@ -38,7 +38,7 @@ class TestBooster(unittest.TestCase):
         oldSession.commit()
         try:
             f = Fit()
-            f.ship = db.getItem("Rifter")
+            f.ship = Ship(db.getItem("Rifter"))
             f.owner = User("boostertest", "testy", False)
             b = Booster(db.getItem("Strong Drop Booster"))
             activate = ("boosterTurretFalloffPenalty", "boosterArmorRepairAmountPenalty")
@@ -46,7 +46,7 @@ class TestBooster(unittest.TestCase):
                 if sideEffect.effect.name in activate:
                     sideEffect.active = True
             
-            f.addBooster(b)
+            f.boosters.add(b)
             db.saveddata_session.add(f)
             db.saveddata_session.flush()
             fitID = f.ID
