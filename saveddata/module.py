@@ -1,6 +1,8 @@
 from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
 from model.effectHandlerHelpers import HandledItem, HandledCharge
+from itertools import chain
+
 class State():
     OFFLINE = -1
     ONLINE = 0
@@ -119,19 +121,17 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.chargeModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
-        postponed = []
-        if self.state == State.OVERHEATED:
-            for effect in self.item.effects:
-                if effect.runTime == runTime:
-                    if effect.isType("overload"):
-                        effect.handler(fit, self, "module")
-                    elif effect.isType("active") or effect.isType("passive"):
-                        postponed.append(effect)
-                    
-            for effect in postponed:
-                effect.handler(fit, self, "module")
-        else:
-            for effect in self.item.effects:
+        #We will run the effect when two conditions are met:
+        #1: It makes sense to run the effect
+        #    the effect is either passive,
+        #    or the effect is active and the module is in the active state
+        #    or the effect is overheat and the module is in the overheated state
+        #2: the runtimes match
+        for effect in self.item.effects:
+            if effect.runTime == runTime and \
+               (effect.isType("passive") or \
+               (effect.isType("active") and self.state >= State.ACTIVE) or \
+               (effect.isType("overheat") and self.state >= State.OVERHEATED)):
                 effect.handler(fit, self, "module")
                 
         for effect in self.charge.effects:
