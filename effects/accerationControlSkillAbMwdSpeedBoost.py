@@ -1,6 +1,4 @@
-#Used by: Skill: Acceleration Control
-from customEffects import boostModListByReq
-def accerationControlSkillAbMwdSpeedBoost(self, fitting, level = 1):
-    boostModListByReq(fitting.modules, "speedFactor", "speedFBonus",
-                      lambda mod: mod.group.name == "Afterburner",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+                                  "speedFactor", skill.getModifiedItemAttr("speedFBonus") * skill.level)

@@ -1,5 +1,4 @@
-#Used by: Item: Dynamic Fuel Valve
-from customEffects import boostModListByReq
-def accerationControlCapNeedBonusPostPercentCapacitorNeedLocationShipGroupAfterburner(self, fitting, state):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: mod.group.name == "Afterburner", self.item)
+type = "passive"
+def handler(fit, container, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus"))

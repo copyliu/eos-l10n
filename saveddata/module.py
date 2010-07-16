@@ -70,7 +70,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.chargeID = charge.ID if charge != None else None
         self.__chargeModifiedAttributes.original = charge.attributes
         self.__itemModifiedAttributes.clear()
-        
+    
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
         if charge == None: return True
@@ -123,13 +123,15 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def calculateModifiedAttributes(self, fit, runTime):
         #We will run the effect when two conditions are met:
         #1: It makes sense to run the effect
-        #    the effect is either passive,
-        #    or the effect is active and the module is in the active state
-        #    or the effect is overheat and the module is in the overheated state
+        #    The effect is either offline
+        #    or the effect is passive and the module is in the online state (or higher)
+        #    or the effect is active and the module is in the active state (or higher)
+        #    or the effect is overheat and the module is in the overheated state (or higher)
         #2: the runtimes match
         for effect in self.item.effects:
             if effect.runTime == runTime and \
-               (effect.isType("passive") or \
+               (effect.isType("offline") or 
+               (effect.isType("passive" and self.state >= State.ONLINE)) or \
                (effect.isType("active") and self.state >= State.ACTIVE) or \
                (effect.isType("overheat") and self.state >= State.OVERHEATED)):
                 effect.handler(fit, self, "module")

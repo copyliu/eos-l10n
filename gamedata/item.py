@@ -21,6 +21,7 @@ class Item(object):
         if self.__requiredSkills == None:
             from model import db
             requiredSkills = {}
+            self.__requiredSkills = requiredSkills
             for i in xrange(5):
                 skillID, skillLevel = None, None
                 skillID = self.getAttribute('requiredSkill%d' % i)
@@ -29,8 +30,7 @@ class Item(object):
                 item = db.getItem(int(skillID))
                 requiredSkills[item] = skillLevel
             
-            self.__requiredSkills = requiredSkills
-            
+
         return self.__requiredSkills
     
     @property
@@ -81,3 +81,14 @@ class Item(object):
                 
             
         return self.__race
+    
+    def requiresSkill(self, skill, level = None):
+        for s, l in self.requiredSkills.iteritems():
+            if isinstance(skill, basestring):
+                if s.name == skill and (level == None or l == level): return True
+            elif isinstance(skill, int) and (level == None or l == level):
+                if s.ID == skill: return True
+            elif skill == s and (level == None or l == level):
+                return True
+            
+        return False

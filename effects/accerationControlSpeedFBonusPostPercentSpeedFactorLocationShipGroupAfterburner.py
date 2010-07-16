@@ -1,5 +1,4 @@
-#Used by: Item: Hardwiring - 'Rogue' MY-X
-from customEffects import boostModListByReq
-def accerationControlSpeedFBonusPostPercentSpeedFactorLocationShipGroupAfterburner(self, fitting):
-    boostModListByReq(fitting.modules, "speedFactor", "speedFBonus",
-                      lambda mod: mod.group.name == "Afterburner", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+                                  "speedFactor", implant.getItemAttr("speedFBonus"))

@@ -75,7 +75,7 @@ class TestModule(unittest.TestCase):
         m.charge = a
         self.assertEquals(m.itemID, i.ID)
         self.assertEquals(m.chargeID, a.ID)
-        
+    
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
