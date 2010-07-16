@@ -2,6 +2,7 @@ from model.types import Drone
 from model.effectHandlerHelpers import HandledSet
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
+from itertools import chain
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -84,6 +85,12 @@ class Fit(object):
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
     
+    def clear(self):
+        self.ship.clear()
+        chain = chain(self.modules, self.drones, self.boosters, self.implants)
+        for stuff in chain: stuff.clear()
+        
+    
     def calculateModifiedAttributes(self):
         #There's a few things to keep in mind here
         #1: Early effects first, then regular ones, then late ones, regardless of anything else
@@ -93,16 +100,14 @@ class Fit(object):
         for runTime in ("early", "normal", "late"):
             #Lets start out with the ship's effects
             #We'll be ignoring gang/projected effects for now and focussing on regular ones
-            for effect in self.ship.effects:
-                if effect.runTime == runTime:
-                    effect.handler(self, self.ship)
-            #Handle the rest through their respective classes
-            for module in self.iterModules(): module.calculateModifiedAttributes(self, runTime)
-            for drone in self.iterDrones(): drone.calculateModifiedAttributes(self, runTime)
-            for booster in self.iterBoosters(): booster.calculateModifiedAttributes(self, runTime)
-            for implant in self.iterImplants(): implant.calculateModifiedAttributes(self, runTime)
+            self.ship.calculateModifiedAttributes(self, runTime)
             self.character.calculateModifiedAttributes(self, runTime)
-            
+            #Handle the rest through their respective classes
+            for module in self.modules: module.calculateModifiedAttributes(self, runTime)
+            for drone in self.drones: drone.calculateModifiedAttributes(self, runTime)
+            for booster in self.boosters: booster.calculateModifiedAttributes(self, runTime)
+            for implant in self.implants: implant.calculateModifiedAttributes(self, runTime)
+    
 class HandledDroneSet(HandledSet):
     def __init__(self):
         self.__findCache = {}

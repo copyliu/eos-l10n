@@ -1,6 +1,6 @@
-from model.modifiedAttributeDict import ModifiedAttributeDict
+from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 
-class Ship(object):
+class Ship(ItemAttrShortcut):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
@@ -11,8 +11,8 @@ class Ship(object):
                 raise ValueError("Passed item is not a ship")
 
         self.__item = item
-        self.__modifiedAttributes = ModifiedAttributeDict()
-        self.__modifiedAttributes.original = item.attributes
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__itemModifiedAttributes.original = item.attributes
         self.armorRepair, self.shieldRepair, self.hullRepair, self.extraCapRecharge = 0, 0, 0, 0
         
     @property
@@ -20,7 +20,13 @@ class Ship(object):
         return self.__item
     
     @property
-    def modifiedAttributes(self):
-        return self.__modifiedAttributes
+    def itemModifiedAttributes(self):
+        return self.__itemModifiedAttributes
     
-    
+    def clear(self):
+        self.itemModifiedAttributes.clear()
+        
+    def calculateModifiedAttributes(self, fit, runTime):
+        for effect in self.item.effects:
+            if effect.runTime == runTime:
+                    effect.handler(self, self.ship)

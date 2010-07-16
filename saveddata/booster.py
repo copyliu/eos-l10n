@@ -17,8 +17,8 @@ class Booster(HandledItem, ItemAttrShortcut):
         self.__build()
         
     def __build(self):
-        self.__modifiedAttributes = ModifiedAttributeDict()
-        self.__modifiedAttributes.original = self.__item.attributes
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__itemModifiedAttributes.original = self.__item.attributes
         self.__sideEffects = []
         for effect in self.item.effects.itervalues():
             if effect.isType("boosterSideEffect"):
@@ -31,8 +31,8 @@ class Booster(HandledItem, ItemAttrShortcut):
         return self.__sideEffects.__iter__()
     
     @property
-    def modifiedAttributes(self):
-        return self.__modifiedAttributes
+    def itemModifiedAttributes(self):
+        return self.__itemModifiedAttributes
     
     @property
     def slot(self):
@@ -42,15 +42,15 @@ class Booster(HandledItem, ItemAttrShortcut):
     def item(self):
         return self.__item
     
-    def iterSideEffects(self):
-        return self.__sideEffects.__iter__()
-    
     def __calculateSlot(self, item):
         if not "boosterness" in item.attributes:
             raise ValueError("Passed item is not a booster")
         
         return int(item.attributes["boosterness"].value)
     
+    def clear(self):
+        self.itemModifiedAttributes.clear()
+        
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:

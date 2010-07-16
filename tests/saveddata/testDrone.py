@@ -5,6 +5,14 @@ import model.db.saveddata.queries
 import sqlalchemy.orm
 
 class TestDrone(unittest.TestCase):
+    def test_clear(self):
+        d = Drone(db.getItem("Hobgoblin I"))
+        orig = d.getModifiedItemAttr("hp")
+        
+        d.itemModifiedAttributes["hp"] = 5
+        d.clear()
+        self.assertEquals(d.getModifiedItemAttr("hp"), orig)
+        
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()

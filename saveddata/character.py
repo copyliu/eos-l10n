@@ -39,7 +39,7 @@ class Character(object):
         for element in self.iterSkills():
             if filter(element):
                 element.boostItemAttr(*args, **kwargs)
-                
+    
     def calculateModifiedAttributes(self, fit, runTime):
         for skill in self.iterSkills():
             skill.calculateModifiedAttributes(fit, runTime)

@@ -1,5 +1,5 @@
 import unittest
-from model.types import Fit, Character, Module, Ship
+from model.types import Fit, Character, Module, Ship, Drone
 from model import db
 
 class TestFit(unittest.TestCase):

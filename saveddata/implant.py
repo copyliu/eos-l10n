@@ -6,20 +6,21 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.__slot = self.__calculateSlot(item)
         self.__item = item
         self.itemID = item.ID
-    
+        self.build()
     @reconstructor
     def init(self):
         from model import db
         self.__item = db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
-    
+        self.build()
+        
     def build(self):
-        self.__modifiedAttributes = ModifiedAttributeDict()
-        self.__modifiedAttributes.original = self.item.attributes
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__itemModifiedAttributes.original = self.item.attributes
     
     @property
-    def modifiedAttributes(self):
-        return self.__modifiedAttributes
+    def itemModifiedAttributes(self):
+        return self.__itemModifiedAttributes
     
     @property
     def slot(self):
@@ -35,6 +36,9 @@ class Implant(HandledItem, ItemAttrShortcut):
         
         return int(item.attributes["implantness"].value)
     
+    def clear(self):
+        self.itemModifiedAttributes.clear()
+        
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:

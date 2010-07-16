@@ -8,9 +8,9 @@ class ItemAttrShortcut(object):
             return None
     
 class ChargeAttrShortcut(object):
-    def getModifiedAmmoAttr(self, key):
-        if key in self.ammoModifiedAttributes:
-            return self.ammoModifiedAttributes[key]
+    def getModifiedChargeAttr(self, key):
+        if key in self.chargeModifiedAttributes:
+            return self.chargeModifiedAttributes[key]
         else:
             return None
     

@@ -54,6 +54,10 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
+    
+    def clear(self):
+        self.itemModifiedAttributes.clear()
+        self.chargeModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:

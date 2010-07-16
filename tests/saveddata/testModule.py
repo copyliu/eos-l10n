@@ -8,6 +8,17 @@ class TestModule(unittest.TestCase):
     def setUp(self):
         self.i = db.getItem("Heat Sink I")
         self.m = Module(self.i)
+    
+    def test_clear(self):
+        m = Module(db.getItem("125mm Gatling AutoCannon I"))
+        m.charge = db.getItem("Phased Plasma S")
+        orig = m.getModifiedItemAttr("trackingSpeed")
+        chargeOrig = m.getModifiedChargeAttr("explosiveDamage")
+        m.itemModifiedAttributes["trackingSpeed"] = 5
+        m.chargeModifiedAttributes["explosiveDamage"] = 10
+        m.clear()
+        self.assertEquals(m.getModifiedItemAttr("trackingSpeed"), orig)
+        self.assertEquals(m.getModifiedChargeAttr("explosiveDamage"), chargeOrig)
         
     def test_setItem(self):
         self.assertEquals(self.m.itemID, self.i.ID)

@@ -32,6 +32,14 @@ class TestBooster(unittest.TestCase):
                 self.fail("Invalid effect " + sideEffect.effect.name)
         
         self.assertEquals(4, i)
+    
+    def test_clear(self):
+        b = Booster(db.getItem("Strong Drop Booster"))
+        orig = b.getModifiedItemAttr("trackingSpeedMultiplier")
+        
+        b.itemModifiedAttributes["trackingSpeedMultiplier"] = 5
+        b.clear()
+        self.assertEquals(b.getModifiedItemAttr("trackingSpeedMultiplier"), orig)
         
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session
