@@ -48,3 +48,13 @@ class TestCharacter(unittest.TestCase):
         self.assertTrue(s.isSuppressed())
         s.clear()
         self.assertFalse(s.isSuppressed())
+        
+    def test_getSkill(self):
+        c = Character("testetyChar")
+        s1 = Skill(db.getItem("Caldari Frigate"), 3)
+        c.addSkill(s1)
+        c.addSkill(Skill(db.getItem("Gallente Frigate"), 1))
+        c.addSkill(Skill(db.getItem("Gallente Industrial"), 5))
+        self.assertEquals(c.getSkill(s1.item.name), s1)
+        self.assertEquals(c.getSkill(s1.item.ID), s1)
+        self.assertEquals(c.getSkill(s1.item), s1)
