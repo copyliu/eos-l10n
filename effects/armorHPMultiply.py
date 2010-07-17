@@ -1,7 +1,3 @@
-#Used by: Regenerative Plating
-from customEffects import multiply
-import model.fitting
-
-def armorHPMultiply(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        multiply(fitting.ship, "armorHP", "armorHPMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("armorHP", module.getModifiedItemAttr("armorHPMultiplier"))

@@ -1,5 +1,3 @@
-#Used by: Skill: Armored Warfare
 type = "gang"
-from customEffects import boost
-def armorTankingGang(self, fitting, level):
-    boost(fitting.ship, "armorHP", "armorHpBonus", self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.ship.boostItemAttr("armorHP", module.getModifiedItemAttr("armorHpBonus") * skill.level)

@@ -1,4 +1,3 @@
-#Used by: All T2 ammo
-from customEffects import multiply
-def ammoSpeedMultiplier(self, fitting, containerModule):
-    multiply(containerModule, "speed", "speedMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    module.multiplyItemAttr("speed", module.getModifiedChargeAttr("speedMultiplier"))

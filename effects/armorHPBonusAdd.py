@@ -1,8 +1,3 @@
-#Used by: Item: Armor Plates
-runTime = "early"
-from customEffects import increase
-import model.fitting
-
-def armorHPBonusAdd(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        increase(fitting.ship, "armorHP", "armorHPBonusAdd", self.item, position = "pre")
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("armorHP", module.getModifiedItemAttr("armorHPBonusAdd"))

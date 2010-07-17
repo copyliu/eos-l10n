@@ -1,7 +1,6 @@
-#Used by: Skill: Afterburner
-#          Item: Zor's Custom Navigation Link
-#                Rogue EY-series hardwirings
-from customEffects import boostModListBySkillReq
-def afterburnerDurationBonusPostPercentDurationLocationShipModulesRequiringAfterburner(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "duration", "durationBonus", 
-                           lambda skill: skill.name == "Afterburner", self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    if context == "skill": level = container.level
+    else: level = 1
+    fit.modules.filteredItemIncrease(lambda c: c.item.requiresSkill("Afterburner"),
+                                     "duration", c.getModifiedItemAttr("durationBonus") * level)

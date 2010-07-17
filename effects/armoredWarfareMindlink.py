@@ -1,6 +1,4 @@
-#Used by: Armored Warfare Mindlink
-from customEffects import boostModListBySkillReq
-def armoredWarfareMindlink(self, fitting):
-    boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",
-                           lambda skill: skill.name == "Armored Warfare Specialist",
-                           self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.requiresSkill("Armored Warfare Specialist"),
+                                  "commandBonus", implant.getModifiedItemAttr("mindlinkBonus"))

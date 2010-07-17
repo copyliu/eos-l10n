@@ -1,5 +1,3 @@
-#Used by: Item: T3 subsystems
-runTime = "early"
-from customEffects import increase
-def armorHPBonusAddPassive(self, fitting, state):
-    increase(fitting.ship, "armorHP", "armorHPBonusAdd", self.item, position = "pre")
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("armorHP", module.getModifiedItemAttr("armorHPBonusAdd"))

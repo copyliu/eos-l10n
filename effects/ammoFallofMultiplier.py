@@ -1,4 +1,3 @@
-#Used by: T2 Ammo
-from customEffects import multiply
-def ammoFallofMultiplier(self, fitting, containerModule):
-    multiply(containerModule, "falloff", "fallofMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    module.multipleItemAttr("falloff", module.getModifiedChargeAttr("fallofMultiplier"))

@@ -1,4 +1,3 @@
-#Used by: T2 Ammo
-from customEffects import multiply
-def ammoInfluenceSignatureRadius(self, fitting, containerModule):
-    multiply(fitting.ship, "signatureRadius", "signatureRadiusMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("signatureRadius", module.getModifiedChargeAttr("signatureRadiusMultiplier"))

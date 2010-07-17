@@ -1,6 +1,6 @@
 from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 
-class Ship(ItemAttrShortcut):
+class Ship(ItemAttrShortcut, HandledItem):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
@@ -29,4 +29,4 @@ class Ship(ItemAttrShortcut):
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:
-                    effect.handler(self, self.ship)
+                    effect.handler(fit, self.ship)
