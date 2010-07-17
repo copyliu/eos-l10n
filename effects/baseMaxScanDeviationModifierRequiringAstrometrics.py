@@ -1,7 +1,5 @@
-#Used by: Skill: Astrometrics Pinpointer
-#         Item : Hardwiring - 'Prospector' PPF-X
-from customEffects import boostAmmoListByReq
-def baseMaxScanDeviationModifierRequiringAstrometrics(self, fitting, level = 1):
-    boostAmmoListByReq(fitting.modules, "baseMaxScanDeviation", "maxScanDeviationModifier",
-                       lambda skill: skill.name == "Astrometrics",
-                       self.item, extraMult = level)
+def handler(fit, container, context):
+    if context == "skill": level = container.level
+    else: level = 1
+    fit.modules.filteredItemBoost(lambda mod: mod.requiresSkill("Astrometrics"),
+                                  "baseMaxScanDeviation", container.getModifiedItemAttr("maxScanDeviationModifier") * level)

@@ -1,12 +1,5 @@
-#Used by: Item: Armored Warfare Mindlink
-from customEffects import boost
 type = "gang"
 runTime = "early"
-def armorTankingGang2(self, fitting):
-    skill, level = fitting.getCharSkill("Armored Warfare")
-    if skill != None: fitting.gangSkills[skill]["level"] = 0
-    boost(fitting.ship, "armorHP", "armorHpBonus2", self.item)
-    
-type = "gang"
-runTime = "early"
-def handler():
+def handler(fit, module, context):
+    fit.character.getSkill("Armored Warfare").suppress()
+    fit.ship.boostItemAttr("armorHP", module.getModifiedItemAttr("armorHpBonus2"))
