@@ -6,3 +6,7 @@ def armorTankingGang2(self, fitting):
     skill, level = fitting.getCharSkill("Armored Warfare")
     if skill != None: fitting.gangSkills[skill]["level"] = 0
     boost(fitting.ship, "armorHP", "armorHpBonus2", self.item)
+    
+type = "gang"
+runTime = "early"
+def handler():

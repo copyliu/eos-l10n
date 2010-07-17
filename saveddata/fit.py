@@ -87,7 +87,7 @@ class Fit(object):
     
     def clear(self):
         self.ship.clear()
-        chain = chain(self.modules, self.drones, self.boosters, self.implants)
+        chain = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,))
         for stuff in chain: stuff.clear()
         
     

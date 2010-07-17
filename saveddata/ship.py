@@ -1,4 +1,5 @@
 from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
+from model.effectHandlerHelpers import HandledItem
 
 class Ship(ItemAttrShortcut, HandledItem):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
