@@ -171,7 +171,7 @@ def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
     #return outerScore
     #Return just max of the inner scores, including weight factor
     if float(len(innerScoreDict)):
-        return innerScoreDict[max(innerScoreDict)]*weight
+        return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
     else: return 0.0
 
 #Go through effect files one-by-one
