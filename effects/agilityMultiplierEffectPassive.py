@@ -1,5 +1,3 @@
-#Used by: Item: Polycarbon Engine Housing
-from customEffects import boost
-def agilityMultiplierEffectPassive(self, fitting, state):
-    boost(fitting.ship, "agility", "agilityMultiplier", self.item,
-          useStackingPenalty = True)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.boostItemAttr("agility", module.getItemAttr("agilityMultiplier"), stackingPenalties = True)

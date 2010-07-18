@@ -1,4 +1,3 @@
-#Used by: T2 Ammo
-from customEffects import multiply
-def ammoInfluenceCapRecharge(self, fitting, containerModule):
-    multiply(fitting.ship, "rechargeRate", "capacitorRechargeRateMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("rechargeRate", module.getModifiedChargeAttr("capacitorRechargeRateMultiplier"))

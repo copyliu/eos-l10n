@@ -1,6 +1,3 @@
-#Used by: Item: Armor Plates
-import model.fitting
-from customEffects import increase
-def armorReinforcerMassAdd(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        increase(fitting.ship, "mass", "massAddition", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("mass", module.getModifiedItemAttr("massAddition"))

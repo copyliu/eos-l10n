@@ -1,7 +1,3 @@
-#Used by: Item: Blue Pill Booster
-#               Exile Booster
-from customEffects import boost
 type = "boosterSideEffect"
-def boosterCapacitorCapacityPenalty(self, fitting):
-    boost(fitting.ship, "capacitorCapacity", "boosterCapacitorCapacityPenalty",
-          self.item)
+def handler(fit, booster, context):
+    fit.ship.boostItemAttr("capacitorCapacity", booster.getModifiedItemAttr("boosterCapacitorCapacityPenalty"))

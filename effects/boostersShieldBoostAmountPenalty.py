@@ -1,8 +1,4 @@
-#FAIL
-#Used by: Item: Mindflood Booster
 type = "boosterSideEffect"
-displayName = "Shield Booster Penalty"
-from customEffects import boostModListByReq
-def boostersShieldBoostAmountPenalty(self, fitting):
-    boostModListByReq(fitting.modules, "shieldBonus", "shieldBoostMultiplier",
-                      lambda mod: mod.group.name == "Shield Booster", self.item)
+def handler(fit, booster, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "shieldBonus", booster.getModifiedItemAttr("shieldBoostMultiplier"))

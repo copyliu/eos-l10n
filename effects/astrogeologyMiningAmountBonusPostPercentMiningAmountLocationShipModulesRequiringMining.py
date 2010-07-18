@@ -1,9 +1,5 @@
-#Used by: Skill: Mining
-#                Astreology
-#         Item : Michi's Excavation Augmentor
-#                Hardwiring - 'Highwall' HX-X
-from customEffects import boostModListBySkillReq
-def astrogeologyMiningAmountBonusPostPercentMiningAmountLocationShipModulesRequiringMining(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "miningAmount", "miningAmountBonus",
-                           lambda skill: skill.name == "Mining",
-                           self.item, extraMult = level)
+def handler(fit, container, context):
+    if context == "skill": level = container.level
+    else: level = 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Mining"),
+                                  "miningAmount", container.getModifiedItemAttr("miningAmountBonus") * level)

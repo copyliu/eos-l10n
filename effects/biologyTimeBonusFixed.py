@@ -1,6 +1,4 @@
-#Used by: Skill: Biology
-#         Item : Hardwiring 'Alchemist' WA-X
-from customEffects import boostBoosterListByReq
-def biologyTimeBonusFixed(self, fitting, level = 1):
-    boostBoosterListByReq(fitting.boosters, "boosterDuration", "durationBonus",
-                          lambda booster: True, self.item, extraMult = level)
+def handler(fit, container, context):
+    if context == "skill": level = container.level
+    else: level = 1
+    fit.boosters.filteredItemIncrease(lambda: True, "boosterDuration", container.getModifiedItemAttr("durationBonus") * level)

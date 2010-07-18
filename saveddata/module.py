@@ -43,6 +43,16 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__chargeModifiedAttributes.original = self.charge.attributes
     
     @property
+    def maxRange(self):
+        maxRange = self.item.getModifiedItemAttr("maxRange")
+        if maxRange != None: return maxRange
+        else:
+            delay = self.item.getModifiedItemAttr("explosionDelay")
+            speed = self.item.getModifiedItemAttr("maxVelocity")
+            if delay != None and speed != None:
+                return delay * speed
+        
+    @property
     def slot(self):
         return self.__slot
     

@@ -1,4 +1,3 @@
-#Used by: T2 Ammo
-from customEffects import multiply
-def ammoInfluenceShieldCapacity(self, fitting, containerModule):
-    multiply(fitting.ship, "shieldCapacity", "shieldCapacityMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("shieldCapacity", module.getModifiedChargeAttr("shieldCapacityMultiplier"))

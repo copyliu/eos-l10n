@@ -1,4 +1,3 @@
-#Used by: All ammo
-from customEffects import multiply
-def ammoInfluenceRange(self, fitting, containerModule):
-    multiply(containerModule, "maxRange", "weaponRangeMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    module.multiplyItemAttr("maxRange", module.getModifiedChargeAttr("weaponRangeMultiplier"))

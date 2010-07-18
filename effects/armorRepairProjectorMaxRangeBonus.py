@@ -1,5 +1,4 @@
-#Used by: Ship: Exequror
-from customEffects import boostModListByReq
-def armorRepairProjectorMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Armor Repair Projector", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Projector",
+                                  "maxRange", ship.getModifiedItemAttr("maxRangeBonus"))
