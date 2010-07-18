@@ -47,7 +47,7 @@ queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM invmarketgro
 #Compose list of effects w/o symbols which pyfa doesn't take into consideration
 #we'll use it to find proper effect IDs from file names
 globalMap_effectNamePyfa_effectNameDB = {}
-stripSpec = "[&\t ]"
+stripSpec = "[^A-Za-z0-9]"
 cursor = db.cursor()
 cursor.execute(queryAllEffects)
 for row in cursor:
