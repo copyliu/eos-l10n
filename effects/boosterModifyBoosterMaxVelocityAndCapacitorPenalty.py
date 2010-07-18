@@ -1,11 +1,8 @@
-#Used by: Skill: Nanite Control
-#         Item : Hardwiring - 'Alchemist' YA-X
-#                Edge Implant Set
-from customEffects import boostBoosterListByReq
-def boosterModifyBoosterMaxVelocityAndCapacitorPenalty(self, fitting, level = 1):
-    boostBoosterListByReq(fitting.boosters, "boosterCapacitorCapacityPenalty", "boosterAttributeModifier",
-                          lambda booster: "boosterCapacitorCapacityPenalty" in booster.attributes,
-                          self.item, extraMult = level)
-    boostBoosterListByReq(fitting.boosters, "boosterMaxVelocityPenalty", "boosterAttributeModifier",
-                          lambda booster: "boosterMaxVelocityPenalty" in booster.attributes,
-                          self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    if context == "skill": level = container.level
+    else: level = 1
+    fit.boosters.filteredItemBoost(lambda booster: "boosterCapacitorCapacityPenalty" in booster.itemModifiedAttributes,
+                                   "boosterCapacitorCapacityPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)
+    fit.boosters.filteredItemBoost(lambda booster: "boosterMaxVelocityPenalty" in booster.itemModifiedAttributes,
+                                   "boosterMaxVelocityPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)

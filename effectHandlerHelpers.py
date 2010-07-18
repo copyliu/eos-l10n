@@ -1,34 +1,53 @@
 class HandledSet(set):    
     def filteredItemIncrease(self, filter, *args, **kwargs):
         for element in self:
-            if filter(element):
-                element.increaseItemAttr(*args, **kwargs)
+            try:
+                if filter(element):
+                    element.increaseItemAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+            
                 
     def filteredItemMultiply(self, filter, *args, **kwargs):
         for element in self:
-            if filter(element):
-                element.multiplyItemAttr(*args, **kwargs)
+            try:
+                if filter(element):
+                    element.multiplyItemAttr(*args, **kwargs)
+            except AttributeError:
+                pass
                 
     def filteredItemBoost(self, filter, *args, **kwargs):
         for element in self:
-            if filter(element):
-                element.boostItemAttr(*args, **kwargs)
+            try:
+                if filter(element):
+                    element.boostItemAttr(*args, **kwargs)
+            except AttributeError:
+                pass
                 
     def filteredChargeIncrease(self, filter, *args, **kwargs):
         for element in self:
-            if filter(element):
-                element.increaseChargeAttr(*args, **kwargs)
-                
+            try:
+                if filter(element):
+                    element.increaseChargeAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+            
     def filteredChargeMultiply(self, filter, *args, **kwargs):
         for element in self:
-            if filter(element):
-                element.multiplyChargeAttr(*args, **kwargs)
+            try:
+                if filter(element):
+                    element.multiplyChargeAttr(*args, **kwargs)
+            except AttributeError:
+                pass
                 
     def filteredChargeBoost(self, filter, *args, **kwargs):
         for element in self:
-            if filter(element):
-                element.boostChargeAttr(*args, **kwargs)
-
+            try:
+                if filter(element):
+                    element.boostChargeAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+            
 class HandledItem(object):
     def increaseItemAttr(self, *args, **kwargs):
         self.itemModifiedAttributes.increase(*args, **kwargs)

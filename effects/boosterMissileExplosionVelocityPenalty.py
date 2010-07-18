@@ -1,7 +1,4 @@
-#Used by: Item: Blue Pill Booster
-from customEffects import boostAmmoListBySkillReq
 type = "boosterSideEffect"
-def boosterMissileExplosionVelocityPenalty(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "aoeVelocity", "boosterAOEVelocityPenalty",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item)
+def handler(fit, booster, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "aoeVelocity", booster.getModifiedItemAttr("boosterAOEVelocityPenalty"))
