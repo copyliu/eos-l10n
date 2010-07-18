@@ -1,4 +1,4 @@
-#Item: Sentinel
+#Item: Sentinel [Ship]
 from customEffects import boostModListByReq
 def shipBonusEwWeaponDisruptionTrackingSpeedBonusAF2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

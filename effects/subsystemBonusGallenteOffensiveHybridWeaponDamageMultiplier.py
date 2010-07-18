@@ -1,4 +1,4 @@
-#Item: Proteus Offensive - Covert Reconfiguration
+#Item: Proteus Offensive - Covert Reconfiguration [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusGallenteOffensiveHybridWeaponDamageMultiplier(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Offensive Systems")

@@ -1,4 +1,4 @@
-#Item: Tengu Offensive - Accelerated Ejection Bay
+#Item: Tengu Offensive - Accelerated Ejection Bay [Subsystem]
 from customEffects import boostAmmoListBySkillReq
 def subsystemBonusCaldariOffensive3HeavyMissileVelocity(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Offensive Systems")

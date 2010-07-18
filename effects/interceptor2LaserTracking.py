@@ -1,4 +1,4 @@
-#Item: Crusader
+#Item: Crusader [Ship]
 from customEffects import boostModListBySkillReq
 def interceptor2LaserTracking(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

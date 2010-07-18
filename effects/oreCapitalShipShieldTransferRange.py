@@ -1,4 +1,4 @@
-#Item: Rorqual
+#Item: Rorqual [Ship]
 from customEffects import boostModListBySkillReq
 def oreCapitalShipShieldTransferRange(self, fitting):
     skill, level = fitting.getCharSkill("Capital Industrial Ships")

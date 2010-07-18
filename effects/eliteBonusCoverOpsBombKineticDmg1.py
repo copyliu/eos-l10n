@@ -1,4 +1,4 @@
-#Item: Manticore
+#Item: Manticore [Ship]
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusCoverOpsBombKineticDmg1(self, fitting):
     skill, level = fitting.getCharSkill("Covert Ops")

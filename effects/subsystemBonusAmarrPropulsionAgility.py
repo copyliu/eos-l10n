@@ -1,4 +1,4 @@
-#Item: Legion Propulsion - Interdiction Nullifier
+#Item: Legion Propulsion - Interdiction Nullifier [Subsystem]
 from customEffects import boost
 def subsystemBonusAmarrPropulsionAgility(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Propulsion Systems")

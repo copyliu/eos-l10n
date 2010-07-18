@@ -1,4 +1,4 @@
-#Item: Moros
+#Item: Moros [Ship]
 from customEffects import boostModListBySkillReq
 def dreadnoughtShipBonusHybridDmgG1(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Dreadnought")

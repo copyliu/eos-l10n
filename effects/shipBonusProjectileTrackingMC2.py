@@ -1,4 +1,4 @@
-#Item: Stabber Fleet Issue
+#Item: Stabber Fleet Issue [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusProjectileTrackingMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

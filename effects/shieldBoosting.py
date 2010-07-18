@@ -1,4 +1,4 @@
-#Items from group: Shield Booster (86 of 86)
+#Items from group: Shield Booster (86 of 86) [Module]
 runTime = "late"
 from model import attribute
 import model.fitting

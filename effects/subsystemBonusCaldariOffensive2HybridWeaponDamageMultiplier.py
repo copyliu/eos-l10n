@@ -1,4 +1,4 @@
-#Item: Tengu Offensive - Magnetic Infusion Basin
+#Item: Tengu Offensive - Magnetic Infusion Basin [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusCaldariOffensive2HybridWeaponDamageMultiplier(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Offensive Systems")

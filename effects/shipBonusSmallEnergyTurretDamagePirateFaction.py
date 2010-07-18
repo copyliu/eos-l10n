@@ -1,5 +1,5 @@
-#Item: Cruor
-#Item: Succubus
+#Item: Cruor [Ship]
+#Item: Succubus [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusSmallEnergyTurretDamagePirateFaction(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

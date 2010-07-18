@@ -1,4 +1,4 @@
-#Item: Advanced Spaceship Command
+#Item: Advanced Spaceship Command [Skill]
 from customEffects import boost
 def skillAdvancedSpaceshipAgilityBonus(self, fitting, level):
     if self.item in fitting.ship.requiredSkills:

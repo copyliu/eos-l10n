@@ -1,4 +1,4 @@
-#Item: Tengu Defensive - Adaptive Shielding
+#Item: Tengu Defensive - Adaptive Shielding [Subsystem]
 from customEffects import boost
 def subsystemBonusCaldariDefensiveShieldResistance(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Defensive Systems")

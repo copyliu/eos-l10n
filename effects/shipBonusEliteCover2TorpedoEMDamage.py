@@ -1,4 +1,4 @@
-#Item: Purifier
+#Item: Purifier [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipBonusEliteCover2TorpedoEMDamage(self, fitting):
     skill, level = fitting.getCharSkill("Covert Ops")

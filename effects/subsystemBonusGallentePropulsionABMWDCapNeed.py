@@ -1,4 +1,4 @@
-#Item: Proteus Propulsion - Localized Injectors
+#Item: Proteus Propulsion - Localized Injectors [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusGallentePropulsionABMWDCapNeed(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Propulsion Systems")

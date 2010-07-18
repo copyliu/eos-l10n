@@ -1,4 +1,4 @@
-#Items from group: Rig Launcher (36 of 36)
+#Items from group: Rig Launcher (36 of 36) [Module]
 from customEffects import boostModListByReq
 def drawbackCPUNeedLaunchers(self, fitting, state):
     boostModListByReq(fitting.modules, "cpu", "drawback",

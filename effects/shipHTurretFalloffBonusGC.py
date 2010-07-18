@@ -1,4 +1,4 @@
-#Item: Vigilant
+#Item: Vigilant [Ship]
 from customEffects import boostModListBySkillReq
 def shipHTurretFalloffBonusGC(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

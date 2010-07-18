@@ -1,4 +1,4 @@
-#Item: Skirmish Warfare Mindlink
+#Item: Skirmish Warfare Mindlink [Implant]
 from customEffects import boostModListBySkillReq
 def shirmishWarfareMindlink(self, fitting):
     boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",

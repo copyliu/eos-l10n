@@ -1,4 +1,4 @@
-#Items from group: Marauder (2 of 4)
+#Items from group: Marauder (2 of 4) [Ship]
 from customEffects import boostModListByReq
 def eliteBonusViolatorsArmorDamageAmount2(self, fitting):
     skill, level = fitting.getCharSkill("Marauders")

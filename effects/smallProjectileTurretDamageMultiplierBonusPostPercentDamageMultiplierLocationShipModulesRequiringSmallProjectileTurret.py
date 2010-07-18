@@ -1,5 +1,5 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Gunnery Implants (3 of 9)
-#Item: Small Projectile Turret
+#Item: Small Projectile Turret [Skill]
 from customEffects import boostModListBySkillReq
 def smallProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallProjectileTurret(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus", 

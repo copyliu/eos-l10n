@@ -1,4 +1,4 @@
-#Items from group: Warp Scrambler (20 of 39)
+#Items from group: Warp Scrambler (20 of 39) [Module]
 from customEffects import increase
 import model.fitting
 type = ("projected", "active")

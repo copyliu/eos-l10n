@@ -1,4 +1,4 @@
-#Item: Avatar
+#Item: Avatar [Ship]
 from customEffects import boostModListBySkillReq
 def titanAmarrLaserDmg3(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Titan")

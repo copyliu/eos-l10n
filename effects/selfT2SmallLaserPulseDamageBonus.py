@@ -1,4 +1,4 @@
-#Item: Small Pulse Laser Specialization
+#Item: Small Pulse Laser Specialization [Skill]
 from customEffects import boostModListByReq
 def selfT2SmallLaserPulseDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

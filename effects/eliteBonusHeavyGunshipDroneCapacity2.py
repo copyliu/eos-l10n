@@ -1,4 +1,4 @@
-#Item: Ishtar
+#Item: Ishtar [Ship]
 from customEffects import increase
 def eliteBonusHeavyGunshipDroneCapacity2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

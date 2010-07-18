@@ -1,4 +1,4 @@
-#Item: Manticore
+#Item: Manticore [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipBonusCF1TorpedoExplosionVelocity(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

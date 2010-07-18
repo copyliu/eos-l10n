@@ -1,4 +1,4 @@
-#Item: Wolf
+#Item: Wolf [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusGunshipProjectileDamage1(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

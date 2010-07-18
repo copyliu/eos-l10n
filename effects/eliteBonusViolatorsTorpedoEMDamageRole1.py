@@ -1,4 +1,4 @@
-#Item: Golem
+#Item: Golem [Ship]
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusViolatorsTorpedoEMDamageRole1(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "emDamage", "eliteBonusViolatorsRole1",

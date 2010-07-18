@@ -1,4 +1,4 @@
-#Item: Oneiros
+#Item: Oneiros [Ship]
 from customEffects import boostModListByReq
 def eliteBonusLogisticsTrackingLinkFalloffBonus2(self, fitting):
     skill, level = fitting.getCharSkill("Logistics")

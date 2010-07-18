@@ -1,4 +1,4 @@
-#Item: Falcon
+#Item: Falcon [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusMediumHybridDmgCC2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

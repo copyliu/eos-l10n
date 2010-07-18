@@ -1,4 +1,4 @@
-#Item: Scorpion
+#Item: Scorpion [Ship]
 from customEffects import boostModListByReq
 def caldariShipECMBurstOptimalRangeCB3(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

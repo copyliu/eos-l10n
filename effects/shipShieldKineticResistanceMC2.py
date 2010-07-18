@@ -1,4 +1,4 @@
-#Item: Broadsword
+#Item: Broadsword [Ship]
 from customEffects import boost
 def shipShieldKineticResistanceMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

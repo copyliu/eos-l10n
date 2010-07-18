@@ -1,4 +1,4 @@
-#Item: Crucifier
+#Item: Crucifier [Ship]
 from customEffects import boostModListByReq
 def shipBonusEwWeaponDisruptionMaxRangeBonusAF1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

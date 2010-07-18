@@ -1,4 +1,4 @@
-#Items from group: Tracking Computer (14 of 14)
+#Items from group: Tracking Computer (14 of 14) [Module]
 import model.fitting
 from customEffects import boostModListBySkillReq
 type = "active"

@@ -1,4 +1,4 @@
-#Item: Drake
+#Item: Drake [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipBonusCruiserSizedMissileKineticDamageBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

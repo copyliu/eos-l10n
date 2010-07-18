@@ -1,4 +1,4 @@
-#Item: Naglfar
+#Item: Naglfar [Ship]
 from customEffects import boostModListBySkillReq
 def dreadnoughtMD3ProjRoFBonus(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Dreadnought")

@@ -1,4 +1,4 @@
-#Item: Drake
+#Item: Drake [Ship]
 from customEffects import boost
 def shipShieldResistanceCBC2(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

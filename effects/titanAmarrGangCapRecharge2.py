@@ -1,4 +1,4 @@
-#Item: Avatar
+#Item: Avatar [Ship]
 type = ("gang", "normal")
 from customEffects import boost, multiply
 def titanAmarrGangCapRecharge2(self, fitting, activeLayer):

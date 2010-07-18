@@ -1,4 +1,4 @@
-#Item: Drone Durability
+#Item: Drone Durability [Skill]
 from customEffects import boostDroneListBySkillReq
 def droneDurabilityArmorHPBonus2(self, fitting, level):
     boostDroneListBySkillReq(fitting.drones, "armorHP", "armorHpBonus",

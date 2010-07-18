@@ -1,4 +1,4 @@
-#Item: Tengu Engineering - Capacitor Regeneration Matrix
+#Item: Tengu Engineering - Capacitor Regeneration Matrix [Subsystem]
 from customEffects import boost
 def subsystemBonusCaldariEngineeringCapacitorRecharge(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Engineering Systems")

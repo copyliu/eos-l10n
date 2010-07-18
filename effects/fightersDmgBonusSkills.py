@@ -1,4 +1,4 @@
-#Item: Fighters
+#Item: Fighters [Skill]
 from customEffects import boostDroneListByReq
 def fightersDmgBonusSkills(self, fitting, level):
     boostDroneListByReq(fitting.drones, "damageMultiplier", "damageMultiplierBonus",

@@ -1,6 +1,6 @@
-#Variations of item: Large Algid Energy Administrations Unit I (2 of 2)
-#Variations of item: Medium Algid Energy Administrations Unit I (2 of 2)
-#Variations of item: Small Algid Energy Administrations Unit I (2 of 2)
+#Variations of item: Large Algid Energy Administrations Unit I (2 of 2) [Module]
+#Variations of item: Medium Algid Energy Administrations Unit I (2 of 2) [Module]
+#Variations of item: Small Algid Energy Administrations Unit I (2 of 2) [Module]
 from customEffects import boostModListByReq
 def cpuNeedBonusEffectLasers(self, fitting, state):
     boostModListByReq(fitting.modules, "cpu", "cpuNeedBonus",

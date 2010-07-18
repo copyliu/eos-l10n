@@ -1,4 +1,4 @@
-#Item: Heretic
+#Item: Heretic [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipRocketKineticDmgDF1(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

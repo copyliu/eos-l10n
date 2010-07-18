@@ -1,4 +1,4 @@
-#Items from group: Logistics (2 of 4)
+#Items from group: Logistics (2 of 4) [Ship]
 from customEffects import boostModListByReq
 def energyTransferPowerNeedBonusEffect(self, fitting):
     boostModListByReq(fitting.modules, "power", "powerTransferPowerNeedBonus",

@@ -1,4 +1,4 @@
-#Item: Kinetic Armor Compensation
+#Item: Kinetic Armor Compensation [Skill]
 from customEffects import boostModListByReq
 def kineticArmorCompensationHardeningBonusGroupArmorCoating(self, fitting, level):
     boostModListByReq(fitting.modules, "kineticDamageResistanceBonus", "hardeningBonus",

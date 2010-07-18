@@ -1,4 +1,4 @@
-#Item: Bomb Deployment
+#Item: Bomb Deployment [Skill]
 from customEffects import boostModListByReq
 def skillBombDeploymentModuleReactivationDelayBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "moduleReactivationDelay", "rofBonus",

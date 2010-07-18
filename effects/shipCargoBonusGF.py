@@ -1,4 +1,4 @@
-#Item: Navitas
+#Item: Navitas [Ship]
 from customEffects import boost
 def shipCargoBonusGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

@@ -1,4 +1,4 @@
-#Item: Vargur
+#Item: Vargur [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusViolatorsLargeProjectileTurretDamageRole1(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "eliteBonusViolatorsRole1",

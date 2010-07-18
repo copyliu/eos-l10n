@@ -1,6 +1,6 @@
 #Items from market group: Ships > Command Ships > Gallente (2 of 2)
-#Item: Brutix
-#Item: Myrmidon
+#Item: Brutix [Ship]
+#Item: Myrmidon [Ship]
 from customEffects import boostModListByReq
 def shipArmorRepairingGBC2(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

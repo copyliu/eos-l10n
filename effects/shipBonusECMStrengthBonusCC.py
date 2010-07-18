@@ -1,4 +1,4 @@
-#Item: Blackbird
+#Item: Blackbird [Ship]
 from customEffects import boostModListByReq
 def shipBonusECMStrengthBonusCC(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

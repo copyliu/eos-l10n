@@ -1,4 +1,4 @@
-#Items from group: Transport Ship (2 of 8)
+#Items from group: Transport Ship (2 of 8) [Ship]
 from customEffects import boost
 def zColinArmorHPPerLvl(self, fitting):
     skill, level = fitting.getCharSkill("Transport Ships")

@@ -1,4 +1,4 @@
-#Variations of item: Megathron (3 of 5)
+#Variations of item: Megathron (3 of 5) [Ship]
 from customEffects import boostModListBySkillReq
 def shipHTTrackingBonusGB2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

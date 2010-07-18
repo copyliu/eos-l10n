@@ -1,4 +1,4 @@
-#Item: Imicus
+#Item: Imicus [Ship]
 from customEffects import boostAmmoListByReq
 def shipBonusScanProbeStrengthGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

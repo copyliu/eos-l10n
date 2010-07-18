@@ -1,4 +1,4 @@
-#Items from group: Capacitor Booster (54 of 54)
+#Items from group: Capacitor Booster (54 of 54) [Module]
 import model.fitting
 from model import attribute
 runTime = "late"

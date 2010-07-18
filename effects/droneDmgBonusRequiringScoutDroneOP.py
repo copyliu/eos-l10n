@@ -1,4 +1,4 @@
-#Item: Combat Drone Operation
+#Item: Combat Drone Operation [Skill]
 from customEffects import boostDroneListBySkillReq
 def droneDmgBonusRequiringScoutDroneOP(self, fitting, level):
     boostDroneListBySkillReq(fitting.drones, "damageMultiplier", "damageMultiplierBonus",

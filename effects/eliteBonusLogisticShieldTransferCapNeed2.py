@@ -1,4 +1,4 @@
-#Item: Scimitar
+#Item: Scimitar [Ship]
 from customEffects import boostModListByReq
 def eliteBonusLogisticShieldTransferCapNeed2(self, fitting):
     skill, level = fitting.getCharSkill("Logistics")

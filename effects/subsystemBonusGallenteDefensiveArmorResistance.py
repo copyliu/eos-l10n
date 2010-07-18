@@ -1,4 +1,4 @@
-#Item: Proteus Defensive - Adaptive Augmenter
+#Item: Proteus Defensive - Adaptive Augmenter [Subsystem]
 from customEffects import boost
 def subsystemBonusGallenteDefensiveArmorResistance(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Defensive Systems")

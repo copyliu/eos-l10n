@@ -1,4 +1,4 @@
-#Items from group: Force Recon Ship (4 of 4)
+#Items from group: Force Recon Ship (4 of 4) [Ship]
 from customEffects import boostModListByReq
 def cynosuralDurationBonus(self, fitting):
     boostModListByReq(fitting.modules, "duration", "durationBonus",

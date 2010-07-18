@@ -1,4 +1,4 @@
-#Items from group: Shield Amplifier (88 of 88)
+#Items from group: Shield Amplifier (88 of 88) [Module]
 from customEffects import boost
 import model.fitting
 

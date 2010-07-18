@@ -1,4 +1,4 @@
-#Item: Erebus
+#Item: Erebus [Ship]
 type = ("gang", "normal")
 from customEffects import boost, multiply
 def titanGallenteGangArmorHp2(self, fitting, activeLayer):

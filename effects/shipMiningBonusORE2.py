@@ -1,5 +1,5 @@
-#Items from group: Exhumer (3 of 3)
-#Items from group: Mining Barge (3 of 3)
+#Items from group: Exhumer (3 of 3) [Ship]
+#Items from group: Mining Barge (3 of 3) [Ship]
 from customEffects import boostModListByReq
 def shipMiningBonusORE2(self, fitting):
     skill, level = fitting.getCharSkill("Mining Barge")

@@ -1,4 +1,4 @@
-#Items from group: Tracking Enhancer (17 of 17)
+#Items from group: Tracking Enhancer (17 of 17) [Module]
 import model.fitting
 from customEffects import boostModListBySkillReq
 def gunneryMaxRangeBonusOnline(self, fitting, state):

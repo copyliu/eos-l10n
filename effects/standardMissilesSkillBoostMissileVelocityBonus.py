@@ -1,4 +1,4 @@
-#Item: Defender Missiles
+#Item: Defender Missiles [Skill]
 from customEffects import boostAmmoListByReq
 def standardMissilesSkillBoostMissileVelocityBonus(self, fitting, level):
     boostAmmoListByReq(fitting.modules, "maxVelocity", "missileVelocityBonus",

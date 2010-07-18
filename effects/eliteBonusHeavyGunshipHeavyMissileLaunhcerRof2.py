@@ -1,4 +1,4 @@
-#Items from group: Heavy Assault Ship (2 of 8)
+#Items from group: Heavy Assault Ship (2 of 8) [Ship]
 from customEffects import boostModListByReq
 def eliteBonusHeavyGunshipHeavyMissileLaunhcerRof2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

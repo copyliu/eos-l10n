@@ -1,4 +1,4 @@
-#Variations of item: Warp Scrambler I (19 of 19)
+#Variations of item: Warp Scrambler I (19 of 19) [Module]
 from customEffects import increase
 import model.fitting
 type = ("projected", "active")

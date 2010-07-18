@@ -1,4 +1,4 @@
-#Variations of item: Bellicose (3 of 3)
+#Variations of item: Bellicose (3 of 3) [Ship]
 from customEffects import boostModListByReq
 def minmatarShipEwTargetPainterMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

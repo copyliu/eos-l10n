@@ -1,4 +1,4 @@
-#Item: Erebus
+#Item: Erebus [Ship]
 from customEffects import boostModListByReq, increase
 def titanGallenteLeadershipModuleAmount4(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Titan")

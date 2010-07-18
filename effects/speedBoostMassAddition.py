@@ -1,4 +1,4 @@
-#Items from group: Afterburner (54 of 107)
+#Items from group: Afterburner (54 of 107) [Module]
 from customEffects import boost, increase
 import model.fitting
 runTime = "late"

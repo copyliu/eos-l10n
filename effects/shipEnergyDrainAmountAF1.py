@@ -1,5 +1,5 @@
-#Item: Cruor
-#Item: Sentinel
+#Item: Cruor [Ship]
+#Item: Sentinel [Ship]
 from customEffects import boostModListByReq
 def shipEnergyDrainAmountAF1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

@@ -1,4 +1,4 @@
-#Items from group: Transport Ship (4 of 8)
+#Items from group: Transport Ship (4 of 8) [Ship]
 from customEffects import boostModListByReq
 def eliteIndustrialShieldBoostAmountElite1(self, fitting):
     skill, level = fitting.getCharSkill("Transport Ships")

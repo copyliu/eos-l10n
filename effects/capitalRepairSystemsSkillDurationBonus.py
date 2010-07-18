@@ -1,5 +1,5 @@
-#Items from group: Cyber Armor (3 of 24)
-#Item: Capital Repair Systems
+#Items from group: Cyber Armor (3 of 24) [Implant]
+#Item: Capital Repair Systems [Skill]
 from customEffects import boostModListByReq
 def capitalRepairSystemsSkillDurationBonus(self, fitting, level = 1):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

@@ -1,4 +1,4 @@
-#Item: Nighthawk
+#Item: Nighthawk [Ship]
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusCommandShipMissileKineticDamageCS1(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

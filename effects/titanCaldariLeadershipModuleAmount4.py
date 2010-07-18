@@ -1,4 +1,4 @@
-#Item: Leviathan
+#Item: Leviathan [Ship]
 from customEffects import boostModListByReq, increase
 def titanCaldariLeadershipModuleAmount4(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Titan")

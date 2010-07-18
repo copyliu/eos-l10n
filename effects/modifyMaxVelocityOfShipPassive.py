@@ -1,4 +1,4 @@
-#Items from group: Expanded Cargohold (13 of 13)
+#Items from group: Expanded Cargohold (13 of 13) [Module]
 from customEffects import multiply
 import model.fitting
 def modifyMaxVelocityOfShipPassive(self, fitting, state):

@@ -1,5 +1,5 @@
-#Items from group: Cap Drain Drone (3 of 3)
-#Items from group: Energy Destabilizer (41 of 41)
+#Items from group: Cap Drain Drone (3 of 3) [Drone]
+#Items from group: Energy Destabilizer (41 of 41) [Module]
 from customEffects import increase
 import model.fitting
 type = ("active", "projected", "normal")

@@ -1,4 +1,4 @@
-#Item: Phobos
+#Item: Phobos [Ship]
 from customEffects import boost
 def shipArmorKineticResistanceGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

@@ -1,4 +1,4 @@
-#Variations of item: Vigil (2 of 2)
+#Variations of item: Vigil (2 of 2) [Ship]
 from customEffects import boostModListByReq
 def minmatarShipEwTargetPainterMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

@@ -1,4 +1,4 @@
-#Item: Cormorant
+#Item: Cormorant [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridRangeCD1(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

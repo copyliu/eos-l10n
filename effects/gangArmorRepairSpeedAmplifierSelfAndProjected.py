@@ -1,4 +1,4 @@
-#Item: Armored Warfare Link - Rapid Repair
+#Item: Armored Warfare Link - Rapid Repair [Module]
 import model.fitting
 from customEffects import boostModListByReq
 type = ("gang", "active")

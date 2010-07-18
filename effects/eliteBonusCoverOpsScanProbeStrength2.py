@@ -1,4 +1,4 @@
-#Items from group: Covert Ops (4 of 4)
+#Items from group: Covert Ops (4 of 4) [Ship]
 from customEffects import boostAmmoListByReq
 def eliteBonusCoverOpsScanProbeStrength2(self, fitting):
     skill, level = fitting.getCharSkill("Covert Ops")

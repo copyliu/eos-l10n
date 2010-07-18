@@ -1,4 +1,4 @@
-#Variations of item: Maulus (2 of 2)
+#Variations of item: Maulus (2 of 2) [Ship]
 from customEffects import boostModListByReq
 def shipBonusEwRemoteSensorDampenerScanResolutionBonusGF2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

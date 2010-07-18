@@ -1,6 +1,6 @@
-#Item: Ares
-#Item: Federation Navy Comet
-#Item: Tristan
+#Item: Ares [Ship]
+#Item: Federation Navy Comet [Ship]
+#Item: Tristan [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusHybridTrackingGF2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

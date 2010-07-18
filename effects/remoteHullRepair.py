@@ -1,4 +1,4 @@
-#Items from group: Remote Hull Repairer (4 of 4)
+#Items from group: Remote Hull Repairer (4 of 4) [Module]
 import model.fitting
 from customEffects import increase
 type = ("projected", "active")

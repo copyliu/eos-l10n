@@ -1,4 +1,4 @@
-#Item: EM Armor Compensation
+#Item: EM Armor Compensation [Skill]
 from customEffects import boostModListByReq
 def emArmorCompensationHardeningBonusGroupEnergized(self, fitting, level):
     boostModListByReq(fitting.modules, "emDamageResistanceBonus", "hardeningBonus",

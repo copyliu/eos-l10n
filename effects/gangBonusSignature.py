@@ -1,4 +1,4 @@
-#Item: Skirmish Warfare Link - Evasive Maneuvers
+#Item: Skirmish Warfare Link - Evasive Maneuvers [Module]
 import model.fitting
 from customEffects import boost
 type = ("gang", "active")

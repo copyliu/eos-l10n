@@ -1,4 +1,4 @@
-#Item: Frequency Modulation
+#Item: Frequency Modulation [Skill]
 from customEffects import boostModListByReq
 def ewSkillTdFallOffBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "falloff", "falloffBonus",

@@ -1,4 +1,4 @@
-#Item: Thermic Armor Compensation
+#Item: Thermic Armor Compensation [Skill]
 from customEffects import boostModListByReq
 def thermicArmorCompensationHardeningBonusGroupEnergized(self, fitting, level):
     boostModListByReq(fitting.modules, "thermalDamageResistanceBonus", "hardeningBonus",

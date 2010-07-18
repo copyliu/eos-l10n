@@ -1,4 +1,4 @@
-#Items from group: ECCM (44 of 44)
+#Items from group: ECCM (44 of 44) [Module]
 import model.fitting
 from customEffects import boost
 type = "active"

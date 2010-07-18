@@ -1,4 +1,4 @@
-#Item: Damnation
+#Item: Damnation [Ship]
 from customEffects import boost
 def eliteBonusCommandShipArmorHP1(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

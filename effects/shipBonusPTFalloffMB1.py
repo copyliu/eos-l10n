@@ -1,4 +1,4 @@
-#Item: Vargur
+#Item: Vargur [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusPTFalloffMB1(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

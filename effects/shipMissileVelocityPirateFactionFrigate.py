@@ -1,4 +1,4 @@
-#Item: Worm
+#Item: Worm [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileVelocityPirateFactionFrigate(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusPirateFaction",

@@ -1,4 +1,4 @@
-#Item: Hyena
+#Item: Hyena [Ship]
 from customEffects import boostModListBySkillReq, increase
 def shipBonusMWDCapNeedMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

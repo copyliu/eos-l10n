@@ -1,4 +1,4 @@
-#Item: Vengeance
+#Item: Vengeance [Ship]
 from customEffects import boost
 def eliteBonusGunshipArmorKineticResistance1(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

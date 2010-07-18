@@ -1,5 +1,5 @@
-#Item: Skirmish Warfare
-#Item: Skirmish Warfare Mindlink
+#Item: Skirmish Warfare [Skill]
+#Item: Skirmish Warfare Mindlink [Implant]
 from customEffects import boost
 type = "gang"
 def skirmishWarfareAgilityBonus(self, fitting, level = 1):

@@ -1,4 +1,4 @@
-#Item: Hound
+#Item: Hound [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipBonusMF1TorpedoExplosionVelocity(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

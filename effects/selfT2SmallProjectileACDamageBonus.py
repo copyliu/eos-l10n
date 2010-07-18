@@ -1,4 +1,4 @@
-#Item: Small Autocannon Specialization
+#Item: Small Autocannon Specialization [Skill]
 from customEffects import boostModListByReq
 def selfT2SmallProjectileACDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

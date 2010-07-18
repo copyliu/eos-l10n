@@ -1,4 +1,4 @@
-#Items from group: ECM Stabilizer (6 of 6)
+#Items from group: ECM Stabilizer (6 of 6) [Module]
 from customEffects import boostModListByReq
 import model.fitting
 

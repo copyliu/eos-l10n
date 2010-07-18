@@ -1,5 +1,5 @@
-#Items from group: Armor Coating (201 of 201)
-#Items from group: Armor Plating Energized (187 of 187)
+#Items from group: Armor Coating (201 of 201) [Module]
+#Items from group: Armor Plating Energized (187 of 187) [Module]
 from customEffects import boost
 import model.fitting
 

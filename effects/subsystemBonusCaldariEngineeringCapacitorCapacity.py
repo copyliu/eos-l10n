@@ -1,4 +1,4 @@
-#Item: Tengu Engineering - Augmented Capacitor Reservoir
+#Item: Tengu Engineering - Augmented Capacitor Reservoir [Subsystem]
 from customEffects import boost
 def subsystemBonusCaldariEngineeringCapacitorCapacity(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Engineering Systems")

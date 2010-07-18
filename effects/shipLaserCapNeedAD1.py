@@ -1,4 +1,4 @@
-#Item: Coercer
+#Item: Coercer [Ship]
 from customEffects import boostModListBySkillReq
 def shipLaserCapNeedAD1(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

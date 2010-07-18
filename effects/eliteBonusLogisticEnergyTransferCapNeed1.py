@@ -1,4 +1,4 @@
-#Item: Guardian
+#Item: Guardian [Ship]
 from customEffects import boostModListByReq
 def eliteBonusLogisticEnergyTransferCapNeed1(self, fitting):
     skill, level = fitting.getCharSkill("Logistics")

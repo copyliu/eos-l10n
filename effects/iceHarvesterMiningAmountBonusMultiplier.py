@@ -1,4 +1,4 @@
-#Item: Mackinaw
+#Item: Mackinaw [Ship]
 from customEffects import boostModListBySkillReq
 def iceHarvesterMiningAmountBonusMultiplier(self, fitting):
     boostModListBySkillReq(fitting.modules, "miningAmount", 100,

@@ -1,4 +1,4 @@
-#Item: Harpy
+#Item: Harpy [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridRangeBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

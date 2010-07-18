@@ -1,4 +1,4 @@
-#Item: Exequror Navy Issue
+#Item: Exequror Navy Issue [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridTurretROFBonusGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

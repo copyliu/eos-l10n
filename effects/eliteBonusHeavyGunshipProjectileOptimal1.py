@@ -1,4 +1,4 @@
-#Item: Muninn
+#Item: Muninn [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipProjectileOptimal1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

@@ -1,5 +1,5 @@
-#Items from group: Stasis Web (19 of 19)
-#Items from group: Warp Scrambler (38 of 39)
+#Items from group: Stasis Web (19 of 19) [Module]
+#Items from group: Warp Scrambler (38 of 39) [Module]
 from customEffects import boost
 import model.fitting
 type = "overload"

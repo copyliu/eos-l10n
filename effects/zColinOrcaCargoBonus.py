@@ -1,4 +1,4 @@
-#Item: Orca
+#Item: Orca [Ship]
 from customEffects import boost
 def zColinOrcaCargoBonus(self, fitting):
     skill, level = fitting.getCharSkill("Industrial Command Ships")

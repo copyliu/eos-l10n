@@ -1,5 +1,5 @@
-#Items from group: Armor Hardener (39 of 156)
-#Items from group: Shield Hardener (20 of 91)
+#Items from group: Armor Hardener (39 of 156) [Module]
+#Items from group: Shield Hardener (20 of 91) [Module]
 import model.fitting
 from customEffects import boost
 type = "overload"

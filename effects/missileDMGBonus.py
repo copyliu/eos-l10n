@@ -1,4 +1,4 @@
-#Items from group: Ballistic Control system (21 of 21)
+#Items from group: Ballistic Control system (21 of 21) [Module]
 from customEffects import boostAmmoListBySkillReq, multiply
 import model.fitting
 def missileDMGBonus(self, fitting, state):

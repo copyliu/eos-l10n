@@ -1,5 +1,5 @@
-#Variations of item: Dominix (3 of 3)
-#Item: Rattlesnake
+#Variations of item: Dominix (3 of 3) [Ship]
+#Item: Rattlesnake [Ship]
 from customEffects import boostDroneListByReq
 def shipBonusDroneHitpointsGB2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

@@ -1,4 +1,4 @@
-#Item: Damnation
+#Item: Damnation [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileHeavyAssaultVelocityBC2(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

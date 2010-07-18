@@ -1,4 +1,4 @@
-#Item: Weapon Disruption
+#Item: Weapon Disruption [Skill]
 from customEffects import boostModListByReq
 def ewSkillTdCapNeedBonusSkillLevel(self, fitting, level):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

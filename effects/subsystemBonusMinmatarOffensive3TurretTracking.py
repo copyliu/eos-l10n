@@ -1,4 +1,4 @@
-#Item: Loki Offensive - Turret Concurrence Registry
+#Item: Loki Offensive - Turret Concurrence Registry [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusMinmatarOffensive3TurretTracking(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Offensive Systems")

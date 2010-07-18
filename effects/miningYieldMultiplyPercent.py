@@ -1,4 +1,4 @@
-#Variations of item: Mining Laser Upgrade I (6 of 6)
+#Variations of item: Mining Laser Upgrade I (6 of 6) [Module]
 from customEffects import boostModListBySkillReq
 import model.fitting
 

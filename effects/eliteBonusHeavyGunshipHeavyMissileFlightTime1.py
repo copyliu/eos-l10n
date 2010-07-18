@@ -1,4 +1,4 @@
-#Item: Cerberus
+#Item: Cerberus [Ship]
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusHeavyGunshipHeavyMissileFlightTime1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

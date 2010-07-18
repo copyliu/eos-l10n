@@ -1,4 +1,4 @@
-#Variations of item: Arbitrator (3 of 3)
+#Variations of item: Arbitrator (3 of 3) [Ship]
 from customEffects import boostDroneListByReq
 def shipBonusDroneDamageMultiplierAC2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

@@ -1,4 +1,4 @@
-#Item: Legion Defensive - Augmented Plating
+#Item: Legion Defensive - Augmented Plating [Subsystem]
 from customEffects import boost
 def subsystemBonusAmarrDefensiveArmorHP(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Defensive Systems")

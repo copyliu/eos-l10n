@@ -1,4 +1,4 @@
-#Item: Inquisitor
+#Item: Inquisitor [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileExplosiveDamageAF1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

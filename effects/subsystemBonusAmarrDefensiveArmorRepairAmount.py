@@ -1,4 +1,4 @@
-#Item: Legion Defensive - Nanobot Injector
+#Item: Legion Defensive - Nanobot Injector [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusAmarrDefensiveArmorRepairAmount(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Defensive Systems")

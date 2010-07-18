@@ -1,4 +1,4 @@
-#Item: Siege Module I
+#Item: Siege Module I [Module]
 from customEffects import boost, multiply, boostModListByReq, boostModListBySkillReq, boostAmmoListBySkillReq
 import model.fitting
 type = "active"

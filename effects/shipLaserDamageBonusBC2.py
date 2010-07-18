@@ -1,4 +1,4 @@
-#Item: Harbinger
+#Item: Harbinger [Ship]
 from customEffects import boostModListByReq
 def shipLaserDamageBonusBC2(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

@@ -1,4 +1,4 @@
-#Item: Vargur
+#Item: Vargur [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusViolatorsLargeProjectileTurretTracking1(self, fitting):
     skill, level = fitting.getCharSkill("Marauders")

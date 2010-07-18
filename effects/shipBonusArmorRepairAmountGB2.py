@@ -1,4 +1,4 @@
-#Item: Hyperion
+#Item: Hyperion [Ship]
 from customEffects import boostModListByReq
 def shipBonusArmorRepairAmountGB2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

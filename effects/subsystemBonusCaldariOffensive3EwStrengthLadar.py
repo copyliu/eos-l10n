@@ -1,4 +1,4 @@
-#Item: Tengu Offensive - Rifling Launcher Pattern
+#Item: Tengu Offensive - Rifling Launcher Pattern [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusCaldariOffensive3EwStrengthLadar(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Offensive Systems")

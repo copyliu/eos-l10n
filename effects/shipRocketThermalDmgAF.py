@@ -1,6 +1,6 @@
-#Item: Anathema
-#Item: Malediction
-#Item: Vengeance
+#Item: Anathema [Ship]
+#Item: Malediction [Ship]
+#Item: Vengeance [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipRocketThermalDmgAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

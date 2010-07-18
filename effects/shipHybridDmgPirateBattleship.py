@@ -1,4 +1,4 @@
-#Item: Vindicator
+#Item: Vindicator [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridDmgPirateBattleship(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

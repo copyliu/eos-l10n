@@ -1,4 +1,4 @@
-#Item: Skirmish Warfare Link - Interdiction Maneuvers
+#Item: Skirmish Warfare Link - Interdiction Maneuvers [Module]
 from customEffects import boostModListByReq
 import model.fitting
 type = ("gang", "active")

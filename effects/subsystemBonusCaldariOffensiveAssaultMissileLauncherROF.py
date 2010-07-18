@@ -1,4 +1,4 @@
-#Variations of item: Tengu Offensive - Accelerated Ejection Bay (3 of 4)
+#Variations of item: Tengu Offensive - Accelerated Ejection Bay (3 of 4) [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusCaldariOffensiveAssaultMissileLauncherROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Offensive Systems")

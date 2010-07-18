@@ -1,4 +1,4 @@
-#Items from group: Frigate (4 of 35)
+#Items from group: Frigate (4 of 35) [Ship]
 from customEffects import boostModListByReq, multiply
 def miningCapBonus(self, fitting):
     boostModListByReq(fitting.modules, "capacitorNeed", "capacitorNeedMultiplier",

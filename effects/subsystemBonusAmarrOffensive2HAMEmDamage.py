@@ -1,4 +1,4 @@
-#Item: Legion Offensive - Assault Optimization
+#Item: Legion Offensive - Assault Optimization [Subsystem]
 from customEffects import boostAmmoListBySkillReq
 def subsystemBonusAmarrOffensive2HAMEmDamage(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

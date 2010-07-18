@@ -1,4 +1,4 @@
-#Items from group: Cynosural Field (2 of 2)
+#Items from group: Cynosural Field (2 of 2) [Module]
 from customEffects import boost
 import model.fitting
 type = 'active'

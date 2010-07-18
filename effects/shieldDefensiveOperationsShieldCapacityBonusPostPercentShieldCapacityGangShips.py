@@ -1,5 +1,5 @@
-#Item: Siege Warfare
-#Item: Siege Warfare Mindlink
+#Item: Siege Warfare [Skill]
+#Item: Siege Warfare Mindlink [Implant]
 from customEffects import boost
 type = "gang"
 def shieldDefensiveOperationsShieldCapacityBonusPostPercentShieldCapacityGangShips(self, fitting, level = 1):

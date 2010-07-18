@@ -1,4 +1,4 @@
-#Item: Fighter Bombers
+#Item: Fighter Bombers [Skill]
 from customEffects import boostDroneListAmmoBySkillReq
 def fighterBomberExplosiveDamageBonus2(self, fitting, level):
     boostDroneListAmmoBySkillReq(fitting.drones, "explosiveDamage", "damageMultiplierBonus",

@@ -1,4 +1,4 @@
-#Items from group: Interceptor (4 of 8)
+#Items from group: Interceptor (4 of 8) [Ship]
 from customEffects import boostModListByReq
 def Interceptor2WarpScrambleRange(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

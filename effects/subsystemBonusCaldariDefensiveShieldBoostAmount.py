@@ -1,4 +1,4 @@
-#Item: Tengu Defensive - Amplification Node
+#Item: Tengu Defensive - Amplification Node [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusCaldariDefensiveShieldBoostAmount(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Defensive Systems")

@@ -1,4 +1,4 @@
-#Item: Loki Propulsion - Chassis Optimization
+#Item: Loki Propulsion - Chassis Optimization [Subsystem]
 from customEffects import boost
 def subsystemBonusMinmatarPropulsionMaxVelocity(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Propulsion Systems")

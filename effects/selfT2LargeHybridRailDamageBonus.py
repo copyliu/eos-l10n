@@ -1,4 +1,4 @@
-#Item: Large Railgun Specialization
+#Item: Large Railgun Specialization [Skill]
 from customEffects import boostModListByReq
 def selfT2LargeHybridRailDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

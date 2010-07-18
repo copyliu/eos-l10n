@@ -1,4 +1,4 @@
-#Variations of item: Loki Offensive - Turret Concurrence Registry (2 of 4)
+#Variations of item: Loki Offensive - Turret Concurrence Registry (2 of 4) [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusMinmatarOffensive2ProjectileWeaponROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Offensive Systems")

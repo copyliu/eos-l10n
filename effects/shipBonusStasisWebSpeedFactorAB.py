@@ -1,4 +1,4 @@
-#Item: Paladin
+#Item: Paladin [Ship]
 from customEffects import boostModListByReq
 def shipBonusStasisWebSpeedFactorAB(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

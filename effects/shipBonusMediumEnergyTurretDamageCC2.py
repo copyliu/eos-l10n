@@ -1,4 +1,4 @@
-#Item: Phantasm
+#Item: Phantasm [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusMediumEnergyTurretDamageCC2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

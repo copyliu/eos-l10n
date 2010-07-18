@@ -1,4 +1,4 @@
-#Items from group: Cloaking Device (12 of 14)
+#Items from group: Cloaking Device (12 of 14) [Module]
 import model.fitting
 from model.attribute import basicAttribute
 from customEffects import multiply

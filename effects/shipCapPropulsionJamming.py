@@ -1,4 +1,4 @@
-#Items from group: Interceptor (8 of 8)
+#Items from group: Interceptor (8 of 8) [Ship]
 from customEffects import boostModListBySkillReq
 def shipCapPropulsionJamming(self, fitting):
     boostModListBySkillReq(fitting.modules, "capacitorNeed", "eliteBonusInterceptorRole",

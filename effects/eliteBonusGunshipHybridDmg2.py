@@ -1,4 +1,4 @@
-#Item: Harpy
+#Item: Harpy [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusGunshipHybridDmg2(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

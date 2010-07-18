@@ -1,4 +1,4 @@
-#Item: Arbitrator
+#Item: Arbitrator [Ship]
 from customEffects import boostDroneListByReq
 def shipBonusMiningDroneAmountPercentAC2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

@@ -1,7 +1,7 @@
-#Item: Caracal
-#Item: Caracal Navy Issue
-#Item: Cerberus
-#Item: Onyx
+#Item: Caracal [Ship]
+#Item: Caracal Navy Issue [Ship]
+#Item: Cerberus [Ship]
+#Item: Onyx [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileKineticDamageCC(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

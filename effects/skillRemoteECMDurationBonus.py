@@ -1,4 +1,4 @@
-#Item: Projected Electronic Counter Measures
+#Item: Projected Electronic Counter Measures [Skill]
 from customEffects import boostModListByReq
 def skillRemoteECMDurationBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "duration", "projECMDurationBonus",

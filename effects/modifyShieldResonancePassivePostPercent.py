@@ -1,4 +1,4 @@
-#Items from group: Shield Hardener (91 of 91)
+#Items from group: Shield Hardener (91 of 91) [Module]
 import model.fitting
 from customEffects import boost
 def modifyShieldResonancePassivePostPercent(self, fitting, state):

@@ -1,4 +1,4 @@
-#Item: Bhaalgorn
+#Item: Bhaalgorn [Ship]
 from customEffects import boostModListByReq
 def shipStasisWebRangeBonusMB(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

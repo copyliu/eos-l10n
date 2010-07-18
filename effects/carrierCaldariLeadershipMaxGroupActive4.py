@@ -1,4 +1,4 @@
-#Item: Wyvern
+#Item: Wyvern [Ship]
 from customEffects import boostModListByReq, increase
 def carrierCaldariLeadershipMaxGroupActive4(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Carrier")

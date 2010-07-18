@@ -1,4 +1,4 @@
-#Item: Keres
+#Item: Keres [Ship]
 from customEffects import boostModListByReq
 def shipRemoteSensorDampenerCapNeedGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

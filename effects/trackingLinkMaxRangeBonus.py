@@ -1,4 +1,4 @@
-#Item: Scythe
+#Item: Scythe [Ship]
 from customEffects import boostModListByReq
 def trackingLinkMaxRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",

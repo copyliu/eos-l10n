@@ -1,5 +1,5 @@
-#Variations of item: Catalyst (2 of 2)
-#Item: Cormorant
+#Variations of item: Catalyst (2 of 2) [Ship]
+#Item: Cormorant [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridTrackingGD2(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

@@ -1,4 +1,4 @@
-#Variations of item: Legion Offensive - Drone Synthesis Projector (2 of 4)
+#Variations of item: Legion Offensive - Drone Synthesis Projector (2 of 4) [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusAmarrOffensive2EnergyWeaponCapacitorNeed(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

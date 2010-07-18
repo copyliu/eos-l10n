@@ -1,4 +1,4 @@
-#Item: Rorqual
+#Item: Rorqual [Ship]
 from customEffects import boostModListByReq
 def rorqualSurveyScannerRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "surveyScannerRangeBonus",

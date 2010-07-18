@@ -1,4 +1,4 @@
-#Items from group: Rig Projectile Weapon (6 of 30)
+#Items from group: Rig Projectile Weapon (6 of 30) [Module]
 from customEffects import boostModListByReq, multiply
 def projectileWeaponDamageMultiplyPassive(self, fitting, state):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplier", 

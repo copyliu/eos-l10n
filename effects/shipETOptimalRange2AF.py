@@ -1,4 +1,4 @@
-#Item: Imperial Navy Slicer
+#Item: Imperial Navy Slicer [Ship]
 from customEffects import boostModListBySkillReq
 def shipETOptimalRange2AF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

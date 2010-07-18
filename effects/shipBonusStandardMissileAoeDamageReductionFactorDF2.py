@@ -1,4 +1,4 @@
-#Item: Flycatcher
+#Item: Flycatcher [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipBonusStandardMissileAoeDamageReductionFactorDF2(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

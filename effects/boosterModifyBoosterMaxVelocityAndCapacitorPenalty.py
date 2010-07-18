@@ -1,10 +1,10 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Science Implants (2 of 7)
-#Item: Low-grade Edge Alpha
-#Item: Low-grade Edge Beta
-#Item: Low-grade Edge Delta
-#Item: Low-grade Edge Epsilon
-#Item: Low-grade Edge Gamma
-#Item: Nanite Control
+#Item: Low-grade Edge Alpha [Implant]
+#Item: Low-grade Edge Beta [Implant]
+#Item: Low-grade Edge Delta [Implant]
+#Item: Low-grade Edge Epsilon [Implant]
+#Item: Low-grade Edge Gamma [Implant]
+#Item: Nanite Control [Skill]
 type = "passive"
 def handler(fit, container, context):
     if context == "skill": level = container.level

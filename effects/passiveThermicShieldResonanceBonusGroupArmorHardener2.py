@@ -1,4 +1,4 @@
-#Item: Thermic Shield Compensation
+#Item: Thermic Shield Compensation [Skill]
 from customEffects import boostModListByReq, multiply
 def passiveThermicShieldResonanceBonusGroupArmorHardener2(self, fitting, level):
     boostModListByReq(fitting.modules, "passiveThermicDamageResistanceBonus", "hardeningbonus2",

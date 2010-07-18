@@ -1,4 +1,4 @@
-#Item: Jaguar
+#Item: Jaguar [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusGunshipProjectileOptimal1(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

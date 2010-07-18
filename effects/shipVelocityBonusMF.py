@@ -1,4 +1,4 @@
-#Item: Vigil
+#Item: Vigil [Ship]
 from customEffects import boost
 def shipVelocityBonusMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

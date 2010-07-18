@@ -1,4 +1,4 @@
-#Item: Worm
+#Item: Worm [Ship]
 from customEffects import increase
 def shipBonusDroneCapacityGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

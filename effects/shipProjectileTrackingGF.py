@@ -1,4 +1,4 @@
-#Item: Dramiel
+#Item: Dramiel [Ship]
 from customEffects import boostModListBySkillReq
 def shipProjectileTrackingGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

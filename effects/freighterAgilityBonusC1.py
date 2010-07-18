@@ -1,4 +1,4 @@
-#Item: Rhea
+#Item: Rhea [Ship]
 from customEffects import boost
 def freighterAgilityBonusC1(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Freighter")

@@ -1,4 +1,4 @@
-#Item: Raptor
+#Item: Raptor [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridDamageBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

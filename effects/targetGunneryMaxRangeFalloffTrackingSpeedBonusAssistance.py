@@ -1,4 +1,4 @@
-#Items from group: Tracking Link (10 of 10)
+#Items from group: Tracking Link (10 of 10) [Module]
 type = ("projected", "active")
 import model.fitting
 from customEffects import boostModListBySkillReq

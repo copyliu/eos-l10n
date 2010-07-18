@@ -1,4 +1,4 @@
-#Item: Phobos
+#Item: Phobos [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyInterdictorsHybridFalloff1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Interdictors")

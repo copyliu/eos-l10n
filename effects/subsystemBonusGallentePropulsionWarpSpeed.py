@@ -1,4 +1,4 @@
-#Item: Proteus Propulsion - Gravitational Capacitor
+#Item: Proteus Propulsion - Gravitational Capacitor [Subsystem]
 from customEffects import boost
 def subsystemBonusGallentePropulsionWarpSpeed(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Propulsion Systems")

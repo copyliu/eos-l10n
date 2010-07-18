@@ -1,4 +1,4 @@
-#Items from group: Energy Vampire (52 of 52)
+#Items from group: Energy Vampire (52 of 52) [Module]
 from customEffects import increase
 from model.attribute import basicAttribute
 import model.fitting

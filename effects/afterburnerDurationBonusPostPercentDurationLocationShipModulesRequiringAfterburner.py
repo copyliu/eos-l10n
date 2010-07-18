@@ -1,5 +1,5 @@
-#Items from group: Cyber Navigation (4 of 27)
-#Item: Afterburner
+#Items from group: Cyber Navigation (4 of 27) [Implant]
+#Item: Afterburner [Skill]
 type = "passive"
 def handler(fit, container, context):
     if context == "skill": level = container.level

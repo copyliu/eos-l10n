@@ -1,4 +1,4 @@
-#Item: Small Beam Laser Specialization
+#Item: Small Beam Laser Specialization [Skill]
 from customEffects import boostModListByReq
 def selfT2SmallLaserBeamDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

@@ -1,4 +1,4 @@
-#Item: Zealot
+#Item: Zealot [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipLaserDmg2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

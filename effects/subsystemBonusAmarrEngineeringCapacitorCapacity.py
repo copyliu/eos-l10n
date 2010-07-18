@@ -1,4 +1,4 @@
-#Item: Legion Engineering - Augmented Capacitor Reservoir
+#Item: Legion Engineering - Augmented Capacitor Reservoir [Subsystem]
 from customEffects import boost
 def subsystemBonusAmarrEngineeringCapacitorCapacity(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Engineering Systems")

@@ -1,4 +1,4 @@
-#Item: Loki Offensive - Covert Reconfiguration
+#Item: Loki Offensive - Covert Reconfiguration [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusMinmatarOffensiveProjectileWeaponROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Offensive Systems")

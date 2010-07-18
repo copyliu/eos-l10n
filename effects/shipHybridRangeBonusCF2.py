@@ -1,5 +1,5 @@
-#Item: Merlin
-#Item: Raptor
+#Item: Merlin [Ship]
+#Item: Raptor [Ship]
 from customEffects import boostModListBySkillReq
 def shipHybridRangeBonusCF2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

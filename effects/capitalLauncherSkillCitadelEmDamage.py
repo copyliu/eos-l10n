@@ -1,5 +1,5 @@
-#Items from group: Cyber Missile (3 of 46)
-#Item: Citadel Torpedoes
+#Items from group: Cyber Missile (3 of 46) [Implant]
+#Item: Citadel Torpedoes [Skill]
 from customEffects import boostAmmoListBySkillReq
 def capitalLauncherSkillCitadelEmDamage(self, fitting, level = 1):
     boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",

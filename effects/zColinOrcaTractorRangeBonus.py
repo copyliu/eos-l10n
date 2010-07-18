@@ -1,4 +1,4 @@
-#Item: Orca
+#Item: Orca [Ship]
 from customEffects import boostModListByReq
 def zColinOrcaTractorRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "shipOrcaTractorBeamRangeBonus1",

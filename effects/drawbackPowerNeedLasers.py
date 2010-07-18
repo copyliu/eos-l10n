@@ -1,4 +1,4 @@
-#Items from group: Rig Energy Weapon (42 of 42)
+#Items from group: Rig Energy Weapon (42 of 42) [Module]
 from customEffects import boostModListByReq
 def drawbackPowerNeedLasers(self, fitting, state):
     boostModListByReq(fitting.modules, "power", "drawback",

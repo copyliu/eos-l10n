@@ -1,4 +1,4 @@
-#Item: Rook
+#Item: Rook [Ship]
 from customEffects import boostAmmoListBySkillReq
 def eliteReconBonusHeavyAssaultMissileVelocity(self, fitting):
     skill, level = fitting.getCharSkill("Recon Ships")

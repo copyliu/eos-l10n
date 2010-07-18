@@ -1,4 +1,4 @@
-#Items from group: Auxiliary Power Core (7 of 7)
+#Items from group: Auxiliary Power Core (7 of 7) [Module]
 import model.fitting
 from customEffects import increase
 runTime = "early"

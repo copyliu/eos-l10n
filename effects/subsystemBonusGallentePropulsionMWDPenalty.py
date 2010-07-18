@@ -1,4 +1,4 @@
-#Item: Proteus Propulsion - Wake Limiter
+#Item: Proteus Propulsion - Wake Limiter [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusGallentePropulsionMWDPenalty(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Propulsion Systems")

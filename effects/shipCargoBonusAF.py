@@ -1,4 +1,4 @@
-#Item: Tormentor
+#Item: Tormentor [Ship]
 from customEffects import boost
 def shipCargoBonusAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

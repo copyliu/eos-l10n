@@ -1,4 +1,4 @@
-#Item: Ark
+#Item: Ark [Ship]
 from customEffects import boost
 def freighterAgilityBonusA1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Freighter")

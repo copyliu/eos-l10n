@@ -1,4 +1,4 @@
-#Item: Eos
+#Item: Eos [Ship]
 from customEffects import increase
 def eliteeliteBonusCommandShipDroneBay1(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

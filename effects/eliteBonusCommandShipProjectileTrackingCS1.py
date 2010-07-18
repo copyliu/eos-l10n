@@ -1,4 +1,4 @@
-#Item: Claymore
+#Item: Claymore [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipProjectileTrackingCS1(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

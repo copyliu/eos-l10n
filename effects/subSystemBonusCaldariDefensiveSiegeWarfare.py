@@ -1,4 +1,4 @@
-#Item: Tengu Defensive - Warfare Processor
+#Item: Tengu Defensive - Warfare Processor [Subsystem]
 from customEffects import boostModListBySkillReq
 def subSystemBonusCaldariDefensiveSiegeWarfare(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Defensive Systems")

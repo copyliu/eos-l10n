@@ -1,4 +1,4 @@
-#Item: Gas Cloud Harvesting
+#Item: Gas Cloud Harvesting [Skill]
 from customEffects import boostModListByReq, increase
 def gasCloudHarvestingMaxGroupSkillLevel(self, fitting, level):
     boostModListByReq(fitting.modules, "maxGroupActive", level,

@@ -1,4 +1,4 @@
-#Variations of item: Caracal (3 of 3)
+#Variations of item: Caracal (3 of 3) [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileLightVelocityBonusCC2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

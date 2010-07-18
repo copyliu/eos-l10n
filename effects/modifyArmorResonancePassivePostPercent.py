@@ -1,4 +1,4 @@
-#Items from group: Armor Hardener (156 of 156)
+#Items from group: Armor Hardener (156 of 156) [Module]
 import model.fitting
 from customEffects import boost
 def modifyArmorResonancePassivePostPercent(self, fitting, state):

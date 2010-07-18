@@ -1,6 +1,6 @@
-#Items from group: Energy Weapon (82 of 181)
-#Items from group: Hybrid Weapon (88 of 197)
-#Items from group: Projectile Weapon (82 of 141)
+#Items from group: Energy Weapon (82 of 181) [Module]
+#Items from group: Hybrid Weapon (88 of 197) [Module]
+#Items from group: Projectile Weapon (82 of 141) [Module]
 from customEffects import boost
 import model.fitting
 type = "overload"

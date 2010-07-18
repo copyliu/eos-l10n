@@ -1,4 +1,4 @@
-#Item: Thrasher
+#Item: Thrasher [Ship]
 from customEffects import boostModListBySkillReq
 def smallProjectileMaxRangeBonus(self, fitting):
     boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeBonus",

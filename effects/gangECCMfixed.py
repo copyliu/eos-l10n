@@ -1,4 +1,4 @@
-#Item: Information Warfare Link - Sensor Integrity
+#Item: Information Warfare Link - Sensor Integrity [Module]
 from customEffects import boost
 import model.fitting
 type = ("gang", "active")

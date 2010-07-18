@@ -1,4 +1,4 @@
-#Item: Probe
+#Item: Probe [Ship]
 from customEffects import boostAmmoListByReq
 def shipBonusSurveyProbeExplosionDelay3MF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

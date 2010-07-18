@@ -1,4 +1,4 @@
-#Item: Cloaking
+#Item: Cloaking [Skill]
 from customEffects import boostModListBySkillReq
 def cloakingTargetingDelayBonusPostPercentCloakingTargetingDelayBonusForShipModulesRequiringCloaking(self, fitting, level):
     boostModListBySkillReq(fitting.modules, "cloakingTargetingDelay", "cloakingTargetingDelayBonus",

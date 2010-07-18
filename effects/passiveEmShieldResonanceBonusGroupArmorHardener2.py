@@ -1,4 +1,4 @@
-#Item: EM Shield Compensation
+#Item: EM Shield Compensation [Skill]
 from customEffects import boostModListByReq, multiply
 def passiveEmShieldResonanceBonusGroupArmorHardener2(self, fitting, level):
     boostModListByReq(fitting.modules, "passiveEmDamageResistanceBonus", "hardeningbonus2",

@@ -1,4 +1,4 @@
-#Item: Loki Defensive - Warfare Processor
+#Item: Loki Defensive - Warfare Processor [Subsystem]
 from customEffects import boostModListBySkillReq
 def subSystemBonusMinmatarDefensiveSkirmishWarfare(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Defensive Systems")

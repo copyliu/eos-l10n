@@ -1,4 +1,4 @@
-#Item: Oneiros
+#Item: Oneiros [Ship]
 from customEffects import boostModListByReq
 def eliteBonusLogisticRemoteArmorRepairCapNeed1(self, fitting):
     skill, level = fitting.getCharSkill("Logistics")

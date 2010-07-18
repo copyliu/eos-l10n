@@ -1,4 +1,4 @@
-#Items from group: Propulsion Systems (16 of 16)
+#Items from group: Propulsion Systems (16 of 16) [Subsystem]
 runTime = "early"
 from customEffects import increase
 def maxVelocityAddPassive(self, fitting, state):

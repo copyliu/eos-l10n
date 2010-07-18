@@ -1,4 +1,4 @@
-#Item: Ishkur
+#Item: Ishkur [Ship]
 from customEffects import increase
 def eliteBonusGunshipDroneCapacity2(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

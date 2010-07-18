@@ -1,4 +1,4 @@
-#Item: Nighthawk
+#Item: Nighthawk [Ship]
 from customEffects import boostModListByReq
 def shipCruiserSizedLauncherROFBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

@@ -1,4 +1,4 @@
-#Item: Tengu Defensive - Supplemental Screening
+#Item: Tengu Defensive - Supplemental Screening [Subsystem]
 from customEffects import boost
 def subsystemBonusCaldariDefensiveShieldHP(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Defensive Systems")

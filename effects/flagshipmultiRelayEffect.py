@@ -1,4 +1,4 @@
-#Item: Command Processor I
+#Item: Command Processor I [Module]
 from customEffects import boostModListByReq, increase
 def flagshipmultiRelayEffect(self, fitting, state):
     #Need to enable two more, one for itself, one for an extra gang module

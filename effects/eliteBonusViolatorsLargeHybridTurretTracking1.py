@@ -1,4 +1,4 @@
-#Item: Kronos
+#Item: Kronos [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusViolatorsLargeHybridTurretTracking1(self, fitting):
     skill, level = fitting.getCharSkill("Marauders")

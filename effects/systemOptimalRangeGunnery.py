@@ -1,4 +1,4 @@
-#Items from group: Effect Beacon (6 of 38)
+#Items from group: Effect Beacon (6 of 38) [Celestial]
 from customEffects import boostModListBySkillReq, multiply
 type = "projected"
 def systemOptimalRangeGunnery(self, fitting, state):

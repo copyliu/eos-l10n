@@ -1,4 +1,4 @@
-#Item: Kitsune
+#Item: Kitsune [Ship]
 from customEffects import boostModListByReq
 def eliteBonusElectronicAttackShipECMOptimalRange1(self, fitting):
     skill, level = fitting.getCharSkill("Electronic Attack Ships")

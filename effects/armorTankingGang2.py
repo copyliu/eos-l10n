@@ -1,4 +1,4 @@
-#Item: Armored Warfare Mindlink
+#Item: Armored Warfare Mindlink [Implant]
 type = "gang"
 runTime = "early"
 def handler(fit, module, context):

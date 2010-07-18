@@ -1,7 +1,7 @@
-#Variations of item: Large Tracking Diagnostic Subroutines I (2 of 2)
-#Variations of item: Medium Tracking Diagnostic Subroutines I (2 of 2)
-#Variations of item: Small Tracking Diagnostic Subroutines I (2 of 2)
-#Item: Turret Destabilization
+#Variations of item: Large Tracking Diagnostic Subroutines I (2 of 2) [Module]
+#Variations of item: Medium Tracking Diagnostic Subroutines I (2 of 2) [Module]
+#Variations of item: Small Tracking Diagnostic Subroutines I (2 of 2) [Module]
+#Item: Turret Destabilization [Skill]
 from customEffects import boostModListByReq
 def ewSkillTrackingDisruptionMaxRangeBonus(self, fitting, state = None, level = 1):
     if self.item.group.category.name == "Skill": penalized = False

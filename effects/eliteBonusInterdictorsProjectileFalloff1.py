@@ -1,4 +1,4 @@
-#Item: Sabre
+#Item: Sabre [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusInterdictorsProjectileFalloff1(self, fitting):
     skill, level = fitting.getCharSkill("Interdictors")

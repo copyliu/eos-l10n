@@ -1,4 +1,4 @@
-#Items from group: Signal Amplifier (11 of 11)
+#Items from group: Signal Amplifier (11 of 11) [Module]
 from customEffects import boost
 import model.fitting
 def shipScanResolutionBonusOnline(self, fitting, state):

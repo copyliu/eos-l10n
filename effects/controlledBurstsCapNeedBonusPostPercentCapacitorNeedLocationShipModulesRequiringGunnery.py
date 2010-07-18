@@ -1,5 +1,5 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Gunnery Implants (3 of 9)
-#Item: Controlled Bursts
+#Item: Controlled Bursts [Skill]
 from customEffects import boostModListBySkillReq
 def controlledBurstsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringGunnery(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",

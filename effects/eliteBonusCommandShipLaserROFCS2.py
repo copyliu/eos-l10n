@@ -1,4 +1,4 @@
-#Item: Absolution
+#Item: Absolution [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipLaserROFCS2(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

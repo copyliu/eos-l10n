@@ -1,4 +1,4 @@
-#Item: Loki Propulsion - Fuel Catalyst
+#Item: Loki Propulsion - Fuel Catalyst [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusMinmatarPropulsionAfterburnerSpeedFactor(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Propulsion Systems")

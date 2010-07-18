@@ -1,4 +1,4 @@
-#Items from group: Cyberimplant (20 of 138)
+#Items from group: Cyberimplant (20 of 138) [Implant]
 from customEffects import boost
 def scanStrengthBonusPercentPassive(self, fitting):
     radar = self.item.getModifiedAttribute("scanRadarStrengthPercent")

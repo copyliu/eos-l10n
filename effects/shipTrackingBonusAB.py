@@ -1,4 +1,4 @@
-#Item: Nightmare
+#Item: Nightmare [Ship]
 from customEffects import boostModListBySkillReq
 def shipTrackingBonusAB(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

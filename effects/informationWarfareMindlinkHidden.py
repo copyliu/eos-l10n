@@ -1,4 +1,4 @@
-#Item: Information Warfare Mindlink
+#Item: Information Warfare Mindlink [Implant]
 from customEffects import boostModListBySkillReq
 def informationWarfareMindlinkHidden(self, fitting):
     boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",

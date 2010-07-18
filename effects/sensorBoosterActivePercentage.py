@@ -1,4 +1,4 @@
-#Items from group: Sensor Booster (12 of 12)
+#Items from group: Sensor Booster (12 of 12) [Module]
 from customEffects import boost
 import model.fitting
 type = "active"

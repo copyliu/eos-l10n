@@ -1,4 +1,4 @@
-#Item: Revelation
+#Item: Revelation [Ship]
 from customEffects import boostModListBySkillReq
 def dreadnoughtShipBonusLaserRofA2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Dreadnought")

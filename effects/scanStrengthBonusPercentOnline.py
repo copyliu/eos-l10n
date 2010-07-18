@@ -1,4 +1,4 @@
-#Items from group: Sensor Backup Array (72 of 72)
+#Items from group: Sensor Backup Array (72 of 72) [Module]
 import model.fitting
 from customEffects import boost
 

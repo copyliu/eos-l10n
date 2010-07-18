@@ -1,4 +1,4 @@
-#Item: Loki Defensive - Amplification Node
+#Item: Loki Defensive - Amplification Node [Subsystem]
 from customEffects import boost
 def subsystemBonusMinmatarDefensiveSignatureRadius(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Defensive Systems")

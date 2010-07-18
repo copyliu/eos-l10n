@@ -1,4 +1,4 @@
-#Items from group: Smart Bomb (118 of 118)
+#Items from group: Smart Bomb (118 of 118) [Module]
 from model.attribute import basicAttribute
 type = "active"
 def empWave(self, fitting, state):

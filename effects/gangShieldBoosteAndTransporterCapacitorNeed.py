@@ -1,4 +1,4 @@
-#Item: Siege Warfare Link - Shield Efficiency
+#Item: Siege Warfare Link - Shield Efficiency [Module]
 from customEffects import boostModListByReq
 import model.fitting
 type = ("gang", "active")

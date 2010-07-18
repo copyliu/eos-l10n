@@ -1,4 +1,4 @@
-#Item: Surgical Strike
+#Item: Surgical Strike [Skill]
 from customEffects import boostModListByReq
 def surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupProjectileWeapon(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

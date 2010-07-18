@@ -1,4 +1,4 @@
-#Item: Drone Control Unit I
+#Item: Drone Control Unit I [Module]
 from customEffects import increase
 import model.fitting
 type = 'active'

@@ -1,4 +1,4 @@
-#Item: Doomsday Operation
+#Item: Doomsday Operation [Skill]
 from customEffects import boostModListByReq
 def skillSuperWeaponDmgBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "emDamage", "damageMultiplierBonus",

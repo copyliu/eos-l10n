@@ -1,4 +1,4 @@
-#Items from group: Leadership (5 of 14)
+#Items from group: Leadership (5 of 14) [Skill]
 from customEffects import boostModListByReq, multiply
 runTime = "early"
 def commandMultiplier(self, fitting, level):

@@ -1,4 +1,4 @@
-#Items from group: Rig Shield (24 of 54)
+#Items from group: Rig Shield (24 of 54) [Module]
 from customEffects import boost
 def modifyShieldResonancePostPercentPassive(self, fitting, state):
     for damageType in ("kinetic", "thermal", "explosive", "em"):

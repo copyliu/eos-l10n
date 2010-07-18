@@ -1,4 +1,4 @@
-#Item: Capital Energy Turret
+#Item: Capital Energy Turret [Skill]
 from customEffects import boostModListByReq
 def capitalTurretSkillLaserDamage(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

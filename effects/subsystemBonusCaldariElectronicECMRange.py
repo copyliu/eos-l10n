@@ -1,4 +1,4 @@
-#Item: Tengu Electronics - Obfuscation Manifold
+#Item: Tengu Electronics - Obfuscation Manifold [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusCaldariElectronicECMRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Electronic Systems")

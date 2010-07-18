@@ -1,4 +1,4 @@
-#Item: Moros
+#Item: Moros [Ship]
 from customEffects import boostDroneListByReq
 def dreadnoughtShipBonusDroneDamageMultiplierG2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Dreadnought")

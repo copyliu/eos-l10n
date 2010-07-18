@@ -1,4 +1,4 @@
-#Variations of item: Celestis (3 of 3)
+#Variations of item: Celestis (3 of 3) [Ship]
 from customEffects import boostModListByReq
 def shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

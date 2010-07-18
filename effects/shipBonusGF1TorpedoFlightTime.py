@@ -1,4 +1,4 @@
-#Item: Nemesis
+#Item: Nemesis [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipBonusGF1TorpedoFlightTime(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

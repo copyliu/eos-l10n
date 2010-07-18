@@ -1,4 +1,4 @@
-#Items from group: Heat Sink (25 of 25)
+#Items from group: Heat Sink (25 of 25) [Module]
 import model.fitting
 from customEffects import boostModListByReq, multiply
 def energyWeaponDamageMultiply(self, fitting, state):

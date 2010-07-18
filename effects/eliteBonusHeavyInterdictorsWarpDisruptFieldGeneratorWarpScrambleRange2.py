@@ -1,4 +1,4 @@
-#Items from group: Heavy Interdictor (4 of 4)
+#Items from group: Heavy Interdictor (4 of 4) [Ship]
 from customEffects import boostModListByReq
 def eliteBonusHeavyInterdictorsWarpDisruptFieldGeneratorWarpScrambleRange2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Interdictors")

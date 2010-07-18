@@ -1,4 +1,4 @@
-#Item: Malediction
+#Item: Malediction [Ship]
 from customEffects import boost
 def shipArmorEmResistance2AF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

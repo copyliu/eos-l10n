@@ -1,4 +1,4 @@
-#Items from group: Automated Targeting System (6 of 6)
+#Items from group: Automated Targeting System (6 of 6) [Module]
 from customEffects import increase
 import model.fitting
 type = "active"

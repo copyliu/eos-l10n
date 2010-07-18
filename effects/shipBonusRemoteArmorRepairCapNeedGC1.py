@@ -1,4 +1,4 @@
-#Item: Exequror
+#Item: Exequror [Ship]
 from customEffects import boostModListByReq
 def shipBonusRemoteArmorRepairCapNeedGC1(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

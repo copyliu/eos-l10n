@@ -1,4 +1,4 @@
-#Variations of item: Prophecy (2 of 3)
+#Variations of item: Prophecy (2 of 3) [Ship]
 from customEffects import boostModListByReq
 def shipLaserCapABC2(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

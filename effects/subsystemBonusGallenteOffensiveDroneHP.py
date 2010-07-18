@@ -1,4 +1,4 @@
-#Item: Proteus Offensive - Drone Synthesis Projector
+#Item: Proteus Offensive - Drone Synthesis Projector [Subsystem]
 from customEffects import boostDroneListByReq
 def subsystemBonusGallenteOffensiveDroneHP(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Offensive Systems")

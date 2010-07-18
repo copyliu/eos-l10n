@@ -1,4 +1,4 @@
-#Variations of item: Armageddon (4 of 5)
+#Variations of item: Armageddon (4 of 5) [Ship]
 from customEffects import boostModListBySkillReq
 def shipETspeedBonusAB2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

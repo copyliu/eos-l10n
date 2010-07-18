@@ -1,4 +1,4 @@
-#Item: Vagabond
+#Item: Vagabond [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipProjectileFallOff1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

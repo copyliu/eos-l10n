@@ -1,5 +1,5 @@
-#Item: Ashimmu
-#Item: Phantasm
+#Item: Ashimmu [Ship]
+#Item: Phantasm [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusMediumEnergyTurretDamagePirateFaction(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

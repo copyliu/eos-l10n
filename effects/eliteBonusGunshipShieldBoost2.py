@@ -1,4 +1,4 @@
-#Item: Hawk
+#Item: Hawk [Ship]
 from customEffects import boostModListByReq
 def eliteBonusGunshipShieldBoost2(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

@@ -1,4 +1,4 @@
-#Items from group: Black Ops (4 of 4)
+#Items from group: Black Ops (4 of 4) [Ship]
 from customEffects import multiply
 from model.attribute import basicAttribute
 def eliteBonusBlackOpsCloakVelocity2(self, fitting):

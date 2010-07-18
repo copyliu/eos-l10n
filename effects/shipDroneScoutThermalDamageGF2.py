@@ -1,4 +1,4 @@
-#Item: Helios
+#Item: Helios [Ship]
 from customEffects import boostDroneListBySkillReq
 def shipDroneScoutThermalDamageGF2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

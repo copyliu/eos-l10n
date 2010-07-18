@@ -1,4 +1,4 @@
-#Item: Exequror
+#Item: Exequror [Ship]
 from customEffects import boost
 def shipCargoCapacityGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

@@ -1,5 +1,5 @@
-#Item: Crusader
-#Item: Imperial Navy Slicer
+#Item: Crusader [Ship]
+#Item: Imperial Navy Slicer [Ship]
 from customEffects import boostModListBySkillReq
 def shipETDamageAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

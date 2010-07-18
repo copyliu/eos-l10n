@@ -1,4 +1,4 @@
-#Items from group: Afterburner (107 of 107)
+#Items from group: Afterburner (107 of 107) [Module]
 from customEffects import boost
 import model.fitting
 type = "overload"

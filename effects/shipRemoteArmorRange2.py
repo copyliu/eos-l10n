@@ -1,4 +1,4 @@
-#Item: Guardian
+#Item: Guardian [Ship]
 from customEffects import boostModListByReq
 def shipRemoteArmorRange2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

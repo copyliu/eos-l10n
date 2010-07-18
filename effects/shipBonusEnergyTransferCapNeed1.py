@@ -1,4 +1,4 @@
-#Item: Augoror
+#Item: Augoror [Ship]
 from customEffects import boostModListByReq
 def shipBonusEnergyTransferCapNeed1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

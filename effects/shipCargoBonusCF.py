@@ -1,4 +1,4 @@
-#Item: Bantam
+#Item: Bantam [Ship]
 from customEffects import boost
 def shipCargoBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

@@ -1,4 +1,4 @@
-#Item: Rorqual
+#Item: Rorqual [Ship]
 from customEffects import boostDroneListByReq
 def shipBonusORECapShipDroneDmgBonus(self, fitting):
     skill, level = fitting.getCharSkill("Capital Industrial Ships")

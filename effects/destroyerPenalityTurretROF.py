@@ -1,4 +1,4 @@
-#Items from group: Destroyer (4 of 4)
+#Items from group: Destroyer (4 of 4) [Ship]
 from customEffects import boostModListByReq, multiply
 def destroyerPenalityTurretROF(self, fitting):
     boostModListByReq(fitting.modules, "speed", "destroyerROFpenality",

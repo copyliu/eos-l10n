@@ -1,4 +1,4 @@
-#Item: Warhead Upgrades
+#Item: Warhead Upgrades [Skill]
 from customEffects import boostAmmoListBySkillReq
 def missileSkillWarheadUpgradesEmDamageBonus(self, fitting, level):
     boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",

@@ -1,4 +1,4 @@
-#Item: Medium Beam Laser Specialization
+#Item: Medium Beam Laser Specialization [Skill]
 from customEffects import boostModListByReq
 def selfT2MediumLaserBeamDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

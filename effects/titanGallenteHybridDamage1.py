@@ -1,4 +1,4 @@
-#Item: Erebus
+#Item: Erebus [Ship]
 from customEffects import boostModListBySkillReq
 def titanGallenteHybridDamage1(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Titan")

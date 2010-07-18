@@ -1,4 +1,4 @@
-#Item: Hyena
+#Item: Hyena [Ship]
 from customEffects import boostModListByReq
 def eliteBonusElectronicAttackShipStasisWebMaxRange1(self, fitting):
     skill, level = fitting.getCharSkill("Electronic Attack Ships")

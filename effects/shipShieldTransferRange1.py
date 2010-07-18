@@ -1,4 +1,4 @@
-#Item: Basilisk
+#Item: Basilisk [Ship]
 from customEffects import boostModListByReq
 def shipShieldTransferRange1(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

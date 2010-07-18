@@ -1,4 +1,4 @@
-#Item: Redeemer
+#Item: Redeemer [Ship]
 from customEffects import boostModListBySkillReq
 def eliteBonusBlackOpsLargeEnergyTurretTracking1(self, fitting):
     skill, level = fitting.getCharSkill("Black Ops")

@@ -1,4 +1,4 @@
-#Items from group: Projected ECCM (7 of 7)
+#Items from group: Projected ECCM (7 of 7) [Module]
 import model.fitting
 from customEffects import boost
 type = ("projected", "active")

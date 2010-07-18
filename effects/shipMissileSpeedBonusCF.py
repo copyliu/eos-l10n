@@ -1,4 +1,4 @@
-#Item: Buzzard
+#Item: Buzzard [Ship]
 from customEffects import boostModListBySkillReq
 def shipMissileSpeedBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

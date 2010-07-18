@@ -1,4 +1,4 @@
-#Item: Curse
+#Item: Curse [Ship]
 from customEffects import boostModListByReq
 def eliteReconEnergyVampireRangeBonus1(self, fitting):
     skill, level = fitting.getCharSkill("Recon Ships")

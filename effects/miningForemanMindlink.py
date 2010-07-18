@@ -1,4 +1,4 @@
-#Item: Mining Foreman Mindlink
+#Item: Mining Foreman Mindlink [Implant]
 from customEffects import boostModListBySkillReq
 def miningForemanMindlink(self, fitting):
     boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",

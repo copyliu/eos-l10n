@@ -1,4 +1,4 @@
-#Item: Phoenix
+#Item: Phoenix [Ship]
 from customEffects import boostModListByReq
 def dreadnoughtShipBonusLauncherRofC1(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Dreadnought")

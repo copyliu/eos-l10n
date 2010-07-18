@@ -1,4 +1,4 @@
-#Items from group: Drone Control Range Module (2 of 2)
+#Items from group: Drone Control Range Module (2 of 2) [Module]
 from customEffects import increase
 import model.fitting
 def droneRangeBonusAdd(self, fitting, state):

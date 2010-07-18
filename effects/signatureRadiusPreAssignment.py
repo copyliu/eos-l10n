@@ -1,4 +1,4 @@
-#Items from group: Defensive Systems (16 of 16)
+#Items from group: Defensive Systems (16 of 16) [Subsystem]
 runTime = "early"
 from customEffects import increase
 def signatureRadiusPreAssignment(self, fitting, state):

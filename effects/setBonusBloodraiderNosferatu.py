@@ -1,4 +1,4 @@
-#Items from group: Cyberimplant (10 of 138)
+#Items from group: Cyberimplant (10 of 138) [Implant]
 from customEffects import boostModListBySkillReq
 def setBonusBloodraiderNosferatu(self, fitting):
     boostModListBySkillReq(fitting.modules, "duration", "durationBonus",

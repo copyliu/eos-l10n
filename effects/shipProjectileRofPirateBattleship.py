@@ -1,4 +1,4 @@
-#Item: Machariel
+#Item: Machariel [Ship]
 from customEffects import boostModListBySkillReq
 def shipProjectileRofPirateBattleship(self, fitting):
      boostModListBySkillReq(fitting.modules, "speed", "shipBonusPirateFaction",

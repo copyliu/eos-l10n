@@ -1,4 +1,4 @@
-#Item: Proteus Offensive - Dissonic Encoding Platform
+#Item: Proteus Offensive - Dissonic Encoding Platform [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusGallenteOffensive3TurretTracking(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Offensive Systems")

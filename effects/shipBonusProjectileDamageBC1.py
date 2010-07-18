@@ -1,4 +1,4 @@
-#Item: Hurricane
+#Item: Hurricane [Ship]
 from customEffects import boostModListBySkillReq
 def shipBonusProjectileDamageBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

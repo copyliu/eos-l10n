@@ -1,4 +1,4 @@
-#Item: Proteus Electronics - Emergent Locus Analyzer
+#Item: Proteus Electronics - Emergent Locus Analyzer [Subsystem]
 from customEffects import boostModListByReq
 def subSystemBonusGallenteElectronic2TractorBeamRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Electronic Systems")

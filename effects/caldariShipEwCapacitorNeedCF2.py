@@ -1,4 +1,4 @@
-#Variations of item: Griffin (2 of 2)
+#Variations of item: Griffin (2 of 2) [Ship]
 from customEffects import boostModListByReq
 def caldariShipEwCapacitorNeedCF2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

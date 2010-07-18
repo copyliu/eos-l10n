@@ -1,5 +1,5 @@
-#Items from group: Nanofiber Internal Structure (14 of 14)
-#Items from group: Reinforced Bulkhead (12 of 12)
+#Items from group: Nanofiber Internal Structure (14 of 14) [Module]
+#Items from group: Reinforced Bulkhead (12 of 12) [Module]
 from customEffects import multiply
 import model.fitting
 def structureHPMultiply(self, fitting, state):

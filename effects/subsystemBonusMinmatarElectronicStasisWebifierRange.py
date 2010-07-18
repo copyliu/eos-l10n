@@ -1,4 +1,4 @@
-#Item: Loki Electronics - Immobility Drivers
+#Item: Loki Electronics - Immobility Drivers [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusMinmatarElectronicStasisWebifierRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Electronic Systems")

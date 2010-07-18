@@ -1,4 +1,4 @@
-#Item: Osprey Navy Issue
+#Item: Osprey Navy Issue [Ship]
 from customEffects import boostModListByReq
 def shipMissileAssaultMissileRofCC(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

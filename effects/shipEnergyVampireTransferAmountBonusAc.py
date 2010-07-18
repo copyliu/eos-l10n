@@ -1,4 +1,4 @@
-#Item: Ashimmu
+#Item: Ashimmu [Ship]
 from customEffects import boostModListByReq
 def shipEnergyVampireTransferAmountBonusAc(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

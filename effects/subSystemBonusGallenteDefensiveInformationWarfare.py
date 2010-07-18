@@ -1,4 +1,4 @@
-#Item: Proteus Defensive - Warfare Processor
+#Item: Proteus Defensive - Warfare Processor [Subsystem]
 from customEffects import boostModListBySkillReq
 def subSystemBonusGallenteDefensiveInformationWarfare(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Defensive Systems")

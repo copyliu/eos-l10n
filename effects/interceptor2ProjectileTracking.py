@@ -1,4 +1,4 @@
-#Item: Claw
+#Item: Claw [Ship]
 from customEffects import boostModListBySkillReq
 def interceptor2ProjectileTracking(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

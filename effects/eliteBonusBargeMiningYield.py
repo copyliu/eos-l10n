@@ -1,4 +1,4 @@
-#Item: Hulk
+#Item: Hulk [Ship]
 from customEffects import boostModListByReq
 def eliteBonusBargeMiningYield(self, fitting):
     skill, level = fitting.getCharSkill("Exhumers")

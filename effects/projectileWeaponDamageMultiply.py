@@ -1,4 +1,4 @@
-#Items from group: Gyrostabilizer (19 of 19)
+#Items from group: Gyrostabilizer (19 of 19) [Module]
 from customEffects import boostModListByReq, multiply
 import model.fitting
 def projectileWeaponDamageMultiply(self, fitting, state):

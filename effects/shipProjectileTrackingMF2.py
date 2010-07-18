@@ -1,7 +1,7 @@
-#Item: Republic Fleet Firetail
-#Item: Rifter
-#Item: Slasher
-#Item: Stiletto
+#Item: Republic Fleet Firetail [Ship]
+#Item: Rifter [Ship]
+#Item: Slasher [Ship]
+#Item: Stiletto [Ship]
 from customEffects import boostModListBySkillReq
 def shipProjectileTrackingMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

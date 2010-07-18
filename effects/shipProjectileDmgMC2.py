@@ -1,6 +1,6 @@
-#Item: Cynabal
-#Item: Muninn
-#Item: Rupture
+#Item: Cynabal [Ship]
+#Item: Muninn [Ship]
+#Item: Rupture [Ship]
 from customEffects import boostModListBySkillReq
 def shipProjectileDmgMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

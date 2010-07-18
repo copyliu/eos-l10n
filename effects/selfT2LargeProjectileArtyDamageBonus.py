@@ -1,4 +1,4 @@
-#Item: Large Artillery Specialization
+#Item: Large Artillery Specialization [Skill]
 from customEffects import boostModListByReq
 def selfT2LargeProjectileArtyDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

@@ -1,4 +1,4 @@
-#Item: Navitas
+#Item: Navitas [Ship]
 from customEffects import boostModListByReq
 def shipMiningBonusGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

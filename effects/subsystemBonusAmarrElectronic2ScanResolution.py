@@ -1,4 +1,4 @@
-#Item: Legion Electronics - Tactical Targeting Network
+#Item: Legion Electronics - Tactical Targeting Network [Subsystem]
 from customEffects import boost
 def subsystemBonusAmarrElectronic2ScanResolution(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Electronic Systems")

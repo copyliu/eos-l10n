@@ -1,4 +1,4 @@
-#Item: Nemesis
+#Item: Nemesis [Ship]
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusCoverOpsBombThermalDmg1(self, fitting):
     skill, level = fitting.getCharSkill("Covert Ops")

@@ -1,9 +1,9 @@
 #Items from category: Module (106 of 3488)
-#Items from group: Missile Launcher Cruise (20 of 20)
-#Items from group: Missile Launcher Heavy Assault (12 of 12)
-#Items from group: Missile Launcher Rocket (14 of 14)
-#Items from group: Missile Launcher Siege (21 of 21)
-#Items from group: Missile Launcher Standard (13 of 13)
+#Items from group: Missile Launcher Cruise (20 of 20) [Module]
+#Items from group: Missile Launcher Heavy Assault (12 of 12) [Module]
+#Items from group: Missile Launcher Rocket (14 of 14) [Module]
+#Items from group: Missile Launcher Siege (21 of 21) [Module]
+#Items from group: Missile Launcher Standard (13 of 13) [Module]
 from model.attribute import basicAttribute
 from customEffects import increase
 def launcherFitted(self, fitting, state):

@@ -1,4 +1,4 @@
-#Item: Kinetic Armor Compensation
+#Item: Kinetic Armor Compensation [Skill]
 from customEffects import boostModListByReq, multiply
 def passiveKineticArmorResonanceBonusGroupArmorHardener2(self, fitting, level):
     boostModListByReq(fitting.modules, "passiveKineticDamageResistanceBonus", "hardeningbonus2",

@@ -1,4 +1,4 @@
-#Item: Legion Propulsion - Chassis Optimization
+#Item: Legion Propulsion - Chassis Optimization [Subsystem]
 from customEffects import boost
 def subsystemBonusAmarrPropulsionMaxVelocity(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Propulsion Systems")

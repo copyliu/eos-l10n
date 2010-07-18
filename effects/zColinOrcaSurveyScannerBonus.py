@@ -1,4 +1,4 @@
-#Item: Orca
+#Item: Orca [Ship]
 from customEffects import boostModListByReq
 def zColinOrcaSurveyScannerBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "shipOrcaSurveyScannerBonus",

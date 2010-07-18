@@ -1,4 +1,4 @@
-#Item: Legion Offensive - Liquid Crystal Magnifiers
+#Item: Legion Offensive - Liquid Crystal Magnifiers [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusAmarrOffensiveEnergyWeaponDamageMultiplier(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

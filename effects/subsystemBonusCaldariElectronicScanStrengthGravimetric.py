@@ -1,4 +1,4 @@
-#Item: Tengu Electronics - Dissolution Sequencer
+#Item: Tengu Electronics - Dissolution Sequencer [Subsystem]
 from customEffects import boost
 def subsystemBonusCaldariElectronicScanStrengthGravimetric(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Electronic Systems")

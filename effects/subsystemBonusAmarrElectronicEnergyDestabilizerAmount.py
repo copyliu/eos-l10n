@@ -1,4 +1,4 @@
-#Item: Legion Electronics - Energy Parasitic Complex
+#Item: Legion Electronics - Energy Parasitic Complex [Subsystem]
 from customEffects import boostModListByReq
 def subsystemBonusAmarrElectronicEnergyDestabilizerAmount(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Electronic Systems")

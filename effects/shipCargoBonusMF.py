@@ -1,4 +1,4 @@
-#Item: Probe
+#Item: Probe [Ship]
 from customEffects import boost
 def shipCargoBonusMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

@@ -1,4 +1,4 @@
-#Item: Fuel Conservation
+#Item: Fuel Conservation [Skill]
 from customEffects import boostModListBySkillReq
 def fuelConservationCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringAfterburner(self, fitting, level):
     boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",

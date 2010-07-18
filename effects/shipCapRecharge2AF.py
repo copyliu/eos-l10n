@@ -1,4 +1,4 @@
-#Item: Anathema
+#Item: Anathema [Ship]
 from customEffects import boost
 def shipCapRecharge2AF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

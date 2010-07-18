@@ -1,4 +1,4 @@
-#Item: Mining Foreman Link - Harvester Capacitor Efficiency
+#Item: Mining Foreman Link - Harvester Capacitor Efficiency [Module]
 import model.fitting
 from customEffects import boostModListByReq
 type = ("gang", "active")

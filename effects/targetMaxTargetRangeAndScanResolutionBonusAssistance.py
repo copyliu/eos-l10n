@@ -1,4 +1,4 @@
-#Items from group: Remote Sensor Booster (8 of 8)
+#Items from group: Remote Sensor Booster (8 of 8) [Module]
 import model.fitting
 from customEffects import boost
 type = ("projected", "active")

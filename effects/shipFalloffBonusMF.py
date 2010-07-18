@@ -1,4 +1,4 @@
-#Item: Dramiel
+#Item: Dramiel [Ship]
 from customEffects import boostModListBySkillReq
 def shipFalloffBonusMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

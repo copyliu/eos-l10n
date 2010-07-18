@@ -1,4 +1,4 @@
-#Items from group: Battleship (3 of 30)
+#Items from group: Battleship (3 of 30) [Ship]
 from customEffects import boost
 def shipBonusExplosiveShieldResistanceCB2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

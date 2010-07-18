@@ -1,4 +1,4 @@
-#Item: Leadership
+#Item: Leadership [Skill]
 from customEffects import boost
 type = "gang"
 def leadershipEffect(self, fitting, level):

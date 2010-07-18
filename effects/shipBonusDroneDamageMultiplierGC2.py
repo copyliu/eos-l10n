@@ -1,5 +1,5 @@
-#Variations of item: Vexor (3 of 4)
-#Item: Gila
+#Variations of item: Vexor (3 of 4) [Ship]
+#Item: Gila [Ship]
 from customEffects import boostDroneListByReq
 def shipBonusDroneDamageMultiplierGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")
