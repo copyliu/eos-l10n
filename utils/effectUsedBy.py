@@ -435,7 +435,6 @@ for effectFileName in os.listdir(effectsPath):
             for row in cursor: groupName = row[0]
             groups.append((groupID, groupName))
         for group in sorted(groups, key=lambda tuple: tuple[1], reverse=True):
-            print group
             effectLines.insert(0,"#Items from group: {0} ({1} of {2})".format(group[1], perEffectMap_groupID_typesAffected[group[0]], len(globalMap_groupID_typeID[group[0]])))
 
         for categoryID in describedByCategory:
