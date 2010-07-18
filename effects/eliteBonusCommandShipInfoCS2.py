@@ -1,4 +1,4 @@
-#Used by: Ship: Eos
+#Item: Eos
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipInfoCS2(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

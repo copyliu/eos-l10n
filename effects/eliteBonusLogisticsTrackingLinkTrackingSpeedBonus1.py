@@ -1,4 +1,4 @@
-#Used by: Ship: Scimitar
+#Item: Scimitar
 from customEffects import boostModListByReq
 def eliteBonusLogisticsTrackingLinkTrackingSpeedBonus1(self, fitting):
     skill, level = fitting.getCharSkill("Logistics")

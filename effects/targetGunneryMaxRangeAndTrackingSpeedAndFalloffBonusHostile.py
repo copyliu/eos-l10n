@@ -1,4 +1,4 @@
-#Used by: Item: Tracking Disruptor
+#Items from group: Tracking Disruptor (10 of 10)
 import model.fitting
 from customEffects import boost, boostModListBySkillReq
 type = ("projected", "active")

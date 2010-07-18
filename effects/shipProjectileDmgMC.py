@@ -1,4 +1,3 @@
-#Used by: Ship: Mimir
 from customEffects import boostModListBySkillReq
 def shipProjectileDmgMC(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Skill: Drone Interfacing
+#Item: Drone Interfacing
 from customEffects import boostDroneListBySkillReq
 def droneDamageBonusRequringDrones(self, fitting, level):
     boostDroneListBySkillReq(fitting.drones, "damageMultiplier", "damageMultiplierBonus",

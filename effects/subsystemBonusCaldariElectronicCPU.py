@@ -1,4 +1,4 @@
-#Used by: Item: Tengu Electronics - CPU Efficiency Gate
+#Item: Tengu Electronics - CPU Efficiency Gate
 from customEffects import boost
 def subsystemBonusCaldariElectronicCPU(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Electronic Systems")

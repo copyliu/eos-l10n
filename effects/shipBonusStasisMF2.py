@@ -1,4 +1,3 @@
-#Used by: Ship: Freki
 from customEffects import boostModListByReq
 def shipBonusStasisMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

@@ -1,5 +1,4 @@
-#Used by: Ship: Griffin
-#               Kitsune
+#Variations of item: Griffin (2 of 2)
 from customEffects import boostModListByReq
 def shipECMScanStrengthBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

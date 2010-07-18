@@ -1,4 +1,4 @@
-#Used by: Ship: Kronos
+#Item: Kronos
 from customEffects import boostModListBySkillReq
 def eliteBonusViolatorsLargeHybridTurretDamageRole1(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "eliteBonusViolatorsRole1",

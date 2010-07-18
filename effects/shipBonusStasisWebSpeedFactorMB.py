@@ -1,4 +1,4 @@
-#Used by: Ship: Vindicator
+#Item: Vindicator
 from customEffects import boostModListByReq
 def shipBonusStasisWebSpeedFactorMB(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

@@ -1,10 +1,4 @@
-#Used by: Skill: Rockets
-#                Standard Missiles
-#                FoF Missiles
-#                Heavy Missiles
-#                Torpedoes
-#                Cruise Missiles
-#                Heavy Assault Missiles
+#Items from group: Missile Launcher Operation (7 of 24)
 from customEffects import boostAmmoListByReq
 def missileKineticDmgBonus2(self, fitting, level):
     boostAmmoListByReq(fitting.modules, "kineticDamage", "damageMultiplierBonus",

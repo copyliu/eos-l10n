@@ -1,4 +1,4 @@
-#Used by: Item: Information Warfare Link - Electronic Superiority
+#Item: Information Warfare Link - Electronic Superiority
 type = ("gang", "active")
 from customEffects import boostModListByReq
 import model.fitting

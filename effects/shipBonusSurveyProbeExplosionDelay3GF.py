@@ -1,4 +1,4 @@
-#Used by: Ship: Imicus
+#Item: Imicus
 from customEffects import boostAmmoListByReq
 def shipBonusSurveyProbeExplosionDelay3GF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

@@ -1,8 +1,5 @@
-#Used by: Ship: Scorpion Navy Issue
-#               Raven
-#               Raven Navy Issue
-#               Raven State Issue
-#               Widow
+#Variations of item: Raven (3 of 4)
+#Variations of item: Scorpion (2 of 4)
 from customEffects import boostModListByReq
 def shipSiegeLauncherROFBonus2CB(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

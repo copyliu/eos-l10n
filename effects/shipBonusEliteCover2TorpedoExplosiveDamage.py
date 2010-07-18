@@ -1,4 +1,4 @@
-#Used by: Ship: Hound
+#Item: Hound
 from customEffects import boostAmmoListBySkillReq
 def shipBonusEliteCover2TorpedoExplosiveDamage(self, fitting):
     skill, level = fitting.getCharSkill("Covert Ops")

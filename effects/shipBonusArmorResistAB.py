@@ -1,4 +1,4 @@
-#Used by: Ship: Abaddon
+#Item: Abaddon
 from customEffects import boost
 def shipBonusArmorResistAB(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

@@ -1,13 +1,4 @@
-#Used by: Ship: Bellicose
-#               Stabber
-#               Stabber Fleet Issue
-#               Rupture
-#               Scythe Fleet Issue
-#               Rapier
-#               Huginn
-#               Broadsword
-#               Vagabond
-#               Muninn
+#Items from category: Ship (10 of 245)
 from customEffects import boostModListBySkillReq
 def shipPTurretSpeedBonusMC(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

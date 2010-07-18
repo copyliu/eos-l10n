@@ -1,4 +1,4 @@
-#Used by: Skill: Thermic Armor Compensation
+#Item: Thermic Armor Compensation
 from customEffects import boostModListByReq, multiply
 def passiveThermicArmorResonanceBonusGroupArmorHardener2(self, fitting, level):
     boostModListByReq(fitting.modules, "passiveThermicDamageResistanceBonus", "hardeningbonus2",

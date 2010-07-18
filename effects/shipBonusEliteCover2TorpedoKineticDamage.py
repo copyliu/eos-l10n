@@ -1,4 +1,4 @@
-#Used by: Ship: Manticore
+#Item: Manticore
 from customEffects import boostAmmoListBySkillReq
 def shipBonusEliteCover2TorpedoKineticDamage(self, fitting):
     skill, level = fitting.getCharSkill("Covert Ops")

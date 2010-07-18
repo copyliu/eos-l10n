@@ -1,10 +1,4 @@
-#Used by: Item: Algid Energy Administrations Unit
-#               Energy Ambit Extension
-#               Energy Burst Aerator
-#               Energy Collision Accelerator
-#               Energy Discharge Elutration
-#               Energy Locus Coordinator
-#               Energy Metastasis Adjuster
+#Items from group: Rig Energy Weapon (42 of 42)
 from customEffects import boostModListByReq
 def drawbackPowerNeedLasers(self, fitting, state):
     boostModListByReq(fitting.modules, "power", "drawback",

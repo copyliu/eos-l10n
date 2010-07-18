@@ -1,4 +1,4 @@
-#Used by: Item: Legion Propulsion - Wake Limiter
+#Item: Legion Propulsion - Wake Limiter
 from customEffects import boostModListBySkillReq
 def subsystemBonusAmarrPropulsionMWDPenalty(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Propulsion Systems")

@@ -1,4 +1,4 @@
-#Used by: Ship: Tormentor
+#Item: Tormentor
 from customEffects import boostModListByReq
 def shipMiningBonusAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

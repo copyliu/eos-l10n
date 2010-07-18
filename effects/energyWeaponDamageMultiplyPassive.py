@@ -1,4 +1,6 @@
-#Used by: Item: Energy Collision Accelerator
+#Variations of item: Large Energy Collision Accelerator I (2 of 2)
+#Variations of item: Medium Energy Collision Accelerator I (2 of 2)
+#Variations of item: Small Energy Collision Accelerator I (2 of 2)
 from customEffects import boostModListByReq, multiply
 def energyWeaponDamageMultiplyPassive(self, fitting, state):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplier", 

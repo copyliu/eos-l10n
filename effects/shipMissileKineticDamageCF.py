@@ -1,10 +1,4 @@
-#Used by: Ship: Condor
-#               Heron
-#               Kestrel
-#               Caldari Navy Hookbill
-#               Crow
-#               Buzzard
-#               Hawk
+#Items from category: Ship (7 of 245)
 from customEffects import boostAmmoListBySkillReq
 def shipMissileKineticDamageCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

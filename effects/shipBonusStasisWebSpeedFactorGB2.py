@@ -1,4 +1,4 @@
-#Used by: Ship: Kronos
+#Item: Kronos
 from customEffects import boostModListByReq
 def shipBonusStasisWebSpeedFactorGB2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

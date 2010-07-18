@@ -1,4 +1,4 @@
-#Used by: Item: Information Warfare Link - Recon Operation
+#Item: Information Warfare Link - Recon Operation
 from customEffects import boostModListByReq
 import model.fitting
 type = ("gang", "active")

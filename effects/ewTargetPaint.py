@@ -1,4 +1,5 @@
-#Used by: Item: Target Painter
+#Items from group: Electronic Warfare Drone (3 of 12)
+#Items from group: Target Painter (9 of 9)
 import model.fitting
 from customEffects import boost
 type = ("projected", "active")

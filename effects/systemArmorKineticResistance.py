@@ -1,5 +1,4 @@
-#Used by: Item: Pulsar Effect Beacon
-#               Wolf Rayet Effect Beacon
+#Items from group: Effect Beacon (12 of 38)
 type = "projected"
 from customEffects import boost
 def systemArmorKineticResistance(self, fitting, state):

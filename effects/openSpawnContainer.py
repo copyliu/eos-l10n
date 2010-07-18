@@ -1,3 +1,3 @@
-#Used by: Item: Analyzer
+#Items from group: Data Miners (12 of 14)
 type = "active"
 def openSpawnContainer(self, fitting, state): pass

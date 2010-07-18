@@ -1,4 +1,4 @@
-#Used by: Item: Projectile Collision Accelerator
+#Items from group: Rig Projectile Weapon (6 of 30)
 from customEffects import boostModListByReq, multiply
 def projectileWeaponDamageMultiplyPassive(self, fitting, state):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplier", 

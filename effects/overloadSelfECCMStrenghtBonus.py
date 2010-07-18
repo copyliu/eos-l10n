@@ -1,4 +1,4 @@
-#Used by: Item: ECCM
+#Items from group: ECCM (44 of 44)
 import model.fitting
 from customEffects import boost
 type = "overload"

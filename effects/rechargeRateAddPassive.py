@@ -1,4 +1,4 @@
-#Used by: Item: All Engineering subsystems
+#Items from group: Engineering Systems (16 of 16)
 runTime = "early"
 from customEffects import increase
 def rechargeRateAddPassive(self, fitting, state):

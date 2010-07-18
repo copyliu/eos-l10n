@@ -1,4 +1,4 @@
-#Used by: Skill: Capital Shield Operation
+#Item: Capital Shield Operation
 from customEffects import boostModListByReq
 def capitalShieldOperationSkillCapacitorNeedBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

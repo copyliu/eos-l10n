@@ -1,4 +1,4 @@
-#Used by: Item: Legion Offensive - Assault Optimization
+#Item: Legion Offensive - Assault Optimization
 from customEffects import boostModListByReq
 def subsystemBonusAmarrOffensiveAssaultMissileLauncherROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

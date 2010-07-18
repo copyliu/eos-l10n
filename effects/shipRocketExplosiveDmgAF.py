@@ -1,6 +1,6 @@
-#Used by: Ship: Vengeance
-#               Malediction
-#               Anathema
+#Item: Anathema
+#Item: Malediction
+#Item: Vengeance
 from customEffects import boostAmmoListBySkillReq
 def shipRocketExplosiveDmgAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

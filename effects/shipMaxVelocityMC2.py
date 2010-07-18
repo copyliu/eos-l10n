@@ -1,5 +1,4 @@
-#Used by: Ship: Stabber
-#               Vagabond
+#Variations of item: Stabber (2 of 3)
 from customEffects import boost
 def shipMaxVelocityMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

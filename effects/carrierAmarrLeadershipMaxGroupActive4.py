@@ -1,4 +1,4 @@
-#Used by: Ship: Aeon
+#Item: Aeon
 from customEffects import boostModListByReq, increase
 def carrierAmarrLeadershipMaxGroupActive4(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Carrier")

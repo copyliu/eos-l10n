@@ -1,4 +1,4 @@
-#Used by: Skill: Medium Artillery Specialization
+#Item: Medium Artillery Specialization
 from customEffects import boostModListByReq
 def selfT2MediumProjectileArtyDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

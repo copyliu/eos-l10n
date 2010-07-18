@@ -1,4 +1,4 @@
-#Used by: Ship: Scythe Fleet Issue
+#Item: Scythe Fleet Issue
 from customEffects import boostModListByReq
 def shipMissileLauncherSpeedBonusMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

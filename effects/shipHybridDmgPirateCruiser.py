@@ -1,4 +1,4 @@
-#Used by: Ship: Vigilant
+#Item: Vigilant
 from customEffects import boostModListBySkillReq
 def shipHybridDmgPirateCruiser(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

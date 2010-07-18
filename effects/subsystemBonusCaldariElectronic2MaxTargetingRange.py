@@ -1,4 +1,4 @@
-#Used by: Item: Tengu Electronics - Dissolution Sequencer
+#Item: Tengu Electronics - Dissolution Sequencer
 from customEffects import boost
 def subsystemBonusCaldariElectronic2MaxTargetingRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Electronic Systems")

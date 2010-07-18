@@ -1,7 +1,4 @@
-#Used by: Ship: Rhea
-#               Nomad
-#               Anshar
-#               Ark
+#Items from group: Jump Freighter (4 of 4)
 from customEffects import boost
 def eliteBonusJumpFreighterHullHP1(self, fitting):
     skill, level = fitting.getCharSkill("Jump Freighters")

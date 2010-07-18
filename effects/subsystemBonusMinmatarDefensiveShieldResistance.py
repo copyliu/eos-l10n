@@ -1,4 +1,4 @@
-#Used by: Item: Loki Defensive - Adaptive Shielding
+#Item: Loki Defensive - Adaptive Shielding
 from customEffects import boost
 def subsystemBonusMinmatarDefensiveShieldResistance(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Defensive Systems")

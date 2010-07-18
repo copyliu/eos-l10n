@@ -1,4 +1,4 @@
-#Used by: Item: Shield Resistance Amplifier
+#Items from group: Shield Amplifier (88 of 88)
 from customEffects import boost
 import model.fitting
 

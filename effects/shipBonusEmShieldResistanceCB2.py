@@ -1,6 +1,4 @@
-#Used by: Ship: Scorpion Navy Issue
-#               Rokh
-#               Rattlesnake
+#Items from group: Battleship (3 of 30)
 from customEffects import boost
 def shipBonusEmShieldResistanceCB2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

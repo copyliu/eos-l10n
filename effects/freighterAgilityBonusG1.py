@@ -1,4 +1,4 @@
-#Used by: Ship: Anshar
+#Item: Anshar
 from customEffects import boost
 def freighterAgilityBonusG1(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Freighter")

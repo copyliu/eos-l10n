@@ -1,4 +1,4 @@
-#Used by: Ship: Obelisk
+#Item: Obelisk
 from customEffects import boost
 def freighterMaxVelocityBonusG1(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Freighter")

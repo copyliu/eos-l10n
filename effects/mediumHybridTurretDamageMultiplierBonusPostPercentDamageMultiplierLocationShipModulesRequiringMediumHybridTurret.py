@@ -1,4 +1,5 @@
-#Used by: Skill: Medium Hybrid Turret
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Gunnery Implants (3 of 9)
+#Item: Medium Hybrid Turret
 from customEffects import boostModListBySkillReq
 def mediumHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumHybridTurret(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

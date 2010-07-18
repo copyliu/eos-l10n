@@ -1,4 +1,4 @@
-#Used by: Item: All offensive and engineering subsystems
+#Items from category: Subsystem (29 of 80)
 runTime = "early"
 from customEffects import increase
 def droneBandwidthAddPassive(self, fitting, state):

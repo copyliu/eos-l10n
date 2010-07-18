@@ -1,4 +1,3 @@
-#Used by: Ship: Adrestia
 from customEffects import boostModListBySkillReq
 def shipBonusHybridTrackingATC2(self, fitting):
     boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusATC2",

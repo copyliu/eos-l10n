@@ -1,4 +1,4 @@
-#Used by: Item: Energy Transfer Array
+#Items from group: Energy Transfer Array (37 of 37)
 type = ("projected","active")
 from customEffects import increase
 def energyTransfer(self, fitting, state, activeLayer):

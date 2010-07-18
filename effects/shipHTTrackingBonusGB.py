@@ -1,4 +1,4 @@
-#Used by: Ship: Vindicator
+#Item: Vindicator
 from customEffects import boostModListBySkillReq
 def shipHTTrackingBonusGB(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

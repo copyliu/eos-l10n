@@ -1,9 +1,4 @@
-#Used by: Skill: Amarr Drone Specialization
-#                Caldari Drone Specialization
-#                Gallente Drone Specialization
-#                Minmatar Drone Specialization
-#                Heavy Drone Operation
-#                Sentry Drone Interfacing
+#Items from group: Drones (6 of 19)
 from customEffects import boostDroneListByReq
 def droneDmgBonus(self, fitting, level):
     boostDroneListByReq(fitting.drones, "damageMultiplier", "damageMultiplierBonus",

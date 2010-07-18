@@ -1,4 +1,4 @@
-#Used by: Item: Omnidirectional Tracking Link
+#Items from group: Drone Tracking Modules (2 of 2)
 from customEffects import multiply, boostDroneListByReq
 import model.fitting
 def droneTrackingComputerMultiply(self, fitting, state):

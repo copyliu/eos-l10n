@@ -1,4 +1,4 @@
-#Used by: Ship: Rokh
+#Item: Rokh
 from customEffects import boostModListBySkillReq
 def shipBonusHybridOptimalCB(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

@@ -1,4 +1,4 @@
-#Used by: Ship: Charon
+#Item: Charon
 from customEffects import boost
 def freighterMaxVelocityBonusC1(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Freighter")

@@ -1,6 +1,4 @@
-#Used by: Ship: Brutix
-#               Eos
-#               Astarte
+#Variations of item: Brutix (3 of 3)
 from customEffects import boostModListBySkillReq
 def shipHybridDmgGBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

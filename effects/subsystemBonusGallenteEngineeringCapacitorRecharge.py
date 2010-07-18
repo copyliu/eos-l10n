@@ -1,4 +1,4 @@
-#Used by: Item: Proteus Engineering - Capacitor Regeneration Matrix
+#Item: Proteus Engineering - Capacitor Regeneration Matrix
 from customEffects import boost
 def subsystemBonusGallenteEngineeringCapacitorRecharge(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Engineering Systems")

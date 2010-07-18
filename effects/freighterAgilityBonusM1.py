@@ -1,4 +1,4 @@
-#Used by: Ship: Nomad
+#Item: Nomad
 from customEffects import boost
 def freighterAgilityBonusM1(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Freighter")

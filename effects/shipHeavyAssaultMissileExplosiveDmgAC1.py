@@ -1,4 +1,4 @@
-#Used by: Ship: Sacrilege
+#Item: Sacrilege
 from customEffects import boostAmmoListBySkillReq
 def shipHeavyAssaultMissileExplosiveDmgAC1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

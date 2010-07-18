@@ -1,10 +1,4 @@
-#Used by: Item: Algid Hybrid Administrations Unit
-#               Hybrid Ambit Extension
-#               Hybrid Burst Aerator
-#               Hybrid Collision Accelerator
-#               Hybrid Discharge Elutration
-#               Hybrid Locus Coordinator
-#               Hybrid Metastasis Adjuster
+#Items from group: Rig Hybrid Weapon (42 of 42)
 from customEffects import boostModListByReq
 def drawbackPowerNeedHybrids(self, fitting, state):
     boostModListByReq(fitting.modules, "power", "drawback",

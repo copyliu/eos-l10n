@@ -1,4 +1,4 @@
-#Used by: Ship: Sleipnir
+#Item: Sleipnir
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipProjectileDamageCS1(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

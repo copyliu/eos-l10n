@@ -1,5 +1,4 @@
-#Used by: Ship: Tormentor
-#Fly, oh thee tormentor. (go torment some roids, k k ?)
+#Item: Tormentor
 from customEffects import boost
 def shipCargoBonusAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

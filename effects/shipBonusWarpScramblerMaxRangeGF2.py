@@ -1,4 +1,3 @@
-#Used by: Ship: Utu
 from customEffects import boostModListByReq
 def shipBonusWarpScramblerMaxRangeGF2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

@@ -1,5 +1,4 @@
-#Used by: Ship: Hulk
-#               Mackinaw
+#Items from group: Exhumer (2 of 3)
 from customEffects import boostModListBySkillReq
 def eliteBargeBonusIceHarvestingCycleTimeBarge3(self, fitting):
     skill, level = fitting.getCharSkill("Exhumers")

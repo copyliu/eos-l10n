@@ -1,4 +1,5 @@
-#Used by: Energy Neutralizers
+#Items from group: Cap Drain Drone (3 of 3)
+#Items from group: Energy Destabilizer (41 of 41)
 from customEffects import increase
 import model.fitting
 type = ("active", "projected", "normal")

@@ -1,4 +1,4 @@
-#Used by: Skill: Signature Focusing
+#Item: Signature Focusing
 from customEffects import boostModListByReq
 def ewSkillTargetPaintingStrengthBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "signatureRadiusBonus", "scanSkillTargetPaintStrengthBonus",

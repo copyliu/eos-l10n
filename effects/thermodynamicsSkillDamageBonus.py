@@ -1,4 +1,4 @@
-#Used by: Skill: Thermodynamics
+#Item: Thermodynamics
 from customEffects import boostModListByReq
 def thermodynamicsSkillDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "heatDamage", "thermodynamicsHeatDamage",

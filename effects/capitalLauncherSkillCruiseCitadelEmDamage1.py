@@ -1,4 +1,4 @@
-#Used by: Skill: Citadel Cruise Missiles
+#Item: Citadel Cruise Missiles
 from customEffects import boostAmmoListBySkillReq
 def capitalLauncherSkillCruiseCitadelEmDamage1(self, fitting, level = 1):
     boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",

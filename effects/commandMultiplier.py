@@ -1,4 +1,4 @@
-#Used by: Skill: X Warfare Specialist
+#Items from group: Leadership (5 of 14)
 from customEffects import boostModListByReq, multiply
 runTime = "early"
 def commandMultiplier(self, fitting, level):

@@ -1,4 +1,4 @@
-#Used by: Ship: Maelstrom
+#Item: Maelstrom
 from customEffects import boostModListByReq
 def shipBonusShieldBoosterMB1(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

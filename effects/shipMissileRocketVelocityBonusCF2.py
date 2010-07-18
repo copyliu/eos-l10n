@@ -1,5 +1,5 @@
-#Used by: Ship: Condor
-#               Caldari Navy Hookbill
+#Item: Caldari Navy Hookbill
+#Item: Condor
 from customEffects import boostAmmoListBySkillReq
 def shipMissileRocketVelocityBonusCF2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

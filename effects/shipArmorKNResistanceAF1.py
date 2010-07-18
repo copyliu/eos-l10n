@@ -1,4 +1,4 @@
-#Used by: Ship: Punisher
+#Item: Punisher
 from customEffects import boost
 def shipArmorKNResistanceAF1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

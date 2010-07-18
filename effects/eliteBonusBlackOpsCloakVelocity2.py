@@ -1,7 +1,4 @@
-#Used by: Ship: Redeemer
-#               Sin
-#               Widow
-#               Panther
+#Items from group: Black Ops (4 of 4)
 from customEffects import multiply
 from model.attribute import basicAttribute
 def eliteBonusBlackOpsCloakVelocity2(self, fitting):

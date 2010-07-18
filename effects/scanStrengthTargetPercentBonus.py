@@ -1,4 +1,4 @@
-#Used by: Item: ECCM Projector
+#Items from group: Projected ECCM (7 of 7)
 import model.fitting
 from customEffects import boost
 type = ("projected", "active")

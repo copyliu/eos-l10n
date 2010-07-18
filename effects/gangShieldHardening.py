@@ -1,4 +1,4 @@
-#Used by: Item: Siege Warfare Link - Shield Harmonizing
+#Item: Siege Warfare Link - Shield Harmonizing
 from customEffects import boost
 import model.fitting
 type = ("gang", "active")

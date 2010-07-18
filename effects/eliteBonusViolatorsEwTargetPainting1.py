@@ -1,4 +1,4 @@
-#Used by: Ship: Golem
+#Item: Golem
 from customEffects import boostModListByReq
 def eliteBonusViolatorsEwTargetPainting1(self, fitting):
     skill, level = fitting.getCharSkill("Marauders")

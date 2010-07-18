@@ -1,5 +1,4 @@
-#Used by: Item: Cynosural Field Generator I
-#               Covert Cynosural Field Generator I
+#Items from group: Cynosural Field (2 of 2)
 from customEffects import boost
 import model.fitting
 type = 'active'

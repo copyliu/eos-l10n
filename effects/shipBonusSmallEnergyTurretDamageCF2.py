@@ -1,4 +1,4 @@
-#Used by: Ship: Succubus
+#Item: Succubus
 from customEffects import boostModListBySkillReq
 def shipBonusSmallEnergyTurretDamageCF2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

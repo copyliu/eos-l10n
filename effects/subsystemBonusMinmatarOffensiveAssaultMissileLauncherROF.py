@@ -1,4 +1,4 @@
-#Used by: Item: Hardpoint Efficiency Configuration
+#Item: Loki Offensive - Hardpoint Efficiency Configuration
 from customEffects import boostModListByReq
 def subsystemBonusMinmatarOffensiveAssaultMissileLauncherROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Offensive Systems")

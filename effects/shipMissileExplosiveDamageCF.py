@@ -1,5 +1,5 @@
-#Used by: Ship: Kestrel
-#               Caldari Navy Hookbill
+#Item: Caldari Navy Hookbill
+#Item: Kestrel
 from customEffects import boostAmmoListBySkillReq
 def shipMissileExplosiveDamageCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

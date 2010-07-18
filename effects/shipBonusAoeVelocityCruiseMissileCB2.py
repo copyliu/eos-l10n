@@ -1,4 +1,4 @@
-#Used by: Ship: Golem
+#Item: Golem
 from customEffects import boostAmmoListBySkillReq
 def shipBonusAoeVelocityCruiseMissileCB2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

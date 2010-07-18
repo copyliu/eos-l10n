@@ -1,4 +1,4 @@
-#Used by: Item: Covert ops Cloaking Device
+#Items from group: Cloaking Device (2 of 14)
 import model.fitting
 from model.attribute import basicAttribute
 from customEffects import multiply

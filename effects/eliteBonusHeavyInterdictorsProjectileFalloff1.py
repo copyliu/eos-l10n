@@ -1,4 +1,4 @@
-#Used by: Ship: Phobos
+#Item: Broadsword
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyInterdictorsProjectileFalloff1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Interdictors")

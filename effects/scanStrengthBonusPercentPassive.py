@@ -1,7 +1,4 @@
-#Used by: Item: Grail Implant Set
-#               Talon Implant Set
-#               Spur Implant Set
-#               Jackal Implant Set
+#Items from group: Cyberimplant (20 of 138)
 from customEffects import boost
 def scanStrengthBonusPercentPassive(self, fitting):
     radar = self.item.getModifiedAttribute("scanRadarStrengthPercent")

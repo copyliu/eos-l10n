@@ -1,6 +1,6 @@
-#Used by: Skill: Electronic Warfare
-#       Implant: Hardwiring - Zainou 'Gypsy' KOB series
-#        Module: Signal Disruption Amplifier Rigs
+#Items from group: Cyber Electronics (3 of 27)
+#Items from group: Rig Electronics (6 of 30)
+#Item: Electronic Warfare
 from customEffects import boostModListByReq
 def ewSkillEcmBurstCapNeedBonus(self, fitting, state = None, level = 1):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

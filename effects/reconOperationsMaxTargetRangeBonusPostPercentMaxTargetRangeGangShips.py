@@ -1,5 +1,5 @@
-#Used by: Skill: Information Warfare
-#          Item: Information Warfare Mindlink
+#Item: Information Warfare
+#Item: Information Warfare Mindlink
 from customEffects import boost
 type = "gang"
 def reconOperationsMaxTargetRangeBonusPostPercentMaxTargetRangeGangShips(self, fitting, level = 1):

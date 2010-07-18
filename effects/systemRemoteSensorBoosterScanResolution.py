@@ -1,4 +1,4 @@
-#Used by: Item: Magnatar Effect Beacon
+#Items from group: Effect Beacon (6 of 38)
 from customEffects import boostModListByReq, multiply
 type = "projected"
 def systemRemoteSensorBoosterScanResolution(self, fitting, state):

@@ -1,4 +1,4 @@
-#Used by: Item: Low-Grade Talon Set
+#Items from group: Cyberimplant (6 of 138)
 from customEffects import boostImplantListByReq, multiply
 runTime = "early"
 def caldarisetLGbonus(self, fitting):

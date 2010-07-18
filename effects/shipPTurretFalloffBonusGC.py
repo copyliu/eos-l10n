@@ -1,4 +1,4 @@
-#Used by: Ship: Cynabal
+#Item: Cynabal
 from customEffects import boostModListBySkillReq
 def shipPTurretFalloffBonusGC(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

@@ -1,5 +1,4 @@
-#Used by: Ship: Chimera
-#               Wyvern
+#Items from market group: Ships > Carriers > Caldari (2 of 2)
 from customEffects import increase
 def carrierCaldariDroneMax1(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Carrier")

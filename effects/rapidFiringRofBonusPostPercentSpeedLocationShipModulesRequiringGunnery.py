@@ -1,4 +1,4 @@
-#Used by: Skill: Rapid Firing
+#Item: Rapid Firing
 from customEffects import boostModListBySkillReq
 def rapidFiringRofBonusPostPercentSpeedLocationShipModulesRequiringGunnery(self, fitting, level):
     boostModListBySkillReq(fitting.modules, "speed", "rofBonus",

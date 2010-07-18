@@ -1,4 +1,4 @@
-#Used by: Item: Crystal Implant Set
+#Items from group: Cyberimplant (12 of 138)
 runTime = "early"
 from customEffects import boostImplantListByReq, multiply
 def setBonusGuristas(self, fitting):

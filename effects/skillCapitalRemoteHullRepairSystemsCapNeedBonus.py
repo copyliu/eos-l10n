@@ -1,4 +1,4 @@
-#Used by: Skill: Capital Remote Hull Repair Systems
+#Item: Capital Remote Hull Repair Systems
 from customEffects import boostModListByReq
 def skillCapitalRemoteHullRepairSystemsCapNeedBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

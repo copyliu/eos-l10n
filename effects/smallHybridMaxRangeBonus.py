@@ -1,5 +1,4 @@
-#Used by: Ship: Cormorant
-#               Catalyst
+#Items from group: Destroyer (2 of 4)
 from customEffects import boostModListBySkillReq
 def smallHybridMaxRangeBonus(self, fitting):
     boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeBonus",

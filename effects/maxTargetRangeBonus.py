@@ -1,4 +1,4 @@
-#Used by: Item: Warp Core Stabilizer
+#Items from group: Warp Core Stabilizer (8 of 8)
 from customEffects import boost
 import model.fitting
 def maxTargetRangeBonus(self, fitting, state):

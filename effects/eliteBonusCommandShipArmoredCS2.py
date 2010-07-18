@@ -1,4 +1,4 @@
-#Used by: Ship: Damnation
+#Item: Damnation
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipArmoredCS2(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

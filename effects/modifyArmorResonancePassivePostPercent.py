@@ -1,4 +1,4 @@
-#Used by: Item: Armor Hardeners
+#Items from group: Armor Hardener (156 of 156)
 import model.fitting
 from customEffects import boost
 def modifyArmorResonancePassivePostPercent(self, fitting, state):

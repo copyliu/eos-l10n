@@ -1,4 +1,4 @@
-#Used by: Item: Projectile Burst Aerator
+#Items from group: Rig Projectile Weapon (6 of 30)
 from customEffects import boostModListByReq, multiply
 def projectileWeaponSpeedMultiplyPassive(self, fitting, state):
     boostModListByReq(fitting.modules, "speed", "speedMultiplier",

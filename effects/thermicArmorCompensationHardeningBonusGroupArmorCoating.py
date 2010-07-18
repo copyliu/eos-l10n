@@ -1,4 +1,4 @@
-#Used by: Skill: Thermic Armor Compensation
+#Item: Thermic Armor Compensation
 from customEffects import boostModListByReq
 def thermicArmorCompensationHardeningBonusGroupArmorCoating(self, fitting, level):
     boostModListByReq(fitting.modules, "thermalDamageResistanceBonus", "hardeningBonus",

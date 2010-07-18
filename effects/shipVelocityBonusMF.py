@@ -1,5 +1,4 @@
-#Used by: Ship: Vigil
-#               Republic Fleet Firetail
+#Item: Vigil
 from customEffects import boost
 def shipVelocityBonusMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

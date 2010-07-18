@@ -1,6 +1,6 @@
-#Used by: Skill: Electronics Upgrades
-#       Implant: Hardwiring - Zainou 'Gypsy' KLB series
-#        Module: Liquid Cooled Electronics Rigs
+#Items from group: Cyber Electronics (3 of 27)
+#Items from group: Rig Electronics (6 of 30)
+#Item: Electronics Upgrades
 from customEffects import boostModListBySkillReq
 def sensorUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringSensorUpgrades(self, fitting, state = None, level = 1):
     boostModListBySkillReq(fitting.modules, "cpu", "cpuNeedBonus",

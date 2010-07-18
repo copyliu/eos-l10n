@@ -1,4 +1,4 @@
-#Used by: Item: Proteus Engineering - Augmented Capacitor Reservoir
+#Item: Proteus Engineering - Augmented Capacitor Reservoir
 from customEffects import boostDroneListByReq
 def subsystemBonusGallenteEngineeringDroneHP(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Engineering Systems")

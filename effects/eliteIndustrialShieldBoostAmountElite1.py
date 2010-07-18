@@ -1,7 +1,4 @@
-#Used by: Ship: Prowler
-#               Mastodon
-#               Bustard
-#               Crane
+#Items from group: Transport Ship (4 of 8)
 from customEffects import boostModListByReq
 def eliteIndustrialShieldBoostAmountElite1(self, fitting):
     skill, level = fitting.getCharSkill("Transport Ships")

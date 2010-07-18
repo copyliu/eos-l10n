@@ -1,6 +1,4 @@
-#Used by: Ship: Megathron
-#               Megathron Navy Issue
-#               Megathron Federate Issue
+#Variations of item: Megathron (3 of 5)
 from customEffects import boostModListBySkillReq
 def shipHTTrackingBonusGB2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

@@ -1,4 +1,4 @@
-#Used by: Proteus Electronics - Emergent Locus Analyzer
+#Item: Proteus Electronics - Emergent Locus Analyzer
 from customEffects import boostAmmoListByReq
 def subSystemBonusGallenteElectronicScanProbeStrength(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Electronic Systems")

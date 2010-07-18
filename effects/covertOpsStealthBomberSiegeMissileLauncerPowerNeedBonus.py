@@ -1,4 +1,4 @@
-#Used by: Ship: All stealth bombers
+#Items from group: Stealth Bomber (4 of 4)
 from customEffects import boostModListByReq, multiply
 def covertOpsStealthBomberSiegeMissileLauncerPowerNeedBonus(self, fitting):
     boostModListByReq(fitting.modules, "power", "stealthBomberLauncherPower",

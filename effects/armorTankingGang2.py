@@ -1,3 +1,4 @@
+#Item: Armored Warfare Mindlink
 type = "gang"
 runTime = "early"
 def handler(fit, module, context):

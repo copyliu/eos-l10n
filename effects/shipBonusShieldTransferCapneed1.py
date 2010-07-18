@@ -1,4 +1,4 @@
-#Used by: Ship: Osprey
+#Item: Osprey
 from customEffects import boostModListByReq
 def shipBonusShieldTransferCapneed1(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

@@ -1,5 +1,4 @@
-#Used by: Ship: Obelisk
-#               Anshar
+#Variations of item: Obelisk (2 of 2)
 from customEffects import boost
 def freighterCargoBonusG2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Freighter")

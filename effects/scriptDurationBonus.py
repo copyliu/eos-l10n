@@ -1,4 +1,4 @@
-#Used by: Ammo: Focused Warp Disruption
+#Item: Focused Warp Disruption
 from customEffects import boost
 def scriptDurationBonus(self, fitting, containerModule):
     boost(containerModule, "duration", "durationBonus", self.item)

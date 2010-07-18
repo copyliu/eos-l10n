@@ -1,5 +1,4 @@
-#Used by: Ship: Apocalypse
-#               Apocalypse Navy Issue
+#Variations of item: Apocalypse (2 of 4)
 from customEffects import boostModListBySkillReq
 def shipBonusLargeEnergyTurretMaxRangeAB2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

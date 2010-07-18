@@ -1,4 +1,5 @@
-#Used by: Item: Eifyr & Co 'Gunslinger' CX-X
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Gunnery Implants (3 of 9)
+#Item: Cerebral Accelerator
 from customEffects import boostModListBySkillReq
 def surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringGunnery(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

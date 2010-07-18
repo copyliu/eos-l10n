@@ -1,4 +1,4 @@
-#Used by: Item: Tengu Defensive - Adaptive Shielding
+#Item: Tengu Defensive - Adaptive Shielding
 from customEffects import boostModListByReq
 def subsystemBonusCaldariDefensive2RemoteShieldTransporterAmount(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Defensive Systems")

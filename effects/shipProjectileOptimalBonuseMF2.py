@@ -1,4 +1,4 @@
-#Used by: Ship: Cheetah
+#Item: Cheetah
 from customEffects import boostModListBySkillReq
 def shipProjectileOptimalBonuseMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

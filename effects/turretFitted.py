@@ -1,4 +1,4 @@
-#Used by: All weapon turrets
+#Items from category: Module (542 of 3488)
 from model.attribute import basicAttribute
 from customEffects import increase
 type = "active"

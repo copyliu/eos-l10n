@@ -1,4 +1,4 @@
-#Used by: Ship: Basilisk
+#Item: Basilisk
 from customEffects import boostModListByReq
 def shipEnergyTransferRange2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

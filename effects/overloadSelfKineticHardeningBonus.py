@@ -1,5 +1,5 @@
-#Used by: Item: Armor Thermal Hardener
-#               Ballistic Deflection Field
+#Items from group: Armor Hardener (39 of 156)
+#Items from group: Shield Hardener (20 of 91)
 import model.fitting
 from customEffects import boost
 type = "overload"

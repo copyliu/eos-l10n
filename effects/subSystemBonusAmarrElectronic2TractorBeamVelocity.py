@@ -1,4 +1,4 @@
-#Used by: Legion Electronics - Emergent Locus Analyzer
+#Item: Legion Electronics - Emergent Locus Analyzer
 from customEffects import boostModListByReq
 def subSystemBonusAmarrElectronic2TractorBeamVelocity(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Electronic Systems")

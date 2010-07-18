@@ -1,4 +1,4 @@
-#Used by: Skill: Fighter Bombers
+#Item: Fighter Bombers
 from customEffects import boostDroneListAmmoBySkillReq
 def fighterBomberThermalDamageBonus2(self, fitting, level):
     boostDroneListAmmoBySkillReq(fitting.drones, "thermalDamage", "damageMultiplierBonus",

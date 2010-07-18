@@ -1,4 +1,4 @@
-#Used by: Item: Drone Navigation Computer
+#Item: Drone Navigation Computer I
 from customEffects import boostDroneListByReq
 import model.fitting
 def droneMWDBoostOnline(self, fitting, state):

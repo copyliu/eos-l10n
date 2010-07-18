@@ -1,4 +1,3 @@
-#Used by: Ship: Freki
 from customEffects import boostModListBySkillReq
 def shipMTMaxRangeBonusATF(self, fitting):
     boostModListBySkillReq(fitting.modules, "maxRange", "shipBonusATF2",

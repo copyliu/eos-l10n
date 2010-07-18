@@ -1,4 +1,4 @@
-#Used by: Ship: Eris
+#Item: Eris
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusInterdictorsMissileThermalDamage1(self, fitting):
     skill, level = fitting.getCharSkill("Interdictors")

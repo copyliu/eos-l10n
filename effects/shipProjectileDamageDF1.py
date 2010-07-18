@@ -1,4 +1,4 @@
-#Used by: Ship: Thrasher
+#Variations of item: Thrasher (2 of 2)
 from customEffects import boostModListBySkillReq
 def shipProjectileDamageDF1(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

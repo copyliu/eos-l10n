@@ -1,4 +1,4 @@
-#Used by: Item: Sensor Backup Array
+#Items from group: Sensor Backup Array (72 of 72)
 import model.fitting
 from customEffects import boost
 

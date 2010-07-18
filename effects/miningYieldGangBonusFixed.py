@@ -1,5 +1,5 @@
-#Used by: Skill: Mining Foreman
-#          Item: Mining Foreman Mindlink
+#Item: Mining Foreman
+#Item: Mining Foreman Mindlink
 from customEffects import boostModListBySkillReq
 type = "gang"
 def miningYieldGangBonusFixed(self, fitting, level = 1):

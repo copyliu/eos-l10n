@@ -1,4 +1,4 @@
-#Used by: Item: Signal Distortion Amplifier
+#Items from group: ECM Stabilizer (6 of 6)
 import model.fitting
 from customEffects import boostModListByReq
 def scanRadarStrengthBonusPercentageScanStrengthBonus(self, fitting, state):

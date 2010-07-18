@@ -1,5 +1,4 @@
-#Used by: Ship: Arazu
-#               Lachesis
+#Items from market group: Ships > Recon Ships > Gallente (2 of 2)
 from customEffects import boostModListByReq
 def eliteReconJumpScramblerRangeBonus2(self, fitting):
     skill, level = fitting.getCharSkill("Recon Ships")

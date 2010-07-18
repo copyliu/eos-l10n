@@ -1,4 +1,4 @@
-#Used by: Item: Ballistic Control System
+#Items from group: Ballistic Control system (21 of 21)
 from customEffects import boostModListByReq, multiply
 import model.fitting
 def missileLauncherSpeedMultiplier(self, fitting, state):

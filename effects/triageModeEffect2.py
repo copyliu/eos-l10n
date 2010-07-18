@@ -1,4 +1,4 @@
-#Used by: Item: Triage Module
+#Item: Triage Module I
 import model.fitting
 from customEffects import increase, multiply, boost, boostModListByReq, boostModListBySkillReq
 type = "active"

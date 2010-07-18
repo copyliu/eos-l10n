@@ -1,4 +1,4 @@
-#Used by: Ship: Ragnarok
+#Item: Ragnarok
 type = ("gang", "normal")
 from customEffects import boost, multiply
 def titanMinmatarGangSigRadius2(self, fitting, activeLayer):

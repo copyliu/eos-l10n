@@ -1,4 +1,4 @@
-#Used by: Item: Hull Repairer
+#Items from group: Hull Repair Unit (21 of 21)
 runTime = "late"
 from model import attribute
 import model.fitting

@@ -1,4 +1,4 @@
-#Used by: Item: All T3 subsystems
+#Items from category: Subsystem (80 of 80)
 from customEffects import increase
 def slotModifier(self, fitting, state):
     increase(fitting.ship, "lowSlots", "lowSlotModifier", self.item)

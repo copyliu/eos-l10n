@@ -1,4 +1,4 @@
-#Used by: Ship: Retribution
+#Item: Retribution
 from customEffects import boostModListBySkillReq
 def eliteBonusGunshipLaserDamage2(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

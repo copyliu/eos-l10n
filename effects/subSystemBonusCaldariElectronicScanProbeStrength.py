@@ -1,4 +1,4 @@
-#Used by: Legion Electronics - Emergent Locus Analyzer
+#Item: Tengu Electronics - Emergent Locus Analyzer
 from customEffects import boostAmmoListByReq
 def subSystemBonusCaldariElectronicScanProbeStrength(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Electronic Systems")

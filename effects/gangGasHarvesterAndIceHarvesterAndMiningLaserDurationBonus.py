@@ -1,4 +1,4 @@
-#Used by: Item: Mining Foreman Link - Laser Optimization
+#Item: Mining Foreman Link - Laser Optimization
 import model.fitting
 from customEffects import boostModListByReq
 type = ("gang", "active")

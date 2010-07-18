@@ -1,37 +1,11 @@
-#Used by: Ship: Erebus
-#               Leviathan
-#               Avatar
-#               Ferox
-#               Brutix
-#               Cyclone
-#               Prophecy
-#               Eos
-#               Sleipnir
-#               Vulture
-#               Absolution
-#               Astarte
-#               Claymore
-#               Nighthawk
-#               Damnation
-#               Hel
-#               Archon
-#               Ragnarok
-#               Thanatos
-#               Nyx
-#               Chimera
-#               Wyvern
-#               Aeon
-#               Nidhoggur
-#               Harbinger
-#               Drake
-#               Myrmidon
-#               Hurricane
-#               Rorqual
-#               Orca
-#        Item : Legion Defensive - Warfare Processor
-#               Tengu Defensive - Warfare Processor
-#               Loki Defensive - Warfare Processor
-#               Proteus Defensive - Warfare Processor
+#Items from group: Battlecruiser (8 of 8)
+#Items from group: Carrier (4 of 4)
+#Items from group: Command Ship (8 of 8)
+#Items from group: Defensive Systems (4 of 16)
+#Items from group: Supercarrier (4 of 4)
+#Items from group: Titan (4 of 4)
+#Item: Orca
+#Item: Rorqual
 from customEffects import boostModListBySkillReq
 def leadershipCpuBonus(self, fitting, state = None):
     boostModListBySkillReq(fitting.modules, "cpu", "cpuNeedBonus",

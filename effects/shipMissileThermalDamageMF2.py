@@ -1,4 +1,4 @@
-#Used by: Ship: Breacher
+#Item: Breacher
 from customEffects import boostAmmoListBySkillReq
 def shipMissileThermalDamageMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

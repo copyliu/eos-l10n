@@ -1,4 +1,4 @@
-#Used by: Item: Ice Harvester Upgrade
+#Variations of item: Ice Harvester Upgrade I (6 of 6)
 from customEffects import boostModListBySkillReq
 import model.fitting
 

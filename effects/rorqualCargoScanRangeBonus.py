@@ -1,4 +1,4 @@
-#Used by: Ship: Rorqual
+#Item: Rorqual
 from customEffects import boostModListByReq
 def rorqualCargoScanRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "cargoScannerRangeBonus",

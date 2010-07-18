@@ -1,6 +1,5 @@
-#Used by: Ship: Merlin
-#               Raptor
-#               Caldari Navy Hookbill
+#Item: Merlin
+#Item: Raptor
 from customEffects import boostModListBySkillReq
 def shipHybridRangeBonusCF2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

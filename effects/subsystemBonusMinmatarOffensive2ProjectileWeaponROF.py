@@ -1,5 +1,4 @@
-#Used by: Item: Loki Offensive - Projectile Scoping Array
-#               Hardpoint Efficiency Configuration
+#Variations of item: Loki Offensive - Turret Concurrence Registry (2 of 4)
 from customEffects import boostModListBySkillReq
 def subsystemBonusMinmatarOffensive2ProjectileWeaponROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Offensive Systems")

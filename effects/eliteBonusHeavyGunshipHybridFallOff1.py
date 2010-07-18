@@ -1,4 +1,4 @@
-#Used by: Ship: Deimos
+#Item: Deimos
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipHybridFallOff1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

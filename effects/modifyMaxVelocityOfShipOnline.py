@@ -1,4 +1,4 @@
-#Used by: Reinforced Bulkheads
+#Items from group: Reinforced Bulkhead (12 of 12)
 import model.fitting
 from customEffects import multiply
 def modifyMaxVelocityOfShipOnline(self, fitting, state):

@@ -1,4 +1,4 @@
-#Used by: Skill: EM Shield Compensation
+#Item: EM Shield Compensation
 from customEffects import boostModListByReq, increase
 def emShieldCompensationHardeningBonusGroupShieldAmp(self, fitting, level):
     boostModListByReq(fitting.modules, "emDamageResistanceBonus", "hardeningBonus",

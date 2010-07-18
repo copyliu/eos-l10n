@@ -1,4 +1,4 @@
-#Used by: Ship: Phantasm
+#Item: Phantasm
 from customEffects import boostModListBySkillReq
 def shipBonusMediumEnergyTurretTrackingAC2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

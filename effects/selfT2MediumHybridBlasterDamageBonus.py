@@ -1,4 +1,4 @@
-#Used by: Skill: Medium Blaster Specialization
+#Item: Medium Blaster Specialization
 from customEffects import boostModListByReq
 def selfT2MediumHybridBlasterDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

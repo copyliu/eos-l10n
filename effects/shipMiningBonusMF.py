@@ -1,4 +1,4 @@
-#Used by: Ship: Burst
+#Item: Burst
 from customEffects import boostModListByReq
 def shipMiningBonusMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

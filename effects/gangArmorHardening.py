@@ -1,4 +1,4 @@
-#Used by: Item: Armored Warfare Link - Passive Defense
+#Item: Armored Warfare Link - Passive Defense
 import model.fitting
 from customEffects import boost
 type = ("gang", "active")

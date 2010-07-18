@@ -1,6 +1,4 @@
-#Used by: Ship: Caracal
-#               Caracal Navy Issue
-#               Cerberus
+#Variations of item: Caracal (3 of 3)
 from customEffects import boostAmmoListBySkillReq
 def shipMissileLightVelocityBonusCC2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

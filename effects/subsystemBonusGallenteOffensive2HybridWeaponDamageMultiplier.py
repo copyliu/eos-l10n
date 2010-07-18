@@ -1,4 +1,4 @@
-#Used by: Item: Proteus Offensive - Dissonic Encoding Platform
+#Variations of item: Proteus Offensive - Dissonic Encoding Platform (3 of 4)
 from customEffects import boostModListBySkillReq
 def subsystemBonusGallenteOffensive2HybridWeaponDamageMultiplier(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Offensive Systems")

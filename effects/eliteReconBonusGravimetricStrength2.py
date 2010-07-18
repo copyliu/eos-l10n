@@ -1,5 +1,4 @@
-#Used by: Ship: Rook
-#               Falcon
+#Items from market group: Ships > Recon Ships > Caldari (2 of 2)
 from customEffects import boostModListByReq
 def eliteReconBonusGravimetricStrength2(self, fitting):
     skill, level = fitting.getCharSkill("Recon Ships")

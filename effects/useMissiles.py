@@ -1,6 +1,4 @@
-#Used by: Item: All Missile Bays
-#               Probe Launchers
-#               Bomb Launcher I
+#Items from category: Module (113 of 3488)
 type = 'active'
 def useMissiles(self, fitting, state):
     pass

@@ -1,4 +1,4 @@
-#Used by: Ship: Coercer
+#Item: Coercer
 from customEffects import boostModListBySkillReq
 def smallEnergyMaxRangeBonus(self, fitting):
     boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeBonus",

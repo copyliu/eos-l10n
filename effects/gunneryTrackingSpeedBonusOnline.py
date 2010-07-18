@@ -1,4 +1,4 @@
-#Used by: Item: Tracking Enhancer
+#Items from group: Tracking Enhancer (17 of 17)
 import model.fitting
 from customEffects import boostModListBySkillReq
 def gunneryTrackingSpeedBonusOnline(self, fitting, state):

@@ -1,4 +1,4 @@
-#Used by: Ship: Astarte
+#Item: Astarte
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipHybridDamageCS1(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

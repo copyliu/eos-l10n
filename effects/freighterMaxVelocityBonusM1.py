@@ -1,4 +1,4 @@
-#Used by: Ship: Fenrir
+#Item: Fenrir
 from customEffects import boost
 def freighterMaxVelocityBonusM1(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Freighter")

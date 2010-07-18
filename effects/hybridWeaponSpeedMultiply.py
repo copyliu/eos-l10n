@@ -1,4 +1,4 @@
-#Used by: Item: Magnetic Field Stabilizer
+#Items from group: Magnetic Field Stabilizer (19 of 20)
 from customEffects import boostModListByReq, multiply
 import model.fitting
 def hybridWeaponSpeedMultiply(self, fitting, state):

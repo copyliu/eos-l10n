@@ -1,5 +1,4 @@
-#Used by: Ship: Augoror
-#               Augoror Navy Issue
+#Variations of item: Augoror (2 of 3)
 from customEffects import boost
 def shipArmorHpAC2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Ship: Paladin
+#Item: Paladin
 from customEffects import boostModListBySkillReq
 def eliteBonusViolatorsLargeEnergyTurretDamage1(self, fitting):
     skill, level = fitting.getCharSkill("Marauders")

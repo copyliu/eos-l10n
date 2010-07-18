@@ -1,4 +1,4 @@
-#Used by: Item: Loki Offensive - Projectile Scoping Array
+#Item: Loki Offensive - Projectile Scoping Array
 from customEffects import boostModListBySkillReq
 def subsystemBonusMinmatarOffensiveProjectileWeaponFalloff(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Offensive Systems")

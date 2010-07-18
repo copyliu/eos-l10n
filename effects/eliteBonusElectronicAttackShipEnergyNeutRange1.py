@@ -1,4 +1,4 @@
-#Used by: Ship: Sentinel
+#Item: Sentinel
 from customEffects import boostModListByReq
 def eliteBonusElectronicAttackShipEnergyNeutRange1(self, fitting):
     skill, level = fitting.getCharSkill("Electronic Attack Ships")

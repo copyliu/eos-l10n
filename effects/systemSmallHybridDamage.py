@@ -1,4 +1,4 @@
-#Used by: Item: Wolf Rayet Effect Beacon
+#Items from group: Effect Beacon (6 of 38)
 type = "projected"
 from customEffects import multiply, boostModListBySkillReq
 def systemSmallHybridDamage(self, fitting, state):

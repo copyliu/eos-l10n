@@ -1,4 +1,4 @@
-#Used by: Item: Inertia Stabilizers
+#Items from group: Inertia Stabilizer (12 of 12)
 from customEffects import boost
 import model.fitting
 def increaseSignatureRadiusOnline(self, fitting, state):

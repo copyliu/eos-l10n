@@ -1,4 +1,4 @@
-#Used by: Ship: Crow
+#Item: Crow
 from customEffects import boostAmmoListBySkillReq
 def interceptor2MissileVelocity(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

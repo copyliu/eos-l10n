@@ -1,4 +1,4 @@
-#Used by: Item: Centurion Implant Set
+#Items from group: Cyberimplant (6 of 138)
 runTime = "early"
 from customEffects import boostImplantListByReq, multiply
 def setBonusMordus(self, fitting):

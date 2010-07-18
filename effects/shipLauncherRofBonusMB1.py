@@ -1,5 +1,4 @@
-#Used by: Ship: Typhoon
-#               Typhoon Fleet Issue
+#Variations of item: Typhoon (2 of 3)
 from customEffects import boostModListByReq
 def shipLauncherRofBonusMB1(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

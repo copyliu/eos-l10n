@@ -1,14 +1,6 @@
-#Used by: Ship: Velator
-#               Maulus
-#               Atron
-#               Incursus
-#               Tristan
-#               Federation Navy Comet
-#               Helios
-#               Ares
-#               Taranis
-#               Ishkur
-#               Enyo
+#Items from category: Ship (10 of 245)
+#Items from market group: Ships > Assault Ships > Gallente (2 of 2)
+#Items from market group: Ships > Interceptors > Gallente (2 of 2)
 from customEffects import boostModListBySkillReq
 def shipSHTDmgBonusGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

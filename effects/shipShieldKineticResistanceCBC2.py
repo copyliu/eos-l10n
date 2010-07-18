@@ -1,6 +1,4 @@
-#Used by: Ship: Ferox
-#               Vulture
-#               Nighthawk
+#Variations of item: Ferox (3 of 3)
 from customEffects import boost
 def shipShieldKineticResistanceCBC2(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

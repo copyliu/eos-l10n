@@ -1,4 +1,4 @@
-#Used by: Skill: Capital Projectile Turret
+#Item: Capital Projectile Turret
 from customEffects import boostModListByReq
 def capitalTurretSkillProjectileDamage(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

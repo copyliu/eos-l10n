@@ -1,4 +1,4 @@
-#Used by: Ship: Hawk
+#Item: Hawk
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusAssaultShipMissileVelocity1(self, fitting):
      skill, level = fitting.getCharSkill("Assault Ships")

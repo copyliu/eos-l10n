@@ -1,4 +1,4 @@
-#Used by: Item: Legion Engineering - Power Core Multiplier
+#Item: Legion Engineering - Power Core Multiplier
 from customEffects import boost
 def subsystemBonusAmarrEngineeringPowerOutput(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Engineering Systems")

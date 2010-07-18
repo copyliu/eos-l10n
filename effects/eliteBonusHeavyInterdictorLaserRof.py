@@ -1,4 +1,4 @@
-#Used by: Ship: Devoter
+#Item: Devoter
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyInterdictorLaserRof(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Interdictors")

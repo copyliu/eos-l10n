@@ -1,4 +1,4 @@
-#Used by: Ship: Claymore
+#Item: Claymore
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipSkirmishCS2(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

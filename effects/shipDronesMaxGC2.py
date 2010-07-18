@@ -1,4 +1,4 @@
-#Used by: Ship: Guardian-Vexor
+#Item: Guardian-Vexor
 from customEffects import increase
 def shipDronesMaxGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Item: Proteus Defensive - Nanobot Injector
+#Item: Proteus Defensive - Nanobot Injector
 from customEffects import boostModListByReq
 def subsystemBonusGallenteDefensiveArmorRepairAmount(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Defensive Systems")

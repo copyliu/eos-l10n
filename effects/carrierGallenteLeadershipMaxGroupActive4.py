@@ -1,4 +1,4 @@
-#Used by: Ship: Nyx
+#Item: Nyx
 from customEffects import boostModListByReq, increase
 def carrierGallenteLeadershipMaxGroupActive4(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Carrier")

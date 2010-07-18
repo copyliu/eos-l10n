@@ -1,4 +1,4 @@
-#Used by: Ship: Panther
+#Item: Panther
 from customEffects import boost
 def eliteBonusBlackOpsMaxVelocity1(self, fitting):
     skill, level = fitting.getCharSkill("Black Ops")

@@ -1,9 +1,4 @@
-#Used by: Skill: Rocket Specialization
-#                Standard Missile Specialization
-#                Heavy Missile Specialization
-#                Cruise Missile Specialization
-#                Torpedo Specialization
-#                Heavy Assault Missile Specialization
+#Items from group: Missile Launcher Operation (6 of 24)
 from customEffects import boostModListByReq
 def selfRof(self, fitting, level):
     boostModListByReq(fitting.modules, "speed", "rofBonus",

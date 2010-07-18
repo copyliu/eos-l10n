@@ -1,4 +1,4 @@
-#Used by: Item: Legion Defensive - Warfare Processor
+#Item: Legion Defensive - Warfare Processor
 from customEffects import boostModListBySkillReq
 def subSystemBonusAmarrDefensiveArmoredWarfare(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Defensive Systems")

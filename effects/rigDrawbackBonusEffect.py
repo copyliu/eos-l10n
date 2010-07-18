@@ -1,4 +1,4 @@
-#Used by: All skills related to rigging
+#Items from group: Mechanic (9 of 32)
 from customEffects import boostModListByReq
 def rigDrawbackBonusEffect(self, fitting, level):
     boostModListByReq(fitting.modules, "drawback", "rigDrawbackBonus",

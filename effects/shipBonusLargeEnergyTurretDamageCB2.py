@@ -1,4 +1,4 @@
-#Used by: Ship: Nightmare
+#Item: Nightmare
 from customEffects import boostModListBySkillReq
 def shipBonusLargeEnergyTurretDamageCB2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Battleship")

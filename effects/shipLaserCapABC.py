@@ -1,4 +1,4 @@
-#Used by: Ship: Harbinger
+#Item: Harbinger
 from customEffects import boostModListByReq
 def shipLaserCapABC(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

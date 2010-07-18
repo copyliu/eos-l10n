@@ -1,5 +1,4 @@
-#Used by: Ship: Vigil
-#               Hyena
+#Variations of item: Vigil (2 of 2)
 from customEffects import boostModListByReq
 def minmatarShipEwTargetPainterMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

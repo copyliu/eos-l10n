@@ -1,4 +1,4 @@
-#Used by: Item: Projectile Locus Coordinator
+#Items from group: Rig Projectile Weapon (6 of 30)
 from customEffects import boostModListByReq
 def maxRangeBonusEffectProjectiles(self, fitting, state):
     boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",

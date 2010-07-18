@@ -1,4 +1,4 @@
-#Used by: Afterburners, MicroWarpdrives
+#Items from group: Afterburner (107 of 107)
 from customEffects import boost
 import model.fitting
 type = "overload"

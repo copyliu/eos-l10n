@@ -1,4 +1,4 @@
-#Used by: Skill: Weapon Upgrades
+#Item: Weapon Upgrades
 from customEffects import boostModListBySkillReq
 def weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringBombLauncher(self, fitting, level):
     boostModListBySkillReq(fitting.modules, "cpu", "cpuNeedBonus",

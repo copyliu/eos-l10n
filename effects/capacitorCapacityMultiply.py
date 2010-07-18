@@ -1,6 +1,4 @@
-#Used by: Item: Capacitor Flux Coil
-#               Power Diagnostic System
-#               MicroWarpdrive
+#Items from category: Module (225 of 3488)
 import model.fitting
 from customEffects import multiply
 def capacitorCapacityMultiply(self, fitting, state):

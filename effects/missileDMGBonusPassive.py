@@ -1,4 +1,6 @@
-#Used by: Item: Warhead Calefaction Catalyst
+#Variations of item: Large Warhead Calefaction Catalyst I (2 of 2)
+#Variations of item: Medium Warhead Calefaction Catalyst I (2 of 2)
+#Variations of item: Small Warhead Calefaction Catalyst I (2 of 2)
 from customEffects import boostAmmoListBySkillReq, multiply
 def missileDMGBonusPassive(self, fitting, state):
     boostAmmoListBySkillReq(fitting.modules,

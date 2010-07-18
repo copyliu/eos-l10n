@@ -1,4 +1,4 @@
-#Used by: Skill: Advanced Weapon Upgrades
+#Item: Advanced Weapon Upgrades
 from customEffects import boostModListBySkillReq
 def skillAdvancedWeaponUpgradesPowerNeedBonusBombLaunchers(self, fitting, level):
     boostModListBySkillReq(fitting.modules, "power", "powerNeedBonus",

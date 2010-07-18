@@ -1,5 +1,4 @@
-#Used by: Ship: Ferox
-#               Vulture
+#Variations of item: Ferox (2 of 3)
 from customEffects import boostModListBySkillReq
 def shipHybridOptimalCBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

@@ -1,5 +1,4 @@
-#Used by: Ship: Scimitar
-#               Basilisk
+#Items from group: Logistics (2 of 4)
 from customEffects import boostDroneListByReq
 def droneShieldBonusBonusEffect(self, fitting):
     skill, level = fitting.getCharSkill(self.item.race.capitalize() + " Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Ship: Heron
+#Item: Heron
 from customEffects import boostAmmoListByReq
 def shipBonusScanProbeStrengthCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

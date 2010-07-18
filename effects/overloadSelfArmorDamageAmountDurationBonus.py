@@ -1,4 +1,4 @@
-#Used by: Item: Armor Repairers
+#Items from group: Armor Repair Unit (99 of 99)
 import model.fitting
 from customEffects import boost
 type = "overload"

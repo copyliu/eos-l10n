@@ -1,4 +1,4 @@
-#Used by: Ship: Scythe
+#Item: Scythe
 from customEffects import boostModListByReq
 def shipBonusTrackingLinkTrackingSpeedBonusMC1(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

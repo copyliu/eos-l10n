@@ -1,6 +1,4 @@
-#Used by: Ship: Maller
-#               Devoter
-#               Sacrilege
+#Variations of item: Maller (3 of 3)
 from customEffects import boost
 def shipArmorExplosiveResistanceAC2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Item: Magnatar Effect Beacon
+#Items from group: Effect Beacon (6 of 38)
 from customEffects import boostAmmoListBySkillReq, multiply
 type = "projected"
 def systemRocketThermalDamage(self, fitting, state):

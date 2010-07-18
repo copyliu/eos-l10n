@@ -1,4 +1,4 @@
-#Used by: Ship: Bantam
+#Item: Bantam
 from customEffects import boostModListByReq
 def shipMiningBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

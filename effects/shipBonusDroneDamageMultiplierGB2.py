@@ -1,5 +1,5 @@
-#Used by: Ship: Dominix
-#               Sin
+#Variations of item: Dominix (3 of 3)
+#Item: Rattlesnake
 from customEffects import boostDroneListByReq
 def shipBonusDroneDamageMultiplierGB2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

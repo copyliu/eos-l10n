@@ -1,5 +1,4 @@
-#Used by: Ship: Ibis
-#               Harpy
+#Item: Harpy
 from customEffects import boostModListBySkillReq
 def shipHybridRangeBonusCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

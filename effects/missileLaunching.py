@@ -1,4 +1,4 @@
-#Used by: All missiles
+#Items from category: Charge (161 of 814)
 from model import attribute
 runTime = "late"
 def missileLaunching(self, fitting, containerModule):

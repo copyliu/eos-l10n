@@ -1,4 +1,4 @@
-#Used by: Ship: Heretic
+#Item: Heretic
 from customEffects import boostAmmoListBySkillReq
 def shipMissileAoeVelocityDF2(self, fitting):
     skill, level = fitting.getCharSkill("Destroyers")

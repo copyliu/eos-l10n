@@ -1,4 +1,4 @@
-#Used by: Item: MicroWarpdrive
+#Items from group: Afterburner (53 of 107)
 from customEffects import boost, increase
 import model.fitting
 runTime = "late"

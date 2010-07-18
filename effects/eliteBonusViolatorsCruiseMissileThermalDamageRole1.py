@@ -1,4 +1,4 @@
-#Used by: Ship: Golem
+#Item: Golem
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusViolatorsCruiseMissileThermalDamageRole1(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "thermalDamage", "eliteBonusViolatorsRole1",

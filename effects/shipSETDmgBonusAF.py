@@ -1,6 +1,5 @@
-#Used by: Ship: Executioner
-#               Silver Magnate
-#               Gold Magnate
+#Variations of item: Magnate (2 of 4)
+#Item: Executioner
 from customEffects import boostModListBySkillReq
 def shipSETDmgBonusAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

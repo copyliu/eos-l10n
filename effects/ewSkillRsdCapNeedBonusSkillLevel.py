@@ -1,4 +1,5 @@
-#Used by: Skill: Sensor Linking
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Electronics Implants (3 of 12)
+#Item: Sensor Linking
 from customEffects import boostModListByReq
 def ewSkillRsdCapNeedBonusSkillLevel(self, fitting, level = 1):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

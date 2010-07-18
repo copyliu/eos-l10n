@@ -1,4 +1,4 @@
-#Used by: Item: Damage Control
+#Items from group: Damage Control (14 of 14)
 import model.fitting
 from customEffects import multiply
 type = "active"

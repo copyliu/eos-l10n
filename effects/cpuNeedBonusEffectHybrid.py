@@ -1,4 +1,6 @@
-#Used by: Item: Algid Hybrid Administrations Unit
+#Variations of item: Large Algid Hybrid Administrations Unit I (2 of 2)
+#Variations of item: Medium Algid Hybrid Administrations Unit I (2 of 2)
+#Variations of item: Small Algid Hybrid Administrations Unit I (2 of 2)
 from customEffects import boostModListByReq
 def cpuNeedBonusEffectHybrid(self, fitting, state):
     boostModListByReq(fitting.modules, "cpu", "cpuNeedBonus",

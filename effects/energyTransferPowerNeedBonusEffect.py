@@ -1,5 +1,4 @@
-#Used by: Ship: Guardian
-#               Basilisk
+#Items from group: Logistics (2 of 4)
 from customEffects import boostModListByReq
 def energyTransferPowerNeedBonusEffect(self, fitting):
     boostModListByReq(fitting.modules, "power", "powerTransferPowerNeedBonus",

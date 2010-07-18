@@ -1,4 +1,4 @@
-#Used by: Ship: Ragnarok
+#Item: Ragnarok
 from customEffects import boostModListBySkillReq
 def titanMinmatarProjectileDmg3(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Titan")

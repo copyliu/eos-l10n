@@ -1,4 +1,4 @@
-#Used by: Item: Gyrostabilizer
+#Items from group: Gyrostabilizer (19 of 19)
 from customEffects import boostModListByReq, multiply
 import model.fitting
 def projectileWeaponSpeedMultiply(self, fitting, state):

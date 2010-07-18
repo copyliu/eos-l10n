@@ -1,4 +1,4 @@
-#Used by: Item: Black Hole Effect Beacon
+#Items from group: Effect Beacon (6 of 38)
 type = "projected"
 from customEffects import boostAmmoListBySkillReq, multiply
 def systemMissileVelocity(self, fitting, state):

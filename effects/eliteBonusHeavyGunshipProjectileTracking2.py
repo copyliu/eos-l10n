@@ -1,4 +1,4 @@
-#Used by: Ship: Muninn
+#Item: Muninn
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipProjectileTracking2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

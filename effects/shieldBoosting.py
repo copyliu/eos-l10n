@@ -1,4 +1,4 @@
-#Used by: Item: Shield Booster
+#Items from group: Shield Booster (86 of 86)
 runTime = "late"
 from model import attribute
 import model.fitting

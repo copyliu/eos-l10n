@@ -1,5 +1,5 @@
-#Used by: Item: Nanofiber Internal Structure
-#               Overdrive Injector System
+#Items from group: Nanofiber Internal Structure (14 of 14)
+#Items from group: Overdrive Injector System (14 of 14)
 import model.fitting
 from customEffects import boost
 def velocityBonusOnline(self, fitting, state):

@@ -1,4 +1,4 @@
-#Used by: Ship: Daredevil
+#Item: Daredevil
 from customEffects import boostModListBySkillReq
 def shipBonusPirateSmallHybridDmg(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

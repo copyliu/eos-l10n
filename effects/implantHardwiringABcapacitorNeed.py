@@ -1,4 +1,4 @@
-#Used by: Item: Hardwiring - 'Rogue' DY-1
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Navigation Implants (3 of 3)
 from customEffects import boostModListBySkillReq
 def implantHardwiringABcapacitorNeed(self, fitting):
     boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",

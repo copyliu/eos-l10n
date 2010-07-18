@@ -1,6 +1,8 @@
-#Used by: Module: Drone Mining Augmentor Rigs
-#          Skill: Drone Interfacting
-#                 Mining Drone Operation
+#Variations of item: Large Drone Mining Augmentor I (2 of 2)
+#Variations of item: Medium Drone Mining Augmentor I (2 of 2)
+#Variations of item: Small Drone Mining Augmentor I (2 of 2)
+#Item: Drone Interfacing
+#Item: Mining Drone Operation
 from customEffects import boostDroneListByReq
 def miningDroneOperationMiningAmountBonusPostPercentMiningDroneAmountPercentChar(self, fitting, state = None, level = 1):
     if self.item.group.category.name == "Skill":

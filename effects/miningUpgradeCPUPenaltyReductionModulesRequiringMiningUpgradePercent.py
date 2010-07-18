@@ -1,5 +1,5 @@
-#Used by: Skill: Mining Upgrades
-#         Item : Hardwiring - 'Highwall' HY-X
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Industry Implants (3 of 9)
+#Item: Mining Upgrades
 from customEffects import boostModListBySkillReq
 def miningUpgradeCPUPenaltyReductionModulesRequiringMiningUpgradePercent(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "cpuPenaltyPercent", "miningUpgradeCPUReductionBonus",

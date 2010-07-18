@@ -1,6 +1,4 @@
-#Used by: Ship: Arbitrator
-#               Pilgrim
-#               Curse
+#Variations of item: Arbitrator (3 of 3)
 from customEffects import boostModListByReq
 def shipBonusEwWeaponDisruptionMaxRangeBonusAC1(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

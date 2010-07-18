@@ -1,4 +1,4 @@
-#Used by: Item: Legion Offensive - Covert Reconfiguration
+#Item: Legion Offensive - Covert Reconfiguration
 from customEffects import boostModListBySkillReq
 def subsystemBonusAmarrOffensiveEnergyWeaponCapacitorNeed(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

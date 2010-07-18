@@ -1,4 +1,4 @@
-#Used by: Item: Legion Offensive - Liquid Crystal Magnifiers
+#Item: Legion Offensive - Liquid Crystal Magnifiers
 from customEffects import boostModListBySkillReq
 def subsystemBonusAmarrOffensive3EnergyWeaponMaxRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

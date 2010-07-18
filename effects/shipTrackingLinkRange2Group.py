@@ -1,4 +1,4 @@
-#Used by: Ship: Oneiros
+#Item: Oneiros
 from customEffects import boostModListByReq
 def shipTrackingLinkRange2Group(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

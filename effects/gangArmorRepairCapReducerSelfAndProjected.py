@@ -1,4 +1,4 @@
-#Used by: Item: Armored Warfare Link - Damage Control
+#Item: Armored Warfare Link - Damage Control
 import model.fitting
 from customEffects import boostModListByReq
 

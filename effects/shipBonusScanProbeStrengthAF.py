@@ -1,4 +1,4 @@
-#Used by: Ship: Magnate
+#Item: Magnate
 from customEffects import boostAmmoListByReq
 def shipBonusScanProbeStrengthAF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

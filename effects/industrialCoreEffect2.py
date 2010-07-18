@@ -1,4 +1,4 @@
-#Used by: Item: Industrial Core I
+#Item: Industrial Core I
 import model.fitting
 from customEffects import multiply, boost
 type = "active"

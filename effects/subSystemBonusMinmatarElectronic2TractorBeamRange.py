@@ -1,4 +1,4 @@
-#Used by: Loki Electronics - Emergent Locus Analyzer
+#Item: Loki Electronics - Emergent Locus Analyzer
 from customEffects import boostModListByReq
 def subSystemBonusMinmatarElectronic2TractorBeamRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Electronic Systems")

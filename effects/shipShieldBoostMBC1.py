@@ -1,6 +1,4 @@
-#Used by: Ship: Cyclone
-#               Sleipnir
-#               Claymore
+#Variations of item: Cyclone (3 of 3)
 from customEffects import boostModListByReq
 def shipShieldBoostMBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

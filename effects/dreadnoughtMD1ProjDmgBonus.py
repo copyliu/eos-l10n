@@ -1,4 +1,4 @@
-#Used by: Ship: Naglfar
+#Item: Naglfar
 from customEffects import boostModListBySkillReq
 def dreadnoughtMD1ProjDmgBonus(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Dreadnought")

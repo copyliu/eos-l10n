@@ -1,11 +1,4 @@
-#Used by: Ship: Crow
-#               Raptor
-#               Crusader
-#               Malediction
-#               Claw
-#               Stilleto
-#               Taranis
-#               Ares
+#Items from group: Interceptor (8 of 8)
 from customEffects import boostModListBySkillReq
 def interceptorMWDSignatureRadiusBonus(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

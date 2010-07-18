@@ -1,4 +1,4 @@
-#Used by: Item: Warp Disruptor
+#Items from group: Warp Scrambler (20 of 39)
 from customEffects import increase
 import model.fitting
 type = ("projected", "active")

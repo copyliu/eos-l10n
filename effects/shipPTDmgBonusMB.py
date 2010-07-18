@@ -1,8 +1,8 @@
-#Used by: Ship: Tempest
-#               Tempest Fleet Issue
-#               Tempest Tribal Issue
-#               Machariel
-#               Panther
+#Item: Machariel
+#Item: Panther
+#Item: Tempest
+#Item: Tempest Fleet Issue
+#Item: Tempest Tribal Issue
 from customEffects import boostModListBySkillReq
 def shipPTDmgBonusMB(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

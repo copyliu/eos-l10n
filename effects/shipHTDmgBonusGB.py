@@ -1,11 +1,4 @@
-#Used by: Ship: Dominix
-#               Dominix Navy Issue
-#               Megathron
-#               Megathron Navy Issue
-#               Megathron Federate Issue
-#               Hyperion
-#               Sin
-#               Kronos
+#Items from category: Ship (8 of 245)
 from customEffects import boostModListBySkillReq
 def shipHTDmgBonusGB(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

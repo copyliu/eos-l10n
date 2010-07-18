@@ -1,4 +1,4 @@
-#Used by: Ship: Enyo
+#Item: Enyo
 from customEffects import boostModListBySkillReq
 def eliteBonusGunshipHybridTracking2(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

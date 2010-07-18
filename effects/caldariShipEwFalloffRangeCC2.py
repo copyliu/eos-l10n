@@ -1,4 +1,4 @@
-#Used by: Ship: Blackbird
+#Item: Blackbird
 from customEffects import boostModListByReq
 def caldariShipEwFalloffRangeCC2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

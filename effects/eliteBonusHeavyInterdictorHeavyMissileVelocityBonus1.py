@@ -1,4 +1,4 @@
-#Used by: Ship: Onyx
+#Item: Onyx
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusHeavyInterdictorHeavyMissileVelocityBonus1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Interdictors")

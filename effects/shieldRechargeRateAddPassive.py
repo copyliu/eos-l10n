@@ -1,4 +1,4 @@
-#Used by: Item: T3 subsystems
+#Items from group: Defensive Systems (16 of 16)
 runTime = "early"
 from customEffects import increase
 def shieldRechargeRateAddPassive(self, fitting, state):

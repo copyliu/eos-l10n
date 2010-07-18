@@ -1,4 +1,4 @@
-#Used by: Ship: Bhaalgorn
+#Item: Bhaalgorn
 from customEffects import boostModListByReq
 def shipEnergyVampireTransferAmountBonusAB(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

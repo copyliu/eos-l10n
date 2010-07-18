@@ -1,4 +1,4 @@
-#Used by: Ship: Archon
+#Items from market group: Ships > Carriers > Amarr (2 of 2)
 from customEffects import boost
 def carrierAmarrArmorResist2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Carrier")

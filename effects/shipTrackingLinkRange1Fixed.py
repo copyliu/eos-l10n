@@ -1,4 +1,4 @@
-#Used by: Ship: Scimitar
+#Item: Scimitar
 from customEffects import boostModListByReq
 def shipTrackingLinkRange1Fixed(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

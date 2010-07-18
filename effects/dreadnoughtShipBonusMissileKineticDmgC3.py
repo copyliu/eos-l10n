@@ -1,4 +1,4 @@
-#Used by: Ship: Phoenix
+#Item: Phoenix
 from customEffects import boostAmmoListBySkillReq
 def dreadnoughtShipBonusMissileKineticDmgC3(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Dreadnought")

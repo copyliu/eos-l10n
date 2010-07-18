@@ -1,4 +1,4 @@
-#Used by: Item: Shield booster
+#Items from group: Shield Booster (86 of 86)
 import model.fitting
 from customEffects import boost
 type = "overload"

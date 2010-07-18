@@ -1,4 +1,4 @@
-#Used by: Ship: Leviathan
+#Item: Leviathan
 type = ("gang", "normal")
 from customEffects import boost, multiply
 def titanCaldariGangShieldHp2(self, fitting, activeLayer):

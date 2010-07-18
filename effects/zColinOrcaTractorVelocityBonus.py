@@ -1,4 +1,4 @@
-#Used by: Ship: Orca
+#Item: Orca
 from customEffects import boostModListByReq
 def zColinOrcaTractorVelocityBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxTractorVelocity", "shipOrcaTractorBeamVelocityBonus2",

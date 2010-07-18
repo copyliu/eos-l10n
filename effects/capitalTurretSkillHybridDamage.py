@@ -1,4 +1,4 @@
-#Used by: Skill: Capital Hybrid Turret
+#Item: Capital Hybrid Turret
 from customEffects import boostModListByReq
 def capitalTurretSkillHybridDamage(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

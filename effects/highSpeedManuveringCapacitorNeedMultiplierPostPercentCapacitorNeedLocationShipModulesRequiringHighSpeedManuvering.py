@@ -1,4 +1,5 @@
-#Used by: Skill: High Speed Maneuvering
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Navigation Implants (3 of 3)
+#Item: High Speed Maneuvering
 from customEffects import boostModListBySkillReq
 def highSpeedManuveringCapacitorNeedMultiplierPostPercentCapacitorNeedLocationShipModulesRequiringHighSpeedManuvering(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "capacitorNeed", "capacitorNeedMultiplier",

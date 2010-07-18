@@ -1,4 +1,4 @@
-#Used by: Ship: Ragnarok
+#Item: Ragnarok
 from customEffects import boostModListByReq, increase
 def titanMinmatarLeadershipModuleAmount4(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Titan")

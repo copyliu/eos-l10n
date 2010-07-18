@@ -1,4 +1,4 @@
-#Used by: Item: Remote Sensor Booster
+#Items from group: Remote Sensor Booster (8 of 8)
 import model.fitting
 from customEffects import boost
 type = ("projected", "active")

@@ -1,8 +1,8 @@
-#Used by: Ship: Covert Ops
-#               Stealth Bombers
-#               Force Recon Ships
-#               Blockade Runners
-#         Item: Covert Reconfiguration Subsystems
+#Items from group: Covert Ops (4 of 4)
+#Items from group: Force Recon Ship (4 of 4)
+#Items from group: Offensive Systems (4 of 16)
+#Items from group: Stealth Bomber (4 of 4)
+#Items from group: Transport Ship (4 of 8)
 from customEffects import boostModListByReq, multiply
 def covertOpsCpuBonus1(self, fitting, state = None):
     #take cpu consumption static multiplier

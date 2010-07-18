@@ -1,4 +1,4 @@
-#Used by: Ship: Sentinel
+#Item: Sentinel
 from customEffects import boost
 def eliteBonusElectronicAttackShipRechargeRate2(self, fitting):
     skill, level = fitting.getCharSkill("Electronic Attack Ships")

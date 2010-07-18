@@ -1,4 +1,4 @@
-#Used by: Item: Low-Grade Spur Set
+#Items from group: Cyberimplant (6 of 138)
 from customEffects import boostImplantListByReq, multiply
 runTime = "early"
 def federationsetLGbonus(self, fitting):

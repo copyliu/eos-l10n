@@ -1,4 +1,4 @@
-#Used by: Siege Warfare Mindlink
+#Item: Siege Warfare Mindlink
 from customEffects import boostModListBySkillReq
 def siegeWarfareMindlink(self, fitting):
     boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",

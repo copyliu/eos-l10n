@@ -1,4 +1,4 @@
-#Used by: Item: Cataclysmic Variable Effect Beacon
+#Items from group: Effect Beacon (6 of 38)
 from customEffects import boostModListByReq, multiply
 type = "projected"
 def systemShieldRepairAmount(self, fitting, state):

@@ -1,7 +1,5 @@
-#Used by: Ship: Vexor
-#               Vexor Navy Issue
-#               Gila
-#               Ishtar
+#Variations of item: Vexor (3 of 4)
+#Item: Gila
 from customEffects import boostDroneListByReq
 def shipBonusDroneHitpointsGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Item: Judgement
+#Item: Judgement
 type = 'active'
 def superWeaponAmarr(self, fitting, state):
     pass

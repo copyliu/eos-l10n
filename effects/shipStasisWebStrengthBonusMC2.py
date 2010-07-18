@@ -1,4 +1,5 @@
-#Used by: Ship: Vigilant
+#Item: Ashimmu
+#Item: Vigilant
 from customEffects import boostModListByReq
 def shipStasisWebStrengthBonusMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

@@ -1,4 +1,3 @@
-#Used by: Ship: Mimir
 from customEffects import boost
 def shipArmorExplosiveResistanceMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

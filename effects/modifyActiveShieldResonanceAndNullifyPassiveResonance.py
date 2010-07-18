@@ -1,4 +1,4 @@
-#Used by: Item: Shield Hardeners
+#Items from group: Shield Hardener (91 of 91)
 import model.fitting
 from customEffects import boost
 runTime = "late"

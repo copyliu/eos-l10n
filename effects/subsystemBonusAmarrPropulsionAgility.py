@@ -1,4 +1,4 @@
-#Used by: Item: Loki Defensive - Interdiction Nullifier
+#Item: Legion Propulsion - Interdiction Nullifier
 from customEffects import boost
 def subsystemBonusAmarrPropulsionAgility(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Propulsion Systems")

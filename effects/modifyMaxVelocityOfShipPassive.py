@@ -1,4 +1,4 @@
-#Used by: Cargo hold Expanders
+#Items from group: Expanded Cargohold (13 of 13)
 from customEffects import multiply
 import model.fitting
 def modifyMaxVelocityOfShipPassive(self, fitting, state):

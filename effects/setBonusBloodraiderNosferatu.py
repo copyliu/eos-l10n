@@ -1,4 +1,4 @@
-#Used by: Item: Talisman Implant Set
+#Items from group: Cyberimplant (10 of 138)
 from customEffects import boostModListBySkillReq
 def setBonusBloodraiderNosferatu(self, fitting):
     boostModListBySkillReq(fitting.modules, "duration", "durationBonus",

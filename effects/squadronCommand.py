@@ -1,4 +1,4 @@
-#Used by: Skill: Warfare Link Specialist
+#Item: Warfare Link Specialist
 from customEffects import boostModListByReq
 def squadronCommand(self, fitting, level):
     boostModListByReq(fitting.modules, "commandBonus", "squadronCommandBonus",

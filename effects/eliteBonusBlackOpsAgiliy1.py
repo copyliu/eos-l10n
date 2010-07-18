@@ -1,4 +1,4 @@
-#Used by: Ship: Sin
+#Item: Sin
 from customEffects import boost
 def eliteBonusBlackOpsAgiliy1(self, fitting):
     skill, level = fitting.getCharSkill("Black Ops")

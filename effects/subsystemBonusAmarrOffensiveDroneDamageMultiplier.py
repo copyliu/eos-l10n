@@ -1,4 +1,4 @@
-#Used by: Item: Legion Offensive - Drone Synthesis Projector
+#Item: Legion Offensive - Drone Synthesis Projector
 from customEffects import boostDroneListByReq
 def subsystemBonusAmarrOffensiveDroneDamageMultiplier(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Offensive Systems")

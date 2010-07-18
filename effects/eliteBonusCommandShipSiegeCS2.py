@@ -1,4 +1,4 @@
-#Used by: Ship: Vulture
+#Item: Vulture
 from customEffects import boostModListBySkillReq
 def eliteBonusCommandShipSiegeCS2(self, fitting):
     skill, level = fitting.getCharSkill("Command Ships")

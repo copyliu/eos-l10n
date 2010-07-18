@@ -1,4 +1,4 @@
-#Used by: Item: T3 subsystems
+#Items from category: Subsystem (40 of 80)
 runTime = "early"
 from customEffects import increase
 def cpuOutputAddCpuOutputPassive(self, fitting, state):

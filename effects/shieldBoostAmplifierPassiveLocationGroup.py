@@ -1,4 +1,4 @@
-#Used by: Item: Blue Pill Booster
+#Items from group: Booster (5 of 34)
 from customEffects import boostModListByReq
 def shieldBoostAmplifierPassiveLocationGroup(self, fitting):
     boostModListByReq(fitting.modules, "shieldBonus", "shieldBoostMultiplier",

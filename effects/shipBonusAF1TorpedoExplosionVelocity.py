@@ -1,4 +1,4 @@
-#Used by: Ship: Purifier
+#Item: Purifier
 from customEffects import boostAmmoListBySkillReq
 def shipBonusAF1TorpedoExplosionVelocity(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

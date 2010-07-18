@@ -1,4 +1,5 @@
-#Used by: Ship: Daredevil
+#Item: Cruor
+#Item: Daredevil
 from customEffects import boostModListByReq
 def shipStasisWebStrengthBonusMF2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

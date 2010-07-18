@@ -1,4 +1,3 @@
-#Used by: Ship: Freki
 from customEffects import boostModListBySkillReq
 def shipMTFalloffBonusATF(self, fitting):
     boostModListBySkillReq(fitting.modules, "falloff", "shipBonusATF2",

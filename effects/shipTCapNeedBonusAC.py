@@ -1,9 +1,7 @@
-#Used by: Ship: Augoror Navy Issue
-#               Maller
-#               Omen
-#               Omen Navy Issue
-#               Devoter
-#               Zealot
+#Variations of item: Omen (3 of 3)
+#Item: Augoror Navy Issue
+#Item: Devoter
+#Item: Maller
 from customEffects import boostModListBySkillReq
 def shipTCapNeedBonusAC(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

@@ -1,4 +1,4 @@
-#Used by: Ship: Wolf
+#Item: Wolf
 from customEffects import boostModListBySkillReq
 def eliteBonusGunshipProjectileFalloff2(self, fitting):
     skill, level = fitting.getCharSkill("Assault Ships")

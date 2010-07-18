@@ -1,4 +1,6 @@
-#Used by: Skill: Gunnery
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Gunnery Implants (3 of 9)
+#Item: Gunnery
+#Item: Pashan's Turret Customization Mindlink
 from customEffects import boostModListBySkillReq
 def gunneryTurretSpeeBonusPostPercentSpeedLocationShipModulesRequiringGunnery(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "speed", "turretSpeeBonus",

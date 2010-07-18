@@ -1,5 +1,4 @@
-#Used by: Ship: Eagle
-#               Deimos
+#Items from group: Heavy Assault Ship (2 of 8)
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipHybridDmg2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

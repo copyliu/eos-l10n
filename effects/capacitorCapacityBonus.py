@@ -1,4 +1,4 @@
-#Used by: Item: Capacitor batteries
+#Items from group: Capacitor Battery (27 of 27)
 import model.fitting
 from customEffects import increase
 def capacitorCapacityBonus(self, fitting, state):

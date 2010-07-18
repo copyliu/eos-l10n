@@ -1,4 +1,4 @@
-#Used by: Ship: Rook
+#Item: Rook
 from customEffects import boostModListByReq
 def shipBonusHeavyLauncherRateOfFireCC2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Cruiser")

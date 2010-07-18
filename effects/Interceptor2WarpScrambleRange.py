@@ -1,7 +1,4 @@
-#Used by: Ship: Raptor
-#               Malediction
-#               Stiletto
-#               Ares
+#Items from group: Interceptor (4 of 8)
 from customEffects import boostModListByReq
 def Interceptor2WarpScrambleRange(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

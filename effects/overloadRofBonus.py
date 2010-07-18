@@ -1,4 +1,4 @@
-#Used by: Item: Turrets & Launchers
+#Items from category: Module (372 of 3488)
 from customEffects import boost
 import model.fitting
 type = "overload"

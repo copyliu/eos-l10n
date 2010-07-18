@@ -1,4 +1,4 @@
-#Used by: Item: Talisman Implant Set
+#Items from group: Cyberimplant (12 of 138)
 runTime = "early"
 from customEffects import boostImplantListByReq, multiply
 def setBonusBloodraider(self, fitting):

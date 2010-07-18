@@ -1,4 +1,4 @@
-#Used by: Ship: Taranis
+#Item: Taranis
 from customEffects import boostModListBySkillReq
 def interceptor2HybridTracking(self, fitting):
     skill, level = fitting.getCharSkill("Interceptors")

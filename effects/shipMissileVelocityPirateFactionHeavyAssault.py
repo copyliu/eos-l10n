@@ -1,4 +1,4 @@
-#Used by: Ship: Gila
+#Item: Gila
 from customEffects import boostAmmoListBySkillReq
 def shipMissileVelocityPirateFactionHeavyAssault(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusPirateFaction",

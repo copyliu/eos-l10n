@@ -1,6 +1,4 @@
-#Used by: Ship: Omen
-#               Omen Navy Issue
-#               Zealot
+#Variations of item: Omen (3 of 3)
 from customEffects import boostModListBySkillReq
 def shipLaserRofAC2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Cruiser")

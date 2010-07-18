@@ -1,4 +1,4 @@
-#Used by: Ship: Nyx
+#Item: Nyx
 from customEffects import boostDroneListAmmoBySkillReq
 def carrierGallente1BomberDroneMissileDamageMultiplierBonus(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Carrier")

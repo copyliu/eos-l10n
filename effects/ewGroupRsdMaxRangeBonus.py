@@ -1,4 +1,4 @@
-#Used by: Item: Centurion Implant Set
+#Items from group: Cyberimplant (5 of 138)
 from customEffects import boostModListByReq
 def ewGroupRsdMaxRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "rangeSkillBonus",

@@ -1,7 +1,4 @@
-#Used by: Ship: Paladin
-#               Kronos
-#               Vargur
-#               Golem
+#Items from group: Marauder (4 of 4)
 from customEffects import boostModListByReq
 def eliteBonusViolatorsTractorBeamMaxRangeRole2(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "eliteBonusViolatorsRole2",

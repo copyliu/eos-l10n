@@ -1,4 +1,4 @@
-#Used by: Ship: Machariel
+#Item: Machariel
 from customEffects import boostModListBySkillReq
 def shipPTurretFalloffBonusGB(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

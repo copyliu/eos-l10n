@@ -1,5 +1,5 @@
-#Used by: Item: Armor Plating
-#               Energized Armor Plating
+#Items from group: Armor Coating (201 of 201)
+#Items from group: Armor Plating Energized (187 of 187)
 from customEffects import boost
 import model.fitting
 

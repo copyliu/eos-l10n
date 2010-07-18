@@ -1,4 +1,4 @@
-#Used by: Ship: Viator
+#Item: Viator
 from customEffects import boostModListByReq
 def eliteIndustrialArmorRepairDurationElite2(self, fitting):
     skill, level = fitting.getCharSkill("Transport Ships")

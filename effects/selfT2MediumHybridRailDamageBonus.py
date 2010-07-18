@@ -1,4 +1,4 @@
-#Used by: Skill: Medium Railgun Specialization
+#Item: Medium Railgun Specialization
 from customEffects import boostModListByReq
 def selfT2MediumHybridRailDamageBonus(self, fitting, level):
     boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",

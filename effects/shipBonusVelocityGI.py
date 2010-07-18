@@ -1,6 +1,4 @@
-#Used by: Ship: Iteron
-#               Viator
-#               Occator
+#Items from market group: Ships > Industrial Ships > Gallente (5 of 7)
 from customEffects import boost
 def shipBonusVelocityGI(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Industrial")

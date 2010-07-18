@@ -1,4 +1,6 @@
-#Used by: Item: Turrets
+#Items from group: Energy Weapon (82 of 181)
+#Items from group: Hybrid Weapon (88 of 197)
+#Items from group: Projectile Weapon (82 of 141)
 from customEffects import boost
 import model.fitting
 type = "overload"

@@ -1,4 +1,4 @@
-#Used by: Item: Proteus Electronics - Dissolution Sequencer
+#Item: Proteus Electronics - Dissolution Sequencer
 from customEffects import boost
 def subsystemBonusGallenteElectronic2MaxTargetingRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Electronic Systems")

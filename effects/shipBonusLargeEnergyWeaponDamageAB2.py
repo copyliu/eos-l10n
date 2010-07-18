@@ -1,4 +1,4 @@
-#Used by: Ship: Abaddon
+#Item: Abaddon
 from customEffects import boostModListBySkillReq
 def shipBonusLargeEnergyWeaponDamageAB2(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

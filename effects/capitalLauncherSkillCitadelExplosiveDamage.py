@@ -1,4 +1,5 @@
-#Used by: Skill: Citadel Torpedoes
+#Items from group: Cyber Missile (3 of 46)
+#Item: Citadel Torpedoes
 from customEffects import boostAmmoListBySkillReq
 def capitalLauncherSkillCitadelExplosiveDamage(self, fitting, level = 1):
     boostAmmoListBySkillReq(fitting.modules, "explosiveDamage", "damageMultiplierBonus",

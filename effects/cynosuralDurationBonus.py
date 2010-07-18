@@ -1,7 +1,4 @@
-#Used by: Ship: Falcon
-#               Rapier
-#               Arazu
-#               Pilgrim
+#Items from group: Force Recon Ship (4 of 4)
 from customEffects import boostModListByReq
 def cynosuralDurationBonus(self, fitting):
     boostModListByReq(fitting.modules, "duration", "durationBonus",

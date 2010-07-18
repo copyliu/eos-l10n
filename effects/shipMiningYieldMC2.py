@@ -1,4 +1,4 @@
-#Used by: Ship: Scythe
+#Item: Scythe
 from customEffects import boostModListByReq
 def shipMiningYieldMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

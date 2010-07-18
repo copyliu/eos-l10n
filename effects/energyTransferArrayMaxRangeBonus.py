@@ -1,4 +1,4 @@
-#Used by: Ship: Augoror
+#Item: Augoror
 from customEffects import boostModListByReq
 def energyTransferArrayMaxRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "powerTransferRange", "maxRangeBonus",

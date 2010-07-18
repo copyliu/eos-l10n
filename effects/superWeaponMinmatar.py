@@ -1,4 +1,4 @@
-#Used by: Item: Gjallarhorn
+#Item: Gjallarhorn
 type = 'active'
 def superWeaponMinmatar(self, fitting, state):
     pass

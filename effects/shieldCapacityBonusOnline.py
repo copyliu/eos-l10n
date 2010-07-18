@@ -1,4 +1,5 @@
-#Used by: Item: Shield Extender
+#Items from group: Shield Amplifier (88 of 88)
+#Items from group: Shield Extender (37 of 37)
 import model.fitting
 from customEffects import increase
 runTime = "early"

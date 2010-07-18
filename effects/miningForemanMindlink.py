@@ -1,4 +1,4 @@
-#Used by: Mining Foreman Mindlink
+#Item: Mining Foreman Mindlink
 from customEffects import boostModListBySkillReq
 def miningForemanMindlink(self, fitting):
     boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",

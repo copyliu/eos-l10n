@@ -1,4 +1,4 @@
-#Used by: Item: Heat Sink
+#Items from group: Heat Sink (25 of 25)
 from customEffects import boostModListByReq, multiply
 import model.fitting
 def energyWeaponSpeedMultiply(self, fitting, state):

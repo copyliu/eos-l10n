@@ -1,5 +1,4 @@
-#Used by: Ship: Nidhoggur
-#               Hel
+#Items from market group: Ships > Carriers > Minmatar (2 of 2)
 from customEffects import boostModListBySkillReq
 def carrierMinmatarArmorShieldTransferRange3(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Carrier")

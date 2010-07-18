@@ -1,4 +1,4 @@
-#Used by: Tengu Electronics - Emergent Locus Analyzer
+#Item: Tengu Electronics - Emergent Locus Analyzer
 from customEffects import boostModListByReq
 def subSystemBonusCaldariElectronic2TractorBeamVelocity(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Electronic Systems")

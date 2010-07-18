@@ -1,4 +1,4 @@
-#Used by: Ship: Eagle
+#Item: Eagle
 from customEffects import boostModListBySkillReq
 def eliteBonusHeavyGunshipHybridOptimal1(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

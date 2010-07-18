@@ -1,7 +1,4 @@
-#Used by: Ship: Onyx
-#               Broadsword
-#               Devoter
-#               Phobos
+#Items from group: Heavy Interdictor (4 of 4)
 from customEffects import boostModListByReq
 def eliteBonusHeavyInterdictorsWarpDisruptFieldGeneratorWarpScrambleRange2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Interdictors")

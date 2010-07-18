@@ -1,4 +1,4 @@
-#Used by: Ship: Dramiel
+#Item: Dramiel
 from customEffects import boostModListBySkillReq
 def shipBonusPirateFrigateProjDamage(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

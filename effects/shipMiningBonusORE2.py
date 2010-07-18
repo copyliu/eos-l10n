@@ -1,9 +1,5 @@
-#Used by: Ship: Covetor
-#               Retriever
-#               Procurer
-#               Hulk
-#               Skiff
-#               Mackinaw
+#Items from group: Exhumer (3 of 3)
+#Items from group: Mining Barge (3 of 3)
 from customEffects import boostModListByReq
 def shipMiningBonusORE2(self, fitting):
     skill, level = fitting.getCharSkill("Mining Barge")

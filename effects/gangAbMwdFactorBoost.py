@@ -1,4 +1,4 @@
-#Used by: Item: Skirmish Warfare Link - Rapid Deployment
+#Item: Skirmish Warfare Link - Rapid Deployment
 import model.fitting
 from customEffects import boostModListByReq
 type = ("gang", "active")

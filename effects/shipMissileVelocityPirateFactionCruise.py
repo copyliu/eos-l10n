@@ -1,4 +1,4 @@
-#Used by: Ship: Rattlesnake
+#Item: Rattlesnake
 from customEffects import boostAmmoListBySkillReq
 def shipMissileVelocityPirateFactionCruise(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusPirateFaction",

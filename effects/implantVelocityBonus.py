@@ -1,5 +1,4 @@
-#Used by: Item: Hardwiring - 'Rogue' CY-X
-#               Shaqil's Speed Enhancer
+#Items from group: Cyber Navigation (4 of 27)
 from customEffects import boost
 def implantVelocityBonus(self, fitting):
     boost(fitting.ship, "maxVelocity", "implantBonusVelocity", self.item)

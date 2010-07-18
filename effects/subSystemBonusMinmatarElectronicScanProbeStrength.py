@@ -1,4 +1,4 @@
-#Used by: Loki Electronics - Emergent Locus Analyzer
+#Item: Loki Electronics - Emergent Locus Analyzer
 from customEffects import boostAmmoListByReq
 def subSystemBonusMinmatarElectronicScanProbeStrength(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Electronic Systems")

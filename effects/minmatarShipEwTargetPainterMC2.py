@@ -1,6 +1,4 @@
-#Used by: Ship: Bellicose
-#               Rapier
-#               Huginn
+#Variations of item: Bellicose (3 of 3)
 from customEffects import boostModListByReq
 def minmatarShipEwTargetPainterMC2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Cruiser")

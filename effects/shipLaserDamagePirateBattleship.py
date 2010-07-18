@@ -1,4 +1,5 @@
-#Used by: Ship: Nightmare
+#Item: Bhaalgorn
+#Item: Nightmare
 from customEffects import boostModListBySkillReq
 def shipLaserDamagePirateBattleship(self, fitting):
     boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",

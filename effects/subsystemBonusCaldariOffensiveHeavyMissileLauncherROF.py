@@ -1,6 +1,4 @@
-#Used by: Item: Tengu Offensive - Accelerated Ejection Bay
-#               Tengu Offensive - Rifling Launcher Pattern
-#               Tengu Offensive - Covert Reconfiguration
+#Variations of item: Tengu Offensive - Accelerated Ejection Bay (3 of 4)
 from customEffects import boostModListByReq
 def subsystemBonusCaldariOffensiveHeavyMissileLauncherROF(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Offensive Systems")

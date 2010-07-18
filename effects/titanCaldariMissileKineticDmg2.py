@@ -1,4 +1,4 @@
-#Used by: Ship: Leviathan
+#Item: Leviathan
 from customEffects import boostAmmoListByReq
 def titanCaldariMissileKineticDmg2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Titan")

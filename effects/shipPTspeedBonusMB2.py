@@ -1,11 +1,4 @@
-#Used by: Ship: Typhoon
-#               Typhoon Fleet Issue
-#               Tempest
-#               Tempest Fleet Issue
-#               Tempest Tribal Issue
-#               Maelstrom
-#               Panther
-#               Vargur
+#Items from category: Ship (8 of 245)
 from customEffects import boostModListBySkillReq
 def shipPTspeedBonusMB2(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Battleship")

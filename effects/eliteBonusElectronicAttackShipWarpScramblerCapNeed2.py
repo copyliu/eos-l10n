@@ -1,4 +1,4 @@
-#Used by: Ship: Keres
+#Item: Keres
 from customEffects import boostModListByReq
 def eliteBonusElectronicAttackShipWarpScramblerCapNeed2(self, fitting):
     skill, level = fitting.getCharSkill("Electronic Attack Ships")

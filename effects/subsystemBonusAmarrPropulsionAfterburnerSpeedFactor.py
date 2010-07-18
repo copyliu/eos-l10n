@@ -1,4 +1,4 @@
-#Used by: Item: Legion Propulsion - Fuel Catalyst
+#Item: Legion Propulsion - Fuel Catalyst
 from customEffects import boostModListBySkillReq
 def subsystemBonusAmarrPropulsionAfterburnerSpeedFactor(self, fitting, state):
     skill, level = fitting.getCharSkill("Amarr Propulsion Systems")

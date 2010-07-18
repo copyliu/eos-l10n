@@ -1,4 +1,4 @@
-#Used by: Ship: Osprey
+#Item: Osprey
 from customEffects import boostModListByReq
 def shieldTransporterMaxRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "shieldTransferRange", "maxRangeBonus",

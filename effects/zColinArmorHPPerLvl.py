@@ -1,5 +1,4 @@
-#Used by: Ship: Impel
-#               Occator
+#Items from group: Transport Ship (2 of 8)
 from customEffects import boost
 def zColinArmorHPPerLvl(self, fitting):
     skill, level = fitting.getCharSkill("Transport Ships")

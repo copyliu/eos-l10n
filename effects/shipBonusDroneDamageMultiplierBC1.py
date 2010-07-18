@@ -1,4 +1,4 @@
-#Used by: Ship: Myrmidon
+#Item: Myrmidon
 from customEffects import boostDroneListByReq
 def shipBonusDroneDamageMultiplierBC1(self, fitting):
     skill, level = fitting.getCharSkill("Battlecruisers")

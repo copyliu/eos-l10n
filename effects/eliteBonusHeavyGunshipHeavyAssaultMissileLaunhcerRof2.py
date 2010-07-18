@@ -1,5 +1,4 @@
-#Used by: Ship: Cerberus
-#               Sacrilege
+#Items from group: Heavy Assault Ship (2 of 8)
 from customEffects import boostModListByReq
 def eliteBonusHeavyGunshipHeavyAssaultMissileLaunhcerRof2(self, fitting):
     skill, level = fitting.getCharSkill("Heavy Assault Ships")

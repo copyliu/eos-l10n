@@ -1,4 +1,4 @@
-#Used by: Item: Mining Laser Upgrade
+#Variations of item: Mining Laser Upgrade I (6 of 6)
 from customEffects import boostModListBySkillReq
 import model.fitting
 def minerCpuUsageMultiplyPercent2(self, fitting, state):

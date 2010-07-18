@@ -1,4 +1,4 @@
-#Used by: Item: Signal Distortion Amplifier
+#Items from group: ECM Stabilizer (6 of 6)
 from customEffects import boostModListByReq
 import model.fitting
 

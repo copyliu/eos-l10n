@@ -1,4 +1,4 @@
-#Used by: Item: Gallente Electronics - CPU Efficiency Gate
+#Item: Proteus Electronics - CPU Efficiency Gate
 from customEffects import boost
 def subsystemBonusGallenteElectronicCPU(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Electronic Systems")

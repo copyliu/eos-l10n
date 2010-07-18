@@ -1,4 +1,4 @@
-#Used by: Skill: Explosive Armor Compensation
+#Item: Explosive Armor Compensation
 from customEffects import boostModListByReq
 def explosiveArmorCompensationHardeningBonusGroupArmorCoating(self, fitting, level):
     boostModListByReq(fitting.modules, "explosiveDamageResistanceBonus", "hardeningBonus",

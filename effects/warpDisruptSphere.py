@@ -1,4 +1,4 @@
-#Used by: Item: Warp Disruption Field Generator
+#Item: Warp Disruption Field Generator I
 from customEffects import boost, boostModListByReq
 import model.fitting
 from model.attribute import basicAttribute

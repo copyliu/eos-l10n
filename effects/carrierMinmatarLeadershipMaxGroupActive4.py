@@ -1,4 +1,4 @@
-#Used by: Ship: Hel
+#Item: Hel
 from customEffects import boostModListByReq, increase
 def carrierMinmatarLeadershipMaxGroupActive4(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Carrier")

@@ -1,4 +1,4 @@
-#Used by:Ship: Succubus
+#Item: Succubus
 from customEffects import boostModListBySkillReq
 def shipBonusSmallEnergyTurretTracking2AF(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Frigate")

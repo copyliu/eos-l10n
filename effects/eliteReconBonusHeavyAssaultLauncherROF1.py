@@ -1,4 +1,4 @@
-#Used by: Ship: Huginn
+#Item: Huginn
 from customEffects import boostModListByReq
 def eliteReconBonusHeavyAssaultLauncherROF1(self, fitting):
     skill, level = fitting.getCharSkill("Recon Ships")

@@ -1,4 +1,4 @@
-#Used by: Item: Magnetar Effect Beacon
+#Items from group: Effect Beacon (6 of 38)
 from customEffects import multiply, boostModListByReq
 type = "projected"
 def systemSensorDampenerRangeReduction(self, fitting, state):

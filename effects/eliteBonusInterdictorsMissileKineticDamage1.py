@@ -1,4 +1,4 @@
-#Used by: Ship: Flycatcher
+#Item: Flycatcher
 from customEffects import boostAmmoListBySkillReq
 def eliteBonusInterdictorsMissileKineticDamage1(self, fitting):
     skill, level = fitting.getCharSkill("Interdictors")

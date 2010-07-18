@@ -1,4 +1,4 @@
-#Used by: Item: Proteus Electronics - Friction Extension Processor
+#Item: Proteus Electronics - Friction Extension Processor
 from customEffects import boostModListByReq
 def subsystemBonusGallenteElectronicWarpScrambleRange(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Electronic Systems")

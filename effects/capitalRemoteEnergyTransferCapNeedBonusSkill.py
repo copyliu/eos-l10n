@@ -1,4 +1,4 @@
-#Used by: Skill: Capital Energy Emission Systems
+#Item: Capital Energy Emission Systems
 from customEffects import boostModListByReq
 def capitalRemoteEnergyTransferCapNeedBonusSkill(self, fitting, level):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",

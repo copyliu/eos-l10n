@@ -1,4 +1,4 @@
-#Used by: Item: Harvest Implant Set
+#Items from group: Cyberimplant (5 of 138)
 from customEffects import boostModListByReq
 def miningLaserRangeBonus(self, fitting):
     boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",

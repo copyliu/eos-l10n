@@ -1,5 +1,5 @@
-#Used by: Item: Capacitor Power Relay
-#               Shield Boost Amplifier
+#Items from group: Capacitor Power Relay (25 of 25)
+#Items from group: Shield Boost Amplifier (25 of 25)
 from customEffects import boostModListBySkillReq
 import model.fitting
 def shieldBoostAmplifier(self, fitting, state):
