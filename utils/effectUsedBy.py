@@ -18,17 +18,13 @@ This script goes through all implemented effects and fills them with comments by
 import sys
 sys.path.append("..")
 
-from optparse import OptionParser
-from dataFolder import dataFolder
 import sqlite3
 import os.path
 import re
 import math
 import copy
 
-import sql
-sql.connect("sqlite")
-db = sql.getConnection()
+db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
 
 #List of queries
 categoryLimiter = ' AND (invcategories.categoryID = 2 OR invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR invcategories.categoryID = 32)'
