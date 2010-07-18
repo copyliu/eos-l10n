@@ -1,4 +1,5 @@
-#Items from group: Logistics (2 of 4) [Ship]
+#Item: Basilisk [Ship]
+#Item: Scimitar [Ship]
 from customEffects import boostModListByReq
 def shieldTransportCpuNeedBonusEffect(self, fitting):
     boostModListByReq(fitting.modules, "cpu", "shieldTransportCpuNeedBonus",

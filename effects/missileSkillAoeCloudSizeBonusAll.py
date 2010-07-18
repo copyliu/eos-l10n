@@ -1,4 +1,7 @@
-#Items from market group: Implants & Boosters > Booster (4 of 32)
+#Item: Improved Crash Booster [Implant]
+#Item: Standard Crash Booster [Implant]
+#Item: Strong Crash Booster [Implant]
+#Item: Synth Crash Booster [Implant]
 from customEffects import boostAmmoListBySkillReq
 def missileSkillAoeCloudSizeBonusAll(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "aoeCloudSize", "aoeCloudSizeBonus",

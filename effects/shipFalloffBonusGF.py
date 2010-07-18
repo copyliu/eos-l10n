@@ -1,4 +1,6 @@
-#Items from group: Frigate (3 of 35) [Ship]
+#Item: Atron [Ship]
+#Item: Daredevil [Ship]
+#Item: Incursus [Ship]
 from customEffects import boostModListBySkillReq
 def shipFalloffBonusGF(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Frigate")

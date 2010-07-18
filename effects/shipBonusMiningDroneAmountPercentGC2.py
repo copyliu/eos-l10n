@@ -1,4 +1,5 @@
-#Variations of item: Vexor (2 of 4) [Ship]
+#Item: Vexor [Ship]
+#Item: Vexor Navy Issue [Ship]
 from customEffects import boostDroneListByReq
 def shipBonusMiningDroneAmountPercentGC2(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Cruiser")

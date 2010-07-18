@@ -1,8 +1,13 @@
-#Items from group: Cyber Science (3 of 30) [Implant]
-#Items from group: Cyberimplant (5 of 138) [Implant]
 #Items from group: Rig Electronics (6 of 30) [Module]
-#Items from group: Scan Probe Launcher (2 of 5) [Module]
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Science Implants (3 of 8)
 #Item: Astrometric Rangefinding [Skill]
+#Item: Low-grade Virtue Alpha [Implant]
+#Item: Low-grade Virtue Beta [Implant]
+#Item: Low-grade Virtue Delta [Implant]
+#Item: Low-grade Virtue Epsilon [Implant]
+#Item: Low-grade Virtue Gamma [Implant]
+#Item: Sisters Core Probe Launcher [Module]
+#Item: Sisters Expanded Probe Launcher [Module]
 def handler(fit, container, context):
     if context == "skill": level = container.level
     else: level = 1

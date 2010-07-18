@@ -1,5 +1,7 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Gunnery Implants (3 of 9)
 #Item: Gunnery [Skill]
+#Item: Hardwiring - Inherent Implants 'Lancer' G0-Delta [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G1-Delta [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G2-Delta [Implant]
 #Item: Pashan's Turret Customization Mindlink [Implant]
 from customEffects import boostModListBySkillReq
 def gunneryTurretSpeeBonusPostPercentSpeedLocationShipModulesRequiringGunnery(self, fitting, level = 1):

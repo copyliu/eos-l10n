@@ -1,4 +1,5 @@
-#Variations of item: Tengu Propulsion - Intercalated Nanofibers (2 of 4) [Subsystem]
+#Item: Tengu Propulsion - Intercalated Nanofibers [Subsystem]
+#Item: Tengu Propulsion - Interdiction Nullifier [Subsystem]
 from customEffects import boost
 def subsystemBonusCaldariPropulsionAgility(self, fitting, state):
     skill, level = fitting.getCharSkill("Caldari Propulsion Systems")

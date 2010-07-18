@@ -1,4 +1,9 @@
-#Items from group: Cyberimplant (6 of 138) [Implant]
+#Item: Low-grade Harvest Alpha [Implant]
+#Item: Low-grade Harvest Beta [Implant]
+#Item: Low-grade Harvest Delta [Implant]
+#Item: Low-grade Harvest Epsilon [Implant]
+#Item: Low-grade Harvest Gamma [Implant]
+#Item: Low-grade Harvest Omega [Implant]
 runTime = "early"
 from customEffects import boostImplantListByReq, multiply
 def setBonusOre(self, fitting):

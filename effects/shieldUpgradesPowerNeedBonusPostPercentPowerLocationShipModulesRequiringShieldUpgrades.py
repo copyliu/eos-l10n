@@ -1,5 +1,5 @@
-#Items from group: Cyber Shields (3 of 13) [Implant]
-#Items from group: Rig Shield (6 of 54) [Module]
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Shield Implants (3 of 3)
+#Variations of item: Large Core Defence Charge Economizer I (2 of 2) [Module]
 #Variations of item: Medium Core Defence Charge Economizer I (2 of 2) [Module]
 #Variations of item: Small Core Defence Charge Economizer I (2 of 2) [Module]
 #Item: Shield Upgrades [Skill]

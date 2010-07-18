@@ -1,6 +1,4 @@
-#Item: Caracal [Ship]
-#Item: Caracal Navy Issue [Ship]
-#Item: Cerberus [Ship]
+#Variations of item: Caracal (3 of 3) [Ship]
 #Item: Onyx [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileKineticDamageCC(self, fitting):

@@ -1,5 +1,7 @@
 #Items from group: ECM (44 of 44) [Module]
-#Items from group: Electronic Warfare Drone (3 of 12) [Drone]
+#Item: Hornet EC-300 [Drone]
+#Item: Vespa EC-600 [Drone]
+#Item: Wasp EC-900 [Drone]
 type = ("projected", "active")
 def ewTestEffectJam(self, fitting, state):
     pass

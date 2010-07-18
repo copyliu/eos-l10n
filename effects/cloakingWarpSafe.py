@@ -1,4 +1,5 @@
-#Items from group: Cloaking Device (2 of 14) [Module]
+#Item: 'Smokescreen' Covert Ops Cloaking Device II [Module]
+#Item: Covert Ops Cloaking Device II [Module]
 import model.fitting
 from model.attribute import basicAttribute
 from customEffects import multiply

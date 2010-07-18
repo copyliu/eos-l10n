@@ -1,4 +1,5 @@
-#Items from market group: Ammunition & Charges > Scripts (4 of 9)
+#Items from group: Sensor Booster Script (2 of 2) [Charge]
+#Items from group: Sensor Dampener Script (2 of 2) [Charge]
 from customEffects import boost
 def scriptSensorBoosterScanResolutionBonusBonus(self, fitting, containerModule):
     boost(containerModule, "scanResolutionBonus", "scanResolutionBonusBonus", self.item)

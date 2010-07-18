@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Gunnery Implants (3 of 9)
+#Item: Hardwiring - Inherent Implants 'Lancer' G0-Alpha [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G1-Alpha [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G2-Alpha [Implant]
 #Item: Small Energy Turret [Skill]
 from customEffects import boostModListBySkillReq
 def smallEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallEnergyTurret(self, fitting, level = 1):

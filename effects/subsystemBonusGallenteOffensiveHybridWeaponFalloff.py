@@ -1,4 +1,5 @@
-#Variations of item: Proteus Offensive - Dissonic Encoding Platform (2 of 4) [Subsystem]
+#Item: Proteus Offensive - Dissonic Encoding Platform [Subsystem]
+#Item: Proteus Offensive - Hybrid Propulsion Armature [Subsystem]
 from customEffects import boostModListBySkillReq
 def subsystemBonusGallenteOffensiveHybridWeaponFalloff(self, fitting, state):
     skill, level = fitting.getCharSkill("Gallente Offensive Systems")

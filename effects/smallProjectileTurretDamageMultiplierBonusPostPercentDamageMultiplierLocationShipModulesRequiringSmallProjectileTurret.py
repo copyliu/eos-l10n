@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Gunnery Implants (3 of 9)
+#Item: Hardwiring - Eifyr and Co. 'Gunslinger' SX-0 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Gunslinger' SX-1 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Gunslinger' SX-2 [Implant]
 #Item: Small Projectile Turret [Skill]
 from customEffects import boostModListBySkillReq
 def smallProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallProjectileTurret(self, fitting, level = 1):

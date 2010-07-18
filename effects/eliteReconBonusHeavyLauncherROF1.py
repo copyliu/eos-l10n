@@ -1,4 +1,5 @@
-#Items from group: Combat Recon Ship (2 of 4) [Ship]
+#Item: Huginn [Ship]
+#Item: Lachesis [Ship]
 from customEffects import boostModListByReq
 def eliteReconBonusHeavyLauncherROF1(self, fitting):
     skill, level = fitting.getCharSkill("Recon Ships")

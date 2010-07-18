@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Navigation Implants (3 of 15)
+#Item: Hardwiring - Eifyr and Co. 'Rogue' MY-0 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Rogue' MY-1 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Rogue' MY-2 [Implant]
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",

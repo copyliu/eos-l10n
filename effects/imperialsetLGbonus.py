@@ -1,4 +1,9 @@
-#Items from group: Cyberimplant (6 of 138) [Implant]
+#Item: Low-grade Grail Alpha [Implant]
+#Item: Low-grade Grail Beta [Implant]
+#Item: Low-grade Grail Delta [Implant]
+#Item: Low-grade Grail Epsilon [Implant]
+#Item: Low-grade Grail Gamma [Implant]
+#Item: Low-grade Grail Omega [Implant]
 from customEffects import boostImplantListByReq, multiply
 runTime = "early"
 def imperialsetLGbonus(self, fitting):

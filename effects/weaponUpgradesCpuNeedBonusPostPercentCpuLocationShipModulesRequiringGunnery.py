@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Gunnery Implants (3 of 12)
+#Item: Hardwiring - Zainou 'Gnome' KZA1000 [Implant]
+#Item: Hardwiring - Zainou 'Gnome' KZA2000 [Implant]
+#Item: Hardwiring - Zainou 'Gnome' KZA500 [Implant]
 #Item: Weapon Upgrades [Skill]
 from customEffects import boostModListBySkillReq
 def weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringGunnery(self, fitting, level = 1):

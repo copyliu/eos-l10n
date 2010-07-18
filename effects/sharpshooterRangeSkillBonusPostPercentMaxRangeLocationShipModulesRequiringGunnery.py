@@ -1,6 +1,11 @@
-#Items from market group: Implants & Boosters > Booster (4 of 32)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Gunnery Implants (3 of 9)
+#Item: Hardwiring - Zainou 'Deadeye' ZGA10 [Implant]
+#Item: Hardwiring - Zainou 'Deadeye' ZGA100 [Implant]
+#Item: Hardwiring - Zainou 'Deadeye' ZGA1000 [Implant]
+#Item: Improved Frentix Booster [Implant]
 #Item: Sharpshooter [Skill]
+#Item: Standard Frentix Booster [Implant]
+#Item: Strong Frentix Booster [Implant]
+#Item: Synth Frentix Booster [Implant]
 from customEffects import boostModListBySkillReq
 def sharpshooterRangeSkillBonusPostPercentMaxRangeLocationShipModulesRequiringGunnery(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "maxRange", "rangeSkillBonus",

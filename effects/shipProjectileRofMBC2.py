@@ -1,5 +1,4 @@
-#Items from market group: Ships > Command Ships > Minmatar (2 of 2)
-#Item: Cyclone [Ship]
+#Variations of item: Cyclone (3 of 3) [Ship]
 #Item: Hurricane [Ship]
 from customEffects import boostModListBySkillReq
 def shipProjectileRofMBC2(self, fitting):

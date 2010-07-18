@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Gunnery Implants (3 of 9)
+#Item: Hardwiring - Eifyr and Co. 'Gunslinger' AX-0 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Gunslinger' AX-1 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Gunslinger' AX-2 [Implant]
 #Item: Motion Prediction [Skill]
 #Item: Ogdin's Eye Coordination Enhancer [Implant]
 from customEffects import boostModListBySkillReq

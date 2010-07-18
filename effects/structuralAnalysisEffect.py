@@ -1,5 +1,8 @@
-#Items from group: Cyber Armor (4 of 24) [Implant]
-#Items from group: Rig Armor (6 of 54) [Module]
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Armor Implants (3 of 3)
+#Variations of item: Large Auxiliary Nano Pump I (2 of 2) [Module]
+#Variations of item: Medium Auxiliary Nano Pump I (2 of 2) [Module]
+#Variations of item: Small Auxiliary Nano Pump I (2 of 2) [Module]
+#Item: Imperial Navy Modified 'Noble' Implant [Implant]
 from customEffects import boostModListByReq
 def structuralAnalysisEffect(self, fitting, state = None):
     boostModListByReq(fitting.modules, "armorDamageAmount", "repairBonus",

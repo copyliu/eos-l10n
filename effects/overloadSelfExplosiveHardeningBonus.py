@@ -1,5 +1,6 @@
-#Items from group: Armor Hardener (39 of 156) [Module]
-#Items from group: Shield Hardener (20 of 91) [Module]
+#Variations of item: Armor Explosive Hardener I (39 of 39) [Module]
+#Variations of item: Explosion Dampening Field I (19 of 19) [Module]
+#Item: Civilian Explosion Dampening Field [Module]
 import model.fitting
 from customEffects import boost
 type = "overload"

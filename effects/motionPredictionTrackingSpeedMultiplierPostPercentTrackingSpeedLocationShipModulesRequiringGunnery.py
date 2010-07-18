@@ -1,4 +1,7 @@
-#Items from market group: Implants & Boosters > Booster (4 of 32)
+#Item: Improved Drop Booster [Implant]
+#Item: Standard Drop Booster [Implant]
+#Item: Strong Drop Booster [Implant]
+#Item: Synth Drop Booster [Implant]
 from customEffects import boostModListBySkillReq
 def motionPredictionTrackingSpeedMultiplierPostPercentTrackingSpeedLocationShipModulesRequiringGunnery(self, fitting):
     boostModListBySkillReq(fitting.modules, "trackingSpeed", "trackingSpeedMultiplier",

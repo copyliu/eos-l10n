@@ -1,4 +1,4 @@
-#Items from category: Implant (11 of 471)
+#Items from group: Cyberimplant (11 of 138) [Implant]
 #Variations of item: Large Trimark Armor Pump I (2 of 2) [Module]
 #Variations of item: Medium Trimark Armor Pump I (2 of 2) [Module]
 #Variations of item: Small Trimark Armor Pump I (2 of 2) [Module]

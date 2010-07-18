@@ -1,7 +1,4 @@
-#Item: Golem [Ship]
-#Item: Raven [Ship]
-#Item: Raven Navy Issue [Ship]
-#Item: Raven State Issue [Ship]
+#Variations of item: Raven (4 of 4) [Ship]
 #Item: Widow [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipTorpedosVelocityBonusCB3(self, fitting):

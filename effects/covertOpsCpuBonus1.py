@@ -1,8 +1,7 @@
-#Items from group: Covert Ops (4 of 4) [Ship]
 #Items from group: Force Recon Ship (4 of 4) [Ship]
 #Items from group: Offensive Systems (4 of 16) [Subsystem]
-#Items from group: Stealth Bomber (4 of 4) [Ship]
 #Items from group: Transport Ship (4 of 8) [Ship]
+#Items from market group: Ships > Covert Ops (8 of 8)
 from customEffects import boostModListByReq, multiply
 def covertOpsCpuBonus1(self, fitting, state = None):
     #take cpu consumption static multiplier

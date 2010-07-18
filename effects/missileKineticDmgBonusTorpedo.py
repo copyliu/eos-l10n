@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Missile Implants (3 of 9)
+#Item: Hardwiring - Zainou 'Snapshot' ZMT1000 [Implant]
+#Item: Hardwiring - Zainou 'Snapshot' ZMT2000 [Implant]
+#Item: Hardwiring - Zainou 'Snapshot' ZMT500 [Implant]
 from customEffects import boostAmmoListBySkillReq
 def missileKineticDmgBonusTorpedo(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "kineticDamage", "damageMultiplierBonus",

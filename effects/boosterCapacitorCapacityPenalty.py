@@ -1,4 +1,4 @@
-#Items from market group: Implants & Boosters > Booster (6 of 32)
+#Items from group: Booster (6 of 34) [Implant]
 type = "boosterSideEffect"
 def handler(fit, booster, context):
     fit.ship.boostItemAttr("capacitorCapacity", booster.getModifiedItemAttr("boosterCapacitorCapacityPenalty"))

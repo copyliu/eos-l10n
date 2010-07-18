@@ -1,5 +1,4 @@
-#Items from market group: Ships > Command Ships > Gallente (2 of 2)
-#Item: Brutix [Ship]
+#Variations of item: Brutix (3 of 3) [Ship]
 #Item: Myrmidon [Ship]
 from customEffects import boostModListByReq
 def shipArmorRepairingGBC2(self, fitting):

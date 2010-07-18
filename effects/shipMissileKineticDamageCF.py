@@ -1,4 +1,8 @@
-#Items from category: Ship (7 of 245)
+#Variations of item: Condor (2 of 3) [Ship]
+#Variations of item: Heron (2 of 2) [Ship]
+#Item: Caldari Navy Hookbill [Ship]
+#Item: Hawk [Ship]
+#Item: Kestrel [Ship]
 from customEffects import boostAmmoListBySkillReq
 def shipMissileKineticDamageCF(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

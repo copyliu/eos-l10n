@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Missile Implants (3 of 9)
+#Item: Hardwiring - Zainou 'Gnome' KTA10 [Implant]
+#Item: Hardwiring - Zainou 'Gnome' KTA100 [Implant]
+#Item: Hardwiring - Zainou 'Gnome' KTA1000 [Implant]
 #Item: Weapon Upgrades [Skill]
 from customEffects import boostModListBySkillReq
 def weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringMissileLauncherOperation(self, fitting, level = 1):

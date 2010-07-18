@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Industry Implants (3 of 9)
+#Item: Hardwiring - Inherent Implants 'Yeti' BX-0 [Implant]
+#Item: Hardwiring - Inherent Implants 'Yeti' BX-1 [Implant]
+#Item: Hardwiring - Inherent Implants 'Yeti' BX-2 [Implant]
 #Item: Ice Harvesting [Skill]
 #Item: Mackinaw [Ship]
 from customEffects import boostModListBySkillReq

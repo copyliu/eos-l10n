@@ -1,5 +1,5 @@
-#Items from category: Subsystem (17 of 80)
 #Items from group: Engineering Systems (16 of 16) [Subsystem]
+#Item: Tengu Offensive - Magnetic Infusion Basin [Subsystem]
 runTime = "early"
 from customEffects import increase
 def capacitorCapacityAddPassive(self, fitting, state):

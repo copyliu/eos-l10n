@@ -1,4 +1,5 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Science Implants (2 of 7)
+#Item: Hardwiring - Eifyr and Co. 'Alchemist' YA-1 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Alchemist' YA-2 [Implant]
 #Item: Low-grade Edge Alpha [Implant]
 #Item: Low-grade Edge Beta [Implant]
 #Item: Low-grade Edge Delta [Implant]

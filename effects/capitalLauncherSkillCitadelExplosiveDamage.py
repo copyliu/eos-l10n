@@ -1,5 +1,7 @@
-#Items from group: Cyber Missile (3 of 46) [Implant]
 #Item: Citadel Torpedoes [Skill]
+#Item: Hardwiring - Zainou 'Sharpshooter' ZMX10 [Implant]
+#Item: Hardwiring - Zainou 'Sharpshooter' ZMX100 [Implant]
+#Item: Hardwiring - Zainou 'Sharpshooter' ZMX1000 [Implant]
 from customEffects import boostAmmoListBySkillReq
 def capitalLauncherSkillCitadelExplosiveDamage(self, fitting, level = 1):
     boostAmmoListBySkillReq(fitting.modules, "explosiveDamage", "damageMultiplierBonus",

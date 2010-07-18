@@ -1,4 +1,5 @@
-#Variations of item: Merlin (2 of 4) [Ship]
+#Item: Merlin [Ship]
+#Item: Worm [Ship]
 from customEffects import boost
 def shipShieldExplosiveResistanceCF2(self, fitting):
     skill, level = fitting.getCharSkill("Caldari Frigate")

@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Gunnery Implants (3 of 9)
+#Item: Hardwiring - Zainou 'Deadeye' ZGM10 [Implant]
+#Item: Hardwiring - Zainou 'Deadeye' ZGM100 [Implant]
+#Item: Hardwiring - Zainou 'Deadeye' ZGM1000 [Implant]
 #Item: Medium Hybrid Turret [Skill]
 from customEffects import boostModListBySkillReq
 def mediumHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumHybridTurret(self, fitting, level = 1):

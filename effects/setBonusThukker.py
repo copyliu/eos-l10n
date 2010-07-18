@@ -1,4 +1,9 @@
-#Items from group: Cyberimplant (6 of 138) [Implant]
+#Item: Low-grade Nomad Alpha [Implant]
+#Item: Low-grade Nomad Beta [Implant]
+#Item: Low-grade Nomad Delta [Implant]
+#Item: Low-grade Nomad Epsilon [Implant]
+#Item: Low-grade Nomad Gamma [Implant]
+#Item: Low-grade Nomad Omega [Implant]
 runTime = "early"
 from customEffects import boostImplantListByReq, multiply
 def setBonusThukker(self, fitting):

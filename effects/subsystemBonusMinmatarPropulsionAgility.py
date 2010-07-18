@@ -1,4 +1,5 @@
-#Variations of item: Loki Propulsion - Chassis Optimization (2 of 4) [Subsystem]
+#Item: Loki Propulsion - Intercalated Nanofibers [Subsystem]
+#Item: Loki Propulsion - Interdiction Nullifier [Subsystem]
 from customEffects import boost
 def subsystemBonusMinmatarPropulsionAgility(self, fitting, state):
     skill, level = fitting.getCharSkill("Minmatar Propulsion Systems")

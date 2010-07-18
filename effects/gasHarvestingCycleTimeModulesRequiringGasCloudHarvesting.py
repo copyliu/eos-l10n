@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Industry Implants (3 of 9)
+#Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-0 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-1 [Implant]
+#Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-2 [Implant]
 from customEffects import boostModListBySkillReq
 def gasHarvestingCycleTimeModulesRequiringGasCloudHarvesting(self, fitting):
     boostModListBySkillReq(fitting.modules, "duration", "durationBonus",

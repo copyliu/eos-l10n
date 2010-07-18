@@ -1,4 +1,6 @@
-#Items from category: Ship (8 of 245)
+#Variations of item: Dominix (3 of 3) [Ship]
+#Variations of item: Megathron (4 of 5) [Ship]
+#Item: Hyperion [Ship]
 from customEffects import boostModListBySkillReq
 def shipHTDmgBonusGB(self, fitting):
     skill, level = fitting.getCharSkill("Gallente Battleship")

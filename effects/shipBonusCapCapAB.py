@@ -1,4 +1,5 @@
-#Variations of item: Apocalypse (2 of 4) [Ship]
+#Item: Apocalypse Imperial Issue [Ship]
+#Item: Paladin [Ship]
 from customEffects import boost
 def shipBonusCapCapAB(self, fitting):
     skill, level = fitting.getCharSkill("Amarr Battleship")

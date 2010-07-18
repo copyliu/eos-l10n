@@ -1,4 +1,5 @@
-#Items from category: Charge (161 of 814)
+#Items from group: Light Missile (17 of 17) [Charge]
+#Items from market group: Ammunition & Charges > Missiles (160 of 185)
 from model import attribute
 runTime = "late"
 def missileLaunching(self, fitting, containerModule):

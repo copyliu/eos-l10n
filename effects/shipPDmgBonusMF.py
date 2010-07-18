@@ -1,6 +1,7 @@
-#Items from category: Ship (8 of 245)
-#Items from market group: Ships > Assault Ships > Minmatar (2 of 2)
-#Items from market group: Ships > Interceptors > Minmatar (2 of 2)
+#Variations of item: Rifter (3 of 3) [Ship]
+#Variations of item: Slasher (3 of 3) [Ship]
+#Item: Cheetah [Ship]
+#Item: Republic Fleet Firetail [Ship]
 from customEffects import boostModListBySkillReq
 def shipPDmgBonusMF(self, fitting):
     skill, level = fitting.getCharSkill("Minmatar Frigate")

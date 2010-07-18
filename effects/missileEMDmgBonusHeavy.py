@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Missile Implants (3 of 12)
+#Item: Hardwiring - Zainou 'Snapshot' ZMH1000 [Implant]
+#Item: Hardwiring - Zainou 'Snapshot' ZMH2000 [Implant]
+#Item: Hardwiring - Zainou 'Snapshot' ZMH500 [Implant]
 from customEffects import boostAmmoListBySkillReq
 def missileEMDmgBonusHeavy(self, fitting):
     boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",

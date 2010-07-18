@@ -1,4 +1,9 @@
-#Items from group: Cyberimplant (6 of 138) [Implant]
+#Item: Talon Alpha [Implant]
+#Item: Talon Beta [Implant]
+#Item: Talon Delta [Implant]
+#Item: Talon Epsilon [Implant]
+#Item: Talon Gamma [Implant]
+#Item: Talon Omega [Implant]
 from customEffects import boostImplantListByReq, multiply
 runTime = "early"
 def caldarisetbonus3(self, fitting):

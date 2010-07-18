@@ -1,4 +1,5 @@
-#Items from group: Logistics (2 of 4) [Ship]
+#Item: Guardian [Ship]
+#Item: Oneiros [Ship]
 from customEffects import boostModListByReq
 def remoteArmorPowerNeedBonusEffect(self, fitting):
     boostModListByReq(fitting.modules, "power", "remoteArmorPowerNeedBonus",

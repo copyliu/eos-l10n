@@ -1,5 +1,7 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Gunnery Implants (3 of 9)
 #Item: Controlled Bursts [Skill]
+#Item: Hardwiring - Inherent Implants 'Lancer' G0-Beta [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G1-Beta [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G2-Beta [Implant]
 from customEffects import boostModListBySkillReq
 def controlledBurstsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringGunnery(self, fitting, level = 1):
     boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",

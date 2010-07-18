@@ -1,4 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Gunnery Implants (3 of 12)
+#Item: Hardwiring - Inherent Implants 'Lancer' G0-Epsilon [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G1-Epsilon [Implant]
+#Item: Hardwiring - Inherent Implants 'Lancer' G2-Epsilon [Implant]
 #Item: Large Energy Turret [Skill]
 #Item: Pashan's Turret Handling Mindlink [Implant]
 from customEffects import boostModListBySkillReq

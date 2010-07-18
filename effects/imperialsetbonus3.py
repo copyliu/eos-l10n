@@ -1,4 +1,9 @@
-#Items from group: Cyberimplant (6 of 138) [Implant]
+#Item: Grail Alpha [Implant]
+#Item: Grail Beta [Implant]
+#Item: Grail Delta [Implant]
+#Item: Grail Epsilon [Implant]
+#Item: Grail Gamma [Implant]
+#Item: Grail Omega [Implant]
 from customEffects import boostImplantListByReq, multiply
 runTime = "early"
 def imperialsetbonus3(self, fitting):

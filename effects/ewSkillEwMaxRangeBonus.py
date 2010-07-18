@@ -1,8 +1,12 @@
-#Items from group: Cyberimplant (5 of 138) [Implant]
-#Items from group: Rig Electronics Superiority (6 of 48) [Module]
+#Variations of item: Large Particle Dispersion Projector I (2 of 2) [Module]
 #Variations of item: Medium Particle Dispersion Projector I (2 of 2) [Module]
 #Variations of item: Small Particle Dispersion Projector I (2 of 2) [Module]
 #Item: Long Distance Jamming [Skill]
+#Item: Low-grade Centurion Alpha [Implant]
+#Item: Low-grade Centurion Beta [Implant]
+#Item: Low-grade Centurion Delta [Implant]
+#Item: Low-grade Centurion Epsilon [Implant]
+#Item: Low-grade Centurion Gamma [Implant]
 from customEffects import boostModListByReq
 def ewSkillEwMaxRangeBonus(self, fitting, state = None, level = 1):
     if self.item.group.category.name == "Skill" or self.item.group.category.name == "Implant":

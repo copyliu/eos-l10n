@@ -1,4 +1,9 @@
-#Items from group: Cyberimplant (6 of 138) [Implant]
+#Item: Jackal Alpha [Implant]
+#Item: Jackal Beta [Implant]
+#Item: Jackal Delta [Implant]
+#Item: Jackal Epsilon [Implant]
+#Item: Jackal Gamma [Implant]
+#Item: Jackal Omega [Implant]
 from customEffects import boostImplantListByReq, multiply
 runTime = "early"
 def republicsetbonus3(self, fitting):
