@@ -161,7 +161,7 @@ def calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed,
     innerAffectedPortionDescribed = float(innerScore_affectedDescribed)/float(innerScore_total)
     innerAffectedPortionUndescribed = float(innerScore_affectedUndescribed)/float(innerScore_total)
     innerPortionTotal = innerAffectedPortionDescribed + innerAffectedPortionUndescribed
-    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed/10)*(innerScore_affectedDescribed+innerScore_affectedUndescribed-1)
+    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed/50)*(innerScore_affectedDescribed+innerScore_affectedUndescribed-1)
     return innerScore, innerPortionTotal
 
 def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
@@ -312,7 +312,7 @@ for effectFileName in os.listdir(effectsPath):
             if printStuff: print "Base item total score: {0:.3}".format(baseTypeOuterScore)
 
             marketGroupWithVarsScore = {}
-            marketGroupWithVarsWeight = 1.0
+            marketGroupWithVarsWeight = 0.7
             for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
                 innerScore_affectedDescribed = len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID].intersection(perEffect_describedTypes))
                 innerScore_affectedUndescribed =  len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID].difference(perEffect_describedTypes))
@@ -343,7 +343,7 @@ for effectFileName in os.listdir(effectsPath):
             #print "---"
 
             maxOuterScore = max(groupOuterScore, categoryOuterScore, baseTypeOuterScore, marketGroupWithVarsOuterScore)
-            if maxOuterScore > 0.1:
+            if maxOuterScore > 0.5:
                 if maxOuterScore == groupOuterScore:
                     groupWinner = max(groupScore, key=groupScore.get)
                     describedByGroup.append(groupWinner)
