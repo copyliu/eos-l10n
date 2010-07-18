@@ -38,9 +38,10 @@ queryPublishedTypeNames = 'SELECT invtypes.typeID, invtypes.typeName FROM invtyp
 queryMarketGroupRelations = 'SELECT invmarketgroups.marketGroupID, invmarketgroups.parentGroupID FROM invmarketgroups'
 queryTypesUsedByEffect = 'SELECT invtypes.typeID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID INNER JOIN dgmtypeeffects ON dgmtypeeffects.typeID = invtypes.typeID INNER JOIN dgmeffects ON dgmeffects.effectID = dgmtypeeffects.effectID WHERE invtypes.published = 1' + categoryLimiter + ' AND dgmeffects.effectID = ?'
 queryParentMarketGroup = 'SELECT invmarketgroups.parentGroupID FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
+queryGroupCategory = 'SELECT invgroups.categoryID FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
 queryTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
 queryGroupName = 'SELECT invgroups.groupName FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
-queryCategoryName = 'SELECT invCategories.categoryName FROM invCategories WHERE invCategories.categoryID = ? LIMIT 1'
+queryCategoryName = 'SELECT invcategories.categoryName FROM invcategories WHERE invcategories.categoryID = ? LIMIT 1'
 queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
 
 #Compose list of effects w/o symbols which pyfa doesn't take into consideration
@@ -401,14 +402,22 @@ for effectFileName in os.listdir(effectsPath):
             for row in cursor: typeName = row[0]
             types.append((typeID, typeName))
         for type in sorted(types, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Item: {0}".format(type[1]))
+            cursor.execute(queryGroupCategory, (globalMap_typeID_groupID[type[0]],))
+            for row in cursor: categoryID = row[0]
+            cursor.execute(queryCategoryName, (categoryID,))
+            for row in cursor: categoryName = row[0]
+            effectLines.insert(0,"#Item: {0} [{1}]".format(type[1], categoryName))
 
         for baseTypeID in describedByBaseType:
             cursor.execute(queryTypeName, (baseTypeID,))
             for row in cursor: baseTypeName = row[0]
             baseTypes.append((baseTypeID, baseTypeName))
         for baseType in sorted(baseTypes, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Variations of item: {0} ({1} of {2})".format(baseType[1], perEffectMap_baseTypeID_typesAffected[baseType[0]], len(globalMap_baseTypeID_typeID[baseType[0]])))
+            cursor.execute(queryGroupCategory, (globalMap_typeID_groupID[baseType[0]],))
+            for row in cursor: categoryID = row[0]
+            cursor.execute(queryCategoryName, (categoryID,))
+            for row in cursor: categoryName = row[0]
+            effectLines.insert(0,"#Variations of item: {0} ({1} of {2}) [{3}]".format(baseType[1], perEffectMap_baseTypeID_typesAffected[baseType[0]], len(globalMap_baseTypeID_typeID[baseType[0]]), categoryName))
 
         for marketGroupID in describedByMarketGroupWithVars:
             #Get data for print
@@ -435,7 +444,11 @@ for effectFileName in os.listdir(effectsPath):
             for row in cursor: groupName = row[0]
             groups.append((groupID, groupName))
         for group in sorted(groups, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Items from group: {0} ({1} of {2})".format(group[1], perEffectMap_groupID_typesAffected[group[0]], len(globalMap_groupID_typeID[group[0]])))
+            cursor.execute(queryGroupCategory, (group[0],))
+            for row in cursor: categoryID = row[0]
+            cursor.execute(queryCategoryName, (categoryID,))
+            for row in cursor: categoryName = row[0]
+            effectLines.insert(0,"#Items from group: {0} ({1} of {2}) [{3}]".format(group[1], perEffectMap_groupID_typesAffected[group[0]], len(globalMap_groupID_typeID[group[0]]), categoryName))
 
         for categoryID in describedByCategory:
             cursor.execute(queryCategoryName, (categoryID,))
