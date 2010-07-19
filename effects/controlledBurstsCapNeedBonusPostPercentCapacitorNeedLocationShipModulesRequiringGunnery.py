@@ -2,8 +2,8 @@
 #Item: Hardwiring - Inherent Implants 'Lancer' G0-Beta [Implant]
 #Item: Hardwiring - Inherent Implants 'Lancer' G1-Beta [Implant]
 #Item: Hardwiring - Inherent Implants 'Lancer' G2-Beta [Implant]
-from customEffects import boostModListBySkillReq
-def controlledBurstsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringGunnery(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                           lambda skill: skill.name == "Gunnery",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.skill if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)

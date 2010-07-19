@@ -1,6 +1,5 @@
 #Items from group: Stealth Bomber (4 of 4) [Ship]
-from customEffects import boostModListByReq, multiply
-def covertOpsStealthBomberSiegeMissileLauncerPowerNeedBonus(self, fitting):
-    boostModListByReq(fitting.modules, "power", "stealthBomberLauncherPower",
-                      lambda mod: mod.group.name == "Missile Launcher Siege",
-                      self.item, helper = multiply)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Missile Launcher Siege",
+                                  "power", ship.getModifiedItemAttr("stealthBomberLauncherPower"))
