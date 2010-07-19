@@ -1,10 +1,8 @@
 #Items from market group: Ships > Carriers > Minmatar (2 of 2)
-from customEffects import boostModListBySkillReq
-def carrierMinmatarArmorShieldTransferRange3(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Carrier")
-    boostModListBySkillReq(fitting.modules, "shieldTransferRange", "carrierMinmatarBonus3",
-                           lambda skill: skill.name == "Capital Shield Emission Systems",
-                           self.item, extraMult = level)
-    boostModListBySkillReq(fitting.modules, "maxRange", "carrierMinmatarBonus3",
-                           lambda skill: skill.name == "Capital Remote Armor Repair Systems",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Carrier").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Emission Systems"),
+                                  "shieldTransferRange", ship.getModifiedItemAttr("carrierMinmatarBonus3") * level)
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Armor Repair Systems"),
+                                  "shieldTransferRange", ship.getModifiedItemAttr("carrierMinmatarBonus3") * level)

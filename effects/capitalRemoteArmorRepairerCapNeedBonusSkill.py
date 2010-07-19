@@ -2,8 +2,8 @@
 #Item: Hardwiring - Inherent Implants 'Gentry' ZEX20 [Implant]
 #Item: Hardwiring - Inherent Implants 'Gentry' ZEX200 [Implant]
 #Item: Hardwiring - Inherent Implants 'Gentry' ZEX2000 [Implant]
-from customEffects import boostModListByReq
-def capitalRemoteArmorRepairerCapNeedBonusSkill(self, fitting, level = 1):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Armor Repair Systems"),
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)

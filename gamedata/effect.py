@@ -30,7 +30,7 @@ class Effect(object):
     def __generateHandler(self):
         try:
             effectModule = __import__('model.effects.' + self.name, fromlist=True)
-            self.__handler = getattr(effectModule, self.handlerName)
+            self.__handler = getattr(effectModule, "handler")
             try:
                 self.__runTime = getattr(effectModule, "runTime")
             except AttributeError:

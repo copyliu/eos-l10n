@@ -1,7 +1,6 @@
 #Items from market group: Ships > Carriers > Caldari (2 of 2)
-from customEffects import boost
-def carrierCaldariShieldResist2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Carrier")
-    boost(fitting.ship, ("shieldExplosiveDamageResonance", "shieldKineticDamageResonance",
-                         "shieldEmDamageResonance", "shieldThermalDamageResonance"),
-          "carrierCaldariBonus2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Carrier").level
+    for resType in ("Explosive", "Kinetic", "Em", "Thermal"):
+        fit.ship.boostItemAttr("shield%sDamageResonance", ship.getModifiedAttribute("carrierCaldariBonus2") * level)    

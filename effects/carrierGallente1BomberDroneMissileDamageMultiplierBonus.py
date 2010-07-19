@@ -1,8 +1,8 @@
 #Item: Nyx [Ship]
-from customEffects import boostDroneListAmmoBySkillReq
-def carrierGallente1BomberDroneMissileDamageMultiplierBonus(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Carrier")
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Carrier").level
     for damageType in ("em", "kinetic", "thermal", "explosive"):
-        boostDroneListAmmoBySkillReq(fitting.drones, damageType + "Damage", "carrierGallenteBonus2",
-                                     lambda skill: skill.name == "Fighter Bombers",
-                                     self.item, extraMult = level)
+        fit.drones.filteredChargeBoost(lambda drone: drone.item.requiresSkill("Fighter Bombers"),
+                                       "%sDamage" % damageType,
+                                       ship.getModifiedItemAttr("carrierGallenteBonus2") * level)

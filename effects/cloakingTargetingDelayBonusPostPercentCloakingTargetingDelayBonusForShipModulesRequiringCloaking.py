@@ -1,5 +1,6 @@
 #Item: Cloaking [Skill]
-from customEffects import boostModListBySkillReq
-def cloakingTargetingDelayBonusPostPercentCloakingTargetingDelayBonusForShipModulesRequiringCloaking(self, fitting, level):
-    boostModListBySkillReq(fitting.modules, "cloakingTargetingDelay", "cloakingTargetingDelayBonus",
-                           lambda skill: skill.name == "Cloaking", self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Cloaking"),
+                                  "cloakingTargetingDelay",
+                                  skill.getModifiedItemAttr("cloakingTargetingDelayBonus") * skill.level)

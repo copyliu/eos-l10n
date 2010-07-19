@@ -2,8 +2,8 @@
 #Item: Hardwiring - Zainou 'Sharpshooter' ZMX10 [Implant]
 #Item: Hardwiring - Zainou 'Sharpshooter' ZMX100 [Implant]
 #Item: Hardwiring - Zainou 'Sharpshooter' ZMX1000 [Implant]
-from customEffects import boostAmmoListBySkillReq
-def capitalLauncherSkillCitadelEmDamage(self, fitting, level = 1):
-    boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",
-                       lambda skill: skill.name == "Citadel Torpedoes",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Citadel Torpedoes"),
+                                    "emDamage", container.getModifiedItemAttr("damageMultiplierBonus") * level)

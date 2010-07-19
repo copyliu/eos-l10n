@@ -1,6 +1,5 @@
 #Item: Capital Projectile Turret [Skill]
-from customEffects import boostModListByReq
-def capitalTurretSkillProjectileDamage(self, fitting, level):
-    boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Projectile Turret"),
+                                  "damageMultiplier", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

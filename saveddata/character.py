@@ -23,7 +23,7 @@ class Character(object):
         for skill in self.__skills:
             if skill.item.ID == item or skill.item == item or skill.item.name == item:
                 return skill
-    
+        
     def iterSkills(self):
         return self.__skills.__iter__()
     

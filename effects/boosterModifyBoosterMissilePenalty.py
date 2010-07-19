@@ -8,8 +8,7 @@
 #Item: Nanite Control [Skill]
 type = "passive"
 def handler(fit, container, context):
-    if context == "skill": level = container.level
-    else: level = 1
+    level = container.level if context == "skill" else 1
     fit.boosters.filteredItemBoost(lambda booster: "boosterAOEVelocityPenalty" in booster.itemModifiedAttributes,
                                    "boosterAOEVelocityPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)
     fit.boosters.filteredItemBoost(lambda booster: "boosterMissileVelocityPenalty" in booster.itemModifiedAttributes,

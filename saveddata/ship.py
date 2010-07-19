@@ -14,7 +14,7 @@ class Ship(ItemAttrShortcut, HandledItem):
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = item.attributes
-        self.armorRepair, self.shieldRepair, self.hullRepair, self.extraCapRecharge = 0, 0, 0, 0
+        self.clear()
         
     @property
     def item(self):
@@ -26,6 +26,8 @@ class Ship(ItemAttrShortcut, HandledItem):
     
     def clear(self):
         self.itemModifiedAttributes.clear()
+        self.armorRepair, self.shieldRepair, self.hullRepair, self.extraCapRecharge, self.maxActiveDrones = 0, 0, 0, 0, 0
+        self.cloaked = False
         
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:

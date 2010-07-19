@@ -1,6 +1,5 @@
 #Item: Citadel Cruise Missiles [Skill]
-from customEffects import boostAmmoListBySkillReq
-def capitalLauncherSkillCruiseCitadelKineticDamage1(self, fitting, level = 1):
-    boostAmmoListBySkillReq(fitting.modules, "kineticDamage", "damageMultiplierBonus",
-                            lambda skill: skill.name == "Citadel Cruise Missiles",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Citadel Cruise Missiles"),
+                                    "kineticDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

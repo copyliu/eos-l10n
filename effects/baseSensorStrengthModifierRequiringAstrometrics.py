@@ -9,7 +9,6 @@
 #Item: Sisters Core Probe Launcher [Module]
 #Item: Sisters Expanded Probe Launcher [Module]
 def handler(fit, container, context):
-    if context == "skill": level = container.level
-    else: level = 1
+    level = container.level if context == "skill" else 1
     fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Astrometrics"),
                                     "baseSensorStrength", container.getModifiedItemAttr("scanStrengthBonus") * level)

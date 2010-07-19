@@ -1,5 +1,5 @@
 import unittest
-from model.types import Module, Fit, User, State, Ship
+from model.types import Module, Fit, User, State, Ship, Slot
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -75,6 +75,26 @@ class TestModule(unittest.TestCase):
         m.charge = a
         self.assertEquals(m.itemID, i.ID)
         self.assertEquals(m.chargeID, a.ID)
+    
+    def test_slotRig(self):
+        m = Module(db.getItem("Large Capacitor Control Circuit I"))
+        self.assertEquals(Slot.RIG, m.slot)
+        
+    def test_slotSubsystem(self):
+        m = Module(db.getItem("Tengu Offensive - Magnetic Infusion Basin"))
+        self.assertEquals(Slot.SUBSYSTEM, m.slot)
+        
+    def test_slotHigh(self):
+        m = Module(db.getItem("Salvager I"))
+        self.assertEquals(Slot.HIGH, m.slot)
+        
+    def test_slotMed(self):
+        m = Module(db.getItem("Cap Recharger I"))
+        self.assertEquals(Slot.MED, m.slot)
+        
+    def test_slotLow(self):
+        m = Module(db.getItem("Heat Sink I"))
+        self.assertEquals(Slot.LOW, m.slot)
     
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session

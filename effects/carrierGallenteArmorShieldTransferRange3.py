@@ -1,10 +1,8 @@
 #Items from market group: Ships > Carriers > Gallente (2 of 2)
-from customEffects import boostModListBySkillReq
-def carrierGallenteArmorShieldTransferRange3(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Carrier")
-    boostModListBySkillReq(fitting.modules, "shieldTransferRange", "carrierGallenteBonus3",
-                           lambda skill: skill.name == "Capital Shield Emission Systems",
-                           self.item, extraMult = level)
-    boostModListBySkillReq(fitting.modules, "maxRange", "carrierGallenteBonus3",
-                           lambda skill: skill.name == "Capital Remote Armor Repair Systems",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Carrier")
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Emission Systems"),
+                                  "shieldTransferRange", ship.getModifiedItemAttr("carrierGallenteBonus3") * level)
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Armor Repair Systems"),
+                                  "maxRange", ship.getModifiedItemAttr("carrierGallenteBonus3") * level)

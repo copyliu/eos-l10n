@@ -5,9 +5,6 @@
 #Items from group: Reactor Control Unit (28 of 28) [Module]
 #Items from group: Shield Flux Coil (11 of 11) [Module]
 #Items from group: Shield Power Relay (11 of 11) [Module]
-import model.fitting
-from customEffects import multiply
-def capacitorCapacityMultiply(self, fitting, state):
-    if self.item.group.name != "Afterburner" or state >= model.fitting.STATE_INACTIVE:
-        multiply(fitting.ship, "capacitorCapacity", "capacitorCapacityMultiplier",
-                 self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("capacitorCapacity", module.getModifiedItemAttr("capacitorCapacityMultiplier"))

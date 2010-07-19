@@ -13,6 +13,8 @@ class Slot():
     LOW = 1
     MED = 2
     HIGH = 3
+    RIG = 4
+    SUBSYSTEM = 5
     
 class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     """An instance of this class represents a module together with its charge and modified attributes"""
@@ -104,16 +106,18 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         return False
     
     def __calculateSlot(self, item):
+        effectSlotMap = {"rigSlot" : Slot.RIG,
+                         "loPower" : Slot.LOW,
+                         "medPower" : Slot.MED,
+                         "hiPower" : Slot.HIGH,
+                         "subSystem" : Slot.SUBSYSTEM}
         if item == None:
             return None
-        elif "loPower" in item.effects:
-            return Slot.LOW
-        elif "medPower" in item.effects:
-            return Slot.MED
-        elif "hiPower" in item.effects:
-            return Slot.HIGH
-        else:
-            raise ValueError("Passed item does not fit in a low, med or high slot")
+        for effectName, slot in effectSlotMap.iteritems():
+            if effectName in item.effects:
+                return slot
+
+        raise ValueError("Passed item does not fit in any known slot")
     
     @validates("ID", "itemID", "ammoID", "state")
     def validator(self, key, val):                

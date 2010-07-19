@@ -1,7 +1,6 @@
 #Items from market group: Ships > Carriers > Amarr (2 of 2)
-from customEffects import boost
-def carrierAmarrArmorResist2(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Carrier")
-    boost(fitting.ship, ("armorExplosiveDamageResonance", "armorKineticDamageResonance",
-                         "armorEmDamageResonance", "armorThermalDamageResonance"),
-          "carrierAmarrBonus2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Carrier").level
+    for armorType in ("Explosive" ,"Kinetic", "Em", "Thermal"):
+        fit.ship.boostItemAttr("armor%sDamageResonance" % armorType, ship.getModifiedItemAttr("carrierAmarrBonus2") * level)

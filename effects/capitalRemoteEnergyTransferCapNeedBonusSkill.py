@@ -1,6 +1,5 @@
 #Item: Capital Energy Emission Systems [Skill]
-from customEffects import boostModListByReq
-def capitalRemoteEnergyTransferCapNeedBonusSkill(self, fitting, level):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Energy Emission Systems"),
+                                  "capacitorNeed", skill.getModifiedItemAttr("capNeedBonus") * skill.level)

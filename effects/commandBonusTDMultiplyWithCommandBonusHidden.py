@@ -1,10 +1,9 @@
 #Item: Information Warfare Link - Electronic Superiority [Module]
-type = ("gang", "active")
-from customEffects import boostModListByReq
-import model.fitting
-def commandBonusTDMultiplyWithCommandBonusHidden(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        mult = self.item.getModifiedAttribute("commandBonusHidden")
-        boostModListByReq(fitting.modules, ("maxRangeBonus", "falloffBonus", "trackingSpeedBonus"),
-                          "commandBonusTD", lambda mod: mod.group.name == "Tracking Disruptor",
-                          self.item, useStackingPenalty = True, extraMult = mult)
+type = "active", "gang"
+def handler(fit, module, context):
+    if context != "gang": return
+    mult = module.getModifiedItemAttr("commandBonusHidden")
+    for bonus in ("maxRangeBonus", "falloffBonus", "trackingSpeedBonus")
+        fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+                                      bonus, module.getModifiedItemAttr("commandBonusTD") * mult,
+                                      stackingPenalties = True)

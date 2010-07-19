@@ -1,7 +1,6 @@
 #Item: Scorpion [Ship]
-from customEffects import boostModListByReq
-def caldariShipEwFalloffRangeCB3(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Battleship")
-    boostModListByReq(fitting.modules, "falloff", "shipBonusCB3",
-                      lambda mod: mod.group.name == "ECM",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Battleship").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "ECM",
+                                  "falloff", ship.getModifiedItemAttr("shipBonusCB3") * level)

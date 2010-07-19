@@ -1,6 +1,4 @@
 #Items from group: Capacitor Battery (27 of 27) [Module]
-import model.fitting
-from customEffects import increase
-def capacitorCapacityBonus(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        increase(fitting.ship, "capacitorCapacity", "capacitorBonus", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.ship.increaseItemAttr("capacitorCapacity", ship.getModifiedItemAttr("capacitorBonus"))

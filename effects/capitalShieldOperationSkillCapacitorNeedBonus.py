@@ -1,6 +1,5 @@
 #Item: Capital Shield Operation [Skill]
-from customEffects import boostModListByReq
-def capitalShieldOperationSkillCapacitorNeedBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Operation"),
+                                  "capacitorNeed", skill.getModifiedItemAttr("capNeedBonus") * skill.level)

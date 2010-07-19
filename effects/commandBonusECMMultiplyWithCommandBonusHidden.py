@@ -1,12 +1,10 @@
 #Item: Information Warfare Link - Electronic Superiority [Module]
-type = ("gang", "active")
-from customEffects import boostModListByReq
-import model.fitting
-def commandBonusECMMultiplyWithCommandBonusHidden(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        mult = self.item.getModifiedAttribute("commandBonusHidden")
-        boostModListByReq(fitting.modules,
-                          ("scanMagnetometricStrengthBonus", "scanRadarStrengthBonus",
-                           "scanLadarStrengthBonus", "scanGravimetricStrengthBonus"),
-                          "commandBonusECM", lambda mod: mod.group.name == "ECM",
-                          self.item, useStackingPenalty = True, extraMult = mult)
+type = "active", "gang"
+def handler(fit, module, context):
+    if context != "gang": return
+    mult = module.getModifiedItemAttr("commandBonusHidden")
+    for scanType in ("Magnetometric", "Radar", "Ladar", "Gravimetric"):
+        fit.modules.filteredItemBoost(lambda mod: mod.group.name == "ECM",
+                                      "scan%sStrengthBonus" % scanType,
+                                      module.getModifiedItemAttr("commandBonusECM") * mult,
+                                      stackingPenalties = True)

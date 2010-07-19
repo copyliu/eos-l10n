@@ -4,10 +4,9 @@
 #Item: Low-grade Talon Epsilon [Implant]
 #Item: Low-grade Talon Gamma [Implant]
 #Item: Low-grade Talon Omega [Implant]
-from customEffects import boostImplantListByReq, multiply
 runTime = "early"
-def caldarisetLGbonus(self, fitting):
-    boostImplantListByReq(fitting.implants, "scanGravimetricStrengthModifier", "implantSetLGCaldariNavy",
-                          lambda implant: "implantSetLGCaldariNavy" in implant.attributes \
-                          and "scanGravimetricStrengthModifier" in implant.attributes,
-                          self.item, helper = multiply)
+type = "passive"
+def handler(fit, implant, context):
+    fit.implants.filteredItemBoost(lambda implant: "implantSetLGCaldariNavy" in implant.itemModifiedAttributes and\
+                                   "scanGravimetricStrengthModifier" in implant.itemModifiedAttributes,
+                                   "scanGravimetricStrengthModifier", implant.getModifiedItemAttr("implantSetLGCaldariNavy"))

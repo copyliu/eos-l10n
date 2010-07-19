@@ -5,3 +5,7 @@ from customEffects import boostModListByReq
 def capNeedBonusEffectLasers(self, fitting, state):
     boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
                       lambda mod: mod.group.name == "Energy Weapon", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.modules.filteredItemBoostr(lambda mod: mod.group.name == "Energy Weapon",
+                                   "capacitorNeed", module.getModifiedItemAttr("capNeedBonus"))

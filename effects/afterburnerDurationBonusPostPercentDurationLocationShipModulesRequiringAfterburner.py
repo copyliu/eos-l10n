@@ -7,5 +7,5 @@ type = "passive"
 def handler(fit, container, context):
     if context == "skill": level = container.level
     else: level = 1
-    fit.modules.filteredItemIncrease(lambda c: c.item.requiresSkill("Afterburner"),
-                                     "duration", c.getModifiedItemAttr("durationBonus") * level)
+    fit.modules.filteredItemIncrease(lambda mod: mod.item.requiresSkill("Afterburner"),
+                                     "duration", container.getModifiedItemAttr("durationBonus") * level)

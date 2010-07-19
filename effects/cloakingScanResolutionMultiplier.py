@@ -2,7 +2,8 @@
 #Item: Large Targeting System Subcontroller I [Module]
 #Item: Medium Targeting System Subcontroller I [Module]
 #Item: Small Targeting System Subcontroller I [Module]
-from customEffects import multiply
-def cloakingScanResolutionMultiplier(self, fitting, state):
-    multiply(fitting.ship, "scanResolution", "scanResolutionMultiplier",
-             self.item, useStackingPenalty = True)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("scanResolution",
+                              module.getModifiedItemAttr("scanResolutionMultiplier"),
+                              stackingPenalties = True)

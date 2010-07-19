@@ -1,7 +1,6 @@
 #Item: Wyvern [Ship]
-from customEffects import boostModListByReq, increase
-def carrierCaldariLeadershipMaxGroupActive4(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Carrier")
-    boostModListByReq(fitting.modules, "maxGroupActive", "carrierCaldariBonus4",
-                      lambda mod: mod.group.name == "Gang Coordinator",
-                      self.item, helper = increase, extraMult = level)
+tpye = "active"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Carrier")
+    fit.modules.filteredItemIncrease(lambda mod: mod.group.name == "Gang Coordinator",
+                                  "maxGroupActive", ship.getModifiedItemAttr("carrierCaldariBonus4") * level)
