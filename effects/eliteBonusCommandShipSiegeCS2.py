@@ -1,7 +1,6 @@
 #Item: Vulture [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusCommandShipSiegeCS2(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boostModListBySkillReq(fitting.modules, "commandBonus", "eliteBonusCommandShips2",
-                           lambda skill: skill.name == "Siege Warfare Specialist",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Siege Warfare Specialist"),
+                                  "commandBonus", ship.getModifiedItemAttr("eliteBonusCommandShips2") * level)

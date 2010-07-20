@@ -1,7 +1,7 @@
 #Variations of item: Large Engine Thermal Shielding I (2 of 2) [Module]
 #Variations of item: Medium Engine Thermal Shielding I (2 of 2) [Module]
 #Variations of item: Small Engine Thermal Shielding I (2 of 2) [Module]
-from customEffects import boostModListByReq
-def durationBonusForGroupAfterburner(self, fitting, state):
-    boostModListByReq(fitting.modules, "duration", "durationBonus",
-                      lambda mod: mod.group.name == "Afterburner", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+                                  "duration", module.getModifiedItemAttr("durationBonus"))

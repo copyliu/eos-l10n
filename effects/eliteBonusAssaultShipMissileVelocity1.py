@@ -1,7 +1,6 @@
 #Item: Hawk [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusAssaultShipMissileVelocity1(self, fitting):
-     skill, level = fitting.getCharSkill("Assault Ships")
-     boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "eliteBonusGunship1",
-                        lambda skill: skill.name == "Missile Launcher Operation",
-                        self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "maxVelocity", ship.getModifiedItemAttr("eliteBonusGunship1") * level)

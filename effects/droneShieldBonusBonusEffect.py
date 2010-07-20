@@ -1,8 +1,7 @@
 #Item: Basilisk [Ship]
 #Item: Scimitar [Ship]
-from customEffects import boostDroneListByReq
-def droneShieldBonusBonusEffect(self, fitting):
-    skill, level = fitting.getCharSkill(self.item.race.capitalize() + " Cruiser")
-    boostDroneListByReq(fitting.drones, "shieldBonus", "droneShieldBonusBonus",
-                        lambda drone: "Shield Maintenance Bot" in drone.name,
-                        self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("%s Cruiser" % ship.item.race.capitalize()).level
+    fit.drones.filteredItemBoost(lambda drone: "Shield Maintenance Bot" in drone.item.name,
+                                 "shieldBonus", ship.getModifiedItemAttr("droneShieldBonusBonus") * level)

@@ -1,5 +1,5 @@
 #Item: Damnation [Ship]
-from customEffects import boost
-def eliteBonusCommandShipArmorHP1(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boost(fitting.ship, "armorHP", "eliteBonusCommandShips1", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.ship.boostItemAttr("armorHP", ship.getModifiedItemAttr("eliteBonusCommandShips1") * level)

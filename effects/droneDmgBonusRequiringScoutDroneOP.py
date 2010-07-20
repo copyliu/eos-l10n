@@ -1,6 +1,5 @@
 #Item: Combat Drone Operation [Skill]
-from customEffects import boostDroneListBySkillReq
-def droneDmgBonusRequiringScoutDroneOP(self, fitting, level):
-    boostDroneListBySkillReq(fitting.drones, "damageMultiplier", "damageMultiplierBonus",
-                             lambda skill: skill.name == "Scout Drone Operation",
-                             self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.drones.filteredItemBoost(lambda drone: drone.item.requiresSkill("Scout Drone Operation"),
+                                 "damageMultiplier", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

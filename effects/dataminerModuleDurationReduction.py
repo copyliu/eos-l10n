@@ -1,5 +1,5 @@
 #Item: Hardwiring - Poteque Pharmaceuticals 'Prospector' PPZ-1 [Implant]
-from customEffects import boostModListByReq
-def dataminerModuleDurationReduction(self, fitting):
-    boostModListByReq(fitting.modules, "duration", "durationBonus",
-                      lambda mod: mod.group.name == "Data Miners", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Data Miners",
+                                  "duration", implant.getModifiedItemAttr("durationBonus"))

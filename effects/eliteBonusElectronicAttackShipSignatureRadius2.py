@@ -1,6 +1,5 @@
-#Item: Hyena [Ship]
-from customEffects import boost
-def eliteBonusElectronicAttackShipSignatureRadius2(self, fitting):
-    skill, level = fitting.getCharSkill("Electronic Attack Ships")
-    boost(fitting.ship, "signatureRadius", "eliteBonusElectronicAttackShip2",
-                      self.item, extraMult = level)
+#Item: Hyena [Ship]  
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Electronic Attack Ships").level
+    fit.ship.boostItemAttr("signatureRadius", ship.getModifiedItemAttr("eliteBonusElectronicAttackShip2") * level)

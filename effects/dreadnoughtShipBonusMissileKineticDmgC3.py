@@ -1,7 +1,6 @@
 #Item: Phoenix [Ship]
-from customEffects import boostAmmoListBySkillReq
-def dreadnoughtShipBonusMissileKineticDmgC3(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Dreadnought")
-    boostAmmoListBySkillReq(fitting.modules, "kineticDamage", "dreadnoughtShipBonusC3",
-                            lambda skill: skill.name == "Citadel Cruise Missiles",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Dreadnought").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Citadel Cruise Missiles"),
+                                    "kineticDamage", ship.getModifiedItemAttr("dreadnoughtShipBonusC3") * level)

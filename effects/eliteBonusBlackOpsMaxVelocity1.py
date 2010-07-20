@@ -1,6 +1,5 @@
 #Item: Panther [Ship]
-from customEffects import boost
-def eliteBonusBlackOpsMaxVelocity1(self, fitting):
-    skill, level = fitting.getCharSkill("Black Ops")
-    boost(fitting.ship, "maxVelocity", "eliteBonusBlackOps1",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Black Ops").level
+    fit.ship.boostItemAttr("maxVelocity", ship.getModifiedItemAttr("eliteBonusBlackOps1") * level)

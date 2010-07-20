@@ -1,5 +1,6 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Electronics Implants (3 of 6)
 #Item: Electronics [Skill]
-from customEffects import boost
-def electronicsCpuOutputBonusPostPercentCpuOutputLocationShipGroupComputer(self, fitting, level = 1):
-    boost(fitting.ship, "cpuOutput", "cpuOutputBonus2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.ship.boostItemAttr("cpuOutput", container.getModifiedItemAttr("cpuOutputBonus2") * level)

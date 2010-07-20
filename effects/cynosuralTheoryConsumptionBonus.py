@@ -1,7 +1,7 @@
 #Items from group: Force Recon Ship (4 of 4) [Ship]
 #Item: Cynosural Field Theory [Skill]
-from customEffects import boostModListBySkillReq
-def cynosuralTheoryConsumptionBonus(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "consumptionQuantity", "consumptionQuantityBonusPercentage",
-                           lambda skill: skill.name == "Cynosural Field Theory",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Cynosural Field Theory"),
+                                  "consumptionQuantity", container.getModifiedItemAttr("consumptionQuantityBonusPercentage") * level)

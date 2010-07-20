@@ -30,7 +30,8 @@ class Fit(object):
         from model import db
         self.__ship = db.getItem(self.shipID) if self.shipID != None else None
         self.__shipModifiedAttributes = ModifiedAttributeDict()
-    
+        self.clear()
+        
     @property
     def shipModifiedAttributes(self):
         return self.__shipModifiedAttributes
@@ -89,7 +90,8 @@ class Fit(object):
         self.ship.clear()
         chain = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,))
         for stuff in chain: stuff.clear()
-        
+        self.armorRepair, self.droneControlRange, self.shieldRepair, self.hullRepair, self.extraCapRecharge, self.maxActiveDrones = 0, 0, 0, 0, 0, 0
+        self.cloaked = False
     
     def calculateModifiedAttributes(self):
         #There's a few things to keep in mind here
@@ -100,13 +102,13 @@ class Fit(object):
         for runTime in ("early", "normal", "late"):
             #Lets start out with the ship's effects
             #We'll be ignoring gang/projected effects for now and focussing on regular ones
-            self.ship.calculateModifiedAttributes(self, runTime)
             self.character.calculateModifiedAttributes(self, runTime)
+            self.ship.calculateModifiedAttributes(self, runTime)
             #Handle the rest through their respective classes
-            for module in self.modules: module.calculateModifiedAttributes(self, runTime)
             for drone in self.drones: drone.calculateModifiedAttributes(self, runTime)
             for booster in self.boosters: booster.calculateModifiedAttributes(self, runTime)
             for implant in self.implants: implant.calculateModifiedAttributes(self, runTime)
+            for module in self.modules: module.calculateModifiedAttributes(self, runTime)
     
 class HandledDroneSet(HandledSet):
     def __init__(self):

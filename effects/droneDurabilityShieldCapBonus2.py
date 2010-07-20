@@ -1,5 +1,5 @@
 #Item: Drone Durability [Skill]
-from customEffects import boostDroneListBySkillReq
-def droneDurabilityShieldCapBonus2(self, fitting, level):
-    boostDroneListBySkillReq(fitting.drones, "shieldCapacity", "shieldCapacityBonus",
-                             lambda skill: skill.name == "Drones", self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.drones.filteredDroneBoost(lambda drone: drone.item.requiresSkill("Drones"),
+                                  "shieldCapacity", skill.getModifiedItemAttr("shieldCapacityBonus") * skill.level)

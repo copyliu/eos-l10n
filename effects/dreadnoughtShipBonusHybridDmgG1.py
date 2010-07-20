@@ -1,7 +1,6 @@
 #Item: Moros [Ship]
-from customEffects import boostModListBySkillReq
-def dreadnoughtShipBonusHybridDmgG1(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Dreadnought")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "dreadnoughtShipBonusG1",
-                           lambda skill: skill.name == "Capital Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Dreadnought").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("dreadnoughtShipBonusG1") * level)

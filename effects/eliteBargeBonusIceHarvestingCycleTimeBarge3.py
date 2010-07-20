@@ -1,7 +1,6 @@
 #Items from group: Exhumer (2 of 3) [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBargeBonusIceHarvestingCycleTimeBarge3(self, fitting):
-    skill, level = fitting.getCharSkill("Exhumers")
-    boostModListBySkillReq(fitting.modules, "duration", "eliteBonusBarge2",
-                           lambda skill: skill.name == "Ice Harvesting",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Exhumers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Ice Harvesting"),
+                                  "duration", ship.getModifiedItemAttr("eliteBonusBarge2") * level)

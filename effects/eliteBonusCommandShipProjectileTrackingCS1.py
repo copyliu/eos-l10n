@@ -1,7 +1,6 @@
 #Item: Claymore [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusCommandShipProjectileTrackingCS1(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "eliteBonusCommandShips1",
-                           lambda skill: skill.name == "Medium Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("eliteBonusCommandShips1") * level)

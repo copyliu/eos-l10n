@@ -1,7 +1,6 @@
 #Item: Eos [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusCommandShipInfoCS2(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boostModListBySkillReq(fitting.modules, "commandBonus", "eliteBonusCommandShips2",
-                           lambda skill: skill.name == "Information Warfare Specialist",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Information Warfare Specialist"),
+                                  "commandBonus", ship.getModifiedItemAttr("eliteBonusCommandShips2") * level)

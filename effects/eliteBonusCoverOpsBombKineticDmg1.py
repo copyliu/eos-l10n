@@ -1,7 +1,6 @@
 #Item: Manticore [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusCoverOpsBombKineticDmg1(self, fitting):
-    skill, level = fitting.getCharSkill("Covert Ops")
-    boostAmmoListBySkillReq(fitting.modules, "kineticDamage", "eliteBonusCoverOps1",
-                       lambda skill: skill.name == "Bomb Deployment",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Covert Ops").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Bomb Deployment"),
+                                    "kineticDamage", ship.getModifiedItemAttr("eliteBonusCoverOps1") * level)

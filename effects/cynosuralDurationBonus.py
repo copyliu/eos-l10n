@@ -1,5 +1,5 @@
 #Items from group: Force Recon Ship (4 of 4) [Ship]
-from customEffects import boostModListByReq
-def cynosuralDurationBonus(self, fitting):
-    boostModListByReq(fitting.modules, "duration", "durationBonus",
-                      lambda mod: mod.group.name == "Cynosural Field", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Cynosural Field",
+                                  "duration", ship.getModifiedItemAttr("durationBonus"))

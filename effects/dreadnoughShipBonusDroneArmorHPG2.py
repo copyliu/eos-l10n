@@ -1,6 +1,7 @@
 #Item: Moros [Ship]
-from customEffects import boostDroneListByReq
-def dreadnoughShipBonusDroneArmorHPG2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Dreadnought")
-    boostDroneListByReq(fitting.drones, "armorHP", "dreadnoughtShipBonusG2",
-                        lambda drone: True, self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Dreadnought").level
+    fit.drones.filteredItemBoost(lambda drone: True, "armorHP",
+                                 ship.getModifiedItemAttr("dreadnoughtShipBonusG2") * level)
+    

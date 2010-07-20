@@ -1,7 +1,6 @@
 #Item: Hyena [Ship]
-from customEffects import boostModListByReq
-def eliteBonusElectronicAttackShipStasisWebMaxRange1(self, fitting):
-    skill, level = fitting.getCharSkill("Electronic Attack Ships")
-    boostModListByReq(fitting.modules, "maxRange", "eliteBonusElectronicAttackShip1",
-                      lambda mod: mod.group.name == "Stasis Web",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Electronic Attack Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Stasis Web",
+                                  "maxRange", ship.getModifiedItemAttr("eliteBonusElectronicAttackShip1") * level)

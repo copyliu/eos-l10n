@@ -1,7 +1,6 @@
 #Item: Redeemer [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusBlackOpsLargeEnergyTurretTracking1(self, fitting):
-    skill, level = fitting.getCharSkill("Black Ops")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "eliteBonusBlackOps1",
-                           lambda skill: skill.name == "Large Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Black Ops").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Energy Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("eliteBonusBlackOps1") * level)

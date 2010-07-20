@@ -1,7 +1,6 @@
 #Item: Nighthawk [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusCommandShipsHeavyMissileExplosionVelocityCS2(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boostAmmoListBySkillReq(fitting.modules, "aoeVelocity", "eliteBonusCommandShips2",
-                       lambda skill: skill.name == "Heavy Missiles",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Heavy Missiles"),
+                                    "aoeVelocity", ship.getModifiedItemAttr("eliteBonusCommandShips2") * level)

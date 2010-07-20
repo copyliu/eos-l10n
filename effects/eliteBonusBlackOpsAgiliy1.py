@@ -1,6 +1,5 @@
 #Item: Sin [Ship]
-from customEffects import boost
-def eliteBonusBlackOpsAgiliy1(self, fitting):
-    skill, level = fitting.getCharSkill("Black Ops")
-    boost(fitting.ship, "agility", "eliteBonusBlackOps1",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Black Ops").level
+    fit.ship.boostItemAttr("agility", ship.getModifiedItemAttr("eliteBonusBlackOps1") * level)

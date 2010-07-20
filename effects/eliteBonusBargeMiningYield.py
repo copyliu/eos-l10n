@@ -1,7 +1,7 @@
 #Item: Hulk [Ship]
-from customEffects import boostModListByReq
-def eliteBonusBargeMiningYield(self, fitting):
-    skill, level = fitting.getCharSkill("Exhumers")
-    boostModListByReq(fitting.modules, "miningAmount", "eliteBonusBarge1",
-                      lambda mod: mod.group.name in ("Strip Miner", "Frequency Mining Laser"),
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Exhumers").level
+    groups = "Strip Miner", "Frequency Mining Laser"
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name in groups,
+                                  "miningAmount", ship.getModifiedItemAttr("eliteBonusBarge1") * level)

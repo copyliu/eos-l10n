@@ -1,7 +1,6 @@
 #Item: Sentinel [Ship]
-from customEffects import boostModListByReq
-def eliteBonusElectronicAttackShipEnergyNeutRange1(self, fitting):
-    skill, level = fitting.getCharSkill("Electronic Attack Ships")
-    boostModListByReq(fitting.modules, "energyDestabilizationRange", "eliteBonusElectronicAttackShip1",
-                      lambda mod: mod.group.name == "Energy Destabilizer",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Electronic Attack Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Destabilizer",
+                                  "energyDestabilizationRange", ship.getModifiedItemAttr("eliteBonusElectronicAttackShip1") * level)

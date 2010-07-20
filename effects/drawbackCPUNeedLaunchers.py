@@ -1,6 +1,5 @@
 #Items from group: Rig Launcher (36 of 36) [Module]
-from customEffects import boostModListByReq
-def drawbackCPUNeedLaunchers(self, fitting, state):
-    boostModListByReq(fitting.modules, "cpu", "drawback",
-                      lambda mod: mod.group.name[0:16] == "Missile Launcher",
-                      self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name[0:16] == "Missile Launcher",
+                                  "cpu", module.getModifiedItemAttr("drawback"))

@@ -1,5 +1,4 @@
 #Item: Drones [Skill]
-from customEffects import increase
-def dronesSkillBoostMaxActiveDroneBonus(self, fitting, level):
-    increase(fitting.ship, "_maxActiveDrones", "maxActiveDroneBonus",
-             self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.maxActiveDrons += skill.getModifiedItemAttr("maxActiveDroneBonus") * skill.level

@@ -1,7 +1,6 @@
 #Items from group: Covert Ops (4 of 4) [Ship]
-from customEffects import boostAmmoListByReq
-def eliteBonusCoverOpsScanProbeStrength2(self, fitting):
-    skill, level = fitting.getCharSkill("Covert Ops")
-    boostAmmoListByReq(fitting.modules, "baseSensorStrength", "eliteBonusCoverOps2",
-                       lambda mod: mod.group.name == "Scanner Probe",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Covert Ops").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Scanner Probe",
+                                    "baseSensorStrength", ship.getModifiedItemAttr("eliteBonusCoverOps2") * level)

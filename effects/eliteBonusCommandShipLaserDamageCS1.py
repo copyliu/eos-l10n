@@ -1,7 +1,6 @@
 #Item: Absolution [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusCommandShipLaserDamageCS1(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "eliteBonusCoverOps1",
-                           lambda skill: skill.name == "Medium Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Energy Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("eliteBonusCoverOps1") * level)

@@ -1,7 +1,6 @@
 #Item: Astarte [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusCommandShipHybridFalloffCS2(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    boostModListBySkillReq(fitting.modules, "maxRange", "eliteBonusCommandShips2",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "maxRange", ship.getModifiedItemAttr("eliteBonusCommandShips2") * level)

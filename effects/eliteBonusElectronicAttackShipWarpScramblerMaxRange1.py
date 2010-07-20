@@ -1,7 +1,6 @@
-#Item: Keres [Ship]
-from customEffects import boostModListByReq
-def eliteBonusElectronicAttackShipWarpScramblerMaxRange1(self, fitting):
-    skill, level = fitting.getCharSkill("Electronic Attack Ships")
-    boostModListByReq(fitting.modules, "maxRange", "eliteBonusElectronicAttackShip1",
-                      lambda mod: mod.group.name == "Warp Scrambler",
-                      self.item, extraMult = level)
+#Item: Keres [Ship] 
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Electronic Attack Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Warp Scrambler",
+                                  "maxRange", ship.getModifiedItemAttr("eliteBonusElectronicAttackShip1") * level)
