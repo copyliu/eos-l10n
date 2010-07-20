@@ -1,6 +1,5 @@
 #Item: Vengeance [Ship]
-from customEffects import boost
-def eliteBonusGunshipCapRecharge2(self, fitting):
-    skill, level = fitting.getCharSkill("Assault Ships")
-    boost(fitting.ship, "rechargeRate", "eliteBonusGunship2", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.ship.boostItemAttr("rechargeRate", ship.getModifiedItemAttr("eliteBonusGunship2") * level)

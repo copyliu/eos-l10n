@@ -1,7 +1,6 @@
 #Items from group: Heavy Interdictor (4 of 4) [Ship]
-from customEffects import boostModListByReq
-def eliteBonusHeavyInterdictorsWarpDisruptFieldGeneratorWarpScrambleRange2(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Interdictors")
-    boostModListByReq(fitting.modules, "warpScrambleRange", "eliteBonusHeavyInterdictors2",
-                      lambda mod: mod.group.name == "Warp Disrupt Field Generator",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Interdictors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Warp Disrupt Field Generator",
+                                  "warpScrambleRange", ship.getModifiedItemAttr("eliteBonusHeavyInterdictors2") * level)

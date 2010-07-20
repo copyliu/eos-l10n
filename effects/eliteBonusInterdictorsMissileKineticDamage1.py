@@ -1,8 +1,6 @@
 #Item: Flycatcher [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusInterdictorsMissileKineticDamage1(self, fitting):
-    skill, level = fitting.getCharSkill("Interdictors")
-    boostAmmoListBySkillReq(fitting.modules, "kineticDamage", "eliteBonusInterdictors1",
-                            lambda skill: skill.name == "Rockets" or \
-                            skill.name == "Standard Missiles",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Interdictors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Standard Missiles"),
+                                  "kineticDamage", ship.getModifiedItemAttr("eliteBonusInterdictors1") * level)

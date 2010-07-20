@@ -1,6 +1,5 @@
 #Item: Ishkur [Ship]
-from customEffects import increase
-def eliteBonusGunshipDroneCapacity2(self, fitting):
-    skill, level = fitting.getCharSkill("Assault Ships")
-    increase(fitting.ship, "droneCapacity", "eliteBonusGunship2", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.ship.increaseItemAttr("droneCapacity", ship.getModifiedItemAttr("eliteBonusGunship2") * level)

@@ -1,7 +1,6 @@
 #Item: Sabre [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusInterdictorsProjectileFalloff1(self, fitting):
-    skill, level = fitting.getCharSkill("Interdictors")
-    boostModListBySkillReq(fitting.modules, "falloff", "eliteBonusInterdictors1",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Interdictors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret""),
+                                  "falloff", ship.getModifiedItemAttr("eliteBonusInterdictors1") * level)

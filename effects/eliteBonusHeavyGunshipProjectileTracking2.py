@@ -1,7 +1,6 @@
 #Item: Muninn [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusHeavyGunshipProjectileTracking2(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Assault Ships")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "eliteBonusHeavyGunship2",
-                           lambda skill: skill.name == "Medium Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Assault Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("eliteBonusHeavyGunship2") * level)

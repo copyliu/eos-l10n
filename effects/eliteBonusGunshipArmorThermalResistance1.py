@@ -1,6 +1,5 @@
 #Item: Vengeance [Ship]
-from customEffects import boost
-def eliteBonusGunshipArmorThermalResistance1(self, fitting):
-    skill, level = fitting.getCharSkill("Assault Ships")
-    boost(fitting.ship, "armorThermalDamageResonance", "eliteBonusGunship1",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.ship.boostItemAttr("armorThermalDamageResonance", ship.getModifiedItemAttr("eliteBonusGunship1") * level)

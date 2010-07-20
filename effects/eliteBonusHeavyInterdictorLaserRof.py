@@ -1,7 +1,6 @@
 #Item: Devoter [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusHeavyInterdictorLaserRof(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Interdictors")
-    boostModListBySkillReq(fitting.modules, "speed", "eliteBonusHeavyInterdictors1",
-                           lambda skill: skill.name == "Medium Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Interdictors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Energy Turret"),
+                                  "speed", ship.getModifiedItemAttr("eliteBonusHeavyInterdictors1") * level)

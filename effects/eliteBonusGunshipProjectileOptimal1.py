@@ -1,7 +1,6 @@
 #Item: Jaguar [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusGunshipProjectileOptimal1(self, fitting):
-    skill, level = fitting.getCharSkill("Assault Ships")
-    boostModListBySkillReq(fitting.modules, "maxRange", "eliteBonusGunship1",
-                      lambda skill: skill.name == "Small Projectile Turret",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "maxRange", ship.getModifiedItemAttr("eliteBonusGunship1") * level)

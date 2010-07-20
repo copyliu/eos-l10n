@@ -1,8 +1,7 @@
 #Item: Deimos [Ship]
 #Item: Eagle [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusHeavyGunshipHybridDmg2(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Assault Ships")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "eliteBonusHeavyGunship2",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Assault Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("eliteBonusHeavyGunship2") * level)

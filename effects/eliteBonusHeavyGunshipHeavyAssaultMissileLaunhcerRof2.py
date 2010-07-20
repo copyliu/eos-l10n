@@ -1,8 +1,7 @@
 #Item: Cerberus [Ship]
 #Item: Sacrilege [Ship]
-from customEffects import boostModListByReq
-def eliteBonusHeavyGunshipHeavyAssaultMissileLaunhcerRof2(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Assault Ships")
-    boostModListByReq(fitting.modules, "speed", "eliteBonusHeavyGunship2",
-                      lambda mod: mod.group.name == "Missile Launcher Heavy Assault",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Assault Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Missile Launcher Heavy Assault",
+                                  "speed", ship.getModifiedItemAttr("eliteBonusHeavyGunship2") * level)

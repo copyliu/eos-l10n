@@ -1,7 +1,6 @@
-#Item: Retribution [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusGunshipLaserOptimal1(self, fitting):
-    skill, level = fitting.getCharSkill("Assault Ships")
-    boostModListBySkillReq(fitting.modules, "maxRange", "eliteBonusGunship1",
-                           lambda skill: skill.name == "Small Energy Turret",
-                           self.item, extraMult = level)
+#Item: Retribution [Ship]  
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Energy Turret"),
+                                  "maxRange", ship.getModifiedItemAttr("eliteBonusGunship1") * level)

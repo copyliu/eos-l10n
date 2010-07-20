@@ -1,7 +1,6 @@
 #Item: Onyx [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusHeavyInterdictorHeavyAssaultMissileVelocityBonus(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Interdictors")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "eliteBonusHeavyInterdictors1",
-                       lambda skill: skill.name == "Heavy Assault Missiles",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Interdictors").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Heavy Assault Missiles"),
+                                    "maxVelocity", ship.getModifiedItemAttr("eliteBonusHeavyInterdictors1") * level)

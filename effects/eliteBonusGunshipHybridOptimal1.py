@@ -1,7 +1,6 @@
 #Items from group: Assault Ship (3 of 8) [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusGunshipHybridOptimal1(self, fitting):
-    skill, level = fitting.getCharSkill("Assault Ships")
-    boostModListBySkillReq(fitting.modules, "maxRange", "eliteBonusGunship1",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Assault Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                  "maxRange", ship.getModifiedItemAttr("eliteBonusGunship1") * level)

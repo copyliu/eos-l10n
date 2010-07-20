@@ -1,7 +1,6 @@
 #Item: Cerberus [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusHeavyGunshipAssaultMissileFlightTime1(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Assault Ships")
-    boostAmmoListBySkillReq(fitting.modules, "explosionDelay", "eliteBonusHeavyGunship1",
-                       lambda skill: skill.name == "Heavy Assault Missiles",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Assault Ships").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Heavy Assault Missiles"),
+                                    "explosionDelay", ship.getModifiedItemAttr("eliteBonusHeavyGunship1") * level)

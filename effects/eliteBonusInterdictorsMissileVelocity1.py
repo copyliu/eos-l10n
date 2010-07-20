@@ -1,7 +1,6 @@
 #Item: Heretic [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusInterdictorsMissileVelocity1(self, fitting):
-    skill, level = fitting.getCharSkill("Destroyers")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "eliteBonusInterdictors1",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Interdictors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Missile Launcher Operation"),
+                                  "maxVelocity", ship.getModifiedItemAttr("eliteBonusInterdictors1") * level)

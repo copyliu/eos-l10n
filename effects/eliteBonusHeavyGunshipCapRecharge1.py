@@ -1,6 +1,5 @@
 #Item: Sacrilege [Ship]
-from customEffects import boost
-def eliteBonusHeavyGunshipCapRecharge1(self, fitting):
-    skill, level = fitting.getCharSkill("Heavy Assault Ships")
-    boost(fitting.ship, "rechargeRate", "eliteBonusHeavyGunship1",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Heavy Assault Ships").level
+    fit.ship.boostItemAttr("rechargeRate", ship.getModifiedItemAttr("eliteBonusHeavyGunship1") * level)
