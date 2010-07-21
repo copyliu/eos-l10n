@@ -1,6 +1,5 @@
 #Item: Explosive Shield Compensation [Skill]
-from customEffects import boostModListByReq
-def explosiveShieldCompensationHardeningBonusGroupShieldAmp(self, fitting, level):
-    boostModListByReq(fitting.modules, "explosiveDamageResistanceBonus", "hardeningBonus",
-                      lambda mod: mod.group.name == "Shield Amplifier",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Amplifier",
+                                  "explosiveDamageResistanceBonus", skill.getModifiedItemAttr("hardeningBonus") * skill.level)

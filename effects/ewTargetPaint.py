@@ -2,10 +2,8 @@
 #Item: Berserker TP-900 [Drone]
 #Item: Valkyrie TP-600 [Drone]
 #Item: Warrior TP-300 [Drone]
-import model.fitting
-from customEffects import boost
-type = ("projected", "active")
-def ewTargetPaint(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE and fitting.ship.getModifiedAttribute("disallowOffensiveModifiers") != 1:
-        boost(fitting.ship, "signatureRadius", "signatureRadiusBonus",
-              self.item, useStackingPenalty = True)
+type = "projected", "active"
+def handler(fit, container, context):
+    if context == "projected":
+        fit.ship.boostItemAttr("signatureRadius", container.getModifiedItemAttr("signatureRadiusBonus"),
+                               stackingPenalties = True)

@@ -2,6 +2,6 @@
 #Item: Hornet EC-300 [Drone]
 #Item: Vespa EC-600 [Drone]
 #Item: Wasp EC-900 [Drone]
-type = ("projected", "active")
-def ewTestEffectJam(self, fitting, state):
+type = "projected", "active"
+def handler(fit, container, context):
     pass

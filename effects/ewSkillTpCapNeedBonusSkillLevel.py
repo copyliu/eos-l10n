@@ -1,7 +1,7 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Electronics Implants (6 of 12)
 #Item: Target Painting [Skill]
-from customEffects import boostModListByReq
-def ewSkillTpCapNeedBonusSkillLevel(self, fitting, level = 1):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Target Painting"),
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)

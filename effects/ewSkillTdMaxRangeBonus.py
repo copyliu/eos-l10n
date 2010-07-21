@@ -2,12 +2,9 @@
 #Variations of item: Medium Particle Dispersion Projector I (2 of 2) [Module]
 #Variations of item: Small Particle Dispersion Projector I (2 of 2) [Module]
 #Item: Long Distance Jamming [Skill]
-from customEffects import boostModListByReq
-def ewSkillTdMaxRangeBonus(self, fitting, state = None, level = 1):
-    if self.item.group.category.name == "Skill":
-        penalized = False
-    else:
-        penalized = True
-    boostModListByReq(fitting.modules, "maxRange", "rangeSkillBonus",
-                      lambda mod: mod.group.name == "Tracking Disruptor",
-                      self.item, useStackingPenalty = penalized, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+                                  "maxRange", container.getModifiedItemAttr("rangeSkillBonus") * level,
+                                  stackingPenalties = context != "skill" and context != "implant")

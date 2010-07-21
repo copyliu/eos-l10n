@@ -1,6 +1,5 @@
 #Item: Frequency Modulation [Skill]
-from customEffects import boostModListByReq
-def ewSkillTpFallOffBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "falloff", "falloffBonus",
-                      lambda mod: mod.group.name == "Target Painter",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Target Painter",
+                                  "falloff", skill.getModifiedItemAttr("falloffBonus") * skill.level)

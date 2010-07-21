@@ -1,6 +1,5 @@
 #Item: Signature Focusing [Skill]
-from customEffects import boostModListByReq
-def ewSkillTargetPaintingStrengthBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "signatureRadiusBonus", "scanSkillTargetPaintStrengthBonus",
-                      lambda mod: mod.group.name == "Target Painter",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Target Painter",
+                                  "signatureRadiusBonus", skill.getModifiedItemAttr("scanSkillTargetPaintStrengthBonus") * skill.level)
