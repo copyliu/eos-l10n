@@ -1,6 +1,5 @@
 #Item: Frequency Modulation [Skill]
-from customEffects import boostModListByReq
-def ewSkillRsdFallOffBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "falloff", "falloffBonus",
-                      lambda mod: mod.group.name == "Remote Sensor Damper",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote Sensor Damper",
+                                  "falloff", skill.getModifiedItemAttr("falloffBonus") * skill.level)

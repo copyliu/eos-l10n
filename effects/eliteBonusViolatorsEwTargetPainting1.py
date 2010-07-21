@@ -1,7 +1,6 @@
 #Item: Golem [Ship]
-from customEffects import boostModListByReq
-def eliteBonusViolatorsEwTargetPainting1(self, fitting):
-    skill, level = fitting.getCharSkill("Marauders")
-    boostModListByReq(fitting.modules, "signatureRadiusBonus", "eliteBonusViolators1",
-                      lambda mod: mod.group.name == "Target Painter",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Marauders").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Target Painter",
+                                  "signatureRadiusBonus", ship.getModifiedItemAttr("eliteBonusViolators1") * level)

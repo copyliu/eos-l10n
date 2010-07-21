@@ -1,4 +1,4 @@
-from model.types import Drone
+from model.types import Drone, Ship
 from model.effectHandlerHelpers import HandledSet
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
@@ -28,9 +28,13 @@ class Fit(object):
     
     def build(self):
         from model import db
-        self.__ship = db.getItem(self.shipID) if self.shipID != None else None
+        self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
         self.__shipModifiedAttributes = ModifiedAttributeDict()
-        self.clear()
+        self.initBaseParams()
+    
+    def initBaseParams(self):
+        self.armorRepair, self.droneControlRange, self.shieldRepair, self.hullRepair, self.extraCapRecharge, self.maxActiveDrones = 0, 0, 0, 0, 0, 0
+        self.cloaked = False
         
     @property
     def shipModifiedAttributes(self):
@@ -87,11 +91,12 @@ class Fit(object):
         else: return val
     
     def clear(self):
-        self.ship.clear()
-        chain = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,))
-        for stuff in chain: stuff.clear()
-        self.armorRepair, self.droneControlRange, self.shieldRepair, self.hullRepair, self.extraCapRecharge, self.maxActiveDrones = 0, 0, 0, 0, 0, 0
-        self.cloaked = False
+        if self.ship != None: self.ship.clear()
+        c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,))
+        for stuff in c:
+            if stuff != None: stuff.clear()
+        
+        self.initBaseParams()
     
     def calculateModifiedAttributes(self):
         #There's a few things to keep in mind here

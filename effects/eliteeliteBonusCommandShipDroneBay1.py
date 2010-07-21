@@ -1,6 +1,5 @@
 #Item: Eos [Ship]
-from customEffects import increase
-def eliteeliteBonusCommandShipDroneBay1(self, fitting):
-    skill, level = fitting.getCharSkill("Command Ships")
-    increase(fitting.ship, "droneCapacity", "eliteBonusCommandShips1",
-                  self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Command Ships").level
+    fit.ship.increaseItemAttr("droneCapacity", ship.getModifiedItemAttr("eliteBonusCommandShips1") * level)

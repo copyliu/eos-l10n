@@ -22,7 +22,7 @@ class TestDrone(unittest.TestCase):
             f.ship = Ship(db.getItem("Rifter"))
             i = db.getItem("Hobgoblin I")
             d = f.drones.addItem(i, 5)
-            
+            d.amountActive = 3
             
             f1id = id(f)
             d1id = id(d)
@@ -49,6 +49,7 @@ class TestDrone(unittest.TestCase):
             self.assertEquals(c, 1)
             self.assertEquals(d.item.ID, i.ID)
             self.assertEquals(d.amount, 5)
+            self.assertEquals(d.amountActive, 3)
             
         except:
             db.saveddata_session.rollback()

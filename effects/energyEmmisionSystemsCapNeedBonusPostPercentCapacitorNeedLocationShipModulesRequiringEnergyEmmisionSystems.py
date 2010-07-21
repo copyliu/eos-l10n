@@ -3,8 +3,8 @@
 #Item: Hardwiring - Inherent Implants 'Squire' EE2 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EE4 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EE8 [Implant]
-from customEffects import boostModListBySkillReq
-def energyEmmisionSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringEnergyEmmisionSystems(self, fitting, state = None, level = 1):
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                           lambda skill: skill.name == "Energy Emission Systems",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Energy Emission Systems"),
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)

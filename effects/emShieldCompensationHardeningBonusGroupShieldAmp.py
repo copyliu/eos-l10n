@@ -1,6 +1,6 @@
 #Item: EM Shield Compensation [Skill]
-from customEffects import boostModListByReq, increase
-def emShieldCompensationHardeningBonusGroupShieldAmp(self, fitting, level):
-    boostModListByReq(fitting.modules, "emDamageResistanceBonus", "hardeningBonus",
-                      lambda mod: mod.group.name == "Shield Amplifier",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    level = fit.character.getSkill("EM Shield Compensation").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Amplifier",
+                                  "emDamageResistanceBonus", skill.getModifiedItemAttr("hardeningBonus") * level)

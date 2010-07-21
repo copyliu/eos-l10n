@@ -10,7 +10,7 @@ class ReadOnlyException(Exception):
 def abort_ro():
     raise ReadOnlyException()
 
-gamedata_engine = create_engine(config.gamedata_connectionstring,  echo = config.debug)
+gamedata_engine = create_engine(config.gamedata_connectionstring, echo = config.debug)
 gamedata_meta = MetaData()
 gamedata_meta.bind = gamedata_engine
 gamedata_session = sessionmaker(bind=gamedata_engine, autoflush = False)()
@@ -20,7 +20,7 @@ gamedata_session.flush = abort_ro
 saveddata_engine = create_engine(config.saveddata_connectionstring, echo = config.debug)
 saveddata_meta = MetaData()
 saveddata_meta.bind = saveddata_engine
-saveddata_session = sessionmaker(bind=saveddata_engine)()
+saveddata_session = sessionmaker(bind=saveddata_engine, autoflush = False)()
 
 #Import all the definitions for all our database stuff
 from .gamedata import *

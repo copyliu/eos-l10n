@@ -5,7 +5,7 @@
 #Item: Standard Mindflood Booster [Implant]
 #Item: Strong Mindflood Booster [Implant]
 #Item: Synth Mindflood Booster [Implant]
-from customEffects import boost
-def energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitorCapacityBonus(self, fitting, state = None, level = 1):
-    boost(fitting.ship, "capacitorCapacity", "capacitorCapacityBonus",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.skill if context == "skill" else 1
+    fit.ship.boostItemAttr("capacitorCapacity", container.getModifiedItemAttr("capacitorCapacityBonus") * level)

@@ -1,9 +1,9 @@
-#Item: Energy Pulse Weapons [Skill]
+#Item:  [Skill]
 #Item: Hardwiring - Inherent Implants 'Squire' EP2 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EP4 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EP8 [Implant]
-from customEffects import boostModListByReq
-def energyPulseWeaponsDurationBonusPostPercentDurationLocationShipModulesRequiringEnergyPulseWeapons(self, fitting, level = 1):
-    boostModListByReq(fitting.modules, "duration", "durationBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Energy Pulse Weapons"),
+                                  "duration", container.getModifiedItemAttr("durationBonus") * level)

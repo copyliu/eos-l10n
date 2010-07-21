@@ -1,8 +1,7 @@
 #Item: Kronos [Ship]
 #Item: Paladin [Ship]
-from customEffects import boostModListByReq
-def eliteBonusViolatorsArmorDamageAmount2(self, fitting):
-    skill, level = fitting.getCharSkill("Marauders")
-    boostModListByReq(fitting.modules, "armorDamageAmount", "eliteBonusViolators2",
-                      lambda mod: mod.group.name == "Armor Repair Unit",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Marauders").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "armorDamageAmount", ship.getModifiedItemAttr("eliteBonusViolators2") * level)

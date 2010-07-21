@@ -1,7 +1,6 @@
 #Item: Basilisk [Ship]
-from customEffects import boostModListByReq
-def eliteBonusLogisticShieldTransferCapNeed1(self, fitting):
-    skill, level = fitting.getCharSkill("Logistics")
-    boostModListByReq(fitting.modules, "capacitorNeed", "eliteBonusLogistics1",
-                      lambda mod: mod.group.name == "Shield Transporter",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Logistics").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Transporter",
+                                  "capacitorNeed", ship.getModifiedItemAttr("eliteBonusLogistics1") * level)

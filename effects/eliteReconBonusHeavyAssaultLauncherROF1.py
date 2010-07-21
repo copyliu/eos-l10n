@@ -1,7 +1,6 @@
 #Item: Huginn [Ship]
-from customEffects import boostModListByReq
-def eliteReconBonusHeavyAssaultLauncherROF1(self, fitting):
-    skill, level = fitting.getCharSkill("Recon Ships")
-    boostModListByReq(fitting.modules, "speed", "eliteBonusReconShip1",
-                      lambda mod: mod.group.name == "Missile Launcher Heavy Assault",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Recon Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Missile Launcher Heavy Assault",
+                                  "speed", ship.getModifiedItemAttr("eliteBonusReconShip1") * level)

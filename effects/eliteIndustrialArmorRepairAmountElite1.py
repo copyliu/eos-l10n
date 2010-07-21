@@ -1,7 +1,6 @@
 #Items from group: Transport Ship (3 of 8) [Ship]
-from customEffects import boostModListByReq
-def eliteIndustrialArmorRepairAmountElite1(self, fitting):
-    skill, level = fitting.getCharSkill("Transport Ships")
-    boostModListByReq(fitting.modules, "armorDamageAmount", "eliteBonusIndustrial1",
-                      lambda mod: mod.group.name == "Armor Repair Unit",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Transport Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "armorDamageAmount", ship.getModifiedItemAttr("eliteBonusIndustrial1") * level)

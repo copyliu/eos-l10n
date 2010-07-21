@@ -1,7 +1,6 @@
 #Item: Oneiros [Ship]
-from customEffects import boostModListByReq
-def eliteBonusLogisticsTrackingLinkFalloffBonus2(self, fitting):
-    skill, level = fitting.getCharSkill("Logistics")
-    boostModListByReq(fitting.modules, "falloffBonus", "eliteBonusLogistics2",
-                      lambda mod: mod.group.name == "Tracking Link",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Logistics").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Link",
+                                  "falloffBonus", ship.getModifiedItemAttr("eliteBonusLogistics2") * level)

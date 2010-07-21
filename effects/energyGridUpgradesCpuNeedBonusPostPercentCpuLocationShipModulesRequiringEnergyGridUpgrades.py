@@ -3,8 +3,8 @@
 #Item: Hardwiring - Inherent Implants 'Squire' GU2 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' GU4 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' GU8 [Implant]
-from customEffects import boostModListBySkillReq
-def energyGridUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyGridUpgrades(self, fitting, state = None, level = 1):
-    boostModListBySkillReq(fitting.modules, "cpu", "cpuNeedBonus",
-                           lambda skill: skill.name == "Energy Grid Upgrades" ,
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Energy Grid Upgrades"),
+                                  "cpu", container.getModifiedItemAttr("cpuNeedBonus") * level)

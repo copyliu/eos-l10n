@@ -3,8 +3,7 @@
 #Item: Low-grade Centurion Delta [Implant]
 #Item: Low-grade Centurion Epsilon [Implant]
 #Item: Low-grade Centurion Gamma [Implant]
-from customEffects import boostModListByReq
-def ewGroupTdMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "rangeSkillBonus",
-                      lambda mod: mod.group.name == "Tracking Disruptor",
-                      self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+                                  "maxRange", implant.getModifiedItemAttr("rangeSkillBonus"))

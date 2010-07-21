@@ -1,7 +1,6 @@
 #Item: Rook [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteReconBonusHeavyAssaultMissileVelocity(self, fitting):
-    skill, level = fitting.getCharSkill("Recon Ships")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "eliteBonusReconShip1",
-                      lambda skill: skill.name == "Heavy Assault Missiles",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Recon Ships").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Heavy Assault Missiles"),
+                                  "maxVelocity", ship.getModifiedItemAttr("eliteBonusReconShip1") * level)

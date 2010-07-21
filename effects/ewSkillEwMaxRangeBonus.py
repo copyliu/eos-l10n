@@ -7,12 +7,9 @@
 #Item: Low-grade Centurion Delta [Implant]
 #Item: Low-grade Centurion Epsilon [Implant]
 #Item: Low-grade Centurion Gamma [Implant]
-from customEffects import boostModListByReq
-def ewSkillEwMaxRangeBonus(self, fitting, state = None, level = 1):
-    if self.item.group.category.name == "Skill" or self.item.group.category.name == "Implant":
-        penalized = False
-    else:
-        penalized = True
-    boostModListByReq(fitting.modules, "maxRange", "rangeSkillBonus",
-                      lambda mod: mod.group.name == "ECM", self.item,
-                      useStackingPenalty = penalized, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "ECM",
+                                  "maxRange", container.getModifiedItemAttr("rangeSkillBonus") * level,
+                                  stackingPenalties = context != "skill" and context != "implant")

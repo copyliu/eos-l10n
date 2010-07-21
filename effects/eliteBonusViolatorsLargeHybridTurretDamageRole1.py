@@ -1,5 +1,5 @@
 #Item: Kronos [Ship]
-from customEffects import boostModListBySkillReq
-def eliteBonusViolatorsLargeHybridTurretDamageRole1(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "eliteBonusViolatorsRole1",
-                           lambda skill: skill.name == "Large Hybrid Turret", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("eliteBonusViolatorsRole1"))

@@ -9,12 +9,8 @@
 #Item: Low-grade Nomad Epsilon [Implant]
 #Item: Low-grade Nomad Gamma [Implant]
 #Item: Spaceship Command [Skill]
-from customEffects import boost
-def evasiveManeuveringAgilityBonusPostPercentAgilityShip(self, fitting, state = None, level = 1):
-    if self.item.group.category.name == "Skill" or self.item.group.category.name == "Implant":
-        penalized = False
-    else:
-        penalized = True
-        
-    boost(fitting.ship, "agility", "agilityBonus", self.item,
-          useStackingPenalty = penalized, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.ship.boostItemAttr("agility", container.getModifiedItemAttr("agilityBonus") * level,
+                           stackingPenalties = context != "skill" and context != "implant")

@@ -1,5 +1,5 @@
 #Item: Golem [Ship]
-from customEffects import boostAmmoListBySkillReq
-def eliteBonusViolatorsTorpedoKineticDamageRole1(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "kineticDamage", "eliteBonusViolatorsRole1",
-                       lambda skill: skill.name == "Torpedoes", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Torpedoes"),
+                                  "kineticDamage", ship.getModifiedItemAttr("eliteBonusViolatorsRole1"))

@@ -1,6 +1,5 @@
 #Item: Augoror [Ship]
-from customEffects import boostModListByReq
-def energyTransferArrayMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "powerTransferRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Energy Transfer Array",
-                      self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Transfer Array",
+                                  "powerTransferRange", ship.getModifiedItemAttr("maxRangeBonus"))

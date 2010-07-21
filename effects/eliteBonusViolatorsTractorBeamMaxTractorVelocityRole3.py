@@ -1,5 +1,5 @@
 #Items from group: Marauder (4 of 4) [Ship]
-from customEffects import boostModListByReq
-def eliteBonusViolatorsTractorBeamMaxTractorVelocityRole3(self, fitting):
-    boostModListByReq(fitting.modules, "maxTractorVelocity", "eliteBonusViolatorsRole3",
-                      lambda mod: mod.group.name == "Tractor Beam", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tractor Beam",
+                                  "maxTractorVelocity", ship.getModifiedItemAttr("eliteBonusViolatorsRole3"))

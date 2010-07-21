@@ -3,8 +3,8 @@
 #Item: Hardwiring - Zainou 'Gypsy' KOB-25 [Implant]
 #Item: Hardwiring - Zainou 'Gypsy' KOB-50 [Implant]
 #Item: Hardwiring - Zainou 'Gypsy' KOB-75 [Implant]
-from customEffects import boostModListByReq
-def ewSkillEcmBurstCapNeedBonus(self, fitting, state = None, level = 1):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: mod.group.name == "ECM Burst",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.skill if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "ECM Burst",
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)
