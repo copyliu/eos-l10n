@@ -2,8 +2,7 @@
 #Item: Burst [Ship]
 #Item: Navitas [Ship]
 #Item: Tormentor [Ship]
-from customEffects import boostModListByReq, multiply
-def miningCapBonus(self, fitting):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capacitorNeedMultiplier",
-                      lambda mod: mod.group.name == "Mining Laser", 
-                      self.item, helper = multiply)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Mining Laser",
+                                  "capacitorNeed", ship.getModifiedItemAttr("capacitorNeedMultiplier"))

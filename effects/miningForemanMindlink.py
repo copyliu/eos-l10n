@@ -1,6 +1,6 @@
 #Item: Mining Foreman Mindlink [Implant]
-from customEffects import boostModListBySkillReq
-def miningForemanMindlink(self, fitting):
-    boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",
-                           lambda skill: skill.name == "Mining Director",
-                           self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.character.getSkill("Mining Foreman").suppress()
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Mining Director"),
+                                  "commandBonus", implant.getModifiedItemAttr("mindlinkBonus"))

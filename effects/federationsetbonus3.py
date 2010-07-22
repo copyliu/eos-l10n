@@ -4,11 +4,9 @@
 #Item: Spur Epsilon [Implant]
 #Item: Spur Gamma [Implant]
 #Item: Spur Omega [Implant]
-from customEffects import boostImplantListByReq, multiply
+type = "passive"
 runTime = "early"
-def federationsetbonus3(self, fitting):
-    boostImplantListByReq(fitting.implants, "scanMagnetometricStrengthPercent",
-                          "implantSetFederationNavy",
-                          lambda implant: "implantSetFederationNavy" in implant.attributes and\
-                          "scanMagnetometricStrengthPercent" in implant.attributes,
-                          self.item, helper = multiply)
+def handler(fit, implant, context):
+    fit.implants.filteredItemMultiply(lambda implant: "implantSetFederationNavy" in implant.itemModifiedAttributes and\
+                                   "scanMagnetometricStrengthPercent" in implant.itemModifiedAttributes,
+                                   "scanMagnetometricStrengthPercent", implant.getModifiedItemAttr("implantSetFederationNavy"))

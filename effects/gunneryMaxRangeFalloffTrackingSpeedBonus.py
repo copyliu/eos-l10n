@@ -1,15 +1,7 @@
 #Items from group: Tracking Computer (14 of 14) [Module]
-import model.fitting
-from customEffects import boostModListBySkillReq
 type = "active"
-def gunneryMaxRangeFalloffTrackingSpeedBonus(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeBonus",
-                               lambda skill: skill.name == "Gunnery",
-                               self.item, useStackingPenalty = True)
-        boostModListBySkillReq(fitting.modules, "falloff", "falloffBonus",
-                               lambda skill: skill.name == "Gunnery",
-                               self.item, useStackingPenalty = True)
-        boostModListBySkillReq(fitting.modules, "trackingSpeed", "trackingSpeedBonus",
-                               lambda skill: skill.name == "Gunnery",
-                               self.item, useStackingPenalty = True)
+def handler(fit, module, context):
+    for attr in ("maxRange", "falloff", "trackingSpeed"):
+        fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                      attr, module.getModifiedItemAttr("%sBonus" % attr),
+                                      stackingPenalties = True)

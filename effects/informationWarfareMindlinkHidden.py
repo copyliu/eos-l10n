@@ -1,6 +1,5 @@
 #Item: Information Warfare Mindlink [Implant]
-from customEffects import boostModListBySkillReq
-def informationWarfareMindlinkHidden(self, fitting):
-    boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",
-                           lambda skill: skill.name == "Information Warfare Specialist",
-                           self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Information Warfare Specialist"),
+                                  "commandBonus", implant.getModifiedItemAttr("mindlinkBonus"))

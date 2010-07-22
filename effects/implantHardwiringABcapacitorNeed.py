@@ -1,5 +1,5 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Navigation Implants (3 of 3)
-from customEffects import boostModListBySkillReq
-def implantHardwiringABcapacitorNeed(self, fitting):
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                           lambda skill: skill.name == "Afterburner", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Afterburner"),
+                                  "capacitorNeed", implant.getModifiedItemAttr("capNeedBonus"))

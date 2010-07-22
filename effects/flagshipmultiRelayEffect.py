@@ -1,8 +1,9 @@
 #Item: Command Processor I [Module]
-from customEffects import boostModListByReq, increase
-def flagshipmultiRelayEffect(self, fitting, state):
-    #Need to enable two more, one for itself, one for an extra gang module
-    boostModListByReq(fitting.modules, "maxGroupActive", 2,
-                         lambda mod: mod.group.name == "Gang Coordinator" and \
-                         "maxGroupActive" in mod.attributes,
-                         self.item, helper = increase)
+type = "passive"
+def handler(fit, module, context):
+    #Note: we increase maxGroupActive by two.
+    #If we only increased it by one, we'd get the number to stay equal
+    #As Comman Processors use one themselves too
+    fit.modules.filteredItemIncrease(lambda mod: mod.group.name == "Gang Coordinator" and \
+                                     "maxGroupActive" in mod.itemModifiedAttributes,
+                                     "maxGroupActive", 2)

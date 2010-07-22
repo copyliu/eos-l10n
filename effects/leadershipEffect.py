@@ -1,6 +1,4 @@
 #Item: Leadership [Skill]
-from customEffects import boost
 type = "gang"
-def leadershipEffect(self, fitting, level):
-    boost(fitting.ship, "scanResolution", "scanResolutionBonus",
-          self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.ship.boostItemAttr("scanResolution",skill.getModifiedItemAttr("scanResolutionBonus") * level)

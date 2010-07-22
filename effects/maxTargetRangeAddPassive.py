@@ -1,6 +1,4 @@
 #Items from group: Electronic Systems (16 of 16) [Subsystem]
-runTime = "early"
-from customEffects import increase
-def maxTargetRangeAddPassive(self, fitting, state):
-    increase(fitting.ship, "maxTargetRange", "maxTargetRange", self.item,
-             position = "pre")
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("maxTargetRange", module.getModifiedItemAttr("maxTargetRange"))

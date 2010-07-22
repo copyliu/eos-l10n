@@ -1,6 +1,6 @@
 #Item: Kinetic Armor Compensation [Skill]
-from customEffects import boostModListByReq
-def kineticArmorCompensationHardeningBonusGroupArmorCoating(self, fitting, level):
-    boostModListByReq(fitting.modules, "kineticDamageResistanceBonus", "hardeningBonus",
-                      lambda mod: mod.group.name == "Armor Coating",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Coating",
+                                  "kineticDamageResistanceBonus",
+                                  skill.getModifiedItemAttr("hardeningBonus") * skill.level)

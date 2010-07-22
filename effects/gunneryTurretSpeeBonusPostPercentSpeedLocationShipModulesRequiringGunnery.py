@@ -3,8 +3,8 @@
 #Item: Hardwiring - Inherent Implants 'Lancer' G1-Delta [Implant]
 #Item: Hardwiring - Inherent Implants 'Lancer' G2-Delta [Implant]
 #Item: Pashan's Turret Customization Mindlink [Implant]
-from customEffects import boostModListBySkillReq
-def gunneryTurretSpeeBonusPostPercentSpeedLocationShipModulesRequiringGunnery(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "speed", "turretSpeeBonus",
-                           lambda skill: skill.name == "Gunnery",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "speed", container.getModifiedItemAttr("turretSpeeBonus") * level)

@@ -1,11 +1,5 @@
 #Item: Industrial Core I [Module]
-import model.fitting
-from customEffects import multiply, boost
 type = "active"
-def industrialCoreEffect2(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        #Speed bonus
-        boost(fitting.ship, "maxVelocity", "speedFactor", self.item)
-
-        #Mass
-        multiply(fitting.ship, "mass", "massMultiplier", self.item)
+def handler(fit, module, context):
+    fit.ship.boostItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor"))
+    fit.ship.multiplyItemAttr("mass", module.getModifiedItemAttr("massMultiplier"))

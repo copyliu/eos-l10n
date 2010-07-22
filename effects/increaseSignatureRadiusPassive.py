@@ -4,6 +4,6 @@
 #Items from market group: Ammunition & Charges > Missiles > Light Missiles > Advanced High Damage Light Missiles (4 of 4)
 #Items from market group: Ammunition & Charges > Missiles > Rockets > Advanced Anti-Ship Rockets (4 of 4)
 #Items from market group: Ammunition & Charges > Missiles > Torpedoes > Advanced Anti-Ship Torpedoes (4 of 4)
-from customEffects import boost
-def increaseSignatureRadiusPassive(self, fitting, containerModule):
-    boost(fitting.ship, "signatureRadius", "signatureRadiusBonus", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.boostItemAttr("signatureRadius", module.getModifiedChargeAttr("signatureRadiusBonus"))

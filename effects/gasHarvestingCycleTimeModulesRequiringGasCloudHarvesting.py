@@ -1,8 +1,7 @@
 #Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-0 [Implant]
 #Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-1 [Implant]
 #Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-2 [Implant]
-from customEffects import boostModListBySkillReq
-def gasHarvestingCycleTimeModulesRequiringGasCloudHarvesting(self, fitting):
-    boostModListBySkillReq(fitting.modules, "duration", "durationBonus",
-                           lambda skill: skill.name == "Gas Cloud Harvesting",
-                           self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gas Cloud Harvesting"),
+                                  "duration", implant.getModifiedItemAttr("durationBonus"))

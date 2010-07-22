@@ -1,5 +1,5 @@
 #Variations of item: Providence (2 of 2) [Ship]
-from customEffects import boost
-def freighterCargoBonusA2(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Freighter")
-    boost(fitting.ship, "capacity", "freighterBonusA2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Freighter").level
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr("freighterBonusA2") * level)

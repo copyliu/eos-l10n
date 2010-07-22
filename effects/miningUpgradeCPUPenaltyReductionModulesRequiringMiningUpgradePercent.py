@@ -2,8 +2,8 @@
 #Item: Hardwiring - Inherent Implants 'Highwall' HY-1 [Implant]
 #Item: Hardwiring - Inherent Implants 'Highwall' HY-2 [Implant]
 #Item: Mining Upgrades [Skill]
-from customEffects import boostModListBySkillReq
-def miningUpgradeCPUPenaltyReductionModulesRequiringMiningUpgradePercent(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "cpuPenaltyPercent", "miningUpgradeCPUReductionBonus",
-                           lambda skill: skill.name == "Mining Upgrades",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Mining Upgrades"),
+                                  "cpuPenaltyPercent", container.getModifiedItemAttr("miningUpgradeCPUReductionBonus") * level)

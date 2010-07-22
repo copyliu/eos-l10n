@@ -3,7 +3,7 @@
 #Item: Low-grade Harvest Delta [Implant]
 #Item: Low-grade Harvest Epsilon [Implant]
 #Item: Low-grade Harvest Gamma [Implant]
-from customEffects import boostModListByReq
-def miningLaserRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Mining Laser", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Mining Laser",
+                                  "maxRange", implant.getModifiedItemAttr("maxRangeBonus"))

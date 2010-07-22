@@ -1,6 +1,6 @@
 #Item: Kinetic Shield Compensation [Skill]
-from customEffects import boostModListByReq
-def kineticShieldCompensationHardeningBonusGroupShieldAmp(self, fitting, level):
-    boostModListByReq(fitting.modules, "kineticDamageResistanceBonus", "hardeningBonus",
-                      lambda mod: mod.group.name == "Shield Amplifier",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Amplifier",
+                                  "kineticDamageResistanceBonus",
+                                  skill.getModifiedItemAttr("hardeningBonus") * skill.level)

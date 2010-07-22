@@ -1,20 +1,8 @@
 #Item: Information Warfare Link - Sensor Integrity [Module]
-from customEffects import boost
-import model.fitting
-type = ("gang", "active")
-
-def gangECCMfixed(self, fitting, state):
-    skill, level = fitting.getCharSkill("Information Warfare Specialist")
-    if state >= model.fitting.STATE_ACTIVE:
-        boost(
-            fitting.ship,
-            (
-                "scanGravimetricStrength",
-                "scanRadarStrength",
-                "scanLadarStrength",
-                "scanMagnetometricStrength",
-            ),
-            "commandBonus",
-            self.item,
-            useStackingPenalty = True
-        )
+type = "gang", "active"
+def handler(fit, module, context):
+    if context != "gang": return
+    for scanType in ("Gravimetric", "Radar", "Ladar", "Magnetometric"):
+        fit.ship.boostItemAttr("scan%sStrength" % scanType,
+                               module.getModifiedItemAttr("commandBonus"),
+                               stackingPenalties = True)

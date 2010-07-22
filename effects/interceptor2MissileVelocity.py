@@ -1,7 +1,6 @@
 #Item: Crow [Ship]
-from customEffects import boostAmmoListBySkillReq
-def interceptor2MissileVelocity(self, fitting):
-    skill, level = fitting.getCharSkill("Interceptors")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "eliteBonusInterceptor2",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Interceptors").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Missile Launcher Operation"),
+                                    "maxVelocity", ship.getModifiedItemAttr("eliteBonusInterceptor2") * level)

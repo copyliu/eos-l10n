@@ -1,19 +1,8 @@
 #Item: Armored Warfare Link - Passive Defense [Module]
-import model.fitting
-from customEffects import boost
-type = ("gang", "active")
-
-def gangArmorHardening(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        boost(
-            fitting.ship,
-            (
-                "armorEmDamageResonance",
-                "armorThermalDamageResonance",
-                "armorExplosiveDamageResonance",
-                "armorKineticDamageResonance"
-            ),
-            "commandBonus",
-            self.item,
-            useStackingPenalty = True
-        )
+type = "gang", "active"
+def handler(fit, module, context):
+    if context != "gang": return
+    for damageType in ("Em", "Thermal", "Explosive", "Kinetic"):
+        fit.ship.boostItemAttr("armor%sDamageResonance" % damageType,
+                               module.getModifiedItemAttr("commandBonus"),
+                               stackingPenalties = True)

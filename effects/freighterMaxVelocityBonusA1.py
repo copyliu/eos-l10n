@@ -1,5 +1,5 @@
 #Item: Providence [Ship]
-from customEffects import boost
-def freighterMaxVelocityBonusA1(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Freighter")
-    boost(fitting.ship, "maxVelocity", "freighterBonusA1", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Freighter").level
+    fit.ship.boostItemAttr("maxVelocity", ship.getModifiedItemAttr("freighterBonusA1") * level)

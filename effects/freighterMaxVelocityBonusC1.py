@@ -1,5 +1,5 @@
 #Item: Charon [Ship]
-from customEffects import boost
-def freighterMaxVelocityBonusC1(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Freighter")
-    boost(fitting.ship, "maxVelocity", "freighterBonusC1", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Freighter").level
+    fit.ship.boostItemAttr("maxVelocity", ship.getModifiedItemAttr("freighterBonusC1") * level)

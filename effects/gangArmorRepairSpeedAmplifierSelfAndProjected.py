@@ -1,15 +1,8 @@
 #Item: Armored Warfare Link - Rapid Repair [Module]
-import model.fitting
-from customEffects import boostModListByReq
-type = ("gang", "active")
-
-def gangArmorRepairSpeedAmplifierSelfAndProjected(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        boostModListByReq(
-            fitting.modules,
-            "duration",
-            "commandBonus",
-            lambda mod: mod.group.name == "Armor Repair Unit" or mod.group.name == "Armor Repair Projector",
-            self.item,
-            useStackingPenalty = True
-        )
+type = "gang", "active"
+def handler(fit, module, context):
+    if context != "gang": return
+    groups = "Armor Repair Unit", "Armor Repair Projector"
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name in groups,
+                                  "duration", module.getModifiedItemAttr("commandBonus"),
+                                  stackingPenalties = True)

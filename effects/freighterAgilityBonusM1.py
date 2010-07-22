@@ -1,5 +1,5 @@
 #Item: Nomad [Ship]
-from customEffects import boost
-def freighterAgilityBonusM1(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Freighter")
-    boost(fitting.ship, "agility", "freighterBonusM1", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Freighter").level
+    fit.ship.boostItemAttr("agility", ship.getModifiedItemAttr("freighterBonusM1") * level)

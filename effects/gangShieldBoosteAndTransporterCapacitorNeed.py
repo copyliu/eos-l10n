@@ -1,15 +1,8 @@
 #Item: Siege Warfare Link - Shield Efficiency [Module]
-from customEffects import boostModListByReq
-import model.fitting
-type = ("gang", "active")
-
-def gangShieldBoosteAndTransporterCapacitorNeed(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        boostModListByReq(
-            fitting.modules,
-            "capacitorNeed",
-            "commandBonus",
-            lambda mod: mod.group.name == "Shield Booster" or mod.group.name == "Shield Transporter",
-            self.item,
-            useStackingPenalty = True
-        )
+type = "gang", "active"
+def handler(fit, module, context):
+    if context != "gang": return
+    groups = ("Shield Booster","Shield Transporter")
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name in groups,
+                                  "capacitorNeed", module.getModifiedItemAttr("commandBonus"),
+                                  stackingPenalties = True)

@@ -2,8 +2,9 @@
 #Item: Hardwiring - Eifyr and Co. 'Gunslinger' LX-1 [Implant]
 #Item: Hardwiring - Eifyr and Co. 'Gunslinger' LX-2 [Implant]
 #Item: Large Projectile Turret [Skill]
-from customEffects import boostModListBySkillReq
-def largeProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeProjectileTurret(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                           lambda skill: skill.name == "Large Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Projectile Turret"),
+                                  "damageMultiplier", container.getModifiedItemAttr("damageMultiplierBonus") * level)
+    

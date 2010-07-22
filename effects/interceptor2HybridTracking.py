@@ -1,7 +1,6 @@
 #Item: Taranis [Ship]
-from customEffects import boostModListBySkillReq
-def interceptor2HybridTracking(self, fitting):
-    skill, level = fitting.getCharSkill("Interceptors")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "eliteBonusInterceptor2",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Interceptors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("eliteBonusInterceptor2") * level)

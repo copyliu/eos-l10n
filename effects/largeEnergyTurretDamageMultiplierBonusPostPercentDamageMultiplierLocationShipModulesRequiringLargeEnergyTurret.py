@@ -3,8 +3,8 @@
 #Item: Hardwiring - Inherent Implants 'Lancer' G2-Epsilon [Implant]
 #Item: Large Energy Turret [Skill]
 #Item: Pashan's Turret Handling Mindlink [Implant]
-from customEffects import boostModListBySkillReq
-def largeEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeEnergyTurret(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                           lambda skill: skill.name == "Large Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Energy Turret"),
+                                  "damageMultiplier", container.getModifiedItemAttr("damageMultiplierBonus") * level)

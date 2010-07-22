@@ -1,6 +1,4 @@
 #Items from group: Propulsion Systems (16 of 16) [Subsystem]
-runTime = "early"
-from customEffects import increase
-def maxVelocityAddPassive(self, fitting, state):
-    increase(fitting.ship, "maxVelocity", "maxVelocity", self.item,
-             position = "pre")
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("maxVelocity", module.getModifiedItemAttr("maxVelocity"))

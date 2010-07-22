@@ -1,14 +1,6 @@
 #Item: Skirmish Warfare Link - Evasive Maneuvers [Module]
-import model.fitting
-from customEffects import boost
-type = ("gang", "active")
-
-def gangBonusSignature(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        boost(
-            fitting.ship,
-            "signatureRadius",
-            "commandBonus",
-            self.item,
-            useStackingPenalty = True
-        )
+type = "gang", "active"
+def handler(fit, module, context):
+    if context != "gang": return
+    fit.ship.boostItemAttr("signatureRadius", module.getModifiedItemAttr("commandBonus"),
+                           stackingPenalties = True)

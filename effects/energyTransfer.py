@@ -4,4 +4,4 @@ def handler(fit, module, context):
     if context != "projected": return
     amount = module.getModifiedItemAttr("powerTransferAmount")
     duration = module.getModifiedItemAttr("duration") / 1000.0
-    fit.extraCapRecharge += amount / duration
+    fit.capBoost += amount / duration

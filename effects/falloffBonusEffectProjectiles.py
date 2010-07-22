@@ -1,6 +1,6 @@
 #Items from group: Rig Projectile Weapon (6 of 30) [Module]
-from customEffects import boostModListByReq
-def falloffBonusEffectProjectiles(self, fitting, state):
-    boostModListByReq(fitting.modules, "falloff", "falloffBonus",
-                      lambda mod: mod.group.name == "Projectile Weapon",
-                      self.item, useStackingPenalty = True)
+type = "passive"
+def handler(fit, module, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Projectile Weapon",
+                                  "falloff", module.getModifiedItemAttr("falloffBonus"),
+                                  stackingPenalties = True)

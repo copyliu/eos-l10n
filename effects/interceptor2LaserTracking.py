@@ -1,7 +1,6 @@
 #Item: Crusader [Ship]
-from customEffects import boostModListBySkillReq
-def interceptor2LaserTracking(self, fitting):
-    skill, level = fitting.getCharSkill("Interceptors")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "eliteBonusInterceptor2",
-                           lambda skill: skill.name == "Small Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Interceptors").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Energy Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("eliteBonusInterceptor2") * level)

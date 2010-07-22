@@ -3,7 +3,7 @@
 #Item: Low-grade Harvest Delta [Implant]
 #Item: Low-grade Harvest Epsilon [Implant]
 #Item: Low-grade Harvest Gamma [Implant]
-from customEffects import boostModListByReq
-def gasHarvesterMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Gas Cloud Harvester", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Gas Cloud Harvester",
+                                  "maxRange", implant.getModifiedItemAttr("maxRangeBonus"))

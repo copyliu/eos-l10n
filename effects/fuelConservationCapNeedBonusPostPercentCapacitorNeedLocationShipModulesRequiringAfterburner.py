@@ -1,6 +1,5 @@
 #Item: Fuel Conservation [Skill]
-from customEffects import boostModListBySkillReq
-def fuelConservationCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringAfterburner(self, fitting, level):
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                           lambda skill: skill.name == "Afterburner",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Afterburner"),
+                                  "capacitorNeed", skill.getModifiedItemAttr("capNeedBonus") * skill.level)

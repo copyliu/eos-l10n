@@ -3,8 +3,8 @@
 #Item: Hardwiring - Inherent Implants 'Yeti' BX-2 [Implant]
 #Item: Ice Harvesting [Skill]
 #Item: Mackinaw [Ship]
-from customEffects import boostModListBySkillReq
-def iceHarvestCycleTimeModulesRequiringIceHarvesting(self, fitting, state = None, level = 1):
-    boostModListBySkillReq(fitting.modules, "duration", "iceHarvestCycleBonus",
-                           lambda skill: skill.name == "Ice Harvesting",
-                           self.item)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Ice Harvesting"),
+                                  "duration", container.getModifiedItemAttr("iceHarvestCycleBonus") * level)
