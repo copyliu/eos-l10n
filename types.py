@@ -1,11 +1,4 @@
-from model.gamedata.attribute import Attribute
-from model.gamedata.category import Category
-from model.gamedata.effect import Effect
-from model.gamedata.group import Group
-from model.gamedata.icon import Icon
-from model.gamedata.item import Item
-from model.gamedata.marketgroup import MarketGroup
-from model.gamedata.metagroup import MetaGroup
+from model.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup
 from model.saveddata.user import User
 from model.saveddata.character import Character, Skill
 from model.saveddata.module import Module, State, Slot
