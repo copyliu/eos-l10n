@@ -1,7 +1,6 @@
 #Variations of item: Vigil (2 of 2) [Ship]
-from customEffects import boostModListByReq
-def minmatarShipEwTargetPainterMF2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boostModListByReq(fitting.modules, "signatureRadiusBonus", "shipBonusMF2",
-                      lambda mod: mod.group.name == "Target Painter",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Target Painter",
+                                  "signatureRadiusBonus", ship.getModifiedItemAttr("shipBonusMF2") * level)

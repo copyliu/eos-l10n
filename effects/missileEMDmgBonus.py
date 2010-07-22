@@ -1,6 +1,6 @@
 #Items from group: Missile Launcher Operation (7 of 24) [Skill]
-from customEffects import boostAmmoListByReq
-def missileEMDmgBonus(self, fitting, level):
-    boostAmmoListByReq(fitting.modules, "emDamage", "damageMultiplierBonus",
-                           lambda charge: self.item in charge.requiredSkills,
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    fit.modules.filteredChargeMultiply(lambda mod: mod.item.requiresSkill("Missile Launcher Operation"),
+                                       "emDamage", container.getModifiedItemAttr("damageMultiplierBonus"),
+                                       stackingPenalties = True)
