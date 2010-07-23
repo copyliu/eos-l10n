@@ -1,10 +1,7 @@
 #Items from group: Sensor Backup Array (72 of 72) [Module]
-import model.fitting
-from customEffects import boost
-
-def scanStrengthBonusPercentOnline(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        for scannerType in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):
-            boost(fitting.ship, "scan" + scannerType + "Strength",
-                  "scan" + scannerType + "StrengthPercent",
-                  self.item, useStackingPenalty = True)
+type = "passive"
+def handler(fit, module, context):
+    for type in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):
+        fit.ship.boostItemAttr("scan%sStrength" % type,
+                               module.getModifiedItemAttr("scan%sStrengthPercent" % type),
+                               stackingPenalties = True)

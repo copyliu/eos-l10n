@@ -3,6 +3,6 @@
 #Item: Low-grade Grail Delta [Implant]
 #Item: Low-grade Grail Epsilon [Implant]
 #Item: Low-grade Grail Gamma [Implant]
-from customEffects import increase
-def ScanRadarStrengthModifierEffect(self, fitting):
-    increase(fitting.ship, "scanRadarStrength", "scanRadarStrengthModifier", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.ship.increaseItemAttr("scanRadarStrength", implant.getModifiedItemAttr("scanRadarStrengthModifier"))

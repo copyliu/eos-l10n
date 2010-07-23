@@ -3,7 +3,6 @@
 #Item: Low-grade Spur Delta [Implant]
 #Item: Low-grade Spur Epsilon [Implant]
 #Item: Low-grade Spur Gamma [Implant]
-from customEffects import increase
-def ScanMagnetometricStrengthModifierEffect(self, fitting):
-    increase(fitting.ship, "scanMagnetometricStrength",
-             "scanMagnetometricStrengthModifier", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.ship.increaseItemAttr("scanMagnetometricStrength", implant.getModifiedItemAttr("scanMagnetometricStrengthModifier"))

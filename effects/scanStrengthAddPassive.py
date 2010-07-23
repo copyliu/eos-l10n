@@ -1,12 +1,7 @@
 #Items from group: Electronic Systems (16 of 16) [Subsystem]
-runTime = "early"
-from customEffects import increase
-def scanStrengthAddPassive(self, fitting, state):
-    increase(fitting.ship, "scanGravimetricStrength", "scanGravimetricStrength",
-             self.item, position = "pre")
-    increase(fitting.ship, "scanRadarStrength", "scanRadarStrength",
-             self.item, position = "pre")
-    increase(fitting.ship, "scanMagnetometricStrength", "scanMagnetometricStrength",
-             self.item, position = "pre")
-    increase(fitting.ship, "scanLadarStrength", "scanLadarStrength",
-             self.item, position = "pre")
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("scanGravimetricStrength", module.getModifiedItemAttr("scanGravimetricStrength"))
+    fit.ship.increaseItemAttr("scanRadarStrength", module.getModifiedItemAttr("scanRadarStrength"))
+    fit.ship.increaseItemAttr("scanMagnetometricStrength", module.getModifiedItemAttr("scanMagnetometricStrength"))
+    fit.ship.increaseItemAttr("scanLadarStrength", module.getModifiedItemAttr("scanLadarStrength"))
