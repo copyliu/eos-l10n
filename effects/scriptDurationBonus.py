@@ -1,5 +1,5 @@
 #Item: Focused Warp Disruption [Charge]
-from customEffects import boost
-def scriptDurationBonus(self, fitting, containerModule):
-    boost(containerModule, "duration", "durationBonus", self.item)
-    boost(containerModule, "speedFactorBonus", "speedFactorBonusBonus", self.item)
+type = "passive"
+def handler(fit, module, context):
+    module.boostItemAttr("duration", module.getModifiedChargeAttr("durationBonus"))
+    module.boostItemAttr("speedFactorBonus", module.getModifiedChargeAttr("speedFactorBonusBonus"))
