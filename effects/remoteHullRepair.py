@@ -1,10 +1,8 @@
 #Items from group: Remote Hull Repairer (4 of 4) [Module]
-import model.fitting
-from customEffects import increase
-type = ("projected", "active")
-def remoteHullRepair(self, fitting, state, activeLayer):
-    if state >= model.fitting.STATE_ACTIVE and activeLayer == "projected" and fitting.ship.getModifiedAttribute("disallowAssistance") != 1:
-        structureAmount = self.item.getModifiedAttribute("structureDamageAmount")
-        duration = self.item.getModifiedAttribute("duration") / 1000.0
-        structureBonus = structureAmount / duration
-        increase(fitting.ship, "_structureRawRecharge", structureBonus)
+type = "projected", "active"
+runTime = "late"
+def handler(fit, module, context):
+    if context != "projected": return
+    amount = module.getModifiedItemAttr("structureDamageAmount")
+    duration = module.getModifiedItemAttr("duration") / 1000.0
+    fit.hullRepair += amount / duration

@@ -1,5 +1,5 @@
 #Item: Rorqual [Ship]
-from customEffects import boostModListByReq
-def rorqualSurveyScannerRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "surveyScannerRangeBonus",
-                      lambda mod: mod.group.name == "Survey Scanner", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Survey Scanner",
+                                  "maxRange", ship.getModifiedItemAttr("surveyScannerRangeBonus"))

@@ -3,10 +3,11 @@
 #Variations of item: Medium Warhead Rigor Catalyst I (2 of 2) [Module]
 #Variations of item: Small Warhead Rigor Catalyst I (2 of 2) [Module]
 #Item: Guided Missile Precision [Skill]
-from customEffects import boostAmmoListBySkillReq
-def missileSkillAoeCloudSizeBonus(self, fitting, level = 1, state = None):
-    boostAmmoListBySkillReq(fitting.modules, "aoeCloudSize", "aoeCloudSizeBonus",
-                            lambda skill: skill.name == "Standard Missiles" or \
-                            skill.name == "Heavy Missiles" or \
-                            skill.name == "Cruise Missiles",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Standard Missiles") or \
+                                                mod.charge.requiresSkill("Heavy Missiles") or \
+                                                mod.charge.requiresSkill("Cruise Missiles"),
+                                    "aoeCloudSize", container.getModifiedItemAttr("aoeCloudSizeBonus") * level,
+                                    stackingPenalties = context != "skill" and context != "implant")

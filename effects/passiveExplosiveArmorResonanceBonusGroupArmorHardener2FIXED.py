@@ -1,6 +1,6 @@
 #Item: Explosive Armor Compensation [Skill]
-from customEffects import boostModListByReq, multiply
-def passiveExplosiveArmorResonanceBonusGroupArmorHardener2FIXED(self, fitting, level):
-    boostModListByReq(fitting.modules, "passiveExplosiveDamageResistanceBonus", "hardeningbonus2",
-                           lambda mod: mod.group.name == "Armor Hardener",
-                           self.item, extraMult = level, helper = multiply)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Armor Hardener",
+                                  "passiveExplosiveDamageResistanceBonus",
+                                  skill.getModifiedItemAttr("hardeningbonus2"))

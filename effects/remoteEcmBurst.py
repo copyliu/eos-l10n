@@ -1,4 +1,4 @@
 #Item: Remote ECM Burst I [Module]
 type = 'active'
-def remoteEcmBurst(self, fitting, state):
+def handler(fit, module, context):
     pass

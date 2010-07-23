@@ -2,7 +2,7 @@
 #Item: Standard Drop Booster [Implant]
 #Item: Strong Drop Booster [Implant]
 #Item: Synth Drop Booster [Implant]
-from customEffects import boostModListBySkillReq
-def motionPredictionTrackingSpeedMultiplierPostPercentTrackingSpeedLocationShipModulesRequiringGunnery(self, fitting):
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "trackingSpeedMultiplier",
-                           lambda skill: skill.name == "Gunnery", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "trackingSpeed", implant.getModifiedItemAttr("trackingSpeedMultiplier"))

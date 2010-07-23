@@ -3,8 +3,8 @@
 #Item: Missile Launcher Operation [Skill]
 #Item: Rapid Launch [Skill]
 #Item: Whelan Machorin's Ballistic Smartlink [Implant]
-from customEffects import boostModListBySkillReq
-def missileSkillRapidLauncherRoF(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "speed", "rofBonus",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Missile Launcher Operation"),
+                                    "speed", container.getModifiedItemAttr("rofBonus") * level)

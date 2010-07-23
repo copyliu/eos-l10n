@@ -4,10 +4,9 @@
 #Item: Low-grade Jackal Epsilon [Implant]
 #Item: Low-grade Jackal Gamma [Implant]
 #Item: Low-grade Jackal Omega [Implant]
-from customEffects import boostImplantListByReq, multiply
 runTime = "early"
-def republicsetLGbonus(self, fitting):
-    boostImplantListByReq(fitting.implants, "scanLadarStrengthModifier", "implantSetLGRepublicFleet",
-                          lambda implant: "implantSetLGRepublicFleet" in implant.attributes \
-                          and "scanLadarStrengthModifier" in implant.attributes,
-                          self.item, helper = multiply)
+type = "passive"
+def handler(fit, implant, context):
+    fit.implants.filteredItemMultiply(lambda implant: "implantSetLGRepublicFleet" in implant.itemModifiedAttributes and\
+                                   "scanLadarStrengthPercent" in implant.itemModifiedAttributes,
+                                   "scanLadarStrengthPercent", implant.getModifiedItemAttr("implantSetLGRepublicFleet"))

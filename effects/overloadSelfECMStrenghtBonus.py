@@ -1,9 +1,7 @@
 #Items from group: ECM (44 of 44) [Module]
-import model.fitting
-from customEffects import boost
-type = "overload"
-def overloadSelfECMStrenghtBonus(self, fitting, state):
-    if state >= model.fitting.STATE_OVERLOADED:
-        for scannerType in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):
-            boost(self.item, "scan" + scannerType + "StrengthBonus",
-                  "overloadECMStrengthBonus", self.item, useStackingPenalty = True)
+type = "overheat"
+def handler(fit, module, context):
+    for scanType in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):
+        module.boostItemAttr("scan%StrengthBonus" % scanType,
+                             module.getModifiedItemAttr("overloadECMStrengthBonus"),
+                             stackingPenalties = True)

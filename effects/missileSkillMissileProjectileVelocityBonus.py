@@ -5,13 +5,9 @@
 #Item: Hardwiring - Zainou 'Deadeye' ZML100 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZML1000 [Implant]
 #Item: Missile Projection [Skill]
-from customEffects import boostAmmoListBySkillReq
-def missileSkillMissileProjectileVelocityBonus(self, fitting, state = None, level = 1):
-    if self.item.group.category.name == "Skill":
-        penalized = False
-    else:
-        penalized = True
-        
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "speedFactor",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item, useStackingPenalty = penalized, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "maxVelocity", container.getModifiedItemAttr("speedFactor") * level,
+                                    stackingPenalties = context != "skill" and context != "implant")

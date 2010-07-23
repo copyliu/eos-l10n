@@ -1,14 +1,13 @@
 #Items from group: Armor Hardener (156 of 156) [Module]
-import model.fitting
-from customEffects import boost
-def modifyArmorResonancePassivePostPercent(self, fitting, state):
-    if state == model.fitting.STATE_INACTIVE:
-        for damageType in ("Kinetic", "Thermal", "Explosive", "Em"):
-            if damageType == "Thermal":
-                dn = "Thermic"
-            else:
-                dn = damageType
-                
-            boost(fitting.ship, "armor" + damageType + "DamageResonance",
-                  "passive" + dn + "DamageResistanceBonus", self.item,
-                  useStackingPenalty = True)
+from model.types import State          
+type = "passive"
+def handler(fit, module, context):
+    if module.state != State.ONLINE: return
+    for damageType in ("Kinetic", "Thermal", "Explosive", "Em"):
+        if damageType == "Thermal":
+            dn = "Thermic"
+        else:
+            dn = damageType
+        fit.ship.boostItemAttr("armor%sDamageResonance" % damageType,
+                               module.getModifiedItemAttr("passive%sDamageResistanceBonus" % dn),
+                               stackingPenalties = True)

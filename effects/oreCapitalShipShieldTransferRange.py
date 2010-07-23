@@ -1,7 +1,6 @@
 #Item: Rorqual [Ship]
-from customEffects import boostModListBySkillReq
-def oreCapitalShipShieldTransferRange(self, fitting):
-    skill, level = fitting.getCharSkill("Capital Industrial Ships")
-    boostModListBySkillReq(fitting.modules, "shieldTransferRange", "shipBonusORECapital3",
-                           lambda skill: skill.name == "Capital Shield Emission Systems",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Capital Industrial Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Emission Systems"),
+                                  "shieldTransferRange", ship.getModifiedItemAttr("shipBonusORECapital3") * level)

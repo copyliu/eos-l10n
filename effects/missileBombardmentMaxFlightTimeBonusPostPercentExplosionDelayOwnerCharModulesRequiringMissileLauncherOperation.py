@@ -8,5 +8,5 @@
 type = "passive"
 def handler(fit, container, context):
     level = container.level if context == "skill" else 1
-    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Missile Launcher Operation"),
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
                                     "explosionDelay", container.getModifiedItemAttr("maxFlightTimeBonus") * level)

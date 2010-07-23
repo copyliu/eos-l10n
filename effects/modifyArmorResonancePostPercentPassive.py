@@ -1,7 +1,7 @@
 #Items from group: Rig Armor (24 of 54) [Module]
-from customEffects import boost
-def modifyArmorResonancePostPercentPassive(self, fitting, state):
-    for damageType in ("kinetic", "thermal", "explosive", "em"):
-        boost(fitting.ship, "armor" + damageType.capitalize() + "DamageResonance",
-              damageType + "DamageResistanceBonus", self.item,
-              useStackingPenalty = True)
+type = "passive"
+def handler(fit, module, context):
+    for type in ("kinetic", "thermal", "explosive", "em"):
+        fit.ship.boostItemAttr("armor%sDamageResonance" % type.capitalize(),
+                               module.getModifiedItemAttr("%sDamageResistanceBonus" % type);
+                               stackingPenalties = True)

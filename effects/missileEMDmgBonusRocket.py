@@ -1,7 +1,7 @@
 #Item: Hardwiring - Zainou 'Snapshot' ZMR1000 [Implant]
 #Item: Hardwiring - Zainou 'Snapshot' ZMR2000 [Implant]
 #Item: Hardwiring - Zainou 'Snapshot' ZMR500 [Implant]
-from customEffects import boostAmmoListBySkillReq
-def missileEMDmgBonusRocket(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",
-                       lambda skill: skill.name == "Rockets", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Rockets"),
+                                    "emDamage", implant.getModifiedItemAttr("damageMultiplierBonus"))

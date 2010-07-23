@@ -2,8 +2,8 @@
 #Variations of item: Medium Drone Repair Augmentor I (2 of 2) [Module]
 #Variations of item: Small Drone Repair Augmentor I (2 of 2) [Module]
 #Item: Repair Drone Operation [Skill]
-from customEffects import boostDroneListByReq
-def repairDroneShieldBonusBonus(self, fitting, level):
-    boostDroneListByReq(fitting.drones, "shieldBonus", "damageHP",
-                        lambda drone: drone.group.name == "Logistic Drone",
-                        self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Logistic Drone",
+                                 "shieldBonus", container.getModifiedItemAttr("damageHP") * level)

@@ -4,8 +4,8 @@
 #Variations of item: Small Nanobot Accelerator I (2 of 2) [Module]
 #Item: Numon Family Heirloom [Implant]
 #Item: Repair Systems [Skill]
-from customEffects import boostModListBySkillReq
-def repairSystemsDurationBonusPostPercentDurationLocationShipModulesRequiringRepairSystems(self, fitting, state = None, level = 1):
-    boostModListBySkillReq(fitting.modules, "duration", "durationSkillBonus",
-                           lambda skill: skill.name == "Repair Systems",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Repair Systems"),
+                                  "duration", container.getModifiedItemAttr("durationSkillBonus"),
+                                  stackingPenalties = context != "skill" and context != "implant")

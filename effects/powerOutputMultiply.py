@@ -4,8 +4,6 @@
 #Items from group: Reactor Control Unit (28 of 28) [Module]
 #Items from group: Shield Flux Coil (11 of 11) [Module]
 #Items from group: Shield Power Relay (11 of 11) [Module]
-import model.fitting
-from customEffects import multiply
-def powerOutputMultiply(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        multiply(fitting.ship, "powerOutput", "powerOutputMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("powerOutput", module.getModifiedItemAttr("powerOutputMultiplier"))

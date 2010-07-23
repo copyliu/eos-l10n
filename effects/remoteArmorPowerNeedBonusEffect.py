@@ -1,7 +1,6 @@
 #Item: Guardian [Ship]
 #Item: Oneiros [Ship]
-from customEffects import boostModListByReq
-def remoteArmorPowerNeedBonusEffect(self, fitting):
-    boostModListByReq(fitting.modules, "power", "remoteArmorPowerNeedBonus",
-                      lambda mod: mod.group.name == "Armor Repair Projector",
-                      self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Projector",
+                                  "power", ship.getModifiedItemAttr("remoteArmorPowerNeedBonus"))

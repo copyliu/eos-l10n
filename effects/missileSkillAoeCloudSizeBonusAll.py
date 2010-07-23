@@ -2,8 +2,7 @@
 #Item: Standard Crash Booster [Implant]
 #Item: Strong Crash Booster [Implant]
 #Item: Synth Crash Booster [Implant]
-from customEffects import boostAmmoListBySkillReq
-def missileSkillAoeCloudSizeBonusAll(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "aoeCloudSize", "aoeCloudSizeBonus",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "aoeCloudSize", implant.getModifiedItemAttr("aoeCloudSizeBonus"))

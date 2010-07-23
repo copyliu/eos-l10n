@@ -3,8 +3,8 @@
 #Variations of item: Medium Remote Repair Augmentor I (2 of 2) [Module]
 #Variations of item: Small Remote Repair Augmentor I (2 of 2) [Module]
 #Item: Remote Armor Repair Systems [Skill]
-from customEffects import boostModListBySkillReq
-def remoteArmorSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringRemoteArmorSystems(self, fitting, state = None, level = 1):
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                           lambda skill: skill.name == "Remote Armor Repair Systems",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Remote Armor Repair Systems"),
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)

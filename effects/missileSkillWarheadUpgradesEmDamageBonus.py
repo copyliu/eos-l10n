@@ -1,6 +1,5 @@
 #Item: Warhead Upgrades [Skill]
-from customEffects import boostAmmoListBySkillReq
-def missileSkillWarheadUpgradesEmDamageBonus(self, fitting, level):
-    boostAmmoListBySkillReq(fitting.modules, "emDamage", "damageMultiplierBonus",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "emDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

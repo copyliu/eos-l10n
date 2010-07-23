@@ -10,9 +10,6 @@
 #Items from market group: Ship Equipment > Turrets & Bays > Missile Launchers (44 of 44)
 #Items from market group: Ship Equipment > Turrets & Bays > Projectile Turrets > Artillery Cannons (37 of 37)
 #Variations of item: Standard Missile Launcher I (12 of 12) [Module]
-from customEffects import boost
-import model.fitting
-type = "overload"
-def overloadRofBonus(self, fitting, state):
-    if state >= model.fitting.STATE_OVERLOADED:
-        boost(self.item, "speed", "overloadRofBonus", self.item)
+type = "overheat"
+def handler(fit, module, context):
+    module.boostItemAttr("speed", module.getModifiedItemAttr("overloadRofBonus"))

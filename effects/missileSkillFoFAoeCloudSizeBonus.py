@@ -1,5 +1,6 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Missile Implants (3 of 6)
-from customEffects import boostAmmoListBySkillReq
-def missileSkillFoFAoeCloudSizeBonus(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "aoeCloudSize", "aoeCloudSizeBonus",
-                            lambda skill: skill.name == "FoF Missiles", self.item)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("FoF Missiles"),
+                                    "aoeCloudSize", container.getModifiedItemAttr("aoeCloudSizeBonus") * level)

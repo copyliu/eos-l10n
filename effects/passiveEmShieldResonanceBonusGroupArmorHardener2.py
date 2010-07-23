@@ -1,6 +1,6 @@
 #Item: EM Shield Compensation [Skill]
-from customEffects import boostModListByReq, multiply
-def passiveEmShieldResonanceBonusGroupArmorHardener2(self, fitting, level):
-    boostModListByReq(fitting.modules, "passiveEmDamageResistanceBonus", "hardeningbonus2",
-                           lambda mod: mod.group.name == "Shield Hardener",
-                           self.item, extraMult = level, helper = multiply)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Shield Hardener",
+                                  "passiveEmDamageResistanceBonus",
+                                  skill.getModifiedItemAttr("hardeningbonus2"))

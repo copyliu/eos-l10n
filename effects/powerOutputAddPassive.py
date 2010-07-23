@@ -1,5 +1,4 @@
 #Items from category: Subsystem (40 of 80)
-runTime = "early"
-from customEffects import increase
-def powerOutputAddPassive(self, fitting, state):
-    increase(fitting.ship, "powerOutput", "powerOutput", self.item, position = "pre")
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.boostItemAttr("powerOutput", module.getModifiedItemAttr("powerOutput"))

@@ -3,11 +3,7 @@
 #Variations of item: Medium Auxiliary Thrusters I (2 of 2) [Module]
 #Variations of item: Small Auxiliary Thrusters I (2 of 2) [Module]
 #Item: Navigation [Skill]
-from customEffects import boost
-def navigationVelocityBonusPostPercentMaxVelocityShip(self, fitting, state = None, level = 1):
-    if self.item.group.category.name == "Skill" or self.item.group.category.name == "Implant":
-        penalized = False
-    else:
-        penalized = True
-    boost(fitting.ship, "maxVelocity", "velocityBonus", self.item,
-          useStackingPenalty = penalized, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    fit.ship.boostItemAttr("maxVelocity", container.getModifiedItemAttr("maxVelocity"),
+                           stackingPenalties = context != "skill" and context != "implant")

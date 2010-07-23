@@ -5,8 +5,6 @@
 #Items from group: Shield Flux Coil (11 of 11) [Module]
 #Items from group: Shield Power Relay (11 of 11) [Module]
 #Items from group: Shield Recharger (6 of 6) [Module]
-import model.fitting
-from customEffects import multiply
-def modifyShieldRechargeRate(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        multiply(fitting.ship, "shieldRechargeRate", "shieldRechargeRateMultiplier", self.item)
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.multiplyItemAttr("shieldRechargeRate", module.getModifiedItemAttr("shieldRechargeRateMultiplier"))
