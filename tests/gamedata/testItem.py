@@ -16,6 +16,9 @@ class TestItem(unittest.TestCase):
             
     def test_requiresSkill(self):
         i = db.getItem("Shield Boost Amplifier II")
+        skill = db.getItem("Shield Management")
         self.assertTrue(i.requiresSkill("Shield Management"))
         self.assertTrue(i.requiresSkill("Shield Management", 5))
+        self.assertTrue(i.requiresSkill(skill, 5))
+        self.assertFalse(i.requiresSkill(1302))
         self.assertFalse(i.requiresSkill("Moo Management"), 9000)

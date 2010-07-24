@@ -1,7 +1,7 @@
 from sqlalchemy import MetaData,  create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from .. import config
+from model import config
 
 class ReadOnlyException(Exception):
     pass
