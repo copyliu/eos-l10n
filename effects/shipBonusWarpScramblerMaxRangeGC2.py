@@ -1,6 +1,6 @@
-from customEffects import boostModListByReq
-def shipBonusWarpScramblerMaxRangeGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListByReq(fitting.modules, "maxRange", "shipBonusGC2",
-                      lambda mod: mod.group.name == "Warp Scrambler",
-                      self.item, extraMult = level)
+#Item: Adrestia [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Warp Scrambler",
+                                    "maxRange", ship.getModifiedItemAttr("shipBonusGC2") * level)

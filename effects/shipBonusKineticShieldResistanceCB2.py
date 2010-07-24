@@ -1,8 +1,7 @@
 #Item: Rattlesnake [Ship]
 #Item: Rokh [Ship]
 #Item: Scorpion Navy Issue [Ship]
-from customEffects import boost
-def shipBonusKineticShieldResistanceCB2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Battleship")
-    boost(fitting.ship, "shieldKineticDamageResonance", "shipBonus2CB",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Battleship").level
+    fit.ship.boostItemAttr("shieldKineticDamageResonance", ship.getModifiedItemAttr("shipBonus2CB") * level)

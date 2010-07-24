@@ -1,7 +1,6 @@
 #Item: Magnate [Ship]
-from customEffects import boostAmmoListByReq
-def shipBonusSurveyProbeExplosionDelay3AF(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Frigate")
-    boostAmmoListByReq(fitting.modules, "explosionDelay", "shipBonus3AF",
-                       lambda mod: mod.group.name == "Survey Probe",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.group.name == "Survey Probe",
+                                    "explosionDelay", ship.getModifiedItemAttr("shipBonus3AF") * level)

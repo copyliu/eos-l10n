@@ -1,6 +1,6 @@
 #Item: Basilisk [Ship]
 #Item: Scimitar [Ship]
-from customEffects import boostModListByReq
-def shieldTransportCpuNeedBonusEffect(self, fitting):
-    boostModListByReq(fitting.modules, "cpu", "shieldTransportCpuNeedBonus",
-                      lambda mod: mod.group.name == "Shield Transporter", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Transporter",
+                                  "cpu", ship.getModifiedItemAttr("shieldTransportCpuNeedBonus"))

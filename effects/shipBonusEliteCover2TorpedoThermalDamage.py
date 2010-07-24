@@ -1,7 +1,6 @@
 #Item: Nemesis [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipBonusEliteCover2TorpedoThermalDamage(self, fitting):
-    skill, level = fitting.getCharSkill("Covert Ops")
-    boostAmmoListBySkillReq(fitting.modules, "thermalDamage", "eliteBonusCoverOps2",
-                            lambda skill: skill.name == "Torpedoes",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Covert Ops").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Torpedoes"),
+                                    "thermalDamage", ship.getModifiedItemAttr("eliteBonusCoverOps2") * level)

@@ -1,7 +1,6 @@
 #Item: Scythe [Ship]
-from customEffects import boostModListByReq
-def shipBonusTrackingLinkMaxRangeBonusMC1(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boostModListByReq(fitting.modules, "maxRangeBonus", "shipBonusMC",
-                      lambda mod: mod.group.name == "Tracking Link",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Tracking Link",
+                                    "maxRangeBonus", ship.getModifiedItemAttr("shipBonusMC") * level)

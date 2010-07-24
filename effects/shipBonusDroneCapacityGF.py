@@ -1,5 +1,5 @@
 #Item: Worm [Ship]
-from customEffects import increase
-def shipBonusDroneCapacityGF(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    increase(fitting.ship, "droneCapacity", "shipBonusGF", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.ship.boostItemAttr("droneCapacity", ship.getModifiedItemAttr("shipBonusGF") * level)

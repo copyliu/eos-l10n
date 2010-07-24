@@ -1,12 +1,6 @@
 #Item: Nightmare [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusLargeEnergyTurretDamageCB2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Battleship")
-    boostModListBySkillReq(
-        fitting.modules,
-        "damageMultiplier",
-        "shipBonus2CB",
-        lambda skill: skill.name == "Large Energy Turret",
-        self.item,
-        extraMult = level
-    )
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Large Energy Turret"),
+                                    "damageMultiplier", ship.getModifiedItemAttr("shipBonus2CB") * level)

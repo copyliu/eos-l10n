@@ -4,7 +4,7 @@
 #Variations of item: Small Core Defence Field Extender I (2 of 2) [Module]
 #Item: Sansha Modified 'Gnome' Implant [Implant]
 #Item: Shield Management [Skill]
-from customEffects import boost
-def shieldManagementShieldCapacityBonusPostPercentCapacityLocationShipGroupShield(self, fitting, state = None, level = 1):
-    boost(fitting.ship, "shieldCapacity", "shieldCapacityBonus",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.ship.boostItemAttr("shieldCapacity", container.getModifiedItemAttr("shieldCapacityBonus") * level)

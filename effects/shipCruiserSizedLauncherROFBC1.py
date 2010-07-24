@@ -1,9 +1,7 @@
 #Item: Nighthawk [Ship]
-from customEffects import boostModListByReq
-def shipCruiserSizedLauncherROFBC1(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boostModListByReq(fitting.modules, "speed", "shipBonusBC1",
-                      lambda mod: mod.group.name == "Missile Launcher Assault" or \
-                      mod.group.name == "Missile Launcher Heavy" or \
-                      mod.group.name == "Missile Launcher Heavy Assault",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    groups = "Missile Launcher Assault", "Missile Launcher Heavy", "Missile Launcher Heavy Assault"
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name in groups,
+                                    "speed", ship.getModifiedItemAttr("shipBonusBC1") * level)

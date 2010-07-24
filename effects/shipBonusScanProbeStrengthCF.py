@@ -1,7 +1,6 @@
 #Item: Heron [Ship]
-from customEffects import boostAmmoListByReq
-def shipBonusScanProbeStrengthCF(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boostAmmoListByReq(fitting.modules, "baseSensorStrength", "shipBonusCF2",
-                       lambda charge: charge.group.name == "Scanner Probe",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.group.name == "Scanner Probe",
+                                    "baseSensorStrength", ship.getModifiedItemAttr("shipBonusCF2") * level)

@@ -1,6 +1,5 @@
 #Item: Dramiel [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusPirateFrigateProjDamage(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                    "damageMultiplier", ship.getModifiedItemAttr("shipBonusPirateFaction"))

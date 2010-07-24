@@ -1,7 +1,6 @@
 #Item: Maelstrom [Ship]
-from customEffects import boostModListByReq
-def shipBonusShieldBoosterMB1(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Battleship")
-    boostModListByReq(fitting.modules, "shieldBonus", "shipBonusMB1",
-                      lambda mod: mod.group.name == "Shield Booster",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Shield Booster",
+                                    "shieldBonus", ship.getModifiedItemAttr("shipBonusMB1") * level)

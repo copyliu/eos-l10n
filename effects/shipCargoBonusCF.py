@@ -1,5 +1,5 @@
 #Item: Bantam [Ship]
-from customEffects import boost
-def shipCargoBonusCF(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boost(fitting.ship, "capacity", "shipBonusCF", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr("shipBonusCF") * level)

@@ -1,7 +1,8 @@
 #Item: Abaddon [Ship]
-from customEffects import boost
-def shipBonusArmorResistAB(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Battleship")
-    boost(fitting.ship, ("armorExplosiveDamageResonance", "armorKineticDamageResonance",
-                         "armorEmDamageResonance", "armorThermalDamageResonance"),
-          "shipBonusAB", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Battleship").level
+    for type in ("Explosive", "Kinetic", "Em", "Thermal"):
+        fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                        "armor%sDamageResonance" % type,
+                                        ship.getModifiedItemAttr("shipBonusAB") * level)

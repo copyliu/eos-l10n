@@ -1,7 +1,6 @@
 #Variations of item: Maulus (2 of 2) [Ship]
-from customEffects import boostModListByReq
-def shipBonusEwRemoteSensorDampenerScanResolutionBonusGF2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListByReq(fitting.modules, "scanResolutionBonus", "shipBonusGF2",
-                      lambda mod: mod.group.name == "Remote Sensor Damper",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote Sensor Damper",
+                                  "scanResolutionBonus", ship.getModifiedItemAttr("shipBonusGF2") * level)

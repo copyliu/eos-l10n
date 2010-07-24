@@ -1,7 +1,6 @@
 #Variations of item: Celestis (3 of 3) [Ship]
-from customEffects import boostModListByReq
-def shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListByReq(fitting.modules, "maxTargetRangeBonus", "shipBonusGC2",
-                      lambda mod: mod.group.name == "Remote Sensor Damper",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote Sensor Damper",
+                                  "maxTargetRangeBonus", ship.getModifiedItemAttr("shipBonusGC2") * level)

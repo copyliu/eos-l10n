@@ -1,6 +1,6 @@
-from customEffects import boostDroneListByReq
-def shipBonusDroneDamageGF2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostDroneListByReq(fitting.drones, "damageMultiplier", "shipBonusGF2",
-                        lambda drone: drone.group.name == "Combat Drone",
-                        self.item, extraMult = level)
+#Item: Utu [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Combat Drone",
+                                 "damageMultiplier", ship.getModifiedItemAttr("shipBonusGF2") * level)

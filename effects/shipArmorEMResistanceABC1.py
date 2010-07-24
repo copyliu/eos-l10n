@@ -1,6 +1,6 @@
 #Variations of item: Prophecy (3 of 3) [Ship]
-from customEffects import boost
-def shipArmorEMResistanceABC1(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boost(fitting.ship, "armorEmDamageResonance", "shipBonusBC1", self.item,
-          extraMult = level)
+#Item: Malediction [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    fit.ship.boostItemAttr("armorEmDamageResonance", ship.getModifiedItemAttr("shipBonusBC1") * level)

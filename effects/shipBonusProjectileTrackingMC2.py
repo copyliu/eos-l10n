@@ -1,7 +1,6 @@
 #Item: Stabber Fleet Issue [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusProjectileTrackingMC2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusMC2",
-                           lambda skill: skill.name == "Medium Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                    "trackingSpeed", ship.getModifiedItemAttr("shipBonusMC2") * level)

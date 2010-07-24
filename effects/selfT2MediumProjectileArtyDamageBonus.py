@@ -1,6 +1,5 @@
 #Item: Medium Artillery Specialization [Skill]
-from customEffects import boostModListByReq
-def selfT2MediumProjectileArtyDamageBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Artillery Specialization"),
+                                  "damageMultiplier", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

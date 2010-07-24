@@ -1,7 +1,6 @@
 #Item: Purifier [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipBonusTorpedoVelocity2AF(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Frigate")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonus2AF",
-                       lambda skill: skill.name == "Torpedoes",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Torpedoes"),
+                                    "maxVelocity", ship.getModifiedItemAttr("shipBonus2AF") * level)

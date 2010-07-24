@@ -1,9 +1,7 @@
 #Items from group: Capacitor Power Relay (25 of 25) [Module]
 #Items from group: Shield Boost Amplifier (25 of 25) [Module]
-from customEffects import boostModListBySkillReq
-import model.fitting
-def shieldBoostAmplifier(self, fitting, state):
-    if state >= model.fitting.STATE_INACTIVE:
-        boostModListBySkillReq(fitting.modules, "shieldBonus", "shieldBoostMultiplier",
-                               lambda skill: skill.name in ("Shield Operation", "Capital Shield Operation"),
-                               self.item, useStackingPenalty = self.item.group.name == "Shield Boost Amplifier")
+type = "passive"
+def handler(fit, module, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Shield Operation") or mod.item.requiresSkill("Capital Shield Operation"),
+                                  "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"),
+                                  stackingPenalties = module.item.group.name == "Shield Boost Amplifier")

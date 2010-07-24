@@ -1,8 +1,7 @@
 #Item: Apocalypse [Ship]
 #Item: Apocalypse Navy Issue [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusLargeEnergyTurretMaxRangeAB2(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Battleship")
-    boostModListBySkillReq(fitting.modules, "maxRange", "shipBonusAB2",
-                           lambda skill: skill.name == "Large Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Large Energy Turret"),
+                                    "maxRange", ship.getModifiedItemAttr("shipBonusAB2") * level)

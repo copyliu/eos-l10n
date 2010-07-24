@@ -1,7 +1,6 @@
 #Item: Hound [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipBonusMF1TorpedoFlightTime(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boostAmmoListBySkillReq(fitting.modules, "explosionDelay", "shipBonusMF",
-                       lambda skill: skill.name == "Torpedoes",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Torpedoes"),
+                                    "explosionDelay", ship.getModifiedItemAttr("shipBonusMF") * level)

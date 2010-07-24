@@ -1,6 +1,5 @@
 #Item: Large Pulse Laser Specialization [Skill]
-from customEffects import boostModListByReq
-def selfT2LargeLaserPulseDamageBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Pulse Laser Specialization"),
+                                  "damageMultiplier", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

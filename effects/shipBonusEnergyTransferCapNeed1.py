@@ -1,7 +1,6 @@
 #Item: Augoror [Ship]
-from customEffects import boostModListByReq
-def shipBonusEnergyTransferCapNeed1(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostModListByReq(fitting.modules, "capacitorNeed", "shipBonusAC",
-                      lambda mod: mod.group.name == "Energy Transfer Array",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Transfer Array",
+                                  "capacitorNeed", ship.getModifiedItemAttr("shipBonusAC") * level)

@@ -1,11 +1,6 @@
 #Items from market group: Ships > Industrial Ships > Gallente (5 of 7)
-from customEffects import boost
-def shipBonusCargo2GI(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Industrial")
-    # The Iterons don't have the GI2 bonus.
-    if "shipBonusGI2" in fitting.ship.attributes:
-        bonus = "shipBonusGI2"
-    else:
-        bonus = "shipBonusGI"
-    boost(fitting.ship, "capacity", bonus, self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Industrial").level
+    bonus = "shipBonusGI" if "Iteron" in ship.name else "shipBonusGI2" 
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr(bonus) * level)

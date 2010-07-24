@@ -2,13 +2,9 @@
 #Variations of item: Medium Core Defence Capacitor Safeguard I (2 of 2) [Module]
 #Variations of item: Small Core Defence Capacitor Safeguard I (2 of 2) [Module]
 #Item: Shield Compensation [Skill]
-from customEffects import boostModListByReq, boostModListBySkillReq
-def shieldOperationSkillBoostCapacitorNeedBonus(self, fitting, state = None, level = 1):
-    if self.item.group.category.name == "Skill":
-        boostModListByReq(fitting.modules, "capacitorNeed", "shieldBoostCapacitorBonus",
-                          lambda mod: mod.group.name == "Shield Booster",
-                          self.item, useStackingPenalty = False, extraMult = level)
-    if self.item.group.category.name == "Module":
-        boostModListBySkillReq(fitting.modules, "capacitorNeed", "shieldBoostCapacitorBonus",
-                               lambda skill: skill.name == "Shield Operation",
-                               self.item, useStackingPenalty = True)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "capacitorNeed", container.getModifiedItemAttr("shieldBoostCapacitorBonus") * level,
+                                  stackingPenalties = context != "skill")

@@ -1,9 +1,8 @@
 #Item: Ares [Ship]
 #Item: Federation Navy Comet [Ship]
 #Item: Tristan [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusHybridTrackingGF2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusGF2",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                    "trackingSpeed", ship.getModifiedItemAttr("shipBonusGF2") * level)

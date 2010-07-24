@@ -1,6 +1,5 @@
 #Item: Malediction [Ship]
-from customEffects import boost
-def shipArmorThermalResistance2AF(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Frigate")
-    boost(fitting.ship, "armorThermalDamageResonance", "shipBonus2AF", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Frigate").level
+    fit.ship.boostItemAttr("armorThermalDamageResonance", ship.getModifiedItemAttr("shipBonus2AF") * level)

@@ -1,7 +1,6 @@
 #Item: Golem [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipBonusAoeVelocityCruiseMissileCB2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Battleship")
-    boostAmmoListBySkillReq(fitting.modules, "aoeVelocity", "shipBonus2CB",
-                            lambda skill: skill.name == "Cruise Missile",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Cruise Missile"),
+                                    "aoeVelocity", ship.getModifiedItemAttr("shipBonus2CB") * level)

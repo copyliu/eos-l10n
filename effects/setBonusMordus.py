@@ -5,9 +5,8 @@
 #Item: Low-grade Centurion Gamma [Implant]
 #Item: Low-grade Centurion Omega [Implant]
 runTime = "early"
-from customEffects import boostImplantListByReq, multiply
-def setBonusMordus(self, fitting):
-    boostImplantListByReq(fitting.implants, "rangeSkillBonus", "implantSetMordus",
-                          lambda implant: "rangeSkillBonus" in implant.attributes and \
-                          "implantSetMordus" in implant.attributes,
-                          self.item, helper = multiply)
+type = "passive"
+def handler(fit, implant, context):
+    fit.implants.filteredItemMultiply(lambda implant: "rangeSkillBonus" in implant.itemModifiedAttributes and \
+                                   "implantSetMordus" in implant.itemModifiedAttributes,
+                                   "rangeSkillBonus", implant.getModifiedItemAttr("implantSetMordus"))

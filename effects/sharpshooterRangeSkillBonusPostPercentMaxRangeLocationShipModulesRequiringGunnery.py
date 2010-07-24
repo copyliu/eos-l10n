@@ -6,8 +6,8 @@
 #Item: Standard Frentix Booster [Implant]
 #Item: Strong Frentix Booster [Implant]
 #Item: Synth Frentix Booster [Implant]
-from customEffects import boostModListBySkillReq
-def sharpshooterRangeSkillBonusPostPercentMaxRangeLocationShipModulesRequiringGunnery(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "maxRange", "rangeSkillBonus",
-                           lambda skill: skill.name == "Gunnery",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "maxRange", container.getModifiedItemAttr("rangeSkillBonus") * level)

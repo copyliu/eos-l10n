@@ -1,7 +1,6 @@
 #Item: Manticore [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipBonusCF1TorpedoFlightTime(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boostAmmoListBySkillReq(fitting.modules, "explosionDelay", "shipBonusCF",
-                            lambda skill: skill.name == "Torpedoes",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Torpedoes"),
+                                    "explosionDelay", ship.getModifiedItemAttr("shipBonusCF") * level)

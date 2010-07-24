@@ -1,5 +1,5 @@
 #Item: Burst [Ship]
-from customEffects import boost
-def shipCargoBonusMF2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boost(fitting.ship, "capacity", "shipBonusMF2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr("shipBonusMF2") * level)

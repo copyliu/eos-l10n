@@ -1,5 +1,5 @@
 #Item: Exequror [Ship]
-from customEffects import boost
-def shipCargoCapacityGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boost(fitting.ship, "capacity", "shipBonusGC2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr("shipBonusGC2") * level)

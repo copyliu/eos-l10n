@@ -1,7 +1,6 @@
 #Item: Phantasm [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusMediumEnergyTurretTrackingAC2(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusAC2",
-                           lambda skill: skill.name == "Medium Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Medium Energy Turret"),
+                                    "trackingSpeed", ship.getModifiedItemAttr("shipBonusAC2") * level)

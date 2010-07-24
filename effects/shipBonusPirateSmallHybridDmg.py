@@ -1,6 +1,5 @@
 #Item: Daredevil [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusPirateSmallHybridDmg(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                    "damageMultiplier", ship.getModifiedItemAttr("shipBonusPirateFaction"))

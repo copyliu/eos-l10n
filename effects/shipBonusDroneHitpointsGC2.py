@@ -1,7 +1,8 @@
 #Variations of item: Vexor (3 of 4) [Ship]
 #Item: Gila [Ship]
-from customEffects import boostDroneListByReq
-def shipBonusDroneHitpointsGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostDroneListByReq(fitting.drones, ("shieldCapacity", "armorHP", "hp"), "shipBonusGC2",
-                        lambda mod: True, self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    for type in ("shieldCapacity", "armorHP", "hp"):
+        fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Combat Drone",
+                                     type, ship.getModifiedItemAttr("shipBonusGC2") * level)

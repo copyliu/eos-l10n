@@ -1,7 +1,6 @@
 #Item: Rook [Ship]
-from customEffects import boostModListByReq
-def shipBonusHeavyLauncherRateOfFireCC2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Cruiser")
-    boostModListByReq(fitting.modules, "speed", "shipBonusCC2",
-                      lambda mod: mod.group.name == "Missile Launcher Heavy",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Missile Launcher Heavy",
+                                    "speed", ship.getModifiedItemAttr("shipBonusCC2") * level)

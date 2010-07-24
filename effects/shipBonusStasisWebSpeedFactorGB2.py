@@ -1,7 +1,6 @@
 #Item: Kronos [Ship]
-from customEffects import boostModListByReq
-def shipBonusStasisWebSpeedFactorGB2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Battleship")
-    boostModListByReq(fitting.modules, "speedFactor", "shipBonusGB2",
-                      lambda mod: mod.group.name == "Stasis Web",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Stasis Web",
+                                    "speedFactor", ship.getModifiedItemAttr("shipBonusGB2") * level)

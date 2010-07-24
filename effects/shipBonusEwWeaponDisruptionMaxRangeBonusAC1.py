@@ -1,10 +1,8 @@
 #Variations of item: Arbitrator (3 of 3) [Ship]
-from customEffects import boostModListByReq
-def shipBonusEwWeaponDisruptionMaxRangeBonusAC1(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostModListByReq(fitting.modules, "maxRangeBonus", "shipBonusAC",
-                      lambda mod: mod.group.name == "Tracking Disruptor",
-                      self.item, extraMult = level)
-    boostModListByReq(fitting.modules, "falloffBonus", "shipBonusAC",
-                      lambda mod: mod.group.name == "Tracking Disruptor",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+                                  "maxRangeBonus", ship.getModifiedItemAttr("shipBonusAC") * level)
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+                                  "falloffBonus", ship.getModifiedItemAttr("shipBonusAC") * level)

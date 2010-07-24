@@ -3,8 +3,8 @@
 #Variations of item: Medium Core Defence Charge Economizer I (2 of 2) [Module]
 #Variations of item: Small Core Defence Charge Economizer I (2 of 2) [Module]
 #Item: Shield Upgrades [Skill]
-from customEffects import boostModListByReq
-def shieldUpgradesPowerNeedBonusPostPercentPowerLocationShipModulesRequiringShieldUpgrades(self, fitting, state = None, level = 1):
-    boostModListByReq(fitting.modules, "power", "powerNeedBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Shield Upgrades"),
+                                  "power", container.getModifiedItemAttr("powerNeedBonus") * level)

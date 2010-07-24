@@ -1,7 +1,6 @@
 #Item: Phantasm [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusMediumEnergyTurretDamageCC2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Cruiser")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusCC2",
-                           lambda skill: skill.name == "Medium Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Medium Energy Turret"),
+                                    "damageMultiplier", ship.getModifiedItemAttr("shipBonusCC2") * level)

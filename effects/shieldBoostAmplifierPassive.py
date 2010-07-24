@@ -1,5 +1,4 @@
-from customEffects import boostModListBySkillReq
-def shieldBoostAmplifierPassive(self, fitting):
-    boostModListBySkillReq(fitting.modules, "shieldBonus", "shieldBoostMultiplier",
-                           lambda skill: skill.name == "Shield Operation",
-                           self.item, useStackingPenalty = False)
+type = "passive"
+def handler(fit, container, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Shield Operation"),
+                                  "shieldBonus", container.getModifiedItemAttr("shieldBoostMultiplier"))

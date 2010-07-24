@@ -5,9 +5,8 @@
 #Item: Low-grade Harvest Gamma [Implant]
 #Item: Low-grade Harvest Omega [Implant]
 runTime = "early"
-from customEffects import boostImplantListByReq, multiply
-def setBonusOre(self, fitting):
-    boostImplantListByReq(fitting.implants, "maxRangeBonus", "implantSetORE",
-                          lambda implant: "maxRangeBonus" in implant.attributes and \
-                          "implantSetORE" in implant.attributes,
-                          self.item, helper = multiply)
+type = "passive"
+def handler(fit, implant, context):
+    fit.implants.filteredItemMultiply(lambda implant: "maxRangeBonus" in implant.itemModifiedAttributes and \
+                                      "implantSetORE" in implant.itemModifiedAttributes,
+                                      "maxRangeBonus", implant.getModifiedItemAttr("implantSetORE"))

@@ -1,6 +1,5 @@
 #Item: Osprey [Ship]
-from customEffects import boostModListByReq
-def shieldTransporterMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "shieldTransferRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Shield Transporter",
-                      self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Transporter",
+                                  "shieldTransferRange", ship.getModifiedItemAttr("maxRangeBonus"))

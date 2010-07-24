@@ -1,7 +1,6 @@
 #Item: Myrmidon [Ship]
-from customEffects import boostDroneListByReq
-def shipBonusDroneDamageMultiplierBC1(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boostDroneListByReq(fitting.drones, "damageMultiplier", "shipBonusBC1",
-                        lambda drone: drone.group.name == "Combat Drone",
-                        self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Combat Drone",
+                                 "damageMultiplier", ship.getModifiedItemAttr("shipBonusBC1") * level)

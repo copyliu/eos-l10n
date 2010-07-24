@@ -1,6 +1,5 @@
 #Item: Punisher [Ship]
-from customEffects import boost
-def shipArmorEMResistanceAF1(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Frigate")
-    boost(fitting.ship, "armorEmDamageResonance", "shipBonusAF",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Frigate").level
+    fit.ship.boostItemAttr("armorEmDamageResonance", ship.getModifiedItemAttr("shipBonusAF") * level)

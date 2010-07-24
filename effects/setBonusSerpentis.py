@@ -1,8 +1,7 @@
 #Items from group: Cyberimplant (12 of 138) [Implant]
 runTime = "early"
-from customEffects import boostImplantListByReq, multiply
-def setBonusSerpentis(self, fitting):
-    boostImplantListByReq(fitting.implants, "velocityBonus", "implantSetSerpentis",
-                          lambda implant: "velocityBonus" in implant.attributes and \
-                          "implantSetSerpentis" in implant.attributes,
-                          self.item, helper = multiply)
+type = "passive"
+def handler(fit, implant, context):
+    fit.implants.filteredItemMultiply(lambda implant: "velocityBonus" in implant.itemModifiedAttributes and \
+                                      "implantSetSerpentis" in implant.itemModifiedAttributes,
+                                      "velocityBonus", implant.getModifiedItemAttr("implantSetSerpentis"))

@@ -1,6 +1,7 @@
 #Variations of item: Arbitrator (3 of 3) [Ship]
-from customEffects import boostDroneListByReq
-def shipBonusDroneHitpointsFixedAC2(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostDroneListByReq(fitting.drones, ("shieldCapacity", "armorHP", "hp"), "shipBonusAC2",
-                        lambda drone: True, self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    for type in ("shieldCapacity", "armorHP", "hp"):
+        fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Combat Drone",
+                                     type, ship.getModifiedItemAttr("shipBonusAC2") * level)

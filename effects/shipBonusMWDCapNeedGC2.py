@@ -1,8 +1,7 @@
 #Item: Deimos [Ship]
 #Item: Thorax [Ship]
-from customEffects import boostModListBySkillReq, increase
-def shipBonusMWDCapNeedGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListBySkillReq(fitting.modules, "capacitorCapacityMultiplier", "shipBonusGC2",
-                           lambda skill: skill.name == "High Speed Maneuvering",
-                           self.item, extraMult = level, helper = increase)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredItemIncrease(lambda mod: mod.item.requiresSkill("High Speed Maneuvering"),
+                                  "capacitorCapacityMultiplier", ship.getModifiedItemAttr("shipBonusGC2") * level)

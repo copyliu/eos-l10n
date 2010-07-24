@@ -1,7 +1,6 @@
 #Item: Succubus [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusSmallEnergyTurretTracking2AF(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Frigate")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonus2AF",
-                           lambda skill: skill.name == "Small Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Small Energy Turret"),
+                                    "trackingSpeed", ship.getModifiedItemAttr("shipBonus2AF") * level)

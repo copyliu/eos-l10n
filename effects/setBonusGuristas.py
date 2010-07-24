@@ -1,8 +1,7 @@
 #Items from group: Cyberimplant (12 of 138) [Implant]
 runTime = "early"
-from customEffects import boostImplantListByReq, multiply
-def setBonusGuristas(self, fitting):
-    boostImplantListByReq(fitting.implants, "shieldBoostMultiplier", "implantSetGuristas",
-                          lambda implant: "shieldBoostMultiplier" in implant.attributes and \
-                          "implantSetGuristas" in implant.attributes,
-                          self.item, helper = multiply)
+type = "passive"
+def handler(fit, implant, context):
+    fit.implants.filteredItemMultiply(lambda implant: "shieldBoostMultiplier" in implant.itemModifiedAttributes and \
+                                   "implantSetGuristas" in implant.itemModifiedAttributes,
+                                   "shieldBoostMultiplier", implant.getModifiedItemAttr("implantSetGuristas"))

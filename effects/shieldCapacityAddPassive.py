@@ -1,6 +1,4 @@
-#Items from group: Defensive Systems (16 of 16) [Subsystem]
-runTime = "early"
-from customEffects import increase
-def shieldCapacityAddPassive(self, fitting, state):
-    increase(fitting.ship, "shieldCapacity", "shieldCapacity",
-             self.item, position = "pre")
+#Items from group: Defensive Systems (16 of 16) [Subsystem] 
+type = "passive"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("shieldCapacity", module.getModifiedItemAttr("shieldCapacity"))

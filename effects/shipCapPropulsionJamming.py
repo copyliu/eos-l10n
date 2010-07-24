@@ -1,5 +1,5 @@
 #Items from group: Interceptor (8 of 8) [Ship]
-from customEffects import boostModListBySkillReq
-def shipCapPropulsionJamming(self, fitting):
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "eliteBonusInterceptorRole",
-                           lambda skill: skill.name == "Propulsion Jamming", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Propulsion Jamming"),
+                                    "capacitorNeed", ship.getModifiedItemAttr("eliteBonusInterceptorRole"))

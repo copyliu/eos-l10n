@@ -1,6 +1,5 @@
 #Item: Phobos [Ship]
-from customEffects import boost
-def shipArmorThermalResistanceGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boost(fitting.ship, "armorThermalDamageResonance", "shipBonusGC2",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.ship.boostItemAttr("armorThermalDamageResonance", ship.getModifiedItemAttr("shipBonusGC2") * level)

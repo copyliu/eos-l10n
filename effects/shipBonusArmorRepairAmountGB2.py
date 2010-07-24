@@ -1,7 +1,6 @@
 #Item: Hyperion [Ship]
-from customEffects import boostModListByReq
-def shipBonusArmorRepairAmountGB2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Battleship")
-    boostModListByReq(fitting.modules, "armorDamageAmount", "shipBonusGB2",
-                      lambda mod: mod.group.name == "Armor Repair Unit",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                    "armorDamageAmount", ship.getModifiedItemAttr("shipBonusGB2") * level)

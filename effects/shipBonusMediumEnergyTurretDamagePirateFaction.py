@@ -1,6 +1,6 @@
 #Item: Ashimmu [Ship]
 #Item: Phantasm [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusMediumEnergyTurretDamagePirateFaction(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Medium Energy Turret", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Medium Energy Turret"),
+                                    "damageMultiplier", ship.getModifiedItemAttr("shipBonusPirateFaction"))

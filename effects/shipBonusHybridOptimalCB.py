@@ -1,7 +1,6 @@
 #Item: Rokh [Ship]
-from customEffects import boostModListBySkillReq
-def shipBonusHybridOptimalCB(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Battleship")
-    boostModListBySkillReq(fitting.modules, "maxRange", "shipBonusCB",
-                      lambda skill: skill.name == "Large Hybrid Turret",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Battleship").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Large Hybrid Turret"),
+                                    "maxRange", ship.getModifiedItemAttr("shipBonusCB") * level)
