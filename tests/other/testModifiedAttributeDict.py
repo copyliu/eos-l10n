@@ -19,3 +19,9 @@ class TestModifiedAttributeDict(unittest.TestCase):
         self.dict.original = self.i.attributes
         self.dict["hp"] = 5
         self.assertEqual(self.dict["hp"], 5)
+        
+    def test_overrideAndCalculate(self):
+        self.dict.original = self.i.attributes
+        self.dict["hp"] = 5
+        self.dict.increase("hp", 5)
+        self.assertEqual(self.dict["hp"], 10)

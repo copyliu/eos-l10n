@@ -24,12 +24,14 @@ class ModifiedAttributeDict(object):
     def __init__(self):
         self.__modified = {}
         self.__original = None
+        self.__intermediary = {}
         self.__preIncreases = {}
         self.__postIncreases = {}
         self.__multipliers = {}
         self.__penalizedMultipliers = {}
 
     def clear(self):
+        self.__intermediary.clear()
         self.__modified.clear()
         self.__preIncreases.clear()
         self.__postIncreases.clear()
@@ -50,6 +52,8 @@ class ModifiedAttributeDict(object):
             if self.__modified[key] == self.CalculationPlaceholder:
                 self.__modified[key] = self.__calculateValue(key)
             return self.__modified[key]
+        elif key in self.__intermediary:
+            return self.__intermediary[key]
         else:
             return self.__original[key].value
 
@@ -79,7 +83,13 @@ class ModifiedAttributeDict(object):
     items = iteritems
     keys = iterkeys
     values = itervalues
-
+    
+    def __placehold(self, key):
+        if key in self.__modified and self.__modified[key] != self.CalculationPlaceholder:
+            self.__intermediary[key] = self.__modified[key]
+        
+        self.__modified[key] = self.CalculationPlaceholder
+        
     def __calculateValue(self, key):
         #Grab our values if they're there, otherwise we'll take default values.
         highIsGood = self.__original[key].highIsGood if key in self.__original else True
@@ -87,11 +97,7 @@ class ModifiedAttributeDict(object):
         postIncrease = self.__postIncreases[key] if key in self.__postIncreases else 0
         multiplier = self.__multipliers[key] if key in self.__multipliers else 1
         penalizedMultiplierGroups = self.__penalizedMultipliers[key] if key in self.__penalizedMultipliers else {}
-        val = self.__original[key].value if key in self.__original else 0
-
-        if not isinstance(val, (int, long, float)):
-            return val
-
+        val = self.__intermediary[key] if key in self.__intermediary else self.__original[key].value if key in self.__original else 0
         #We'll do stuff in the following order:
         #Preincreass, then multipliers
         #then stacking penalized multipliers, then postIncreases
@@ -136,7 +142,7 @@ class ModifiedAttributeDict(object):
             tbl[attributeName] = 0
 
         tbl[attributeName] += increase
-        self.__modified[attributeName] = self.CalculationPlaceholder
+        self.__placehold(attributeName)
 
     def multiply(self, attributeName, multiplier, stackingPenalties=False, penaltyGroup="default"):
         if stackingPenalties:
@@ -151,8 +157,8 @@ class ModifiedAttributeDict(object):
             if not attributeName in self.__multipliers:
                 self.__multipliers[attributeName] = 1
             self.__multipliers[attributeName] *= multiplier
-
-        self.__modified[attributeName] = self.CalculationPlaceholder
+        
+        self.__placehold(attributeName)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
