@@ -1,5 +1,5 @@
 #Variations of item: Stabber (2 of 3) [Ship]
-from customEffects import boost
-def shipMaxVelocityMC2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boost(fitting.ship, "maxVelocity", "shipBonusMC2", self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.ship.boostItemAttr("maxVelocity", ship.getModifiedItemAttr("shipBonusMC2") * level)

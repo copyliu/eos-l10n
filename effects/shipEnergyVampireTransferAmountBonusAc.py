@@ -1,7 +1,6 @@
 #Item: Ashimmu [Ship]
-from customEffects import boostModListByReq
-def shipEnergyVampireTransferAmountBonusAc(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostModListByReq(fitting.modules, "powerTransferAmount", "shipBonusAC",
-                      lambda mod: mod.group.name == "Energy Vampire",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Vampire",
+                                  "powerTransferAmount", ship.getModifiedItemAttr("shipBonusAC") * level)

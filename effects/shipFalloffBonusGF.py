@@ -1,9 +1,8 @@
 #Item: Atron [Ship]
 #Item: Daredevil [Ship]
 #Item: Incursus [Ship]
-from customEffects import boostModListBySkillReq
-def shipFalloffBonusGF(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListBySkillReq(fitting.modules, "falloff", "shipBonusGF2",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                  "falloff", ship.getModifiedItemAttr("shipBonusGF2") * level)

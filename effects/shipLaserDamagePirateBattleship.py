@@ -1,7 +1,6 @@
 #Item: Bhaalgorn [Ship]
 #Item: Nightmare [Ship]
-from customEffects import boostModListBySkillReq
-def shipLaserDamagePirateBattleship(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Large Energy Turret",
-                           self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Energy Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusPirateFaction"))

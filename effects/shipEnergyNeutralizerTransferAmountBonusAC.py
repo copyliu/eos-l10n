@@ -1,7 +1,6 @@
 #Item: Ashimmu [Ship]
-from customEffects import boostModListByReq
-def shipEnergyNeutralizerTransferAmountBonusAC(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostModListByReq(fitting.modules, "energyDestabilizationAmount", "shipBonusAC",
-                      lambda mod: mod.group.name == "Energy Destabilizer",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Destabilizer",
+                                  "energyDestabilizationAmount", ship.getModifiedItemAttr("shipBonusAC") * level)

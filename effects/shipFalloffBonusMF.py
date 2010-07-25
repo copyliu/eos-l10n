@@ -1,7 +1,6 @@
 #Item: Dramiel [Ship]
-from customEffects import boostModListBySkillReq
-def shipFalloffBonusMF(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boostModListBySkillReq(fitting.modules, "falloff", "shipBonusMF",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "falloff", ship.getModifiedItemAttr("shipBonusMF") * level)

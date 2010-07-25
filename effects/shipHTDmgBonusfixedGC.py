@@ -2,9 +2,8 @@
 #Variations of item: Thorax (3 of 4) [Ship]
 #Variations of item: Vexor (4 of 4) [Ship]
 #Item: Exequror Navy Issue [Ship]
-from customEffects import boostModListBySkillReq
-def shipHTDmgBonusfixedGC(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusGC",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusGC") * level)

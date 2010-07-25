@@ -1,6 +1,5 @@
 #Item: Guardian-Vexor [Ship]
-from customEffects import increase
-def shipDronesMaxGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    increase(fitting.ship, "_maxActiveDrones", "shipBonusGC2",
-             self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.maxActiveDrones += ship.getModifiedItemAttr("shipBonusGC2") * level

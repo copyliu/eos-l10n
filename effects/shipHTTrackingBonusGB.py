@@ -1,7 +1,6 @@
 #Item: Vindicator [Ship]
-from customEffects import boostModListBySkillReq
-def shipHTTrackingBonusGB(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Battleship")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusGB",
-                           lambda skill: skill.name == "Large Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Battleship").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Hybrid Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("shipBonusGB") * level)

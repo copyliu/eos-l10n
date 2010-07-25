@@ -1,7 +1,6 @@
 #Item: Bhaalgorn [Ship]
-from customEffects import boostModListByReq
-def shipEnergyNeutralizerTransferAmountBonusAB(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Battleship")
-    boostModListByReq(fitting.modules, "energyDestabilizationAmount", "shipBonusAB",
-                      lambda mod: mod.group.name == "Energy Destabilizer",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Battleship").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Destabilizer",
+                                  "energyDestabilizationAmount", ship.getModifiedItemAttr("shipBonusAB") * level)

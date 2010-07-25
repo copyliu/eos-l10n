@@ -1,7 +1,6 @@
 #Item: Helios [Ship]
-from customEffects import boostDroneListBySkillReq
-def shipDroneScoutThermalDamageGF2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostDroneListBySkillReq(fitting.drones, "thermalDamage", "shipBonusGF2",
-                             lambda skill: skill.name == "Scout Drone Operation",
-                             self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.drones.filteredItemBoost(lambda mod: mod.item.requiresSkill("Scout Drone Operation"),
+                                 "thermalDamage", ship.getModifiedItemAttr("shipBonusGF2")) * level

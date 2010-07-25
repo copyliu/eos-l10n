@@ -1,7 +1,6 @@
 #Item: Harbinger [Ship]
-from customEffects import boostModListByReq
-def shipLaserDamageBonusBC2(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boostModListByReq(fitting.modules, "damageMultiplier", "shipBonusBC2",
-                      lambda mod: mod.group.name == "Energy Weapon", self.item,
-                      extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Weapon",
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusBC2") * level)

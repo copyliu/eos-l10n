@@ -1,7 +1,6 @@
 #Item: Exequror Navy Issue [Ship]
-from customEffects import boostModListBySkillReq
-def shipHybridTurretROFBonusGC2(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListBySkillReq(fitting.modules, "speed", "shipBonusGC2",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "speed", ship.getModifiedItemAttr("shipBonusGC2") * level)

@@ -1,8 +1,7 @@
 #Item: Eagle [Ship]
 #Item: Moa [Ship]
-from customEffects import boostModListBySkillReq
-def shipHRangeBonusCC(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Cruiser")
-    boostModListBySkillReq(fitting.modules, "maxRange", "shipBonusCC",
-                      lambda skill: skill.name == "Medium Hybrid Turret",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "maxRange", ship.getModifiedItemAttr("shipBonusCC") * level)

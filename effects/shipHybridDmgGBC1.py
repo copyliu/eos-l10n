@@ -1,7 +1,6 @@
 #Variations of item: Brutix (3 of 3) [Ship]
-from customEffects import boostModListBySkillReq
-def shipHybridDmgGBC1(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusBC1",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusBC1") * level)

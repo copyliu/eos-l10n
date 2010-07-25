@@ -1,7 +1,6 @@
 #Item: Raptor [Ship]
-from customEffects import boostModListBySkillReq
-def shipHybridDamageBonusCF(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusCF",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusCF") * level)

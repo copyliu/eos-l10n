@@ -1,7 +1,6 @@
 #Item: Sacrilege [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipHeavyAssaultMissileThermalDmgAC1(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Cruiser")
-    boostAmmoListBySkillReq(fitting.modules, "thermalDamage", "shipBonusAC",
-                       lambda skill: skill.name == "Heavy Assault Missiles",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Heavy Assault Missiles"),
+                                    "thermalDamage", ship.getModifiedItemAttr("shipBonusAC") * level)

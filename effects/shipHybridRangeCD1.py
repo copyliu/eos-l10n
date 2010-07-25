@@ -1,7 +1,6 @@
 #Item: Cormorant [Ship]
-from customEffects import boostModListBySkillReq
-def shipHybridRangeCD1(self, fitting):
-    skill, level = fitting.getCharSkill("Destroyers")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusDF1",
-                           lambda skill: skill.name == "Small Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Destroyers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Energy Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("shipBonusDF1") * level)

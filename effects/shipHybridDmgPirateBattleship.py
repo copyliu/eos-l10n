@@ -1,6 +1,5 @@
 #Item: Vindicator [Ship]
-from customEffects import boostModListBySkillReq
-def shipHybridDmgPirateBattleship(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Large Hybrid Turret",
-                           self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusPirateFaction"))

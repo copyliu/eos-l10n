@@ -1,7 +1,6 @@
 #Item: Vigilant [Ship]
-from customEffects import boostModListBySkillReq
-def shipHTurretFalloffBonusGC(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListBySkillReq(fitting.modules, "falloff", "shipBonusGC",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "falloff", ship.getModifiedItemAttr("shipBonusGC") * level)

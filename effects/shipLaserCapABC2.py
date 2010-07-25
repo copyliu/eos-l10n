@@ -1,7 +1,6 @@
 #Variations of item: Prophecy (2 of 3) [Ship]
-from customEffects import boostModListByReq
-def shipLaserCapABC2(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boostModListByReq(fitting.modules, "capacitorNeed", "shipBonusBC2",
-                      lambda mod: mod.group.name == "Energy Weapon", self.item,
-                      extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Energy Weapon",
+                                  "capacitorNeed", ship.getModifiedItemAttr("shipBonusBC2") * level)

@@ -1,6 +1,5 @@
 #Item: Vigilant [Ship]
-from customEffects import boostModListBySkillReq
-def shipHybridDmgPirateCruiser(self, fitting):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusPirateFaction"))
