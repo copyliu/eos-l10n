@@ -1,9 +1,8 @@
 #Item: Executioner [Ship]
 #Item: Gold Magnate [Ship]
 #Item: Silver Magnate [Ship]
-from customEffects import boostModListBySkillReq
-def shipSETDmgBonusAF(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Frigate")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusAF",
-                           lambda skill: skill.name == "Small Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Energy Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusAF") * level)

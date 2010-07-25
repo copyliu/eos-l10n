@@ -1,7 +1,6 @@
 #Item: Osprey Navy Issue [Ship]
-from customEffects import boostModListByReq
-def shipMissileHeavyMissileRofCC(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Cruiser")
-    boostModListByReq(fitting.modules, "speed", "shipBonusCC",
-                      lambda mod: mod.group.name == "Missile Launcher Heavy",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Missile Launcher Heavy",
+                                    "speed", ship.getModifiedItemAttr("shipBonusCC") * level)

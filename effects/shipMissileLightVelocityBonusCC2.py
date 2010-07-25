@@ -1,7 +1,6 @@
 #Variations of item: Caracal (3 of 3) [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileLightVelocityBonusCC2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Cruiser")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusCC2",
-                            lambda skill: skill.name == "Standard Missiles",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Cruiser").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Standard Missiles"),
+                                    "maxVelocity", ship.getModifiedItemAttr("shipBonusCC2") * level)

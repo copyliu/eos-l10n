@@ -1,7 +1,6 @@
 #Item: Keres [Ship]
-from customEffects import boostModListByReq
-def shipRemoteSensorDampenerCapNeedGF(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListByReq(fitting.modules, "capacitorNeed", "shipBonusGF",
-                      lambda mod: mod.group.name == "Remote Sensor Damper",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote Sensor Damper",
+                                  "capacitorNeed", ship.getModifiedItemAttr("shipBonusGF") * level)

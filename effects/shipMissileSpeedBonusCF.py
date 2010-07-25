@@ -1,7 +1,6 @@
 #Item: Buzzard [Ship]
-from customEffects import boostModListBySkillReq
-def shipMissileSpeedBonusCF(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boostModListBySkillReq(fitting.modules, "speed", "shipBonusCF",
-                           lambda skill: skill.name == "Missile Launcher Operation",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "speed", ship.getModifiedItemAttr("shipBonusCF") * level)

@@ -1,8 +1,6 @@
 #Item: Flycatcher [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileVelocityDF1(self, fitting):
-    skill, level = fitting.getCharSkill("Destroyers")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusDF1",
-                       lambda skill: skill.name == "Rockets" or \
-                       skill.name == "Standard Missiles",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Destroyers").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Rockets") or mod.charge.requiresSkill("Standard Missiles"),
+                                    "maxVelocity", ship.getModifiedItemAttr("shipBonusDF1") * level)

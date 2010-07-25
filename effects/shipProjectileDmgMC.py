@@ -1,6 +1,6 @@
-from customEffects import boostModListBySkillReq
-def shipProjectileDmgMC(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusMC",
-                           lambda skill: skill.name == "Medium Projectile Turret",
-                           self.item, extraMult = level)
+#Item: Mimir [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusMC") * level)

@@ -1,7 +1,6 @@
 #Item: Heretic [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileAoeVelocityDF2(self, fitting):
-    skill, level = fitting.getCharSkill("Destroyers")
-    boostAmmoListBySkillReq(fitting.modules, "aoeVelocity", "shipBonusDF2",
-                            lambda skill: skill.name == "Missile Launcher Operation",
-                            self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Destroyers").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "aoeVelocity", ship.getModifiedItemAttr("shipBonusDF2") * level)

@@ -1,5 +1,5 @@
 #Item: Gila [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileVelocityPirateFactionHeavy(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusPirateFaction",
-                       lambda skill: skill.name == "Heavy Missiles", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Heavy Missiles"),
+                                    "maxVelocity", ship.getModifiedItemAttr("shipBonusPirateFaction"))

@@ -1,7 +1,6 @@
 #Item: Cheetah [Ship]
-from customEffects import boostModListBySkillReq
-def shipProjectileOptimalBonuseMF2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boostModListBySkillReq(fitting.modules, "maxRange", "shipBonusMF2",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "maxRange", ship.getModifiedItemAttr("shipBonusMF2") * level)

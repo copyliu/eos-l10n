@@ -1,6 +1,5 @@
 #Item: Cynabal [Ship]
-from customEffects import boostModListBySkillReq
-def shipProjectileRofPirateCruiser(self, fitting):
-     boostModListBySkillReq(fitting.modules, "speed", "shipBonusPirateFaction",
-                           lambda skill: skill.name == "Medium Projectile Turret",
-                           self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                  "speed", ship.getModifiedItemAttr("shipBonusPirateFaction"))

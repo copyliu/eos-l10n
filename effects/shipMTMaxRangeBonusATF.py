@@ -1,5 +1,5 @@
-from customEffects import boostModListBySkillReq
-def shipMTMaxRangeBonusATF(self, fitting):
-    boostModListBySkillReq(fitting.modules, "maxRange", "shipBonusATF2",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item)
+#Item: Mimir [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "falloffmaxRange", ship.getModifiedItemAttr("shipBonusATF2"))

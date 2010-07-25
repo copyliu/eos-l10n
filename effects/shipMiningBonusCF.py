@@ -1,7 +1,6 @@
 #Item: Bantam [Ship]
-from customEffects import boostModListByReq
-def shipMiningBonusCF(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boostModListByReq(fitting.modules, "miningAmount", "shipBonusCF2",
-                      lambda mod: mod.group.name == "Mining Laser",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Mining Laser",
+                                  "miningAmount", ship.getModifiedItemAttr("shipBonusCF2") * level)

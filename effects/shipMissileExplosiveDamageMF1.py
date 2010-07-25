@@ -1,7 +1,6 @@
 #Item: Breacher [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileExplosiveDamageMF1(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boostAmmoListBySkillReq(fitting.modules, "explosiveDamage", "shipBonusMF",
-                       lambda skill: skill.name == "Missile Launcher Operation",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                    "explosiveDamage", ship.getModifiedItemAttr("shipBonusMF") * level)

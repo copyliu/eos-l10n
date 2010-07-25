@@ -1,6 +1,5 @@
 #Item: Worm [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileVelocityPirateFactionFrigate(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusPirateFaction",
-                       lambda skill: skill.name == "Standard Missiles" or \
-                       skill.name == "Rockets", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Standard Missiles") or mod.charge.requiresSkill("Rockets"),
+                                    "maxVelocity", ship.getModifiedItemAttr("shipBonusPirateFaction"))

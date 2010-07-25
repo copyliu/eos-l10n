@@ -1,9 +1,7 @@
 #Item: Scythe Fleet Issue [Ship]
-from customEffects import boostModListByReq
-def shipMissileLauncherSpeedBonusMC2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boostModListByReq(fitting.modules, "speed", "shipBonusMC2",
-                      lambda mod: mod.group.name == "Missile Launcher Assault" or \
-                      mod.group.name == "Missile Launcher Heavy" or \
-                      mod.group.name == "Missile Launcher Heavy Assault",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    groups = ("Missile Launcher Assault", "Missile Launcher Heavy", "Missile Launcher Heavy Assault")
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name in groups,
+                                    "speed", ship.getModifiedItemAttr("shipBonusMC2") * level)

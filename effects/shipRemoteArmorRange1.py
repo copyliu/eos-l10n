@@ -1,7 +1,6 @@
 #Item: Oneiros [Ship]
-from customEffects import boostModListByReq
-def shipRemoteArmorRange1(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Cruiser")
-    boostModListByReq(fitting.modules, "maxRange", "shipBonusGC",
-                      lambda mod: mod.group.name == "Armor Repair Projector",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Projector",
+                                  "maxRange", ship.getModifiedItemAttr("shipBonusGC") * level)

@@ -1,5 +1,5 @@
-from customEffects import boostModListBySkillReq
-def shipMTFalloffBonusATC(self, fitting):
-    boostModListBySkillReq(fitting.modules, "falloff", "shipBonusATC2",
-                           lambda skill: skill.name == "Medium Projectile Turret",
-                           self.item)
+#Item: Mimir [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                  "falloff", ship.getModifiedItemAttr("shipBonusATC2"))

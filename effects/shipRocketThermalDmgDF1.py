@@ -1,7 +1,6 @@
 #Item: Heretic [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipRocketThermalDmgDF1(self, fitting):
-    skill, level = fitting.getCharSkill("Destroyers")
-    boostAmmoListBySkillReq(fitting.modules, "thermalDamage", "shipBonusDF1",
-                       lambda skill: skill.name == "Rockets",
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Destroyers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Rockets"),
+                                  "thermalDamage", ship.getModifiedItemAttr(shipBonusDF1) * level)

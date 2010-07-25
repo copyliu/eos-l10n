@@ -1,7 +1,6 @@
 #Item: Dramiel [Ship]
-from customEffects import boostModListBySkillReq
-def shipProjectileTrackingGF(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusGF",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("shipBonusGF") * level)

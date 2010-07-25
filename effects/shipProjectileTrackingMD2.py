@@ -1,7 +1,6 @@
 #Variations of item: Thrasher (2 of 2) [Ship]
-from customEffects import boostModListBySkillReq
-def shipProjectileTrackingMD2(self, fitting):
-    skill, level = fitting.getCharSkill("Destroyers")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusDF2",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Destroyers").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("shipBonusDF2") * level)

@@ -1,5 +1,5 @@
 #Item: Rattlesnake [Ship]
-from customEffects import boostAmmoListBySkillReq
-def shipMissileVelocityPirateFactionTorp(self, fitting):
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "shipBonusPirateFaction",
-                            lambda skill: skill.name == "Torpedoes", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Torpedoes"),
+                                    "maxVelocity", ship.getModifiedItemAttr("shipBonusPirateFaction"))

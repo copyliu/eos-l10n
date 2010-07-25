@@ -1,9 +1,8 @@
 #Variations of item: Slasher (2 of 3) [Ship]
 #Item: Republic Fleet Firetail [Ship]
 #Item: Rifter [Ship]
-from customEffects import boostModListBySkillReq
-def shipProjectileTrackingMF2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Frigate")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "shipBonusMF2",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "trackingSpeed", ship.getModifiedItemAttr("shipBonusMF2") * level)

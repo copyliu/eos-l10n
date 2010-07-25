@@ -1,7 +1,6 @@
 #Item: Navitas [Ship]
-from customEffects import boostModListByReq
-def shipMiningBonusGF(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListByReq(fitting.modules, "miningAmount", "shipBonusGF",
-                      lambda mod: mod.group.name == "Mining Laser",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Mining Laser",
+                                  "miningAmount", ship.getModifiedItemAttr("shipBonusGF") * level)

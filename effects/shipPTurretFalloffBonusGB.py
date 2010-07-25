@@ -1,7 +1,6 @@
 #Item: Machariel [Ship]
-from customEffects import boostModListBySkillReq
-def shipPTurretFalloffBonusGB(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Battleship")
-    boostModListBySkillReq(fitting.modules, "falloff", "shipBonusGB",
-                           lambda skill: skill.name == "Large Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Battleship").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Projectile Turret"),
+                                  "falloff", ship.getModifiedItemAttr("shipBonusGB") * level)
