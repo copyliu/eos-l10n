@@ -4,9 +4,8 @@
 #Item: Helios [Ship]
 #Item: Maulus [Ship]
 #Item: Tristan [Ship]
-from customEffects import boostModListBySkillReq
-def shipSHTDmgBonusGF(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Frigate")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "shipBonusGF",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Frigate").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("shipBonusGF") * level)

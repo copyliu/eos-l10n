@@ -1,50 +1,45 @@
 #Item: Siege Module I [Module]
-from customEffects import boost, multiply, boostModListByReq, boostModListBySkillReq, boostAmmoListBySkillReq
-import model.fitting
 type = "active"
-def siegeModeEffect4(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        #Turrets
-        boostModListBySkillReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                          lambda skill: skill.name == "Gunnery",
-                          self.item)
-        boostModListBySkillReq(fitting.modules, "trackingSpeed", "trackingSpeedBonus",
-                          lambda skill: skill.name == "Gunnery",
-                          self.item)
-        #Missiles
-        for damageType in ("kinetic", "thermal", "explosive", "em"):
-            boostAmmoListBySkillReq(fitting.modules, damageType + "Damage", "damageMultiplierBonus",
-                                    lambda skill: skill.name == "Missile Launcher Operation",
-                                    self.item)
-        boostAmmoListBySkillReq(fitting.modules, "aoeVelocity", "aoeVelocityBonus",
-                                lambda skill: skill.name == "Missile Launcher Operation",
-                                self.item)
-        #Shield booster
-        boostModListByReq(fitting.modules, "duration", "shieldBonusDurationBonus",
-                          lambda mod: mod.group.name == "Shield Booster",
-                          self.item)
-        boostModListByReq(fitting.modules, "shieldBonus", "shieldBoostMultiplier",
-                          lambda mod: mod.group.name == "Shield Booster",
-                          self.item)
-        #Armor repper
-        boostModListByReq(fitting.modules, "armorDamageAmount", "armorDamageAmountBonus",
-                          lambda mod: mod.group.name == "Armor Repair Unit",
-                          self.item)
-        boostModListByReq(fitting.modules, "duration", "armorDamageDurationBonus",
-                          lambda mod: mod.group.name == "Armor Repair Unit",
-                          self.item)
-        #Speed penalty
-        boost(fitting.ship, "maxVelocity", "speedFactor", self.item)
-
-        #Mass
-        multiply(fitting.ship, "mass", "massMultiplier", self.item)
-
-        #Scan resolution
-        multiply(fitting.ship, "scanResolution", "scanResolutionMultiplier", self.item)
-        
-        #Max locked targets
-        fitting.ship.attributes["maxLockedTargets"].overrideValue = self.item.getModifiedAttribute("maxLockedTargets")
-
-        #Block Hostile EWAR and friendly effects
-        fitting.ship.attributes["disallowOffensiveModifiers"] = self.item.attributes["disallowOffensiveModifiers"]
-        fitting.ship.attributes["disallowAssistance"] = self.item.attributes["disallowAssistance"]
+runTime = "late"
+def handler(fit, module, context):
+    #Turrets
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "damageMultiplier", module.getModifiedItemAttr("damageMultiplierBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "trackingSpeed", module.getModifiedItemAttr("trackingSpeedBonus"))
+    
+    #Missiles
+    for type in ("kinetic", "thermal", "explosive", "em"):
+        fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                        "%sDamage" % type, module.getModifiedItemAttr("damageMultiplierBonus"))
+    
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                     "aoeVelocity", module.getModifiedItemAttr("aoeVelocityBonus"))
+    
+    #Shield Boosters
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "duration", module.getModifiedItemAttr("shieldBonusDurationBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"))
+    
+    #Armor Reppers
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "armorDamageAmount", module.getModifiedItemAttr("armorDamageAmountBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "duration", module.getModifiedItemAttr("armorDamageDurationBonus"))
+    
+    #Speed penalty
+    fit.ship.multiplyItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor"))
+    
+    #Mass
+    fit.ship.multiplyItemAttr("mass", module.getModifiedItemAttr("massMultiplier"))
+    
+    #Scan resolution
+    fit.ship.multiplyItemAttr("scanResolution", module.getModifiedItemAttr("scanResolutionMultiplier"))
+    
+    #Max locked targets
+    fit.ship.itemModifiedAttributes["maxLockedTargets"] = module.getModifiedItemAttr("maxLockedTargets")
+    
+    #Block Hostile EWAR and friendly effects
+    fit.ship.itemModifiedAttributes["disallowOffensiveModifiers"] = module.getModifiedItemAttr("disallowOffensiveModifiers")
+    fit.ship.itemModifiedAttributes["disallowAssistance"] = module.getModifiedItemAttr("disallowAssistance")

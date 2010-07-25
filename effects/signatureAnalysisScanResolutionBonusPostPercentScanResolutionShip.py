@@ -1,6 +1,6 @@
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Electronics Implants (3 of 3)
 #Item: Signature Analysis [Skill]
-from customEffects import boost
-def signatureAnalysisScanResolutionBonusPostPercentScanResolutionShip(self, fitting, level = 1):
-    boost(fitting.ship, "scanResolution", "scanResolutionBonus",
-          self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.ship.boostItemAttr("scanResolution", container.getModifiedItemAttr("scanResolutionBonus") * level)

@@ -1,7 +1,6 @@
 #Item: Scimitar [Ship]
-from customEffects import boostModListByReq
-def shipShieldTransferRange2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boostModListByReq(fitting.modules, "maxRange", "shipBonusMC2",
-                      lambda mod: mod.group.name == "Shield Transporter",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Transporter",
+                                  "shieldTransferRange", ship.getModifiedItemAttr("shipBonusMC2") * level)

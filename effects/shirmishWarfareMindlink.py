@@ -1,6 +1,6 @@
 #Item: Skirmish Warfare Mindlink [Implant]
 from customEffects import boostModListBySkillReq
-def shirmishWarfareMindlink(self, fitting):
-    boostModListBySkillReq(fitting.modules, "commandBonus", "mindlinkBonus",
-                           lambda skill: skill.name == "Skirmish Warfare Specialist",
-                           self.item)
+def handler(fit, implant, context):
+    fit.character.getSkill("Skirmish Warfare Specialist").suppress()
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Skirmish Warfare Specialist"),
+                                  "commandBonus", implant.getModifiedItemAttr("mindlinkBonus"))

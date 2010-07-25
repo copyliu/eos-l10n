@@ -1,6 +1,5 @@
 #Item: Broadsword [Ship]
-from customEffects import boost
-def shipShieldKineticResistanceMC2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boost(fitting.ship, "shieldKineticDamageResonance", "shipBonusMC2", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.ship.boostItemAttr("shieldKineticDamageResonance", ship.getModifiedItemAttr("shipBonusMC2") * level)

@@ -1,6 +1,5 @@
 #Variations of item: Ferox (3 of 3) [Ship]
-from customEffects import boost
-def shipShieldKineticResistanceCBC2(self, fitting):
-    skill, level = fitting.getCharSkill("Battlecruisers")
-    boost(fitting.ship, "shieldKineticDamageResonance", "shipBonusBC2", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Battlecruisers").level
+    fit.ship.boostItemAttr("shieldKineticDamageResonance", ship.getModifiedItemAttr("shipBonusBC2") * level)

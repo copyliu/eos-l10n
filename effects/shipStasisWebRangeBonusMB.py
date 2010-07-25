@@ -1,7 +1,6 @@
 #Item: Bhaalgorn [Ship]
-from customEffects import boostModListByReq
-def shipStasisWebRangeBonusMB(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Battleship")
-    boostModListByReq(fitting.modules, "maxRange", "shipBonusMB",
-                      lambda mod: mod.group.name == "Stasis Web",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Battleship").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Stasis Web",
+                                  "maxRange", ship.getModifiedItemAttr("shipBonusMB") * level)

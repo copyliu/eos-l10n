@@ -1,3 +1,5 @@
-from customEffects import boost
-def shipVelocityBonusATC1(self, fitting):
-    boost(fitting.ship, "maxVelocity", "shipBonusATC1", self.item)
+#Item: Adrestia [Ship]
+#Item: Mimir [Ship]
+type = "passive"
+def handler(fit, ship, context):
+    fit.ship.boostItemAttr("maxVelocity", ship.getModifiedItemAttr("shipBonusATC1"))

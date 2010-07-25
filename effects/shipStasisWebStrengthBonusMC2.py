@@ -1,8 +1,7 @@
 #Item: Ashimmu [Ship]
 #Item: Vigilant [Ship]
-from customEffects import boostModListByReq
-def shipStasisWebStrengthBonusMC2(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Cruiser")
-    boostModListByReq(fitting.modules, "speedFactor", "shipBonusMC2",
-                      lambda mod: mod.group.name == "Stasis Web",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Cruiser").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Stasis Web",
+                                  "speedFactor", ship.getModifiedItemAttr("shipBonusMC2") * level)

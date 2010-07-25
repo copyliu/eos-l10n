@@ -1,7 +1,6 @@
 #Item: Merlin [Ship]
 #Item: Worm [Ship]
-from customEffects import boost
-def shipShieldExplosiveResistanceCF2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Frigate")
-    boost(fitting.ship, "shieldExplosiveDamageResonance", "shipBonusCF", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Frigate").level
+    fit.ship.boostItemAttr("shieldExplosiveDamageResonance", ship.getModifiedItemAttr("shipBonusCF") * level)
