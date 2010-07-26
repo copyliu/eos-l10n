@@ -1,6 +1,5 @@
 #Items from group: Rig Projectile Weapon (6 of 30) [Module]
-from customEffects import boostModListByReq, multiply
-def trackingSpeedMultiplierEffectProjectiles(self, fitting, state):
-    boostModListByReq(fitting.modules, "trackingSpeed", "trackingSpeedMultiplier",
-                      lambda mod: mod.group.name == "Projectile Weapon",
-                      self.item, helper = multiply)
+type = "passive"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Projectile Weapon",
+                                  "trackingSpeed", module.getModifiedItemAttr("trackingSpeedMultiplier"))

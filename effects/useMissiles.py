@@ -10,5 +10,5 @@
 #Item: Bomb Launcher I [Module]
 #Item: Interdiction Sphere Launcher I [Module]
 type = 'active'
-def useMissiles(self, fitting, state):
+def handler(fit, module, context):
     pass

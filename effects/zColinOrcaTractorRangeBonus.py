@@ -1,6 +1,5 @@
 #Item: Orca [Ship]
-from customEffects import boostModListByReq
-def zColinOrcaTractorRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "shipOrcaTractorBeamRangeBonus1",
-                      lambda mod: mod.group.name == "Tractor Beam", self.item)
-    
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tractor Beam",
+                                  "maxRange", ship.getModifiedItemAttr("shipOrcaTractorBeamRangeBonus1"))

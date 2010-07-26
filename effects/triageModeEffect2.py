@@ -1,66 +1,51 @@
 #Item: Triage Module I [Module]
-import model.fitting
-from customEffects import increase, multiply, boost, boostModListByReq, boostModListBySkillReq
 type = "active"
-def triageModeEffect2(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        #Remote armor rep
-        boostModListBySkillReq(fitting.modules, "duration", "remoteArmorDamageDurationBonus",
-                               lambda skill: skill.name == "Capital Remote Armor Repair Systems",
-                               self.item)
-        boostModListBySkillReq(fitting.modules, "armorDamageAmount", "remoteArmorDamageAmountBonus",
-                               lambda skill: skill.name == "Capital Remote Armor Repair Systems",
-                               self.item)
-        #Remote mantank repairer
-        boostModListBySkillReq(fitting.modules, "structureDamageAmount", "remoteHullDamageAmountBonus",
-                               lambda skill: skill.name == "Capital Remote Hull Repair Systems",
-                               self.item)
-        boostModListBySkillReq(fitting.modules, "duration", "remoteHullDamageDurationBonus",
-                               lambda skill: skill.name == "Capital Remote Hull Repair Systems",
-                               self.item)
-        
-        #Shield transporter
-        boostModListBySkillReq(fitting.modules, "duration", "shieldTransportDurationBonus",
-                               lambda skill: skill.name == "Capital Shield Emission Systems",
-                               self.item)
-        boostModListBySkillReq(fitting.modules, "shieldBonus", "shieldTransportAmountBonus",
-                               lambda skill: skill.name == "Capital Shield Emission Systems",
-                               self.item)
-        
-        #Energy transfer array
-        boostModListBySkillReq(fitting.modules, "powerTransferAmount", "powerTransferAmountBonus",
-                               lambda skill: skill.name == "Capital Energy Emission Systems",
-                               self.item)
-        boostModListBySkillReq(fitting.modules, "duration", "powerTransferDurationBonus",
-                               lambda skill: skill.name == "Capital Energy Emission Systems",
-                               self.item)
-        #Shield Booster
-        boostModListByReq(fitting.modules, "duration", "shieldBonusDurationBonus",
-                               lambda mod: mod.group.name == "Shield Booster",
-                               self.item)
-        boostModListByReq(fitting.modules, "shieldBonus", "shieldBoostMultiplier",
-                               lambda mod: mod.group.name == "Shield Booster",
-                               self.item)
-        #Armor repper
-        boostModListByReq(fitting.modules, "armorDamageAmount", "armorDamageAmountBonus",
-                          lambda mod: mod.group.name == "Armor Repair Unit",
-                          self.item)
-        boostModListByReq(fitting.modules, "duration", "armorDamageDurationBonus",
-                          lambda mod: mod.group.name == "Armor Repair Unit",
-                          self.item)
-
-        #Speed bonus
-        boost(fitting.ship, "maxVelocity", "speedFactor", self.item)
-
-        #Mass
-        multiply(fitting.ship, "mass", "massMultiplier", self.item)
-
-        #Drone bonus
-        boost(fitting.ship, "_maxActiveDrones", "maxDronePercentageBonus", self.item)
-
-        #Max targets bonus
-        increase(fitting.ship, "maxLockedTargets", "maxLockedTargetsBonus", self.item)
-        
-        #Block Hostile EWAR and friendly effects
-        fitting.ship.attributes["disallowOffensiveModifiers"] = self.item.attributes["disallowOffensiveModifiers"]
-        fitting.ship.attributes["disallowAssistance"] = self.item.attributes["disallowAssistance"]
+def handler(fit, module, context):
+    #Remote armor reps
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Armor Repair Systems"),
+                                  "duration", module.getModifiedItemAttr("remoteArmorDamageDurationBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Armor Repair Systems"),
+                                  "armorDamageAmount", module.getModifiedItemAttr("remoteArmorDamageAmountBonus"))
+    
+    #Remote hull reppers
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Hull Repair Systems"),
+                                  "structureDamageAmount", module.getModifiedItemAttr("remoteHullDamageAmountBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Hull Repair Systems"),
+                                  "duration", module.getModifiedItemAttr("remoteHullDamageDurationBonus"))
+    
+    #Shield Transporters
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Emission Systems"),
+                                  "shieldBonus", module.getModifiedItemAttr("shieldTransportAmountBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Emission Systems"),
+                                  "duration", module.getModifiedItemAttr("shieldTransportDurationBonus"))
+    
+    #Energy Transfer Arrays
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Energy Emission Systems"),
+                                  "powerTransferAmount", module.getModifiedItemAttr("powerTransferAmountBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Energy Emission Systems"),
+                                  "duration", module.getModifiedItemAttr("powerTransferDurationBonus"))
+    
+    #Shield boosters
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"))
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "duration", module.getModifiedItemAttr("shieldBonusDurationBonus"))
+    
+    #Armor reps
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "armorDamageAmount", module.getModifiedItemAttr("armorDamageAmountBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "duration", module.getModifiedItemAttr("armorDamageDurationBonus"))
+    
+    #Speed bonus
+    fit.ship.boostItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor"))
+    
+    #Mass multiplier
+    fit.ship.multiplyItemAttr("mass", module.getModifiedItemAttr("massMultiplier"))
+    
+    #Max locked targets
+    fit.ship.increaseItemAttr("maxLockedTargets", module.getModifiedItemAttr("maxLockedTargetsBonus"))
+    
+    #Block EWAR & projected effects
+    fit.ship.itemModifiedAttributes["disallowOffensiveModifiers"] = module.getModifiedItemAttr("disallowOffensiveModifiers")
+    fit.ship.itemModifiedAttributes["disallowAssistance"] = module.getModifiedItemAttr("disallowAssistance")

@@ -1,5 +1,5 @@
 #Item: Orca [Ship]
-from customEffects import boostModListByReq
-def zColinOrcaSurveyScannerBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "shipOrcaSurveyScannerBonus",
-                      lambda mod: mod.group.name == "Survey Scanner", self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Survey Scanner",
+                                  "maxRange", ship.getModifiedItemAttr("shipOrcaSurveyScannerBonus"))

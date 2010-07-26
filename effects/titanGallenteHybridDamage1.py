@@ -1,7 +1,6 @@
 #Item: Erebus [Ship]
-from customEffects import boostModListBySkillReq
-def titanGallenteHybridDamage1(self, fitting):
-    skill, level = fitting.getCharSkill("Gallente Titan")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "titanGallenteBonus1",
-                           lambda skill: skill.name == "Capital Hybrid Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Gallente Titan").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Hybrid Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("titanGallenteBonus1") * level)

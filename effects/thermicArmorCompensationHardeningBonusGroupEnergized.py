@@ -1,6 +1,5 @@
 #Item: Thermic Armor Compensation [Skill]
-from customEffects import boostModListByReq
-def thermicArmorCompensationHardeningBonusGroupEnergized(self, fitting, level):
-    boostModListByReq(fitting.modules, "thermalDamageResistanceBonus", "hardeningBonus",
-                      lambda mod: mod.group.name == "Armor Plating Energized",
-                      self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Plating Energized",
+                                  "thermalDamageResistanceBonus", skill.getModifiedItemAttr("hardeningBonus") * skill.level)

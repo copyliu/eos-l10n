@@ -1,7 +1,7 @@
 #Item: Leviathan [Ship]
-from customEffects import boostAmmoListByReq
-def titanCaldariMissileKineticDmg2(self, fitting):
-    skill, level = fitting.getCharSkill("Caldari Titan")
-    boostAmmoListByReq(fitting.modules, "kineticDamage", "shipBonusCT1",
-                       lambda charge: charge.group.name in ("Citadel Torpedo", "Citadel Cruise"),
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Caldari Titan").level
+    groups = "Citadel Torpedo", "Citadel Cruise"
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.group.name in groups,
+                                  "kineticDamage", ship.getModifiedItemAttr("shipBonusCT1") * level)

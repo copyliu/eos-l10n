@@ -1,10 +1,8 @@
 #Item: Erebus [Ship]
-type = ("gang", "normal")
-from customEffects import boost, multiply
-def titanGallenteGangArmorHp2(self, fitting, activeLayer):
-    if activeLayer == "ship":
-        skill, level = fitting.getCharSkill("Gallente Titan")
-        multiply(self.item, "titanGallenteBonus2", level)
-        self.item.attributes["commandBonus"] = self.item.attributes["titanGallenteBonus2"]
-    else:
-        boost(fitting.ship, "armorHP", "titanGallenteBonus2", self.item)
+type = "gang", "passive"
+def handler(fit, ship, context):
+    if context == "ship":
+        level = fit.character.getSkill("Gallente Titan").level
+        fit.ship.multiplyItemAttr("titanGallenteBonus2", level)
+    elif context == "gang":
+        fit.ship.boostItemAttr("armorHP", ship.getModifiedItemAttr("titanGallenteBonus2"))

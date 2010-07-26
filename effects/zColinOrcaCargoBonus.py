@@ -1,6 +1,5 @@
 #Item: Orca [Ship]
-from customEffects import boost
-def zColinOrcaCargoBonus(self, fitting):
-    skill, level = fitting.getCharSkill("Industrial Command Ships")
-    boost(fitting.ship, "capacity", "shipOrcaCargoBonusOrca1", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Industrial Command Ships").level
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr("shipOrcaCargoBonusOrca1") * level)

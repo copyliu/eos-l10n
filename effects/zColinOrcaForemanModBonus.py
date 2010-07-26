@@ -1,7 +1,6 @@
 #Item: Orca [Ship]
-from customEffects import boostModListBySkillReq
-def zColinOrcaForemanModBonus(self, fitting):
-    skill, level = fitting.getCharSkill("Industrial Command Ships")
-    boostModListBySkillReq(fitting.modules, "commandBonus", "shipOrcaCargoBonusOrca1",
-                           lambda skill: skill.name == "Mining Director",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Industrial Command Ships").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Mining Director"),
+                                  "commandBonus", ship.getModifiedItemAttr("shipOrcaCargoBonusOrca1") * level)

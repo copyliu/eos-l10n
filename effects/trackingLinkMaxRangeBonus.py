@@ -1,6 +1,5 @@
 #Item: Scythe [Ship]
-from customEffects import boostModListByReq
-def trackingLinkMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Tracking Link",
-                      self.item)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Link",
+                                  "maxRange", ship.getModifiedItemAttr("maxRangeBonus"))

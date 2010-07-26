@@ -1,10 +1,8 @@
 #Item: Avatar [Ship]
-type = ("gang", "normal")
-from customEffects import boost, multiply
-def titanAmarrGangCapRecharge2(self, fitting, activeLayer):
-    if activeLayer == "ship":
-        skill, level = fitting.getCharSkill("Amarr Titan")
-        multiply(self.item, "titanAmarrBonus2", level)
-        self.item.attributes["commandBonus"] = self.item.attributes["titanAmarrBonus2"]
-    else:
-        boost(fitting.ship, "rechargeRate", "titanAmarrBonus2", self.item)
+type = "gang", "passive"
+def handler(fit, ship, context):
+    if context == "ship":
+        level = fit.character.getSkill("Amarr Titan").level
+        fit.ship.multiplyItemAttr("titanAmarrBonus2", level)
+    elif context == "gang":
+        fit.ship.boostItemAttr("rechargeRate", ship.getModifiedItemAttr("titanAmarrBonus2"))

@@ -3,8 +3,8 @@
 #Item: Hardwiring - Eifyr and Co. 'Gunslinger' AX-2 [Implant]
 #Item: Motion Prediction [Skill]
 #Item: Ogdin's Eye Coordination Enhancer [Implant]
-from customEffects import boostModListBySkillReq
-def trackingSpeedBonusPassiveRequiringGunneryTrackingSpeedBonus(self, fitting, level = 1):
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "trackingSpeedBonus",
-                           lambda skill: skill.name == "Gunnery",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                  "trackingSpeed", container.getModifiedItemAttr("trackingSpeedBonus") * level)

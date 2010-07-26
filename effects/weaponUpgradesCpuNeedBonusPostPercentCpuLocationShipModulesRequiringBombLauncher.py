@@ -1,6 +1,5 @@
 #Item: Weapon Upgrades [Skill]
-from customEffects import boostModListBySkillReq
-def weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringBombLauncher(self, fitting, level):
-    boostModListBySkillReq(fitting.modules, "cpu", "cpuNeedBonus",
-                           lambda skill: skill.name == "Bomb Deployment",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Bomb Deployment"),
+                                  "cpu", skill.getModifiedItemAttr("cpuNeedBonus") * skill.level)

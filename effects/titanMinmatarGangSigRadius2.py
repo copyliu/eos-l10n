@@ -1,10 +1,8 @@
 #Item: Ragnarok [Ship]
-type = ("gang", "normal")
-from customEffects import boost, multiply
-def titanMinmatarGangSigRadius2(self, fitting, activeLayer):
-    if activeLayer == "ship":
-        skill, level = fitting.getCharSkill("Minmatar Titan")
-        multiply(self.item, "titanMinmatarBonus2", level)
-        self.item.attributes["commandBonus"] = self.item.attributes["titanMinmatarBonus2"]
-    else:
-        boost(fitting.ship, "signatureRadius", "titanMinmatarBonus2", self.item)
+type = "gang", "passive"
+def handler(fit, ship, context):
+    if context == "ship":
+        level = fit.character.getSkill("Minmatar Titan").level
+        fit.ship.multiplyItemAttr("titanMinmatarBonus2", level)
+    elif context == "gang":
+        fit.ship.boostItemAttr("signatureRadius", ship.getModifiedItemAttr("titanMinmatarBonus2"))

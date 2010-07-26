@@ -1,6 +1,5 @@
 #Item: Thermodynamics [Skill]
-from customEffects import boostModListByReq
-def thermodynamicsSkillDamageBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "heatDamage", "thermodynamicsHeatDamage",
-                           lambda mod: "heatDamage" in mod.attributes,
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: "heatDamage" in mod.itemModifiedAttributes,
+                                  "heatDamage", skill.getModifiedItemAttr("thermodynamicsHeatDamage") * level)

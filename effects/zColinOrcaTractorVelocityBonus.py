@@ -1,6 +1,5 @@
 #Item: Orca [Ship]
-from customEffects import boostModListByReq
-def zColinOrcaTractorVelocityBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxTractorVelocity", "shipOrcaTractorBeamVelocityBonus2",
-                      lambda mod: mod.group.name == "Tractor Beam", self.item)
-    
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tractor Beam",
+                                  "maxTractorVelocity", ship.getModifiedItemAttr("shipOrcaTractorBeamVelocityBonus2"))

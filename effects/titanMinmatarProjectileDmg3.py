@@ -1,7 +1,6 @@
 #Item: Ragnarok [Ship]
-from customEffects import boostModListBySkillReq
-def titanMinmatarProjectileDmg3(self, fitting):
-    skill, level = fitting.getCharSkill("Minmatar Titan")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "titanMinmatarBonus3",
-                           lambda skill: skill.name == "Capital Projectile Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Minmatar Titan").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Projectile Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("titanMinmatarBonus3") * level)

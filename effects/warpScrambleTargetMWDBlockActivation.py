@@ -11,3 +11,14 @@ def warpScrambleTargetMWDBlockActivation(self, fitting, state):
                 if skill.name == "High Speed Maneuvering":
                     fitting.blockedItems.add(module.getItem())
                     break
+
+type = "projected", "active"
+def handler(fit, module, context):
+    if context != "projected" or fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1:
+        return
+    
+    fit.ship.increaseItemAttr("warpScrambleStatus", module.getModifiedItemAttr("warpScrambleStrength"))
+    for module in fit.modules:
+        if module.item.requiresSkill("High Speed Maneuvering"):
+            module.block()
+            

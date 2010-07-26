@@ -1,7 +1,6 @@
 #Item: Impel [Ship]
 #Item: Occator [Ship]
-from customEffects import boost
-def zColinArmorHPPerLvl(self, fitting):
-    skill, level = fitting.getCharSkill("Transport Ships")
-    boost(fitting.ship, "armorHP", "shipBonusHPExtender1", self.item,
-          extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Transport Ships").level
+    fit.ship.boostItemAttr("armorHP", ship.getModifiedItemAttr("shipBonusHPExtender1") * level)

@@ -1,13 +1,7 @@
 #Item: Warp Disruption Field Generator I [Module]
-from customEffects import boost, boostModListByReq
-import model.fitting
-from model.attribute import basicAttribute
 type = "active"
-def warpDisruptSphere(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        boost(fitting.ship, "signatureRadius", "signatureRadiusBonus", self.item)
-        boostModListByReq(fitting.modules, "speedFactor", "speedFactorBonus",
-                          lambda mod: mod.group.name == "Afterburner", self.item)
-        fitting.ship.attributes["_disallowAssistance"] = \
-            basicAttribute(fitting.ship, "_disallowAssistance", None, True)
-        self.item.attributes["_maxRange"] = self.item.attributes["warpScrambleRange"]
+def handler(fit, module, context):
+    fit.ship.boostItemAttr("signatureRadius", module.getModifiedItemAttr("signatureRadiusBonus"))
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+                                  "speedFactor", module.getModifiedItemAttr("speedFactorBonus"))
+    fit.ship.itemModifiedAttributes["disallowAssistance"] =  1

@@ -1,7 +1,6 @@
 #Item: Avatar [Ship]
-from customEffects import boostModListBySkillReq
-def titanAmarrLaserDmg3(self, fitting):
-    skill, level = fitting.getCharSkill("Amarr Titan")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "titanAmarrBonus3",
-                           lambda skill: skill.name == "Capital Energy Turret",
-                           self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    level = fit.character.getSkill("Amarr Titan").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Energy Turret"),
+                                  "damageMultiplier", ship.getModifiedItemAttr("titanAmarrBonus3") * level)
