@@ -30,4 +30,4 @@ class Ship(ItemAttrShortcut, HandledItem):
     def calculateModifiedAttributes(self, fit, runTime):
         for effect in self.item.effects:
             if effect.runTime == runTime:
-                    effect.handler(fit, self.ship)
+                    effect.handler(fit, self.ship, "ship")

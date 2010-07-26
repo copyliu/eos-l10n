@@ -12,7 +12,6 @@ class Fit(object):
         self.__drones = HandledDroneSet()
         self.__implants = HandledImplantBoosterSet()
         self.__boosters = HandledImplantBoosterSet()
-        self.__blockedItems = set()
         self.__projectedModules = HandledSet()
         self.__projectedFits = HandledSet()
         self.__gang = None
@@ -94,12 +93,12 @@ class Fit(object):
     
     def clear(self):
         if self.ship != None: self.ship.clear()
-        c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,))
+        c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,), (self.__blockedItems,))
         for stuff in c:
             if stuff != None: stuff.clear()
         
         self.initBaseParams()
-    
+        
     def calculateModifiedAttributes(self):
         #There's a few things to keep in mind here
         #1: Early effects first, then regular ones, then late ones, regardless of anything else
