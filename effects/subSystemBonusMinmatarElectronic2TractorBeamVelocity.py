@@ -1,7 +1,5 @@
 #Item: Loki Electronics - Emergent Locus Analyzer [Subsystem]
-from customEffects import boostModListByReq
-def subSystemBonusMinmatarElectronic2TractorBeamVelocity(self, fitting, state):
-    skill, level = fitting.getCharSkill("Minmatar Electronic Systems")
-    boostModListByReq(fitting.modules, "maxTractorVelocity", "subsystemBonusMinmatarElectronic2",
-                      lambda mod: mod.group.name == "Tractor Beam",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Minmatar Electronic Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tractor Beam",
+                                  "maxTractorVelocity", module.getModifiedItemAttr("subsystemBonusMinmatarElectronic2") * level)

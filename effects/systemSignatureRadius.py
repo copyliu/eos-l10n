@@ -1,5 +1,4 @@
 #Items from group: Effect Beacon (12 of 38) [Celestial]
 type = "projected"
-from customEffects import multiply
-def systemSignatureRadius(self, fitting, state):
-    multiply(fitting.ship, "signatureRadius", "signatureRadiusMultiplier", self.item)
+def handler(fit, beacon, context):
+    fit.ship.multiplyItemAttr("signatureRadius", beacon.getModifiedItemAttr("signatureRadiusMultiplier"))

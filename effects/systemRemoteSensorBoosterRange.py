@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import multiply, boostModListByReq
 type= "projected"
-def systemRemoteSensorBoosterRange(self, fitting, state):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonusMultiplier",
-                      lambda mod: mod.group.name == "Remote Sensor Booster",
-                      self.item, helper = multiply)
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Remote Sensor Booster",
+                                     "maxRange", module.getModifiedItemAttr("maxRangeBonusMultiplier"))

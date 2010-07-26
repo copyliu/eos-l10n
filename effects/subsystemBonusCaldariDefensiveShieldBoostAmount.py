@@ -1,7 +1,5 @@
 #Item: Tengu Defensive - Amplification Node [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusCaldariDefensiveShieldBoostAmount(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Defensive Systems")
-    boostModListByReq(fitting.modules, "shieldBonus", "subsystemBonusCaldariDefensive",
-                      lambda mod: mod.group.name == "Shield Booster",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+                                  "shieldBonus", module.getModifiedItemAttr("subsystemBonusCaldariDefensive") * level)

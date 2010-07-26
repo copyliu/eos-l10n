@@ -1,5 +1,4 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
 type = "projected"
-from customEffects import multiply
-def systemAgility(self, fitting, state):
-    multiply(fitting.ship, "agility", "agilityMultiplier", self.item)
+def handler(fit, beacon, context):
+    fit.ship.multiplyItemAttr("agility", beacon.getModifiedItemAttr("agilityMultiplier"))

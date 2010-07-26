@@ -1,7 +1,5 @@
 #Item: Loki Offensive - Projectile Scoping Array [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusMinmatarOffensiveProjectileWeaponFalloff(self, fitting, state):
-    skill, level = fitting.getCharSkill("Minmatar Offensive Systems")
-    boostModListBySkillReq(fitting.modules, "falloff", "subsystemBonusMinmatarOffensive",
-                      lambda skill: skill.name == "Medium Projectile Turret",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Minmatar Offensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Projectile Turret"),
+                                  "falloff", module.getModifiedItemAttr("subsystemBonusMinmatarOffensive") * level)

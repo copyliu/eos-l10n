@@ -1,7 +1,5 @@
 #Item: Tengu Offensive - Magnetic Infusion Basin [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusCaldariOffensive2HybridWeaponDamageMultiplier(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Offensive Systems")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "subsystemBonusCaldariOffensive2",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Offensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "damageMultiplier", module.getModifiedItemAttr("subsystemBonusCaldariOffensive2") * level)

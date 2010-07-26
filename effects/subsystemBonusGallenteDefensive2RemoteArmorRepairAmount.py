@@ -1,7 +1,5 @@
 #Item: Proteus Defensive - Adaptive Augmenter [Subsystem]
-from customEffects import boost
-def subsystemBonusGallenteDefensive2RemoteArmorRepairAmount(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Defensive Systems")
-    for resonanceType in ("Em", "Kinetic", "Thermal", "Explosive"):
-        boost(fitting.ship, "armor" + resonanceType + "DamageResonance",
-              "subsystemBonusGallenteDefensive", self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Projector",
+                                  "armorDamageAmount", module.getModifiedItemAttr("subsystemBonusGallenteDefensive") * level)

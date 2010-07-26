@@ -1,7 +1,5 @@
 #Item: Legion Defensive - Nanobot Injector [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusAmarrDefensiveArmorRepairAmount(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Defensive Systems")
-    boostModListByReq(fitting.modules, "armorDamageAmount", "subsystemBonusAmarrDefensive",
-                      lambda mod: mod.group.name == "Armor Repair Unit",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "armorDamageAmount", module.getModifiedItemAttr("subsystemBonusAmarrDefensive") * level)

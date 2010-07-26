@@ -1,11 +1,9 @@
 #Items from group: Armor Repair Projector (37 of 37) [Module]
 #Items from group: Logistic Drone (6 of 12) [Drone]
-import model.fitting
-from customEffects import increase
-type = ("projected", "active")
-def targetArmorRepair(self, fitting, state, activeLayer):
-    if state >= model.fitting.STATE_ACTIVE and activeLayer == "projected" and fitting.ship.getModifiedAttribute("disallowAssistance") != 1:
-        armorAmount = self.item.getModifiedAttribute("armorDamageAmount")
-        duration = self.item.getModifiedAttribute("duration") / 1000.0
-        armorBonus = armorAmount / duration
-        increase(fitting.ship, "_armorRawRecharge", armorBonus)
+type = "projected", "active"
+def handler(fit, container, context):
+    if context != "projected" or fit.ship.getModifiedItemAttr("disallowAssistance") == 1:
+        return
+    amount = container.getModifiedItemAttr("armorDamageAmount")
+    speed = container.getModifiedAttribute("duration") / 1000.0
+    fit.armorRepair += amount / speed

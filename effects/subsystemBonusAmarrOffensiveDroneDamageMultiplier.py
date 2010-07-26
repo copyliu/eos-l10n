@@ -1,7 +1,5 @@
 #Item: Legion Offensive - Drone Synthesis Projector [Subsystem]
-from customEffects import boostDroneListByReq
-def subsystemBonusAmarrOffensiveDroneDamageMultiplier(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Offensive Systems")
-    boostDroneListByReq(fitting.drones, "damageMultiplier", "subsystemBonusAmarrOffensive",
-                        lambda drone: drone.group.name == "Combat Drone",
-                        self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Offensive Systems").level
+    fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Combat Drone",
+                                 "damageMultiplier", module.getModifiedItemAttr("subsystemBonusAmarrOffensive") * level)

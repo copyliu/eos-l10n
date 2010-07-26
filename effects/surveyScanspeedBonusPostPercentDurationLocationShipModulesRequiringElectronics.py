@@ -2,8 +2,7 @@
 #Variations of item: Medium Signal Focusing Kit I (2 of 2) [Module]
 #Variations of item: Small Signal Focusing Kit I (2 of 2) [Module]
 #Item: Survey [Skill]
-from customEffects import boostModListBySkillReq
-def surveyScanspeedBonusPostPercentDurationLocationShipModulesRequiringElectronics(self, fitting, state = None, level = 1):
-    boostModListBySkillReq(fitting.modules, "duration", "scanspeedBonus",
-                           lambda skill: skill.name == "Electronics",
-                           self.item, extraMult = level)
+def handler(fit, container, context):
+    level = container.level if context == "skill" else 1
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Electronics"),
+                                  "duration", container.getModifiedItemAttr("scanspeedBonus") * level)

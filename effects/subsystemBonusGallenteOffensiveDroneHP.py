@@ -1,7 +1,6 @@
 #Item: Proteus Offensive - Drone Synthesis Projector [Subsystem]
-from customEffects import boostDroneListByReq
-def subsystemBonusGallenteOffensiveDroneHP(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Offensive Systems")
-    boostDroneListByReq(fitting.drones, ("shieldCapacity", "armorHP", "hp"),
-                        "subsystemBonusGallenteOffensive", lambda drone: True,
-                        self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Offensive Systems").level
+    for bonus in ("hp", "armorHP", "shieldCapacity"):
+        fit.drones.filteredItemBoost(lambda drone: True, bonus,
+                                     module.getModifiedItemAttr("subsystemBonusGallenteOffensive") * level)

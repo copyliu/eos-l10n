@@ -1,7 +1,5 @@
 #Item: Loki Propulsion - Fuel Catalyst [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusMinmatarPropulsionAfterburnerSpeedFactor(self, fitting, state):
-    skill, level = fitting.getCharSkill("Minmatar Propulsion Systems")
-    boostModListBySkillReq(fitting.modules, "speedFactor", "subsystemBonusMinmatarPropulsion",
-                           lambda skill: skill.name == "Afterburner",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Propulsion Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Afterburner"),
+                                    "speedFactor", module.getModifiedItemAttr("subsystemBonusMinmatarPropulsion") * level)

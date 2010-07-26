@@ -1,8 +1,6 @@
 #Item: Proteus Offensive - Dissonic Encoding Platform [Subsystem]
 #Item: Proteus Offensive - Hybrid Propulsion Armature [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusGallenteOffensiveHybridWeaponFalloff(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Offensive Systems")
-    boostModListBySkillReq(fitting.modules, "falloff", "subsystemBonusGallenteOffensive",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Offensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "falloff", module.getModifiedItemAttr("subsystemBonusGallenteOffensive") * level)

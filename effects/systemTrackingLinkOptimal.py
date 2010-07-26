@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import boostModListByReq, multiply
-type = "projected"
-def systemTrackingLinkOptimal(self, fitting, state):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonusMultiplier",
-                      lambda mod: mod.group.name == "Tracking Link",
-                      self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Tracking Link",
+                                     "maxRange", module.getModifiedItemAttr("maxRangeBonusMultiplier"))

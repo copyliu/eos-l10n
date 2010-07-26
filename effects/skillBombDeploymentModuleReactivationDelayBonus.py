@@ -1,6 +1,4 @@
 #Item: Bomb Deployment [Skill]
-from customEffects import boostModListByReq
-def skillBombDeploymentModuleReactivationDelayBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "moduleReactivationDelay", "rofBonus",
-                      lambda mod: mod.group.name == "Missile Launcher Bomb",
-                      self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Missile Launcher Bomb",
+                                  "moduleReactivationDelay", skill.getModifiedItemAttr("rofBonus") * skill.level)

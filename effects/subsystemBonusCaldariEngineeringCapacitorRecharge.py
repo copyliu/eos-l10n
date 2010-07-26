@@ -1,6 +1,4 @@
 #Item: Tengu Engineering - Capacitor Regeneration Matrix [Subsystem]
-from customEffects import boost
-def subsystemBonusCaldariEngineeringCapacitorRecharge(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Engineering Systems")
-    boost(fitting.ship, "rechargeRate", "subsystemBonusCaldariEngineering",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Engineering Systems").level
+    fit.ship.boostItemAttr("rechargeRate", module.getModifiedItemAttr("subsystemBonusCaldariEngineering") * level)

@@ -1,7 +1,5 @@
 #Item: Tengu Electronics - Obfuscation Manifold [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusCaldariElectronicECMRange(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Electronic Systems")
-    boostModListByReq(fitting.modules, "maxRange", "subsystemBonusCaldariElectronic",
-                      lambda mod: mod.group.name == "ECM",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Electronic Systems").level
+    fit.modules.filteredItemBoost(mod.group.name == "ECM",
+                                  "maxRange", module.getModifiedItemAttr("subsystemBonusCaldariElectronic") * level)

@@ -1,6 +1,4 @@
 #Item: Tengu Propulsion - Gravitational Capacitor [Subsystem]
-from customEffects import boost
-def subsystemBonusCaldariPropulsion2WarpCapacitor(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Propulsion Systems")
-    boost(fitting.ship, "warpCapacitorNeed", "subsystemBonusCaldariPropulsion2",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Propulsion Systems").level
+    fit.ship.boostItemAttr("warpCapacitorNeed", module.getModifiedItemAttr("subsystemBonusCaldariPropulsion2") * level)

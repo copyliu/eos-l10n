@@ -1,6 +1,4 @@
 #Item: Proteus Electronics - Dissolution Sequencer [Subsystem]
-from customEffects import boost
-def subsystemBonusGallenteElectronicScanStrengthMagnetometric(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Electronic Systems")
-    boost(fitting.ship, "scanMagnetometricStrength", "subsystemBonusGallenteElectronic",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Electronic Systems").level
+    fit.ship.boostItemAttr("scanMagnetometricStrength", module.getModifiedItemAttr("subsystemBonusGallenteElectronic") * level)

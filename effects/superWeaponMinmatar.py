@@ -1,4 +1,4 @@
 #Item: Gjallarhorn [Module]
 type = 'active'
-def superWeaponMinmatar(self, fitting, state):
+def handler(fit, module, context):
     pass

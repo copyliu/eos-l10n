@@ -1,7 +1,5 @@
 #Item: Loki Defensive - Adaptive Shielding [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusMinmatarDefensive2RemoteShieldTransporterAmount(self, fitting, state):
-    skill, level = fitting.getCharSkill("Minmatar Defensive Systems")
-    boostModListByReq(fitting.modules, "shieldBonus", "subsystemBonusMinmatarDefensive2",
-                      lambda mod: mod.group.name == "Shield Transporter",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Minmatar Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Transporter",
+                                  "shieldBonus", module.getModifiedItemAttr("subsystemBonusMinmatarDefensive2") * level)

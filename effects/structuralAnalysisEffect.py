@@ -3,8 +3,7 @@
 #Variations of item: Medium Auxiliary Nano Pump I (2 of 2) [Module]
 #Variations of item: Small Auxiliary Nano Pump I (2 of 2) [Module]
 #Item: Imperial Navy Modified 'Noble' Implant [Implant]
-from customEffects import boostModListByReq
-def structuralAnalysisEffect(self, fitting, state = None):
-    boostModListByReq(fitting.modules, "armorDamageAmount", "repairBonus",
-                      lambda mod: mod.group.name == "Armor Repair Unit",
-                      self.item, useStackingPenalty = True)
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+                                  "armorDamageAmount", implant.getModifiedItemAttr("repairBonus"),
+                                  stackingPenalties = context != "implant")

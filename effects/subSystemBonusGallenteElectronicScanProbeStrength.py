@@ -1,7 +1,5 @@
 #Item: Proteus Electronics - Emergent Locus Analyzer [Subsystem]
-from customEffects import boostAmmoListByReq
-def subSystemBonusGallenteElectronicScanProbeStrength(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Electronic Systems")
-    boostAmmoListByReq(fitting.modules, "baseSensorStrength", "subsystemBonusGallenteElectronic",
-                       lambda mod: mod.group.name == "Scanner Probe",
-                       self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Electronic Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Scanner Probe",
+                                  "baseSensorStrength", module.getModifiedItemAttr("subsystemBonusGallenteElectronic") * level)

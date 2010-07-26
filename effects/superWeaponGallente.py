@@ -1,4 +1,4 @@
 #Item: Aurora Ominae [Module]
 type = 'active'
-def superWeaponGallente(self, fitting, state):
+def handler(fit, module, context):
     pass

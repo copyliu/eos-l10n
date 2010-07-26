@@ -1,5 +1,4 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import multiply
 type = "projected"
-def systemMaxVelocity(self, fitting, state):
-    multiply(fitting.ship, "maxVelocity", "maxVelocityMultiplier", self.item)
+def handler(fit, beacon, context):
+    fit.ship.multiplyItemAttr("maxVelocity", beacon.getModifiedItemAttr("maxVelocityMultiplier"))

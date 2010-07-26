@@ -1,6 +1,4 @@
 #Item: Capital Remote Hull Repair Systems [Skill]
-from customEffects import boostModListByReq
-def skillCapitalRemoteHullRepairSystemsCapNeedBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "capacitorNeed", "capNeedBonus",
-                      lambda mod: self.item in mod.requiredSkills,
-                      self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Hull Repair Systems"),
+                                  "capacitorNeed", skill.getModifiedItemAttr("capNeedBonus") * skill.level)

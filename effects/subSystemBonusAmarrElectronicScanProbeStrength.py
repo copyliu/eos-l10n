@@ -1,7 +1,5 @@
 #Item: Legion Electronics - Emergent Locus Analyzer [Subsystem]
-from customEffects import boostAmmoListByReq
-def subSystemBonusAmarrElectronicScanProbeStrength(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Electronic Systems")
-    boostAmmoListByReq(fitting.modules, "baseSensorStrength", "subsystemBonusAmarrElectronic",
-                       lambda mod: mod.group.name == "Scanner Probe",
-                       self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Electronic Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Scanner Probe",
+                                  "baseSensorStrength", module.getModifiedItemAttr("subsystemBonusAmarrElectronic") * level)

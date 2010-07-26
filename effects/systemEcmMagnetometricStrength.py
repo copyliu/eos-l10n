@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-type = "projected"
-from customEffects import boostModListByReq, multiply
-def systemEcmMagnetometricStrength(self, fitting, state):
-    boostModListByReq(fitting.modules, "scanMagnetometricStrengthBonus", "scanMagnetometricStrengthMultiplier",
-                      lambda mod: mod.group.name == "ECM",
-                      self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "ECM",
+                                     "scanMagnetometricStrengthBonus", module.getModifiedItemAttr("scanMagnetometricStrengthMultiplier"))

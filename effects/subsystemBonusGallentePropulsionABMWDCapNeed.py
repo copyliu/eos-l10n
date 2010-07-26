@@ -1,7 +1,5 @@
 #Item: Proteus Propulsion - Localized Injectors [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusGallentePropulsionABMWDCapNeed(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Propulsion Systems")
-    boostModListByReq(fitting.modules, "capacitorNeed", "subsystemBonusGallentePropulsion",
-                      lambda mod: mod.group.name == "Afterburner"
-                      ,self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Propulsion Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Afterburner"),
+                                    "capacitorNeed", module.getModifiedItemAttr("subsystemBonusCaldariPropulsion") * level)

@@ -1,7 +1,5 @@
 #Item: Legion Offensive - Assault Optimization [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusAmarrOffensiveHeavyMissileLauncherROF(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Offensive Systems")
-    boostModListByReq(fitting.modules, "speed", "subsystemBonusAmarrOffensive",
-                      lambda mod: mod.group.name == "Missile Launcher Heavy",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Offensive Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Missile Launcher Heavy",
+                                  "speed", module.getModifiedItemAttr("subsystemBonusAmarrOffensive") * level)

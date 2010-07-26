@@ -1,7 +1,5 @@
 #Item: Legion Propulsion - Wake Limiter [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusAmarrPropulsionMWDPenalty(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Propulsion Systems")
-    boostModListBySkillReq(fitting.modules, "signatureRadiusBonus", "subsystemBonusAmarrPropulsion",
-                           lambda skill: skill.name == "High Speed Maneuvering",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Propulsion Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("High Speed Maneuvering"),
+                                    "signatureRadiusBonus", module.getModifiedItemAttr("subsystemBonusAmarrPropulsion") * level)

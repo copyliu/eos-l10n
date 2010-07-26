@@ -1,10 +1,10 @@
 #Items from group: Remote Sensor Damper (9 of 9) [Module]
-import model.fitting
-from customEffects import boost
-type = ("projected", "active")
-def targetMaxTargetRangeAndScanResolutionBonusHostile(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE and fitting.ship.getModifiedAttribute("disallowOffensiveModifiers") != 1:
-        boost(fitting.ship, "maxTargetRange", "maxTargetRangeBonus",
-              self.item, useStackingPenalty = True)
-        boost(fitting.ship, "scanResolution", "scanResolutionBonus",
-              self.item, useStackingPenalty = True)
+type= "projected", "active"
+def handler(fit, module, context):
+    if context != "projected" or fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1:
+        return
+    
+    fit.ship.boostItemAttr("maxTargetRange", module.getModifiedItemAttr("maxTargetRangeBonus"),
+                           stackingPenalties = True)
+    fit.ship.boostItemAttr("scanResolution", module.getModifiedItemAttr("scanResolutionBonus"),
+                           stackingPenalties = True)

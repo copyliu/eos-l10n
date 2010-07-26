@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import boostAmmoListBySkillReq, multiply
-type = "projected"
-def systemAoeVelocity(self, fitting, state):
-    boostAmmoListBySkillReq(fitting.modules, "aoeVelocity", "aoeVelocityMultiplier",
-                      lambda skill: skill.name == "Missile Launcher Operation",
-                      self.item, helper = multiply)
+type = "projected
+def handler(fit, beacon, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                  "aoeVelocity", beacon.getModifiedItemAttr("aoeVelocityMultiplier"))

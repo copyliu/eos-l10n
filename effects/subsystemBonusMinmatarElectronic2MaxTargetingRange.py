@@ -1,6 +1,4 @@
 #Item: Loki Electronics - Dissolution Sequencer [Subsystem]
-from customEffects import boost
-def subsystemBonusMinmatarElectronic2MaxTargetingRange(self, fitting, state):
-    skill, level = fitting.getCharSkill("Minmatar Electronic Systems")
-    boost(fitting.ship, "maxTargetRange", "subsystemBonusMinmatarElectronic2",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Minmatar Electronic Systems").level
+    fit.ship.boostItemAttr("maxTargetRange", module.getModifiedItemAttr("subsystemBonusMinmatarElectronic2") * level)

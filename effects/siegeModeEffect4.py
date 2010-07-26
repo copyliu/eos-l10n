@@ -1,6 +1,6 @@
 #Item: Siege Module I [Module]
 type = "active"
-runTime = "late"
+runTime = "early"
 def handler(fit, module, context):
     #Turrets
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),

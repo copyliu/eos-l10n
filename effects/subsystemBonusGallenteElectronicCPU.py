@@ -1,6 +1,4 @@
 #Item: Proteus Electronics - CPU Efficiency Gate [Subsystem]
-from customEffects import boost
-def subsystemBonusGallenteElectronicCPU(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Electronic Systems")
-    boost(fitting.ship, "cpuOutput", "subsystemBonusGallenteElectronic",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Electronic Systems").level
+    fit.ship.boostItemAttr("cpuOutput", module.getModifiedItemAttr("subsystemBonusGallenteElectronic") * level)

@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-type = "projected"
-from customEffects import boostModListByReq, multiply
-def systemRemoteEccmLadar(self, fitting, state):
-    boostModListByReq(fitting.modules, "scanLadarStrengthBonus", "scanLadarStrengthMultiplier",
-                      lambda mod: mod.group.name == "ECCM",
-                      self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Projected ECCM",
+                                     "scanLadarStrengthBonus", module.getModifiedItemAttr("scanLadarStrengthMultiplier"))

@@ -1,6 +1,4 @@
 #Item: Thrasher [Ship]
-from customEffects import boostModListBySkillReq
-def smallProjectileMaxRangeBonus(self, fitting):
-    boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeBonus",
-                           lambda skill: skill.name == "Small Projectile Turret",
-                           self.item)
+def handler(fit, container, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Projectile Turret"),
+                                  "maxRange", container.getModifiedItemAttr("maxRangeBonus"))

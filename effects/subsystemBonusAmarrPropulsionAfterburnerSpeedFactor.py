@@ -1,7 +1,5 @@
 #Item: Legion Propulsion - Fuel Catalyst [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusAmarrPropulsionAfterburnerSpeedFactor(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Propulsion Systems")
-    boostModListBySkillReq(fitting.modules, "speedFactor", "subsystemBonusAmarrPropulsion",
-                           lambda skill: skill.name == "Afterburner",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Propulsion Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Afterburner"),
+                                    "speedFactor", module.getModifiedItemAttr("subsystemBonusAmarrPropulsion") * level)

@@ -1,6 +1,4 @@
 #Item: Surgical Strike [Skill]
-from customEffects import boostModListByReq
-def surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupHybridWeapon(self, fitting, level):
-    boostModListByReq(fitting.modules, "damageMultiplier", "damageMultiplierBonus",
-                      lambda mod: mod.group.name == "Hybrid Weapon",
-                      self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Hybrid Weapon",
+                                  "damageMultiplier", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

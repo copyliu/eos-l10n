@@ -1,11 +1,8 @@
 #Items from group: Afterburner (54 of 107) [Module]
-from customEffects import boost, increase
-import model.fitting
-runTime = "late"
 type = "active"
-def speedBoostMassAddition(self, fitting, state):
-    if state >= model.fitting.STATE_ACTIVE:
-        increase(fitting.ship, "mass", "massAddition", self.item)
-        mass = fitting.ship.getModifiedAttribute("mass")
-        thrust = float(self.item.getModifiedAttribute("speedBoostFactor"))
-        boost(fitting.ship, "maxVelocity", "speedFactor", self.item, extraMult = thrust / mass)
+runTime = "late"
+def handler(fit, module, context):
+    fit.ship.increaseItemAttr("mass", module.getModifiedItemAttr("massAddition"))
+    mass = module.getModifiedItemAttr("mass")
+    thrust = module.getModifiedItemAttr("speedBoostFactor")
+    fit.ship.boostItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor") * thrust / mass)

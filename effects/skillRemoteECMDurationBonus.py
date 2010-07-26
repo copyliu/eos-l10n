@@ -1,6 +1,4 @@
 #Item: Projected Electronic Counter Measures [Skill]
-from customEffects import boostModListByReq
-def skillRemoteECMDurationBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "duration", "projECMDurationBonus",
-                      lambda mod: mod.group.name == "Remote ECM Burst",
-                      self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote ECM Burst",
+                                  "duration", skill.getModifiedItemAttr("projECMDurationBonus") * skill.level)

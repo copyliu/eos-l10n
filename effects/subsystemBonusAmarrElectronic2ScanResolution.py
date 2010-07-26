@@ -1,6 +1,4 @@
 #Item: Legion Electronics - Tactical Targeting Network [Subsystem]
-from customEffects import boost
-def subsystemBonusAmarrElectronic2ScanResolution(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Electronic Systems")
-    boost(fitting.ship, "scanResolution", "subsystemBonusAmarrElectronic2",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Electronic Systems").level
+    fit.ship.boostItemAttr("scanResolution", module.getModifiedItemAttr("subsystemBonusAmarrElectronic2") * level)

@@ -1,7 +1,5 @@
 #Item: Catalyst [Ship]
 #Item: Cormorant [Ship]
-from customEffects import boostModListBySkillReq
-def smallHybridMaxRangeBonus(self, fitting):
-    boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeBonus",
-                           lambda skill: skill.name == "Small Hybrid Turret",
-                           self.item)
+def handler(fit, container, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Hybrid Turret"),
+                                  "maxRange", container.getModifiedItemAttr("maxRangeBonus"))

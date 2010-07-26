@@ -1,7 +1,5 @@
 #Item: Tengu Defensive - Warfare Processor [Subsystem]
-from customEffects import boostModListBySkillReq
-def subSystemBonusCaldariDefensiveSiegeWarfare(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Defensive Systems")
-    boostModListBySkillReq(fitting.modules, "commandBonus", "subsystemBonusCaldariDefensive",
-                           lambda skill: skill.name == "Siege Warfare Specialist",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Siege Warfare Specialist"),
+                                  "commandBonus", module.getModifiedItemAttr("subsystemBonusCaldariDefensive") * level)

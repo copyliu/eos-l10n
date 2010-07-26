@@ -1,7 +1,5 @@
 #Item: Proteus Electronics - Emergent Locus Analyzer [Subsystem]
-from customEffects import boostModListByReq
-def subSystemBonusGallenteElectronic2TractorBeamRange(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Electronic Systems")
-    boostModListByReq(fitting.modules, "maxRange", "subsystemBonusGallenteElectronic2",
-                      lambda mod: mod.group.name == "Tractor Beam",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Electronic Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tractor Beam",
+                                  "maxRange", module.getModifiedItemAttr("subsystemBonusGallenteElectronic2") * level)

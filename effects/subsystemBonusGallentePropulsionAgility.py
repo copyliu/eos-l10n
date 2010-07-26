@@ -1,6 +1,4 @@
 #Item: Proteus Propulsion - Interdiction Nullifier [Subsystem]
-from customEffects import boost
-def subsystemBonusGallentePropulsionAgility(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Propulsion Systems")
-    boost(fitting.ship, "agility", "subsystemBonusGallentePropulsion",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Propulsion Systems").level
+    fit.ship.boostItemAttr("agility", module.getModifiedItemAttr("subsystemBonusGallentePropulsion") * level)

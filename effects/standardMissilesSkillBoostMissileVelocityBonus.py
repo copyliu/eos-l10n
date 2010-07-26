@@ -1,6 +1,5 @@
 #Item: Defender Missiles [Skill]
-from customEffects import boostAmmoListByReq
-def standardMissilesSkillBoostMissileVelocityBonus(self, fitting, level):
-    boostAmmoListByReq(fitting.modules, "maxVelocity", "missileVelocityBonus",
-                       lambda charge: self.item in charge.requiredSkills,
-                       self.item, extraMult = level)
+type = "passive"
+def handler(fit, ship, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Defender Missiles"),
+                                    "maxVelocity", ship.getModifiedItemAttr("missileVelocityBonus") * skill.level)

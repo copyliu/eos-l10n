@@ -3,7 +3,6 @@
 #Item: Low-grade Harvest Delta [Implant]
 #Item: Low-grade Harvest Epsilon [Implant]
 #Item: Low-grade Harvest Gamma [Implant]
-from customEffects import boostModListByReq
-def stripMinerMaxRangeBonus(self, fitting):
-    boostModListByReq(fitting.modules, "maxRange", "maxRangeBonus",
-                      lambda mod: mod.group.name == "Strip Miner", self.item)
+def handler(fit, implant, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Strip Miner",
+                                  "maxRange", implant.getModifiedItemAttr("maxRangeBonus"))

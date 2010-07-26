@@ -1,6 +1,4 @@
 #Item: Proteus Engineering - Capacitor Regeneration Matrix [Subsystem]
-from customEffects import boost
-def subsystemBonusGallenteEngineeringCapacitorRecharge(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Engineering Systems")
-    boost(fitting.ship, "rechargeRate", "subsystemBonusGallenteEngineering",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Engineering Systems").level
+    fit.ship.boostItemAttr("rechargeRate", module.getModifiedItemAttr("subsystemBonusGallenteEngineering") * level)

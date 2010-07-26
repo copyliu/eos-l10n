@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-type = "projected"
-from customEffects import boostModListByReq, multiply
-def systemHeatDamage(self, fitting, state):
-    boostModListByReq(fitting.modules, "heatDamage", "heatDamageMultiplier",
-                      lambda mod: "heatDamage" in mod.attributes,
-                      self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: "heatDamage" in mod.itemModifiedAttributes,
+                                     "heatDamage", module.getModifiedItemAttr("heatDamageMultiplier"))

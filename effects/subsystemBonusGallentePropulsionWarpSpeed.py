@@ -1,6 +1,4 @@
 #Item: Proteus Propulsion - Gravitational Capacitor [Subsystem]
-from customEffects import boost
-def subsystemBonusGallentePropulsionWarpSpeed(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Propulsion Systems")
-    boost(fitting.ship, "baseWarpSpeed", "subsystemBonusGallentePropulsion",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Propulsion Systems").level
+    fit.ship.boostItemAttr("baseWarpSpeed", module.getModifiedItemAttr("subsystemBonusGallentePropulsion") * level)

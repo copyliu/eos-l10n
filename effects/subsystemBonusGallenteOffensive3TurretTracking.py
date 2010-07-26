@@ -1,7 +1,5 @@
 #Item: Proteus Offensive - Dissonic Encoding Platform [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusGallenteOffensive3TurretTracking(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Offensive Systems")
-    boostModListBySkillReq(fitting.modules, "trackingSpeed", "subsystemBonusGallenteOffensive3",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Offensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "trackingSpeed", module.getModifiedItemAttr("subsystemBonusGallenteOffensive3") * level)

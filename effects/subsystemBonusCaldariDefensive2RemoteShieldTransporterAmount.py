@@ -1,7 +1,5 @@
 #Item: Tengu Defensive - Adaptive Shielding [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusCaldariDefensive2RemoteShieldTransporterAmount(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Defensive Systems")
-    boostModListByReq(fitting.modules, "shieldBonus", "subsystemBonusCaldariDefensive2",
-                      lambda mod: mod.group.name == "Shield Transporter",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Transporter",
+                                  "shieldBonus", module.getModifiedItemAttr("subsystemBonusCaldariDefensive2") * level)

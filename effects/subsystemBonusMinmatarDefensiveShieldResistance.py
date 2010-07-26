@@ -1,7 +1,5 @@
 #Item: Loki Defensive - Adaptive Shielding [Subsystem]
-from customEffects import boost
-def subsystemBonusMinmatarDefensiveShieldResistance(self, fitting, state):
-    skill, level = fitting.getCharSkill("Minmatar Defensive Systems")
-    for resonanceType in ("Em", "Kinetic", "Thermal", "Explosive"):
-        boost(fitting.ship, "shield" + resonanceType + "DamageResonance",
-              "subsystemBonusMinmatarDefensive", self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Minmatar Defensive Systems").level
+    for type in ("Em", "Kinetic", "Thermal", "Explosive"):
+        fit.ship.boostItemAttr("shield%sDamageResonance" % type, module.getModifiedItemAttr("subsystemBonusMinmatarDefensive") * level)

@@ -1,7 +1,5 @@
 #Item: Legion Defensive - Adaptive Augmenter [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusAmarrDefensive2RemoteArmorRepairAmount(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Defensive Systems")
-    boostModListByReq(fitting.modules, "armorDamageAmount", "subsystemBonusAmarrDefensive2",
-                      lambda mod: mod.group.name == "Armor Repair Projector",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Defensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Projector",
+                                  "armorDamageAmount", module.getModifiedItemAttr("subsystemBonusAmarrDefensive2") * level)

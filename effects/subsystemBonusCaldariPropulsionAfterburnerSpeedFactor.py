@@ -1,7 +1,5 @@
 #Item: Tengu Propulsion - Fuel Catalyst [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusCaldariPropulsionAfterburnerSpeedFactor(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Propulsion Systems")
-    boostModListBySkillReq(fitting.modules, "speedFactor", "subsystemBonusCaldariPropulsion",
-                           lambda skill: skill.name == "Afterburner",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Propulsion Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Afterburner"),
+                                    "speedFactor", module.getModifiedItemAttr("subsystemBonusCaldariPropulsion") * level)

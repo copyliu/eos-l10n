@@ -1,7 +1,6 @@
 #Item: Proteus Engineering - Augmented Capacitor Reservoir [Subsystem]
-from customEffects import boostDroneListByReq
-def subsystemBonusGallenteEngineeringDroneHP(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Engineering Systems")
-    boostDroneListByReq(fitting.drones, ("hp", "armorHP", "shieldCapacity"),
-                        "subsystemBonusGallenteEngineering",
-                        lambda drone: True, self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Engineering Systems").level
+    for bonus in ("hp", "armorHP", "shieldCapacity"):
+        fit.drones.filteredItemBoost(lambda drone: True, bonus,
+                                     module.getModifiedItemAttr("subsystemBonusGallenteEngineering") * level)

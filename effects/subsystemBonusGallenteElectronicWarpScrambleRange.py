@@ -1,7 +1,5 @@
 #Item: Proteus Electronics - Friction Extension Processor [Subsystem]
-from customEffects import boostModListByReq
-def subsystemBonusGallenteElectronicWarpScrambleRange(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Electronic Systems")
-    boostModListByReq(fitting.modules, "maxRange", "subsystemBonusGallenteElectronic",
-                      lambda mod: mod.group.name == "Warp Scrambler",
-                      self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Electronic Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Warp Scrambler",
+                                  "maxRange", module.getModifiedItemAttr("subsystemBonusGallenteElectronic") * level)

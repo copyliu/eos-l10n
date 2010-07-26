@@ -1,6 +1,4 @@
 #Item: Legion Propulsion - Chassis Optimization [Subsystem]
-from customEffects import boost
-def subsystemBonusAmarrPropulsionMaxVelocity(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Propulsion Systems")
-    boost(fitting.ship, "maxVelocity", "subsystemBonusAmarrPropulsion",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Propulsion Systems").level
+    fit.ship.boostItemAttr("maxVelocity", module.getModifiedItemAttr("subsystemBonusAmarrPropulsion") * level)

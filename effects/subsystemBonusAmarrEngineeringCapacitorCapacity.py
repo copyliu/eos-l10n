@@ -1,6 +1,4 @@
 #Item: Legion Engineering - Augmented Capacitor Reservoir [Subsystem]
-from customEffects import boost
-def subsystemBonusAmarrEngineeringCapacitorCapacity(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Engineering Systems")
-    boost(fitting.ship, "capacitorCapacity", "subsystemBonusAmarrEngineering",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Engineering Systems").level
+    fit.ship.boostItemAttr("capacitorCapacity", module.getModifiedItemAttr("subsystemBonusAmarrEngineering") * level)

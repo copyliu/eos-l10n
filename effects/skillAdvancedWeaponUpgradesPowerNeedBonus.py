@@ -1,6 +1,4 @@
 #Item: Advanced Weapon Upgrades [Skill]
-from customEffects import boostModListBySkillReq
-def skillAdvancedWeaponUpgradesPowerNeedBonus(self, fitting, level):
-    boostModListBySkillReq(fitting.modules, "power", "powerNeedBonus",
-                           lambda skill: skill.name == "Gunnery" or skill.name == "Missile Launcher Operation",
-                           self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery") or mod.item.requiresSkill("Missile Launcher Operation"),
+                                  "power", skill.getModifiedItemAttr("powerNeedBonus") * skill.level)

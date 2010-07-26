@@ -1,7 +1,5 @@
 #Item: Proteus Offensive - Covert Reconfiguration [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusGallenteOffensiveHybridWeaponDamageMultiplier(self, fitting, state):
-    skill, level = fitting.getCharSkill("Gallente Offensive Systems")
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "subsystemBonusGallenteOffensive",
-                           lambda skill: skill.name == "Medium Hybrid Turret",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Gallente Offensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Hybrid Turret"),
+                                  "damageMultiplier", module.getModifiedItemAttr("subsystemBonusGallenteOffensive") * level)

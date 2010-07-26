@@ -1,6 +1,4 @@
 #Item: Legion Electronics - Dissolution Sequencer [Subsystem]
-from customEffects import boost
-def subsystemBonusAmarrElectronicScanStrengthRADAR(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Electronic Systems")
-    boost(fitting.ship, "scanRadarStrength", "subsystemBonusAmarrElectronic",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Electronic Systems").level
+    fit.ship.boostItemAttr("scanRadarStrength", module.getModifiedItemAttr("subsystemBonusAmarrElectronic") * level)

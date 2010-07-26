@@ -1,15 +1,10 @@
 #Item: Doomsday Operation [Skill]
-from customEffects import boostModListByReq
-def skillSuperWeaponDmgBonus(self, fitting, level):
-    boostModListByReq(fitting.modules, "emDamage", "damageMultiplierBonus",
-                      lambda mod: mod.group.name == "Super Weapon" and "emDamage" in mod.attributes,
-                      self.item, extraMult = level)
-    boostModListByReq(fitting.modules, "thermalDamage", "damageMultiplierBonus",
-                      lambda mod: mod.group.name == "Super Weapon" and "thermalDamage" in mod.attributes,
-                      self.item, extraMult = level)
-    boostModListByReq(fitting.modules, "kineticDamage", "damageMultiplierBonus",
-                      lambda mod: mod.group.name == "Super Weapon" and "kineticDamage" in mod.attributes,
-                      self.item, extraMult = level)
-    boostModListByReq(fitting.modules, "explosiveDamage", "damageMultiplierBonus",
-                      lambda mod: mod.group.name == "Super Weapon" and "explosiveDamage" in mod.attributes,
-                      self.item, extraMult = level)
+def handler(fit, skill, context):
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Super Weapon" and "emDamage" in mod.itemModifiedAttributes,
+                                  "emDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Super Weapon" and "thermalDamage" in mod.itemModifiedAttributes,
+                                  "thermalDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Super Weapon" and "kineticDamage" in mod.itemModifiedAttributes,
+                                  "kineticDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)
+    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Super Weapon" and "explosiveDamage" in mod.itemModifiedAttributes,
+                                  "explosiveDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

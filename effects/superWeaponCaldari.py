@@ -1,4 +1,4 @@
 #Item: Oblivion [Module]
 type = 'active'
-def superWeaponCaldari(self, fitting, state):
+def handler(fit, module, context):
     pass

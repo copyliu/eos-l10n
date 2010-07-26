@@ -1,6 +1,4 @@
 #Item: Legion Engineering - Power Core Multiplier [Subsystem]
-from customEffects import boost
-def subsystemBonusAmarrEngineeringPowerOutput(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Engineering Systems")
-    boost(fitting.ship, "powerOutput", "subsystemBonusAmarrEngineering",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Engineering Systems").level
+    fit.ship.boostItemAttr("powerOutput", module.getModifiedItemAttr("subsystemBonusAmarrEngineering") * level)

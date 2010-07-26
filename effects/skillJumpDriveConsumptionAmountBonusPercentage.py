@@ -1,4 +1,4 @@
 #Item: Jump Fuel Conservation [Skill]
-from customEffects import boost
-def skillJumpDriveConsumptionAmountBonusPercentage(self, fitting, level):
-    boost(fitting.ship, "jumpDriveConsumptionAmount", "consumptionQuantityBonusPercentage", self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.ship.boostItemAttr("jumpDriveConsumptionAmount", skill.getModifiedItemAttr("consumptionQuantityBonusPercentage") * skill.level)

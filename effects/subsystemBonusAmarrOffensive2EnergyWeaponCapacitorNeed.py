@@ -1,8 +1,6 @@
 #Item: Legion Offensive - Drone Synthesis Projector [Subsystem]
 #Item: Legion Offensive - Liquid Crystal Magnifiers [Subsystem]
-from customEffects import boostModListBySkillReq
-def subsystemBonusAmarrOffensive2EnergyWeaponCapacitorNeed(self, fitting, state):
-    skill, level = fitting.getCharSkill("Amarr Offensive Systems")
-    boostModListBySkillReq(fitting.modules, "capacitorNeed", "subsystemBonusAmarrOffensive2",
-                           lambda skill: skill.name == "Medium Energy Turret",
-                           self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Amarr Offensive Systems").level
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Medium Energy Turret"),
+                                  "capacitorNeed", module.getModifiedItemAttr("subsystemBonusAmarrOffensive2") * level)

@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import boostModListByReq, multiply
-type = "projected"
-def systemSensorDampenerScanResolution(self, fitting, state):
-    boostModListByReq(fitting.modules, "scanResolutionBonus", "scanResolutionBonusMultiplier",
-                      lambda mod: mod.group.name == "Remote Sensor Damper",
-                      self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.group.name == "Remote Sensor Damper",
+                                     "scanResolutionBonus", module.getModifiedItemAttr("scanResolutionBonusMultiplier"))

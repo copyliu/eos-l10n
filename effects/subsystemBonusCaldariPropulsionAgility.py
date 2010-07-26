@@ -1,7 +1,5 @@
 #Item: Tengu Propulsion - Intercalated Nanofibers [Subsystem]
 #Item: Tengu Propulsion - Interdiction Nullifier [Subsystem]
-from customEffects import boost
-def subsystemBonusCaldariPropulsionAgility(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Propulsion Systems")
-    boost(fitting.ship, "agility", "subsystemBonusCaldariPropulsion",
-          self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Propulsion Systems").level
+    fit.ship.boostItemAttr("agility", module.getModifiedItemAttr("subsystemBonusCaldariPropulsion") * level)

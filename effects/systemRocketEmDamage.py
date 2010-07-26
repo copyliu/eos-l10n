@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import boostAmmoListBySkillReq, multiply
 type = "projected"
-def systemRocketEmDamage(self, fitting, state):
-    boostAmmoListBySkillReq(fitting.modules, "emDamage", "smallWeaponDamageMultiplier",
-                      lambda skill: skill.name == "Rockets",
-                      self.item, helper = multiply)
+def handler(fit, beacon, context):
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Rockets"),
+                                  "emDamage", beacon.getModifiedItemAttr("smallWeaponDamageMultiplier"))

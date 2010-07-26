@@ -1,5 +1,4 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import multiply
 type = "projected"
-def systemShieldEmResistance(self, fitting, state):
-    multiply(fitting.ship, "shieldEmDamageResonance", "shieldEmDamageResistanceBonus", self.item)
+def handler(fit, beacon, context):
+    fit.ship.multiplyItemAttr("shieldEmDamageResonance", beacon.getModifiedItemAttr("shieldEmDamageResistanceBonus"))

@@ -1,4 +1,4 @@
 #Item: Judgement [Module]
 type = 'active'
-def superWeaponAmarr(self, fitting, state):
+def handler(fit, module, context):
     pass

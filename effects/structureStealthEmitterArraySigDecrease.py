@@ -3,6 +3,6 @@
 #Item: Standard X-Instinct Booster [Implant]
 #Item: Strong X-Instinct Booster [Implant]
 #Item: Synth X-Instinct Booster [Implant]
-from customEffects import boost
-def structureStealthEmitterArraySigDecrease(self, fitting):
-    boost(fitting.ship, "signatureRadius", "signatureRadiusBonus", self.item)
+type = "passive"
+def handler(fit, implant, context):
+    fit.ship.multiplyItemAttr("signatureRadius", implant.getModifiedItemAttr("signatureRadiusBonus"))

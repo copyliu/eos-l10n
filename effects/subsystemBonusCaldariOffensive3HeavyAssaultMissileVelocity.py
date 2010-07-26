@@ -1,7 +1,5 @@
 #Item: Tengu Offensive - Accelerated Ejection Bay [Subsystem]
-from customEffects import boostAmmoListBySkillReq
-def subsystemBonusCaldariOffensive3HeavyAssaultMissileVelocity(self, fitting, state):
-    skill, level = fitting.getCharSkill("Caldari Offensive Systems")
-    boostAmmoListBySkillReq(fitting.modules, "maxVelocity", "subsystemBonusCaldariOffensive3",
-                       lambda skill: skill.name == "Heavy Assault Missiles",
-                       self.item, extraMult = level)
+def handler(fit, module, context):
+    level = fit.character.getSkill("Caldari Offensive Systems").level
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Heavy Assault Missiles"),
+                                    "maxVelocity", module.getModifiedItemAttr("subsystemBonusCaldariOffensive3") * level)

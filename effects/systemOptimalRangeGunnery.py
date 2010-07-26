@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-from customEffects import boostModListBySkillReq, multiply
-type = "projected"
-def systemOptimalRangeGunnery(self, fitting, state):
-    boostModListBySkillReq(fitting.modules, "maxRange", "maxRangeMultiplier",
-                           lambda skill: skill.name == "Gunnery",
-                           self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.item.requiresSkill("Gunnery"),
+                                     "maxRange", module.getModifiedItemAttr("maxRangeMultiplier"))

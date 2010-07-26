@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-type = "projected"
-from customEffects import boostModListByReq, multiply
-def systemOverloadShieldBonus(self, fitting, state):
-    boostModListByReq(fitting.modules, "overloadShieldBonus", "overloadBonusMultiplier",
-                      lambda mod: "overloadShieldBonus" in mod.attributes,
-                      self.item, helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: "overloadShieldBonus" in mod.itemModifiedAttributes,
+                                     "overloadShieldBonus", module.getModifiedItemAttr("overloadBonusMultiplier"))

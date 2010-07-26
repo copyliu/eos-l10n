@@ -1,7 +1,5 @@
 #Items from group: Effect Beacon (6 of 38) [Celestial]
-type = "projected"
-from customEffects import multiply, boostModListBySkillReq
-def systemSmallEnergyDamage(self, fitting, state):
-    boostModListBySkillReq(fitting.modules, "damageMultiplier", "smallWeaponDamageMultiplier",
-                           lambda skill: skill.name == "Small Energy Turret", self.item,
-                           helper = multiply)
+type= "projected"
+def handler(fit, module, context):
+    fit.modules.filteredItemMultiply(lambda mod: mod.item.requiresSkill("Small Energy Turret"),
+                                     "damageMultiplier", module.getModifiedItemAttr("smallWeaponDamageMultiplier"))
