@@ -33,7 +33,9 @@ class Fit(object):
         self.initBaseParams()
     
     def initBaseParams(self):
-        self.armorRepair, self.droneControlRange, self.shieldRepair, self.hullRepair, self.capBoost, self.capDrain, self.maxActiveDrones = 0, 0, 0, 0, 0, 0, 0
+        self.armorRepair, self.droneControlRange, self.shieldRepair, \
+        self.hullRepair, self.capBoost, self.capDrain, \
+        self.maxActiveDrones, self.maxTargetsLocked = 0, 0, 0, 0, 0, 0, 0, 0
         self.cloaked = False
         
     @property
