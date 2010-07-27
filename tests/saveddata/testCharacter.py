@@ -1,5 +1,6 @@
 import unittest
 from model.types import Character, User, Fit, Skill, Ship
+from model.saveddata.character import ReadOnlyException
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -67,3 +68,21 @@ class TestCharacter(unittest.TestCase):
         self.assertEquals(c.getSkill(s1.item.name), s1)
         self.assertEquals(c.getSkill(s1.item.ID), s1)
         self.assertEquals(c.getSkill(s1.item), s1)
+        
+    def test_ReadOnly(self):
+        s = Skill(db.getItem("Caldari Frigate"), 3, True)
+        try:
+            s.level = 5
+        except ReadOnlyException:
+            return
+        self.fail("Expected ReadOnlyExcption, didn't get it")
+        
+    def test_all0(self):
+        c = Character.getAll0()
+        for skill in c.iterSkills():
+            self.assertEquals(skill.level, 0)
+            
+    def test_all5(self):
+        c = Character.getAll5()
+        for skill in c.iterSkills():
+            self.assertEquals(skill.level, 5)

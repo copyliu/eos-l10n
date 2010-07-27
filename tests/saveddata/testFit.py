@@ -46,3 +46,9 @@ class TestFit(unittest.TestCase):
     def test_setShip(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
+        
+    def test_extraAttributesClear(self):
+        f = Fit()
+        f.extraAttributes["cloaked"] = True
+        f.clear()
+        self.assertEqual(f.extraAttributes["cloaked"], False)
