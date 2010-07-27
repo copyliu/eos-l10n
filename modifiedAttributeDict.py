@@ -55,10 +55,14 @@ class ModifiedAttributeDict(object):
         elif key in self.__intermediary:
             return self.__intermediary[key]
         else:
-            return self.__original[key].value
-
+            return self.getOriginal(key)
+    
+    def getOriginal(self, key):
+        val = self.__original[key]
+        return val.value if hasattr(val, "value") else val
+    
     def __setitem__(self, key, val):
-        self.__modified[key] = val
+        self.__intermediary[key] = val
 
     def __iter__(self):
         all = dict(self.__original, **self.__modified)
@@ -97,7 +101,7 @@ class ModifiedAttributeDict(object):
         postIncrease = self.__postIncreases[key] if key in self.__postIncreases else 0
         multiplier = self.__multipliers[key] if key in self.__multipliers else 1
         penalizedMultiplierGroups = self.__penalizedMultipliers[key] if key in self.__penalizedMultipliers else {}
-        val = self.__intermediary[key] if key in self.__intermediary else self.__original[key].value if key in self.__original else 0
+        val = self.__intermediary[key] if key in self.__intermediary else self.getOriginal(key) if key in self.__original else 0
         #We'll do stuff in the following order:
         #Preincreass, then multipliers
         #then stacking penalized multipliers, then postIncreases
