@@ -1,5 +1,5 @@
 #Item: Exequror [Ship]
 type = "passive"
 def handler(fit, ship, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Projector",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Projector",
                                   "maxRange", ship.getModifiedItemAttr("maxRangeBonus"))

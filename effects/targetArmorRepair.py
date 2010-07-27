@@ -6,4 +6,4 @@ def handler(fit, container, context):
         return
     amount = container.getModifiedItemAttr("armorDamageAmount")
     speed = container.getModifiedAttribute("duration") / 1000.0
-    fit.armorRepair += amount / speed
+    fit.extraAttributes["armorRepair"].increase(amount / speed)

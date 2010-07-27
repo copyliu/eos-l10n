@@ -2,5 +2,5 @@
 type = "passive"
 def handler(fit, ship, context):
     groups = "Hybrid Weapon", "Energy Weapon", "Projectile Weapon"
-    fit.modules.filteredItemMultiply(lambda mod: mod.group.name in groups,
+    fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name in groups ,
                                      "speed", ship.getModifiedItemAttr("destroyerROFpenality"))

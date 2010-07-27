@@ -3,6 +3,6 @@
 #Variations of item: Small Hybrid Locus Coordinator I (2 of 2) [Module]
 type = "passive"
 def handler(fit, module, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Hybrid Weapon",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Hybrid Weapon",
                                   "maxRange", module.getModifiedItemAttr("maxRangeBonus"),
                                   stackingPenalties = True)

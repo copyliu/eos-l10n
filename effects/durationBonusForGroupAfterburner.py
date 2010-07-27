@@ -3,5 +3,5 @@
 #Variations of item: Small Engine Thermal Shielding I (2 of 2) [Module]
 type = "passive"
 def handler(fit, module, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Afterburner",
                                   "duration", module.getModifiedItemAttr("durationBonus"))

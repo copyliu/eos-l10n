@@ -5,4 +5,4 @@ def handler(fit, container, context):
     if context != "projected": return
     bonus = container.getModifiedItemAttr("shieldBonus")
     duration = container.getModifiedItemAttr("duration")
-    fit.ship.shieldRepair += bonus / duration
+    fit.extraAttributes["shieldRepair"].increase(bonus / duration)

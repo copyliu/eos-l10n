@@ -2,4 +2,4 @@
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Operation"),
-                                  "capacitorNeed", skill.getModifiedItemAttr("capNeedBonus") * skill.level)
+                                  "capacitorNeed", skill.getModifiedItemAttr("shieldBoostCapacitorBonus") * skill.level)

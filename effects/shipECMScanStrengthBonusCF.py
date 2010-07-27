@@ -3,6 +3,6 @@ type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level
     for type in ("Gravimetric", "Ladar", "Radar", "Magnetometric"):
-        fit.modules.filteredItemBoost(lambda mod: mod.group.name == "ECM",
+        fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "ECM",
                                       "scan%sStrengthBonus" % type,
                                       ship.getModifiedItemAttr("shipBonusCF") * level)

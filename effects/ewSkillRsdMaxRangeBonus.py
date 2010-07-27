@@ -4,6 +4,6 @@
 #Item: Long Distance Jamming [Skill]
 type = "passive"
 def handler(fit, module, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote Sensor Damper",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Remote Sensor Damper",
                                   "maxRange", module.getModifiedItemAttr("rangeSkillBonus"),
                                   stackingPenalties = context != "skill")

@@ -5,5 +5,5 @@
 #Item: Low-grade Harvest Gamma [Implant]
 type = "passive"
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Gas Cloud Harvester",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Gas Cloud Harvester",
                                   "maxRange", implant.getModifiedItemAttr("maxRangeBonus"))

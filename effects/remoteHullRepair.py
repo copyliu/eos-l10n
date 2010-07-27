@@ -5,4 +5,4 @@ def handler(fit, module, context):
     if context != "projected": return
     amount = module.getModifiedItemAttr("structureDamageAmount")
     duration = module.getModifiedItemAttr("duration") / 1000.0
-    fit.hullRepair += amount / duration
+    fit.extraAttributes["hullRepair"].increase(amount / duration)

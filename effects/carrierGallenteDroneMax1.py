@@ -2,4 +2,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Carrier").level
-    fit.ship.maxActiveDrones += ship.getModifiedItemAttr("carrierGallenteBonus1") * level
+    amount = ship.getModifiedItemAttr("carrierGallenteBonus1")
+    fit.extraAttributes["maxActiveDrones"].increase(amount * level)

@@ -3,5 +3,5 @@
 #Item: Strong Mindflood Booster [Implant]
 type = "boosterSideEffect"
 def handler(fit, booster, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
                                   "shieldBonus", booster.getModifiedItemAttr("shieldBoostMultiplier"))

@@ -4,5 +4,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Battleship").level
-    fit.modules.filteredChargeBoost(lambda mod: mod.charge.group.name == "Missile Launcher Cruise",
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.group.name == "Missile Launcher Cruise",
                                     "speed", ship.getModifiedItemAttr("shipBonus2CB") * level)

@@ -2,5 +2,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Covert Ops").level
-    fit.modules.filteredChargeBoost(lambda mod: mod.group.name == "Scanner Probe",
+    fit.modules.filteredChargeBoost(lambda mod: mod.item.group.name == "Scanner Probe",
                                     "baseSensorStrength", ship.getModifiedItemAttr("eliteBonusCoverOps2") * level)

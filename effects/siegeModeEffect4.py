@@ -17,15 +17,15 @@ def handler(fit, module, context):
                                      "aoeVelocity", module.getModifiedItemAttr("aoeVelocityBonus"))
     
     #Shield Boosters
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
                                   "duration", module.getModifiedItemAttr("shieldBonusDurationBonus"))
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
                                   "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"))
     
     #Armor Reppers
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
                                   "armorDamageAmount", module.getModifiedItemAttr("armorDamageAmountBonus"))
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
                                   "duration", module.getModifiedItemAttr("armorDamageDurationBonus"))
     
     #Speed penalty

@@ -4,5 +4,5 @@ type = "passive"
 def handler(fit, container, context):
     groups = "Stasis Web", "Warp Scrambler"
     level = container.level if context == "skill" else 1
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name in groups,
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name in groups,
                                   "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)

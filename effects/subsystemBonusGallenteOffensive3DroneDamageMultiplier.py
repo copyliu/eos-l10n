@@ -1,6 +1,6 @@
 #Item: Proteus Offensive - Drone Synthesis Projector [Subsystem]
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Engineering Systems").level
-    fit.drones.filteredItemBoost(lambda drone: drone.group.name == "Combat Drone",
+    fit.drones.filteredItemBoost(lambda drone: drone.item.group.name == "Combat Drone",
                                  "damageMultiplier",
                                  module.getModifiedItemAttr("subsystemBonusGallenteOffensive3") * level)

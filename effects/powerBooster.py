@@ -22,4 +22,5 @@ def handler(fit, module, context):
     cycleAmount = capAmount * numBoosts
     
     #Add the boost per second to the fit
+    fit.extraAttributes["capBoost"].increase(cycleAmount / cycleTime)
     fit.capBoost += cycleAmount / cycleTime

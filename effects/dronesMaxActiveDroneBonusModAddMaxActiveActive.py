@@ -1,4 +1,5 @@
 #Item: Drone Control Unit I [Module]
 type = "active"
 def handler(fit, module, context):
-    fit.maxActiveDrones += module.getModifiedItemAttr("maxActiveDroneBonus")
+    amount = module.getModifiedItemAttr("maxActiveDroneBonus")
+    fit.extraAttributes["maxActiveDrones"].increase(amount)

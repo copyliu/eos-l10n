@@ -5,5 +5,5 @@
 #Item: Low-grade Centurion Gamma [Implant]
 type = "passive"
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Remote ECM Burst",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Remote ECM Burst",
                                   "maxRange", implant.getModifiedItemAttr("rangeSkillBonus"))

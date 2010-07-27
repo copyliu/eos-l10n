@@ -4,5 +4,5 @@
 #Item: Low-grade Harvest Epsilon [Implant]
 #Item: Low-grade Harvest Gamma [Implant]
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Strip Miner",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Strip Miner",
                                   "maxRange", implant.getModifiedItemAttr("maxRangeBonus"))

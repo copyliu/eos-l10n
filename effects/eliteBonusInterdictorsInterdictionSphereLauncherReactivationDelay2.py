@@ -2,5 +2,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Interdictors").level
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Interdiction Sphere Launcher",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Interdiction Sphere Launcher",
                                   "moduleReactivationDelay", ship.getModifiedItemAttr("eliteBonusInterdictors2") * level)

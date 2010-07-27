@@ -5,6 +5,6 @@
 type = "passive"
 def handler(fit, container, context):
     level = container.level if context == "skill" else 1
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Tracking Disruptor",
                                   "maxRange", container.getModifiedItemAttr("rangeSkillBonus") * level,
                                   stackingPenalties = context != "skill" and context != "implant")

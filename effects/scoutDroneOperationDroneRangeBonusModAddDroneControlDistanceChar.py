@@ -6,4 +6,5 @@
 type = "passive"
 def handler(fit, container, context):
     level = container.level if context == "skill" else 1
-    fit.droneControlRange += container.getModifiedItemAttr("droneRangeBonus") * level
+    amount = container.getModifiedItemAttr("droneRangeBonus")
+    fit.extraAttributes["droneControlRange"].increase(amount * level)

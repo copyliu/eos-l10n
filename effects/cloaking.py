@@ -2,5 +2,5 @@
 type = "active"
 runTime = "early"
 def handler(fit, module, context):
-    fit.cloaked = True
+    fit.extraAttributes["cloaked"] = True
     #TODO: Rewrite this effect

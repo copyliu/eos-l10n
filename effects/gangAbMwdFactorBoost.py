@@ -2,6 +2,6 @@
 type = "gang", "active"
 def handler(fit, module, context):
     if context != "gang": return
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Afterburner",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Afterburner",
                                   "speedFactor", module.getModifiedItemAttr("commandBonus"),
                                   stackingPenalties = True)

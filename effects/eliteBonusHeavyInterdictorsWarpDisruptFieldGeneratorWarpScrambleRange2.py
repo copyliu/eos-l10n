@@ -2,5 +2,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Interdictors").level
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Warp Disrupt Field Generator",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Warp Disrupt Field Generator",
                                   "warpScrambleRange", ship.getModifiedItemAttr("eliteBonusHeavyInterdictors2") * level)

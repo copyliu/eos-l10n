@@ -4,4 +4,4 @@ type = "active"
 def handler(fit, module, context):
     amount = module.getModifiedItemAttr("shieldBonus")
     speed = module.getModifiedItemAttr("duration") / 1000.0
-    fit.shieldRepair += amount / speed
+    fit.extraAttributes["shieldRepair"].increase(amount / speed)

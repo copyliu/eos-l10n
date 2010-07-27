@@ -3,5 +3,5 @@
 type = "active"
 runTime = "early"
 def handler(fit, ship, context):
-    fit.cloaked = True
+    fit.extraAttributes["cloaked"] = True
     #TODO: Implement

@@ -2,5 +2,5 @@
 type = "passive"
 def handler(fit, skill, context):
     level = fit.character.getSkill("EM Shield Compensation").level
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Amplifier",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Amplifier",
                                   "emDamageResistanceBonus", skill.getModifiedItemAttr("hardeningBonus") * level)

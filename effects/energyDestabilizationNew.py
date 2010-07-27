@@ -8,5 +8,5 @@ def handler(fit, container, context):
         amount = container.getModifiedItemAttr("energyDestabilizationAmount")
         time = container.getModifiedItemAttr("duration") / 1000.0
         drain = amount / time * multiplier
-        fit.capDrain += drain
+        fit.extraAttributes["capDrain"].increase(drain)
         

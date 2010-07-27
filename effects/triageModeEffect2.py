@@ -26,15 +26,15 @@ def handler(fit, module, context):
                                   "duration", module.getModifiedItemAttr("powerTransferDurationBonus"))
     
     #Shield boosters
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
                                   "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"))
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
                                   "duration", module.getModifiedItemAttr("shieldBonusDurationBonus"))
     
     #Armor reps
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
                                   "armorDamageAmount", module.getModifiedItemAttr("armorDamageAmountBonus"))
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
                                   "duration", module.getModifiedItemAttr("armorDamageDurationBonus"))
     
     #Speed bonus

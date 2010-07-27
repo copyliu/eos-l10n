@@ -4,6 +4,6 @@
 #Variations of item: Small Auxiliary Nano Pump I (2 of 2) [Module]
 #Item: Imperial Navy Modified 'Noble' Implant [Implant]
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Armor Repair Unit",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
                                   "armorDamageAmount", implant.getModifiedItemAttr("repairBonus"),
                                   stackingPenalties = context != "implant")

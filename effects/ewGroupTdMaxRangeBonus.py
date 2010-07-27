@@ -5,5 +5,5 @@
 #Item: Low-grade Centurion Gamma [Implant]
 type = "passive"
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.group.name == "Tracking Disruptor",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Tracking Disruptor",
                                   "maxRange", implant.getModifiedItemAttr("rangeSkillBonus"))
