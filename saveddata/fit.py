@@ -1,4 +1,4 @@
-from model.types import Drone, Ship
+from model.types import Drone, Ship, Character
 from model.effectHandlerHelpers import HandledSet
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
@@ -6,6 +6,15 @@ from itertools import chain
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
+    EXTRA_ATTRIBUTES = {"armorRepair": 0,
+                        "hullRepair": 0,
+                        "shieldRepair": 0,
+                        "capBoost": 0,
+                        "capDrain": 0,
+                        "maxActiveDrones": 0,
+                        "maxTargetsLocked": 0,
+                        "droneControlRange": 0,
+                        "cloaked": False}
     
     def __init__(self):
         self.__modules = HandledSet()
@@ -28,22 +37,12 @@ class Fit(object):
     def build(self):
         from model import db
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
-        self.__shipModifiedAttributes = ModifiedAttributeDict()
-        self.initBaseParams()
-    
-    def initBaseParams(self):
-        self.armorRepair, self.droneControlRange, self.shieldRepair, \
-        self.hullRepair, self.capBoost, self.capDrain, \
-        self.maxActiveDrones, self.maxTargetsLocked = 0, 0, 0, 0, 0, 0, 0, 0
-        self.cloaked = False
-        
-    @property
-    def shipModifiedAttributes(self):
-        return self.__shipModifiedAttributes
-    
+        self.extraAttributes = ModifiedAttributeDict()
+        self.extraAttributes.original = self.EXTRA_ATTRIBUTES
+
     @property
     def character(self):
-        return self.__character;
+        return self.__character if self.__character != None else Character.getAll0()
     
     @character.setter
     def character(self, char):
@@ -93,11 +92,10 @@ class Fit(object):
     
     def clear(self):
         if self.ship != None: self.ship.clear()
-        c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character,), (self.__blockedItems,))
+        c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character, self.extraAttributes))
         for stuff in c:
             if stuff != None: stuff.clear()
         
-        self.initBaseParams()
         
     def calculateModifiedAttributes(self):
         #There's a few things to keep in mind here
@@ -108,8 +106,10 @@ class Fit(object):
         for runTime in ("early", "normal", "late"):
             #Lets start out with the ship's effects
             #We'll be ignoring gang/projected effects for now and focussing on regular ones
-            self.character.calculateModifiedAttributes(self, runTime)
-            self.ship.calculateModifiedAttributes(self, runTime)
+            if self.character != None:
+                self.character.calculateModifiedAttributes(self, runTime)
+            if self.ship != None:
+                self.ship.calculateModifiedAttributes(self, runTime)
             #Handle the rest through their respective classes
             for drone in self.drones: drone.calculateModifiedAttributes(self, runTime)
             for booster in self.boosters: booster.calculateModifiedAttributes(self, runTime)

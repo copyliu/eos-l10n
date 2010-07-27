@@ -61,9 +61,9 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.chargeModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
-        for effect in self.item.effects:
+        for effect in self.item.effects.itervalues():
             if effect.runTime == runTime:
                 effect.handler(fit, self, "drone")
-        for effect in self.charge.effects:
+        for effect in self.charge.effects.itervalues():
             if effect.runTime == runTime:
                 effect.handler(fit, self, "droneCharge")

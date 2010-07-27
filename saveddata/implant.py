@@ -40,7 +40,7 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.itemModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
-        for effect in self.item.effects:
+        for effect in self.item.effects.itervalues():
             if effect.runTime == runTime:
                 effect.handler(fit, self, "implant")
                 

@@ -142,14 +142,15 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         #    or the effect is active and the module is in the active state (or higher)
         #    or the effect is overheat and the module is in the overheated state (or higher)
         #2: the runtimes match
-        for effect in self.item.effects:
+        for effect in self.item.effects.itervalues():
             if effect.runTime == runTime and \
                (effect.isType("offline") or 
-               (effect.isType("passive" and self.state >= State.ONLINE)) or \
+               (effect.isType("passive") and self.state >= State.ONLINE) or \
                (effect.isType("active") and self.state >= State.ACTIVE) or \
                (effect.isType("overheat") and self.state >= State.OVERHEATED)):
                 effect.handler(fit, self, "module")
                 
-        for effect in self.charge.effects:
-            if effect.runTime == runTime:
-                effect.handler(fit, self, "moduleCharge")
+        if self.charge != None:
+            for effect in self.charge.effects.itervalues():
+                if effect.runTime == runTime:
+                    effect.handler(fit, self, "moduleCharge")

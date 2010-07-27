@@ -52,7 +52,7 @@ class Booster(HandledItem, ItemAttrShortcut):
         self.itemModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
-        for effect in self.item.effects:
+        for effect in self.item.effects.itervalues():
             if effect.runTime == runTime:
                 effect.handler(fit, self, "booster")
         for sideEffect in self.iterSideEffects():
