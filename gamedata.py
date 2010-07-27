@@ -3,8 +3,7 @@ from sqlalchemy.orm import reconstructor
 
 class Effect(object):
     #Filter to change names of effects to valid python method names
-    nameFilter = dict((ord(char), '')
-                      for char in u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
+    nameFilter = dict(zip(map(ord, u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'), u''))
 
     @reconstructor
     def init(self):
@@ -37,12 +36,12 @@ class Effect(object):
 
     def __generateHandler(self):
         try:
-            effectModule = __import__('model.effects.' + self.name, fromlist=True)
-            self.__handler = getattr(effectModule, "handler")
+            effectModule = __import__('model.effects.' + self.handlerName, fromlist=True)
+            self.__handler = getattr(effectModule, "handler") 
             try:
-                self.__runTime = getattr(effectModule, "runTime")
+                self.__runTime = getattr(effectModule, "runTime") or "normal"
             except AttributeError:
-                self.__runTime = None
+                self.__runTime = "normal"
 
             try:
                 t = getattr(effectModule, "type")
@@ -53,7 +52,7 @@ class Effect(object):
             self.__type = t
         except ImportError:
             self.__handler = effectDummy
-            self.__runTime = None
+            self.__runTime = "normal"
             self.__type = None
 
         self.__generated = True
