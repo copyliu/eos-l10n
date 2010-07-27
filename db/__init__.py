@@ -27,5 +27,5 @@ from .gamedata import *
 from .saveddata import *
    
 #Import queries
-from .gamedata.queries import getItem, searchItems, getVariations
+from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory
 from .saveddata.queries import getUser, getCharacter, getFit

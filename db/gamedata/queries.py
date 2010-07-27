@@ -1,13 +1,21 @@
 from model.db import gamedata_session
 from model.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
-from model.types import Item
+from model.types import Item, Category, Group
 def getItem(lookfor):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).filter(Item.name == lookfor).one()
     elif isinstance(lookfor, int):
         return gamedata_session.query(Item).filter(Item.ID == lookfor).one()
-    
+
+def getItemsByCategory(filter):
+    if isinstance(filter, basestring):
+        filter = Category.name == filter
+    elif isinstance(filter, int):
+        filter = Category.ID == filter
+        
+    return gamedata_session.query(Item).join(Item.group, Group.category).filter(filter).all()
+
 def searchItems(nameLike):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
