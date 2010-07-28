@@ -206,57 +206,38 @@ for effectFileName in os.listdir(effectsPath):
             perEffectList_usedByTypes.add(typeID)
 
         #Compose per-group map of items which are affected by current effect
-        # { groupID : set(typeID) }
+        # { groupID : (set(typeID), described) }
         perEffectMap_groupID_typeID = {}
         for typeID in perEffectList_usedByTypes:
             groupID = globalMap_typeID_groupID[typeID]
-            if not groupID in perEffectMap_groupID_typeID: perEffectMap_groupID_typeID[groupID] = set()
-            perEffectMap_groupID_typeID[groupID].add(typeID)
+            if not groupID in perEffectMap_groupID_typeID: perEffectMap_groupID_typeID[groupID] = [set(), False]
+            perEffectMap_groupID_typeID[groupID][0].add(typeID)
 
         #Now, per-category map of items
-        # { categoryID : set(typeID) }
+        # { categoryID : (set(typeID), described) }
         perEffectMap_categoryID_typeID = {}
         for typeID in perEffectList_usedByTypes:
             categoryID = globalMap_typeID_categoryID[typeID]
-            if not categoryID in perEffectMap_categoryID_typeID: perEffectMap_categoryID_typeID[categoryID] = set()
-            perEffectMap_categoryID_typeID[categoryID].add(typeID)
+            if not categoryID in perEffectMap_categoryID_typeID: perEffectMap_categoryID_typeID[categoryID] = [set(), False]
+            perEffectMap_categoryID_typeID[categoryID][0].add(typeID)
 
         #Per-baseType map of variations
-        # { baseTypeID : set(typeID) }
+        # { baseTypeID : (set(typeID), described) }
         perEffectMap_baseTypeID_typeID = {}
         for typeID in perEffectList_usedByTypes:
             baseTypeID = globalMap_typeID_baseTypeID[typeID]
-            if not baseTypeID in perEffectMap_baseTypeID_typeID: perEffectMap_baseTypeID_typeID[baseTypeID] = set()
-            perEffectMap_baseTypeID_typeID[baseTypeID].add(typeID)
+            if not baseTypeID in perEffectMap_baseTypeID_typeID: perEffectMap_baseTypeID_typeID[baseTypeID] = [set(), False]
+            perEffectMap_baseTypeID_typeID[baseTypeID][0].add(typeID)
 
         #Per-marketGroup map with variations
-        # { marketGroupID : set(typeIDWithVariations) }
+        # { marketGroupID : (set(typeIDWithVariations), described) }
         perEffectMap_marketGroupID_typeIDWithVariations = {}
         for typeID in perEffectList_usedByTypes:
             if typeID in globalMap_typeID_marketGroupID: marketGroupIDs = globalMap_typeID_marketGroupID[typeID]
             else: marketGroupIDs = set()
             for marketGroupID in marketGroupIDs:
-                if not marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations: perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID] = set()
-                perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID].add(typeID)
-
-        #These dictionaries will store number of items in certain groups affected by
-        #current effect for printing purposes
-        # { groupID : int }
-        perEffectMap_groupID_typesAffected = {}
-        for groupID in perEffectMap_groupID_typeID:
-            perEffectMap_groupID_typesAffected[groupID] = len(perEffectMap_groupID_typeID[groupID])
-        # { categoryID : int }
-        perEffectMap_categoryID_typesAffected = {}
-        for categoryID in perEffectMap_categoryID_typeID:
-            perEffectMap_categoryID_typesAffected[categoryID] = len(perEffectMap_categoryID_typeID[categoryID])
-        # { baseTypeID : int }
-        perEffectMap_baseTypeID_typesAffected = {}
-        for baseTypeID in perEffectMap_baseTypeID_typeID:
-            perEffectMap_baseTypeID_typesAffected[baseTypeID] = len(perEffectMap_baseTypeID_typeID[baseTypeID])
-        # { marketGroupID : int }
-        perEffectMap_marketGroupID_typesWithVariationsAffected = {}
-        for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
-            perEffectMap_marketGroupID_typesWithVariationsAffected[marketGroupID] = len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID])
+                if not marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations: perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID] = [set(), False]
+                perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].add(typeID)
 
         perEffect_totalAffected = len(perEffectList_usedByTypes)
 
@@ -277,16 +258,17 @@ for effectFileName in os.listdir(effectsPath):
             groupScore = {}
             groupWeight = 1.0
             for groupID in perEffectMap_groupID_typeID:
-                innerScore_affectedDescribed = len(perEffectMap_groupID_typeID[groupID].intersection(perEffect_describedTypes))
-                innerScore_affectedUndescribed =  len(perEffectMap_groupID_typeID[groupID].difference(perEffect_describedTypes))
-                innerScore_total = len(globalMap_groupID_typeID[groupID])
-                groupScore[groupID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, groupWeight)
-                if printStuff:
-                    #Get data for print
-                    cursor.execute(queryGroupName, (groupID,))
-                    for row in cursor: groupName = row[0]
-                    #Print inner data
-                    print("Group: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(groupName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, groupScore[groupID]))
+                if not perEffectMap_groupID_typeID[groupID][1]:
+                    innerScore_affectedDescribed = len(perEffectMap_groupID_typeID[groupID][0].intersection(perEffect_describedTypes))
+                    innerScore_affectedUndescribed =  len(perEffectMap_groupID_typeID[groupID][0].difference(perEffect_describedTypes))
+                    innerScore_total = len(globalMap_groupID_typeID[groupID])
+                    groupScore[groupID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, groupWeight)
+                    if printStuff:
+                        #Get data for print
+                        cursor.execute(queryGroupName, (groupID,))
+                        for row in cursor: groupName = row[0]
+                        #Print inner data
+                        print("Group: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(groupName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, groupScore[groupID]))
             groupOuterScore = calcOuterScore(groupScore, perEffect_totalAffected, groupWeight)
             #Print outer data
             if printStuff: print("Groups total score: {0:.3}".format(groupOuterScore))
@@ -294,16 +276,17 @@ for effectFileName in os.listdir(effectsPath):
             categoryScore = {}
             categoryWeight = 1.0
             for categoryID in perEffectMap_categoryID_typeID:
-                innerScore_affectedDescribed = len(perEffectMap_categoryID_typeID[categoryID].intersection(perEffect_describedTypes))
-                innerScore_affectedUndescribed =  len(perEffectMap_categoryID_typeID[categoryID].difference(perEffect_describedTypes))
-                innerScore_total = len(globalMap_categoryID_typeID[categoryID])
-                categoryScore[categoryID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, categoryWeight)
-                if printStuff:
-                    #Get data for print
-                    cursor.execute(queryCategoryName, (categoryID,))
-                    for row in cursor: categoryName = row[0]
-                    #Print inner data
-                    print("Category: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(categoryName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, categoryScore[categoryID]))
+                if not perEffectMap_categoryID_typeID[categoryID][1]:
+                    innerScore_affectedDescribed = len(perEffectMap_categoryID_typeID[categoryID][0].intersection(perEffect_describedTypes))
+                    innerScore_affectedUndescribed =  len(perEffectMap_categoryID_typeID[categoryID][0].difference(perEffect_describedTypes))
+                    innerScore_total = len(globalMap_categoryID_typeID[categoryID])
+                    categoryScore[categoryID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, categoryWeight)
+                    if printStuff:
+                        #Get data for print
+                        cursor.execute(queryCategoryName, (categoryID,))
+                        for row in cursor: categoryName = row[0]
+                        #Print inner data
+                        print("Category: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(categoryName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, categoryScore[categoryID]))
             categoryOuterScore = calcOuterScore(categoryScore, perEffect_totalAffected, categoryWeight)
             #Print outer data
             if printStuff: print("Category total score: {0:.3}".format(categoryOuterScore))
@@ -311,16 +294,17 @@ for effectFileName in os.listdir(effectsPath):
             baseTypeScore = {}
             baseTypeWeight = 1.0
             for baseTypeID in perEffectMap_baseTypeID_typeID:
-                innerScore_affectedDescribed = len(perEffectMap_baseTypeID_typeID[baseTypeID].intersection(perEffect_describedTypes))
-                innerScore_affectedUndescribed =  len(perEffectMap_baseTypeID_typeID[baseTypeID].difference(perEffect_describedTypes))
-                innerScore_total = len(globalMap_baseTypeID_typeID[baseTypeID])
-                baseTypeScore[baseTypeID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, baseTypeWeight)
-                if printStuff:
-                #Get data for print
-                    cursor.execute(queryTypeName, (baseTypeID,))
-                    for row in cursor: baseTypeName = row[0]
-                    #Print inner data
-                    print("Base item: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(baseTypeName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, baseTypeScore[baseTypeID]))
+                if not perEffectMap_baseTypeID_typeID[baseTypeID][1]:
+                    innerScore_affectedDescribed = len(perEffectMap_baseTypeID_typeID[baseTypeID][0].intersection(perEffect_describedTypes))
+                    innerScore_affectedUndescribed =  len(perEffectMap_baseTypeID_typeID[baseTypeID][0].difference(perEffect_describedTypes))
+                    innerScore_total = len(globalMap_baseTypeID_typeID[baseTypeID])
+                    baseTypeScore[baseTypeID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, baseTypeWeight)
+                    if printStuff:
+                    #Get data for print
+                        cursor.execute(queryTypeName, (baseTypeID,))
+                        for row in cursor: baseTypeName = row[0]
+                        #Print inner data
+                        print("Base item: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(baseTypeName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, baseTypeScore[baseTypeID]))
             baseTypeOuterScore = calcOuterScore(baseTypeScore, perEffect_totalAffected, baseTypeWeight)
             #Print outer data
             if printStuff: print("Base item total score: {0:.3}".format(baseTypeOuterScore))
@@ -328,27 +312,28 @@ for effectFileName in os.listdir(effectsPath):
             marketGroupWithVarsScore = {}
             marketGroupWithVarsWeight = 0.7
             for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
-                innerScore_affectedDescribed = len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID].intersection(perEffect_describedTypes))
-                innerScore_affectedUndescribed =  len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID].difference(perEffect_describedTypes))
-                innerScore_total = len(globalMap_marketGroupID_typeIDWithVariations[marketGroupID])
-                marketGroupWithVarsScore[marketGroupID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, marketGroupWithVarsWeight)
-                if printStuff:
-                    #Get data for print
-                    cursor.execute(queryMarketGroupName, (marketGroupID,))
-                    for row in cursor: marketGroupName = row[0]
-                    #Prepend market group name with its parents names
-                    prependParentID = marketGroupID
-                    for depth in range(20):
-                        cursorParentMarket = db.cursor()
-                        cursorParentMarket.execute(queryParentMarketGroup, (prependParentID,))
-                        for row in cursorParentMarket:
-                            prependParentID = row[0]
-                        if prependParentID:
-                            cursor.execute(queryMarketGroupName, (prependParentID,))
-                            for row in cursor: marketGroupName = "{0} > {1}".format(row[0], marketGroupName)
-                        else: break
-                    #Print inner data
-                    print("Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(marketGroupName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, marketGroupWithVarsScore[marketGroupID]))
+                if not perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][1]:
+                    innerScore_affectedDescribed = len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].intersection(perEffect_describedTypes))
+                    innerScore_affectedUndescribed =  len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].difference(perEffect_describedTypes))
+                    innerScore_total = len(globalMap_marketGroupID_typeIDWithVariations[marketGroupID])
+                    marketGroupWithVarsScore[marketGroupID], innerAffectedPortion = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, marketGroupWithVarsWeight)
+                    if printStuff:
+                        #Get data for print
+                        cursor.execute(queryMarketGroupName, (marketGroupID,))
+                        for row in cursor: marketGroupName = row[0]
+                        #Prepend market group name with its parents names
+                        prependParentID = marketGroupID
+                        for depth in range(20):
+                            cursorParentMarket = db.cursor()
+                            cursorParentMarket.execute(queryParentMarketGroup, (prependParentID,))
+                            for row in cursorParentMarket:
+                                prependParentID = row[0]
+                            if prependParentID:
+                                cursor.execute(queryMarketGroupName, (prependParentID,))
+                                for row in cursor: marketGroupName = "{0} > {1}".format(row[0], marketGroupName)
+                            else: break
+                        #Print inner data
+                        print("Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, score: {5:.3})".format(marketGroupName, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, innerAffectedPortion*100, marketGroupWithVarsScore[marketGroupID]))
             marketGroupWithVarsOuterScore = calcOuterScore(marketGroupWithVarsScore, perEffect_totalAffected, marketGroupWithVarsWeight)
             #Print outer data
             if printStuff: print("Market group total score: {0:.3}".format(marketGroupWithVarsOuterScore))
@@ -363,22 +348,22 @@ for effectFileName in os.listdir(effectsPath):
                     describedByGroup.append(groupWinner)
                     #add all items described by winning group into set of described items
                     perEffect_describedTypes |= globalMap_groupID_typeID[groupWinner]
-                    del perEffectMap_groupID_typeID[groupWinner]
+                    perEffectMap_groupID_typeID[groupWinner][1] = True
                 elif maxOuterScore == categoryOuterScore:
                     categoryWinner = max(categoryScore, key=categoryScore.get)
                     describedByCategory.append(categoryWinner)
                     perEffect_describedTypes |= globalMap_categoryID_typeID[categoryWinner]
-                    del perEffectMap_categoryID_typeID[categoryWinner]
+                    perEffectMap_categoryID_typeID[categoryWinner][1] = True
                 elif maxOuterScore == baseTypeOuterScore:
                     baseTypeWinner = max(baseTypeScore, key=baseTypeScore.get)
                     describedByBaseType.append(baseTypeWinner)
                     perEffect_describedTypes |= globalMap_baseTypeID_typeID[baseTypeWinner]
-                    del perEffectMap_baseTypeID_typeID[baseTypeWinner]
+                    perEffectMap_baseTypeID_typeID[baseTypeWinner][1] = True
                 elif maxOuterScore == marketGroupWithVarsOuterScore:
                     marketGroupWithVarsWinner = max(marketGroupWithVarsScore, key=marketGroupWithVarsScore.get)
                     describedByMarketGroupWithVars.append(marketGroupWithVarsWinner)
                     perEffect_describedTypes |= globalMap_marketGroupID_typeIDWithVariations[marketGroupWithVarsWinner]
-                    del perEffectMap_marketGroupID_typeIDWithVariations[marketGroupWithVarsWinner]
+                    perEffectMap_marketGroupID_typeIDWithVariations[marketGroupWithVarsWinner][1] = True
             #Stop if we have score less than some critical value, all undescribed
             #items will be provided as plain list
             else: iterate = False
@@ -431,7 +416,7 @@ for effectFileName in os.listdir(effectsPath):
             for row in cursor: categoryID = row[0]
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
-            effectLines.insert(0,"#Variations of item: {0} ({1} of {2}) [{3}]".format(baseType[1], perEffectMap_baseTypeID_typesAffected[baseType[0]], len(globalMap_baseTypeID_typeID[baseType[0]]), categoryName))
+            effectLines.insert(0,"#Variations of item: {0} ({1} of {2}) [{3}]".format(baseType[1], len(perEffectMap_baseTypeID_typeID[baseType[0]][0]), len(globalMap_baseTypeID_typeID[baseType[0]]), categoryName))
 
         for marketGroupID in describedByMarketGroupWithVars:
             #Get data for print
@@ -451,7 +436,7 @@ for effectFileName in os.listdir(effectsPath):
                 else: break
             marketGroupsWithVars.append((marketGroupID, marketGroupName))
         for marketGroup in sorted(marketGroupsWithVars, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Items from market group: {0} ({1} of {2})".format(marketGroup[1], perEffectMap_marketGroupID_typesWithVariationsAffected[marketGroup[0]], len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
+            effectLines.insert(0,"#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
 
         for groupID in describedByGroup:
             cursor.execute(queryGroupName, (groupID,))
@@ -462,14 +447,14 @@ for effectFileName in os.listdir(effectsPath):
             for row in cursor: categoryID = row[0]
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
-            effectLines.insert(0,"#Items from group: {0} ({1} of {2}) [{3}]".format(group[1], perEffectMap_groupID_typesAffected[group[0]], len(globalMap_groupID_typeID[group[0]]), categoryName))
+            effectLines.insert(0,"#Items from group: {0} ({1} of {2}) [{3}]".format(group[1], len(perEffectMap_groupID_typeID[group[0]][0]), len(globalMap_groupID_typeID[group[0]]), categoryName))
 
         for categoryID in describedByCategory:
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
             categories.append((categoryID, categoryName))
         for category in sorted(categories, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Items from category: {0} ({1} of {2})".format(category[1], perEffectMap_categoryID_typesAffected[category[0]], len(globalMap_categoryID_typeID[category[0]])))
+            effectLines.insert(0,"#Items from category: {0} ({1} of {2})".format(category[1], len(perEffectMap_categoryID_typeID[category[0]][0]), len(globalMap_categoryID_typeID[category[0]])))
 
         effectContentsProcessed = "\n".join(effectLines)
         if effectContentsProcessed != effectContentsSource:
