@@ -3,5 +3,5 @@ type = "passive"
 def handler(fit, module, context):
     for type in ("kinetic", "thermal", "explosive", "em"):
         fit.ship.boostItemAttr("armor%sDamageResonance" % type.capitalize(),
-                               module.getModifiedItemAttr("%sDamageResistanceBonus" % type);
+                               module.getModifiedItemAttr("%sDamageResistanceBonus" % type),
                                stackingPenalties = True)

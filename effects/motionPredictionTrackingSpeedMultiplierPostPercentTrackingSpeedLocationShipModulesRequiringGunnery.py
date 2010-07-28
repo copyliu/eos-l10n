@@ -4,5 +4,5 @@
 #Item: Synth Drop Booster [Implant]
 type = "passive"
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+    fit.modules.filteredItemMultiply(lambda mod: mod.item.requiresSkill("Gunnery"),
                                   "trackingSpeed", implant.getModifiedItemAttr("trackingSpeedMultiplier"))

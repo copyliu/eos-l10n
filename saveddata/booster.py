@@ -1,6 +1,7 @@
 from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from model.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import reconstructor, validates
+import traceback
 
 class Booster(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
@@ -30,6 +31,13 @@ class Booster(HandledItem, ItemAttrShortcut):
     def iterSideEffects(self):
         return self.__sideEffects.__iter__()
     
+    def getSideEffect(self, name):
+        for sideEffect in self.iterSideEffects():
+            if sideEffect.effect.name == name:
+                return sideEffect
+            
+        raise KeyError("SideEffect with %s as name not found" % name)
+            
     @property
     def itemModifiedAttributes(self):
         return self.__itemModifiedAttributes
@@ -52,18 +60,21 @@ class Booster(HandledItem, ItemAttrShortcut):
         self.itemModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
+        if self.active == False: return
         for effect in self.item.effects.itervalues():
-            if effect.runTime == runTime:
+            if effect.runTime == runTime and effect.isType("passive"):
                 effect.handler(fit, self, "booster")
+        
         for sideEffect in self.iterSideEffects():
-            if sideEffect.active:
+            if sideEffect.active and sideEffect.effect.runTime == runTime:
                 sideEffect.effect.handler(fit, self, "boosterSideEffect")
                 
-    @validates("ID", "itemID", "ammoID")
+    @validates("ID", "itemID", "ammoID", "active")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "itemID" : lambda val: isinstance(val, int),
                "ammoID" : lambda val: isinstance(val, int),
+               "active" : lambda val: isinstance(val, bool),
                "slot" : lambda val: isinstance(val, int) and val >= 1 and val <= 3}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)

@@ -12,23 +12,23 @@ class TestThrasher(unittest.TestCase):
         self.m2 = Module(self.i2)
         self.f = Fit()
         self.f.ship = Ship(db.getItem("Thrasher"))
-        self.f.modules.add(self.m)
-        self.f.modules.add(self.m2)
-        
+        self.f.modules.append(self.m)
+        self.f.modules.append(self.m2)
+
     def test_turretRofPenalty(self):
         self.f.calculateModifiedAttributes()
         original1 = self.i.attributes["speed"].value
         original2 = self.i2.attributes["speed"].value
         self.assertAlmostEquals(original1 * 1.25, self.m.getModifiedItemAttr("speed"))
         self.assertAlmostEquals(original2 * 1.25, self.m2.getModifiedItemAttr("speed"))
-        
+
     def test_turretMaxRangeBonus(self):
         self.f.calculateModifiedAttributes()
         original1 = self.i.attributes["maxRange"].value
         original2 = self.i2.attributes["maxRange"].value
         self.assertAlmostEquals(original1 * 1.5, self.m.getModifiedItemAttr("maxRange"))
         self.assertAlmostEquals(original2, self.m2.getModifiedItemAttr("maxRange"))
-        
+
     def test_trackingBonus(self):
         self.f.character = self.c
         self.f.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestThrasher(unittest.TestCase):
         original2 = self.i2.getAttribute("trackingSpeed")
         self.assertAlmostEquals(original1 * 1.5, self.m.getModifiedItemAttr("trackingSpeed"))
         self.assertAlmostEquals(original2, self.m2.getModifiedItemAttr("trackingSpeed"))
-        
+
     def test_damageBonus(self):
         self.f.character = self.c
         self.f.calculateModifiedAttributes()
@@ -44,4 +44,3 @@ class TestThrasher(unittest.TestCase):
         original2 = self.i2.getAttribute("damageMultiplier")
         self.assertAlmostEquals(original1 * 1.25, self.m.getModifiedItemAttr("damageMultiplier"))
         self.assertAlmostEquals(original2, self.m2.getModifiedItemAttr("damageMultiplier"))
-        

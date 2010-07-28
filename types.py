@@ -7,4 +7,5 @@ from model.saveddata.implant import Implant
 from model.saveddata.booster import SideEffect
 from model.saveddata.booster import Booster
 from model.saveddata.ship import Ship
+from model.saveddata.projectedEffect import ProjectedEffect
 from model.saveddata.fit import Fit
