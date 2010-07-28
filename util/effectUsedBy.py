@@ -379,9 +379,9 @@ for effectFileName in os.listdir(effectsPath):
 
         #Print stuff to effect file
         effectFile = open(os.path.join(effectsPath, effectFileName), 'r')
-        effectContents = effectFile.read()
+        effectContentsSource = effectFile.read()
         effectFile.close()
-        effectLines = effectContents.split("\n")
+        effectLines = effectContentsSource.split("\n")
         #Delete old comments from file contents
         numberOfCommentLines = 0
         for line in effectLines:
@@ -458,6 +458,8 @@ for effectFileName in os.listdir(effectsPath):
         for category in sorted(categories, key=lambda tuple: tuple[1], reverse=True):
             effectLines.insert(0,"#Items from category: {0} ({1} of {2})".format(category[1], perEffectMap_categoryID_typesAffected[category[0]], len(globalMap_categoryID_typeID[category[0]])))
 
-        effectFile = open(os.path.join(effectsPath, effectFileName), 'w')
-        effectFile.write("\n".join(effectLines))
-        effectFile.close()
+        effectContentsProcessed = "\n".join(effectLines)
+        if effectContentsProcessed != effectContentsSource:
+            effectFile = open(os.path.join(effectsPath, effectFileName), 'w')
+            effectFile.write(effectContentsProcessed)
+            effectFile.close()
