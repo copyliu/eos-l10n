@@ -25,9 +25,11 @@ import re
 import math
 import copy
 
+#Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
 cursor = db.cursor()
 
+#As we don't rely on pyfa's overrides, we need to set them manually
 overrides = '''
 UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
 UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
@@ -37,7 +39,8 @@ UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
 for statement in overrides.split(";\n"):
     cursor.execute(statement)
 
-#List of queries
+#List of queries which will be used in the script
+#Limit categories to Celestials (2, only for wormhole effects), Ships (6), Modules (7), Charges (8), Skills (16), Drones (18), Implants (2), Subsystems (32)
 categoryLimiter = ' AND (invcategories.categoryID = 2 OR invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR invcategories.categoryID = 32)'
 queryAllEffects = 'SELECT dgmeffects.effectID, dgmeffects.effectName FROM dgmeffects'
 queryPublishedTypes = 'SELECT invtypes.typeID, invtypes.groupID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
@@ -87,7 +90,7 @@ for row in cursor:
     globalMap_categoryID_typeID[categoryID].add(typeID)
     globalMap_typeID_categoryID[typeID] = categoryID
 
-#BaseType
+#BaseType maps
 # { baseTypeID : set(typeID) }
 globalMap_baseTypeID_typeID =  {}
 # { typeID : baseTypeID }
@@ -106,7 +109,7 @@ for row in cursor:
     globalMap_baseTypeID_typeID[typeID].add(typeID)
     globalMap_typeID_baseTypeID[typeID] = typeID
 
-#MarketGroup
+#MarketGroup maps
 # { marketGroupID : set(typeID) }
 globalMap_marketGroupID_typeID =  {}
 # { typeID : set(marketGroupID) }
@@ -167,6 +170,7 @@ for marketGroupID, typeIDWithVariationsSet in globalMap_marketGroupID_typeIDWith
     #typeID, typeName = row[0], row[1]
     #print typeName.split(" ")
 
+#Method for calculating score of group inside set of groups of given type
 def calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, weight):
     innerAffectedPortionDescribed = float(innerScore_affectedDescribed)/float(innerScore_total)
     innerAffectedPortionUndescribed = float(innerScore_affectedUndescribed)/float(innerScore_total)
@@ -174,6 +178,7 @@ def calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed,
     innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed/50)*(innerScore_affectedDescribed+innerScore_affectedUndescribed-1)
     return innerScore, innerPortionTotal
 
+#Method for calculating score of group types
 def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
     #outerAffected = float(len(innerScoreDict))
     #if outerAffected: outerScore = math.fsum(innerScoreDict.itervalues())/(math.pow(outerAffected,0.5))
@@ -191,13 +196,12 @@ for effectFileName in os.listdir(effectsPath):
 #effectsToTest = ["modifyActiveShieldResonanceAndNullifyPassiveResonance.py", "customEffects.py"]
 #for effectFileName in effectsToTest:
     basename, extension = effectFileName.split('.')
-    #Ignore non-py files and exclude pyfa-specific 'effects'
-    if extension == "py" and not basename in ("__init__", "customEffects"):
+    #Ignore non-py files and exclude implementation-specific 'effects'
+    if extension == "py" and not basename in ("__init__"):
         #Gather all necessary data regarding items using this effect in single dictionary
         perEffectList_usedByTypes = set()
-        cursorTypes = db.cursor()
-        cursorTypes.execute(queryTypesUsedByEffect, (globalMap_effectNamePyfa_effectNameDB[basename],))
-        for rowTypes in cursorTypes:
+        cursor.execute(queryTypesUsedByEffect, (globalMap_effectNamePyfa_effectNameDB[basename],))
+        for rowTypes in cursor:
             typeID = rowTypes[0]
             perEffectList_usedByTypes.add(typeID)
 
