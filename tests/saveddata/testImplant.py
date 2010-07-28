@@ -52,7 +52,6 @@ class TestImplant(unittest.TestCase):
             self.assertEquals(i, 1)
             self.assertNotEquals(id(f), id(newfit))
             self.assertNotEquals(id(implant), id(newimplant))
-            self.assertEquals(implant.fit.ID, newimplant.fit.ID)
             self.assertEquals(implant.item.ID, newimplant.item.ID)
 
         except:
