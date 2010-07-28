@@ -7,6 +7,7 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.__item = item
         self.itemID = item.ID
         self.build()
+        
     @reconstructor
     def init(self):
         from model import db
@@ -40,14 +41,16 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.itemModifiedAttributes.clear()
         
     def calculateModifiedAttributes(self, fit, runTime):
+        if self.active == False: return
         for effect in self.item.effects.itervalues():
             if effect.runTime == runTime:
                 effect.handler(fit, self, "implant")
                 
-    @validates("fitID", "itemID")
+    @validates("fitID", "itemID", "active")
     def validator(self, key, val):
         map = {"fitID": lambda val: isinstance(val, int),
-               "itemID" : lambda val: isinstance(val, int)}
+               "itemID" : lambda val: isinstance(val, int),
+               "active": lambda val: isinstance(val, bool)}
         
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

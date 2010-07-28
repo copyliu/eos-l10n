@@ -1,5 +1,5 @@
 from model.types import Drone, Ship, Character
-from model.effectHandlerHelpers import HandledSet
+from model.effectHandlerHelpers import HandledList
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
@@ -15,25 +15,25 @@ class Fit(object):
                         "maxTargetsLocked": 0,
                         "droneControlRange": 0,
                         "cloaked": False}
-    
+
     def __init__(self):
-        self.__modules = HandledSet()
-        self.__drones = HandledDroneSet()
-        self.__implants = HandledImplantBoosterSet()
-        self.__boosters = HandledImplantBoosterSet()
-        self.__projectedModules = HandledSet()
-        self.__projectedFits = HandledSet()
+        self.__modules = HandledList()
+        self.__drones = HandledDroneList()
+        self.__implants = HandledImplantBoosterList()
+        self.__boosters = HandledImplantBoosterList()
+        self.__projectedModules = HandledList()
+        self.__projectedFits = HandledList()
         self.__gang = None
         self.__character = None
         self.__owner = None
         self.shipID = None
         self.name = ""
         self.build()
-        
+
     @reconstructor
     def init(self):
         self.build()
-    
+
     def build(self):
         from model import db
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
@@ -43,24 +43,24 @@ class Fit(object):
     @property
     def character(self):
         return self.__character if self.__character != None else Character.getAll0()
-    
+
     @character.setter
     def character(self, char):
         self.__character = char
-    
+
     @property
     def ship(self):
         return self.__ship
-    
+
     @ship.setter
-    def ship(self, ship):        
+    def ship(self, ship):
         self.__ship = ship
         self.shipID = ship.item.ID if ship != None else None
-        
+
     @property
     def owner(self):
         return self.__owner
-    
+
     @owner.setter
     def owner(self, owner):
         self.__owner = owner
@@ -68,35 +68,39 @@ class Fit(object):
     @property
     def drones(self):
         return self.__drones
-    
+
     @property
     def modules(self):
         return self.__modules
-    
+
     @property
     def implants(self):
         return self.__implants
-    
+
     @property
     def boosters(self):
         return self.__boosters
-    
+
+    @property
+    def projectedModules(self):
+        return self.__projectedModules
+
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "ownerID" : lambda val: isinstance(val, int),
                "shipID" : lambda val: isinstance(val, int) or val == None}
-        
+
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
-    
+
     def clear(self):
         if self.ship != None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character, self.extraAttributes))
         for stuff in c:
             if stuff != None: stuff.clear()
-        
-        
+
+
     def calculateModifiedAttributes(self):
         #There's a few things to keep in mind here
         #1: Early effects first, then regular ones, then late ones, regardless of anything else
@@ -115,60 +119,61 @@ class Fit(object):
             for booster in self.boosters: booster.calculateModifiedAttributes(self, runTime)
             for implant in self.implants: implant.calculateModifiedAttributes(self, runTime)
             for module in self.modules: module.calculateModifiedAttributes(self, runTime)
-    
-class HandledDroneSet(HandledSet):
+
+class HandledDroneList(HandledList):
     def __init__(self):
         self.__findCache = {}
-    
+
     def find(self, item):
         if self.__findCache.has_key(item.ID):
             return self.__findCache[item.ID]
         else:
             return None
-        
-    def add(self, drone):
+
+    def append(self, drone):
         if self.__findCache.has_key(drone.item.ID):
             raise ValueError("Drone already here, cannot add the same one multiple times")
-        
-        set.add(self, drone)
+
+        list.append(self, drone)
         self.__findCache[drone.item.ID] = drone
-    
+
     def remove(self, drone):
         if self.__findCache.has_key(drone.item.ID):
             del self.__findCache[drone.item.ID]
+            list.remove(self, drone)
         else:
             raise KeyError("Drone is not in the list")
-        
-    def addItem(self, item, amount = 1):
+
+    def appendItem(self, item, amount = 1):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
         d = self.find(item)
         if d is None:
             d = Drone(item)
-            self.add(d)
-            
+            self.append(d)
+
         d.amount += amount
         return d
-    
+
     def removeItem(self, item, amount):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
         d = self.findDrone(item)
-        if d is None: return            
+        if d is None: return
         d.amount -= amount
         if d.amount <= 0:
             self.remove(d)
             return None
-        
+
         return d
-    
-class HandledImplantBoosterSet(HandledSet):
+
+class HandledImplantBoosterList(HandledList):
     def __init__(self):
         self.__slotCache = {}
-        
-    def add(self, booster, replace = False):
+
+    def append(self, booster, replace = False):
         if self.__slotCache.has_key(booster.slot):
             if replace: self.remove(booster)
-            else: 
+            else:
                 if replace: self.remove(booster)
                 else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True ")
-        
-        set.add(self, booster)
+
+        list.append(self, booster)
