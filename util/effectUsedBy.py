@@ -23,6 +23,7 @@ import sqlite3
 import os.path
 import re
 import math
+import itertools
 import copy
 
 #show debugging prints?
@@ -167,22 +168,26 @@ for marketGroupID, typeIDWithVariationsSet in globalMap_marketGroupID_typeIDWith
         globalMap_typeIDWithVariations_marketGroupID[typeID].add(marketGroupID)
 
 #Item names map
-# { [typeName] : set(typeID) }
-globalMap_typeName_typeID =  {}
-# { typeID : set(typeName) }
-globalMap_typeID_typeName =  {}
+# { (typeNameCombination) : set(typeID) }
+globalMap_typeNameCombination_typeID =  {}
+# { typeID : set((typeNameCombination)) }
+globalMap_typeID_typeNameCombination =  {}
 cursor.execute(queryPublishedTypeNames)
 for row in cursor:
     typeID, typeName = row[0], row[1]
-    if not typeName in globalMap_typeName_typeID: globalMap_typeName_typeID[typeName] = set()
-    globalMap_typeName_typeID[typeName].add(typeID)
-    globalMap_typeID_typeName[typeID] = typeName
-    #print typeName.split(" ")
+    wordList = typeName.split(" ")
+    for wordNumIndex in range(len(wordList)):
+        for typeNameCombination in itertools.combinations(wordList, wordNumIndex + 1):
+            if not typeNameCombination in globalMap_typeNameCombination_typeID: globalMap_typeNameCombination_typeID[typeNameCombination] = set()
+            globalMap_typeNameCombination_typeID[typeNameCombination].add(typeID)
+            if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = set()
+            globalMap_typeID_typeNameCombination[typeID].add(typeNameCombination)
 
 #Method for calculating score of group inside set of groups of given type
 def calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, weight):
     innerAffectedPortionDescribed = float(innerScore_affectedDescribed)/float(innerScore_total)
     innerAffectedPortionUndescribed = float(innerScore_affectedUndescribed)/float(innerScore_total)
+    #Items which are already described have 0 weight for now
     innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(innerScore_affectedDescribed+innerScore_affectedUndescribed-1)
     return innerScore
 
