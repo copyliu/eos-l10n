@@ -26,6 +26,16 @@ import math
 import copy
 
 db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
+cursor = db.cursor()
+
+overrides = '''
+UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
+UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
+UPDATE invtypes SET published = '1' WHERE typeName = 'Utu';
+UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
+'''
+for statement in overrides.split(";\n"):
+    cursor.execute(statement)
 
 #List of queries
 categoryLimiter = ' AND (invcategories.categoryID = 2 OR invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR invcategories.categoryID = 32)'
@@ -49,7 +59,6 @@ queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM invmarketgro
 #we'll use it to find proper effect IDs from file names
 globalMap_effectNamePyfa_effectNameDB = {}
 stripSpec = "[^A-Za-z0-9]"
-cursor = db.cursor()
 cursor.execute(queryAllEffects)
 for row in cursor:
     globalMap_effectNamePyfa_effectNameDB[re.sub(stripSpec, "", row[1])] = row[0]
