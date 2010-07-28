@@ -10,9 +10,9 @@ class TestCR8(unittest.TestCase):
         self.f.ship = Ship(db.getItem("Rifter"))
         self.i = db.getItem("Hardwiring - Inherent Implants 'Squire' CR8")
         self.implant = Implant(self.i)
-        self.f.implants.add(self.implant)
+        self.f.implants.append(self.implant)
         self.f.calculateModifiedAttributes()
-        
+
     def test_rechargeTimeBonus(self):
         original = self.f.ship.item.getAttribute("rechargeRate")
         self.assertAlmostEquals(original * 0.95, self.f.ship.getModifiedItemAttr("rechargeRate"))
