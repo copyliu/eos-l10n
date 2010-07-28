@@ -30,7 +30,7 @@ import copy
 #0 - don't show debugging stuff and perform actual run through effect comments
 #1 - show only for first iteration
 #2 - show for all iterations
-debugLevel = 0
+debugLevel = 1
 
 #Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
@@ -250,6 +250,15 @@ for effectFileName in os.listdir(effectsPath):
                 if not marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations: perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID] = [set(), False]
                 perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].add(typeID)
 
+        #Per-typeNameCombination map
+        # { typeNameCombination : (set(typeID), describes) }
+        perEffectMap_typeNameCombination_typeID = {}
+        for typeID in perEffectList_usedByTypes:
+            typeNameCombinations = globalMap_typeID_typeNameCombination[typeID]
+            for typeNameCombination in typeNameCombinations:
+                if not typeNameCombination in perEffectMap_typeNameCombination_typeID: perEffectMap_typeNameCombination_typeID[typeNameCombination] = [set(), False]
+                perEffectMap_typeNameCombination_typeID[typeNameCombination][0].add(typeID)
+
         stopDebugPrints = False
         if debugLevel >= 1:
             print("\nEffect:", basename)
@@ -260,6 +269,7 @@ for effectFileName in os.listdir(effectsPath):
         describedByCategory = []
         describedByBaseType = []
         describedByMarketGroupWithVars = []
+        describedByTypeNameCombination = []
 
         #Each iteration some group is picked which
         #will be used to describe set of items
@@ -313,7 +323,7 @@ for effectFileName in os.listdir(effectsPath):
                     innerScore_total = len(globalMap_baseTypeID_typeID[baseTypeID])
                     baseTypeScore[baseTypeID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, baseTypeWeight)
                     if debugLevel >= 1 and not stopDebugPrints:
-                    #Get data for print
+                        #Get data for print
                         cursor.execute(queryTypeName, (baseTypeID,))
                         for row in cursor: baseTypeName = row[0]
                         #Print inner data
@@ -352,6 +362,24 @@ for effectFileName in os.listdir(effectsPath):
             marketGroupWithVarsOuterScore = calcOuterScore(marketGroupWithVarsScore, perEffect_totalAffected, marketGroupWithVarsWeight)
             #Print outer data
             if debugLevel >= 1 and not stopDebugPrints: print("Market group outer score: {0:.3}".format(marketGroupWithVarsOuterScore))
+
+            typeNameCombinationScore = {}
+            typeNameCombinationWeight = 1.0
+            for typeNameCombination in perEffectMap_typeNameCombination_typeID:
+                if not perEffectMap_typeNameCombination_typeID[typeNameCombination][1]:
+                    innerScore_affectedDescribed = len(perEffectMap_typeNameCombination_typeID[typeNameCombination][0].intersection(perEffect_describedTypes))
+                    innerScore_affectedUndescribed =  len(perEffectMap_typeNameCombination_typeID[typeNameCombination][0].difference(perEffect_describedTypes))
+                    innerScore_total = len(globalMap_typeNameCombination_typeID[typeNameCombination])
+                    typeNameCombinationScore[typeNameCombination] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, typeNameCombinationWeight)
+                    if debugLevel >= 1 and not stopDebugPrints:
+                        #Get data for print
+                        typeNameCombinationPrintable = " ".join(typeNameCombination)
+                        #Print inner data
+                        if debugLevel == 1: print("Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})".format(typeNameCombinationPrintable, innerScore_affectedUndescribed, innerScore_total, float(innerScore_affectedDescribed + innerScore_affectedUndescribed)/float(innerScore_total)*100, typeNameCombinationScore[typeNameCombination]))
+                        if debugLevel == 2: print("Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(typeNameCombinationPrintable, innerScore_affectedUndescribed, innerScore_affectedDescribed, innerScore_total, float(innerScore_affectedDescribed + innerScore_affectedUndescribed)/float(innerScore_total)*100, typeNameCombinationScore[typeNameCombination]))
+            typeNameCombinationOuterScore = calcOuterScore(typeNameCombinationScore, perEffect_totalAffected, typeNameCombinationWeight)
+            #Print outer data
+            if debugLevel >= 1 and not stopDebugPrints: print("Type name combination outer score: {0:.3}".format(typeNameCombinationOuterScore))
 
             #If Don't print anything after 1st iteration at 1st debugging level
             if debugLevel == 1: stopDebugPrints = True
