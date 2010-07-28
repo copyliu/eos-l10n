@@ -1,4 +1,4 @@
-#Item: Retribution [Ship]  
+#Item: Retribution [Ship]
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

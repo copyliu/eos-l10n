@@ -1,4 +1,5 @@
-#Items from group: Assault Ship (3 of 8) [Ship]
+#Items from market group: Ships > Assault Ships > Gallente (2 of 2)
+#Item: Harpy [Ship]
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

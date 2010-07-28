@@ -1,4 +1,4 @@
-#Item:  [Skill]
+#Item: Energy Pulse Weapons [Skill]
 #Item: Hardwiring - Inherent Implants 'Squire' EP2 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EP4 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EP8 [Implant]
