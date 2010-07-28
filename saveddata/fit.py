@@ -84,7 +84,15 @@ class Fit(object):
     @property
     def projectedModules(self):
         return self.__projectedModules
-
+    
+    @property
+    def projectedFits(self):
+        return self.__projectedFits
+    
+    @property
+    def projectedDrones(self):
+        return self.__projectedDrones
+    
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -134,13 +142,13 @@ class HandledDroneList(HandledList):
         if self.__findCache.has_key(drone.item.ID):
             raise ValueError("Drone already here, cannot add the same one multiple times")
 
-        list.append(self, drone)
+        HandledList.append(self, drone)
         self.__findCache[drone.item.ID] = drone
 
     def remove(self, drone):
         if self.__findCache.has_key(drone.item.ID):
             del self.__findCache[drone.item.ID]
-            list.remove(self, drone)
+            HandledList.remove(self, drone)
         else:
             raise KeyError("Drone is not in the list")
 
@@ -176,4 +184,19 @@ class HandledImplantBoosterList(HandledList):
                 if replace: self.remove(booster)
                 else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True ")
 
-        list.append(self, booster)
+        HandledList.append(self, booster)
+
+class HandledProjectedModList(HandledList):
+    def append(self, proj):
+        proj.projected = True
+        HandledList.append(self, proj)
+        
+class HandledProjectedDroneList(HandledDroneList):
+    def append(self, proj):
+        proj.projected = True
+        HandledDroneList.append(self, proj)
+        
+class HandledProjectedFitList(list):
+    def append(self, proj):
+        proj.projected = True
+        list.append(self, proj)

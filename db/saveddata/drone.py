@@ -8,5 +8,6 @@ drones_table = Table("drones", saveddata_meta,
                      Column("itemID", Integer, primary_key = True),
                      Column("amount", Integer, nullable = False),
                      Column("amountActive", Integer, nullable = False),
-                     Column("projected", Boolean, default = False, nullable = False))
+                     Column("projected", Boolean, default = False, primary_key = True))
+
 mapper(Drone, drones_table)

@@ -10,6 +10,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__item = item
         self.itemID = item.ID
         self.amount = 0
+        self.amountActive = 0
         self.build()
         
     @reconstructor

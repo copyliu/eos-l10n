@@ -105,12 +105,13 @@ class TestModule(unittest.TestCase):
             f.owner = User("moduletest", "testy", False)
 
             item = db.getItem("Dual Light Pulse Laser I")
+            item2 = db.getItem("Stasis Webifier I")
+            projMod = Module(item2)
             charge = db.getItem("Gamma S")
             mod = Module(item)
             mod.charge = charge
             f.modules.append(mod)
-
-            db.saveddata_session.add(mod)
+            f.projectedModules.append(projMod)
             db.saveddata_session.add(f)
             db.saveddata_session.flush()
 
@@ -125,10 +126,18 @@ class TestModule(unittest.TestCase):
             for m in newf.modules:
                 i+= 1
                 newmod = m
-
-            self.assertNotEquals(id(newmod), id(mod))
+            
             self.assertEquals(i, 1)
-            self.assertEqual(len(f.projectedModules), 0)
+            
+            i = 0
+            for m in newf.projectedModules:
+                i += 1
+                newprojMod = m
+            
+            self.assertEquals(newprojMod.item.name, "Stasis Webifier I")
+            self.assertEqual(i, 1)
+            self.assertNotEquals(id(newprojMod), id(projMod))
+            self.assertNotEquals(id(newmod), id(mod))
             self.assertEquals(mod.state, newmod.state)
             self.assertEquals(mod.charge.ID, newmod.charge.ID)
             self.assertEquals(mod.item.ID, newmod.item.ID)
