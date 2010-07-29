@@ -1,8 +1,4 @@
-#Item: Low-grade Centurion Alpha [Implant]
-#Item: Low-grade Centurion Beta [Implant]
-#Item: Low-grade Centurion Delta [Implant]
-#Item: Low-grade Centurion Epsilon [Implant]
-#Item: Low-grade Centurion Gamma [Implant]
+#Items with name like: Low-grade Centurion (5 of 6)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Target Painter",

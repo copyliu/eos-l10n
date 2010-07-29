@@ -1,4 +1,4 @@
-#Items from group: Electronic Systems (4 of 16) [Subsystem]
+#Items with name like: Electronics - Emergent Locus Analyzer (4 of 4)
 def handler(fit, module, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Scan Probe Launcher",
                                   "cpu", module.getModifiedItemAttr("cpuNeedBonus"))

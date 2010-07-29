@@ -1,6 +1,4 @@
-#Variations of item: Large Drone Repair Augmentor I (2 of 2) [Module]
-#Variations of item: Medium Drone Repair Augmentor I (2 of 2) [Module]
-#Variations of item: Small Drone Repair Augmentor I (2 of 2) [Module]
+#Items with name like: Drone Repair Augmentor (6 of 6)
 #Item: Repair Drone Operation [Skill]
 type = "passive"
 def handler(fit, container, context):

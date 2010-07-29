@@ -1,6 +1,4 @@
-#Item: Hardwiring - Inherent Implants 'Yeti' BX-0 [Implant]
-#Item: Hardwiring - Inherent Implants 'Yeti' BX-1 [Implant]
-#Item: Hardwiring - Inherent Implants 'Yeti' BX-2 [Implant]
+#Items with name like: Hardwiring - Inherent Implants 'Yeti' (3 of 3)
 #Item: Ice Harvesting [Skill]
 #Item: Mackinaw [Ship]
 type = "passive"

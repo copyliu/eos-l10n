@@ -1,4 +1,4 @@
-#Variations of item: Apocalypse (3 of 4) [Ship]
+#Items with name like: Apocalypse (3 of 3)
 #Variations of item: Armageddon (4 of 5) [Ship]
 type = "passive"
 def handler(fit, ship, context):

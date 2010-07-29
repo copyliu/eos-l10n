@@ -1,6 +1,4 @@
-#Variations of item: Large Core Defence Capacitor Safeguard I (2 of 2) [Module]
-#Variations of item: Medium Core Defence Capacitor Safeguard I (2 of 2) [Module]
-#Variations of item: Small Core Defence Capacitor Safeguard I (2 of 2) [Module]
+#Items with name like: Core Defence Capacitor Safeguard (6 of 6)
 #Item: Shield Compensation [Skill]
 type = "passive"
 def handler(fit, container, context):

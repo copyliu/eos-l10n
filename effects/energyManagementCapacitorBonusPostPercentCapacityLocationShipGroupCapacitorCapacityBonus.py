@@ -1,10 +1,7 @@
-#Items from group: Rig Energy Grid (6 of 30) [Module]
+#Items with name like: Mindflood Booster (4 of 4)
+#Items with name like: Semiconductor Memory Cell (6 of 6)
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Engineering Implants (3 of 3)
 #Item: Energy Management [Skill]
-#Item: Improved Mindflood Booster [Implant]
-#Item: Standard Mindflood Booster [Implant]
-#Item: Strong Mindflood Booster [Implant]
-#Item: Synth Mindflood Booster [Implant]
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

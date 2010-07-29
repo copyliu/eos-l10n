@@ -1,9 +1,4 @@
-#Item: Grail Alpha [Implant]
-#Item: Grail Beta [Implant]
-#Item: Grail Delta [Implant]
-#Item: Grail Epsilon [Implant]
-#Item: Grail Gamma [Implant]
-#Item: Grail Omega [Implant]
+#Items with name like: Grail (6 of 12)
 type = "passive"
 runTim = "early"
 def handler(fit, implant, context):

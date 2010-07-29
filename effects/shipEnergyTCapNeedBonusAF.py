@@ -1,5 +1,5 @@
+#Items with name like: Magnate (3 of 3)
 #Variations of item: Executioner (2 of 3) [Ship]
-#Variations of item: Magnate (3 of 4) [Ship]
 #Variations of item: Punisher (2 of 3) [Ship]
 #Item: Crucifier [Ship]
 type = "passive"

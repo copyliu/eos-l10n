@@ -1,4 +1,4 @@
-#Items from group: Rig Energy Grid (6 of 30) [Module]
+#Items with name like: Egress Port Maximizer (6 of 6)
 #Item: Energy Emission Systems [Skill]
 #Item: Hardwiring - Inherent Implants 'Squire' EE2 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' EE4 [Implant]

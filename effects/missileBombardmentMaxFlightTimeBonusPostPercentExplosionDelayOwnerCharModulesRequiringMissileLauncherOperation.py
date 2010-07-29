@@ -1,6 +1,4 @@
-#Variations of item: Large Rocket Fuel Cache Partition I (2 of 2) [Module]
-#Variations of item: Medium Rocket Fuel Cache Partition I (2 of 2) [Module]
-#Variations of item: Small Rocket Fuel Cache Partition I (2 of 2) [Module]
+#Items with name like: Rocket Fuel Cache Partition (6 of 6)
 #Item: Hardwiring - Zainou 'Deadeye' ZMC10 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZMC100 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZMC1000 [Implant]

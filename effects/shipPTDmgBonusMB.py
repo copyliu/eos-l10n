@@ -1,4 +1,4 @@
-#Variations of item: Tempest (3 of 4) [Ship]
+#Items with name like: Tempest (3 of 3)
 #Item: Machariel [Ship]
 #Item: Panther [Ship]
 type = "passive"

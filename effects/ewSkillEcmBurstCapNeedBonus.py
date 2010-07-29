@@ -1,4 +1,4 @@
-#Items from group: Rig Electronics (6 of 30) [Module]
+#Items with name like: Signal Disruption Amplifier (6 of 6)
 #Item: Electronic Warfare [Skill]
 #Item: Hardwiring - Zainou 'Gypsy' KOB-25 [Implant]
 #Item: Hardwiring - Zainou 'Gypsy' KOB-50 [Implant]

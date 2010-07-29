@@ -1,4 +1,4 @@
-#Items from group: Cyberimplant (10 of 138) [Implant]
+#Items with name like: Talisman (10 of 12)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Energy Emission Systems"),

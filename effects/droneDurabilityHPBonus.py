@@ -1,7 +1,4 @@
-#Variations of item: Large Drone Durability Enhancer I (2 of 2) [Module]
-#Variations of item: Medium Drone Durability Enhancer I (2 of 2) [Module]
-#Variations of item: Small Drone Durability Enhancer I (2 of 2) [Module]
-#Item: Drone Durability [Skill]
+#Items with name like: Drone Durability (7 of 7)
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

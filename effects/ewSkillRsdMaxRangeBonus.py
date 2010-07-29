@@ -1,6 +1,4 @@
-#Variations of item: Large Particle Dispersion Projector I (2 of 2) [Module]
-#Variations of item: Medium Particle Dispersion Projector I (2 of 2) [Module]
-#Variations of item: Small Particle Dispersion Projector I (2 of 2) [Module]
+#Items with name like: Particle Dispersion Projector (6 of 6)
 #Item: Long Distance Jamming [Skill]
 type = "passive"
 def handler(fit, module, context):

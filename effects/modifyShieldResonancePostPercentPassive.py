@@ -1,4 +1,4 @@
-#Items from group: Rig Shield (24 of 54) [Module]
+#Items with name like: Screen Reinforcer (24 of 24)
 type = "passive"
 def handler(fit, module, context):
     for type in ("kinetic", "thermal", "explosive", "em"):

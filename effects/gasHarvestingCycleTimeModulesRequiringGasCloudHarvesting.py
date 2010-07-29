@@ -1,6 +1,4 @@
-#Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-0 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-1 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Alchemist' ZA-2 [Implant]
+#Items with name like: Hardwiring - Eifyr and Co. 'Alchemist' (3 of 9)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gas Cloud Harvesting"),

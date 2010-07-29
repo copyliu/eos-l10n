@@ -1,6 +1,4 @@
-#Variations of item: Large Tracking Diagnostic Subroutines I (2 of 2) [Module]
-#Variations of item: Medium Tracking Diagnostic Subroutines I (2 of 2) [Module]
-#Variations of item: Small Tracking Diagnostic Subroutines I (2 of 2) [Module]
+#Items with name like: Tracking Diagnostic Subroutines (6 of 6)
 #Item: Turret Destabilization [Skill]
 type = "passive"
 def handler(fit, container, context):

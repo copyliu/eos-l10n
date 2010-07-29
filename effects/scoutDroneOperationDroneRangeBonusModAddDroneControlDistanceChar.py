@@ -1,6 +1,4 @@
-#Variations of item: Large Drone Control Range Augmentor I (2 of 2) [Module]
-#Variations of item: Medium Drone Control Range Augmentor I (2 of 2) [Module]
-#Variations of item: Small Drone Control Range Augmentor I (2 of 2) [Module]
+#Items with name like: Drone Control Range Augmentor (6 of 6)
 #Item: Electronic Warfare Drone Interfacing [Skill]
 #Item: Scout Drone Operation [Skill]
 type = "passive"

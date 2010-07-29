@@ -1,4 +1,4 @@
-#Items from group: Rig Energy Grid (6 of 30) [Module]
+#Items with name like: Capacitor Control Circuit (6 of 6)
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Engineering Implants (3 of 6)
 #Item: Energy Systems Operation [Skill]
 type = "passive"

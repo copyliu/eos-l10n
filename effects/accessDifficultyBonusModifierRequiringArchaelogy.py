@@ -1,4 +1,4 @@
-#Items from group: Rig Electronics (6 of 30) [Module]
+#Items with name like: Emission Scope Sharpener (6 of 6)
 #Item: Hardwiring - Poteque Pharmaceuticals 'Prospector' PPW-1 [Implant]
 type = "passive"
 def handler(fit, container, context):

@@ -1,9 +1,4 @@
-#Item: Jackal Alpha [Implant]
-#Item: Jackal Beta [Implant]
-#Item: Jackal Delta [Implant]
-#Item: Jackal Epsilon [Implant]
-#Item: Jackal Gamma [Implant]
-#Item: Jackal Omega [Implant]
+#Items with name like: Jackal (6 of 12)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

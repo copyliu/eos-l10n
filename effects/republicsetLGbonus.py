@@ -1,9 +1,4 @@
-#Item: Low-grade Jackal Alpha [Implant]
-#Item: Low-grade Jackal Beta [Implant]
-#Item: Low-grade Jackal Delta [Implant]
-#Item: Low-grade Jackal Epsilon [Implant]
-#Item: Low-grade Jackal Gamma [Implant]
-#Item: Low-grade Jackal Omega [Implant]
+#Items with name like: Low-grade Jackal (6 of 6)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

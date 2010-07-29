@@ -1,6 +1,4 @@
-#Variations of item: Large Hydraulic Bay Thrusters I (2 of 2) [Module]
-#Variations of item: Medium Hydraulic Bay Thrusters I (2 of 2) [Module]
-#Variations of item: Small Hydraulic Bay Thrusters I (2 of 2) [Module]
+#Items with name like: Hydraulic Bay Thrusters (6 of 6)
 #Item: Hardwiring - Zainou 'Deadeye' ZML10 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZML100 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZML1000 [Implant]

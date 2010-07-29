@@ -1,6 +1,4 @@
-#Variations of item: Large Cargohold Optimization I (2 of 2) [Module]
-#Variations of item: Medium Cargohold Optimization I (2 of 2) [Module]
-#Variations of item: Small Cargohold Optimization I (2 of 2) [Module]
+#Items with name like: Cargohold Optimization (6 of 6)
 type = "passive"
 def handler(fit, module, context):
     fit.ship.boostItemAttr("capacity", module.getModifiedItemAttr("cargoCapacityBonus"))

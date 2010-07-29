@@ -1,6 +1,4 @@
-#Variations of item: Large Particle Dispersion Augmentor I (2 of 2) [Module]
-#Variations of item: Medium Particle Dispersion Augmentor I (2 of 2) [Module]
-#Variations of item: Small Particle Dispersion Augmentor I (2 of 2) [Module]
+#Items with name like: Particle Dispersion Augmentor (6 of 6)
 #Item: Signal Dispersion [Skill]
 type = "passive"
 def handler(fit, container, context):

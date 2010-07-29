@@ -1,7 +1,5 @@
+#Items with name like: Hardwiring - Inherent Implants 'Gentry' (3 of 6)
 #Item: Capital Repair Systems [Skill]
-#Item: Hardwiring - Inherent Implants 'Gentry' ZEX10 [Implant]
-#Item: Hardwiring - Inherent Implants 'Gentry' ZEX100 [Implant]
-#Item: Hardwiring - Inherent Implants 'Gentry' ZEX1000 [Implant]
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

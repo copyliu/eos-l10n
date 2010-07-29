@@ -1,6 +1,4 @@
-#Variations of item: Large Energy Burst Aerator I (2 of 2) [Module]
-#Variations of item: Medium Energy Burst Aerator I (2 of 2) [Module]
-#Variations of item: Small Energy Burst Aerator I (2 of 2) [Module]
+#Items with name like: Energy Burst Aerator (6 of 6)
 type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Energy Weapon",

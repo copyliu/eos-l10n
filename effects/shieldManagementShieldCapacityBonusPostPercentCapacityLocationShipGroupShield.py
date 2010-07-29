@@ -1,7 +1,5 @@
+#Items with name like: Core Defence Field Extender (6 of 6)
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Shield Implants (3 of 3)
-#Variations of item: Large Core Defence Field Extender I (2 of 2) [Module]
-#Variations of item: Medium Core Defence Field Extender I (2 of 2) [Module]
-#Variations of item: Small Core Defence Field Extender I (2 of 2) [Module]
 #Item: Sansha Modified 'Gnome' Implant [Implant]
 #Item: Shield Management [Skill]
 type = "passive"
