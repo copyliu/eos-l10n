@@ -54,7 +54,7 @@ import copy
 #0 - don't show debugging stuff and perform actual run through effect comments
 #1 - show only for first iteration
 #2 - show for all iterations
-debugLevel = 2
+debugLevel = 0
 
 #Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
