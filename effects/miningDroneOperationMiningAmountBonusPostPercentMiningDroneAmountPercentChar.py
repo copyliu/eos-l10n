@@ -1,6 +1,4 @@
-#Variations of item: Large Drone Mining Augmentor I (2 of 2) [Module]
-#Variations of item: Medium Drone Mining Augmentor I (2 of 2) [Module]
-#Variations of item: Small Drone Mining Augmentor I (2 of 2) [Module]
+#Items with name like: Drone Mining Augmentor (6 of 6)
 #Item: Drone Interfacing [Skill]
 #Item: Mining Drone Operation [Skill]
 type = "passive"

@@ -1,7 +1,4 @@
-#Item: Improved Drop Booster [Implant]
-#Item: Standard Drop Booster [Implant]
-#Item: Strong Drop Booster [Implant]
-#Item: Synth Drop Booster [Implant]
+#Items with name like: Drop Booster (4 of 4)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.requiresSkill("Gunnery"),

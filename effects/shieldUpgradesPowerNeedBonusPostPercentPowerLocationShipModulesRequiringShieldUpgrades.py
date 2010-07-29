@@ -1,7 +1,5 @@
+#Items with name like: Core Defence Charge Economizer (6 of 6)
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Shield Implants (3 of 3)
-#Variations of item: Large Core Defence Charge Economizer I (2 of 2) [Module]
-#Variations of item: Medium Core Defence Charge Economizer I (2 of 2) [Module]
-#Variations of item: Small Core Defence Charge Economizer I (2 of 2) [Module]
 #Item: Shield Upgrades [Skill]
 type = "passive"
 def handler(fit, container, context):

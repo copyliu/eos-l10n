@@ -1,6 +1,4 @@
-#Variations of item: Large Signal Focusing Kit I (2 of 2) [Module]
-#Variations of item: Medium Signal Focusing Kit I (2 of 2) [Module]
-#Variations of item: Small Signal Focusing Kit I (2 of 2) [Module]
+#Items with name like: Signal Focusing Kit (6 of 6)
 #Item: Survey [Skill]
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

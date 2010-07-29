@@ -1,6 +1,4 @@
-#Variations of item: Large Drone Speed Augmentor I (2 of 2) [Module]
-#Variations of item: Medium Drone Speed Augmentor I (2 of 2) [Module]
-#Variations of item: Small Drone Speed Augmentor I (2 of 2) [Module]
+#Items with name like: Drone Speed Augmentor (6 of 6)
 #Item: Drone Navigation [Skill]
 type = "passive"
 def handler(fit, container, context):

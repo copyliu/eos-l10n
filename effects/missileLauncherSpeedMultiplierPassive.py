@@ -1,6 +1,4 @@
-#Variations of item: Large Bay Loading Accelerator I (2 of 2) [Module]
-#Variations of item: Medium Bay Loading Accelerator I (2 of 2) [Module]
-#Variations of item: Small Bay Loading Accelerator I (2 of 2) [Module]
+#Items with name like: Bay Loading Accelerator (6 of 6)
 type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name[0:16] == "Missile Launcher",

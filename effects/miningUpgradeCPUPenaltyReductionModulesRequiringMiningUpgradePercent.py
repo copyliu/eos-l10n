@@ -1,6 +1,4 @@
-#Item: Hardwiring - Inherent Implants 'Highwall' HY-0 [Implant]
-#Item: Hardwiring - Inherent Implants 'Highwall' HY-1 [Implant]
-#Item: Hardwiring - Inherent Implants 'Highwall' HY-2 [Implant]
+#Items with name like: Hardwiring - Inherent Implants 'Highwall' (3 of 6)
 #Item: Mining Upgrades [Skill]
 type = "passive"
 def handler(fit, container, context):

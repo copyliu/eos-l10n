@@ -1,5 +1,5 @@
-#Items from group: Logistic Drone (6 of 12) [Drone]
 #Items from group: Shield Transporter (38 of 38) [Module]
+#Items with name like: Shield Maintenance Bot (6 of 6)
 type = "projected", "active"
 def handler(fit, container, context):
     if "projected" not in context: return

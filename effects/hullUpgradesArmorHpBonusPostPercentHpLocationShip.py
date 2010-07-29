@@ -1,8 +1,7 @@
-#Items from group: Cyberimplant (11 of 138) [Implant]
-#Variations of item: Large Trimark Armor Pump I (2 of 2) [Module]
-#Variations of item: Medium Trimark Armor Pump I (2 of 2) [Module]
-#Variations of item: Small Trimark Armor Pump I (2 of 2) [Module]
+#Items with name like: Slave (10 of 12)
+#Items with name like: Trimark Armor Pump (6 of 6)
 #Item: Hull Upgrades [Skill]
+#Item: Low-grade Snake Epsilon [Implant]
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

@@ -1,9 +1,4 @@
-#Item: Low-grade Talon Alpha [Implant]
-#Item: Low-grade Talon Beta [Implant]
-#Item: Low-grade Talon Delta [Implant]
-#Item: Low-grade Talon Epsilon [Implant]
-#Item: Low-grade Talon Gamma [Implant]
-#Item: Low-grade Talon Omega [Implant]
+#Items with name like: Low-grade Talon (6 of 6)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

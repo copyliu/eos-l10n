@@ -1,6 +1,4 @@
-#Variations of item: Large Hybrid Collision Accelerator I (2 of 2) [Module]
-#Variations of item: Medium Hybrid Collision Accelerator I (2 of 2) [Module]
-#Variations of item: Small Hybrid Collision Accelerator I (2 of 2) [Module]
+#Items with name like: Hybrid Collision Accelerator (6 of 6)
 type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Hybrid Weapon",

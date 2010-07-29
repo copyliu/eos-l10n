@@ -1,9 +1,4 @@
-#Item: Low-grade Edge Alpha [Implant]
-#Item: Low-grade Edge Beta [Implant]
-#Item: Low-grade Edge Delta [Implant]
-#Item: Low-grade Edge Epsilon [Implant]
-#Item: Low-grade Edge Gamma [Implant]
-#Item: Low-grade Edge Omega [Implant]
+#Items with name like: Low-grade Edge (6 of 6)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

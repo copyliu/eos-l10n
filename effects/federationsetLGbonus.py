@@ -1,9 +1,4 @@
-#Item: Low-grade Spur Alpha [Implant]
-#Item: Low-grade Spur Beta [Implant]
-#Item: Low-grade Spur Delta [Implant]
-#Item: Low-grade Spur Epsilon [Implant]
-#Item: Low-grade Spur Gamma [Implant]
-#Item: Low-grade Spur Omega [Implant]
+#Items with name like: Low-grade Spur (6 of 6)
 type = "passive"
 runTime = "early"
 def handler(fit, implant, context):

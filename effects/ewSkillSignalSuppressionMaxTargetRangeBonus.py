@@ -1,6 +1,4 @@
-#Variations of item: Large Inverted Signal Field Projector I (2 of 2) [Module]
-#Variations of item: Medium Inverted Signal Field Projector I (2 of 2) [Module]
-#Variations of item: Small Inverted Signal Field Projector I (2 of 2) [Module]
+#Items with name like: Inverted Signal Field Projector (6 of 6)
 #Item: Signal Suppression [Skill]
 type = "passive"
 def handler(fit, container, context):

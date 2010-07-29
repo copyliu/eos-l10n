@@ -1,4 +1,4 @@
-#Items from group: Warp Scrambler (20 of 39) [Module]
+#Items with name like: Warp Disruptor (20 of 20)
 #Variations of item: Warp Disruptor I (18 of 18) [Module]
 type = "projected", "active"
 def handler(fit, module, context):

@@ -1,6 +1,4 @@
-#Variations of item: Large Drone Scope Chip I (2 of 2) [Module]
-#Variations of item: Medium Drone Scope Chip I (2 of 2) [Module]
-#Variations of item: Small Drone Scope Chip I (2 of 2) [Module]
+#Items with name like: Drone Scope Chip (6 of 6)
 #Item: Drone Sharpshooting [Skill]
 type = "passive"
 def handler(fit, container, context):

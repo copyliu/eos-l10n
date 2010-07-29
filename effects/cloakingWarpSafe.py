@@ -1,5 +1,4 @@
-#Item: 'Smokescreen' Covert Ops Cloaking Device II [Module]
-#Item: Covert Ops Cloaking Device II [Module]
+#Items with name like: Covert Ops Cloaking Device II (2 of 2)
 type = "active"
 runTime = "early"
 def handler(fit, ship, context):

@@ -1,4 +1,4 @@
-#Items from group: Rig Energy Grid (6 of 30) [Module]
+#Items with name like: Powergrid Subroutine Maximizer (6 of 6)
 #Item: Energy Grid Upgrades [Skill]
 #Item: Hardwiring - Inherent Implants 'Squire' GU2 [Implant]
 #Item: Hardwiring - Inherent Implants 'Squire' GU4 [Implant]

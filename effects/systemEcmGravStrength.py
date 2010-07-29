@@ -1,4 +1,4 @@
-#Items from group: Effect Beacon (6 of 38) [Celestial]
+#Items with name like: Magnetar Effect Beacon Class (6 of 6)
 type= "projected"
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "ECM",

@@ -1,9 +1,4 @@
-#Item: Low-grade Harvest Alpha [Implant]
-#Item: Low-grade Harvest Beta [Implant]
-#Item: Low-grade Harvest Delta [Implant]
-#Item: Low-grade Harvest Epsilon [Implant]
-#Item: Low-grade Harvest Gamma [Implant]
-#Item: Low-grade Harvest Omega [Implant]
+#Items with name like: Low-grade Harvest (6 of 6)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

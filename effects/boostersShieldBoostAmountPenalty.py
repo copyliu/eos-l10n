@@ -1,6 +1,4 @@
-#Item: Improved Mindflood Booster [Implant]
-#Item: Standard Mindflood Booster [Implant]
-#Item: Strong Mindflood Booster [Implant]
+#Items with name like: Mindflood Booster (3 of 4)
 type = "boosterSideEffect"
 def handler(fit, booster, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",

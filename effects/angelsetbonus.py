@@ -1,4 +1,4 @@
-#Items from group: Cyberimplant (12 of 138) [Implant]
+#Items with name like: Halo (12 of 12)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

@@ -1,7 +1,5 @@
+#Items with name like: Warhead Rigor Catalyst (6 of 6)
 #Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Missile Implants (3 of 6)
-#Variations of item: Large Warhead Rigor Catalyst I (2 of 2) [Module]
-#Variations of item: Medium Warhead Rigor Catalyst I (2 of 2) [Module]
-#Variations of item: Small Warhead Rigor Catalyst I (2 of 2) [Module]
 #Item: Guided Missile Precision [Skill]
 type = "passive"
 def handler(fit, container, context):

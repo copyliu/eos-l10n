@@ -1,4 +1,5 @@
-#Items from group: Cyberimplant (12 of 138) [Implant]
+#Items with name like: Crystal (12 of 45)
+#Items with name like: Low-grade Crystal (6 of 6)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

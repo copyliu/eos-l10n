@@ -1,7 +1,5 @@
 #Items from group: Cloaking Device (12 of 14) [Module]
-#Item: Large Targeting System Subcontroller I [Module]
-#Item: Medium Targeting System Subcontroller I [Module]
-#Item: Small Targeting System Subcontroller I [Module]
+#Items with name like: Targeting System Subcontroller I (3 of 3)
 type = "passive"
 def handler(fit, module, context):
     fit.ship.multiplyItemAttr("scanResolution",

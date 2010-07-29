@@ -1,7 +1,4 @@
-#Item: Improved Exile Booster [Implant]
-#Item: Standard Exile Booster [Implant]
-#Item: Strong Exile Booster [Implant]
-#Item: Synth Exile Booster [Implant]
+#Items with name like: Exile Booster (4 of 4)
 type = "passive"
 def handler(fit, booster, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",

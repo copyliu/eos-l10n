@@ -1,4 +1,4 @@
-#Variations of item: Augoror (2 of 3) [Ship]
+#Items with name like: Augoror (2 of 2)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

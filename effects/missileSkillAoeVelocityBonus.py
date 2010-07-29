@@ -1,6 +1,4 @@
-#Variations of item: Large Warhead Flare Catalyst I (2 of 2) [Module]
-#Variations of item: Medium Warhead Flare Catalyst I (2 of 2) [Module]
-#Variations of item: Small Warhead Flare Catalyst I (2 of 2) [Module]
+#Items with name like: Warhead Flare Catalyst (6 of 6)
 #Item: Hardwiring - Zainou 'Deadeye' ZMS10 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZMS100 [Implant]
 #Item: Hardwiring - Zainou 'Deadeye' ZMS1000 [Implant]
