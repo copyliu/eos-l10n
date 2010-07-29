@@ -99,7 +99,6 @@ class Character(object):
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
 
-
 class Skill(HandledItem):
     def __init__(self, item, level = 0, ro = False):
         self.__item = item
@@ -127,7 +126,7 @@ class Skill(HandledItem):
     def calculateModifiedAttributes(self, fit, runTime):
         if self.__suppressed or self.level == 0: return
         for effect in self.item.effects.itervalues():
-                if effect.runTime == runTime:
+                if effect.runTime == runTime and effect.isType("passive"):
                     try:
                         effect.handler(fit, self, ("skill",))
                     except AttributeError:

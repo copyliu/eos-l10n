@@ -74,7 +74,8 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         for effect in self.item.effects.itervalues():
             if effect.runTime == runTime and \
-            ((projected == True and effect.isType("projected")) or projected == False):
+            ((projected == True and effect.isType("projected")) or \
+             projected == False and effect.isType("passive")):
                 i = 0
                 while i != self.amountActive:
                     effect.handler(fit, self, context)
