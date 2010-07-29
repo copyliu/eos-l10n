@@ -2,7 +2,7 @@
 #Items from group: Logistic Drone (6 of 12) [Drone]
 type = "projected", "active"
 def handler(fit, container, context):
-    if context != "projected" or fit.ship.getModifiedItemAttr("disallowAssistance") == 1:
+    if "projected" not in context or fit.ship.getModifiedItemAttr("disallowAssistance") == 1:
         return
     amount = container.getModifiedItemAttr("armorDamageAmount")
     speed = container.getModifiedAttribute("duration") / 1000.0

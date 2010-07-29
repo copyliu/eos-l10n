@@ -4,7 +4,7 @@ def handler(fit, module, context):
     amount = module.getModifiedItemAttr("powerTransferAmount")
     time = module.getModifiedItemAttr("duration") / 1000.0
     persec = amount / time
-    if context == "projected" and fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") != 1:
+    if "projected" in context and fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") != 1:
         fit.extraAttributes["capDrain"].increase(persec)
-    elif context == "module":
+    elif "module" in context:
         fit.extraAttributes["capBoost"].increase(persec)

@@ -8,4 +8,4 @@ type = "passive"
 def handler(fit, container, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Repair Systems"),
                                   "duration", container.getModifiedItemAttr("durationSkillBonus"),
-                                  stackingPenalties = context != "skill" and context != "implant")
+                                  stackingPenalties = "skill" not in context and "implant" not in context)

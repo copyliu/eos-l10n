@@ -7,5 +7,5 @@
 #Item: Synth Mindflood Booster [Implant]
 type = "passive"
 def handler(fit, container, context):
-    level = container.skill if context == "skill" else 1
+    level = container.level if "skill" in context else 1
     fit.ship.boostItemAttr("capacitorCapacity", container.getModifiedItemAttr("capacitorCapacityBonus") * level)

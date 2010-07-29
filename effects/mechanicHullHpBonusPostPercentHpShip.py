@@ -2,5 +2,5 @@
 #Item: Mechanic [Skill]
 type = "passive"
 def handler(fit, container, context):
-    level = container.level if context == "skill" else 1
+    level = container.level if "skill" in context else 1
     fit.ship.boostItemAttr("hp", container.getModifiedItemAttr("hullHpBonus") * level)

@@ -6,4 +6,4 @@ type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Remote Sensor Damper",
                                   "maxRange", module.getModifiedItemAttr("rangeSkillBonus"),
-                                  stackingPenalties = context != "skill")
+                                  stackingPenalties = "skill" not in context)

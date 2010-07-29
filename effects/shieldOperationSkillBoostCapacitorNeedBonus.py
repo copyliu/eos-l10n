@@ -4,7 +4,7 @@
 #Item: Shield Compensation [Skill]
 type = "passive"
 def handler(fit, container, context):
-    level = container.level if context == "skill" else 1
+    level = container.level if "skill" in context else 1
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
                                   "capacitorNeed", container.getModifiedItemAttr("shieldBoostCapacitorBonus") * level,
-                                  stackingPenalties = context != "skill")
+                                  stackingPenalties = "skill" not in context)

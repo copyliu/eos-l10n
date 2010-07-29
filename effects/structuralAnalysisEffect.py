@@ -6,4 +6,4 @@
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
                                   "armorDamageAmount", implant.getModifiedItemAttr("repairBonus"),
-                                  stackingPenalties = context != "implant")
+                                  stackingPenalties = "implant" not in context)

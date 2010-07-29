@@ -3,8 +3,8 @@
 #Variations of item: Small Tracking Diagnostic Subroutines I (2 of 2) [Module]
 #Item: Turret Destabilization [Skill]
 def handler(fit, container, context):
-    level = container.level if context == "skill" else 1
+    level = container.level if "skill" in context else 1
     for attr in ("maxRangeBonus", "falloffBonus"):
         fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Tracking Disruptor",
                                       attr, container.getModifiedItemAttr("scanSkillEwStrengthBonus") * level,
-                                      stackingPenalties = context != "skill")
+                                      stackingPenalties = "skill" not in context)

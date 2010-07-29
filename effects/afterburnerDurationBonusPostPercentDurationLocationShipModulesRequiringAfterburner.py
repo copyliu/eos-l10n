@@ -5,7 +5,6 @@
 #Item: Zor's Custom Navigation Link [Implant]
 type = "passive"
 def handler(fit, container, context):
-    if context == "skill": level = container.level
-    else: level = 1
+    level = container.level if "skill" in context else 1
     fit.modules.filteredItemIncrease(lambda mod: mod.item.requiresSkill("Afterburner"),
                                      "duration", container.getModifiedItemAttr("durationBonus") * level)

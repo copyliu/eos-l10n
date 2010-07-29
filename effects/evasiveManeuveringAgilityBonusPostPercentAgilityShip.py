@@ -11,6 +11,6 @@
 #Item: Spaceship Command [Skill]
 type = "passive"
 def handler(fit, container, context):
-    level = container.level if context == "skill" else 1
+    level = container.level if "skill" in context else 1
     fit.ship.boostItemAttr("agility", container.getModifiedItemAttr("agilityBonus") * level,
-                           stackingPenalties = context != "skill" and context != "implant")
+                           stackingPenalties = "skill" not in context and "implant" not in context)

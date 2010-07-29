@@ -4,6 +4,6 @@
 #Item: Warrior TP-300 [Drone]
 type = "projected", "active"
 def handler(fit, container, context):
-    if context == "projected":
+    if "projected" in context:
         fit.ship.boostItemAttr("signatureRadius", container.getModifiedItemAttr("signatureRadiusBonus"),
                                stackingPenalties = True)

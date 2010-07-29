@@ -6,4 +6,4 @@
 type = "passive"
 def handler(fit, container, context):
     fit.ship.boostItemAttr("maxVelocity", container.getModifiedItemAttr("velocityBonus"),
-                           stackingPenalties = context != "skill" and context != "implant")
+                           stackingPenalties = "skill" not in context and "implant" not in context)
