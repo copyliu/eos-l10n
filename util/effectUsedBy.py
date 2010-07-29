@@ -30,7 +30,7 @@ import copy
 #0 - don't show debugging stuff and perform actual run through effect comments
 #1 - show only for first iteration
 #2 - show for all iterations
-debugLevel = 1
+debugLevel = 0
 
 #Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
@@ -170,7 +170,7 @@ for marketGroupID, typeIDWithVariationsSet in globalMap_marketGroupID_typeIDWith
 #Item names map
 # { (typeNameCombination) : set(typeID) }
 globalMap_typeNameCombination_typeID =  {}
-# { typeID : set((typeNameCombination)) }
+# { typeID : (set((typeNameCombination)), len(typeName)) }
 globalMap_typeID_typeNameCombination =  {}
 cursor.execute(queryPublishedTypeNames)
 for row in cursor:
@@ -180,15 +180,15 @@ for row in cursor:
         for typeNameCombination in itertools.combinations(wordList, wordNumIndex + 1):
             if not typeNameCombination in globalMap_typeNameCombination_typeID: globalMap_typeNameCombination_typeID[typeNameCombination] = set()
             globalMap_typeNameCombination_typeID[typeNameCombination].add(typeID)
-            if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = set()
-            globalMap_typeID_typeNameCombination[typeID].add(typeNameCombination)
+            if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(wordList))
+            globalMap_typeID_typeNameCombination[typeID][0].add(typeNameCombination)
 
 #Method for calculating score of group inside set of groups of given type
-def calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, weight):
+def calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, weight = 1.0):
     innerAffectedPortionDescribed = float(innerScore_affectedDescribed)/float(innerScore_total)
     innerAffectedPortionUndescribed = float(innerScore_affectedUndescribed)/float(innerScore_total)
     #Items which are already described have 0 weight for now
-    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(innerScore_affectedDescribed+innerScore_affectedUndescribed-1)
+    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(innerScore_affectedDescribed+innerScore_affectedUndescribed-1)*weight
     return innerScore
 
 #Method for calculating score of group types
@@ -254,7 +254,7 @@ for effectFileName in os.listdir(effectsPath):
         # { typeNameCombination : (set(typeID), describes) }
         perEffectMap_typeNameCombination_typeID = {}
         for typeID in perEffectList_usedByTypes:
-            typeNameCombinations = globalMap_typeID_typeNameCombination[typeID]
+            typeNameCombinations = globalMap_typeID_typeNameCombination[typeID][0]
             for typeNameCombination in typeNameCombinations:
                 if not typeNameCombination in perEffectMap_typeNameCombination_typeID: perEffectMap_typeNameCombination_typeID[typeNameCombination] = [set(), False]
                 perEffectMap_typeNameCombination_typeID[typeNameCombination][0].add(typeID)
@@ -283,7 +283,7 @@ for effectFileName in os.listdir(effectsPath):
                     innerScore_affectedDescribed = len(perEffectMap_groupID_typeID[groupID][0].intersection(perEffect_describedTypes))
                     innerScore_affectedUndescribed =  len(perEffectMap_groupID_typeID[groupID][0].difference(perEffect_describedTypes))
                     innerScore_total = len(globalMap_groupID_typeID[groupID])
-                    groupScore[groupID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, groupWeight)
+                    groupScore[groupID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected)
                     if debugLevel >= 1 and not stopDebugPrints:
                         #Get data for print
                         cursor.execute(queryGroupName, (groupID,))
@@ -302,7 +302,7 @@ for effectFileName in os.listdir(effectsPath):
                     innerScore_affectedDescribed = len(perEffectMap_categoryID_typeID[categoryID][0].intersection(perEffect_describedTypes))
                     innerScore_affectedUndescribed =  len(perEffectMap_categoryID_typeID[categoryID][0].difference(perEffect_describedTypes))
                     innerScore_total = len(globalMap_categoryID_typeID[categoryID])
-                    categoryScore[categoryID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, categoryWeight)
+                    categoryScore[categoryID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected)
                     if debugLevel >= 1 and not stopDebugPrints:
                         #Get data for print
                         cursor.execute(queryCategoryName, (categoryID,))
@@ -321,7 +321,7 @@ for effectFileName in os.listdir(effectsPath):
                     innerScore_affectedDescribed = len(perEffectMap_baseTypeID_typeID[baseTypeID][0].intersection(perEffect_describedTypes))
                     innerScore_affectedUndescribed =  len(perEffectMap_baseTypeID_typeID[baseTypeID][0].difference(perEffect_describedTypes))
                     innerScore_total = len(globalMap_baseTypeID_typeID[baseTypeID])
-                    baseTypeScore[baseTypeID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, baseTypeWeight)
+                    baseTypeScore[baseTypeID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected)
                     if debugLevel >= 1 and not stopDebugPrints:
                         #Get data for print
                         cursor.execute(queryTypeName, (baseTypeID,))
@@ -340,7 +340,7 @@ for effectFileName in os.listdir(effectsPath):
                     innerScore_affectedDescribed = len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].intersection(perEffect_describedTypes))
                     innerScore_affectedUndescribed =  len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].difference(perEffect_describedTypes))
                     innerScore_total = len(globalMap_marketGroupID_typeIDWithVariations[marketGroupID])
-                    marketGroupWithVarsScore[marketGroupID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, marketGroupWithVarsWeight)
+                    marketGroupWithVarsScore[marketGroupID] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected)
                     if debugLevel >= 1 and not stopDebugPrints:
                         #Get data for print
                         cursor.execute(queryMarketGroupName, (marketGroupID,))
@@ -370,7 +370,11 @@ for effectFileName in os.listdir(effectsPath):
                     innerScore_affectedDescribed = len(perEffectMap_typeNameCombination_typeID[typeNameCombination][0].intersection(perEffect_describedTypes))
                     innerScore_affectedUndescribed =  len(perEffectMap_typeNameCombination_typeID[typeNameCombination][0].difference(perEffect_describedTypes))
                     innerScore_total = len(globalMap_typeNameCombination_typeID[typeNameCombination])
-                    typeNameCombinationScore[typeNameCombination] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, typeNameCombinationWeight)
+                    averageCoverage = 0
+                    for typeID in perEffectMap_typeNameCombination_typeID[typeNameCombination][0]:
+                        averageCoverage += len(typeNameCombination)/globalMap_typeID_typeNameCombination[typeID][1]
+                    averageCoverage = averageCoverage/len(perEffectMap_typeNameCombination_typeID[typeNameCombination][0])
+                    typeNameCombinationScore[typeNameCombination] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, 0.5 + averageCoverage/2)
                     if debugLevel >= 1 and not stopDebugPrints:
                         #Get data for print
                         typeNameCombinationPrintable = " ".join(typeNameCombination)
@@ -386,7 +390,7 @@ for effectFileName in os.listdir(effectsPath):
             #Print separator for 2nd debugging level
             if debugLevel >= 2: print("---")
 
-            maxOuterScore = max(groupOuterScore, categoryOuterScore, baseTypeOuterScore, marketGroupWithVarsOuterScore)
+            maxOuterScore = max(groupOuterScore, categoryOuterScore, baseTypeOuterScore, marketGroupWithVarsOuterScore, typeNameCombinationOuterScore)
             if maxOuterScore > 0.5:
                 if maxOuterScore == categoryOuterScore:
                     categoryWinner = max(categoryScore, key=categoryScore.get)
@@ -401,6 +405,11 @@ for effectFileName in os.listdir(effectsPath):
                     describedByGroup.append(groupWinner)
                     perEffect_describedTypes |= globalMap_groupID_typeID[groupWinner]
                     perEffectMap_groupID_typeID[groupWinner][1] = True
+                elif maxOuterScore == typeNameCombinationOuterScore:
+                    typeNameCombinationWinner = max(typeNameCombinationScore, key=typeNameCombinationScore.get)
+                    describedByTypeNameCombination.append(typeNameCombinationWinner)
+                    perEffect_describedTypes |= globalMap_typeNameCombination_typeID[typeNameCombinationWinner]
+                    perEffectMap_typeNameCombination_typeID[typeNameCombinationWinner][1] = True
                 elif maxOuterScore == marketGroupWithVarsOuterScore:
                     marketGroupWithVarsWinner = max(marketGroupWithVarsScore, key=marketGroupWithVarsScore.get)
                     describedByMarketGroupWithVars.append(marketGroupWithVarsWinner)
@@ -423,6 +432,7 @@ for effectFileName in os.listdir(effectsPath):
             print("Category IDs:", describedByCategory)
             print("Base item IDs:", describedByBaseType)
             print("Market group with variations IDs:", describedByMarketGroupWithVars)
+            print("Type name combinations:", describedByTypeNameCombination)
 
         #Print stuff to effect file
         effectFile = open(os.path.join(effectsPath, effectFileName), 'r')
@@ -444,6 +454,7 @@ for effectFileName in os.listdir(effectsPath):
         categories = []
         baseTypes = []
         marketGroupsWithVars = []
+        typeNameCombinations = []
 
         for typeID in set(perEffectList_usedByTypes).difference(perEffect_describedTypes):
             cursor.execute(queryTypeName, (typeID,))
@@ -486,6 +497,12 @@ for effectFileName in os.listdir(effectsPath):
             marketGroupsWithVars.append((marketGroupID, marketGroupName))
         for marketGroup in sorted(marketGroupsWithVars, key=lambda tuple: tuple[1], reverse=True):
             effectLines.insert(0,"#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
+
+        for typeNameCombination in describedByTypeNameCombination:
+            typeNameCombinationPrint = " ".join(typeNameCombination)
+            typeNameCombinations.append((typeNameCombination, typeNameCombinationPrint))
+        for typeNameCombination in sorted(typeNameCombinations, key=lambda tuple: tuple[1], reverse=True):
+            effectLines.insert(0,"#Items with name like: {0} ({1} of {2})".format(typeNameCombination[1], len(perEffectMap_typeNameCombination_typeID[typeNameCombination[0]][0]), len(globalMap_typeNameCombination_typeID[typeNameCombination[0]])))
 
         for groupID in describedByGroup:
             cursor.execute(queryGroupName, (groupID,))
