@@ -1,5 +1,5 @@
 import unittest
-from model.types import Fit, Character, Module, Ship, User
+from model.types import Fit, Character, Module, Ship, User, State
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -54,7 +54,7 @@ class TestFit(unittest.TestCase):
         f.extraAttributes["cloaked"] = True
         f.clear()
         self.assertEqual(f.extraAttributes["cloaked"], False)
-        
+
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
@@ -64,7 +64,7 @@ class TestFit(unittest.TestCase):
             f.name = "test fit 1"
             u = User("fittest", "testy", False)
             f.owner = u
-            
+
             f2 = Fit()
             f2.ship = Ship(db.getItem("Thrasher"))
             f2.name = "test fit 2"
@@ -72,22 +72,22 @@ class TestFit(unittest.TestCase):
             db.saveddata_session.add(f)
             db.saveddata_session.add(f2)
             db.saveddata_session.flush()
-            
+
             f.projectedFits.append(f2)
-            
+
             #Hack our way through changing the session temporarly
             oldSession = model.db.saveddata.queries.saveddata_session
             model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             newf = db.getFit(f.ID)
-            
+
             self.assertNotEquals(id(newf), id(f))
             self.assertEquals(f.name, newf.name)
             for fit in newf.projectedFits:
                 self.assertNotEqual(id(fit), id(f2))
                 self.assertEquals(f2.name, fit.name)
-                
-            
+
+
 
         except:
             db.saveddata_session.rollback()
@@ -95,3 +95,30 @@ class TestFit(unittest.TestCase):
         finally:
             #Undo our hack as to not fuck up anything
             model.db.saveddata.queries.saveddata_session = oldSession
+
+    def test_projectedFit(self):
+        f1 = Fit()
+        f1.ship = Ship(db.getItem("Rifter"))
+        f2 = Fit()
+        m1 = Module(db.getItem("Stasis Webifier I"))
+        m2 = Module(db.getItem("Stasis Webifier I"))
+        m1.state = State.ACTIVE
+        m2.state = State.ACTIVE
+        f2.modules.append(m1)
+        f2.modules.append(m2)
+        f1.projectedFits.append(f2)
+        f1.calculateModifiedAttributes()
+        self.assertAlmostEquals(99.800, f1.ship.getModifiedItemAttr("maxVelocity"), 3)
+
+    def test_projectSelf(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        m1 = Module(db.getItem("Stasis Webifier I"))
+        m2 = Module(db.getItem("Stasis Webifier I"))
+        m1.state = State.ACTIVE
+        m2.state = State.ACTIVE
+        f.modules.append(m1)
+        f.modules.append(m2)
+        f.projectedFits.append(f)
+        f.calculateModifiedAttributes()
+        self.assertAlmostEquals(99.800, f.ship.getModifiedItemAttr("maxVelocity"), 3)

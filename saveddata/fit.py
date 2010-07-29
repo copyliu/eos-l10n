@@ -27,6 +27,7 @@ class Fit(object):
         self.__character = None
         self.__owner = None
         self.shipID = None
+        self.projected = False
         self.name = ""
         self.build()
 
@@ -36,6 +37,7 @@ class Fit(object):
 
     def build(self):
         from model import db
+        self.__calculatedTargets = []
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
         self.extraAttributes = ModifiedAttributeDict()
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
@@ -84,15 +86,15 @@ class Fit(object):
     @property
     def projectedModules(self):
         return self.__projectedModules
-    
+
     @property
     def projectedFits(self):
         return self.__projectedFits
-    
+
     @property
     def projectedDrones(self):
         return self.__projectedDrones
-    
+
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -103,13 +105,24 @@ class Fit(object):
         else: return val
 
     def clear(self):
+        del self.__calculatedTargets[:]
         if self.ship != None: self.ship.clear()
-        c = chain(self.modules, self.drones, self.boosters, self.implants, (self.character, self.extraAttributes))
+        c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
             if stuff != None: stuff.clear()
 
 
-    def calculateModifiedAttributes(self):
+    def calculateModifiedAttributes(self, targetFit = None):
+        if targetFit == None:
+            targetFit = self
+            forceProjected = False
+        elif targetFit not in self.__calculatedTargets:
+            self.__calculatedTargets.append(targetFit)
+            targetFit.calculateModifiedAttributes()
+            forceProjected = True
+        else:
+            return
+
         #There's a few things to keep in mind here
         #1: Early effects first, then regular ones, then late ones, regardless of anything else
         #2: Some effects aren't implemented
@@ -118,15 +131,21 @@ class Fit(object):
         for runTime in ("early", "normal", "late"):
             #Lets start out with the ship's effects
             #We'll be ignoring gang/projected effects for now and focussing on regular ones
+            extra = []
             if self.character != None:
-                self.character.calculateModifiedAttributes(self, runTime)
+                extra.append(self.character)
             if self.ship != None:
-                self.ship.calculateModifiedAttributes(self, runTime)
-            #Handle the rest through their respective classes
-            for drone in self.drones: drone.calculateModifiedAttributes(self, runTime)
-            for booster in self.boosters: booster.calculateModifiedAttributes(self, runTime)
-            for implant in self.implants: implant.calculateModifiedAttributes(self, runTime)
-            for module in self.modules: module.calculateModifiedAttributes(self, runTime)
+                extra.append(self.ship)
+
+            c = chain(extra, self.drones, self.boosters, self.implants, self.modules,
+                      self.projectedDrones, self.projectedModules)
+
+            for item in c:
+                item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
+
+
+        for fit in self.projectedFits:
+            fit.calculateModifiedAttributes(self)
 
 class HandledDroneList(HandledList):
     def __init__(self):
@@ -190,12 +209,12 @@ class HandledProjectedModList(HandledList):
     def append(self, proj):
         proj.projected = True
         HandledList.append(self, proj)
-        
+
 class HandledProjectedDroneList(HandledDroneList):
     def append(self, proj):
         proj.projected = True
         HandledDroneList.append(self, proj)
-        
+
 class HandledProjectedFitList(list):
     def append(self, proj):
         proj.projected = True

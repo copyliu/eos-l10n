@@ -2,10 +2,10 @@ from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from model.effectHandlerHelpers import HandledItem
 
 class Ship(ItemAttrShortcut, HandledItem):
-    REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize", 
+    REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize",
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
-    
+
     def __init__(self, item):
         for requiredAttr in self.REQUIRED_ATTRIBUTES:
             if not requiredAttr in  item.attributes:
@@ -15,19 +15,20 @@ class Ship(ItemAttrShortcut, HandledItem):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = item.attributes
         self.clear()
-        
+
     @property
     def item(self):
         return self.__item
-    
+
     @property
     def itemModifiedAttributes(self):
         return self.__itemModifiedAttributes
-    
+
     def clear(self):
         self.itemModifiedAttributes.clear()
-        
-    def calculateModifiedAttributes(self, fit, runTime):
+
+    def calculateModifiedAttributes(self, fit, runTime, forceProjected = False):
+        if forceProjected: return
         for effect in self.item.effects.itervalues():
             if effect.runTime == runTime:
-                 effect.handler(fit, self, "ship")
+                 effect.handler(fit, self, ("ship",))

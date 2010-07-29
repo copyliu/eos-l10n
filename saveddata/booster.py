@@ -9,14 +9,14 @@ class Booster(HandledItem, ItemAttrShortcut):
         self.itemID = item.ID
         self.__item = item
         self.__build()
-        
+
     @reconstructor
     def init(self):
         from model import db
         self.__item = db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
         self.__build()
-        
+
     def __build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = self.__item.attributes
@@ -27,48 +27,49 @@ class Booster(HandledItem, ItemAttrShortcut):
                 s.effect = effect
                 s.active = effect.ID in self.__activeSideEffectIDs
                 self.__sideEffects.append(s)
-    
+
     def iterSideEffects(self):
         return self.__sideEffects.__iter__()
-    
+
     def getSideEffect(self, name):
         for sideEffect in self.iterSideEffects():
             if sideEffect.effect.name == name:
                 return sideEffect
-            
+
         raise KeyError("SideEffect with %s as name not found" % name)
-            
+
     @property
     def itemModifiedAttributes(self):
         return self.__itemModifiedAttributes
-    
+
     @property
     def slot(self):
         return self.__slot
-    
+
     @property
     def item(self):
         return self.__item
-    
+
     def __calculateSlot(self, item):
         if not "boosterness" in item.attributes:
             raise ValueError("Passed item is not a booster")
-        
+
         return int(item.attributes["boosterness"].value)
-    
+
     def clear(self):
         self.itemModifiedAttributes.clear()
-        
-    def calculateModifiedAttributes(self, fit, runTime):
+
+    def calculateModifiedAttributes(self, fit, runTime, forceProjected = False):
+        if forceProjected: return
         if self.active == False: return
         for effect in self.item.effects.itervalues():
             if effect.runTime == runTime and effect.isType("passive"):
-                effect.handler(fit, self, "booster")
-        
+                effect.handler(fit, self, ("booster",))
+
         for sideEffect in self.iterSideEffects():
             if sideEffect.active and sideEffect.effect.runTime == runTime:
-                sideEffect.effect.handler(fit, self, "boosterSideEffect")
-                
+                sideEffect.effect.handler(fit, self, ("boosterSideEffect",))
+
     @validates("ID", "itemID", "ammoID", "active")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -76,40 +77,40 @@ class Booster(HandledItem, ItemAttrShortcut):
                "ammoID" : lambda val: isinstance(val, int),
                "active" : lambda val: isinstance(val, bool),
                "slot" : lambda val: isinstance(val, int) and val >= 1 and val <= 3}
-        
+
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
-                
+
 class SideEffect(object):
     def __init__(self, owner):
         self.__owner = owner
         self.__active = False
         self.__effect = None
-        
+
     @property
     def active(self):
         return self.__active
-    
+
     @active.setter
     def active(self, active):
         if not isinstance(active, bool):
             raise TypeError("Expecting a bool, not a " + type(active))
-        
+
         if active != self.__active:
             if active:
                 self.__owner._Booster__activeSideEffectIDs.append(self.effect.ID)
             else:
                 self.__owner._Booster__activeSideEffectIDs.remove(self.effect.ID)
-            
+
             self.__active = active
-        
+
     @property
     def effect(self):
         return self.__effect
-    
+
     @effect.setter
     def effect(self, effect):
         if not hasattr(effect, "handler"):
             raise TypeError("Need an effect with a handler")
-        
+
         self.__effect = effect

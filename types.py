@@ -8,3 +8,4 @@ from model.saveddata.booster import SideEffect
 from model.saveddata.booster import Booster
 from model.saveddata.ship import Ship
 from model.saveddata.fit import Fit
+from model.saveddata.gang import Gang, Wing, Squad
