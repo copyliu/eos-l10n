@@ -374,7 +374,7 @@ for effectFileName in os.listdir(effectsPath):
                     for typeID in perEffectMap_typeNameCombination_typeID[typeNameCombination][0]:
                         averageCoverage += len(typeNameCombination)/globalMap_typeID_typeNameCombination[typeID][1]
                     averageCoverage = averageCoverage/len(perEffectMap_typeNameCombination_typeID[typeNameCombination][0])
-                    typeNameCombinationScore[typeNameCombination] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, 0.5 + averageCoverage/2)
+                    typeNameCombinationScore[typeNameCombination] = calcInnerScore(innerScore_affectedDescribed, innerScore_affectedUndescribed, innerScore_total, perEffect_totalAffected, 0.2 + averageCoverage*0.8)
                     if debugLevel >= 1 and not stopDebugPrints:
                         #Get data for print
                         typeNameCombinationPrintable = " ".join(typeNameCombination)

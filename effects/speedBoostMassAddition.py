@@ -1,5 +1,4 @@
 #Items from group: Afterburner (54 of 107) [Module]
-#Items with name like: Afterburner (47 of 48)
 type = "active"
 runTime = "late"
 def handler(fit, module, context):

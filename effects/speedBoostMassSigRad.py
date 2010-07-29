@@ -1,5 +1,4 @@
 #Items from group: Afterburner (53 of 107) [Module]
-#Items with name like: MicroWarpdrive (46 of 46)
 type = "active"
 runTime = "late"
 def handler(fit, module, context):

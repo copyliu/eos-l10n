@@ -1,4 +1,4 @@
-#Items with name like: Raven (3 of 3)
+#Variations of item: Raven (3 of 4) [Ship]
 #Item: Scorpion Navy Issue [Ship]
 #Item: Widow [Ship]
 type = "passive"

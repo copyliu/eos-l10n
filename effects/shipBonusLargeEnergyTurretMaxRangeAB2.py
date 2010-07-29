@@ -1,4 +1,5 @@
-#Items with name like: Apocalypse (2 of 3)
+#Item: Apocalypse [Ship]
+#Item: Apocalypse Navy Issue [Ship]
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level
