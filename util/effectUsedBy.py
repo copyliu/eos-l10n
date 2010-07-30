@@ -71,20 +71,19 @@ for statement in overrides.split(";\n"):
     cursor.execute(statement)
 
 #List of queries which will be used in the script
+queryAllEffects = 'SELECT dgmeffects.effectID, dgmeffects.effectName FROM dgmeffects'
+#Queries to get raw data
 #Limit categories to Celestials (2, only for wormhole effects), Ships (6), Modules (7), Charges (8), Skills (16), Drones (18), Implants (2), Subsystems (32)
 categoryLimiter = ' AND (invcategories.categoryID = 2 OR invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR invcategories.categoryID = 32)'
-queryAllEffects = 'SELECT dgmeffects.effectID, dgmeffects.effectName FROM dgmeffects'
-queryPublishedTypes = 'SELECT invtypes.typeID, invtypes.groupID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
-queryPublishedTypeCategories = 'SELECT invtypes.typeID, invgroups.categoryID FROM invtypes  INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
-queryPublishedTypeVariations = 'SELECT invmetatypes.typeID, invmetatypes.parentTypeID FROM invmetatypes INNER JOIN invtypes ON invmetatypes.typeID = invtypes.typeID INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
-queryPublishedSelfVariations = 'SELECT invtypes.typeID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1 AND invtypes.typeID NOT IN (SELECT invmetatypes.typeID FROM invmetatypes)' + categoryLimiter
-queryPublishedTypeMarketGroups = 'SELECT invtypes.typeID, invtypes.marketGroupID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
-queryPublishedTypeNames = 'SELECT invtypes.typeID, invtypes.typeName FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
-queryMarketGroupRelations = 'SELECT invmarketgroups.marketGroupID, invmarketgroups.parentGroupID FROM invmarketgroups'
-queryTypesUsedByEffect = 'SELECT invtypes.typeID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID INNER JOIN dgmtypeeffects ON dgmtypeeffects.typeID = invtypes.typeID INNER JOIN dgmeffects ON dgmeffects.effectID = dgmtypeeffects.effectID WHERE invtypes.published = 1' + categoryLimiter + ' AND dgmeffects.effectID = ?'
-queryParentMarketGroup = 'SELECT invmarketgroups.parentGroupID FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
-queryGroupCategory = 'SELECT invgroups.categoryID FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
-queryTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
+queryPublishedTypeIDs = 'SELECT invtypes.typeID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
+queryTypeIDGroupID = 'SELECT invtypes.groupID FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
+queryGroupIDCategoryID = 'SELECT invgroups.categoryID FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
+queryTypeIDParentTypeID = 'SELECT invmetatypes.parentTypeID FROM invmetatypes WHERE invmetatypes.typeID = ? LIMIT 1'
+queryTypeIDMarketGroupID = 'SELECT invtypes.marketGroupID FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
+queryTypeIDTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
+queryMarketGroupIDParentGroupID = 'SELECT invmarketgroups.parentGroupID FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
+queryEffectIDTypeID = 'SELECT dgmtypeeffects.typeID FROM dgmtypeeffects WHERE dgmtypeeffects.effectID = ?'
+#Queries for printing
 queryGroupName = 'SELECT invgroups.groupName FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
 queryCategoryName = 'SELECT invcategories.categoryName FROM invcategories WHERE invcategories.categoryID = ? LIMIT 1'
 queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
@@ -98,14 +97,22 @@ for row in cursor:
     globalMap_effectNamePyfa_effectNameDB[re.sub(stripSpec, "", row[1])] = row[0]
 
 ######################### Stage 1 #########################
+
+#Published types set
+publishedTypes = set()
+cursor.execute(queryPublishedTypeIDs)
+for row in cursor:
+    publishedTypes.add(row[0])
+
 #Compose group maps
 # { groupID : set(typeID) }
 globalMap_groupID_typeID = {}
 # { typeID : groupID }
 globalMap_typeID_groupID = {}
-cursor.execute(queryPublishedTypes)
-for row in cursor:
-    typeID, groupID = row[0], row[1]
+for typeID in publishedTypes:
+    groupID = 0
+    cursor.execute(queryTypeIDGroupID, (typeID,))
+    for row in cursor: groupID = row[0]
     if not groupID in globalMap_groupID_typeID: globalMap_groupID_typeID[groupID] = set()
     globalMap_groupID_typeID[groupID].add(typeID)
     globalMap_typeID_groupID[typeID] = groupID
@@ -115,9 +122,10 @@ for row in cursor:
 globalMap_categoryID_typeID =  {}
 # { typeID : categoryID }
 globalMap_typeID_categoryID =  {}
-cursor.execute(queryPublishedTypeCategories)
-for row in cursor:
-    typeID, categoryID = row[0], row[1]
+for typeID in publishedTypes:
+    categoryID = 0
+    cursor.execute(queryGroupIDCategoryID, (globalMap_typeID_groupID[typeID],))
+    for row in cursor: categoryID = row[0]
     if not categoryID in globalMap_categoryID_typeID: globalMap_categoryID_typeID[categoryID] = set()
     globalMap_categoryID_typeID[categoryID].add(typeID)
     globalMap_typeID_categoryID[typeID] = categoryID
@@ -127,19 +135,18 @@ for row in cursor:
 globalMap_baseTypeID_typeID =  {}
 # { typeID : baseTypeID }
 globalMap_typeID_baseTypeID =  {}
-cursor.execute(queryPublishedTypeVariations)
-for row in cursor:
-    typeID, baseTypeID = row[0], row[1]
+for typeID in publishedTypes:
+    #not all items in the database have baseTypeIDs, so
+    #assign some default value to it
+    baseTypeID = 0
+    cursor.execute(queryTypeIDParentTypeID, (typeID,))
+    for row in cursor: baseTypeID = row[0]
+    #if baseType is not published or is not set in database,
+    #consider item as variation of self
+    if baseTypeID not in publishedTypes: baseTypeID = typeID
     if not baseTypeID in globalMap_baseTypeID_typeID: globalMap_baseTypeID_typeID[baseTypeID] = set()
     globalMap_baseTypeID_typeID[baseTypeID].add(typeID)
     globalMap_typeID_baseTypeID[typeID] = baseTypeID
-#All items which do not have base item are considered as variations of self
-cursor.execute(queryPublishedSelfVariations)
-for row in cursor:
-    typeID = row[0]
-    if not typeID in globalMap_baseTypeID_typeID: globalMap_baseTypeID_typeID[typeID] = set()
-    globalMap_baseTypeID_typeID[typeID].add(typeID)
-    globalMap_typeID_baseTypeID[typeID] = typeID
 
 #MarketGroup maps. We won't use this one for further processing,
 #just as helper for composing other maps
@@ -147,9 +154,10 @@ for row in cursor:
 globalMap_marketGroupID_typeID =  {}
 # { typeID : set(marketGroupID) }
 globalMap_typeID_marketGroupID =  {}
-cursor.execute(queryPublishedTypeMarketGroups)
-for row in cursor:
-    typeID, marketGroupID = row[0], row[1]
+for typeID in publishedTypes:
+    marketGroupID = 0
+    cursor.execute(queryTypeIDMarketGroupID, (typeID,))
+    for row in cursor: marketGroupID = row[0]
     if not marketGroupID: continue
     if not marketGroupID in globalMap_marketGroupID_typeID: globalMap_marketGroupID_typeID[marketGroupID] = set()
     globalMap_marketGroupID_typeID[marketGroupID].add(typeID)
@@ -161,7 +169,7 @@ for marketGroupID in intialMarketGroupIDList:
     cyclingMarketGroupID = marketGroupID
     for depth in range(20):
         cursorParentMarket = db.cursor()
-        cursorParentMarket.execute(queryParentMarketGroup, (cyclingMarketGroupID,))
+        cursorParentMarket.execute(queryMarketGroupIDParentGroupID, (cyclingMarketGroupID,))
         for row in cursorParentMarket:
             cyclingMarketGroupID = row[0]
         if cyclingMarketGroupID:
@@ -200,9 +208,10 @@ for marketGroupID, typeIDWithVariationsSet in globalMap_marketGroupID_typeIDWith
 globalMap_typeNameCombinationTuple_typeID =  {}
 # { typeID : (set((typeNameCombination)), len(typeName)) }
 globalMap_typeID_typeNameCombination =  {}
-cursor.execute(queryPublishedTypeNames)
-for row in cursor:
-    typeID, typeName = row[0], row[1]
+for typeID in publishedTypes:
+    typeName = ""
+    cursor.execute(queryTypeIDTypeName, (typeID,))
+    for row in cursor: typeName = row[0]
     #Let's split strings into separate words
     typeNameSplitted = []
     #Start from the whole typeName
@@ -283,10 +292,10 @@ for effectFileName in os.listdir(effectsPath):
         ######################## Stage 2.1 ########################
         #Data regarding which items are effected by current effect
         perEffectList_usedByTypes = set()
-        cursor.execute(queryTypesUsedByEffect, (globalMap_effectNamePyfa_effectNameDB[basename],))
+        cursor.execute(queryEffectIDTypeID, (globalMap_effectNamePyfa_effectNameDB[basename],))
         for rowTypes in cursor:
             typeID = rowTypes[0]
-            perEffectList_usedByTypes.add(typeID)
+            if typeID in publishedTypes: perEffectList_usedByTypes.add(typeID)
         #Number of items affected by current effect
         perEffect_totalAffected = len(perEffectList_usedByTypes)
 
@@ -417,7 +426,7 @@ for effectFileName in os.listdir(effectsPath):
                     total = len(globalMap_baseTypeID_typeID[baseTypeID])
                     baseTypeScore[baseTypeID] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
                     if debugLevel >= 1 and not stopDebugPrints:
-                        cursor.execute(queryTypeName, (baseTypeID,))
+                        cursor.execute(queryTypeIDTypeName, (baseTypeID,))
                         for row in cursor: baseTypeName = row[0]
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
                         if debugLevel == 1: print("Base item: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(baseTypeName, affectedAndUndescribed, total, coverage, baseTypeScore[baseTypeID]))
@@ -443,7 +452,7 @@ for effectFileName in os.listdir(effectsPath):
                         #Limit depth in case if market groups form a loop
                         for depth in range(20):
                             cursorParentMarket = db.cursor()
-                            cursorParentMarket.execute(queryParentMarketGroup, (prependParentID,))
+                            cursorParentMarket.execute(queryMarketGroupIDParentGroupID, (prependParentID,))
                             for row in cursorParentMarket:
                                 prependParentID = row[0]
                             if prependParentID:
@@ -568,13 +577,13 @@ for effectFileName in os.listdir(effectsPath):
         #category > group > name > marketGroup > baseType > single items
         #Go through all items in list
         for typeID in singleItems:
-            cursor.execute(queryTypeName, (typeID,))
+            cursor.execute(queryTypeIDTypeName, (typeID,))
             for row in cursor: typeName = row[0]
             #Make tuples and append them
             types.append((typeID, typeName))
         #As we're prepending lines, sort items by name in reverse order
         for type in sorted(types, key=lambda tuple: tuple[1], reverse=True):
-            cursor.execute(queryGroupCategory, (globalMap_typeID_groupID[type[0]],))
+            cursor.execute(queryGroupIDCategoryID, (globalMap_typeID_groupID[type[0]],))
             for row in cursor: categoryID = row[0]
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
@@ -582,11 +591,11 @@ for effectFileName in os.listdir(effectsPath):
             effectLines.insert(0,"#Item: {0} [{1}]".format(type[1], categoryName))
 
         for baseTypeID in describedByBaseType:
-            cursor.execute(queryTypeName, (baseTypeID,))
+            cursor.execute(queryTypeIDTypeName, (baseTypeID,))
             for row in cursor: baseTypeName = row[0]
             baseTypes.append((baseTypeID, baseTypeName))
         for baseType in sorted(baseTypes, key=lambda tuple: tuple[1], reverse=True):
-            cursor.execute(queryGroupCategory, (globalMap_typeID_groupID[baseType[0]],))
+            cursor.execute(queryGroupIDCategoryID, (globalMap_typeID_groupID[baseType[0]],))
             for row in cursor: categoryID = row[0]
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
@@ -600,7 +609,7 @@ for effectFileName in os.listdir(effectsPath):
             #Limit depth to avoid looping, as usual
             for depth in range(20):
                 cursorParentMarket = db.cursor()
-                cursorParentMarket.execute(queryParentMarketGroup, (prependParentID,))
+                cursorParentMarket.execute(queryMarketGroupIDParentGroupID, (prependParentID,))
                 for row in cursorParentMarket:
                     prependParentID = row[0]
                 if prependParentID:
@@ -625,7 +634,7 @@ for effectFileName in os.listdir(effectsPath):
             for row in cursor: groupName = row[0]
             groups.append((groupID, groupName))
         for group in sorted(groups, key=lambda tuple: tuple[1], reverse=True):
-            cursor.execute(queryGroupCategory, (group[0],))
+            cursor.execute(queryGroupIDCategoryID, (group[0],))
             for row in cursor: categoryID = row[0]
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
