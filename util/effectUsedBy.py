@@ -194,8 +194,10 @@ for marketGroupID, typeIDWithVariationsSet in globalMap_marketGroupID_typeIDWith
         globalMap_typeIDWithVariations_marketGroupID[typeID].add(marketGroupID)
 
 #Item names map
-# { (typeNameCombination) : set(typeID) }
-globalMap_typeNameCombination_typeID =  {}
+#We need to include category ID to avoid combining items from
+#different categories (e.g. skills and modules)
+# { ((typeNameCombination), categoryID) : set(typeID) }
+globalMap_typeNameCombinationTuple_typeID =  {}
 # { typeID : (set((typeNameCombination)), len(typeName)) }
 globalMap_typeID_typeNameCombination =  {}
 cursor.execute(queryPublishedTypeNames)
@@ -250,8 +252,9 @@ for row in cursor:
     for wordNumIndex in range(len(typeNameSplitted)):
         #Iterate through all possible combinations
         for typeNameCombination in itertools.combinations(typeNameSplitted, wordNumIndex + 1):
-            if not typeNameCombination in globalMap_typeNameCombination_typeID: globalMap_typeNameCombination_typeID[typeNameCombination] = set()
-            globalMap_typeNameCombination_typeID[typeNameCombination].add(typeID)
+            typeNameCombinationTuple = (typeNameCombination, globalMap_typeID_categoryID[typeID])
+            if not typeNameCombinationTuple in globalMap_typeNameCombinationTuple_typeID: globalMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple] = set()
+            globalMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple].add(typeID)
             if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(typeNameSplitted))
             globalMap_typeID_typeNameCombination[typeID][0].add(typeNameCombination)
 
@@ -322,13 +325,14 @@ for effectFileName in os.listdir(effectsPath):
                 perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].add(typeID)
 
         #Per-typeNameCombination map
-        # { typeNameCombination : (set(typeID), describes) }
-        perEffectMap_typeNameCombination_typeID = {}
+        # { ((typeNameCombination), categoryID) : (set(typeID), describes) }
+        perEffectMap_typeNameCombinationTuple_typeID = {}
         for typeID in perEffectList_usedByTypes:
             typeNameCombinations = globalMap_typeID_typeNameCombination[typeID][0]
             for typeNameCombination in typeNameCombinations:
-                if not typeNameCombination in perEffectMap_typeNameCombination_typeID: perEffectMap_typeNameCombination_typeID[typeNameCombination] = [set(), False]
-                perEffectMap_typeNameCombination_typeID[typeNameCombination][0].add(typeID)
+                typeNameCombinationTuple = (typeNameCombination, globalMap_typeID_categoryID[typeID])
+                if not typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID: perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple] = [set(), False]
+                perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0].add(typeID)
 
         stopDebugPrints = False
         if debugLevel >= 1:
@@ -454,25 +458,25 @@ for effectFileName in os.listdir(effectsPath):
 
             typeNameCombinationScore = {}
             typeNameCombinationWeight = 1.0
-            for typeNameCombination in perEffectMap_typeNameCombination_typeID:
-                if not perEffectMap_typeNameCombination_typeID[typeNameCombination][1]:
-                    affectedItemsFromCurrenttypeNameCombination = perEffectMap_typeNameCombination_typeID[typeNameCombination][0]
+            for typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID:
+                if not perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][1]:
+                    affectedItemsFromCurrenttypeNameCombination = perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0]
                     affectedAndDecribed = len(affectedItemsFromCurrenttypeNameCombination.intersection(perEffect_describedTypes))
                     affectedAndUndescribed =  len(affectedItemsFromCurrenttypeNameCombination.difference(perEffect_describedTypes))
-                    total = len(globalMap_typeNameCombination_typeID[typeNameCombination])
+                    total = len(globalMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple])
                     #typeNames are special: wee also need to consider how certain
                     #word combination covers full typeName. We start from zero
                     averageCoverage = 0
-                    itemsNamedLikeThis = perEffectMap_typeNameCombination_typeID[typeNameCombination][0]
+                    itemsNamedLikeThis = perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0]
                     for typeID in itemsNamedLikeThis:
                         #Add number of words in combination divided by total number of words from any given item
-                        averageCoverage += len(typeNameCombination)/globalMap_typeID_typeNameCombination[typeID][1]
+                        averageCoverage += len(typeNameCombinationTuple[0])/globalMap_typeID_typeNameCombination[typeID][1]
                     #Then divide by number of items we checked, making it real average
                     averageCoverage = averageCoverage/len(itemsNamedLikeThis)
                     #Pass average coverage as additional balancing factor
-                    typeNameCombinationScore[typeNameCombination] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, 0.2 + averageCoverage*0.8)
+                    typeNameCombinationScore[typeNameCombinationTuple] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, 0.2 + averageCoverage*0.8)
                     if debugLevel >= 1 and not stopDebugPrints:
-                        typeNameCombinationPrintable = " ".join(typeNameCombination)
+                        typeNameCombinationPrintable = " ".join(typeNameCombinationTuple[0])
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
                         if debugLevel == 1: print("Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, total, coverage, typeNameCombinationScore[typeNameCombination]))
                         if debugLevel == 2: print("Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, affectedAndDecribed, total, coverage, typeNameCombinationScore[typeNameCombination]))
@@ -509,8 +513,8 @@ for effectFileName in os.listdir(effectsPath):
                 elif maxOuterScore == typeNameCombinationOuterScore:
                     typeNameCombinationWinner = max(typeNameCombinationScore, key=typeNameCombinationScore.get)
                     describedByTypeNameCombination.append(typeNameCombinationWinner)
-                    perEffect_describedTypes |= globalMap_typeNameCombination_typeID[typeNameCombinationWinner]
-                    perEffectMap_typeNameCombination_typeID[typeNameCombinationWinner][1] = True
+                    perEffect_describedTypes |= globalMap_typeNameCombinationTuple_typeID[typeNameCombinationWinner]
+                    perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationWinner][1] = True
                 elif maxOuterScore == marketGroupWithVarsOuterScore:
                     marketGroupWithVarsWinner = max(marketGroupWithVarsScore, key=marketGroupWithVarsScore.get)
                     describedByMarketGroupWithVars.append(marketGroupWithVarsWinner)
@@ -558,7 +562,7 @@ for effectFileName in os.listdir(effectsPath):
         categories = []
         baseTypes = []
         marketGroupsWithVars = []
-        typeNameCombinations = []
+        typeNameCombinationTuples = []
 
         #Processing order matters here, as we're prepending comment lines to file
         #category > group > name > marketGroup > baseType > single items
@@ -607,11 +611,14 @@ for effectFileName in os.listdir(effectsPath):
         for marketGroup in sorted(marketGroupsWithVars, key=lambda tuple: tuple[1], reverse=True):
             effectLines.insert(0,"#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
 
-        for typeNameCombination in describedByTypeNameCombination:
-            typeNameCombinationPrint = " ".join(typeNameCombination)
-            typeNameCombinations.append((typeNameCombination, typeNameCombinationPrint))
-        for typeNameCombination in sorted(typeNameCombinations, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Items with name like: {0} ({1} of {2})".format(typeNameCombination[1], len(perEffectMap_typeNameCombination_typeID[typeNameCombination[0]][0]), len(globalMap_typeNameCombination_typeID[typeNameCombination[0]])))
+        for typeNameCombinationTuple in describedByTypeNameCombination:
+            typeNameCombinationPrint = " ".join(typeNameCombinationTuple[0])
+            typeNameCombinationTuples.append((typeNameCombinationTuple, typeNameCombinationPrint))
+        for typeNameCombination in sorted(typeNameCombinationTuples, key=lambda tuple: tuple[1], reverse=True):
+            #Tuples contain category name, get it
+            cursor.execute(queryCategoryName, (typeNameCombination[0][1],))
+            for row in cursor: categoryName = row[0]
+            effectLines.insert(0,"#Items with name like: {0} ({1} of {2}) [{3}]".format(typeNameCombination[1], len(perEffectMap_typeNameCombinationTuple_typeID[typeNameCombination[0]][0]), len(globalMap_typeNameCombinationTuple_typeID[typeNameCombination[0]]), categoryName))
 
         for groupID in describedByGroup:
             cursor.execute(queryGroupName, (groupID,))
