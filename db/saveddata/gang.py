@@ -25,11 +25,11 @@ squadmembers_table = Table("squadmembers", saveddata_meta,
                            Column("memberID", ForeignKey("fits.ID"), primary_key = True))
 
 mapper(Gang, gangs_table,
-       properties = {"wings" : relation(Wing),
+       properties = {"wings" : relation(Wing, backref="gang"),
                      "leader" : relation(Fit)})
 
 mapper(Wing, wings_table,
-       properties = {"squads" : relation(Squad),
+       properties = {"squads" : relation(Squad, backref="wing"),
                      "leader" : relation(Fit)})
 
 mapper(Squad, squads_table,
