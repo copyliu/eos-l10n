@@ -13,15 +13,18 @@ class Gang(object):
         store.apply(self.leader)
         #Do the same, one level down.
         for wing in self.wings:
-            wing.calculateGangBonusses(self.leader)
+            wing.calculateGangBonusses(store)
 
 class Wing(object):
     def calculateModifiedAttributes(self):
         for c in chain(self.squads, (self.leader,)):
             c.calculateModifiedAttributes()
 
-    def calculateGangBonusses(self, alternative):
-        pass
+    def calculateGangBonusses(self, store):
+        store.reconsider(self.leader)
+        store.apply(self.leader)
+        for squad in self.squads:
+            squad.calculateGangBonusses(store)
 
 
 class Squad(object):
@@ -29,6 +32,10 @@ class Squad(object):
         for fit in self.members:
             fit.calculateModifiedAttributes()
 
+    def calculateGangBonusses(self, store):
+        store.reconsider(self.booster)
+        for member in self.members:
+            store.apply(member)
 
 class Store():
     def __init__(self):
