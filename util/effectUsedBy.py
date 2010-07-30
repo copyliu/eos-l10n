@@ -201,15 +201,58 @@ globalMap_typeID_typeNameCombination =  {}
 cursor.execute(queryPublishedTypeNames)
 for row in cursor:
     typeID, typeName = row[0], row[1]
-    #Split strings into separate words
-    wordList = typeName.split(" ")
+    #Let's split strings into separate words
+    typeNameSplitted = []
+    #Start from the whole typeName
+    remainingString = typeName
+    #We will pick word each iteration
+    iterate = True
+    while iterate:
+        #This regexp helps to split into words with spaces and dashes between them
+        #For example: CX|-|1, Hardwiring| - |Inherent, Zainou| |'Snapshot'
+        separatingPatternGeneral = "((?P<left_part>[^ -]+)(?P<separator>[ -]+)(?P<right_part>([^ -].*)))"
+        #This will help to split names like those used in implants, for exapmle ZET||500, EE||8
+        separatingPatternSeries = "((?P<left_part>[A-Za-z]{2,4})(?P<right_part>[0-9]{1,4}.*))"
+        #Check remaining string using both criteria
+        matchObjectGeneral = re.match(separatingPatternGeneral, remainingString)
+        matchObjectSeries = re.match(separatingPatternSeries, remainingString)
+        #Now, we need to find which criterion satisfies us
+        useGeneral = False
+        useSeries = False
+        #If remaining string meets both criteria
+        if matchObjectGeneral and matchObjectSeries:
+            #We check which occurs first and pick it
+            if len(matchObjectGeneral.group("left_part")) <= len(matchObjectSeries.group("left_part")): useGeneral = True
+            else: useSeries = True
+        #If only one criterion is met, just pick it
+        elif matchObjectGeneral:
+            useGeneral = True
+        elif matchObjectSeries:
+            useSeries = True
+        #Now, actually split string into word, separator and remaining string
+        #And append word to list of words of current typeName
+        if useGeneral:
+            newWord = matchObjectGeneral.group("left_part")
+            separator = matchObjectGeneral.group("separator")
+            remainingString = matchObjectGeneral.group("right_part")
+            typeNameSplitted.append(newWord)
+        elif useSeries:
+            newWord = matchObjectSeries.group("left_part")
+            separator = ""
+            remainingString = matchObjectSeries.group("right_part")
+            typeNameSplitted.append(newWord)
+        #If we didn't match any regexp, then we see last word.
+        #Append it too and stop iterating
+        else:
+            typeNameSplitted.append(remainingString)
+            iterate = False
     #Iterate  through number of words which will be used to compose combinations
-    for wordNumIndex in range(len(wordList)):
+    for wordNumIndex in range(len(typeNameSplitted)):
         #Iterate through all possible combinations
-        for typeNameCombination in itertools.combinations(wordList, wordNumIndex + 1):
+        for typeNameCombination in itertools.combinations(typeNameSplitted, wordNumIndex + 1):
             if not typeNameCombination in globalMap_typeNameCombination_typeID: globalMap_typeNameCombination_typeID[typeNameCombination] = set()
             globalMap_typeNameCombination_typeID[typeNameCombination].add(typeID)
-            if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(wordList))
+            if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(typeNameSplitted))
             globalMap_typeID_typeNameCombination[typeID][0].add(typeNameCombination)
 
 #Method for calculating score of group inside set of groups of given type
