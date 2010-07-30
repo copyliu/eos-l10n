@@ -1,4 +1,5 @@
 #Item: Proteus Offensive - Drone Synthesis Projector [Subsystem]
+type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Offensive Systems").level
     for bonus in ("hp", "armorHP", "shieldCapacity"):

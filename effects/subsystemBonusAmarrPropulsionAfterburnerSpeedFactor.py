@@ -1,4 +1,5 @@
 #Item: Legion Propulsion - Fuel Catalyst [Subsystem]
+type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Propulsion Systems").level
     fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Afterburner"),

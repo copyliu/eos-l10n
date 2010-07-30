@@ -1,4 +1,5 @@
 #Item: Doomsday Operation [Skill]
+type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Super Weapon" and "emDamage" in mod.itemModifiedAttributes,
                                   "emDamage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

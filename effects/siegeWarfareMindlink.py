@@ -1,4 +1,5 @@
 #Item: Siege Warfare Mindlink [Implant]
+type = "passive"
 def handler(fit, implant, context):
     fit.character.getSkill("Siege Warfare Specialist").suppress()
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Siege Warfare Specialist"),

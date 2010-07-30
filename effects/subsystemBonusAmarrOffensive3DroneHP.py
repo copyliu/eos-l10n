@@ -1,4 +1,5 @@
 #Item: Legion Offensive - Drone Synthesis Projector [Subsystem]
+type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Offensive Systems").level
     for type in ("shieldCapacity", "armorHP", "hp"):

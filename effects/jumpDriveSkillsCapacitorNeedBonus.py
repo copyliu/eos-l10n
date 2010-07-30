@@ -1,4 +1,4 @@
 #Item: Jump Drive Operation [Skill]
-from customEffects import boost
-def jumpDriveSkillsCapacitorNeedBonus(self, fitting, level):
-    boost(fitting.ship, "jumpDriveCapacitorNeed", "jumpDriveCapacitorNeedBonus", self.item, extraMult = level)
+type = "passive"
+def handler(fit, skill, context):
+    fit.ship.boostItemAttr("jumpDriveCapacitorNeed", skill.getModifiedItemAttr("jumpDriveCapacitorNeedBonus") * skill.level)

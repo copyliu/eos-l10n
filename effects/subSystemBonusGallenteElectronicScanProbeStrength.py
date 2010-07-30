@@ -1,4 +1,5 @@
 #Item: Proteus Electronics - Emergent Locus Analyzer [Subsystem]
+type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Electronic Systems").level
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Scanner Probe",
