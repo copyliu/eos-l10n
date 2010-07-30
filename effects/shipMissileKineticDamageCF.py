@@ -1,7 +1,8 @@
 #Used by:
-#Variations of ship: Condor (2 of 3)
 #Variations of ship: Heron (2 of 2)
 #Ship: Caldari Navy Hookbill
+#Ship: Condor
+#Ship: Crow
 #Ship: Hawk
 #Ship: Kestrel
 type = "passive"

@@ -1,5 +1,6 @@
 #Used by:
-#Variations of ship: Stabber (2 of 3)
+#Ship: Stabber
+#Ship: Vagabond
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Cruiser").level

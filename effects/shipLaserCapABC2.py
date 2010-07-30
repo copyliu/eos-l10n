@@ -1,5 +1,6 @@
 #Used by:
-#Variations of ship: Prophecy (2 of 3)
+#Ship: Absolution
+#Ship: Prophecy
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

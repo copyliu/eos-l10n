@@ -1,5 +1,6 @@
 #Used by:
-#Ships from group: Exhumer (2 of 3)
+#Ship: Hulk
+#Ship: Mackinaw
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Exhumers").level
