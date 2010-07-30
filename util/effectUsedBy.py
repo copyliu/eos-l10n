@@ -40,6 +40,7 @@ This script goes through all implemented effects and fills them with comments by
 #BaseTypes (variations, like they appear on eve's variation tab)
 #Market groups + variations (market groups like usual, plus variations
 #of all items from it)
+
 import sys
 sys.path.append("..")
 
@@ -62,6 +63,33 @@ parser.add_option("-u", "--debug", help="debug level, 0 by default", type="int",
 #1 - show only for first iteration
 #2 - show for all iterations
 debugLevel = options.debug
+
+######################### Control #########################
+#Ways to control process:
+#Adjust grouping type weights (more number - better chance to pick this
+#grouping type)
+groupWeight = 1.0
+categoryWeight = 1.0
+baseTypeWeight = 1.0
+marketGroupWithVarsWeight = 0.7
+typeNameCombinationWeight = 1.0
+#If score drops below this value, remaining items will be
+#listed without any grouping
+lowestScore = 0.7
+#Adjust inner/outer score calculation formulae
+def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, weight = 1.0):
+    innerAffectedPortionDescribed = affectedAndDecribed/total
+    innerAffectedPortionUndescribed = affectedAndUndescribed/total
+    #Items which are already described have 0 weight for now
+    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(affectedAndDecribed+affectedAndUndescribed-1)*weight
+    return innerScore
+def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
+    #Return just max of the inner scores, including weight factor
+    if float(len(innerScoreDict)):
+        return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
+    else: return 0.0
+
+
 
 #Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(options.database))
@@ -274,21 +302,6 @@ for typeID in publishedTypes:
             if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(typeNameSplitted))
             globalMap_typeID_typeNameCombination[typeID][0].add(typeNameCombination)
 
-#Method for calculating score of group inside set of groups of given type
-def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, weight = 1.0):
-    innerAffectedPortionDescribed = affectedAndDecribed/total
-    innerAffectedPortionUndescribed = affectedAndUndescribed/total
-    #Items which are already described have 0 weight for now
-    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(affectedAndDecribed+affectedAndUndescribed-1)*weight
-    return innerScore
-
-#Method for calculating score of group types
-def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
-    #Return just max of the inner scores, including weight factor
-    if float(len(innerScoreDict)):
-        return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
-    else: return 0.0
-
 ######################### Stage 2 #########################
 #Go through effect files one-by-one
 effectsPath = os.path.join("..", "effects")
@@ -374,7 +387,6 @@ for effectFileName in os.listdir(effectsPath):
             #stores scores for each group which describe set of items
             groupScore = {}
             #define weight of this grouping type
-            groupWeight = 1.0
             for groupID in perEffectMap_groupID_typeID:
                 #skip groups which are already used for item description
                 #(have 'describes' flag set to True)
@@ -406,7 +418,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Groups outer score: {0:.3}".format(groupOuterScore))
 
             categoryScore = {}
-            categoryWeight = 1.0
             for categoryID in perEffectMap_categoryID_typeID:
                 if not perEffectMap_categoryID_typeID[categoryID][1]:
                     affectedItemsFromCurrentCategory = perEffectMap_categoryID_typeID[categoryID][0]
@@ -424,7 +435,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Category outer score: {0:.3}".format(categoryOuterScore))
 
             baseTypeScore = {}
-            baseTypeWeight = 1.0
             for baseTypeID in perEffectMap_baseTypeID_typeID:
                 if not perEffectMap_baseTypeID_typeID[baseTypeID][1]:
                     affectedItemsFromCurrentBaseType = perEffectMap_baseTypeID_typeID[baseTypeID][0]
@@ -443,7 +453,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Base item outer score: {0:.3}".format(baseTypeOuterScore))
 
             marketGroupWithVarsScore = {}
-            marketGroupWithVarsWeight = 0.7
             for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
                 if not perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][1]:
                     affectedItemsFromCurrentMarketGroupWithVars = perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0]
@@ -473,7 +482,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Market group outer score: {0:.3}".format(marketGroupWithVarsOuterScore))
 
             typeNameCombinationScore = {}
-            typeNameCombinationWeight = 1.0
             for typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID:
                 if not perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][1]:
                     affectedItemsFromCurrenttypeNameCombination = perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0]
@@ -509,7 +517,7 @@ for effectFileName in os.listdir(effectsPath):
             #Pick max score from outer scores of all grouping types
             maxOuterScore = max(groupOuterScore, categoryOuterScore, baseTypeOuterScore, marketGroupWithVarsOuterScore, typeNameCombinationOuterScore)
             #define lower limit for score, below which there will be no winners
-            if maxOuterScore > 0.5:
+            if maxOuterScore >= lowestScore:
                 #If scores are similar, priorities are: category > group > name > marketGroup > baseType
                 if maxOuterScore == categoryOuterScore:
                     #pick ID of category which has highest score among other categories
