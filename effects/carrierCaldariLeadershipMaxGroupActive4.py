@@ -1,5 +1,5 @@
 #Item: Wyvern [Ship]
-tpye = "active"
+type = "active"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Carrier")
     fit.modules.filteredItemIncrease(lambda mod: mod.item.group.name == "Gang Coordinator",
