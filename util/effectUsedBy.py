@@ -43,6 +43,7 @@ This script goes through all implemented effects and fills them with comments by
 import sys
 sys.path.append("..")
 
+from optparse import OptionParser
 import sqlite3
 import os.path
 import re
@@ -50,14 +51,20 @@ import math
 import itertools
 import copy
 
+usage = "usage: %prog --database=DB [--debug=DEBUG]"
+parser = OptionParser(usage=usage)
+parser.add_option("-d", "--database", help="path to eve cache data dump in sqlite format, default pyfa database path is used if none specified", type="string", default=os.path.join("~", ".pyfa","eve.db"))
+parser.add_option("-u", "--debug", help="debug level, 0 by default", type="int", default=0)
+(options, args) = parser.parse_args()
+
 #show debugging prints?
 #0 - don't show debugging stuff and perform actual run through effect comments
 #1 - show only for first iteration
 #2 - show for all iterations
-debugLevel = 0
+debugLevel = options.debug
 
 #Connect to database and set up cursor
-db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
+db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
 #As we don't rely on pyfa's overrides, we need to set them manually
