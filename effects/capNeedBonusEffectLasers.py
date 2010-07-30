@@ -1,4 +1,5 @@
-#Items with name like: Energy Discharge Elutriation (6 of 6)
+#Used by:
+#Modules named like: Energy Discharge Elutriation (6 of 6)
 type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemBoostr(lambda mod: mod.item.group.name == "Energy Weapon",

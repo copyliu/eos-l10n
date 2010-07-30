@@ -1,4 +1,5 @@
-#Item: Leviathan [Ship]
+#Used by:
+#Ship: Leviathan
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Titan").level

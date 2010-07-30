@@ -1,7 +1,6 @@
-#Item: Energy Pulse Weapons [Skill]
-#Item: Hardwiring - Inherent Implants 'Squire' EP2 [Implant]
-#Item: Hardwiring - Inherent Implants 'Squire' EP4 [Implant]
-#Item: Hardwiring - Inherent Implants 'Squire' EP8 [Implant]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Squire' EP (3 of 3)
+#Skill: Energy Pulse Weapons
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

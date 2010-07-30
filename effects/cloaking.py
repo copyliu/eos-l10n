@@ -1,4 +1,5 @@
-#Items from group: Cloaking Device (12 of 14) [Module]
+#Used by:
+#Modules from group: Cloaking Device (12 of 14)
 type = "active"
 runTime = "early"
 def handler(fit, module, context):

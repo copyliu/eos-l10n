@@ -1,7 +1,8 @@
-#Variations of item: Executioner (2 of 3) [Ship]
-#Variations of item: Magnate (3 of 4) [Ship]
-#Variations of item: Punisher (2 of 3) [Ship]
-#Item: Crucifier [Ship]
+#Used by:
+#Variations of ship: Executioner (2 of 3)
+#Variations of ship: Magnate (3 of 4)
+#Variations of ship: Punisher (2 of 3)
+#Ship: Crucifier
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

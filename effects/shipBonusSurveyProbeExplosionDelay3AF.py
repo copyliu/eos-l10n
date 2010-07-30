@@ -1,4 +1,5 @@
-#Item: Magnate [Ship]
+#Used by:
+#Ship: Magnate
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

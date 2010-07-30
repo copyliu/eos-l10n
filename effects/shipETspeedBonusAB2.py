@@ -1,4 +1,5 @@
-#Variations of item: Armageddon (4 of 5) [Ship]
+#Used by:
+#Variations of ship: Armageddon (4 of 5)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level

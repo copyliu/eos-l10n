@@ -1,4 +1,5 @@
-#Item: Nightmare [Ship]
+#Used by:
+#Ship: Nightmare
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level

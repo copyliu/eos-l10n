@@ -1,4 +1,5 @@
-#Item: Tengu Defensive - Warfare Processor [Subsystem]
+#Used by:
+#Subsystem: Tengu Defensive - Warfare Processor
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Defensive Systems").level

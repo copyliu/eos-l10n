@@ -1,4 +1,5 @@
-#Items with name like: Low-grade Grail (6 of 6)
+#Used by:
+#Implants named like: Low grade Grail (6 of 6)
 type = "passive"
 runTim = "early"
 def handler(fit, implant, context):

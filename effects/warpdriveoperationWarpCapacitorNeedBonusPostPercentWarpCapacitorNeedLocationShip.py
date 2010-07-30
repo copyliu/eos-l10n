@@ -1,6 +1,5 @@
-#Item: Hardwiring - Eifyr and Co. 'Rogue' FY-0 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Rogue' FY-1 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Rogue' FY-2 [Implant]
+#Used by:
+#Implants named like: Hardwiring Eifyr and Co. 'Rogue' FY (3 of 3)
 type = "passive"
 def handler(fit, implant, context):
     fit.ship.boostItemAttr("warpCapacitorNeed", implant.getModifiedItemAttr("warpCapacitorNeedBonus"))

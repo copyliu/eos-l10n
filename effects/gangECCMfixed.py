@@ -1,4 +1,5 @@
-#Item: Information Warfare Link - Sensor Integrity [Module]
+#Used by:
+#Module: Information Warfare Link - Sensor Integrity
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

@@ -1,4 +1,5 @@
-#Item: Tengu Propulsion - Gravitational Capacitor [Subsystem]
+#Used by:
+#Subsystem: Tengu Propulsion - Gravitational Capacitor
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Propulsion Systems").level

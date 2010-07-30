@@ -1,4 +1,5 @@
-#Item: Triage Module I [Module]
+#Used by:
+#Module: Triage Module I
 type = "active"
 def handler(fit, module, context):
     #Remote armor reps

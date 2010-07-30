@@ -1,5 +1,6 @@
-#Items with name like: Hardwiring - Zainou 'Sharpshooter' (3 of 3)
-#Item: Citadel Torpedoes [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Sharpshooter' ZMX (3 of 3)
+#Skill: Citadel Torpedoes
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

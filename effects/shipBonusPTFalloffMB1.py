@@ -1,4 +1,5 @@
-#Item: Vargur [Ship]
+#Used by:
+#Ship: Vargur
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Battleship").level

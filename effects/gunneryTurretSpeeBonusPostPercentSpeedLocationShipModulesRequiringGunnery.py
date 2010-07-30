@@ -1,8 +1,7 @@
-#Item: Gunnery [Skill]
-#Item: Hardwiring - Inherent Implants 'Lancer' G0-Delta [Implant]
-#Item: Hardwiring - Inherent Implants 'Lancer' G1-Delta [Implant]
-#Item: Hardwiring - Inherent Implants 'Lancer' G2-Delta [Implant]
-#Item: Pashan's Turret Customization Mindlink [Implant]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Delta (3 of 3)
+#Implant: Pashan's Turret Customization Mindlink
+#Skill: Gunnery
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

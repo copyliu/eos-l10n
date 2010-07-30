@@ -1,4 +1,5 @@
-#Item: Providence [Ship]
+#Used by:
+#Ship: Providence
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Freighter").level

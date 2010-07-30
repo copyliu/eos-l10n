@@ -1,4 +1,5 @@
-#Items with name like: Jackal (6 of 12)
+#Used by:
+#Implants named like: Jackal (6 of 12)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

@@ -1,6 +1,6 @@
-#Item: Biology [Skill]
-#Item: Hardwiring - Eifyr and Co. 'Alchemist' WA-1 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Alchemist' WA-2 [Implant]
+#Used by:
+#Implants named like: Hardwiring Eifyr and Co. 'Alchemist' WA (2 of 2)
+#Skill: Biology
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

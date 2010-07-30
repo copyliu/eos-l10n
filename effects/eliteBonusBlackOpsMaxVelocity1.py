@@ -1,4 +1,5 @@
-#Item: Panther [Ship]
+#Used by:
+#Ship: Panther
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Black Ops").level

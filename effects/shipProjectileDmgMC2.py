@@ -1,5 +1,6 @@
-#Variations of item: Rupture (2 of 3) [Ship]
-#Item: Cynabal [Ship]
+#Used by:
+#Variations of ship: Rupture (2 of 3)
+#Ship: Cynabal
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Cruiser").level

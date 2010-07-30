@@ -1,5 +1,6 @@
-#Items from group: Exhumer (3 of 3) [Ship]
-#Items from group: Mining Barge (3 of 3) [Ship]
+#Used by:
+#Ships from group: Exhumer (3 of 3)
+#Ships from group: Mining Barge (3 of 3)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Mining Barge").level

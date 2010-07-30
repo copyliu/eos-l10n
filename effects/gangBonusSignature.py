@@ -1,4 +1,5 @@
-#Item: Skirmish Warfare Link - Evasive Maneuvers [Module]
+#Used by:
+#Module: Skirmish Warfare Link - Evasive Maneuvers
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

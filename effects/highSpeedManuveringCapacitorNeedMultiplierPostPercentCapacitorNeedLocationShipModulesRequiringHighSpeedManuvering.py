@@ -1,5 +1,6 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Navigation Implants (3 of 3)
-#Item: High Speed Maneuvering [Skill]
+#Used by:
+#Implants named like: Hardwiring Eifyr and Co. 'Rogue' GY (3 of 3)
+#Skill: High Speed Maneuvering
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

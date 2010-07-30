@@ -1,4 +1,5 @@
-#Item: Maelstrom [Ship]
+#Used by:
+#Ship: Maelstrom
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Battleship").level

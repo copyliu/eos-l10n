@@ -1,4 +1,5 @@
-#Item: Tengu Offensive - Magnetic Infusion Basin [Subsystem]
+#Used by:
+#Subsystem: Tengu Offensive - Magnetic Infusion Basin
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Offensive Systems").level

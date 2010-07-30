@@ -1,7 +1,8 @@
-#Item: Bantam [Ship]
-#Item: Burst [Ship]
-#Item: Navitas [Ship]
-#Item: Tormentor [Ship]
+#Used by:
+#Ship: Bantam
+#Ship: Burst
+#Ship: Navitas
+#Ship: Tormentor
 type = "passive"
 def handler(fit, ship, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Mining Laser",

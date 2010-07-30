@@ -1,6 +1,7 @@
-#Items with name like: Capacitor Control Circuit (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Engineering Implants (3 of 6)
-#Item: Energy Systems Operation [Skill]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Squire' CR (3 of 3)
+#Modules named like: Capacitor Control Circuit (6 of 6)
+#Skill: Energy Systems Operation
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

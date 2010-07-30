@@ -1,4 +1,5 @@
-#Item: Loki Electronics - Emergent Locus Analyzer [Subsystem]
+#Used by:
+#Subsystem: Loki Electronics - Emergent Locus Analyzer
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Electronic Systems").level

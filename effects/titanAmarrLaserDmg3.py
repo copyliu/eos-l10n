@@ -1,4 +1,5 @@
-#Item: Avatar [Ship]
+#Used by:
+#Ship: Avatar
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Titan").level

@@ -1,4 +1,5 @@
-#Item: Crusader [Ship]
+#Used by:
+#Ship: Crusader
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Interceptors").level

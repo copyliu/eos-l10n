@@ -1,4 +1,5 @@
-#Item: Legion Defensive - Augmented Plating [Subsystem]
+#Used by:
+#Subsystem: Legion Defensive - Augmented Plating
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Defensive Systems").level

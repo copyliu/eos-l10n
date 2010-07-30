@@ -1,4 +1,5 @@
-#Item: Legion Propulsion - Interdiction Nullifier [Subsystem]
+#Used by:
+#Subsystem: Legion Propulsion - Interdiction Nullifier
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Propulsion Systems").level

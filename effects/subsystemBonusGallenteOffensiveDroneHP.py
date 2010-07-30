@@ -1,4 +1,5 @@
-#Item: Proteus Offensive - Drone Synthesis Projector [Subsystem]
+#Used by:
+#Subsystem: Proteus Offensive - Drone Synthesis Projector
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Offensive Systems").level

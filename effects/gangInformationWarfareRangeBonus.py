@@ -1,4 +1,5 @@
-#Item: Information Warfare Link - Recon Operation [Module]
+#Used by:
+#Module: Information Warfare Link - Recon Operation
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

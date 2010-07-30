@@ -1,4 +1,5 @@
-#Item: Legion Engineering - Power Core Multiplier [Subsystem]
+#Used by:
+#Subsystem: Legion Engineering - Power Core Multiplier
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Engineering Systems").level

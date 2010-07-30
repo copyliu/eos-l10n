@@ -1,4 +1,5 @@
-#Item: Avatar [Ship]
+#Used by:
+#Ship: Avatar
 type = "gang", "passive"
 def handler(fit, ship, context):
     if "ship" in context:

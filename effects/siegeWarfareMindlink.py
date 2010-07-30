@@ -1,4 +1,5 @@
-#Item: Siege Warfare Mindlink [Implant]
+#Used by:
+#Implant: Siege Warfare Mindlink
 type = "passive"
 def handler(fit, implant, context):
     fit.character.getSkill("Siege Warfare Specialist").suppress()

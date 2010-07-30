@@ -1,4 +1,5 @@
-#Item: Scythe [Ship]
+#Used by:
+#Ship: Scythe
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Cruiser").level

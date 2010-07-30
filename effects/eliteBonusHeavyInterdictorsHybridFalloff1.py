@@ -1,4 +1,5 @@
-#Item: Phobos [Ship]
+#Used by:
+#Ship: Phobos
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Interdictors").level

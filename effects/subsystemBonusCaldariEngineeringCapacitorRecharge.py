@@ -1,4 +1,5 @@
-#Item: Tengu Engineering - Capacitor Regeneration Matrix [Subsystem]
+#Used by:
+#Subsystem: Tengu Engineering - Capacitor Regeneration Matrix
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Engineering Systems").level

@@ -1,6 +1,7 @@
-#Variations of item: Dominix (3 of 3) [Ship]
-#Variations of item: Megathron (4 of 5) [Ship]
-#Item: Hyperion [Ship]
+#Used by:
+#Variations of ship: Dominix (3 of 3)
+#Variations of ship: Megathron (4 of 5)
+#Ship: Hyperion
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Battleship").level

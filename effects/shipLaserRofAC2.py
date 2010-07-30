@@ -1,4 +1,5 @@
-#Variations of item: Omen (3 of 3) [Ship]
+#Used by:
+#Variations of ship: Omen (3 of 3)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

@@ -1,7 +1,6 @@
-#Items from group: Target Painter (9 of 9) [Module]
-#Item: Berserker TP-900 [Drone]
-#Item: Valkyrie TP-600 [Drone]
-#Item: Warrior TP-300 [Drone]
+#Used by:
+#Modules from group: Target Painter (9 of 9)
+#Drones named like: TP (3 of 3)
 type = "projected", "active"
 def handler(fit, container, context):
     if "projected" in context:

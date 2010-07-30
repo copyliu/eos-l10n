@@ -1,4 +1,5 @@
-#Item: Manticore [Ship]
+#Used by:
+#Ship: Manticore
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

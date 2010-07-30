@@ -1,7 +1,8 @@
-#Items with name like: Core Defence Field Extender (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Shield Implants (3 of 3)
-#Item: Sansha Modified 'Gnome' Implant [Implant]
-#Item: Shield Management [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Gnome' KVA (3 of 3)
+#Modules named like: Core Defence Field Extender (6 of 6)
+#Implant: Sansha Modified 'Gnome' Implant
+#Skill: Shield Management
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

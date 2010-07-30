@@ -1,5 +1,6 @@
-#Items with name like: Warfare Specialist (4 of 5)
-#Item: Mining Director [Skill]
+#Used by:
+#Skills named like: Warfare Specialist (4 of 5)
+#Skill: Mining Director
 runTime = "early"
 type = "passive"
 def handler(fit, skill, context):

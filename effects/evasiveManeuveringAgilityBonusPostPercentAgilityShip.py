@@ -1,8 +1,9 @@
-#Items with name like: Low Friction Nozzle Joints (6 of 6)
-#Items with name like: Low-grade Nomad (5 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Navigation Implants (3 of 4)
-#Item: Evasive Maneuvering [Skill]
-#Item: Spaceship Command [Skill]
+#Used by:
+#Implants named like: Hardwiring Eifyr and Co. 'Rogue' AY (3 of 3)
+#Implants named like: Low grade Nomad (5 of 6)
+#Modules named like: Low Friction Nozzle Joints (6 of 6)
+#Skill: Evasive Maneuvering
+#Skill: Spaceship Command
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

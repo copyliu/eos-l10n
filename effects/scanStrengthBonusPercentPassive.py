@@ -1,4 +1,5 @@
-#Items from group: Cyberimplant (20 of 138) [Implant]
+#Used by:
+#Implants from group: Cyberimplant (20 of 138)
 type = "passive"
 def handler(fit, module, context):
     for type in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):

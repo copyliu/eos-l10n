@@ -1,4 +1,5 @@
-#Item: Vulture [Ship]
+#Used by:
+#Ship: Vulture
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Command Ships").level

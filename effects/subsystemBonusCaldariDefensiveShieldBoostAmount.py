@@ -1,4 +1,5 @@
-#Item: Tengu Defensive - Amplification Node [Subsystem]
+#Used by:
+#Subsystem: Tengu Defensive - Amplification Node
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Defensive Systems").level

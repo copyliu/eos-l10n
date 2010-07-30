@@ -1,6 +1,7 @@
-#Variations of item: Slasher (2 of 3) [Ship]
-#Item: Republic Fleet Firetail [Ship]
-#Item: Rifter [Ship]
+#Used by:
+#Variations of ship: Slasher (2 of 3)
+#Ship: Republic Fleet Firetail
+#Ship: Rifter
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Frigate").level

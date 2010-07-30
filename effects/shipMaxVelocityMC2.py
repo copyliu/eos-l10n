@@ -1,4 +1,5 @@
-#Variations of item: Stabber (2 of 3) [Ship]
+#Used by:
+#Variations of ship: Stabber (2 of 3)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Cruiser").level

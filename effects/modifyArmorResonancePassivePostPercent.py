@@ -1,4 +1,5 @@
-#Items from group: Armor Hardener (156 of 156) [Module]
+#Used by:
+#Modules from group: Armor Hardener (156 of 156)
 from model.types import State          
 type = "passive"
 def handler(fit, module, context):

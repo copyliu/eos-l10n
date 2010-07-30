@@ -1,5 +1,6 @@
-#Items from group: Cap Drain Drone (3 of 3) [Drone]
-#Items from group: Energy Destabilizer (41 of 41) [Module]
+#Used by:
+#Drones from group: Cap Drain Drone (3 of 3)
+#Modules from group: Energy Destabilizer (41 of 41)
 from model.types import State
 type = "active", "projected"
 def handler(fit, container, context):

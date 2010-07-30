@@ -1,4 +1,5 @@
-#Item: Dramiel [Ship]
+#Used by:
+#Ship: Dramiel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

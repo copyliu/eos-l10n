@@ -1,8 +1,7 @@
-#Items with name like: Egress Port Maximizer (6 of 6)
-#Item: Energy Emission Systems [Skill]
-#Item: Hardwiring - Inherent Implants 'Squire' EE2 [Implant]
-#Item: Hardwiring - Inherent Implants 'Squire' EE4 [Implant]
-#Item: Hardwiring - Inherent Implants 'Squire' EE8 [Implant]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Squire' EE (3 of 3)
+#Modules named like: Egress Port Maximizer (6 of 6)
+#Skill: Energy Emission Systems
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

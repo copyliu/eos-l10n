@@ -1,4 +1,5 @@
-#Item: Siege Warfare Link - Shield Harmonizing [Module]
+#Used by:
+#Module: Siege Warfare Link - Shield Harmonizing
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

@@ -1,5 +1,6 @@
-#Item: Loki Offensive - Hardpoint Efficiency Configuration [Subsystem]
-#Item: Loki Offensive - Projectile Scoping Array [Subsystem]
+#Used by:
+#Subsystem: Loki Offensive - Hardpoint Efficiency Configuration
+#Subsystem: Loki Offensive - Projectile Scoping Array
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Offensive Systems").level

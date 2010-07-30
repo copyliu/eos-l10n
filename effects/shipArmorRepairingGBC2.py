@@ -1,5 +1,6 @@
-#Variations of item: Brutix (3 of 3) [Ship]
-#Item: Myrmidon [Ship]
+#Used by:
+#Variations of ship: Brutix (3 of 3)
+#Ship: Myrmidon
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

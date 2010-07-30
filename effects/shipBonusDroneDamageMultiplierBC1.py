@@ -1,4 +1,5 @@
-#Item: Myrmidon [Ship]
+#Used by:
+#Ship: Myrmidon
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

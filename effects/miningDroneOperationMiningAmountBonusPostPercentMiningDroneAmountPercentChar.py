@@ -1,6 +1,7 @@
-#Items with name like: Drone Mining Augmentor (6 of 6)
-#Item: Drone Interfacing [Skill]
-#Item: Mining Drone Operation [Skill]
+#Used by:
+#Modules named like: Drone Mining Augmentor (6 of 6)
+#Skill: Drone Interfacing
+#Skill: Mining Drone Operation
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

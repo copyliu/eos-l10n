@@ -1,4 +1,5 @@
-#Item: Siege Warfare Link - Active Shielding [Module]
+#Used by:
+#Module: Siege Warfare Link - Active Shielding
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

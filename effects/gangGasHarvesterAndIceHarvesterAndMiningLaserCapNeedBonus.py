@@ -1,4 +1,5 @@
-#Item: Mining Foreman Link - Harvester Capacitor Efficiency [Module]
+#Used by:
+#Module: Mining Foreman Link - Harvester Capacitor Efficiency
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

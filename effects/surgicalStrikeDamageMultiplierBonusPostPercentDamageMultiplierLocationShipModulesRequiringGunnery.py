@@ -1,7 +1,6 @@
-#Item: Cerebral Accelerator [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Gunslinger' CX-0 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Gunslinger' CX-1 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Gunslinger' CX-2 [Implant]
+#Used by:
+#Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' CX (3 of 3)
+#Implant: Cerebral Accelerator
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),

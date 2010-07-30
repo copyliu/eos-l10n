@@ -1,4 +1,5 @@
-#Item: Cloaking [Skill]
+#Used by:
+#Skill: Cloaking
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Cloaking"),

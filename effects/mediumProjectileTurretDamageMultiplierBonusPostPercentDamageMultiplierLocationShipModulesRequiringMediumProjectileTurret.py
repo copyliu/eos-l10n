@@ -1,7 +1,6 @@
-#Item: Hardwiring - Eifyr and Co 'Gunslinger' MX-2 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Gunslinger' MX-0 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Gunslinger' MX-1 [Implant]
-#Item: Medium Projectile Turret [Skill]
+#Used by:
+#Implants named like: Hardwiring Eifyr and 'Gunslinger' MX (3 of 3)
+#Skill: Medium Projectile Turret
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

@@ -1,7 +1,8 @@
-#Variations of item: Bellicose (3 of 3) [Ship]
-#Variations of item: Rupture (3 of 3) [Ship]
-#Variations of item: Stabber (3 of 3) [Ship]
-#Item: Scythe Fleet Issue [Ship]
+#Used by:
+#Variations of ship: Bellicose (3 of 3)
+#Variations of ship: Rupture (3 of 3)
+#Variations of ship: Stabber (3 of 3)
+#Ship: Scythe Fleet Issue
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Cruiser").level

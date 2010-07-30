@@ -1,6 +1,7 @@
-#Items with name like: Auxiliary Thrusters (6 of 6)
-#Items with name like: Snake (11 of 13)
-#Item: Navigation [Skill]
+#Used by:
+#Implants named like: Snake (11 of 12)
+#Modules named like: Auxiliary Thrusters (6 of 6)
+#Skill: Navigation
 type = "passive"
 def handler(fit, container, context):
     fit.ship.boostItemAttr("maxVelocity", container.getModifiedItemAttr("velocityBonus"),

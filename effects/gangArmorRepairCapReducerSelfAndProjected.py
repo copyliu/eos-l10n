@@ -1,4 +1,5 @@
-#Item: Armored Warfare Link - Damage Control [Module]
+#Used by:
+#Module: Armored Warfare Link - Damage Control
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

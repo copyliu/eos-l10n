@@ -1,8 +1,7 @@
-#Items with name like: Sooth Sayer Booster (4 of 4)
-#Item: Hardwiring - Zainou 'Deadeye' ZGC10 [Implant]
-#Item: Hardwiring - Zainou 'Deadeye' ZGC100 [Implant]
-#Item: Hardwiring - Zainou 'Deadeye' ZGC1000 [Implant]
-#Item: Trajectory Analysis [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Deadeye' ZGC (3 of 3)
+#Implants named like: Sooth Sayer Booster (4 of 4)
+#Skill: Trajectory Analysis
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

@@ -1,4 +1,5 @@
-#Item: Tengu Electronics - Emergent Locus Analyzer [Subsystem]
+#Used by:
+#Subsystem: Tengu Electronics - Emergent Locus Analyzer
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Electronic Systems").level

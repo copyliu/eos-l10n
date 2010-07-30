@@ -1,4 +1,5 @@
-#Items from group: Energy Transfer Array (37 of 37) [Module]
+#Used by:
+#Modules from group: Energy Transfer Array (37 of 37)
 type = "projected", "active"
 def handler(fit, module, context):
     if "projected" not in context: return

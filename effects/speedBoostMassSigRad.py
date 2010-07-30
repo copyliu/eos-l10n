@@ -1,4 +1,5 @@
-#Items from group: Afterburner (53 of 107) [Module]
+#Used by:
+#Modules from group: Afterburner (53 of 107)
 type = "active"
 runTime = "late"
 def handler(fit, module, context):

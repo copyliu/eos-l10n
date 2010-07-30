@@ -1,4 +1,5 @@
-#Item: Keres [Ship]
+#Used by:
+#Ship: Keres
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Electronic Attack Ships").level

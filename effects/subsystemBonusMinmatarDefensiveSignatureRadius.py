@@ -1,4 +1,5 @@
-#Item: Loki Defensive - Amplification Node [Subsystem]
+#Used by:
+#Subsystem: Loki Defensive - Amplification Node
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Defensive Systems").level

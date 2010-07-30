@@ -1,4 +1,5 @@
-#Item: Rorqual [Ship]
+#Used by:
+#Ship: Rorqual
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Capital Industrial Ships").level

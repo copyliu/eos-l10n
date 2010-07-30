@@ -1,4 +1,5 @@
-#Item: Cerberus [Ship]
+#Used by:
+#Ship: Cerberus
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Assault Ships").level

@@ -1,4 +1,5 @@
-#Item: Skirmish Warfare Link - Rapid Deployment [Module]
+#Used by:
+#Module: Skirmish Warfare Link - Rapid Deployment
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

@@ -1,4 +1,5 @@
-#Item: Remote ECM Burst I [Module]
+#Used by:
+#Module: Remote ECM Burst I
 type = 'active'
 def handler(fit, module, context):
     pass

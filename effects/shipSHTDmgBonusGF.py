@@ -1,9 +1,10 @@
-#Variations of item: Atron (3 of 3) [Ship]
-#Variations of item: Incursus (3 of 3) [Ship]
-#Item: Federation Navy Comet [Ship]
-#Item: Helios [Ship]
-#Item: Maulus [Ship]
-#Item: Tristan [Ship]
+#Used by:
+#Variations of ship: Atron (3 of 3)
+#Variations of ship: Incursus (3 of 3)
+#Ship: Federation Navy Comet
+#Ship: Helios
+#Ship: Maulus
+#Ship: Tristan
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

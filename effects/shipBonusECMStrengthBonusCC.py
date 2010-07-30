@@ -1,4 +1,5 @@
-#Item: Blackbird [Ship]
+#Used by:
+#Ship: Blackbird
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

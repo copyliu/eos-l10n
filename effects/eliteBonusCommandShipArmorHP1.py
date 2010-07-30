@@ -1,4 +1,5 @@
-#Item: Damnation [Ship]
+#Used by:
+#Ship: Damnation
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Command Ships").level

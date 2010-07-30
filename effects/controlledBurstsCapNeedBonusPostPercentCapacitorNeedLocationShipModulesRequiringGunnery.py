@@ -1,7 +1,6 @@
-#Item: Controlled Bursts [Skill]
-#Item: Hardwiring - Inherent Implants 'Lancer' G0-Beta [Implant]
-#Item: Hardwiring - Inherent Implants 'Lancer' G1-Beta [Implant]
-#Item: Hardwiring - Inherent Implants 'Lancer' G2-Beta [Implant]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Beta (3 of 3)
+#Skill: Controlled Bursts
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

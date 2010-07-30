@@ -1,4 +1,5 @@
-#Item: Nemesis [Ship]
+#Used by:
+#Ship: Nemesis
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Covert Ops").level

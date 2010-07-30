@@ -1,4 +1,5 @@
-#Item: Loki Defensive - Warfare Processor [Subsystem]
+#Used by:
+#Subsystem: Loki Defensive - Warfare Processor
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Defensive Systems").level

@@ -1,6 +1,7 @@
-#Item: Executioner [Ship]
-#Item: Gold Magnate [Ship]
-#Item: Silver Magnate [Ship]
+#Used by:
+#Ship: Executioner
+#Ship: Gold Magnate
+#Ship: Silver Magnate
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

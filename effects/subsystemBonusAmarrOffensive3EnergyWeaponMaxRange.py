@@ -1,4 +1,5 @@
-#Item: Legion Offensive - Liquid Crystal Magnifiers [Subsystem]
+#Used by:
+#Subsystem: Legion Offensive - Liquid Crystal Magnifiers
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Offensive Systems").level
