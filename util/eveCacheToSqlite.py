@@ -16,7 +16,7 @@
 '''
 This script pulls data out of EVE cache and makes an SQLite dump
 Reverence library by Entity is used, check http://wiki.github.com/ntt/reverence/ for info
-As reverence uses the same python version as EVE client, script cannot be converted to python3
+As reverence uses the same python version as EVE client (2.x series), script cannot be converted to python3
 Example commands to run the script for default paths:
 Tranquility: python2.6 eveCacheToSqlite.py --eve="~/.wine/drive_c/Program Files/CCP/EVE" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/cache" --dump="~/Desktop/eve.db"
 Singularity: python2.6 eveCacheToSqlite.py --eve="~/.wine/drive_c/Program Files/CCP/EVE (Singularity)" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_(singularity)_singularity/cache" --sisi --dump="~/Desktop/evetest.db"
