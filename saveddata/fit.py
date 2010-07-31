@@ -1,4 +1,3 @@
-from model.types import Drone, Ship, Character
 from model.effectHandlerHelpers import HandledList
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
@@ -224,3 +223,4 @@ class HandledProjectedFitList(list):
     def append(self, proj):
         proj.projected = True
         list.append(self, proj)
+from model.types import Drone, Ship, Character
