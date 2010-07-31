@@ -23,7 +23,6 @@ class Fit(object):
         self.__boosters = HandledImplantBoosterList()
         self.__projectedModules = HandledList()
         self.__projectedFits = HandledList()
-        self.__gang = None
         self.__character = None
         self.__owner = None
         self.shipID = None
@@ -37,6 +36,7 @@ class Fit(object):
 
     def build(self):
         from model import db
+        self.__calculated = False
         self.__calculatedTargets = []
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
         self.extraAttributes = ModifiedAttributeDict()
@@ -105,6 +105,7 @@ class Fit(object):
         else: return val
 
     def clear(self):
+        self.__calculated = False
         del self.__calculatedTargets[:]
         if self.ship != None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
@@ -123,6 +124,10 @@ class Fit(object):
         else:
             return
 
+        if self.__calculated == True and forceProjected == False:
+            return
+        else:
+            self.__calculated = True
         #There's a few things to keep in mind here
         #1: Early effects first, then regular ones, then late ones, regardless of anything else
         #2: Some effects aren't implemented

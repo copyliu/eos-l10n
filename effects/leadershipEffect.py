@@ -1,4 +1,7 @@
 #Item: Leadership [Skill]
-type = "gang"
+type = "gang", "passive"
 def handler(fit, skill, context):
-    fit.ship.boostItemAttr("scanResolution", skill.getModifiedItemAttr("scanResolutionBonus") * skill.level)
+    if "gang" in context:
+        fit.ship.boostItemAttr("scanResolution", skill.getModifiedItemAttr("scanResolutionBonus") * skill.level)
+    else:
+        skill.commandBonus = skill.getModifiedItemAttr("scanResolutionBonus") * skill.level

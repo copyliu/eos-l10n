@@ -6,5 +6,6 @@
 #Item: Rorqual [Ship]
 type = "passive"
 def handler(fit, ship, context):
-    level = fit.character.getSkill("Advanced Spaceship Command").level
-    fit.ship.boostItemAttr("agility", ship.getModifiedItemAttr("agilityBonus") * level)
+    skill = fit.character.getSkill("Advanced Spaceship Command")
+    level = skill.level
+    fit.ship.boostItemAttr("agility", skill.getModifiedItemAttr("agilityBonus") * level)

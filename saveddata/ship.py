@@ -14,7 +14,7 @@ class Ship(ItemAttrShortcut, HandledItem):
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = item.attributes
-        self.clear()
+        self.commandBonus = 0
 
     @property
     def item(self):
@@ -26,6 +26,7 @@ class Ship(ItemAttrShortcut, HandledItem):
 
     def clear(self):
         self.itemModifiedAttributes.clear()
+        self.commandBonus = 0
 
     def calculateModifiedAttributes(self, fit, runTime, forceProjected = False):
         if forceProjected: return

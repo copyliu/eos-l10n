@@ -60,7 +60,11 @@ class Character(object):
 
         #Haven't found it
         if self != self.getAll0():
-            return self.getAll0().getSkill(item)
+            skill = self.getAll0().getSkill(item)
+            if skill != None:
+                s = Skill(skill.item, 0)
+                self.addSkill(s)
+                return s
 
     def iterSkills(self):
         return self.__skills.__iter__()
@@ -104,6 +108,7 @@ class Skill(HandledItem):
         self.__item = item
         self.itemID = item.ID
         self.level = level
+        self.commandBonus = 0
         self.build(ro)
 
     @reconstructor
@@ -134,6 +139,7 @@ class Skill(HandledItem):
 
     def clear(self):
         self.__suppressed = False
+        self.commandBonus = 0
 
     def suppress(self):
         self.__suppressed = True
