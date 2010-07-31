@@ -1,5 +1,6 @@
-#Items with name like: Drone Scope Chip (6 of 6)
-#Item: Drone Sharpshooting [Skill]
+#Used by:
+#Modules named like: Drone Scope Chip (6 of 6)
+#Skill: Drone Sharpshooting
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

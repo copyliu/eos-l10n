@@ -1,4 +1,5 @@
-#Item: Ragnarok [Ship]
+#Used by:
+#Ship: Ragnarok
 type = "gang", "passive"
 def handler(fit, ship, context):
     if "ship" in context:

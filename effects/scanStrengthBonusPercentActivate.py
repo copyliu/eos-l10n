@@ -1,4 +1,5 @@
-#Items from group: ECCM (44 of 44) [Module]
+#Used by:
+#Modules from group: ECCM (44 of 44)
 type = "active"
 def handler(fit, module, context):
     for type in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):

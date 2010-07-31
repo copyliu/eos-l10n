@@ -1,4 +1,5 @@
-#Items from group: Energy Vampire (52 of 52) [Module]
+#Used by:
+#Modules from group: Energy Vampire (52 of 52)
 type = "active", "projected"
 def handler(fit, module, context):
     amount = module.getModifiedItemAttr("powerTransferAmount")

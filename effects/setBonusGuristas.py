@@ -1,5 +1,5 @@
-#Items with name like: Crystal (12 of 45)
-#Items with name like: Low-grade Crystal (6 of 6)
+#Used by:
+#Implants named like: Crystal (12 of 12)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

@@ -1,4 +1,5 @@
-#Item: Huginn [Ship]
+#Used by:
+#Ship: Huginn
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Recon Ships").level

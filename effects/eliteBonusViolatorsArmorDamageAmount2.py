@@ -1,5 +1,6 @@
-#Item: Kronos [Ship]
-#Item: Paladin [Ship]
+#Used by:
+#Ship: Kronos
+#Ship: Paladin
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Marauders").level

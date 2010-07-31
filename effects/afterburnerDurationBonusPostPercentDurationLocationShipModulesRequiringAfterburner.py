@@ -1,8 +1,7 @@
-#Item: Afterburner [Skill]
-#Item: Hardwiring - Eifyr and Co. 'Rogue' EY-0 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Rogue' EY-1 [Implant]
-#Item: Hardwiring - Eifyr and Co. 'Rogue' EY-2 [Implant]
-#Item: Zor's Custom Navigation Link [Implant]
+#Used by:
+#Implants named like: Hardwiring Eifyr and Co. 'Rogue' EY (3 of 3)
+#Implant: Zor's Custom Navigation Link
+#Skill: Afterburner
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

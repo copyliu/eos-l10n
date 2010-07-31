@@ -1,5 +1,6 @@
-#Item: Cruor [Ship]
-#Item: Succubus [Ship]
+#Used by:
+#Ship: Cruor
+#Ship: Succubus
 type = "passive"
 def handler(fit, ship, context):
     fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Small Energy Turret"),

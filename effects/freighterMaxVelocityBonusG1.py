@@ -1,4 +1,5 @@
-#Item: Obelisk [Ship]
+#Used by:
+#Ship: Obelisk
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Freighter").level

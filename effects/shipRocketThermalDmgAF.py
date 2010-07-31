@@ -1,6 +1,7 @@
-#Item: Anathema [Ship]
-#Item: Malediction [Ship]
-#Item: Vengeance [Ship]
+#Used by:
+#Ship: Anathema
+#Ship: Malediction
+#Ship: Vengeance
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

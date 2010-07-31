@@ -1,4 +1,5 @@
-#Item: Enyo [Ship]
+#Used by:
+#Ship: Enyo
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

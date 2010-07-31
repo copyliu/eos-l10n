@@ -1,4 +1,5 @@
-#Item: Viator [Ship]
+#Used by:
+#Ship: Viator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Transport Ships").level

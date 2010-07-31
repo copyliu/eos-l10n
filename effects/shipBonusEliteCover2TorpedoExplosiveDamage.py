@@ -1,4 +1,5 @@
-#Item: Hound [Ship]
+#Used by:
+#Ship: Hound
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Covert Ops").level

@@ -1,4 +1,5 @@
-#Items from group: Ballistic Control system (21 of 21) [Module]
+#Used by:
+#Modules from group: Ballistic Control system (21 of 21)
 type = "passive"
 def handler(fit, container, context):
     for dmgType in ("em", "kinetic", "explosive", "thermal"):

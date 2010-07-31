@@ -1,4 +1,5 @@
-#Items with name like: Targeting System Subcontroller II (3 of 3)
+#Used by:
+#Modules named like: Targeting System Subcontroller II (3 of 3)
 type = "passive"
 def handler(fit, module, context):
     fit.ship.multiplyItemAttr("scanResolution", module.getModifiedItemAttr("scanResolutionMultiplier"),

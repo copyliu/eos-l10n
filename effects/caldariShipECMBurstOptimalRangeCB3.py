@@ -1,4 +1,5 @@
-#Item: Scorpion [Ship]
+#Used by:
+#Ship: Scorpion
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Battleship").level

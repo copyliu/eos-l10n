@@ -1,4 +1,6 @@
-#Items with name like: Vexor (2 of 2)
+#Used by:
+#Ship: Vexor
+#Ship: Vexor Navy Issue
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

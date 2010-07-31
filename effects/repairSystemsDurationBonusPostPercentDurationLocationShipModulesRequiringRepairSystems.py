@@ -1,7 +1,10 @@
-#Items with name like: Nanobot Accelerator (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Armor Implants (3 of 3)
-#Item: Numon Family Heirloom [Implant]
-#Item: Repair Systems [Skill]
+#Used by:
+#Modules named like: Nanobot Accelerator (6 of 6)
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET10
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET100
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET1000
+#Implant: Numon Family Heirloom
+#Skill: Repair Systems
 type = "passive"
 def handler(fit, container, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Repair Systems"),

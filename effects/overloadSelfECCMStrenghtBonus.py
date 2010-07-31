@@ -1,4 +1,5 @@
-#Items from group: ECCM (44 of 44) [Module]
+#Used by:
+#Modules from group: ECCM (44 of 44)
 type = "overheat"
 def handler(fit, module, context):
     for scanType in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):

@@ -1,4 +1,5 @@
-#Item: Crucifier [Ship]
+#Used by:
+#Ship: Crucifier
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

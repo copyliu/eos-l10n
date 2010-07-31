@@ -1,5 +1,6 @@
-#Items with name like: Memetic Algorithm Bank (6 of 6)
-#Item: Hardwiring - Poteque Pharmaceuticals 'Prospector' PPX-1 [Implant]
+#Used by:
+#Modules named like: Memetic Algorithm Bank (6 of 6)
+#Implant: Hardwiring - Poteque Pharmaceuticals 'Prospector' PPX-1
 type = "passive"
 def handler(fit, container, context):
     fit.modules.filteredItemIncrease(lambda c: c.item.requiresSkill("Hacking"),

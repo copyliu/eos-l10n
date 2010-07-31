@@ -1,4 +1,6 @@
-#Items with name like: Drone Durability (7 of 7)
+#Used by:
+#Modules named like: Drone Durability Enhancer (6 of 6)
+#Skill: Drone Durability
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

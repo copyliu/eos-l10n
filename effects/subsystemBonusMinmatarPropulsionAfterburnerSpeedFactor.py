@@ -1,4 +1,5 @@
-#Item: Loki Propulsion - Fuel Catalyst [Subsystem]
+#Used by:
+#Subsystem: Loki Propulsion - Fuel Catalyst
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Propulsion Systems").level

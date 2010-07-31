@@ -1,4 +1,5 @@
-#Item: Hel [Ship]
+#Used by:
+#Ship: Hel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Carrier").level

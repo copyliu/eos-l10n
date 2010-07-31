@@ -1,4 +1,5 @@
-#Item: Aeon [Ship]
+#Used by:
+#Ship: Aeon
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Carrier")

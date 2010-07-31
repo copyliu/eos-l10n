@@ -1,4 +1,5 @@
-#Item: Cynabal [Ship]
+#Used by:
+#Ship: Cynabal
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

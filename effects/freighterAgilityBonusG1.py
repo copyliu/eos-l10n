@@ -1,4 +1,5 @@
-#Item: Anshar [Ship]
+#Used by:
+#Ship: Anshar
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Freighter").level

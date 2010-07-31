@@ -1,5 +1,6 @@
-#Items from group: Force Recon Ship (4 of 4) [Ship]
-#Item: Cynosural Field Theory [Skill]
+#Used by:
+#Ships from group: Force Recon Ship (4 of 4)
+#Skill: Cynosural Field Theory
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

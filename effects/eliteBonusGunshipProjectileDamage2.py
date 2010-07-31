@@ -1,4 +1,5 @@
-#Item: Jaguar [Ship]
+#Used by:
+#Ship: Jaguar
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

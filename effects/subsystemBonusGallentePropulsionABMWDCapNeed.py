@@ -1,4 +1,5 @@
-#Item: Proteus Propulsion - Localized Injectors [Subsystem]
+#Used by:
+#Subsystem: Proteus Propulsion - Localized Injectors
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Propulsion Systems").level

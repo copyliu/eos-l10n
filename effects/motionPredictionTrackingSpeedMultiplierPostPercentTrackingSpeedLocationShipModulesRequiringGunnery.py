@@ -1,4 +1,5 @@
-#Items with name like: Drop Booster (4 of 4)
+#Used by:
+#Implants named like: Drop Booster (4 of 4)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.requiresSkill("Gunnery"),

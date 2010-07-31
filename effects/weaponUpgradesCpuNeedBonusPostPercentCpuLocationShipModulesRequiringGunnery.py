@@ -1,7 +1,6 @@
-#Item: Hardwiring - Zainou 'Gnome' KZA1000 [Implant]
-#Item: Hardwiring - Zainou 'Gnome' KZA2000 [Implant]
-#Item: Hardwiring - Zainou 'Gnome' KZA500 [Implant]
-#Item: Weapon Upgrades [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Gnome' KZA (3 of 3)
+#Skill: Weapon Upgrades
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

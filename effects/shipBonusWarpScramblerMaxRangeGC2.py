@@ -1,4 +1,5 @@
-#Item: Adrestia [Ship]
+#Used by:
+#Ship: Adrestia
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

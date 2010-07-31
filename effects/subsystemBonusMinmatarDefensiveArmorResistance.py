@@ -1,4 +1,5 @@
-#Item: Loki Defensive - Adaptive Augmenter [Subsystem]
+#Used by:
+#Subsystem: Loki Defensive - Adaptive Augmenter
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Defensive Systems").level

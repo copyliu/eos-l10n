@@ -1,4 +1,5 @@
-#Item: Ragnarok [Ship]
+#Used by:
+#Ship: Ragnarok
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Titan").level

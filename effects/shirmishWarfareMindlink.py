@@ -1,4 +1,5 @@
-#Item: Skirmish Warfare Mindlink [Implant]
+#Used by:
+#Implant: Skirmish Warfare Mindlink
 type = "passive"
 def handler(fit, implant, context):
     fit.character.getSkill("Skirmish Warfare Specialist").suppress()

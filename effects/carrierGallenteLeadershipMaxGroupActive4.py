@@ -1,4 +1,5 @@
-#Item: Nyx [Ship]
+#Used by:
+#Ship: Nyx
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Carrier").level

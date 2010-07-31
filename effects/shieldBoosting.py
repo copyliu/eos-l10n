@@ -1,4 +1,5 @@
-#Items from group: Shield Booster (86 of 86) [Module]
+#Used by:
+#Modules from group: Shield Booster (86 of 86)
 runTime = "late"
 type = "active"
 def handler(fit, module, context):

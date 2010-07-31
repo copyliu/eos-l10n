@@ -1,4 +1,5 @@
-#Items from group: Covert Ops (4 of 4) [Ship]
+#Used by:
+#Ships from group: Covert Ops (4 of 4)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Covert Ops").level

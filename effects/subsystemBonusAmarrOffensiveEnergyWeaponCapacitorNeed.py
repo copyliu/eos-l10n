@@ -1,4 +1,5 @@
-#Item: Legion Offensive - Covert Reconfiguration [Subsystem]
+#Used by:
+#Subsystem: Legion Offensive - Covert Reconfiguration
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Offensive Systems").level

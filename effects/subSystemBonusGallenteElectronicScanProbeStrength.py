@@ -1,4 +1,5 @@
-#Item: Proteus Electronics - Emergent Locus Analyzer [Subsystem]
+#Used by:
+#Subsystem: Proteus Electronics - Emergent Locus Analyzer
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Electronic Systems").level

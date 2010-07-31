@@ -1,4 +1,5 @@
-#Item: Ishkur [Ship]
+#Used by:
+#Ship: Ishkur
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

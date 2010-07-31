@@ -1,6 +1,5 @@
-#Item: Hardwiring - Zainou 'Snapshot' ZMN1000 [Implant]
-#Item: Hardwiring - Zainou 'Snapshot' ZMN2000 [Implant]
-#Item: Hardwiring - Zainou 'Snapshot' ZMN500 [Implant]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Snapshot' ZMN (3 of 3)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Standard Missiles"),

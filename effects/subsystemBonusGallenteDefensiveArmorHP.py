@@ -1,4 +1,5 @@
-#Item: Proteus Defensive - Augmented Plating [Subsystem]
+#Used by:
+#Subsystem: Proteus Defensive - Augmented Plating
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Defensive Systems").level

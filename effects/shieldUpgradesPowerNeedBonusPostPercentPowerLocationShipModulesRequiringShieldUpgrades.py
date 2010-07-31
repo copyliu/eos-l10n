@@ -1,6 +1,7 @@
-#Items with name like: Core Defence Charge Economizer (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Shield Implants (3 of 3)
-#Item: Shield Upgrades [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Gnome' KUA (3 of 3)
+#Modules named like: Core Defence Charge Economizer (6 of 6)
+#Skill: Shield Upgrades
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

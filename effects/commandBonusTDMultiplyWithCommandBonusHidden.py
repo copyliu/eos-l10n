@@ -1,4 +1,5 @@
-#Item: Information Warfare Link - Electronic Superiority [Module]
+#Used by:
+#Module: Information Warfare Link - Electronic Superiority
 type = "active", "gang"
 def handler(fit, module, context):
     if "gang" not in context: return

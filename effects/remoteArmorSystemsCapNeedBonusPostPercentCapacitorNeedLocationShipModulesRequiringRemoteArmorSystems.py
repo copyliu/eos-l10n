@@ -1,6 +1,9 @@
-#Items with name like: Remote Repair Augmentor (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Armor Implants (3 of 3)
-#Item: Remote Armor Repair Systems [Skill]
+#Used by:
+#Modules named like: Remote Repair Augmentor (6 of 6)
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET20
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET200
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET2000
+#Skill: Remote Armor Repair Systems
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

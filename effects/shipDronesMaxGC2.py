@@ -1,4 +1,5 @@
-#Item: Guardian-Vexor [Ship]
+#Used by:
+#Ship: Guardian-Vexor
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

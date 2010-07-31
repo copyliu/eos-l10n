@@ -1,4 +1,5 @@
-#Item: Phantasm [Ship]
+#Used by:
+#Ship: Phantasm
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

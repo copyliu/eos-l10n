@@ -1,4 +1,7 @@
-#Items from group: Afterburner (53 of 107) [Module]
+#Used by:
+#Variations of module: 100MN MicroWarpdrive I (24 of 24)
+#Variations of module: 10MN MicroWarpdrive I (14 of 14)
+#Variations of module: 1MN MicroWarpdrive I (15 of 15)
 type = "active"
 runTime = "late"
 def handler(fit, module, context):

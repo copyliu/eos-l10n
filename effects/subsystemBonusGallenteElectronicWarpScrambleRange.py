@@ -1,4 +1,5 @@
-#Item: Proteus Electronics - Friction Extension Processor [Subsystem]
+#Used by:
+#Subsystem: Proteus Electronics - Friction Extension Processor
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Electronic Systems").level

@@ -1,4 +1,5 @@
-#Item: Explosive Armor Compensation [Skill]
+#Used by:
+#Skill: Explosive Armor Compensation
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Armor Hardener",

@@ -1,4 +1,5 @@
-#Item: Flycatcher [Ship]
+#Used by:
+#Ship: Flycatcher
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Interdictors").level

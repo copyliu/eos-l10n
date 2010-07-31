@@ -1,4 +1,5 @@
-#Items from group: Booster (9 of 34) [Implant]
+#Used by:
+#Implants from group: Booster (9 of 34)
 type = "boosterSideEffect"
 def handler(fit, booster, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),

@@ -1,6 +1,7 @@
-#Items with name like: Drone Control Range Augmentor (6 of 6)
-#Item: Electronic Warfare Drone Interfacing [Skill]
-#Item: Scout Drone Operation [Skill]
+#Used by:
+#Modules named like: Drone Control Range Augmentor (6 of 6)
+#Skill: Electronic Warfare Drone Interfacing
+#Skill: Scout Drone Operation
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

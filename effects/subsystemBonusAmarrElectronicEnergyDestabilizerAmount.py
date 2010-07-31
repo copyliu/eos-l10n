@@ -1,4 +1,5 @@
-#Item: Legion Electronics - Energy Parasitic Complex [Subsystem]
+#Used by:
+#Subsystem: Legion Electronics - Energy Parasitic Complex
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Electronic Systems").level

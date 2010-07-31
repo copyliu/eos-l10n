@@ -1,4 +1,5 @@
-#Item: Armored Warfare Link - Passive Defense [Module]
+#Used by:
+#Module: Armored Warfare Link - Passive Defense
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

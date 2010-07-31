@@ -1,5 +1,7 @@
-#Items with name like: Iteron (5 of 5)
-#Items from market group: Ships > Transport Ships > Gallente (2 of 2)
+#Used by:
+#Ships named like: Iteron (5 of 5)
+#Ship: Occator
+#Ship: Viator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Industrial").level

@@ -1,5 +1,6 @@
-#Variations of item: Dominix (3 of 3) [Ship]
-#Item: Rattlesnake [Ship]
+#Used by:
+#Variations of ship: Dominix (3 of 3)
+#Ship: Rattlesnake
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Battleship").level

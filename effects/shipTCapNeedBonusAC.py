@@ -1,6 +1,8 @@
-#Variations of item: Maller (2 of 3) [Ship]
-#Variations of item: Omen (3 of 3) [Ship]
-#Item: Augoror Navy Issue [Ship]
+#Used by:
+#Variations of ship: Omen (3 of 3)
+#Ship: Augoror Navy Issue
+#Ship: Devoter
+#Ship: Maller
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

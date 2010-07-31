@@ -1,4 +1,5 @@
-#Items from group: Propulsion Systems (16 of 16) [Subsystem]
+#Used by:
+#Subsystems from group: Propulsion Systems (16 of 16)
 runTime = "early"
 type = "passive"
 def handler(fit, module, context):

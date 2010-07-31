@@ -1,7 +1,6 @@
-#Item: Hardwiring - Zainou 'Deadeye' ZGL10 [Implant]
-#Item: Hardwiring - Zainou 'Deadeye' ZGL100 [Implant]
-#Item: Hardwiring - Zainou 'Deadeye' ZGL1000 [Implant]
-#Item: Large Hybrid Turret [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Deadeye' ZGL (3 of 3)
+#Skill: Large Hybrid Turret
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

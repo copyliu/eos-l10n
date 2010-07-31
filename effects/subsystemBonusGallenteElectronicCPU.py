@@ -1,4 +1,5 @@
-#Item: Proteus Electronics - CPU Efficiency Gate [Subsystem]
+#Used by:
+#Subsystem: Proteus Electronics - CPU Efficiency Gate
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Electronic Systems").level

@@ -1,5 +1,6 @@
-#Variations of item: Caracal (3 of 3) [Ship]
-#Item: Osprey Navy Issue [Ship]
+#Used by:
+#Variations of ship: Caracal (3 of 3)
+#Ship: Osprey Navy Issue
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Cruiser").level

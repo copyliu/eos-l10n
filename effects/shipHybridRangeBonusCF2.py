@@ -1,5 +1,6 @@
-#Item: Merlin [Ship]
-#Item: Raptor [Ship]
+#Used by:
+#Ship: Merlin
+#Ship: Raptor
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

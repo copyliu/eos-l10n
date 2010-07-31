@@ -1,5 +1,6 @@
-#Item: Acceleration Control [Skill]
-#Item: Zor's Custom Navigation Hyper-Link [Implant]
+#Used by:
+#Implant: Zor's Custom Navigation Hyper-Link
+#Skill: Acceleration Control
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

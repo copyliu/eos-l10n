@@ -1,4 +1,5 @@
-#Item: Warp Disruption Field Generator I [Module]
+#Used by:
+#Module: Warp Disruption Field Generator I
 type = "active"
 def handler(fit, module, context):
     fit.ship.boostItemAttr("signatureRadius", module.getModifiedItemAttr("signatureRadiusBonus"))

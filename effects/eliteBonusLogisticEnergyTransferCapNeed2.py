@@ -1,4 +1,5 @@
-#Item: Basilisk [Ship]
+#Used by:
+#Ship: Basilisk
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Logistics").level

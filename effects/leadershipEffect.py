@@ -1,4 +1,5 @@
-#Item: Leadership [Skill]
+#Used by:
+#Skill: Leadership
 type = "gang", "passive"
 def handler(fit, skill, context):
     if "gang" in context:

@@ -1,5 +1,7 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 9 > Electronics Implants (6 of 12)
-#Item: Target Painting [Skill]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Gypsy' KSB (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gypsy' KTB (3 of 3)
+#Skill: Target Painting
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

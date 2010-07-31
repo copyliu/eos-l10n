@@ -1,5 +1,6 @@
-#Item: Caldari Navy Hookbill [Ship]
-#Item: Kestrel [Ship]
+#Used by:
+#Ship: Caldari Navy Hookbill
+#Ship: Kestrel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

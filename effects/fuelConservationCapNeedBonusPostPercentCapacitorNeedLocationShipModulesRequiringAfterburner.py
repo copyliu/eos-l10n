@@ -1,4 +1,5 @@
-#Item: Fuel Conservation [Skill]
+#Used by:
+#Skill: Fuel Conservation
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Afterburner"),

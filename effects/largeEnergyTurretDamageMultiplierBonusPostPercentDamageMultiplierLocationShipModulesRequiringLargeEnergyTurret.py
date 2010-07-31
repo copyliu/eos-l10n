@@ -1,8 +1,7 @@
-#Item: Hardwiring - Inherent Implants 'Lancer' G0-Epsilon [Implant]
-#Item: Hardwiring - Inherent Implants 'Lancer' G1-Epsilon [Implant]
-#Item: Hardwiring - Inherent Implants 'Lancer' G2-Epsilon [Implant]
-#Item: Large Energy Turret [Skill]
-#Item: Pashan's Turret Handling Mindlink [Implant]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Epsilon (3 of 3)
+#Implant: Pashan's Turret Handling Mindlink
+#Skill: Large Energy Turret
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

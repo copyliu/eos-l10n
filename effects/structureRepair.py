@@ -1,4 +1,5 @@
-#Items from group: Hull Repair Unit (21 of 21) [Module]
+#Used by:
+#Modules from group: Hull Repair Unit (21 of 21)
 type = "active"
 runTime = "late"
 def handler(fit, module, context):

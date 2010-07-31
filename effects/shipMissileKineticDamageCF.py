@@ -1,8 +1,10 @@
-#Variations of item: Condor (2 of 3) [Ship]
-#Variations of item: Heron (2 of 2) [Ship]
-#Item: Caldari Navy Hookbill [Ship]
-#Item: Hawk [Ship]
-#Item: Kestrel [Ship]
+#Used by:
+#Variations of ship: Heron (2 of 2)
+#Ship: Caldari Navy Hookbill
+#Ship: Condor
+#Ship: Crow
+#Ship: Hawk
+#Ship: Kestrel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

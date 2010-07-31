@@ -1,5 +1,6 @@
-#Item: Legion Offensive - Drone Synthesis Projector [Subsystem]
-#Item: Legion Offensive - Liquid Crystal Magnifiers [Subsystem]
+#Used by:
+#Subsystem: Legion Offensive - Drone Synthesis Projector
+#Subsystem: Legion Offensive - Liquid Crystal Magnifiers
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Offensive Systems").level

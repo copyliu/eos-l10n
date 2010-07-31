@@ -1,4 +1,5 @@
-#Item: Legion Propulsion - Fuel Catalyst [Subsystem]
+#Used by:
+#Subsystem: Legion Propulsion - Fuel Catalyst
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Propulsion Systems").level

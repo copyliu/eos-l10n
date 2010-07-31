@@ -1,4 +1,5 @@
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Missile Implants (3 of 6)
+#Used by:
+#Implants named like: Hardwiring Zainou 'Snapshot' ZMF (3 of 3)
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

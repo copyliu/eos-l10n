@@ -1,4 +1,5 @@
-#Item: Vigil [Ship]
+#Used by:
+#Ship: Vigil
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Frigate")

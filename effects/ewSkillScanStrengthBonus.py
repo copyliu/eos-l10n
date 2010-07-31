@@ -1,5 +1,6 @@
-#Items with name like: Particle Dispersion Augmentor (6 of 6)
-#Item: Signal Dispersion [Skill]
+#Used by:
+#Modules named like: Particle Dispersion Augmentor (6 of 6)
+#Skill: Signal Dispersion
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

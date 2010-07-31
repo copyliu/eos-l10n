@@ -1,4 +1,5 @@
-#Item: Tengu Electronics - CPU Efficiency Gate [Subsystem]
+#Used by:
+#Subsystem: Tengu Electronics - CPU Efficiency Gate
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Electronic Systems").level

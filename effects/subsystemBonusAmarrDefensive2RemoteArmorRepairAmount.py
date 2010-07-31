@@ -1,4 +1,5 @@
-#Item: Legion Defensive - Adaptive Augmenter [Subsystem]
+#Used by:
+#Subsystem: Legion Defensive - Adaptive Augmenter
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Defensive Systems").level

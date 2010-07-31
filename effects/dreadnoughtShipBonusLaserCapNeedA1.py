@@ -1,4 +1,5 @@
-#Item: Revelation [Ship]
+#Used by:
+#Ship: Revelation
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Dreadnought").level

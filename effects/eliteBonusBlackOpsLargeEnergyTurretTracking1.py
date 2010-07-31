@@ -1,4 +1,5 @@
-#Item: Redeemer [Ship]
+#Used by:
+#Ship: Redeemer
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Black Ops").level

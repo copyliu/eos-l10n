@@ -1,4 +1,5 @@
-#Item: Armored Warfare Link - Rapid Repair [Module]
+#Used by:
+#Module: Armored Warfare Link - Rapid Repair
 type = "gang", "active"
 def handler(fit, module, context):
     if "gang" not in context: return

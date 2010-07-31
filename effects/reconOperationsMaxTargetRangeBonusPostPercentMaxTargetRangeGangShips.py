@@ -1,5 +1,6 @@
-#Item: Information Warfare [Skill]
-#Item: Information Warfare Mindlink [Implant]
+#Used by:
+#Implant: Information Warfare Mindlink
+#Skill: Information Warfare
 type = "gang"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

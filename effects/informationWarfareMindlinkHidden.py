@@ -1,4 +1,5 @@
-#Item: Information Warfare Mindlink [Implant]
+#Used by:
+#Implant: Information Warfare Mindlink
 type = "passive"
 def handler(fit, implant, context):
     fit.character.getSkill("Information Warfare").suppress()

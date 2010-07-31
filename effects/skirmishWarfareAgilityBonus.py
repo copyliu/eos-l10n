@@ -1,5 +1,6 @@
-#Item: Skirmish Warfare [Skill]
-#Item: Skirmish Warfare Mindlink [Implant]
+#Used by:
+#Implant: Skirmish Warfare Mindlink
+#Skill: Skirmish Warfare
 type = "gang"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

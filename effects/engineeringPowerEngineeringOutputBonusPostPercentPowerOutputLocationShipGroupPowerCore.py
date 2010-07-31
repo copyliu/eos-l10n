@@ -1,6 +1,7 @@
-#Items with name like: Ancillary Current Router (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Engineering Implants (3 of 6)
-#Item: Engineering [Skill]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Squire' PG (3 of 3)
+#Modules named like: Ancillary Current Router (6 of 6)
+#Skill: Engineering
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

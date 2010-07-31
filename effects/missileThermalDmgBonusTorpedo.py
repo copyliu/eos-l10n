@@ -1,6 +1,5 @@
-#Item: Hardwiring - Zainou 'Snapshot' ZMT1000 [Implant]
-#Item: Hardwiring - Zainou 'Snapshot' ZMT2000 [Implant]
-#Item: Hardwiring - Zainou 'Snapshot' ZMT500 [Implant]
+#Used by:
+#Implants named like: Hardwiring Zainou 'Snapshot' ZMT (3 of 3)
 type = "passive"
 def handler(fit, container, context):
     fit.modules.filteredChargeMultiply(lambda mod: mod.charge.requiresSkill("Torpedoes"),

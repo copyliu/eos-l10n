@@ -40,9 +40,11 @@ This script goes through all implemented effects and fills them with comments by
 #BaseTypes (variations, like they appear on eve's variation tab)
 #Market groups + variations (market groups like usual, plus variations
 #of all items from it)
+
 import sys
 sys.path.append("..")
 
+from optparse import OptionParser
 import sqlite3
 import os.path
 import re
@@ -50,14 +52,51 @@ import math
 import itertools
 import copy
 
+usage = "usage: %prog --database=DB [--debug=DEBUG]"
+parser = OptionParser(usage=usage)
+parser.add_option("-d", "--database", help="path to eve cache data dump in sqlite format, default pyfa database path is used if none specified", type="string", default=os.path.join("~", ".pyfa","eve.db"))
+parser.add_option("-u", "--debug", help="debug level, 0 by default", type="int", default=0)
+(options, args) = parser.parse_args()
+
 #show debugging prints?
 #0 - don't show debugging stuff and perform actual run through effect comments
 #1 - show only for first iteration
 #2 - show for all iterations
-debugLevel = 0
+debugLevel = options.debug
+
+######################### Control #########################
+#Ways to control process:
+#Adjust grouping type weights (more number - better chance to pick this
+#grouping type)
+groupWeight = 1.0
+categoryWeight = 1.0
+baseTypeWeight = 1.0
+marketGroupWithVarsWeight = 0.3
+typeNameCombinationWeight = 1.0
+#If score drops below this value, remaining items will be
+#listed without any grouping
+lowestScore = 0.7
+#Adjust inner/outer score calculation formulae
+def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, weight = 1.0):
+    #Percentage of items affected by effect out of total number of items in this group
+    coverageTotal = (affectedAndDecribed + affectedAndUndescribed)/total
+    #Same, but only described/undescribed items are taken
+    coverageDescribed = affectedAndDecribed/total
+    coverageUndescribed = affectedAndUndescribed/total
+    #Already described items should have less weight
+    coverageAdditionalFactor = coverageUndescribed + coverageDescribed*0
+    #If group has just one item it should have zero score
+    affectedTotalFactor = affectedAndDecribed + affectedAndUndescribed - 1
+    innerScore = (coverageTotal**0.23)*coverageAdditionalFactor*affectedTotalFactor*weight
+    return innerScore
+def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
+    #Return just max of the inner scores, including weight factor
+    if float(len(innerScoreDict)):
+        return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
+    else: return 0.0
 
 #Connect to database and set up cursor
-db = sqlite3.connect(os.path.expanduser(os.path.join("~", ".pyfa","eve.db")))
+db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
 #As we don't rely on pyfa's overrides, we need to set them manually
@@ -267,21 +306,6 @@ for typeID in publishedTypes:
             if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(typeNameSplitted))
             globalMap_typeID_typeNameCombination[typeID][0].add(typeNameCombination)
 
-#Method for calculating score of group inside set of groups of given type
-def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, weight = 1.0):
-    innerAffectedPortionDescribed = affectedAndDecribed/total
-    innerAffectedPortionUndescribed = affectedAndUndescribed/total
-    #Items which are already described have 0 weight for now
-    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(affectedAndDecribed+affectedAndUndescribed-1)*weight
-    return innerScore
-
-#Method for calculating score of group types
-def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
-    #Return just max of the inner scores, including weight factor
-    if float(len(innerScoreDict)):
-        return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
-    else: return 0.0
-
 ######################### Stage 2 #########################
 #Go through effect files one-by-one
 effectsPath = os.path.join("..", "effects")
@@ -290,7 +314,7 @@ for effectFileName in os.listdir(effectsPath):
     #Ignore non-py files and exclude implementation-specific 'effects'
     if extension == "py" and not basename in ("__init__"):
         ######################## Stage 2.1 ########################
-        #Data regarding which items are effected by current effect
+        #Data regarding which items are affected by current effect
         perEffectList_usedByTypes = set()
         cursor.execute(queryEffectIDTypeID, (globalMap_effectNamePyfa_effectNameDB[basename],))
         for rowTypes in cursor:
@@ -367,7 +391,6 @@ for effectFileName in os.listdir(effectsPath):
             #stores scores for each group which describe set of items
             groupScore = {}
             #define weight of this grouping type
-            groupWeight = 1.0
             for groupID in perEffectMap_groupID_typeID:
                 #skip groups which are already used for item description
                 #(have 'describes' flag set to True)
@@ -399,7 +422,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Groups outer score: {0:.3}".format(groupOuterScore))
 
             categoryScore = {}
-            categoryWeight = 1.0
             for categoryID in perEffectMap_categoryID_typeID:
                 if not perEffectMap_categoryID_typeID[categoryID][1]:
                     affectedItemsFromCurrentCategory = perEffectMap_categoryID_typeID[categoryID][0]
@@ -417,7 +439,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Category outer score: {0:.3}".format(categoryOuterScore))
 
             baseTypeScore = {}
-            baseTypeWeight = 1.0
             for baseTypeID in perEffectMap_baseTypeID_typeID:
                 if not perEffectMap_baseTypeID_typeID[baseTypeID][1]:
                     affectedItemsFromCurrentBaseType = perEffectMap_baseTypeID_typeID[baseTypeID][0]
@@ -436,7 +457,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Base item outer score: {0:.3}".format(baseTypeOuterScore))
 
             marketGroupWithVarsScore = {}
-            marketGroupWithVarsWeight = 0.7
             for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
                 if not perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][1]:
                     affectedItemsFromCurrentMarketGroupWithVars = perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0]
@@ -466,7 +486,6 @@ for effectFileName in os.listdir(effectsPath):
             if debugLevel >= 1 and not stopDebugPrints: print("Market group outer score: {0:.3}".format(marketGroupWithVarsOuterScore))
 
             typeNameCombinationScore = {}
-            typeNameCombinationWeight = 1.0
             for typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID:
                 if not perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][1]:
                     affectedItemsFromCurrenttypeNameCombination = perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0]
@@ -502,7 +521,7 @@ for effectFileName in os.listdir(effectsPath):
             #Pick max score from outer scores of all grouping types
             maxOuterScore = max(groupOuterScore, categoryOuterScore, baseTypeOuterScore, marketGroupWithVarsOuterScore, typeNameCombinationOuterScore)
             #define lower limit for score, below which there will be no winners
-            if maxOuterScore > 0.5:
+            if maxOuterScore >= lowestScore:
                 #If scores are similar, priorities are: category > group > name > marketGroup > baseType
                 if maxOuterScore == categoryOuterScore:
                     #pick ID of category which has highest score among other categories
@@ -565,42 +584,48 @@ for effectFileName in os.listdir(effectsPath):
         for i in range(numberOfCommentLines):
             del effectLines[0]
 
-        #These lists will contain IDs and more human-friendly names in tuples
-        types = []
-        groups = []
-        categories = []
-        baseTypes = []
-        marketGroupsWithVars = []
-        typeNameCombinationTuples = []
+        #These lists will contain IDs and some metadata in tuples
+        printing_types = []
+        printing_groups = []
+        printing_categories = []
+        printing_baseTypes = []
+        printing_marketGroupsWithVars = []
+        printing_typeNameCombinationTuples = []
 
-        #Processing order matters here, as we're prepending comment lines to file
-        #category > group > name > marketGroup > baseType > single items
-        #Go through all items in list
+        #Gather data for printing in the form of tuples
+        #Each tuple has grouping type ID, human-readable name and category name
         for typeID in singleItems:
+            typeName = ""
             cursor.execute(queryTypeIDTypeName, (typeID,))
             for row in cursor: typeName = row[0]
-            #Make tuples and append them
-            types.append((typeID, typeName))
-        #As we're prepending lines, sort items by name in reverse order
-        for type in sorted(types, key=lambda tuple: tuple[1], reverse=True):
-            cursor.execute(queryGroupIDCategoryID, (globalMap_typeID_groupID[type[0]],))
+            categoryName = ""
+            cursor.execute(queryCategoryName, (globalMap_typeID_categoryID[typeID],))
+            for row in cursor: categoryName = row[0]
+            printing_types.append((typeID, typeName, categoryName))
+        for groupID in describedByGroup:
+            groupName = ""
+            cursor.execute(queryGroupName, (groupID,))
+            for row in cursor: groupName = row[0]
+            categoryID = 0
+            cursor.execute(queryGroupIDCategoryID, (groupID,))
             for row in cursor: categoryID = row[0]
+            categoryName = ""
             cursor.execute(queryCategoryName, (categoryID,))
             for row in cursor: categoryName = row[0]
-            #Prepend line with all the data we need
-            effectLines.insert(0,"#Item: {0} [{1}]".format(type[1], categoryName))
-
+            printing_groups.append((groupID, groupName, categoryName))
+        for categoryID in describedByCategory:
+            categoryName = ""
+            cursor.execute(queryCategoryName, (categoryID,))
+            for row in cursor: categoryName = row[0]
+            printing_categories.append((categoryID, categoryName))
         for baseTypeID in describedByBaseType:
+            baseTypeName = ""
             cursor.execute(queryTypeIDTypeName, (baseTypeID,))
             for row in cursor: baseTypeName = row[0]
-            baseTypes.append((baseTypeID, baseTypeName))
-        for baseType in sorted(baseTypes, key=lambda tuple: tuple[1], reverse=True):
-            cursor.execute(queryGroupIDCategoryID, (globalMap_typeID_groupID[baseType[0]],))
-            for row in cursor: categoryID = row[0]
-            cursor.execute(queryCategoryName, (categoryID,))
+            categoryName = ""
+            cursor.execute(queryCategoryName, (globalMap_typeID_categoryID[baseTypeID],))
             for row in cursor: categoryName = row[0]
-            effectLines.insert(0,"#Variations of item: {0} ({1} of {2}) [{3}]".format(baseType[1], len(perEffectMap_baseTypeID_typeID[baseType[0]][0]), len(globalMap_baseTypeID_typeID[baseType[0]]), categoryName))
-
+            printing_baseTypes.append((baseTypeID, baseTypeName, categoryName))
         for marketGroupID in describedByMarketGroupWithVars:
             cursor.execute(queryMarketGroupName, (marketGroupID,))
             for row in cursor: marketGroupName = row[0]
@@ -616,41 +641,64 @@ for effectFileName in os.listdir(effectsPath):
                     cursor.execute(queryMarketGroupName, (prependParentID,))
                     for row in cursor: marketGroupName = "{0} > {1}".format(row[0], marketGroupName)
                 else: break
-            marketGroupsWithVars.append((marketGroupID, marketGroupName))
-        for marketGroup in sorted(marketGroupsWithVars, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
-
+            printing_marketGroupsWithVars.append((marketGroupID, marketGroupName))
         for typeNameCombinationTuple in describedByTypeNameCombination:
             typeNameCombinationPrint = " ".join(typeNameCombinationTuple[0])
-            typeNameCombinationTuples.append((typeNameCombinationTuple, typeNameCombinationPrint))
-        for typeNameCombination in sorted(typeNameCombinationTuples, key=lambda tuple: tuple[1], reverse=True):
-            #Tuples contain category name, get it
-            cursor.execute(queryCategoryName, (typeNameCombination[0][1],))
+            categoryName = ""
+            cursor.execute(queryCategoryName, (typeNameCombinationTuple[1],))
             for row in cursor: categoryName = row[0]
-            effectLines.insert(0,"#Items with name like: {0} ({1} of {2}) [{3}]".format(typeNameCombination[1], len(perEffectMap_typeNameCombinationTuple_typeID[typeNameCombination[0]][0]), len(globalMap_typeNameCombinationTuple_typeID[typeNameCombination[0]]), categoryName))
+            printing_typeNameCombinationTuples.append((typeNameCombinationTuple, typeNameCombinationPrint, categoryName))
 
-        for groupID in describedByGroup:
-            cursor.execute(queryGroupName, (groupID,))
-            for row in cursor: groupName = row[0]
-            groups.append((groupID, groupName))
-        for group in sorted(groups, key=lambda tuple: tuple[1], reverse=True):
-            cursor.execute(queryGroupIDCategoryID, (group[0],))
-            for row in cursor: categoryID = row[0]
-            cursor.execute(queryCategoryName, (categoryID,))
-            for row in cursor: categoryName = row[0]
-            effectLines.insert(0,"#Items from group: {0} ({1} of {2}) [{3}]".format(group[1], len(perEffectMap_groupID_typeID[group[0]][0]), len(globalMap_groupID_typeID[group[0]]), categoryName))
+        #Use separate list per grouping type to easy grouping type sorting
+        printing_typeLines = []
+        #Sort by item name first
+        printing_types = sorted(printing_types, key=lambda tuple: tuple[1])
+        #Then sort by category name
+        printing_types = sorted(printing_types, key=lambda tuple: tuple[2])
+        for type in printing_types:
+            #Append line for printing to list
+            printing_typeLines.append("#{0}: {1}".format(type[2], type[1]))
+        printing_groupLines = []
+        printing_groups = sorted(printing_groups, key=lambda tuple: tuple[1])
+        printing_groups = sorted(printing_groups, key=lambda tuple: tuple[2])
+        for group in printing_groups:
+            printing_groupLines.append("#{0}s from group: {1} ({2} of {3})".format(group[2], group[1], len(perEffectMap_groupID_typeID[group[0]][0]), len(globalMap_groupID_typeID[group[0]])))
+        printing_categoryLines = []
+        printing_categories = sorted(printing_categories, key=lambda tuple: tuple[1])
+        for category in printing_categories:
+            printing_categoryLines.append("#Items from category: {0} ({1} of {2})".format(category[1], len(perEffectMap_categoryID_typeID[category[0]][0]), len(globalMap_categoryID_typeID[category[0]])))
+        printing_baseTypeLines = []
+        printing_baseTypes = sorted(printing_baseTypes, key=lambda tuple: tuple[1])
+        printing_baseTypes = sorted(printing_baseTypes, key=lambda tuple: tuple[2])
+        for baseType in printing_baseTypes:
+            printing_baseTypeLines.append("#Variations of {0}: {1} ({2} of {3})".format(baseType[2].lower(), baseType[1], len(perEffectMap_baseTypeID_typeID[baseType[0]][0]), len(globalMap_baseTypeID_typeID[baseType[0]])))
+        printing_marketGroupWithVarsLines = []
+        printing_marketGroupsWithVars = sorted(printing_marketGroupsWithVars, key=lambda tuple: tuple[1])
+        for marketGroup in printing_marketGroupsWithVars:
+            printing_marketGroupWithVarsLines.append("#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
+        printing_typeNameCombinationTupleLines = []
+        printing_typeNameCombinationTuples = sorted(printing_typeNameCombinationTuples, key=lambda tuple: tuple[1])
+        printing_typeNameCombinationTuples = sorted(printing_typeNameCombinationTuples, key=lambda tuple: tuple[2])
+        for typeNameCombination in printing_typeNameCombinationTuples:
+            printing_typeNameCombinationTupleLines.append("#{0}s named like: {1} ({2} of {3})".format(typeNameCombination[2], typeNameCombination[1], len(perEffectMap_typeNameCombinationTuple_typeID[typeNameCombination[0]][0]), len(globalMap_typeNameCombinationTuple_typeID[typeNameCombination[0]])))
 
-        for categoryID in describedByCategory:
-            cursor.execute(queryCategoryName, (categoryID,))
-            for row in cursor: categoryName = row[0]
-            categories.append((categoryID, categoryName))
-        for category in sorted(categories, key=lambda tuple: tuple[1], reverse=True):
-            effectLines.insert(0,"#Items from category: {0} ({1} of {2})".format(category[1], len(perEffectMap_categoryID_typeID[category[0]][0]), len(globalMap_categoryID_typeID[category[0]])))
-
+        #Compose single list of lines using custom sorting
+        commentLines = printing_categoryLines + printing_groupLines + printing_typeNameCombinationTupleLines + printing_marketGroupWithVarsLines + printing_baseTypeLines + printing_typeLines
+        #Prepend everything with used by
+        if commentLines: commentLines = ["#Used by:"] + commentLines
+        #If effect isn't used, write it to file and to terminal
+        else:
+            commentLines = ["#Not used by any item"]
+            print("Warning: effect file " + basename + " is not used by any item")
+        #Combine "used by" comment lines and actual effect lines
+        outputLines = commentLines + effectLines
         #Combine all lines into single string
-        effectContentsProcessed = "\n".join(effectLines)
+        effectContentsProcessed = "\n".join(outputLines)
         #If we're not debugging and contents actually changed - write changes to the file
         if debugLevel == 0 and (effectContentsProcessed != effectContentsSource):
             effectFile = open(os.path.join(effectsPath, effectFileName), 'w')
             effectFile.write(effectContentsProcessed)
             effectFile.close()
+        elif debugLevel >= 2:
+            print("Comment to write to file:")
+            print("\n".join(commentLines))

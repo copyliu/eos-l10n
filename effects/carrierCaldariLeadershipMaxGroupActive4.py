@@ -1,4 +1,5 @@
-#Item: Wyvern [Ship]
+#Used by:
+#Ship: Wyvern
 type = "active"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Carrier")

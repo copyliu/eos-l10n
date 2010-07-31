@@ -1,7 +1,8 @@
-#Items with name like: Mindflood Booster (4 of 4)
-#Items with name like: Semiconductor Memory Cell (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Engineering Implants (3 of 3)
-#Item: Energy Management [Skill]
+#Used by:
+#Implants named like: Hardwiring Inherent Implants 'Squire' CC (3 of 3)
+#Implants named like: Mindflood Booster (4 of 4)
+#Modules named like: Semiconductor Memory Cell (6 of 6)
+#Skill: Energy Management
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

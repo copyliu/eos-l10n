@@ -1,4 +1,5 @@
-#Item: Erebus [Ship]
+#Used by:
+#Ship: Erebus
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Titan").level

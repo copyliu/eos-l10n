@@ -1,5 +1,6 @@
-#Item: Basilisk [Ship]
-#Item: Scimitar [Ship]
+#Used by:
+#Ship: Basilisk
+#Ship: Scimitar
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("%s Cruiser" % ship.item.race.capitalize()).level

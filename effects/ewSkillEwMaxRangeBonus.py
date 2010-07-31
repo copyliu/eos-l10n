@@ -1,6 +1,7 @@
-#Items with name like: Low-grade Centurion (5 of 6)
-#Items with name like: Particle Dispersion Projector (6 of 6)
-#Item: Long Distance Jamming [Skill]
+#Used by:
+#Implants named like: Low grade Centurion (5 of 6)
+#Modules named like: Particle Dispersion Projector (6 of 6)
+#Skill: Long Distance Jamming
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

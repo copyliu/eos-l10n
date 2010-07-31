@@ -1,5 +1,6 @@
-#Item: Apocalypse Imperial Issue [Ship]
-#Item: Paladin [Ship]
+#Used by:
+#Ship: Apocalypse Imperial Issue
+#Ship: Paladin
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level
