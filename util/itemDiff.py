@@ -19,15 +19,14 @@ It shows removed/changed/new items with list of changed effects,
 changed attributes and effects which were renamed
 '''
 from optparse import OptionParser
-from dataFolder import dataFolder
 import sqlite3
 import os.path
 import re
 
 usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
 parser = OptionParser(usage=usage)
-parser.add_option("-o", "--old", help="path to old sqlite database (if none specified database default pyfa path to database is taken)")
-parser.add_option("-n", "--new", help="path to new sqlite database")
+parser.add_option("-o", "--old", help="path to old cache data dump (if none specified default pyfa path to database is taken)", type="string", default=os.path.join("~", ".pyfa","eve.db"))
+parser.add_option("-n", "--new", help="path to new cache data dump", type="string")
 parser.add_option("-e", "--noeffects", action="store_false", dest="effects", help="don't show list of changed effects", default=True)
 parser.add_option("-a", "--noattributes", action="store_false", dest="attributes", help="don't show list of changed attributes", default=True)
 parser.add_option("-r", "--norenames", action="store_false", dest="renames", help="don't show list of renamed data", default=True)
@@ -35,13 +34,8 @@ parser.add_option("-r", "--norenames", action="store_false", dest="renames", hel
 
 #fetch database names from command line arguments
 if options.old != None and options.new != None:
-    oldDB = sqlite3.connect(options.old)
-    newDB = sqlite3.connect(options.new)
-elif options.new != None:
-    import sql
-    sql.connect("sqlite")
-    oldDB = sql.getConnection()
-    newDB = sqlite3.connect(options.new)
+    oldDB = sqlite3.connect(os.path.expanduser(options.old))
+    newDB = sqlite3.connect(os.path.expanduser(options.new))
 else:
     sys.stderr.write("You need to specify at least 1 database file. Run script with --help option for further info.\n")
     sys.exit()
