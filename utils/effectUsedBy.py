@@ -71,17 +71,23 @@ debugLevel = options.debug
 groupWeight = 1.0
 categoryWeight = 1.0
 baseTypeWeight = 1.0
-marketGroupWithVarsWeight = 0.7
+marketGroupWithVarsWeight = 0.3
 typeNameCombinationWeight = 1.0
 #If score drops below this value, remaining items will be
 #listed without any grouping
 lowestScore = 0.7
 #Adjust inner/outer score calculation formulae
 def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, weight = 1.0):
-    innerAffectedPortionDescribed = affectedAndDecribed/total
-    innerAffectedPortionUndescribed = affectedAndUndescribed/total
-    #Items which are already described have 0 weight for now
-    innerScore = (innerAffectedPortionUndescribed + innerAffectedPortionDescribed*0)*(affectedAndDecribed+affectedAndUndescribed-1)*weight
+    #Percentage of items affected by effect out of total number of items in this group
+    coverageTotal = (affectedAndDecribed + affectedAndUndescribed)/total
+    #Same, but only described/undescribed items are taken
+    coverageDescribed = affectedAndDecribed/total
+    coverageUndescribed = affectedAndUndescribed/total
+    #Already described items should have less weight
+    coverageAdditionalFactor = coverageUndescribed + coverageDescribed*0
+    #If group has just one item it should have zero score
+    affectedTotalFactor = affectedAndDecribed + affectedAndUndescribed - 1
+    innerScore = (coverageTotal**0.2)*coverageAdditionalFactor*affectedTotalFactor*weight
     return innerScore
 def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
     #Return just max of the inner scores, including weight factor
