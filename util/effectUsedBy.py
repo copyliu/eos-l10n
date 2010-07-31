@@ -89,8 +89,6 @@ def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
         return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
     else: return 0.0
 
-
-
 #Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
