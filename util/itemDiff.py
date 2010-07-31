@@ -40,6 +40,19 @@ else:
     sys.stderr.write("You need to specify at least 1 database file. Run script with --help option for further info.\n")
     sys.exit()
 
+#We don't rely on pyfa backend for overrides, setting them manually
+overrides = '''
+UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
+UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
+UPDATE invtypes SET published = '1' WHERE typeName = 'Utu';
+UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
+'''
+for statement in overrides.split(";\n"):
+    oldCursor = oldDB.cursor()
+    oldCursor.execute(statement)
+    newCursor = newDB.cursor()
+    newCursor.execute(statement)
+
 #initialization of few things used by both changed/renamed effects list
 if options.effects or options.renames:
     effectsPath = os.path.join("..", "effects")
@@ -48,7 +61,7 @@ if options.effects or options.renames:
     for filename in os.listdir(effectsPath):
         basename, extension = filename.split('.')
         #Ignore non-py files and exclude 2 pyfa-specific 'effects'
-        if extension == "py" and basename != "__init__" and basename != "customEffects":
+        if extension == "py" and basename != "__init__":
             implemented.append(basename)
 
     #effects' names are used w/o any special symbols by pyfa
