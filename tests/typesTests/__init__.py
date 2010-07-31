@@ -1,3 +1,4 @@
 import math
-def getStackingPenaltyFactor(x = 2):
-    return math.exp(-math.pow(x-1, 2) / 7.1289)
+#Pass 0 for 1st unpenalized module
+def getStackingPenaltyFactor(x = 1):
+    return math.exp(-math.pow(x, 2) / 7.1289)
