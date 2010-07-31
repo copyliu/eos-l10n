@@ -87,7 +87,7 @@ def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect
     coverageAdditionalFactor = coverageUndescribed + coverageDescribed*0
     #If group has just one item it should have zero score
     affectedTotalFactor = affectedAndDecribed + affectedAndUndescribed - 1
-    innerScore = (coverageTotal**0.2)*coverageAdditionalFactor*affectedTotalFactor*weight
+    innerScore = (coverageTotal**0.23)*coverageAdditionalFactor*affectedTotalFactor*weight
     return innerScore
 def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
     #Return just max of the inner scores, including weight factor
