@@ -308,7 +308,7 @@ for effectFileName in os.listdir(effectsPath):
     #Ignore non-py files and exclude implementation-specific 'effects'
     if extension == "py" and not basename in ("__init__"):
         ######################## Stage 2.1 ########################
-        #Data regarding which items are effected by current effect
+        #Data regarding which items are affected by current effect
         perEffectList_usedByTypes = set()
         cursor.execute(queryEffectIDTypeID, (globalMap_effectNamePyfa_effectNameDB[basename],))
         for rowTypes in cursor:
