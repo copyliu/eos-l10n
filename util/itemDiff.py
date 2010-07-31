@@ -1,4 +1,5 @@
-#Copyright 2009 Anton Vorobyov
+#!/usr/bin/env python3
+#Copyright 2009-2010 Anton Vorobyov
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -17,9 +18,6 @@ This script is used to compare two different database versions.
 It shows removed/changed/new items with list of changed effects,
 changed attributes and effects which were renamed
 '''
-import sys
-sys.path.append("..")
-
 from optparse import OptionParser
 from dataFolder import dataFolder
 import sqlite3
@@ -28,7 +26,7 @@ import re
 
 usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
 parser = OptionParser(usage=usage)
-parser.add_option("-o", "--old", help="path to old sqlite database (if none specified database currently used by pyfa is taken)")
+parser.add_option("-o", "--old", help="path to old sqlite database (if none specified database default pyfa path to database is taken)")
 parser.add_option("-n", "--new", help="path to new sqlite database")
 parser.add_option("-e", "--noeffects", action="store_false", dest="effects", help="don't show list of changed effects", default=True)
 parser.add_option("-a", "--noattributes", action="store_false", dest="attributes", help="don't show list of changed attributes", default=True)
@@ -59,9 +57,9 @@ if options.effects or options.renames:
         if extension == "py" and basename != "__init__" and basename != "customEffects":
             implemented.append(basename)
 
-    #effects' names are used w/o &, tab symbols and spaces as pyfa also filters them
-    stripSpec = "[&\t ]"
-            
+    #effects' names are used w/o any special symbols by pyfa
+    stripSpec = "[^A-Za-z0-9]"
+
     def getEffectStatus(effectName):
         pyfaName = re.sub(stripSpec, "", effectName)
         if pyfaName in implemented: return 'y'
@@ -101,14 +99,14 @@ if options.effects or options.attributes:
                 attrDict[161] = row[5]
                 #add non-base attributes to the dictionary
                 if not row[1] in (4, 38, 161): attrDict[row[1]] = row[2]
-                else: print "Warning: base attribute is described in non-base attribute table"
+                else: print("Warning: base attribute is described in non-base attribute table")
 
     #Lists contain IDs of items which have the same/changed set of effects' IDs
     same = []
     changed = []
 
     #iterates through item IDs from old database
-    for itemId in oldDict.iterkeys():
+    for itemId in oldDict.keys():
         #check if there's such ID in new database
         if itemId in newDict:
             #assume that items are the same, try to prove that it's wrong later
@@ -122,7 +120,7 @@ if options.effects or options.attributes:
                 #if set of attributes does not coincide - perform further checks
                 if oldAttrDict != newAttrDict:
                     #cycle through attribute list of old items
-                    for attributeId in oldAttrDict.iterkeys():
+                    for attributeId in oldAttrDict.keys():
                         #it should be present in new item
                         if attributeId in newAttrDict:
                             oldVal = oldAttrDict[attributeId]
@@ -137,7 +135,7 @@ if options.effects or options.attributes:
                         #if there's no such attribute in new item - it's not the same
                         else: isSame = False
                     #if some attribute is present in new item but absent in old, it's not the same
-                    for attributeId in newAttrDict.iterkeys():
+                    for attributeId in newAttrDict.keys():
                         if not attributeId in oldAttrDict:
                             isSame = False
                             break
@@ -163,7 +161,7 @@ if options.renames:
                 if strip: dictionary[row[0]] = re.sub(stripSpec, "", row[1])
                 else: dictionary[row[0]] = row[1]
 
-        for someID in oldRenDict.iterkeys():
+        for someID in oldRenDict.keys():
             if someID in newRenDict:
                 if oldRenDict[someID] != newRenDict[someID]:
                     renamedList.append((oldRenDict[someID],newRenDict[someID]))
@@ -196,7 +194,7 @@ if options.renames:
 if options.effects or options.attributes:
     #print legend only when there're any interesting changes
     if changed:
-        print '[+] - new item\n[-] - removed item\n[*] - changed item\n  [+] - effect or attribute has been added to item\n  [-] - effect or attribute has been removed from item\n  [y] - effect is implemented\n  [n] - effect is not implemented\n\nItems:'
+        print('[+] - new item\n[-] - removed item\n[*] - changed item\n  [+] - effect or attribute has been added to item\n  [-] - effect or attribute has been removed from item\n  [y] - effect is implemented\n  [n] - effect is not implemented\n\nItems:')
 
         #queries to get item and effect names
         queryTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE invtypes.typeID = ?'
@@ -206,21 +204,21 @@ if options.effects or options.attributes:
         #process added/removed items; only effect list is printed for ease of maintenance,
         #attributes are not shown as there're usually too many of them
         def printAbsentItems(dict, db, sign):
-            for itemId in dict.iterkeys():
+            for itemId in dict.keys():
                 #items which are not changed but remain in old/new list were removed/added
                 if not itemId in changed:
                     c = db.cursor()
                     c.execute(queryTypeName, (itemId,))
                     #print item name with added/deleted tag
                     for row in c:
-                        print "\n[{0}] {1}".format(sign, row[0])
+                        print("\n[{0}] {1}".format(sign, row[0]))
                     if options.effects:
                         #print effects list
                         for effect in dict[itemId][0]:
                             c = db.cursor()
                             c.execute(queryEffectName, (effect,))
                             for row in c:
-                                print "  [{0}|{1}] {2}".format(sign, getEffectStatus(row[0]), re.sub(stripSpec, "",row[0]))
+                                print("  [{0}|{1}] {2}".format(sign, getEffectStatus(row[0]), re.sub(stripSpec, "",row[0])))
 
         if options.effects:
             #print old items
@@ -232,7 +230,7 @@ if options.effects or options.attributes:
             c.execute(queryTypeName, (itemId,))
             #print item name with changed tag
             for row in c:
-                print "\n[*] {0}".format(row[0])
+                print("\n[*] {0}".format(row[0]))
 
             if options.effects:
                 #print effects list
@@ -243,12 +241,12 @@ if options.effects or options.attributes:
                             c = db.cursor()
                             c.execute(queryEffectName, (effect,))
                             for row in c:
-                                print "  [{0}|{1}] {2}".format(sign, getEffectStatus(row[0]), re.sub(stripSpec, "",row[0]))
+                                print("  [{0}|{1}] {2}".format(sign, getEffectStatus(row[0]), re.sub(stripSpec, "",row[0])))
 
             if options.attributes:
                 #prints attributes which are present in baseDict but absent in compDict
                 def printAbsentAttrs(baseDict, compDict, db, tag):
-                    for attributeId in baseDict.iterkeys():
+                    for attributeId in baseDict.keys():
                         if not attributeId in compDict:
                             value = baseDict[attributeId]
                             if not value: value = 0
@@ -256,7 +254,7 @@ if options.effects or options.attributes:
                             c.execute(queryAttributeName, (attributeId,))
                             for row in c:
                                 #print zeros instead of none as eve considers none values this way
-                                print "  [{0}] {1}: {2}".format(tag, row[0], value or 0)
+                                print("  [{0}] {1}: {2}".format(tag, row[0], value or 0))
 
                 oldAttrDict = oldDict[itemId][1]
                 newAttrDict = newDict[itemId][1]
@@ -265,7 +263,7 @@ if options.effects or options.attributes:
                 printAbsentAttrs(oldAttrDict, newAttrDict, oldDB, "-")
 
                 #print changed attributes
-                for attributeId in oldAttrDict.iterkeys():
+                for attributeId in oldAttrDict.keys():
                     if attributeId in newAttrDict:
                         if oldAttrDict[attributeId] != newAttrDict[attributeId]:
                             oldVal = oldAttrDict[attributeId]
@@ -276,7 +274,7 @@ if options.effects or options.attributes:
                                 c.execute(queryAttributeName, (attributeId,))
                                 for row in c:
                                     #print zeros instead of none as eve considers none values this way
-                                    print "  [*] {0}: {1} => {2}".format(row[0], oldVal or 0, newVal or 0)
+                                    print("  [*] {0}: {1} => {2}".format(row[0], oldVal or 0, newVal or 0))
 
                 #seek for added attributes
                 printAbsentAttrs(newAttrDict, oldAttrDict, newDB, "+")
@@ -288,10 +286,10 @@ if options.effects or options.attributes:
 if options.renames:
     def printRenames(renamedList, title, implementedEffectTag = False):
         if renamedList:
-            print '\nRenamed ' + title + ':'
+            print('\nRenamed ' + title + ':')
             for couple in renamedList:
-                if implementedEffectTag: print "\n[{0}] \"{1}\"\n[{2}] \"{3}\"".format(getEffectStatus(couple[0]), couple[0], getEffectStatus(couple[1]), couple[1])
-                else: print "\n\"{0}\"\n\"{1}\"".format(couple[0], couple[1])
+                if implementedEffectTag: print("\n[{0}] \"{1}\"\n[{2}] \"{3}\"".format(getEffectStatus(couple[0]), couple[0], getEffectStatus(couple[1]), couple[1]))
+                else: print("\n\"{0}\"\n\"{1}\"".format(couple[0], couple[1]))
 
     title = 'effects'
     printRenames(renamedEffects, title, implementedEffectTag = True)
