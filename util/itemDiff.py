@@ -60,13 +60,14 @@ if options.effects or options.renames:
 
     for filename in os.listdir(effectsPath):
         basename, extension = filename.split('.')
-        #Ignore non-py files and exclude 2 pyfa-specific 'effects'
-        if extension == "py" and basename != "__init__":
+        #Ignore non-py files and exclude implementation-specific 'effect'
+        if extension == "py" and extension not in ("__init__"):
             implemented.append(basename)
 
     #effects' names are used w/o any special symbols by pyfa
     stripSpec = "[^A-Za-z0-9]"
 
+    #Method to get data if effect iss implemented in pyfa or not
     def getEffectStatus(effectName):
         pyfaName = re.sub(stripSpec, "", effectName)
         if pyfaName in implemented: return 'y'
@@ -113,7 +114,7 @@ if options.effects or options.attributes:
     changed = []
 
     #iterates through item IDs from old database
-    for itemId in oldDict.keys():
+    for itemId in oldDict:
         #check if there's such ID in new database
         if itemId in newDict:
             #assume that items are the same, try to prove that it's wrong later
@@ -127,7 +128,7 @@ if options.effects or options.attributes:
                 #if set of attributes does not coincide - perform further checks
                 if oldAttrDict != newAttrDict:
                     #cycle through attribute list of old items
-                    for attributeId in oldAttrDict.keys():
+                    for attributeId in oldAttrDict:
                         #it should be present in new item
                         if attributeId in newAttrDict:
                             oldVal = oldAttrDict[attributeId]
@@ -142,7 +143,7 @@ if options.effects or options.attributes:
                         #if there's no such attribute in new item - it's not the same
                         else: isSame = False
                     #if some attribute is present in new item but absent in old, it's not the same
-                    for attributeId in newAttrDict.keys():
+                    for attributeId in newAttrDict:
                         if not attributeId in oldAttrDict:
                             isSame = False
                             break
@@ -168,7 +169,7 @@ if options.renames:
                 if strip: dictionary[row[0]] = re.sub(stripSpec, "", row[1])
                 else: dictionary[row[0]] = row[1]
 
-        for someID in oldRenDict.keys():
+        for someID in oldRenDict:
             if someID in newRenDict:
                 if oldRenDict[someID] != newRenDict[someID]:
                     renamedList.append((oldRenDict[someID],newRenDict[someID]))
@@ -211,7 +212,7 @@ if options.effects or options.attributes:
         #process added/removed items; only effect list is printed for ease of maintenance,
         #attributes are not shown as there're usually too many of them
         def printAbsentItems(dict, db, sign):
-            for itemId in dict.keys():
+            for itemId in dict:
                 #items which are not changed but remain in old/new list were removed/added
                 if not itemId in changed:
                     c = db.cursor()
@@ -253,7 +254,7 @@ if options.effects or options.attributes:
             if options.attributes:
                 #prints attributes which are present in baseDict but absent in compDict
                 def printAbsentAttrs(baseDict, compDict, db, tag):
-                    for attributeId in baseDict.keys():
+                    for attributeId in baseDict:
                         if not attributeId in compDict:
                             value = baseDict[attributeId]
                             if not value: value = 0
@@ -270,7 +271,7 @@ if options.effects or options.attributes:
                 printAbsentAttrs(oldAttrDict, newAttrDict, oldDB, "-")
 
                 #print changed attributes
-                for attributeId in oldAttrDict.keys():
+                for attributeId in oldAttrDict:
                     if attributeId in newAttrDict:
                         if oldAttrDict[attributeId] != newAttrDict[attributeId]:
                             oldVal = oldAttrDict[attributeId]
