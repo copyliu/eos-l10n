@@ -1,5 +1,6 @@
 #Used by:
-#Items from market group: Ships > Carriers > Gallente (2 of 2)
+#Ship: Nyx
+#Ship: Thanatos
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Carrier")

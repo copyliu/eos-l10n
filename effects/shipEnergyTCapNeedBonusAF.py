@@ -1,5 +1,5 @@
 #Used by:
-#Variations of ship: Magnate (3 of 4)
+#Ships named like: Magnate (3 of 3)
 #Ship: Crucifier
 #Ship: Crusader
 #Ship: Executioner

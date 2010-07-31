@@ -1,5 +1,6 @@
 #Used by:
-#Items from market group: Ships > Recon Ships > Caldari (2 of 2)
+#Ship: Falcon
+#Ship: Rook
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Cruiser").level

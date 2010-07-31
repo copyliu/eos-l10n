@@ -1,6 +1,8 @@
 #Used by:
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 10 > Armor Implants (3 of 3)
 #Implant: Akemon's Modified 'Noble' ZET5000
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET50
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET500
+#Implant: Hardwiring - Inherent Implants 'Noble' ZET5000
 #Implant: Imperial Navy Modified 'Noble' Implant
 #Implant: Imperial Special Ops Field Enhancer - Standard
 type = "passive"

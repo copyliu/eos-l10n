@@ -1,5 +1,6 @@
 #Used by:
-#Items from market group: Ships > Carriers > Caldari (2 of 2)
+#Ship: Chimera
+#Ship: Wyvern
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Carrier").level

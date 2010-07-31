@@ -1,5 +1,7 @@
 #Used by:
-#Ships from group: Transport Ship (3 of 8)
+#Ship: Impel
+#Ship: Occator
+#Ship: Prorator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Transport Ships").level

@@ -1,6 +1,7 @@
 #Used by:
-#Items from market group: Ships > Assault Ships > Gallente (2 of 2)
+#Ship: Enyo
 #Ship: Harpy
+#Ship: Ishkur
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

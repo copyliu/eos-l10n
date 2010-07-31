@@ -1,5 +1,6 @@
 #Used by:
-#Items from market group: Ships > Recon Ships > Minmatar (2 of 2)
+#Ship: Huginn
+#Ship: Rapier
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Recon Ships").level

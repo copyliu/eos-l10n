@@ -5,7 +5,6 @@
 #Modules from group: Projectile Weapon (59 of 141)
 #Modules named like: Missile Launcher (77 of 78)
 #Items from market group: Ship Equipment > Turrets & Bays > Missile Launchers (44 of 44)
-#Items from market group: Ship Equipment > Turrets & Bays > Projectile Turrets > Artillery Cannons (37 of 37)
 type = "overheat"
 def handler(fit, module, context):
     module.boostItemAttr("speed", module.getModifiedItemAttr("overloadRofBonus"))
