@@ -4,112 +4,183 @@ class Gang(object):
     def calculateModifiedAttributes(self):
         #Make sure ALL fits in the gang have been calculated
         for c in chain(self.wings, (self.leader,)):
-            c.calculateModifiedAttributes()
+            if c != None: c.calculateModifiedAttributes()
 
+        self.broken = False
         store = Store()
-        #Now that we're confident every fit has been figured.
-        #A fleet commander always gets his own bonusses,so lets do just that.
-        store.reconsider(self.leader)
-        store.apply(self.leader)
-        #Do the same, one level down.
+        store.set(self.leader, "fleet")
+        #Go all the way down for each subtree we have.
         for wing in self.wings:
             wing.calculateGangBonusses(store)
+
+        #No wings = BAD FC, You won't be getting any bonusses!
+        if len(self.wings) == 0:
+            self.broken = True
+
+        #Now calculate our own if we aren't broken
+        if self.broken == False:
+            #We only get our own bonusses *Sadface*
+            store.apply(self.leader, "fleet")
 
 class Wing(object):
     def calculateModifiedAttributes(self):
         for c in chain(self.squads, (self.leader,)):
-            c.calculateModifiedAttributes()
+            if c != None: c.calculateModifiedAttributes()
 
     def calculateGangBonusses(self, store):
-        store.reconsider(self.leader)
-        store.apply(self.leader)
+        self.broken = False
+        if self.leader == None:
+            #Broken chain
+            self.broken = True
+        else:
+            store.set(self.leader, "wing")
+
+        #ALWAYS move down
         for squad in self.squads:
             squad.calculateGangBonusses(store)
 
+        #No squads = BAD WC, No bonusses!
+        if len(self.squads) == 0:
+            self.broken = True
+
+        #Check if we aren't broken, if we aren't, boost
+        if self.broken == False:
+            store.apply(self.leader, "wing")
+        else:
+            #We broke, don't go up
+            self.gang.broken = True
 
 class Squad(object):
     def calculateModifiedAttributes(self):
-        for fit in self.members:
-            fit.calculateModifiedAttributes()
+        for member in self.members:
+            member.calculateModifiedAttributes()
 
     def calculateGangBonusses(self, store):
-        store.reconsider(self.booster)
-        for member in self.members:
-            store.apply(member)
+        self.broken = False
+        if self.leader == None:
+            #Broken chain, don't boost up. And don't boost ourselves either.
+            self.broken = True
+        elif self.booster != None:
+            store.set(self.booster, "squad")
+        else:
+            store.set(self.leader, "squad")
 
-class Store():
+        if len(self.members) <= 1:
+            self.broken = True
+
+        if self.broken == False:
+            for member in self.members:
+                store.apply(member, "squad")
+        else:
+            self.wing.broken = True
+
+class Store(object):
     def __init__(self):
-        self.__skillStore = {}
-        self.__moduleStore = {}
-        self.__ship = None
-        self.__dead = False
-        self.__started = False
+        #Build our data containers
+        self.bonusses = {}
+        for dictType in ("fleet", "wing", "squad"):
+            self.bonusses[dictType] = {"ship": None}
+            for boostType in ("skills", "modules"):
+                self.bonusses[dictType][boostType] = {}
 
-    def reconsider(self, fit):
-        #Tricky stuff:
-        #When we already have some skills, and the chain is broken (None gets passed)
-        #We will scrap all bonusses.
-        if (fit == None and self.__started == False) or self.__dead == True:
-            return
-        elif fit == None and self.__started == True:
-            self.__dead = True
-            return
+    def set(self, fit, layer):
         if fit == None:
             return
 
-        self.__started = True
-        #Ships:
-        #Check the fit's ship's commandBonus
-        #(it will be set as extraAttribute by effect)
-        if fit.ship and fit.ship.item.isType("gang"):
-            currBonus = self.__ship.commandBonus if self.__ship else 0
-            newBonus = fit.ship.commandBonus
-            if newBonus > currBonus:
-                self.__ship = fit.ship
+        dict = self.bonusses[layer]
+        #Clear existing bonusses
+        dict["ship"] = None
+        dict["modules"].clear()
+        dict["skills"].clear()
 
-        #Modules:
-        #Loop through all the modules on the fit & check their commandBonus.
-        #if higher  then current, use instead.
-        gangModules = filter(lambda mod: mod.item.isType("gang"), fit.modules)
-        for mod in gangModules:
-            name = mod.item.name
-            newCommandBonus = abs(mod.getModifiedItemAttr("commandBonus"))
-            currCommandBonus = abs(self.__moduleStore[name].getModifiedItemAttr("commandBonus")) if name in self.__moduleStore else 0
-            if (newCommandBonus > currCommandBonus):
-                self.__moduleStore[name] = mod
 
-        #Skills part
-        #Get all the gang skills the char has
-        #Loop through all the gangSkills the char has and checks if any are higher then the current ones
-        #If they're higher, use those instead.
+        for mod in fit.modules:
+            if mod.item.isType("gang"):
+                dict["modules"][mod.item.name] = mod
+
         for skill in fit.character.iterSkills():
             if skill.item.isType("gang"):
-                name = skill.item.name
-                currBonus =  self.__skillStore[name].commandBonus if name in self.__skillStore else 0
-                newBonus = skill.commandBonus
-                if newBonus > currBonus:
-                    self.__skillStore[name] = skill
+                dict["skills"][skill.item.name] = skill
 
+        if fit.ship.item.isType("gang"):
+            dict["ship"] = fit.ship
+    def apply(self, fit, layer):
+        skills = set()
+        mods = set()
+        ships = set()
+        for dictType in ("fleet", "wing", "squad"):
+            for skill in self.bonusses[dictType]["skills"].keys():
+                skills.add(skill)
 
-    def apply(self, fit):
-        if self.__dead == True or self.__started == False:
-            return
+            for mod in self.bonusses[dictType]["modules"].keys():
+                mods.add(mod)
 
-        for runTime in ("early", "normal", "late"):
-            #Run through skills
-            for skill in self.__skillStore.values():
-                for effect in skill.item.effects.values():
+            if self.bonusses[dictType]["ship"] != None:
+                ships.add(self.bonusses[dictType]["ship"].item.name)
+
+        #Run through skills
+        for skillName in skills:
+            skill = self.getHighestBonus(layer, "skills", skillName)
+            if skill == None: continue
+            for effect in skill.item.effects.values():
+                for runTime in ("early", "normal", "late"):
                     if effect.isType("gang") and effect.runTime == runTime:
-                        effect.handler(fit, skill, ("gang", "skill"))
+                        try:
+                            effect.handler(fit, skill, ("gang", "skill"))
+                        except AttributeError:
+                            pass
 
-            #Do the ship
-            if self.__ship:
-                for effect in self.__ship.item.effects.values():
+        #Do the ship
+        for shipName in ships:
+            ship = self.getHighestBonus(layer, "ship", shipName)
+            if ship == None: continue
+            for effect in ship.item.effects.values():
+                for runTime in ("early", "normal", "late"):
                     if effect.isType("gang") and effect.runTime == runTime:
-                        effect.handler(fit, self.__ship, ("gang", "ship"))
+                        try:
+                            effect.handler(fit, ship, ("gang", "ship"))
+                        except AttributeError:
+                            pass
 
-            #And the modules
-            for mod in self.__moduleStore.values():
-                for effect in mod.item.effects.values():
+        #And the modules
+        for modName in mods:
+            mod = self.getHighestBonus(layer, "modules", modName)
+            if mod == None: continue
+            for effect in mod.item.effects.values():
+                for runTime in ("early", "normal", "late"):
                     if effect.isType("gang") and effect.runTime == runTime:
-                        effect.handler(fit, mod, ("gang", "module"))
+                        try:
+                            effect.handler(fit, mod, ("gang", "module"))
+                        except AttributeError:
+                            pass
+
+    def getHighestBonus(self, layer, type, name = None):
+        highestStuff = None
+        highest = 0
+        for dictType in ("fleet", "wing", "squad"):
+            stuff = self.bonusses[dictType][type]
+            if stuff == None:
+                #Chain broken, only consider stuff under the current ones
+                highest = 0
+                highestStuff = None
+                continue
+
+            if type == "ship":
+                if abs(highest) < abs(stuff.commandBonus) and stuff.item.name == name:
+                    highest = stuff.commandBonus
+                    highestStuff = stuff
+            elif type == "skills":
+                if name not in stuff: continue
+                skill = stuff[name]
+                if abs(highest) < abs(skill.commandBonus):
+                    highest = skill.commandBonus
+                    highestStuff = skill
+            elif type == "modules":
+                if name not in stuff: continue
+                module = stuff[name]
+                commandBonus = module.getModifiedItemAttr("commandBonus")
+                if abs(highest) < abs(commandBonus):
+                    highest = commandBonus
+                    highestStuff = module
+            if dictType == layer:
+                return highestStuff
