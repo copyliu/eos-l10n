@@ -17,6 +17,7 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
     #T1 and T2 rigs have different effects for scanning resolution boost,
     #so we have to test them separately
     def test_scanResolutionT1(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t1tssm2)
         self.fit.calculateModifiedAttributes()
@@ -28,6 +29,7 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_scanResolutionT2(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.t2tssm1)
         self.fit.modules.append(self.t2tssm2)
         self.fit.calculateModifiedAttributes()
@@ -39,6 +41,7 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_scanResolutionT1T2(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t2tssm1)
         self.fit.calculateModifiedAttributes()
@@ -50,6 +53,7 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_shieldCapacity(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t2tssm2)
         self.fit.calculateModifiedAttributes()

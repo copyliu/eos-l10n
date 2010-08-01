@@ -17,6 +17,7 @@ class TestSensorBoosterSignalAmplifier(unittest.TestCase):
         self.fit.calculateModifiedAttributes()
 
     def test_scanResolution(self):
+        self.buildTested = 171215
         original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes

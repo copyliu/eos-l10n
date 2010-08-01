@@ -17,6 +17,7 @@ class TestSensorBooster(unittest.TestCase):
         self.fit.calculateModifiedAttributes()
 
     def test_scanResolution(self):
+        self.buildTested = 171215
         original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
@@ -25,6 +26,7 @@ class TestSensorBooster(unittest.TestCase):
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_maxTargetRange(self):
+        self.buildTested = 171215
         original = self.fit.ship.item.getAttribute("maxTargetRange")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes

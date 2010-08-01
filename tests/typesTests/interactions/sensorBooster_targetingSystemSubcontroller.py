@@ -16,6 +16,7 @@ class TestSensorBoosterTargetingSubsystemSubcontroller(unittest.TestCase):
         self.sbm.state = State.ACTIVE
 
     def test_scanResolutionT1(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.sbm)
         self.fit.modules.append(self.t1tssm)
         self.fit.calculateModifiedAttributes()
@@ -27,6 +28,7 @@ class TestSensorBoosterTargetingSubsystemSubcontroller(unittest.TestCase):
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_scanResolutionT2(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.sbm)
         self.fit.modules.append(self.t2tssm)
         self.fit.calculateModifiedAttributes()
