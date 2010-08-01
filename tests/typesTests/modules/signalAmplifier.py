@@ -8,10 +8,10 @@ class TestSignalAmplifier(unittest.TestCase):
         self.fit = Fit()
         self.fit.ship = Ship(db.getItem("Rifter"))
         self.sai = db.getItem("Signal Amplifier II")
-        self.sa1m = Module(self.sai)
-        self.sa2m = Module(self.sai)
-        self.fit.modules.append(self.sa1m)
-        self.fit.modules.append(self.sa2m)
+        self.sam1 = Module(self.sai)
+        self.sam2 = Module(self.sai)
+        self.fit.modules.append(self.sam1)
+        self.fit.modules.append(self.sam2)
         self.fit.calculateModifiedAttributes()
 
     def test_scanResolution(self):

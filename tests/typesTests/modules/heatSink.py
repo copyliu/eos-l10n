@@ -1,28 +1,33 @@
 import unittest
 from model import db
 from model.types import Module, Fit
+from model.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestHeatSink(unittest.TestCase):
     def setUp(self):
-        self.i = db.getItem("Heat Sink II")
-        self.ii = db.getItem("Heavy Modulated Energy Beam I")
-        self.f = Fit()
-        self.m = Module(self.i)
-        self.mm = Module(self.ii)
-        self.mmm = Module(self.i)
-        self.f.modules.append(self.m)
-        self.f.modules.append(self.mm)
-        self.f.modules.append(self.mmm)
-        self.f.calculateModifiedAttributes()
+        self.fit = Fit()
+        self.hsi = db.getItem("Heat Sink II")
+        self.eti = db.getItem("Heavy Modulated Energy Beam I")
+        self.hsm1 = Module(self.hsi)
+        self.hsm2 = Module(self.hsi)
+        self.etm = Module(self.eti)
+        self.fit.modules.append(self.hsm1)
+        self.fit.modules.append(self.hsm2)
+        self.fit.modules.append(self.etm)
+        self.fit.calculateModifiedAttributes()
 
-    def test_dmgBonus(self):
-        original = self.ii.attributes["damageMultiplier"].value
-        multiplier = self.i.attributes["damageMultiplier"].value
-        expected = original * (1 + (multiplier -1) * 0.86911998)  * multiplier
-        self.assertAlmostEquals(expected, self.mm.getModifiedItemAttr("damageMultiplier"), 3)
+    def test_damageMultiplier(self):
+        original = self.etm.item.getAttribute("damageMultiplier")
+        expected = ModifiedAttributeDict()
+        expected.original = self.etm.item.attributes
+        expected.multiply("damageMultiplier", self.hsi.getAttribute("damageMultiplier"), stackingPenalties = True)
+        expected.multiply("damageMultiplier", self.hsi.getAttribute("damageMultiplier"), stackingPenalties = True)
+        self.assertAlmostEquals(expected["damageMultiplier"], self.etm.getModifiedItemAttr("damageMultiplier"))
 
-    def test_speedBonus(self):
-        original = self.ii.attributes["speed"].value
-        multiplier = self.i.attributes["speedMultiplier"].value
-        expected = original * (1 + (multiplier -1) * 0.86911998)  * multiplier
-        self.assertAlmostEquals(expected, self.mm.getModifiedItemAttr("speed"), 3)
+    def test_speed(self):
+        original = self.etm.item.getAttribute("speed")
+        expected = ModifiedAttributeDict()
+        expected.original = self.etm.item.attributes
+        expected.multiply("speed", self.hsi.getAttribute("speedMultiplier"), stackingPenalties = True)
+        expected.multiply("speed", self.hsi.getAttribute("speedMultiplier"), stackingPenalties = True)
+        self.assertAlmostEquals(expected["speed"], self.etm.getModifiedItemAttr("speed"))

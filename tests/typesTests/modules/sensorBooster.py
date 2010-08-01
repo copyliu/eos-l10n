@@ -8,12 +8,12 @@ class TestSensorBooster(unittest.TestCase):
         self.fit = Fit()
         self.fit.ship = Ship(db.getItem("Rifter"))
         self.sbi = db.getItem("Sensor Booster II")
-        self.sb1m = Module(self.sbi)
-        self.sb2m = Module(self.sbi)
-        self.sb1m.state = State.ACTIVE
-        self.sb2m.state = State.ACTIVE
-        self.fit.modules.append(self.sb1m)
-        self.fit.modules.append(self.sb2m)
+        self.sbm1 = Module(self.sbi)
+        self.sbm2 = Module(self.sbi)
+        self.sbm1.state = State.ACTIVE
+        self.sbm2.state = State.ACTIVE
+        self.fit.modules.append(self.sbm1)
+        self.fit.modules.append(self.sbm2)
         self.fit.calculateModifiedAttributes()
 
     def test_scanResolution(self):
