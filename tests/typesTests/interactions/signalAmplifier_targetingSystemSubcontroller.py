@@ -15,6 +15,7 @@ class TestSignalAmplifierTargetingSubsystemSubcontroller(unittest.TestCase):
         self.t2tssm = Module(self.t2tssi)
 
     def test_scanResolutionT1(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.sam)
         self.fit.modules.append(self.t1tssm)
         self.fit.calculateModifiedAttributes()
@@ -26,6 +27,7 @@ class TestSignalAmplifierTargetingSubsystemSubcontroller(unittest.TestCase):
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_scanResolutionT2(self):
+        self.buildTested = 171215
         self.fit.modules.append(self.sam)
         self.fit.modules.append(self.t2tssm)
         self.fit.calculateModifiedAttributes()
