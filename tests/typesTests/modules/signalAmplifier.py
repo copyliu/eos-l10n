@@ -33,4 +33,3 @@ class TestSignalAmplifier(unittest.TestCase):
         original = self.fit.ship.item.attributes["maxLockedTargets"].value
         expected = original + self.sa1m.item.attributes["maxLockedTargetsBonus"].value + self.sa2m.item.attributes["maxLockedTargetsBonus"].value
         self.assertAlmostEquals(expected, self.fit.ship.getModifiedItemAttr("maxLockedTargets"), 3)
-
