@@ -27,6 +27,7 @@ modules_table = Table("modules", saveddata_meta,
                       Column("itemID", Integer, nullable = False),
                       Column("chargeID", Integer),
                       Column("state", Integer, CheckConstraint("state >= -1"), CheckConstraint("state <= 2")),
-                      Column("projected", Boolean, default = False, nullable = False))
+                      Column("projected", Boolean, default = False, nullable = False),
+                      Column("position", Integer))
 
 mapper(Module, modules_table)

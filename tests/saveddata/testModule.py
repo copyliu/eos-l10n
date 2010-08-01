@@ -109,10 +109,26 @@ class TestModule(unittest.TestCase):
             projMod = Module(item2)
             charge = db.getItem("Gamma S")
             mod = Module(item)
+            posMod1 = Module(item)
+            posMod2 = Module(item)
+            posMod3 = Module(item)
+            posMods = [posMod1, posMod2, posMod3]
+            for m in posMods:
+                f.modules.append(m)
+
             mod.charge = charge
             f.modules.append(mod)
             f.projectedModules.append(projMod)
             db.saveddata_session.add(f)
+            db.saveddata_session.flush()
+
+            for m in posMods:
+                f.modules.remove(m)
+
+            posMods.reverse()
+            for m in posMods:
+                f.modules.append(m)
+
             db.saveddata_session.flush()
 
             #Hack our way through changing the session temporarly
@@ -122,20 +138,19 @@ class TestModule(unittest.TestCase):
             newf = db.getFit(f.ID)
             self.assertNotEquals(id(newf), id(f))
 
+            newmod = newf.modules[0]
+            newprojMod = newf.projectedModules[0]
+
             i = 0
-            for m in newf.modules:
-                i+= 1
-                newmod = m
-            
-            self.assertEquals(i, 1)
-            
-            i = 0
-            for m in newf.projectedModules:
+            while i < len(newf.modules):
+                if i == 0:
+                    i += 1
+                    continue
+                else:
+                    self.assertEquals(newf.modules[i].ID, posMods[i-1].ID)
                 i += 1
-                newprojMod = m
-            
+
             self.assertEquals(newprojMod.item.name, "Stasis Webifier I")
-            self.assertEqual(i, 1)
             self.assertNotEquals(id(newprojMod), id(projMod))
             self.assertNotEquals(id(newmod), id(mod))
             self.assertEquals(mod.state, newmod.state)

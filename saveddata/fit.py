@@ -168,6 +168,29 @@ class Fit(object):
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
+class HandledModuleList(HandledList):
+    def append(self, mod):
+        l = len(self)
+        mod.position = l
+        HandledList.append(self, mod)
+
+    def insert(self, index, mod):
+        mod.position = index
+        i = index
+        while i < len(self):
+            self[i].position += 1
+            i += 1
+        HandledList.insert(self, index, mod)
+
+    def remove(self, mod):
+        HandledList.remove(self, mod)
+        oldPos = mod.position
+        mod.position = None
+        i = oldPos
+        while i < len(self):
+            self[i].position -= 1
+            i += 1
+
 class HandledDroneList(HandledList):
     def __init__(self):
         self.__findCache = {}

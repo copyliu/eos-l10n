@@ -24,7 +24,9 @@ from model.db.saveddata.module import modules_table
 from model.db.saveddata.drone import drones_table
 from model.types import Fit, Module, User, Booster, Drone, Implant, Character
 from model.effectHandlerHelpers import HandledList
-from model.saveddata.fit import HandledDroneList, HandledImplantBoosterList, HandledProjectedModList, HandledProjectedDroneList, HandledProjectedFitList
+from model.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
+ HandledProjectedModList, HandledProjectedDroneList, HandledProjectedFitList, \
+ HandledModuleList
 
 fits_table = Table("fits", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
@@ -38,8 +40,9 @@ projectedFits_table = Table("projectedFits", saveddata_meta,
                             Column("victimID", ForeignKey("fits.ID"), primary_key = True),
                             Column("amount", Integer))
 mapper(Fit, fits_table,
-       properties = {"_Fit__modules" : relation(Module, collection_class = HandledList,
-                                                primaryjoin = and_(modules_table.c.fitID == fits_table.c.ID, modules_table.c.projected == False)),
+       properties = {"_Fit__modules" : relation(Module, collection_class = HandledModuleList,
+                                                primaryjoin = and_(modules_table.c.fitID == fits_table.c.ID, modules_table.c.projected == False),
+                                                order_by = modules_table.c.position),
                      "_Fit__projectedModules" : relation(Module, collection_class = HandledProjectedModList,
                                                 primaryjoin = and_(modules_table.c.fitID == fits_table.c.ID, modules_table.c.projected == True)),
                      "_Fit__owner" : relation(User, backref = "fits"),
