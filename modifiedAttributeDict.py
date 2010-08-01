@@ -1,3 +1,20 @@
+#===============================================================================
+# This file is part of pyfa.
+#
+# pyfa is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# pyfa is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
+#===============================================================================
+
 import math
 
 
@@ -56,11 +73,11 @@ class ModifiedAttributeDict(object):
             return self.__intermediary[key]
         else:
             return self.getOriginal(key)
-    
+
     def getOriginal(self, key):
         val = self.__original[key]
         return val.value if hasattr(val, "value") else val
-    
+
     def __setitem__(self, key, val):
         self.__intermediary[key] = val
 
@@ -87,13 +104,13 @@ class ModifiedAttributeDict(object):
     items = iteritems
     keys = iterkeys
     values = itervalues
-    
+
     def __placehold(self, key):
         if key in self.__modified and self.__modified[key] != self.CalculationPlaceholder:
             self.__intermediary[key] = self.__modified[key]
-        
+
         self.__modified[key] = self.CalculationPlaceholder
-        
+
     def __calculateValue(self, key):
         #Grab our values if they're there, otherwise we'll take default values.
         highIsGood = self.__original[key].highIsGood if key in self.__original else True
@@ -161,7 +178,7 @@ class ModifiedAttributeDict(object):
             if not attributeName in self.__multipliers:
                 self.__multipliers[attributeName] = 1
             self.__multipliers[attributeName] *= multiplier
-        
+
         self.__placehold(attributeName)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
