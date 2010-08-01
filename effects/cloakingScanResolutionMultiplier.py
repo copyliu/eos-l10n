@@ -5,4 +5,4 @@ type = "passive"
 def handler(fit, module, context):
     fit.ship.multiplyItemAttr("scanResolution",
                               module.getModifiedItemAttr("scanResolutionMultiplier"),
-                              stackingPenalties = True)
+                              stackingPenalties = True, penaltyGroup="cloakingScanResolutionMultiplier")
