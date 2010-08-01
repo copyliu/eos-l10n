@@ -16,7 +16,7 @@ class TestSensorBoosterSignalAmplifier(unittest.TestCase):
         self.fit.modules.append(self.sam)
         self.fit.calculateModifiedAttributes()
 
-    def test_scanRes(self):
+    def test_scanResolution(self):
         original = self.fit.ship.item.attributes["scanResolution"].value
         boostList = []
         boostList.append(self.sbi.attributes["scanResolutionBonus"].value)
