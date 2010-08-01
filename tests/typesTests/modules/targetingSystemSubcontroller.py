@@ -1,16 +1,18 @@
 import unittest
 from model import db
 from model.types import Module, Fit, Ship, State
-from model.tests.typesTests import calculateBoostMultiplier, calculateMultiplierMultiplier
+from model.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestSignalAmplifier(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.fit.ship = Ship(db.getItem("Rifter"))
-        self.t1tss1m = Module(db.getItem("Small Targeting System Subcontroller I"))
-        self.t1tss2m = Module(db.getItem("Small Targeting System Subcontroller I"))
-        self.t2tss1m = Module(db.getItem("Small Targeting System Subcontroller II"))
-        self.t2tss2m = Module(db.getItem("Small Targeting System Subcontroller II"))
+        self.t1tssi = db.getItem("Small Targeting System Subcontroller I")
+        self.t2tssi = db.getItem("Small Targeting System Subcontroller II")
+        self.t1tss1m = Module(self.t1tssi)
+        self.t1tss2m = Module(self.t1tssi)
+        self.t2tss1m = Module(self.t2tssi)
+        self.t2tss2m = Module(self.t2tssi)
 
     #T1 and T2 rigs have different effects for scanning resolution boost,
     #so we have to test them separately
@@ -18,33 +20,31 @@ class TestSignalAmplifier(unittest.TestCase):
         self.fit.modules.append(self.t1tss1m)
         self.fit.modules.append(self.t1tss2m)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.attributes["scanResolution"].value
-        boostList = []
-        boostList.append(self.t1tss1m.item.attributes["scanResolutionMultiplier"].value)
-        boostList.append(self.t1tss2m.item.attributes["scanResolutionMultiplier"].value)
-        expected = original * calculateMultiplierMultiplier(boostList, stackingPenalized = True)
-        self.assertAlmostEquals(expected, self.fit.ship.getModifiedItemAttr("scanResolution"), 3)
+        original = self.fit.ship.item.getAttribute("scanResolution")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.multiply("scanResolution", self.t1tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
+        expected.multiply("scanResolution", self.t1tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
+        self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_scanResolutionT2(self):
         self.fit.modules.append(self.t2tss1m)
         self.fit.modules.append(self.t2tss2m)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.attributes["scanResolution"].value
-        boostList = []
-        boostList.append(self.t2tss1m.item.attributes["scanResolutionMultiplier"].value)
-        boostList.append(self.t2tss2m.item.attributes["scanResolutionMultiplier"].value)
-        expected = original * calculateMultiplierMultiplier(boostList, stackingPenalized = True)
-        self.assertAlmostEquals(expected, self.fit.ship.getModifiedItemAttr("scanResolution"), 3)
+        original = self.fit.ship.item.getAttribute("scanResolution")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.multiply("scanResolution", self.t2tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
+        expected.multiply("scanResolution", self.t2tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
+        self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_shieldCapacity(self):
         self.fit.modules.append(self.t1tss1m)
         self.fit.modules.append(self.t2tss2m)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.attributes["shieldCapacity"].value
-        boostList = []
-        boostList.append(self.t1tss1m.item.attributes["drawback"].value)
-        boostList.append(self.t2tss2m.item.attributes["drawback"].value)
-        expected = original * calculateBoostMultiplier(boostList, stackingPenalized = False)
-        self.assertAlmostEquals(expected, self.fit.ship.getModifiedItemAttr("shieldCapacity"), 3)
-
-
+        original = self.fit.ship.item.getAttribute("shieldCapacity")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.boost("shieldCapacity", self.t1tssi.getAttribute("drawback"), stackingPenalties = False)
+        expected.boost("shieldCapacity", self.t2tssi.getAttribute("drawback"), stackingPenalties = False)
+        self.assertAlmostEquals(expected["shieldCapacity"], self.fit.ship.getModifiedItemAttr("shieldCapacity"))

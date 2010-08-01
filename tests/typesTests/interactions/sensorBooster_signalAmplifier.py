@@ -1,7 +1,7 @@
 import unittest
 from model import db
 from model.types import Module, Fit, Ship, State
-from model.tests.typesTests import calculateBoostMultiplier
+from model.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestSensorBoosterSignalAmplifier(unittest.TestCase):
     def setUp(self):
@@ -17,9 +17,9 @@ class TestSensorBoosterSignalAmplifier(unittest.TestCase):
         self.fit.calculateModifiedAttributes()
 
     def test_scanResolution(self):
-        original = self.fit.ship.item.attributes["scanResolution"].value
-        boostList = []
-        boostList.append(self.sbi.attributes["scanResolutionBonus"].value)
-        boostList.append(self.sai.attributes["scanResolutionBonus"].value)
-        expected = original * calculateBoostMultiplier(boostList, stackingPenalized = True)
-        self.assertAlmostEquals(expected, self.fit.ship.getModifiedItemAttr("scanResolution"), 3)
+        original = self.fit.ship.item.getAttribute("scanResolution")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.boost("scanResolution", self.sbi.getAttribute("scanResolutionBonus"), stackingPenalties = True)
+        expected.boost("scanResolution", self.sai.getAttribute("scanResolutionBonus"), stackingPenalties = True)
+        self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
