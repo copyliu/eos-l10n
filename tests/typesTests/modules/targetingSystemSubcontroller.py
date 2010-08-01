@@ -38,6 +38,17 @@ class TestSignalAmplifier(unittest.TestCase):
         expected.multiply("scanResolution", self.t2tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
+    def test_scanResolutionT1T2(self):
+        self.fit.modules.append(self.t1tssm1)
+        self.fit.modules.append(self.t2tssm1)
+        self.fit.calculateModifiedAttributes()
+        original = self.fit.ship.item.getAttribute("scanResolution")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.multiply("scanResolution", self.t1tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
+        expected.multiply("scanResolution", self.t2tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
+        self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
+
     def test_shieldCapacity(self):
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t2tssm2)
