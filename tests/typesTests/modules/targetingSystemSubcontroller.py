@@ -1,9 +1,9 @@
 import unittest
 from model import db
-from model.types import Module, Fit, Ship, State
+from model.types import Module, Fit, Ship
 from model.modifiedAttributeDict import ModifiedAttributeDict
 
-class TestSignalAmplifier(unittest.TestCase):
+class TestTargetingSubsystemSubcontroller(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.fit.ship = Ship(db.getItem("Rifter"))
