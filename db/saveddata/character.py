@@ -24,6 +24,7 @@ from model.types import Character, User, Skill
 characters_table = Table("characters", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
                          Column("name", String, nullable = False),
+                         Column("apiID", Integer),
                          Column("apiKey", String),
                          Column("ownerID", ForeignKey("users.ID"), nullable = False))
 

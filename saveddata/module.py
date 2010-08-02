@@ -97,8 +97,13 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def charge(self, charge):
         if not self.isValidCharge(charge): raise ValueError("Ammo does not fit in that slot")
         self.__charge = charge
-        self.chargeID = charge.ID if charge != None else None
-        self.__chargeModifiedAttributes.original = charge.attributes
+        if charge != None:
+            self.chargeID = charge.ID
+            self.__chargeModifiedAttributes.original = charge.attributes
+        else:
+            self.chargeID = None
+            self.__chargeModifiedAttributes.original = None
+
         self.__itemModifiedAttributes.clear()
 
     def isValidCharge(self, charge):
@@ -180,3 +185,10 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             for effect in self.charge.effects.itervalues():
                 if effect.runTime == runTime:
                     effect.handler(fit, self, ("moduleCharge",))
+
+
+    def __deepcopy__(self, memo):
+        copy = Module(self.item)
+        copy.charge = self.charge
+        copy.state = self.state
+        return copy

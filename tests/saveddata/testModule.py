@@ -3,6 +3,7 @@ from model.types import Module, Fit, User, State, Ship, Slot
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
+from copy import deepcopy
 
 class TestModule(unittest.TestCase):
     def setUp(self):
@@ -162,3 +163,15 @@ class TestModule(unittest.TestCase):
         finally:
             #Undo our hack as to not fuck up anything
             model.db.saveddata.queries.saveddata_session = oldSession
+
+    def test_copy(self):
+        m = Module(db.getItem("Dual Light Pulse Laser I"))
+        m.charge = db.getItem("Gamma S")
+        m.state = State.OFFLINE
+
+        c = deepcopy(m)
+
+        self.assertNotEquals(id(m), id(c))
+        self.assertEquals(m.item, c.item)
+        self.assertEquals(m.charge, c.charge)
+        self.assertEquals(m.state, c.state)

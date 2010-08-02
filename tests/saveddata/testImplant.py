@@ -3,6 +3,7 @@ from model.types import Implant, Fit, User, Ship
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
+from copy import deepcopy
 
 class TestImplant(unittest.TestCase):
     def test_InvalidImplant(self):
@@ -60,3 +61,12 @@ class TestImplant(unittest.TestCase):
         finally:
             #Undo our hack as to not fuck up anything
             model.db.saveddata.queries.saveddata_session = oldSession
+
+    def test_copy(self):
+        i = Implant(db.getItem("Halo Omega"))
+        i.active = False
+
+        c = deepcopy(i)
+        self.assertNotAlmostEqual(id(i), id(c))
+        self.assertEquals(i.item, c.item)
+        self.assertEquals(i.active, c.active)

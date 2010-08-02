@@ -19,6 +19,7 @@ from model.effectHandlerHelpers import HandledItem
 from model.modifiedAttributeDict import ItemAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
 from model.types import Item
+from copy import deepcopy
 
 class Character(object):
     __all5 = None
@@ -110,6 +111,17 @@ class Character(object):
         for skill in self.iterSkills():
             skill.clear()
 
+    def __deepcopy__(self, memo):
+        copy = Character("%s copy" % self.name)
+        copy.apiKey = self.apiKey
+        copy.apiID = self.apiID
+        for skill in self.iterSkills():
+            copy.addSkill(deepcopy(skill, memo))
+
+        return copy
+
+
+
     @validates("ID", "name", "apiKey", "ownerID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -175,6 +187,10 @@ class Skill(HandledItem):
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
+
+    def __deepcopy__(self, memo):
+        copy = Skill(self.item, self.level, self.__ro)
+        return copy
 
 class ReadOnlyException(Exception):
     pass

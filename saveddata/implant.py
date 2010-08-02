@@ -23,6 +23,7 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.__slot = self.__calculateSlot(item)
         self.__item = item
         self.itemID = item.ID
+        self.active = True
         self.build()
 
     @reconstructor
@@ -72,3 +73,8 @@ class Implant(HandledItem, ItemAttrShortcut):
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
+
+    def __deepcopy__(self, memo):
+        copy = Implant(self.item)
+        copy.active = self.active
+        return copy

@@ -19,6 +19,7 @@ from model.effectHandlerHelpers import HandledList
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
+from copy import deepcopy
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -39,6 +40,7 @@ class Fit(object):
         self.__boosters = HandledImplantBoosterList()
         self.__projectedModules = HandledList()
         self.__projectedFits = HandledList()
+        self.__projectedDrones = HandledProjectedDroneList()
         self.__character = None
         self.__owner = None
         self.shipID = None
@@ -168,6 +170,37 @@ class Fit(object):
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
+    def __deepcopy__(self, memo):
+        copy = Fit()
+        #Character and owner are not copied
+        copy.character = self.character
+        copy.owner = self.owner
+        copy.ship = deepcopy(self.ship, memo)
+        copy.name = "%s copy" % self.name
+
+        for mod in self.modules:
+            copy.modules.append(deepcopy(mod, memo))
+
+        for drone in self.drones:
+            copy.drones.append(deepcopy(drone, memo))
+
+        for implant in self.implants:
+            copy.implants.append(deepcopy(implant, memo))
+
+        for booster in self.boosters:
+            copy.boosters.append(deepcopy(booster, memo))
+
+        for mod in self.projectedModules:
+            copy.projectedModules.append(deepcopy(implant, memo))
+
+        for drone in self.projectedDrones:
+            copy.projectedDrones.append(deepcopy(drone, memo))
+
+        for fit in self.projectedFits:
+            copy.projectedFits.append(fit)
+
+        return copy
+
 class HandledModuleList(HandledList):
     def append(self, mod):
         l = len(self)
@@ -236,6 +269,7 @@ class HandledDroneList(HandledList):
 
         return d
 
+
 class HandledImplantBoosterList(HandledList):
     def __init__(self):
         self.__slotCache = {}
@@ -245,7 +279,7 @@ class HandledImplantBoosterList(HandledList):
             if replace: self.remove(booster)
             else:
                 if replace: self.remove(booster)
-                else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True ")
+                else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True")
 
         HandledList.append(self, booster)
 
@@ -263,4 +297,5 @@ class HandledProjectedFitList(list):
     def append(self, proj):
         proj.projected = True
         list.append(self, proj)
+
 from model.types import Drone, Ship, Character

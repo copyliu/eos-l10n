@@ -25,6 +25,7 @@ class Booster(HandledItem, ItemAttrShortcut):
         self.__slot = self.__calculateSlot(item)
         self.itemID = item.ID
         self.__item = item
+        self.active = True
         self.__build()
 
     @reconstructor
@@ -97,6 +98,19 @@ class Booster(HandledItem, ItemAttrShortcut):
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
+
+    def __deepcopy__(self, memo):
+        copy = Booster(self.item)
+        copy.active = self.active
+        origSideEffects = list(self.iterSideEffects())
+        copySideEffects = list(copy.iterSideEffects())
+        i = 0
+        while i < len(origSideEffects):
+            copySideEffects[i].active = origSideEffects[i].active
+            i += 1
+
+        return copy
+
 
 class SideEffect(object):
     def __init__(self, owner):

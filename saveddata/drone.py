@@ -102,3 +102,9 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             for effect in self.charge.effects.itervalues():
                 if effect.runTime == runTime:
                     effect.handler(fit, self, ("droneCharge",))
+
+    def __deepcopy__(self, memo):
+        copy = Drone(self.item)
+        copy.amount = self.amount
+        copy.amountActive = self.amountActive
+        return copy

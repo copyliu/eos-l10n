@@ -50,3 +50,7 @@ class Ship(ItemAttrShortcut, HandledItem):
         for effect in self.item.effects.itervalues():
             if effect.runTime == runTime and effect.isType("passive"):
                  effect.handler(fit, self, ("ship",))
+
+    def __deepcopy__(self, memo):
+        copy = Ship(self.item)
+        return copy

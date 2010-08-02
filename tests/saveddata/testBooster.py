@@ -3,6 +3,7 @@ from model import db
 from model.types import Booster, Fit, User, Ship
 import sqlalchemy.orm
 import model.db.saveddata.queries
+from copy import deepcopy
 
 class TestBooster(unittest.TestCase):
     def test_SetInvalidBooster(self):
@@ -84,3 +85,19 @@ class TestBooster(unittest.TestCase):
         finally:
             #Undo our hack as to not fuck up anything
             model.db.saveddata.queries.saveddata_session = oldSession
+
+    def test_copy(self):
+        b = Booster(db.getItem("Strong Drop Booster"))
+        b.active = False
+        activate = ("boosterTurretFalloffPenalty", "boosterArmorRepairAmountPenalty")
+        for sideEffect in b.iterSideEffects():
+                if sideEffect.effect.name in activate:
+                    sideEffect.active = True
+
+        copy = deepcopy(b)
+
+        self.assertNotEquals(id(b), id(copy))
+        self.assertEquals(b.item, copy.item)
+        self.assertEquals(b.active, copy.active)
+        for sideEffect in copy.iterSideEffects():
+                    self.assertEquals(sideEffect.effect.name in activate, sideEffect.active)

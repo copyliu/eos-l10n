@@ -1,8 +1,9 @@
 import unittest
-from model.types import Fit, Character, Module, Ship, User, State
+from model.types import Fit, Character, Module, Ship, User, State, Drone, Implant, Booster
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
+from copy import deepcopy
 
 class TestFit(unittest.TestCase):
     def setUp(self):
@@ -122,3 +123,71 @@ class TestFit(unittest.TestCase):
         f.projectedFits.append(f)
         f.calculateModifiedAttributes()
         self.assertAlmostEquals(99.800, f.ship.getModifiedItemAttr("maxVelocity"), 3)
+
+    def test_copy(self):
+        f = Fit()
+        f.name = "Testety"
+        f.character = Character("TEST")
+        f.owner = User("moo")
+        testm = Module(db.getItem("Heat Sink I"))
+        f.modules.append(testm)
+        tests = Ship(db.getItem("Rifter"))
+
+        f.ship = tests
+
+        testpm = Module(db.getItem("Stasis Webifier I"))
+        f.projectedModules.append(testpm)
+
+        testd = Drone(db.getItem("Hobgoblin I"))
+        f.drones.append(testd)
+
+        testi = Implant(db.getItem("Halo Omega"))
+        f.implants.append(testi)
+
+        testb = Booster(db.getItem("Strong Drop Booster"))
+        f.boosters.append(testb)
+
+        testpd = Drone(db.getItem("Warrior TP-300"))
+        f.projectedDrones.append(testpd)
+
+        testpf = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.name = "Projected"
+        f.projectedFits.append(testpf)
+
+        newf = deepcopy(f)
+        self.assertEquals(newf.name, "%s copy" % f.name)
+        self.assertEquals(newf.character, f.character)
+        self.assertEquals(newf.owner, f.owner)
+
+        newm = newf.modules[0]
+        self.assertNotEquals(id(newm), id(testm))
+        self.assertEquals(len(newf.modules), len(f.modules))
+
+        newpm = newf.projectedModules[0]
+        self.assertNotEquals(id(newpm), id(testpm))
+        self.assertEquals(len(newf.projectedModules), len(f.projectedModules))
+
+        newd = newf.drones[0]
+        self.assertNotEquals(id(newd), id(testd))
+        self.assertEquals(len(newf.drones), len(f.drones))
+
+        newb = newf.boosters[0]
+        self.assertNotEquals(id(newb), id(testb))
+        self.assertEquals(len(newf.boosters), len(f.boosters))
+
+        newi = newf.implants[0]
+        self.assertNotEquals(id(newi), id(testi))
+        self.assertEquals(len(newf.implants), len(f.implants))
+
+        newpd = newf.projectedDrones[0]
+        self.assertNotEquals(id(newpd), id(testpd))
+        self.assertEquals(len(newf.projectedDrones), len(f.projectedDrones))
+
+        newpm = newf.projectedModules[0]
+        self.assertNotEquals(id(newpm), id(testpm))
+        self.assertEquals(len(newf.projectedModules), len(f.projectedModules))
+
+        newpf = newf.projectedFits[0]
+        self.assertEquals(id(newpf), id(testpf))
+        self.assertEquals(len(newf.projectedFits), len(f.projectedFits))

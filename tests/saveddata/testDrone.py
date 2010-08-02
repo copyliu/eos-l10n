@@ -3,6 +3,7 @@ from model import db
 from model.types import Drone, Fit, User, Ship
 import model.db.saveddata.queries
 import sqlalchemy.orm
+from copy import deepcopy
 
 class TestDrone(unittest.TestCase):
     def test_clear(self):
@@ -21,7 +22,7 @@ class TestDrone(unittest.TestCase):
             f.owner = User("dronetest", "testy", False)
             f.ship = Ship(db.getItem("Rifter"))
             i = db.getItem("Hobgoblin I")
-            
+
             d = f.drones.appendItem(i, 5)
             d.amountActive = 3
             d2 = f.projectedDrones.appendItem(i, 3)
@@ -46,17 +47,17 @@ class TestDrone(unittest.TestCase):
             for d in f.drones:
                 c += 1
                 self.assertNotEquals(id(d), d1id)
-            
+
             self.assertEquals(c, 1)
             self.assertEquals(d.item.ID, i.ID)
             self.assertEquals(d.amount, 5)
             self.assertEquals(d.amountActive, 3)
-            
+
             c = 0
             for d in f.projectedDrones:
                 c += 1
                 self.assertNotEquals(id(d2), id(d))
-                
+
             self.assertEquals(c, 1)
             self.assertEquals(d.item.ID, i.ID)
             self.assertEquals(d.amount, 3)
@@ -66,3 +67,14 @@ class TestDrone(unittest.TestCase):
         finally:
             #Undo our hack as to not fuck up anything
             model.db.saveddata.queries.saveddata_session = oldSession
+
+    def test_copy(self):
+        d = Drone(db.getItem("Hobgoblin I"))
+        d.amount = 3
+        d.amountActive = 1
+
+        c = deepcopy(d)
+        self.assertNotEquals(id(d), id(c))
+        self.assertEquals(d.item, c.item)
+        self.assertEquals(d.amount, c.amount)
+        self.assertEquals(d.amountActive, c.amountActive)
