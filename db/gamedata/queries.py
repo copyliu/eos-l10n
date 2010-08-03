@@ -18,7 +18,7 @@
 from model.db import gamedata_session
 from model.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
-from model.types import Item, Category, Group
+from model.types import Item, Category, Group, MarketGroup
 def getItem(lookfor):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).filter(Item.name == lookfor).one()
@@ -43,3 +43,19 @@ def searchItems(nameLike):
 def getVariations(item):
     if not isinstance(item, int): item = item.ID
     return gamedata_session.query(Item).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()
+
+def getGroup(group):
+    if isinstance(group, basestring):
+        filter = Group.name == group
+    elif isinstance(group, int):
+        filter = Group.ID == group
+
+    return gamedata_session.query(Group).filter(filter).one()
+
+def getMarketGroup(group):
+    if isinstance(group, basestring):
+        filter = MarketGroup.name == group
+    elif isinstance(group, int):
+        filter = MarketGroup.ID == group
+
+    return gamedata_session.query(MarketGroup).filter(filter).one()

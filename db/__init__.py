@@ -25,7 +25,7 @@ saveddata_session = sessionmaker(bind=saveddata_engine, autoflush = False)()
 #Import all the definitions for all our database stuff
 from .gamedata import *
 from .saveddata import *
-   
+
 #Import queries
-from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory
+from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup
 from .saveddata.queries import getUser, getCharacter, getFit
