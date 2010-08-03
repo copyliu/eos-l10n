@@ -124,6 +124,21 @@ class TestFit(unittest.TestCase):
         f.calculateModifiedAttributes()
         self.assertAlmostEquals(99.800, f.ship.getModifiedItemAttr("maxVelocity"), 3)
 
+    def test_capacitorNoMods(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        self.assertEquals(f.isCapStable(), True)
+        self.assertEquals(f.capState(), 100)
+
+    def test_capacitorUnstable(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        m = Module(db.getItem("100MN Afterburner I"))
+        m.state = State.ACTIVE
+        f.modules.append(m)
+        self.assertEquals(f.isCapStable(), False)
+        self.assertTrue(f.capState(), 15)
+
     def test_copy(self):
         f = Fit()
         f.name = "Testety"

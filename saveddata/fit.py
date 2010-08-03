@@ -18,8 +18,9 @@
 from model.effectHandlerHelpers import HandledList
 from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
-from itertools import chain
+from itertools import chain, count
 from copy import deepcopy
+from math import sqrt
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -32,6 +33,8 @@ class Fit(object):
                         "maxTargetsLocked": 0,
                         "droneControlRange": 0,
                         "cloaked": False}
+
+    PEAK_CAP_RECHARGE = -(sqrt(2) - 2 ) / 2
 
     def __init__(self):
         self.__modules = HandledList()
@@ -55,6 +58,8 @@ class Fit(object):
     def build(self):
         from model import db
         self.__calculated = False
+        self.__capStable = None
+        self.__capState = None
         self.__calculatedTargets = []
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
         self.extraAttributes = ModifiedAttributeDict()
@@ -124,6 +129,8 @@ class Fit(object):
 
     def clear(self):
         self.__calculated = False
+        self.__capStable = None
+        self.__capState = None
         del self.__calculatedTargets[:]
         if self.ship != None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
@@ -169,6 +176,81 @@ class Fit(object):
 
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
+
+    def calculateCapRecharge(self, procent):
+        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate")
+        return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
+                           sqrt((2 * procent) - pow(procent, 2)))
+
+    def isCapStable(self):
+        if self.__capStable == None:
+            self.simulateCap()
+
+        return self.__capStable
+
+    def capState(self):
+        """
+        If the cap is stable, the capacitor state is the % at which it is stable.
+        If the cap is unstable, this is the amount of time before it runs out
+        """
+        if self.__capState == None:
+            self.simulateCap()
+
+        return self.__capState
+
+    def simulateCap(self):
+        #Figure out natural recharge is, boosted amount & drained amount.
+        #Compute the total afterwards
+        peakRecharge = self.calculateCapRecharge(self.PEAK_CAP_RECHARGE)
+        capBoost = self.extraAttributes["capBoost"]
+        capDrain = self.extraAttributes["capDrain"]
+        totalPeakLoad = peakRecharge + capBoost
+
+        #Figure out how much cap we're using
+        capUse = capDrain
+        for mod in self.modules:
+            if mod.state >= State.ACTIVE:
+                capNeed = mod.getModifiedItemAttr("capacitorNeed")
+                cycleTime = mod.getModifiedItemAttr("speed") or mod.getModifiedItemAttr("duration")
+                if capNeed != None and cycleTime != None:
+                    capUse += capNeed / (cycleTime / 1000.0)
+
+        if totalPeakLoad > capUse:
+            #Stable!
+            #We'll figure out where exactly its stable then.
+            #This is rather easy.
+            #lower bound = peak recharge
+            #Upper bound = 100%
+            #We need to find out at how many % capUse == capRecharge
+            #Algorithm: keep taking the average between low and up. Call it mid
+            #If our recharge at mid % is above our cap use, the mid becomes the new upper bound.
+            #If our recharge at mid % is under our cap use, mid becomes new lower bound.
+            low = self.PEAK_CAP_RECHARGE
+            high = 1.0
+            diff = 10
+            while diff >= 0.000001:
+                mid = (low + high) / 2
+                rechargeRate = self.calculateCapRecharge(mid) + capBoost
+                diff = abs(rechargeRate - capUse)
+                if rechargeRate > capUse:
+                    low = mid
+                else:
+                    high = mid
+
+            self.__capStable = True
+            self.__capState = round(mid * 100, 1)
+        else:
+            capCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+            currentCap = capCapacity
+            for i in count(1):
+                if currentCap <= 0:
+                    break
+                rechargeRate = self.calculateCapRecharge(currentCap / capCapacity)
+                currentCap -= capUse - rechargeRate
+
+            self.__capStable = False
+            self.__capState = i
 
     def __deepcopy__(self, memo):
         copy = Fit()
@@ -298,4 +380,4 @@ class HandledProjectedFitList(list):
         proj.projected = True
         list.append(self, proj)
 
-from model.types import Drone, Ship, Character
+from model.types import Drone, Ship, Character, State
