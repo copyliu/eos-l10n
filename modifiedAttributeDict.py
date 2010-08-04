@@ -113,7 +113,6 @@ class ModifiedAttributeDict(object):
 
     def __calculateValue(self, key):
         #Grab our values if they're there, otherwise we'll take default values.
-        highIsGood = self.__original[key].highIsGood if key in self.__original else True
         preIncrease = self.__preIncreases[key] if key in self.__preIncreases else 0
         postIncrease = self.__postIncreases[key] if key in self.__postIncreases else 0
         multiplier = self.__multipliers[key] if key in self.__multipliers else 1

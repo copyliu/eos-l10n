@@ -15,15 +15,18 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup
-from model.saveddata.user import User
-from model.saveddata.damagePattern import DamagePattern
-from model.saveddata.character import Character, Skill
-from model.saveddata.module import Module, State, Slot
-from model.saveddata.drone import Drone
-from model.saveddata.implant import Implant
-from model.saveddata.booster import SideEffect
-from model.saveddata.booster import Booster
-from model.saveddata.ship import Ship
-from model.saveddata.fit import Fit
-from model.saveddata.gang import Gang, Wing, Squad
+from sqlalchemy import Table, Column, Integer, ForeignKey, String
+from sqlalchemy.orm import relation, mapper
+
+from model.db import saveddata_meta
+from model.types import DamagePattern
+
+damagePatterns_table = Table("damagePatterns", saveddata_meta,
+                             Column("ID", Integer, primary_key = True),
+                             Column("emAmount", Integer),
+                             Column("thermalAmount", Integer),
+                             Column("kineticAmount", Integer),
+                             Column("explosiveAmount", Integer),
+                             Column("ownerID", ForeignKey("users.ID"), nullable=True))
+
+mapper(DamagePattern, damagePatterns_table)

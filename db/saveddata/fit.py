@@ -22,7 +22,7 @@ from sqlalchemy.sql import and_
 from model.db import saveddata_meta
 from model.db.saveddata.module import modules_table
 from model.db.saveddata.drone import drones_table
-from model.types import Fit, Module, User, Booster, Drone, Implant, Character
+from model.types import Fit, Module, User, Booster, Drone, Implant, Character, DamagePattern
 from model.effectHandlerHelpers import HandledList
 from model.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
  HandledProjectedModList, HandledProjectedDroneList, HandledProjectedFitList, \
@@ -33,7 +33,8 @@ fits_table = Table("fits", saveddata_meta,
                          Column("ownerID", ForeignKey("users.ID"), nullable = False),
                          Column("shipID", Integer, nullable = False),
                          Column("name", String, nullable = False),
-                         Column("characterID", ForeignKey("characters.ID"), nullable = True))
+                         Column("characterID", ForeignKey("characters.ID"), nullable = True),
+                         Column("damagePatternID", ForeignKey("damagePatterns.ID"), nullable=True))
 
 projectedFits_table = Table("projectedFits", saveddata_meta,
                             Column("sourceID", ForeignKey("fits.ID"), primary_key = True),
@@ -53,6 +54,7 @@ mapper(Fit, fits_table,
                                                primaryjoin = and_(drones_table.c.fitID == fits_table.c.ID, drones_table.c.projected == True)),
                      "_Fit__implants" : relation(Implant, collection_class = HandledImplantBoosterList),
                      "_Fit__character" : relation(Character),
+                     "_Fit__damagePattern" : relation(DamagePattern),
                      "_Fit__projectedFits" : relation(Fit,
                                                       primaryjoin = projectedFits_table.c.victimID == fits_table.c.ID,
                                                       secondaryjoin = fits_table.c.ID == projectedFits_table.c.sourceID,

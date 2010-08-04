@@ -34,7 +34,7 @@ class Fit(object):
                         "droneControlRange": 0,
                         "cloaked": False}
 
-    PEAK_CAP_RECHARGE = -(sqrt(2) - 2 ) / 2
+    PEAK_RECHARGE = -(sqrt(2) - 2 ) / 2
 
     def __init__(self):
         self.__modules = HandledList()
@@ -57,6 +57,8 @@ class Fit(object):
 
     def build(self):
         from model import db
+        self.__ehp = None
+        self.__effectiveTank = None
         self.__calculated = False
         self.__capStable = None
         self.__capState = None
@@ -64,6 +66,16 @@ class Fit(object):
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
         self.extraAttributes = ModifiedAttributeDict()
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
+
+    @property
+    def damagePattern(self):
+        return self.__damagePattern
+
+    @damagePattern.setter
+    def damagePattern(self, damagePattern):
+        self.__damagePattern = damagePattern
+        self.__ehp = None
+        self.__effectiveTank = None
 
     @property
     def character(self):
@@ -128,6 +140,8 @@ class Fit(object):
         else: return val
 
     def clear(self):
+        self.__effectiveTank = None
+        self.__ehp = None
         self.__calculated = False
         self.__capStable = None
         self.__capState = None
@@ -177,9 +191,15 @@ class Fit(object):
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
-    def calculateCapRecharge(self, procent):
+    def calculateCapRecharge(self, procent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate")
+        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
+        return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
+                           sqrt((2 * procent) - pow(procent, 2)))
+
+    def calculateShieldRecharge(self, procent = PEAK_RECHARGE):
+        capacity = self.ship.getModifiedItemAttr("shieldCapacity")
+        rechargeRate = self.ship.getModifiedItemAttr("shieldRechargeRate") / 1000.0
         return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
                            sqrt((2 * procent) - pow(procent, 2)))
 
@@ -202,7 +222,7 @@ class Fit(object):
     def simulateCap(self):
         #Figure out natural recharge is, boosted amount & drained amount.
         #Compute the total afterwards
-        peakRecharge = self.calculateCapRecharge(self.PEAK_CAP_RECHARGE)
+        peakRecharge = self.calculateCapRecharge(self.PEAK_RECHARGE)
         capBoost = self.extraAttributes["capBoost"]
         capDrain = self.extraAttributes["capDrain"]
         totalPeakLoad = peakRecharge + capBoost
@@ -226,7 +246,7 @@ class Fit(object):
             #Algorithm: keep taking the average between low and up. Call it mid
             #If our recharge at mid % is above our cap use, the mid becomes the new upper bound.
             #If our recharge at mid % is under our cap use, mid becomes new lower bound.
-            low = self.PEAK_CAP_RECHARGE
+            low = self.PEAK_RECHARGE
             high = 1.0
             diff = 10
             while diff >= 0.000001:
@@ -251,6 +271,30 @@ class Fit(object):
 
             self.__capStable = False
             self.__capState = i
+
+    def getEhp(self):
+        if self.__ehp == None:
+            if self.damagePattern == None:
+                ehp = {}
+                for (type, attr) in (('shield', 'shieldCapacity'), ('armor', 'armorHP'), ('hull', 'hp')):
+                    ehp[type] = self.ship.getModifiedItemAttr(attr)
+            else:
+                ehp = self.damagePattern.calculateEhp(self)
+            self.__ehp = ehp
+        return self.__ehp
+
+    def getEffectiveTank(self):
+        if self.__effectiveTank == None:
+            if self.damagePattern == None:
+                ehps = {"passiveShield" : self.calculateShieldRecharge()}
+                for type in ("shield", "armor", "hull"):
+                    ehps[type] = self.extraAttributes["%sRepair" % type]
+            else:
+                ehps = self.damagePattern.calculateEffectiveTank(self)
+
+            self.__effectiveTank = ehps
+
+        return self.__effectiveTank
 
     def __deepcopy__(self, memo):
         copy = Fit()
