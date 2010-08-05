@@ -25,8 +25,11 @@ from math import sqrt
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
     EXTRA_ATTRIBUTES = {"armorRepair": 0,
+                        "sustainableArmorRepair" : 0,
                         "hullRepair": 0,
+                        "sustainableHullRepair" : 0,
                         "shieldRepair": 0,
+                        "sustainableShieldRepair" : 0,
                         "capBoost": 0,
                         "capDrain": 0,
                         "maxActiveDrones": 0,
@@ -58,10 +61,13 @@ class Fit(object):
     def build(self):
         from model import db
         self.__ehp = None
+        self.__sustainableTank = None
         self.__effectiveTank = None
         self.__calculated = False
         self.__capStable = None
         self.__capState = None
+        self.__capUsed = None
+        self.__capRecharge = None
         self.__calculatedTargets = []
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
         self.extraAttributes = ModifiedAttributeDict()
@@ -145,6 +151,8 @@ class Fit(object):
         self.__calculated = False
         self.__capStable = None
         self.__capState = None
+        self.__capUsed = None
+        self.__capRecharge = None
         del self.__calculatedTargets[:]
         if self.ship != None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
@@ -219,6 +227,78 @@ class Fit(object):
 
         return self.__capState
 
+    def capUsed(self):
+        if self.__capUsed == None:
+            self.simulateCap()
+
+        return self.__capUsed
+
+    def capRecharge(self):
+        if self.__capRecharge == None:
+            self.simulateCap()
+
+        return self.__capRecharge
+
+    def calculateSustainableTank(self):
+        if self.__sustainableTank == None:
+            if self.isCapStable():
+                sustainable = {}
+                sustainable["armorRepair"] = self.extraAttributes["armorRepair"]
+                sustainable["shieldRepair"] = self.extraAttributes["shieldRepair"]
+                sustainable["hullRepair"] = self.extraAttributes["hullRepair"]
+            else:
+                sustainable = {"armorRepair": 0,
+                               "shieldRepair": 0,
+                               "hullRepair": 0}
+
+                groups = ("Armor Repair Unit", "Hull Repair Unit", "Shield Booster")
+                repairers = []
+                capUsed = self.capUsed()
+                #Figure out how much cap is left when repper modules aren't run
+                for mod in self.modules:
+                    if mod.state >= State.ACTIVE and mod.item.group.name in groups:
+                        capNeed = mod.getModifiedItemAttr("capacitorNeed")
+                        cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
+                        capUsed -= capNeed / cycleTime
+                        repairers.append(mod)
+
+                #Map a repairer type to the attribute it uses
+                groupAttrMap = {"Armor Repair Unit": "armorDamageAmount",
+                     "Hull Repair Unit": "structureDamageAmount",
+                     "Shield Booster": "shieldBonus"}
+                #Map repairer type to attribute
+                groupStoreMap = {"Armor Repair Unit": "armorRepair",
+                                 "Hull Repair Unit": "hullRepair",
+                                 "Shield Booster": "shieldRepair"}
+
+                #Sort repairers by efficiency. We want to use the most efficient repairers first
+                repairers.sort(key=lambda mod: mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name]) / mod.getModifiedItemAttr("capacitorNeed"), reverse = True)
+
+                #Loop through every module until we're above peak recharge
+                #Most efficient first, as we sorted earlier.
+                #calculate how much the repper can rep stability & add to total
+                totalPeakRecharge = self.capRecharge()
+                for mod in repairers:
+                    if capUsed > totalPeakRecharge: break
+                    capNeed = mod.getModifiedItemAttr("capacitorNeed")
+                    cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
+                    if capNeed != None and cycleTime != None:
+                        #How much cap left ?
+                        capPerSec = capNeed / cycleTime
+
+                        #Check how much this repper can work
+                        sustainability = (totalPeakRecharge - capUsed) / capPerSec
+
+                        #Add the sustainable amount
+                        amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
+                        sustainable[groupStoreMap[mod.item.group.name]] += sustainability * (amount / cycleTime)
+                        capUsed += capPerSec
+
+
+            self.__sustainableTank = sustainable
+
+        return self.__sustainableTank
+
     def simulateCap(self):
         #Figure out natural recharge is, boosted amount & drained amount.
         #Compute the total afterwards
@@ -226,6 +306,7 @@ class Fit(object):
         capBoost = self.extraAttributes["capBoost"]
         capDrain = self.extraAttributes["capDrain"]
         totalPeakLoad = peakRecharge + capBoost
+        self.__capRecharge = totalPeakLoad
 
         #Figure out how much cap we're using
         capUse = capDrain
@@ -236,6 +317,7 @@ class Fit(object):
                 if capNeed != None and cycleTime != None:
                     capUse += capNeed / (cycleTime / 1000.0)
 
+        self.__capUsed = capUse
         if totalPeakLoad > capUse:
             #Stable!
             #We'll figure out where exactly its stable then.

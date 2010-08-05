@@ -4,6 +4,7 @@ from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
+from itertools import count
 
 class TestFit(unittest.TestCase):
     def setUp(self):
@@ -206,3 +207,42 @@ class TestFit(unittest.TestCase):
         newpf = newf.projectedFits[0]
         self.assertEquals(id(newpf), id(testpf))
         self.assertEquals(len(newf.projectedFits), len(f.projectedFits))
+
+    def test_repperSustainability(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Raven"))
+        m = Module(db.getItem("Small Shield Booster I"))
+        m.state = State.ACTIVE
+        f.modules.append(m)
+        f.calculateModifiedAttributes()
+        s = f.calculateSustainableTank()
+        self.assertEquals(s["armorRepair"], f.extraAttributes["armorRepair"])
+
+    def test_ZeroSustainable(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        for i in count(1):
+            if i == 5: break
+            m = Module(db.getItem("Heavy Energy Neutralizer I"))
+            m.state = State.ACTIVE
+            f.modules.append(m)
+
+        m = Module(db.getItem("Small Shield Booster I"))
+        m.state = State.ACTIVE
+        f.modules.append(m)
+        f.calculateModifiedAttributes()
+        s = f.calculateSustainableTank()
+        self.assertEquals(s["armorRepair"], 0)
+
+    def test_sustainabilityConsistency(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        for i in count(1):
+            if i == 3: break
+            m = Module(db.getItem("Small Shield Booster I"))
+            m.state = State.ACTIVE
+            f.modules.append(m)
+
+        f.calculateModifiedAttributes()
+        s = f.calculateSustainableTank()
+        self.assertAlmostEquals(s["shieldRepair"], 3.8, 1)
