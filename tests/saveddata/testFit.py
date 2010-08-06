@@ -246,3 +246,14 @@ class TestFit(unittest.TestCase):
         f.calculateModifiedAttributes()
         s = f.calculateSustainableTank()
         self.assertAlmostEquals(s["shieldRepair"], 3.8, 1)
+
+    def test_capCalcs(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Reaper"))
+        f.ship.itemModifiedAttributes["capacitorCapacity"] = 125.0
+        f.ship.itemModifiedAttributes["rechargeRate"] = 93.25
+        m = Module(db.getItem("Small Shield Booster I"))
+        m.state = State.ACTIVE
+        f.modules.append(m)
+        self.assertAlmostEquals(f.capState(), 16.6, 1)
+
