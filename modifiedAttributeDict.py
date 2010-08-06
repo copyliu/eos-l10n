@@ -15,8 +15,7 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-import math
-
+from math import exp
 
 class ItemAttrShortcut(object):
     def getModifiedItemAttr(self, key):
@@ -146,7 +145,7 @@ class ModifiedAttributeDict(object):
                 for l in (l1, l2):
                     for i in xrange(len(l)):
                         bonus = l[i]
-                        val *= 1 + (bonus - 1) * math.exp(- math.pow(i, 2) / 7.1289)
+                        val *= 1 + (bonus - 1) * exp(- i ** 2 / 7.1289)
 
         val += postIncrease
         return val

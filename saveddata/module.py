@@ -186,13 +186,16 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 if effect.runTime == runTime:
                     effect.handler(fit, self, ("moduleCharge",))
 
+    def getCycleTime(self):
+        speed =  self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
+        return speed / 1000.0 if speed != None else speed
 
     def getCapUsage(self):
-        speed = self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
+        speed = self.getCycleTime()
         if speed != None:
             capUse = self.getModifiedItemAttr("capacitorNeed")
             if capUse != None:
-                speed = speed / 1000.0
+                speed = speed
                 return capUse / speed
 
     def __deepcopy__(self, memo):

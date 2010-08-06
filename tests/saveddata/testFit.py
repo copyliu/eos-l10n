@@ -138,7 +138,7 @@ class TestFit(unittest.TestCase):
         m.state = State.ACTIVE
         f.modules.append(m)
         self.assertEquals(f.isCapStable(), False)
-        self.assertTrue(f.capState(), 15)
+        self.assertTrue(f.capState() < 15)
 
     def test_copy(self):
         f = Fit()

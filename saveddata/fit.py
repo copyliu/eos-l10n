@@ -20,7 +20,8 @@ from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain, count
 from copy import deepcopy
-from math import sqrt
+from math import sqrt, pi, exp
+from model.solverMath import gaussian, solve
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -215,7 +216,14 @@ class Fit(object):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
         rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
         return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
-                           sqrt((2 * procent) - pow(procent, 2)))
+                           sqrt((2 * procent) - procent ** 2))
+
+    def calculateCapRechargeAbs(self, currCapacity):
+        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+        procent = currCapacity / capacity
+        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
+        return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
+                           sqrt((2 * procent) - procent ** 2))
 
     def calculateShieldRecharge(self, procent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("shieldCapacity")
@@ -250,6 +258,23 @@ class Fit(object):
             self.simulateCap()
 
         return self.__capRecharge
+
+    def __generateDrain(self, variance):
+        def mapper(mod):
+            cycleTime = mod.getCycleTime()
+            drain = mod.getModifiedItemAttr("capacitorNeed")
+            def gauss(t):
+                return drain * gaussian(cycleTime / 2.0, variance)(t)
+
+            return (cycleTime, gauss)
+
+        mods = filter(lambda mod: mod.getModifiedItemAttr("capacitorNeed") != None, self.modules)
+        drains = map(mapper, mods)
+        def result(t):
+            m = map(lambda x: x[1](t % x[0]), drains)
+            return sum(m)
+
+        return result
 
     def calculateSustainableTank(self):
         if self.__sustainableTank == None:
@@ -299,7 +324,7 @@ class Fit(object):
                     if capNeed != None and cycleTime != None:
                         capPerSec = mod.getCapUsage()
                         #Check how much this repper can work
-                        sustainability = (totalPeakRecharge - capUsed) / capPerSec
+                        sustainability = min(1, (totalPeakRecharge - capUsed) / capPerSec)
 
                         #Add the sustainable amount
                         amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
@@ -355,16 +380,15 @@ class Fit(object):
             self.__capStable = True
             self.__capState = round(mid * 100, 1)
         else:
+            VARIANCE = 0.1
             capCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")
             currentCap = capCapacity
-            for i in count(1):
-                if currentCap <= 0:
-                    break
-                rechargeRate = self.calculateCapRecharge(currentCap / capCapacity)
-                currentCap -= capUse - rechargeRate
-
+            #Solve the cap stuff by integrating and solving it
+            r = self.calculateCapRechargeAbs
+            d = self.__generateDrain(VARIANCE)
+            f_prime = lambda t, y: r(y) - d(t)
             self.__capStable = False
-            self.__capState = i
+            self.__capState = solve(f_prime, capCapacity)
 
     def getEhp(self):
         if self.__ehp == None:
