@@ -38,7 +38,7 @@ class ModifiedAttributeDict(object):
     class CalculationPlaceholder():
         pass
 
-    def __init__(self):
+    def __init__(self, fit = None):
         self.__modified = {}
         self.__original = None
         self.__intermediary = {}
@@ -46,6 +46,8 @@ class ModifiedAttributeDict(object):
         self.__postIncreases = {}
         self.__multipliers = {}
         self.__penalizedMultipliers = {}
+        self.__affectedBy = {}
+        self.fit = fit
 
     def clear(self):
         self.__intermediary.clear()
@@ -54,6 +56,7 @@ class ModifiedAttributeDict(object):
         self.__postIncreases.clear()
         self.__multipliers.clear()
         self.__penalizedMultipliers.clear()
+        self.__affectedBy.clear()
 
     @property
     def original(self):
@@ -148,6 +151,27 @@ class ModifiedAttributeDict(object):
         val += postIncrease
         return val
 
+    def getAfflictions(self, key):
+        return self.__affectedBy[key] if key in self.__affectedBy else {}
+
+    def __afflict(self, key):
+        if self.fit == None:
+            return
+
+        if key not in self.__affectedBy:
+            self.__affectedBy[key] = {}
+
+        stuff = self.__affectedBy[key]
+        if self.fit not in stuff:
+            stuff[self.fit] = {}
+
+        stuff = stuff[self.fit]
+        modifier = self.fit.getModifier()
+        if modifier not in stuff:
+            stuff[modifier] = []
+
+
+
     def increase(self, attributeName, increase, position="pre"):
         if position == "pre":
             tbl = self.__preIncreases
@@ -163,6 +187,7 @@ class ModifiedAttributeDict(object):
 
         tbl[attributeName] += increase
         self.__placehold(attributeName)
+        self.__afflict(attributeName)
 
     def multiply(self, attributeName, multiplier, stackingPenalties=False, penaltyGroup="default"):
         if stackingPenalties:
@@ -179,6 +204,12 @@ class ModifiedAttributeDict(object):
             self.__multipliers[attributeName] *= multiplier
 
         self.__placehold(attributeName)
+        self.__afflict(attributeName)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
+
+class Affliction():
+    def __init__(self, type, amount):
+        self.type = type
+        self.amount = amount

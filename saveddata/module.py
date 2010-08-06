@@ -187,6 +187,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     effect.handler(fit, self, ("moduleCharge",))
 
 
+    def getCapUsage(self):
+        speed = self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
+        if speed != None:
+            capUse = self.getModifiedItemAttr("capacitorNeed")
+            if capUse != None:
+                speed = speed / 1000.0
+                return capUse / speed
+
     def __deepcopy__(self, memo):
         copy = Module(self.item)
         copy.charge = self.charge

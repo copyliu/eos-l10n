@@ -70,7 +70,7 @@ class Fit(object):
         self.__capRecharge = None
         self.__calculatedTargets = []
         self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
-        self.extraAttributes = ModifiedAttributeDict()
+        self.extraAttributes = ModifiedAttributeDict(self)
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
 
     @property
@@ -159,6 +159,17 @@ class Fit(object):
         for stuff in c:
             if stuff != None: stuff.clear()
 
+    #Methods to register and get the thing currently affecting the fit,
+    #so we can correctly map "Affected By"
+    def __register(self, currModifier):
+        self.__modifier = currModifier
+        if hasattr(self, "itemModifiedAttributes"):
+            currModifier.itemModifiedAttributes.fit = self
+        if hasattr(self, "chargeModifiedAttributes"):
+            currModifier.chargeModifiedAttributes.fit = self
+
+    def getModifier(self):
+        return self.__modifier
 
     def calculateModifiedAttributes(self, targetFit = None):
         if targetFit == None:
@@ -182,7 +193,6 @@ class Fit(object):
         #4: Errors should be handled gracefully and preferably without crashing unless serious
         for runTime in ("early", "normal", "late"):
             #Lets start out with the ship's effects
-            #We'll be ignoring gang/projected effects for now and focussing on regular ones
             extra = []
             if self.character != None:
                 extra.append(self.character)
@@ -193,6 +203,8 @@ class Fit(object):
                       self.projectedDrones, self.projectedModules)
 
             for item in c:
+                #Registering the item about to affect the fit allows us to track "Affected By" relations correctly
+                targetFit.__register(item)
                 item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
 
 
@@ -247,21 +259,11 @@ class Fit(object):
                 sustainable["shieldRepair"] = self.extraAttributes["shieldRepair"]
                 sustainable["hullRepair"] = self.extraAttributes["hullRepair"]
             else:
-                sustainable = {"armorRepair": 0,
-                               "shieldRepair": 0,
-                               "hullRepair": 0}
+                sustainable = {}
 
                 groups = ("Armor Repair Unit", "Hull Repair Unit", "Shield Booster")
                 repairers = []
-                capUsed = self.capUsed()
-                #Figure out how much cap is left when repper modules aren't run
-                for mod in self.modules:
-                    if mod.state >= State.ACTIVE and mod.item.group.name in groups:
-                        capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                        cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
-                        capUsed -= capNeed / cycleTime
-                        repairers.append(mod)
-
+                extraRep = {}
                 #Map a repairer type to the attribute it uses
                 groupAttrMap = {"Armor Repair Unit": "armorDamageAmount",
                      "Hull Repair Unit": "structureDamageAmount",
@@ -270,6 +272,18 @@ class Fit(object):
                 groupStoreMap = {"Armor Repair Unit": "armorRepair",
                                  "Hull Repair Unit": "hullRepair",
                                  "Shield Booster": "shieldRepair"}
+
+                capUsed = self.capUsed()
+                for attr in ("shieldRepair", "armorRepair", "hullRepair"):
+                    sustainable[attr] = self.extraAttributes[attr]
+                    dict = self.extraAttributes.getAfflictions(attr)
+                    if self in dict:
+                        for mod in dict[self]:
+                            capUsed -= mod.getCapUsage()
+                            cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
+                            amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
+                            sustainable[attr] -= amount / cycleTime
+                            repairers.append(mod)
 
                 #Sort repairers by efficiency. We want to use the most efficient repairers first
                 repairers.sort(key=lambda mod: mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name]) / mod.getModifiedItemAttr("capacitorNeed"), reverse = True)
@@ -283,9 +297,7 @@ class Fit(object):
                     capNeed = mod.getModifiedItemAttr("capacitorNeed")
                     cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
                     if capNeed != None and cycleTime != None:
-                        #How much cap left ?
-                        capPerSec = capNeed / cycleTime
-
+                        capPerSec = mod.getCapUsage()
                         #Check how much this repper can work
                         sustainability = (totalPeakRecharge - capUsed) / capPerSec
 
