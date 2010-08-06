@@ -251,7 +251,7 @@ class TestFit(unittest.TestCase):
         f = Fit()
         f.ship = Ship(db.getItem("Reaper"))
         f.ship.itemModifiedAttributes["capacitorCapacity"] = 125.0
-        f.ship.itemModifiedAttributes["rechargeRate"] = 93.25
+        f.ship.itemModifiedAttributes["rechargeRate"] = 93250
         m = Module(db.getItem("Small Shield Booster I"))
         m.state = State.ACTIVE
         f.modules.append(m)
