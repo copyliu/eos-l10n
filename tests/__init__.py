@@ -1,5 +1,6 @@
 #===============================================================================
-# Copyright (C) 2010  Duclos Diego
+# Copyright (C) 2010 Diego Duclos
+#               2010 Anton Vorobyov
 #
 # This file and all other files in this folder (and its subfolders) are part of pyfa.
 #

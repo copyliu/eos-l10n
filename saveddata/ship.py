@@ -1,5 +1,5 @@
 #===============================================================================
-# Copyright (C) 2010  Duclos Diego
+# Copyright (C) 2010 Diego Duclos
 #
 # This file is part of pyfa.
 #
