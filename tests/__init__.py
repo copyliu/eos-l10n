@@ -1,4 +1,6 @@
 #===============================================================================
+# Copyright (C) 2010  Duclos Diego
+#
 # This file and all other files in this folder (and its subfolders) are part of pyfa.
 #
 # pyfa is free software: you can redistribute it and/or modify
@@ -14,4 +16,3 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
-

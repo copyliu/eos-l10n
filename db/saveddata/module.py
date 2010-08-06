@@ -1,4 +1,6 @@
 #===============================================================================
+# Copyright (C) 2010  Duclos Diego
+#
 # This file is part of pyfa.
 #
 # pyfa is free software: you can redistribute it and/or modify
