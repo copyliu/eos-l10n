@@ -19,14 +19,14 @@ from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from model.effectHandlerHelpers import HandledItem
 
 class Ship(ItemAttrShortcut, HandledItem):
-    REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate", "rigSize",
+    REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate",
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
                               "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
 
     def __init__(self, item):
         for requiredAttr in self.REQUIRED_ATTRIBUTES:
             if not requiredAttr in  item.attributes:
-                raise ValueError("Passed item is not a ship")
+                raise ValueError("Passed item is not a ship, missing: %s" % requiredAttr)
 
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
