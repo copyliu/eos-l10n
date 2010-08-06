@@ -214,24 +214,24 @@ class Fit(object):
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
-    def calculateCapRecharge(self, procent = PEAK_RECHARGE):
+    def calculateCapRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
         rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
-        return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
-                           sqrt((2 * procent) - procent ** 2))
+        return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
+                           sqrt((2 * percent) - percent ** 2))
 
     def calculateCapRechargeAbs(self, currCapacity):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-        procent = currCapacity / capacity
+        percent = currCapacity / capacity
         rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
-        return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
-                           sqrt((2 * procent) - procent ** 2))
+        return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
+                           sqrt((2 * percent) - percent ** 2))
 
-    def calculateShieldRecharge(self, procent = PEAK_RECHARGE):
+    def calculateShieldRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("shieldCapacity")
         rechargeRate = self.ship.getModifiedItemAttr("shieldRechargeRate") / 1000.0
-        return capacity * ((4.9678 / rechargeRate) * (1 - procent) *
-                           sqrt((2 * procent) - pow(procent, 2)))
+        return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
+                           sqrt((2 * percent) - pow(percent, 2)))
 
     def isCapStable(self):
         if self.__capStable == None:
