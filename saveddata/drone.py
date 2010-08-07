@@ -42,15 +42,16 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def build(self):
         from model import db
         self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__chargeModifiedAttributes = ModifiedAttributeDict()
         self.itemModifiedAttributes.original = self.item.attributes
         chargeID = self.getModifiedItemAttr("entityMissileTypeID")
         if chargeID != None:
             charge = db.getItem(int(chargeID))
             self.__charge = charge
+            self.__chargeModifiedAttributes = ModifiedAttributeDict()
             self.chargeModifiedAttributes.original = charge.attributes
         else:
-            self.__charge = None
+            self.__charge = self.__item
+            self.__chargeModifiedAttributes = self.__itemModifiedAttributes
 
     @property
     def itemModifiedAttributes(self):

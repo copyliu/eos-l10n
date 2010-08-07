@@ -257,3 +257,52 @@ class TestFit(unittest.TestCase):
         f.modules.append(m)
         self.assertAlmostEquals(f.capState(), 16.6, 1)
 
+    def test_weaponDPS(self):
+        f = Fit()
+        m = Module(db.getItem("Heavy Modulated Energy Beam I"))
+        m.state = State.ACTIVE
+        m.charge = db.getItem("Multifrequency M")
+        f.modules.append(m)
+        expected = 0
+        for type in ("emDamage", "thermalDamage", "kineticDamage", "explosiveDamage"):
+            expected += m.getModifiedChargeAttr(type)
+
+        expected *= m.getModifiedItemAttr("damageMultiplier") / (m.getModifiedItemAttr("speed") / 1000.0)
+        self.assertAlmostEquals(f.weaponDPS, expected)
+
+    def test_weaponVolley(self):
+        f = Fit()
+        m = Module(db.getItem("Heavy Modulated Energy Beam I"))
+        m.state = State.ACTIVE
+        m.charge = db.getItem("Multifrequency M")
+        f.modules.append(m)
+        expected = 0
+        for type in ("emDamage", "thermalDamage", "kineticDamage", "explosiveDamage"):
+            expected += m.getModifiedChargeAttr(type)
+
+        expected *= m.getModifiedItemAttr("damageMultiplier")
+        self.assertAlmostEquals(f.weaponVolley, expected)
+
+    def test_droneDPS(self):
+        f = Fit()
+        d = Drone(db.getItem("Hammerhead II"))
+        d.active = True
+        f.drones.append(d)
+        expected = 0
+        for type in ("emDamage", "thermalDamage", "kineticDamage", "explosiveDamage"):
+            expected += d.getModifiedItemAttr(type)
+
+        expected *= d.getModifiedItemAttr("damageMultiplier") / (d.getModifiedItemAttr("speed") / 1000.0)
+        self.assertAlmostEquals(f.droneDPS, expected)
+
+    def test_missileDroneDPS(self):
+        f = Fit()
+        d = Drone(db.getItem("Cyclops"))
+        d.active = True
+        f.drones.append(d)
+        expected = 0
+        for type in ("emDamage", "thermalDamage", "kineticDamage", "explosiveDamage"):
+            expected += d.getModifiedChargeAttr(type)
+
+        expected /= d.getModifiedItemAttr("missileLaunchDuration") / 1000.0
+        self.assertAlmostEquals(f.droneDPS, expected)

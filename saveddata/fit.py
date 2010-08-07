@@ -24,7 +24,7 @@ from itertools import chain, count
 from copy import deepcopy
 from math import sqrt, pi, exp
 from model.solverMath import gaussian, solve
-from model.types import Drone, Ship, Character, State
+from model.types import Drone, Ship, Character, State, Hardpoint
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -66,6 +66,7 @@ class Fit(object):
         from model import db
         self.__ehp = None
         self.__weaponDPS = None
+        self.__weaponVolley = None
         self.__droneDPS = None
         self.__sustainableTank = None
         self.__effectiveTank = None
@@ -134,6 +135,31 @@ class Fit(object):
     def projectedDrones(self):
         return self.__projectedDrones
 
+    @property
+    def weaponDPS(self):
+        if self.__weaponDPS is None:
+            self.calculateWeaponStats()
+
+        return self.__weaponDPS
+
+    @property
+    def weaponVolley(self):
+        if self.__weaponVolley is None:
+            self.calculateWeaponStats()
+
+        return self.__weaponVolley
+
+    @property
+    def droneDPS(self):
+        if self.__droneDPS is None:
+            self.calculateWeaponStats()
+
+        return self.__droneDPS
+
+    @property
+    def totalDPS(self):
+        return self.droneDPS + self.weaponDPS
+
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -146,6 +172,7 @@ class Fit(object):
     def clear(self):
         self.__effectiveTank = None
         self.__weaponDPS = None
+        self.__weaponVolley = None
         self.__droneDPS = None
         self.__ehp = None
         self.__calculated = False
@@ -412,11 +439,32 @@ class Fit(object):
 
         return self.__effectiveTank
 
-    def calculateDPS(self):
+    def calculateWeaponStats(self):
         weaponDPS = 0
         droneDPS = 0
+        weaponVolley = 0
+        damageAttributes = ("emDamage", "kineticDamage", "explosiveDamage", "thermalDamage")
         for mod in self.modules:
-            pass
+            if mod.state == State.ACTIVE and \
+            (mod.hardpoint == Hardpoint.TURRET or mod.hardpoint == Hardpoint.MISSILE):
+                cycleTime = mod.getCycleTime()
+                volley = sum(map(lambda attr: mod.getModifiedChargeAttr(attr), damageAttributes))
+                volley *= mod.getModifiedItemAttr("damageMultiplier") or 1
+                weaponVolley += volley
+                weaponDPS += volley / cycleTime
+
+        for drone in self.drones:
+            charge = drone.charge
+            attr = "missileLaunchDuration" if charge != drone.item else "speed"
+            if drone.active and "emDamage" in charge.attributes:
+                cycleTime = drone.getModifiedItemAttr(attr) / 1000.0
+                volley = sum(map(lambda attr: drone.getModifiedChargeAttr(attr), damageAttributes))
+                volley *= drone.getModifiedItemAttr("damageMultiplier") or 1
+                droneDPS += volley / cycleTime
+
+        self.__weaponDPS = weaponDPS
+        self.__weaponVolley = weaponVolley
+        self.__droneDPS = droneDPS
 
     def __deepcopy__(self, memo):
         copy = Fit()
