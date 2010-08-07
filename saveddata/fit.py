@@ -24,6 +24,7 @@ from itertools import chain, count
 from copy import deepcopy
 from math import sqrt, pi, exp
 from model.solverMath import gaussian, solve
+from model.types import Drone, Ship, Character, State
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -544,5 +545,3 @@ class HandledProjectedFitList(list):
     def append(self, proj):
         proj.projected = True
         list.append(self, proj)
-
-from model.types import Drone, Ship, Character, State
