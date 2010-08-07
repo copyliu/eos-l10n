@@ -104,14 +104,6 @@ class Fit(object):
         self.shipID = ship.item.ID if ship != None else None
 
     @property
-    def owner(self):
-        return self.__owner
-
-    @owner.setter
-    def owner(self, owner):
-        self.__owner = owner
-
-    @property
     def drones(self):
         return self.__drones
 
@@ -366,6 +358,7 @@ class Fit(object):
             #Algorithm: keep taking the average between low and up. Call it mid
             #If our recharge at mid % is above our cap use, the mid becomes the new upper bound.
             #If our recharge at mid % is under our cap use, mid becomes new lower bound.
+            #Note: This is a variant of binary search.
             low = self.PEAK_RECHARGE
             high = 1.0
             diff = 10
