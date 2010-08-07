@@ -21,7 +21,7 @@ from model.gamedata import Attribute, Category, Effect, Group, Icon, Item, Marke
 from model.saveddata.user import User
 from model.saveddata.damagePattern import DamagePattern
 from model.saveddata.character import Character, Skill
-from model.saveddata.module import Module, State, Slot
+from model.saveddata.module import Module, State, Slot, Hardpoint
 from model.saveddata.drone import Drone
 from model.saveddata.implant import Implant
 from model.saveddata.booster import SideEffect

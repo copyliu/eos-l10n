@@ -1,5 +1,5 @@
 import unittest
-from model.types import Module, Fit, User, State, Ship, Slot
+from model.types import Module, Fit, User, State, Ship, Slot, Hardpoint
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -96,6 +96,18 @@ class TestModule(unittest.TestCase):
     def test_slotLow(self):
         m = Module(db.getItem("Heat Sink I"))
         self.assertEquals(Slot.LOW, m.slot)
+
+    def test_hardpointTurret(self):
+        m = Module(db.getItem("Dual Light Pulse Laser I"))
+        self.assertEquals(m.hardpoint, Hardpoint.TURRET)
+
+    def test_hardpointMissile(self):
+        m = Module(db.getItem("Standard Missile Launcher I"))
+        self.assertEquals(m.hardpoint, Hardpoint.MISSILE)
+
+    def test_hardpointNone(self):
+        m = Module(db.getItem("Salvager I"))
+        self.assertEquals(m.hardpoint, Hardpoint.NONE)
 
     def test_DatabaseConsistency(self):
         oldSession = db.saveddata_session

@@ -35,11 +35,15 @@ class Slot():
     RIG = 4
     SUBSYSTEM = 5
 
+class Hardpoint():
+    NONE = 0
+    MISSILE = 1
+    TURRET = 2
+
 class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     """An instance of this class represents a module together with its charge and modified attributes"""
 
     def __init__(self, item):
-        self.__slot = self.__calculateSlot(item)
         self.__item = item
         self.itemID = item.ID if item != None else None
         self.__charge = None
@@ -61,8 +65,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = self.item.attributes
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
+        self.__hardpoint = self.__calculateHardpoint(self.item)
+        self.__slot = self.__calculateSlot(self.item)
         if self.charge != None:
             self.__chargeModifiedAttributes.original = self.charge.attributes
+
+    @property
+    def hardpoint(self):
+        return self.__hardpoint
 
     @property
     def maxRange(self):
@@ -129,6 +139,19 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             if itemChargeGroup == chargeGroup: return True
 
         return False
+
+    def __calculateHardpoint(self, item):
+        effectHardpointMap = {"turretFitted" : Hardpoint.TURRET,
+                              "useMissiles": Hardpoint.MISSILE}
+
+        if item == None:
+            return None
+
+        for effectName, slot in effectHardpointMap.iteritems():
+            if effectName in item.effects:
+                return slot
+
+        return Hardpoint.NONE
 
     def __calculateSlot(self, item):
         effectSlotMap = {"rigSlot" : Slot.RIG,

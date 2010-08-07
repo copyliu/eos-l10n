@@ -64,6 +64,8 @@ class Fit(object):
     def build(self):
         from model import db
         self.__ehp = None
+        self.__weaponDPS = None
+        self.__droneDPS = None
         self.__sustainableTank = None
         self.__effectiveTank = None
         self.__calculated = False
@@ -142,6 +144,8 @@ class Fit(object):
 
     def clear(self):
         self.__effectiveTank = None
+        self.__weaponDPS = None
+        self.__droneDPS = None
         self.__ehp = None
         self.__calculated = False
         self.__capStable = None
@@ -406,6 +410,12 @@ class Fit(object):
             self.__effectiveTank = ehps
 
         return self.__effectiveTank
+
+    def calculateDPS(self):
+        weaponDPS = 0
+        droneDPS = 0
+        for mod in self.modules:
+            pass
 
     def __deepcopy__(self, memo):
         copy = Fit()
