@@ -284,7 +284,6 @@ class TestFit(unittest.TestCase):
         self.assertAlmostEquals(f.weaponVolley, expected)
 
     def test_droneDPS(self):
-        return
         f = Fit()
         d = Drone(db.getItem("Hammerhead II"))
         d.active = True
