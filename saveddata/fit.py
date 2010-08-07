@@ -321,10 +321,9 @@ class Fit(object):
                 totalPeakRecharge = self.capRecharge()
                 for mod in repairers:
                     if capUsed > totalPeakRecharge: break
-                    capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                    cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
-                    if capNeed != None and cycleTime != None:
-                        capPerSec = mod.getCapUsage()
+                    cycleTime = mod.getCycleTime()
+                    capPerSec = mod.getCapUsage()
+                    if capPerSec != None and cycleTime != None:
                         #Check how much this repper can work
                         sustainability = min(1, (totalPeakRecharge - capUsed) / capPerSec)
 
@@ -378,9 +377,8 @@ class Fit(object):
                     low = mid
                 else:
                     high = mid
-
             self.__capStable = True
-            self.__capState = round(mid * 100, 1)
+            self.__capState = mid * 100
         else:
             VARIANCE = 0.1
             capCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")

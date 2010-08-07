@@ -129,7 +129,7 @@ class TestFit(unittest.TestCase):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         self.assertEquals(f.isCapStable(), True)
-        self.assertEquals(f.capState(), 100)
+        self.assertAlmostEquals(f.capState(), 100, 1)
 
     def test_capacitorUnstable(self):
         f = Fit()
