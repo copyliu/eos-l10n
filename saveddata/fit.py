@@ -454,11 +454,16 @@ class Fit(object):
                 weaponDPS += volley / cycleTime
 
         for drone in self.drones:
-            charge = drone.charge
-            attr = "missileLaunchDuration" if charge != drone.item else "speed"
-            if drone.active and "emDamage" in charge.attributes:
+            if drone.active and drone.dealsDamage():
+                if drone.hasAmmo():
+                    attr = "missileLaunchDuration"
+                    getter = drone.getModifiedChargeAttr
+                else:
+                    attr =  "speed"
+                    getter = drone.getModifiedItemAttr
+
                 cycleTime = drone.getModifiedItemAttr(attr) / 1000.0
-                volley = sum(map(lambda attr: drone.getModifiedChargeAttr(attr), damageAttributes))
+                volley = sum(map(lambda d: getter(d), damageAttributes)) * drone.amount
                 volley *= drone.getModifiedItemAttr("damageMultiplier") or 1
                 droneDPS += volley / cycleTime
 
