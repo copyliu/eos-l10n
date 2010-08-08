@@ -30,7 +30,7 @@ class Character(object):
 
     @classmethod
     def __getSkillCache(cls):
-        if cls.__skillCache == None:
+        if cls.__skillCache is None:
             from model import db
             cls.__skillCache = db.getItemsByCategory("Skill")
 
@@ -38,7 +38,7 @@ class Character(object):
 
     @classmethod
     def getAll5(cls):
-        if cls.__all5 == None:
+        if cls.__all5 is None:
             all5 = Character("All 5")
             cls.__all5 = all5
             for skill in cls.__getSkillCache():
@@ -48,7 +48,7 @@ class Character(object):
 
     @classmethod
     def getAll0(cls):
-        if cls.__all0 == None:
+        if cls.__all0 is None:
             all0 = Character("All 0")
             cls.__all0 = all0
             for skill in cls.__getSkillCache():
@@ -81,7 +81,7 @@ class Character(object):
         #Haven't found it
         if self != self.getAll0():
             skill = self.getAll0().getSkill(item)
-            if skill != None:
+            if skill is not None:
                 s = Skill(skill.item, 0)
                 self.addSkill(s)
                 return s
@@ -128,7 +128,7 @@ class Character(object):
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "name" : lambda val: True,
-               "apiKey" : lambda val: val == None or (isinstance(val, basestring) and len(val) == 64),
+               "apiKey" : lambda val: val is None or (isinstance(val, basestring) and len(val) == 64),
                "ownerID" : lambda val: isinstance(val, int)}
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)

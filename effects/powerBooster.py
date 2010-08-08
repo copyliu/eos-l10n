@@ -2,7 +2,7 @@
 #Modules from group: Capacitor Booster (54 of 54)
 type = "active"
 def handler(fit, module, context):
-    if module.charge == None: return
+    if module.charge is None: return
     #This is quite the effect compared to most others.
     #So an explanation is probably at hand.
     

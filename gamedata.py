@@ -51,7 +51,7 @@ class Effect(object):
         return self.__type
 
     def isType(self, type):
-        return self.type != None and type in self.type
+        return self.type is not None and type in self.type
 
     def __generateHandler(self):
         try:
@@ -67,7 +67,7 @@ class Effect(object):
             except AttributeError:
                 t = None
 
-            t = t if isinstance(t, tuple) or t == None else (t,)
+            t = t if isinstance(t, tuple) or t is None else (t,)
             self.__type = t
         except ImportError:
             self.__handler = effectDummy
@@ -100,7 +100,7 @@ class Item(object):
 
     @property
     def requiredSkills(self):
-        if self.__requiredSkills == None:
+        if self.__requiredSkills is None:
             from model import db
             requiredSkills = {}
             self.__requiredSkills = requiredSkills
@@ -108,7 +108,7 @@ class Item(object):
                 skillID, skillLevel = None, None
                 skillID = self.getAttribute('requiredSkill%d' % i)
                 skillLevel = self.getAttribute('requiredSkill%dLevel' % i)
-                if skillID == None or skillLevel == None:
+                if skillID is None or skillLevel is None:
                     continue
 
                 item = db.getItem(int(skillID))
@@ -118,7 +118,7 @@ class Item(object):
 
     @property
     def race(self):
-        if self.__race == None:
+        if self.__race is None:
             #There's a few hacks in how we look for this regarding to ships
             #I'll discuss each of them as we do it
             #1: If a ship belongs to the ORE market group, it'll be tagged as ORE
@@ -131,7 +131,7 @@ class Item(object):
 
             skillRaces.add(self.raceID)
             for skill in self.requiredSkills.iterkeys():
-                if skill.raceID != None:
+                if skill.raceID is not None:
                     skillRaces.add(skill.raceID)
 
             #Now that we know what races the skills have, figure it out
@@ -167,14 +167,14 @@ class Item(object):
     def requiresSkill(self, skill, level=None):
         for s, l in self.requiredSkills.iteritems():
             if isinstance(skill, basestring):
-                if s.name == skill and (level == None or l == level):
+                if s.name == skill and (level is None or l == level):
                     return True
 
-            elif isinstance(skill, int) and (level == None or l == level):
+            elif isinstance(skill, int) and (level is None or l == level):
                 if s.ID == skill:
                     return True
 
-            elif skill == s and (level == None or l == level):
+            elif skill == s and (level is None or l == level):
                 return True
 
         return False

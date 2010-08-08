@@ -45,7 +45,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         self.itemModifiedAttributes.original = self.item.attributes
         chargeID = self.getModifiedItemAttr("entityMissileTypeID")
-        if chargeID != None:
+        if chargeID is not None:
             charge = db.getItem(int(chargeID))
             self.__charge = charge
             self.__chargeModifiedAttributes = ModifiedAttributeDict()

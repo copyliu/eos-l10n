@@ -23,7 +23,7 @@ class Gang(object):
     def calculateModifiedAttributes(self):
         #Make sure ALL fits in the gang have been calculated
         for c in chain(self.wings, (self.leader,)):
-            if c != None: c.calculateModifiedAttributes()
+            if c is not None: c.calculateModifiedAttributes()
 
         self.broken = False
         store = Store()
@@ -44,11 +44,11 @@ class Gang(object):
 class Wing(object):
     def calculateModifiedAttributes(self):
         for c in chain(self.squads, (self.leader,)):
-            if c != None: c.calculateModifiedAttributes()
+            if c is not None: c.calculateModifiedAttributes()
 
     def calculateGangBonusses(self, store):
         self.broken = False
-        if self.leader == None:
+        if self.leader is None:
             #Broken chain
             self.broken = True
         else:
@@ -76,10 +76,10 @@ class Squad(object):
 
     def calculateGangBonusses(self, store):
         self.broken = False
-        if self.leader == None:
+        if self.leader is None:
             #Broken chain, don't boost up. And don't boost ourselves either.
             self.broken = True
-        elif self.booster != None:
+        elif self.booster is not None:
             store.set(self.booster, "squad")
         else:
             store.set(self.leader, "squad")
@@ -103,7 +103,7 @@ class Store(object):
                 self.bonusses[dictType][boostType] = {}
 
     def set(self, fit, layer):
-        if fit == None:
+        if fit is None:
             return
 
         dict = self.bonusses[layer]
@@ -134,13 +134,13 @@ class Store(object):
             for mod in self.bonusses[dictType]["modules"].keys():
                 mods.add(mod)
 
-            if self.bonusses[dictType]["ship"] != None:
+            if self.bonusses[dictType]["ship"] is not None:
                 ships.add(self.bonusses[dictType]["ship"].item.name)
 
         #Run through skills
         for skillName in skills:
             skill = self.getHighestBonus(layer, "skills", skillName)
-            if skill == None: continue
+            if skill is None: continue
             for effect in skill.item.effects.values():
                 for runTime in ("early", "normal", "late"):
                     if effect.isType("gang") and effect.runTime == runTime:
@@ -152,7 +152,7 @@ class Store(object):
         #Do the ship
         for shipName in ships:
             ship = self.getHighestBonus(layer, "ship", shipName)
-            if ship == None: continue
+            if ship is None: continue
             for effect in ship.item.effects.values():
                 for runTime in ("early", "normal", "late"):
                     if effect.isType("gang") and effect.runTime == runTime:
@@ -164,7 +164,7 @@ class Store(object):
         #And the modules
         for modName in mods:
             mod = self.getHighestBonus(layer, "modules", modName)
-            if mod == None: continue
+            if mod is None: continue
             for effect in mod.item.effects.values():
                 for runTime in ("early", "normal", "late"):
                     if effect.isType("gang") and effect.runTime == runTime:
@@ -178,7 +178,7 @@ class Store(object):
         highest = 0
         for dictType in ("fleet", "wing", "squad"):
             stuff = self.bonusses[dictType][type]
-            if stuff == None:
+            if stuff is None:
                 #Chain broken, only consider stuff under the current ones
                 highest = 0
                 highestStuff = None

@@ -25,7 +25,7 @@ import random
 class User(object):
     def __init__(self, username, password = None, admin = False):
         self.username = username
-        if password != None: self.encodeAndSetPassword(password)
+        if password is not None: self.encodeAndSetPassword(password)
         self.admin = admin
 
     def encodeAndSetPassword(self, pw):
@@ -37,7 +37,7 @@ class User(object):
         self.password = ("%s%s" % (h.hexdigest(), salt))
 
     def isPasswordValid(self, pw):
-        if self.password == None: return False
+        if self.password is None: return False
         salt = self.password[-32:]
         h = hashlib.new("sha256")
         h.update(pw)

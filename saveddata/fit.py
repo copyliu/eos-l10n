@@ -76,7 +76,7 @@ class Fit(object):
         self.__capUsed = None
         self.__capRecharge = None
         self.__calculatedTargets = []
-        self.__ship = Ship(db.getItem(self.shipID)) if self.shipID != None else None
+        self.__ship = Ship(db.getItem(self.shipID)) if self.shipID is not None else None
         self.extraAttributes = ModifiedAttributeDict(self)
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
 
@@ -92,7 +92,7 @@ class Fit(object):
 
     @property
     def character(self):
-        return self.__character if self.__character != None else Character.getAll0()
+        return self.__character if self.__character is not None else Character.getAll0()
 
     @character.setter
     def character(self, char):
@@ -105,7 +105,7 @@ class Fit(object):
     @ship.setter
     def ship(self, ship):
         self.__ship = ship
-        self.shipID = ship.item.ID if ship != None else None
+        self.shipID = ship.item.ID if ship is not None else None
 
     @property
     def drones(self):
@@ -164,7 +164,7 @@ class Fit(object):
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "ownerID" : lambda val: isinstance(val, int),
-               "shipID" : lambda val: isinstance(val, int) or val == None}
+               "shipID" : lambda val: isinstance(val, int) or val is None}
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val
@@ -181,10 +181,10 @@ class Fit(object):
         self.__capUsed = None
         self.__capRecharge = None
         del self.__calculatedTargets[:]
-        if self.ship != None: self.ship.clear()
+        if self.ship is not None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
-            if stuff != None: stuff.clear()
+            if stuff is not None: stuff.clear()
 
     #Methods to register and get the thing currently affecting the fit,
     #so we can correctly map "Affected By"
@@ -199,7 +199,7 @@ class Fit(object):
         return self.__modifier
 
     def calculateModifiedAttributes(self, targetFit = None):
-        if targetFit == None:
+        if targetFit is None:
             targetFit = self
             forceProjected = False
         elif targetFit not in self.__calculatedTargets:
@@ -221,9 +221,9 @@ class Fit(object):
         for runTime in ("early", "normal", "late"):
             #Lets start out with the ship's effects
             extra = []
-            if self.character != None:
+            if self.character is not None:
                 extra.append(self.character)
-            if self.ship != None:
+            if self.ship is not None:
                 extra.append(self.ship)
 
             c = chain(extra, self.drones, self.boosters, self.implants, self.modules,
@@ -266,7 +266,7 @@ class Fit(object):
                            sqrt((2 * percent) - pow(percent, 2)))
 
     def isCapStable(self):
-        if self.__capStable == None:
+        if self.__capStable is None:
             self.simulateCap()
 
         return self.__capStable
@@ -276,19 +276,19 @@ class Fit(object):
         If the cap is stable, the capacitor state is the % at which it is stable.
         If the cap is unstable, this is the amount of time before it runs out
         """
-        if self.__capState == None:
+        if self.__capState is None:
             self.simulateCap()
 
         return self.__capState
 
     def capUsed(self):
-        if self.__capUsed == None:
+        if self.__capUsed is None:
             self.simulateCap()
 
         return self.__capUsed
 
     def capRecharge(self):
-        if self.__capRecharge == None:
+        if self.__capRecharge is None:
             self.simulateCap()
 
         return self.__capRecharge
@@ -302,7 +302,7 @@ class Fit(object):
 
             return (cycleTime, gauss)
 
-        mods = filter(lambda mod: mod.getModifiedItemAttr("capacitorNeed") != None, self.modules)
+        mods = filter(lambda mod: mod.getModifiedItemAttr("capacitorNeed") is not None, self.modules)
         drains = map(mapper, mods)
         def result(t):
             m = map(lambda x: x[1](t % x[0]), drains)
@@ -311,7 +311,7 @@ class Fit(object):
         return result
 
     def calculateSustainableTank(self):
-        if self.__sustainableTank == None:
+        if self.__sustainableTank is None:
             if self.isCapStable():
                 sustainable = {}
                 sustainable["armorRepair"] = self.extraAttributes["armorRepair"]
@@ -355,7 +355,7 @@ class Fit(object):
                     if capUsed > totalPeakRecharge: break
                     cycleTime = mod.getCycleTime()
                     capPerSec = mod.getCapUsage()
-                    if capPerSec != None and cycleTime != None:
+                    if capPerSec is not None and cycleTime is not None:
                         #Check how much this repper can work
                         sustainability = min(1, (totalPeakRecharge - capUsed) / capPerSec)
 
@@ -384,7 +384,7 @@ class Fit(object):
             if mod.state >= State.ACTIVE:
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
                 cycleTime = mod.getModifiedItemAttr("speed") or mod.getModifiedItemAttr("duration")
-                if capNeed != None and cycleTime != None:
+                if capNeed is not None and cycleTime is not None:
                     capUse += capNeed / (cycleTime / 1000.0)
 
         self.__capUsed = capUse
@@ -424,8 +424,8 @@ class Fit(object):
             self.__capState = solve(f_prime, capCapacity)
 
     def getEhp(self):
-        if self.__ehp == None:
-            if self.damagePattern == None:
+        if self.__ehp is None:
+            if self.damagePattern is None:
                 ehp = {}
                 for (type, attr) in (('shield', 'shieldCapacity'), ('armor', 'armorHP'), ('hull', 'hp')):
                     ehp[type] = self.ship.getModifiedItemAttr(attr)
@@ -435,8 +435,8 @@ class Fit(object):
         return self.__ehp
 
     def getEffectiveTank(self):
-        if self.__effectiveTank == None:
-            if self.damagePattern == None:
+        if self.__effectiveTank is None:
+            if self.damagePattern is None:
                 ehps = {"passiveShield" : self.calculateShieldRecharge()}
                 for type in ("shield", "armor", "hull"):
                     ehps[type] = self.extraAttributes["%sRepair" % type]

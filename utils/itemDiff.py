@@ -39,7 +39,7 @@ parser.add_option("-r", "--norenames", action="store_false", dest="renames", hel
 (options, args) = parser.parse_args()
 
 #fetch database names from command line arguments
-if options.old != None and options.new != None:
+if options.old is not None and options.new is not None:
     oldDB = sqlite3.connect(os.path.expanduser(options.old))
     newDB = sqlite3.connect(os.path.expanduser(options.new))
 else:
@@ -141,7 +141,7 @@ if options.effects or options.attributes:
                             newVal = newAttrDict[attributeId]
                             #eve considers none and zero values as zero
                             for val in (oldVal, newVal):
-                                if val == None: val = 0
+                                if val is None: val = 0
                                 if int(val) == val: val = int(val)
                             if (oldVal or newVal) and oldVal != newVal:
                                 isSame = False

@@ -90,7 +90,7 @@ class ModifiedAttributeDict(object):
         return (key for key in all)
 
     def __contains__(self, key):
-        return (self.__original != None and key in self.__original) or key in self.__modified
+        return (self.__original is not None and key in self.__original) or key in self.__modified
 
     def iterkeys(self):
         for key in self:
@@ -156,7 +156,7 @@ class ModifiedAttributeDict(object):
         return self.__affectedBy[key] if key in self.__affectedBy else {}
 
     def __afflict(self, key):
-        if self.fit == None:
+        if self.fit is None:
             return
 
         if key not in self.__affectedBy:

@@ -276,7 +276,7 @@ def processTableValues(tableData):
             #lists are converted to csv
             elif t is list: row[key] = "'" + ",".join(map(str, row[key])) + "'"
             #pass empty strings to sql in  case of no data
-            elif row[key] == None: row[key] = "''"
+            elif row[key] is None: row[key] = "''"
             #convert everything else to str for proper operation of join
             else: row[key] = str(row[key])
     return
@@ -439,7 +439,7 @@ if __name__ == "__main__":
     #compose list of tables from table map, filter those which have None interest for us
     tableNameList = []
     for table in tableMap.iterkeys():
-        if tableMap[table] != None: tableNameList.append(table)
+        if tableMap[table] is not None: tableNameList.append(table)
 
     #get data from cache (needs just login) and write it
     for tableName in tableNameList:

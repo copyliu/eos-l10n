@@ -45,7 +45,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     def __init__(self, item):
         self.__item = item
-        self.itemID = item.ID if item != None else None
+        self.itemID = item.ID if item is not None else None
         self.__charge = None
         self.projected = False
         self.state = State.ONLINE
@@ -57,7 +57,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         item = db.getItem(self.itemID)
         self.__item = item
         self.__slot = self.__calculateSlot(item)
-        self.__charge = db.getItem(self.chargeID) if self.chargeID != None else None
+        self.__charge = db.getItem(self.chargeID) if self.chargeID is not None else None
 
         self.build()
 
@@ -67,7 +67,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         self.__hardpoint = self.__calculateHardpoint(self.item)
         self.__slot = self.__calculateSlot(self.item)
-        if self.charge != None:
+        if self.charge is not None:
             self.__chargeModifiedAttributes.original = self.charge.attributes
 
     @property
@@ -77,11 +77,11 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def maxRange(self):
         maxRange = self.item.getModifiedItemAttr("maxRange")
-        if maxRange != None: return maxRange
+        if maxRange is not None: return maxRange
         else:
             delay = self.item.getModifiedItemAttr("explosionDelay")
             speed = self.item.getModifiedItemAttr("maxVelocity")
-            if delay != None and speed != None:
+            if delay is not None and speed is not None:
                 return delay * speed
 
     @property
@@ -109,7 +109,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def charge(self, charge):
         if not self.isValidCharge(charge): raise ValueError("Ammo does not fit in that slot")
         self.__charge = charge
-        if charge != None:
+        if charge is not None:
             self.chargeID = charge.ID
             self.__chargeModifiedAttributes.original = charge.attributes
         else:
@@ -120,14 +120,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
-        if charge == None: return True
+        if charge is None: return True
         chargeVolume = charge.getAttribute("volume")
         moduleCapacity = self.getModifiedItemAttr("capacity")
-        if chargeVolume != None and moduleCapacity != None and chargeVolume > moduleCapacity:
+        if chargeVolume is not None and moduleCapacity is not None and chargeVolume > moduleCapacity:
             return False
 
         itemChargeSize = self.getModifiedItemAttr("chargeSize")
-        if itemChargeSize != None:
+        if itemChargeSize is not None:
             chargeSize = charge.getAttribute('chargeSize')
             if itemChargeSize != chargeSize:
                 return False
@@ -135,7 +135,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         chargeGroup = charge.groupID
         for i in range(5):
             itemChargeGroup = self.getModifiedItemAttr('chargeGroup' + str(i))
-            if itemChargeGroup == None: continue
+            if itemChargeGroup is None: continue
             if itemChargeGroup == chargeGroup: return True
 
         return False
@@ -144,7 +144,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         effectHardpointMap = {"turretFitted" : Hardpoint.TURRET,
                               "useMissiles": Hardpoint.MISSILE}
 
-        if item == None:
+        if item is None:
             return None
 
         for effectName, slot in effectHardpointMap.iteritems():
@@ -159,7 +159,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                          "medPower" : Slot.MED,
                          "hiPower" : Slot.HIGH,
                          "subSystem" : Slot.SUBSYSTEM}
-        if item == None:
+        if item is None:
             return None
         for effectName, slot in effectSlotMap.iteritems():
             if effectName in item.effects:
@@ -206,20 +206,20 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             ((projected and effect.isType("projected")) or not projected):
                     effect.handler(fit, self, context)
 
-        if self.charge != None and not projected:
+        if self.charge is not None and not projected:
             for effect in self.charge.effects.itervalues():
                 if effect.runTime == runTime:
                     effect.handler(fit, self, ("moduleCharge",))
 
     def getCycleTime(self):
         speed =  self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
-        return speed / 1000.0 if speed != None else speed
+        return speed / 1000.0 if speed is not None else speed
 
     def getCapUsage(self):
         speed = self.getCycleTime()
-        if speed != None:
+        if speed is not None:
             capUse = self.getModifiedItemAttr("capacitorNeed")
-            if capUse != None:
+            if capUse is not None:
                 speed = speed
                 return capUse / speed
 

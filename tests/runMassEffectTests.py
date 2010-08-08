@@ -56,7 +56,7 @@ if __name__ == "__main__":
                 errors += 1
                 sys.stdout.write("F")
                 errorString += "\n%s: No handler" % moduleName
-            if e.type == None:
+            if e.type is None:
                 errors += 1
                 sys.stdout.write("F")
                 errorString += "\n%s: No type" % moduleName
