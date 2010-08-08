@@ -18,8 +18,7 @@
 import hashlib, unittest, os, os.path, sys
 
 #Add the good path to sys.path
-path = os.path.realpath(os.path.join(sys.path[0], "..", ".."))
-sys.path.append(path)
+sys.path.append(os.path.realpath(os.path.join(sys.path[0], "..", "..")))
 
 from model import config
 

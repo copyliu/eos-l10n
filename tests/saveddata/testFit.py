@@ -1,5 +1,5 @@
 import unittest
-from model.types import Fit, Character, Module, Ship, User, State, Drone, Implant, Booster
+from model.types import Fit, Character, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
 from model import db
 import model.db.saveddata.queries
 import sqlalchemy.orm
@@ -308,3 +308,11 @@ class TestFit(unittest.TestCase):
 
         expected /= d.getModifiedItemAttr("missileLaunchDuration") / 1000.0
         self.assertAlmostEquals(f.droneDPS, expected * 2)
+
+    def test_hardpointCount(self):
+        f = Fit()
+        f.modules.append(Module(db.getItem("Heavy Modulated Energy Beam I")))
+        f.modules.append(Module(db.getItem("Standard Missile Launcher I")))
+        f.modules.append(Module(db.getItem("Salvager I")))
+        self.assertEquals(f.getHardpointsUsed(Hardpoint.MISSILE), 1)
+        self.assertEquals(f.getHardpointsUsed(Hardpoint.TURRET), 1)

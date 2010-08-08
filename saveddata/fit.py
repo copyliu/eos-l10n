@@ -238,6 +238,14 @@ class Fit(object):
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
+    def getHardpointsUsed(self, type):
+        amount = 0
+        for mod in self.modules:
+            if mod.hardpoint is type:
+                amount += 1
+
+        return amount
+
     def calculateCapRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
         rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
