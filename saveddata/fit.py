@@ -216,20 +216,15 @@ class Fit(object):
         #3: Some effects are implemented poorly and will just explode on us
         #4: Errors should be handled gracefully and preferably without crashing unless serious
         for runTime in ("early", "normal", "late"):
-            #Lets start out with the ship's effects
-            extra = []
-            if self.character is not None:
-                extra.append(self.character)
-            if self.ship is not None:
-                extra.append(self.ship)
-
-            c = chain(extra, self.drones, self.boosters, self.implants, self.modules,
+            #Build a little chain of stuff
+            c = chain((self.character, self.ship), self.drones, self.boosters, self.implants, self.modules,
                       self.projectedDrones, self.projectedModules)
 
             for item in c:
                 #Registering the item about to affect the fit allows us to track "Affected By" relations correctly
-                targetFit.__register(item)
-                item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
+                if item is not None:
+                    targetFit.__register(item)
+                    item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
 
 
         for fit in self.projectedFits:
