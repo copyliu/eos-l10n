@@ -226,7 +226,6 @@ class Fit(object):
                     targetFit.__register(item)
                     item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
 
-
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
@@ -479,23 +478,12 @@ class Fit(object):
         copy.ship = deepcopy(self.ship, memo)
         copy.name = "%s copy" % self.name
 
-        for mod in self.modules:
-            copy.modules.append(deepcopy(mod, memo))
-
-        for drone in self.drones:
-            copy.drones.append(deepcopy(drone, memo))
-
-        for implant in self.implants:
-            copy.implants.append(deepcopy(implant, memo))
-
-        for booster in self.boosters:
-            copy.boosters.append(deepcopy(booster, memo))
-
-        for mod in self.projectedModules:
-            copy.projectedModules.append(deepcopy(implant, memo))
-
-        for drone in self.projectedDrones:
-            copy.projectedDrones.append(deepcopy(drone, memo))
+        toCopy = ("modules", "drones", "implants", "boosters", "projectedModules", "projectedDrones")
+        for name in toCopy:
+            orig = getattr(self, name)
+            c = getattr(copy, name)
+            for i in orig:
+                c.append(deepcopy(i, memo))
 
         for fit in self.projectedFits:
             copy.projectedFits.append(fit)
