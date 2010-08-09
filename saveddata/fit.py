@@ -29,11 +29,8 @@ from model.types import Drone, Ship, Character, State, Hardpoint
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
     EXTRA_ATTRIBUTES = {"armorRepair": 0,
-                        "sustainableArmorRepair" : 0,
                         "hullRepair": 0,
-                        "sustainableHullRepair" : 0,
                         "shieldRepair": 0,
-                        "sustainableShieldRepair" : 0,
                         "capBoost": 0,
                         "capDrain": 0,
                         "maxActiveDrones": 0,
