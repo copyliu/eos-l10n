@@ -20,7 +20,7 @@ import hashlib, unittest, os, os.path, sys
 #Add the good path to sys.path
 sys.path.append(os.path.realpath(os.path.join(sys.path[0], "..", "..")))
 
-from model import config
+from eos import config
 
 config.debug = False
 config.saveddata_connectionstring = "sqlite:///:memory:"
@@ -41,4 +41,5 @@ def iteratedir(dir, prefix = []):
 iteratedir(os.path.dirname(__file__))
 
 if __name__ == "__main__":
+
     unittest.TextTestRunner().run(suite)

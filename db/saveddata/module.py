@@ -20,8 +20,8 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey, CheckConstraint, Boolean
 from sqlalchemy.orm import mapper
 
-from model.db import saveddata_meta
-from model.types import Module
+from eos.db import saveddata_meta
+from eos.types import Module
 
 modules_table = Table("modules", saveddata_meta,
                       Column("ID", Integer, primary_key = True),

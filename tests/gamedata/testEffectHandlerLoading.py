@@ -1,5 +1,5 @@
 import unittest
-from model import db
+from eos import db
 import types
 
 class TestEffectHandlerLoading(unittest.TestCase):

@@ -1,6 +1,6 @@
 #Used by:
 #Modules from group: Shield Hardener (91 of 91)
-from model.types import State          
+from eos.types import State          
 type = "passive"
 def handler(fit, module, context):
     if module.state != State.ONLINE: return

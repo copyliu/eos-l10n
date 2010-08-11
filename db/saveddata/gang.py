@@ -20,9 +20,9 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey, CheckConstraint, Boolean
 from sqlalchemy.orm import mapper, relation
 
-from model.db import saveddata_meta
-from model.types import Gang, Wing, Squad, Fit
-from model.db.saveddata.fit import fits_table
+from eos.db import saveddata_meta
+from eos.types import Gang, Wing, Squad, Fit
+from eos.db.saveddata.fit import fits_table
 
 gangs_table = Table("gangs", saveddata_meta,
                     Column("ID", Integer, primary_key = True),

@@ -20,7 +20,7 @@
 from sqlalchemy import MetaData,  create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from model import config
+from eos import config
 
 class ReadOnlyException(Exception):
     pass

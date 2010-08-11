@@ -1,5 +1,5 @@
 import unittest
-from model import db
+from eos import db
 
 class TestItem(unittest.TestCase):
     def test_Race(self):

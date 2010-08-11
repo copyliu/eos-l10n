@@ -1,5 +1,5 @@
 import unittest
-from model import db
+from eos import db
 
 class TestGameDataQueries(unittest.TestCase):
     def test_getItem(self):
