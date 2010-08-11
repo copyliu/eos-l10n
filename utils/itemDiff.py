@@ -70,10 +70,10 @@ if options.effects or options.renames:
         if extension == "py" and extension not in ("__init__"):
             implemented.append(basename)
 
-    #effects' names are used w/o any special symbols by pyfa
+    #effects' names are used w/o any special symbols by eos
     stripSpec = "[^A-Za-z0-9]"
 
-    #Method to get data if effect iss implemented in pyfa or not
+    #Method to get data if effect iss implemented in eos or not
     def getEffectStatus(effectName):
         pyfaName = re.sub(stripSpec, "", effectName)
         if pyfaName in implemented: return 'y'

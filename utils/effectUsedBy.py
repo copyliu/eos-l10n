@@ -133,7 +133,7 @@ queryGroupName = 'SELECT invgroups.groupName FROM invgroups WHERE invgroups.grou
 queryCategoryName = 'SELECT invcategories.categoryName FROM invcategories WHERE invcategories.categoryID = ? LIMIT 1'
 queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
 
-#Compose list of effects w/o symbols which pyfa doesn't take into consideration
+#Compose list of effects w/o symbols which eos doesn't take into consideration
 #we'll use it to find proper effect IDs from file names
 globalMap_effectNamePyfa_effectNameDB = {}
 stripSpec = "[^A-Za-z0-9]"

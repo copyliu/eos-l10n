@@ -2,7 +2,7 @@
 # Copyright (C) 2010 Diego Duclos
 #               2010 Anton Vorobyov
 #
-# This file, as well as all files in this folder, are part of pyfa.
+# This file, as well as all files in this folder, are part of eos.
 #
 # eos is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
