@@ -20,8 +20,8 @@
 from sqlalchemy import Column, String, Integer, Table
 from sqlalchemy.orm import mapper, synonym
 
-from model.db import gamedata_meta
-from model.types import Icon
+from eos.db import gamedata_meta
+from eos.types import Icon
 
 icons_table = Table("icons", gamedata_meta,
                     Column("iconID", Integer, primary_key = True),

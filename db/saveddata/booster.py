@@ -21,8 +21,8 @@ from sqlalchemy import Table, Column, ForeignKey, Integer, UniqueConstraint, Boo
 from sqlalchemy.orm import mapper, relation
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from model.db import saveddata_meta
-from model.types import Booster
+from eos.db import saveddata_meta
+from eos.types import Booster
 
 boosters_table = Table("boosters", saveddata_meta,
                        Column("ID", Integer, primary_key = True),

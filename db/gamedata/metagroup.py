@@ -19,9 +19,9 @@
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relation, mapper, join, synonym
-from model.db import gamedata_meta
-from model.db.gamedata.item import items_table
-from model.types import MetaGroup, Item
+from eos.db import gamedata_meta
+from eos.db.gamedata.item import items_table
+from eos.types import MetaGroup, Item
 
 metagroups_table = Table("invmetagroups", gamedata_meta,
                          Column("metaGroupID", Integer, primary_key = True),

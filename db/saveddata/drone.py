@@ -19,8 +19,8 @@
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, Boolean
 from sqlalchemy.orm import mapper
-from model.db import saveddata_meta
-from model.types import Drone
+from eos.db import saveddata_meta
+from eos.types import Drone
 
 drones_table = Table("drones", saveddata_meta,
                      Column("fitID", Integer, ForeignKey("fits.ID"), primary_key = True),

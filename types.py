@@ -17,15 +17,15 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup
-from model.saveddata.user import User
-from model.saveddata.damagePattern import DamagePattern
-from model.saveddata.character import Character, Skill
-from model.saveddata.module import Module, State, Slot, Hardpoint
-from model.saveddata.drone import Drone
-from model.saveddata.implant import Implant
-from model.saveddata.booster import SideEffect
-from model.saveddata.booster import Booster
-from model.saveddata.ship import Ship
-from model.saveddata.fit import Fit
-from model.saveddata.gang import Gang, Wing, Squad
+from eos.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup
+from eos.saveddata.user import User
+from eos.saveddata.damagePattern import DamagePattern
+from eos.saveddata.character import Character, Skill
+from eos.saveddata.module import Module, State, Slot, Hardpoint
+from eos.saveddata.drone import Drone
+from eos.saveddata.implant import Implant
+from eos.saveddata.booster import SideEffect
+from eos.saveddata.booster import Booster
+from eos.saveddata.ship import Ship
+from eos.saveddata.fit import Fit
+from eos.saveddata.gang import Gang, Wing, Squad

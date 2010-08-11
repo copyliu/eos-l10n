@@ -19,8 +19,8 @@
 
 from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
 from sqlalchemy.orm import relation, mapper, join, synonym
-from model.types import Attribute, Icon
-from model.db import gamedata_meta
+from eos.types import Attribute, Icon
+from eos.db import gamedata_meta
 typeattributes_table = Table("dgmtypeattribs", gamedata_meta,
                          Column("value", Float),
                          Column("typeID", Integer, ForeignKey("invtypes.typeID")),

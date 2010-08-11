@@ -17,14 +17,14 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.effectHandlerHelpers import HandledList
-from model.modifiedAttributeDict import ModifiedAttributeDict
+from eos.effectHandlerHelpers import HandledList
+from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain, count
 from copy import deepcopy
 from math import sqrt, pi, exp
-from model.solverMath import gaussian, solve
-from model.types import Drone, Ship, Character, State, Hardpoint
+from eos.solverMath import gaussian, solve
+from eos.types import Drone, Ship, Character, State, Hardpoint
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -60,7 +60,7 @@ class Fit(object):
         self.build()
 
     def build(self):
-        from model import db
+        from eos import db
         self.__ehp = None
         self.__weaponDPS = None
         self.__weaponVolley = None

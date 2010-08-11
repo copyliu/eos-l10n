@@ -22,8 +22,8 @@ from sqlalchemy.orm import relation, mapper, synonym
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
-from model.db import gamedata_meta
-from model.types import Icon, Attribute, Item, Effect, MetaGroup
+from eos.db import gamedata_meta
+from eos.types import Icon, Attribute, Item, Effect, MetaGroup
 
 items_table = Table("invtypes", gamedata_meta,
                     Column("typeID", Integer, primary_key = True),

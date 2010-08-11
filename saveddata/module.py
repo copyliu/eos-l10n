@@ -17,9 +17,9 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
+from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
-from model.effectHandlerHelpers import HandledItem, HandledCharge
+from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from itertools import chain
 
 class State():
@@ -53,7 +53,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @reconstructor
     def init(self):
-        from model import db
+        from eos import db
         item = db.getItem(self.itemID)
         self.__item = item
         self.__slot = self.__calculateSlot(item)

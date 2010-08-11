@@ -17,8 +17,8 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.db import saveddata_session
-from model.types import User, Character, Fit
+from eos.db import saveddata_session
+from eos.types import User, Character, Fit
 
 def getUser(lookfor):
     if isinstance(lookfor, int): return saveddata_session.query(User).filter(User.ID == lookfor).one()

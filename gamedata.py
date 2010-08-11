@@ -55,7 +55,7 @@ class Effect(object):
 
     def __generateHandler(self):
         try:
-            effectModule = __import__('model.effects.' + self.handlerName, fromlist=True)
+            effectModule = __import__('eos.effects.' + self.handlerName, fromlist=True)
             self.__handler = getattr(effectModule, "handler")
             try:
                 self.__runTime = getattr(effectModule, "runTime") or "normal"
@@ -101,7 +101,7 @@ class Item(object):
     @property
     def requiredSkills(self):
         if self.__requiredSkills is None:
-            from model import db
+            from eos import db
             requiredSkills = {}
             self.__requiredSkills = requiredSkills
             for i in xrange(5):

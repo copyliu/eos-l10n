@@ -25,8 +25,8 @@ if __name__ == "__main__":
     path = os.path.realpath(os.path.join(sys.path[0], "..", ".."))
     sys.path.append(path)
 
-    from model.types import Effect
-    from model.gamedata import effectDummy
+    from eos.types import Effect
+    from eos.gamedata import effectDummy
 
     print "checking files in effects folder"
     list = os.listdir(os.path.join("../effects"))

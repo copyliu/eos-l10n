@@ -19,8 +19,8 @@
 
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
 from sqlalchemy.orm import mapper, join, synonym
-from model.types import Effect
-from model.db import gamedata_meta
+from eos.types import Effect
+from eos.db import gamedata_meta
 
 typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
                           Column("typeID", Integer, ForeignKey("invtypes.typeID")),

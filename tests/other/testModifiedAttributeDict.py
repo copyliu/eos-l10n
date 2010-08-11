@@ -1,6 +1,6 @@
 import unittest
-from model.modifiedAttributeDict import ModifiedAttributeDict
-from model import db
+from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos import db
 
 class TestModifiedAttributeDict(unittest.TestCase):
     def setUp(self):

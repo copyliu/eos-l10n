@@ -1,6 +1,6 @@
 import unittest
-from model import db
-from model.types import Module, Fit, Ship, Character, Skill
+from eos import db
+from eos.types import Module, Fit, Ship, Character, Skill
 
 class TestThrasher(unittest.TestCase):
     def setUp(self):

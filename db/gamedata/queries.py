@@ -17,10 +17,10 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.db import gamedata_session
-from model.db.gamedata.metagroup import metatypes_table
+from eos.db import gamedata_session
+from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
-from model.types import Item, Category, Group, MarketGroup
+from eos.types import Item, Category, Group, MarketGroup
 def getItem(lookfor):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).filter(Item.name == lookfor).one()

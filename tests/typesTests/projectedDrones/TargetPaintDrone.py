@@ -1,7 +1,7 @@
 import unittest
 import unittest
-from model import db
-from model.types import Drone, Fit, Ship
+from eos import db
+from eos.types import Drone, Fit, Ship
 
 class TestStasisWebifier(unittest.TestCase):
     def setUp(self):

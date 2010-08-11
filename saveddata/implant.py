@@ -17,8 +17,8 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
-from model.effectHandlerHelpers import HandledItem
+from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
+from eos.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates, reconstructor
 class Implant(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
@@ -30,7 +30,7 @@ class Implant(HandledItem, ItemAttrShortcut):
 
     @reconstructor
     def init(self):
-        from model import db
+        from eos import db
         self.__item = db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
         self.build()

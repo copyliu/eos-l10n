@@ -21,12 +21,12 @@ from sqlalchemy import Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relation, mapper
 from sqlalchemy.sql import and_
 
-from model.db import saveddata_meta
-from model.db.saveddata.module import modules_table
-from model.db.saveddata.drone import drones_table
-from model.types import Fit, Module, User, Booster, Drone, Implant, Character, DamagePattern
-from model.effectHandlerHelpers import HandledList
-from model.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
+from eos.db import saveddata_meta
+from eos.db.saveddata.module import modules_table
+from eos.db.saveddata.drone import drones_table
+from eos.types import Fit, Module, User, Booster, Drone, Implant, Character, DamagePattern
+from eos.effectHandlerHelpers import HandledList
+from eos.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
  HandledProjectedModList, HandledProjectedDroneList, HandledProjectedFitList, \
  HandledModuleList
 

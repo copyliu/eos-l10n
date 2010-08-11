@@ -1,7 +1,7 @@
 import unittest
-from model.types import Fit, Character, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
-from model import db
-import model.db.saveddata.queries
+from eos.types import Fit, Character, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
+from eos import db
+import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 from itertools import count
@@ -78,8 +78,8 @@ class TestFit(unittest.TestCase):
             f.projectedFits.append(f2)
 
             #Hack our way through changing the session temporarly
-            oldSession = model.db.saveddata.queries.saveddata_session
-            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            oldSession = eos.db.saveddata.queries.saveddata_session
+            eos.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             newf = db.getFit(f.ID)
 
@@ -96,7 +96,7 @@ class TestFit(unittest.TestCase):
             raise
         finally:
             #Undo our hack as to not fuck up anything
-            model.db.saveddata.queries.saveddata_session = oldSession
+            eos.db.saveddata.queries.saveddata_session = oldSession
 
     def test_projectedFit(self):
         f1 = Fit()

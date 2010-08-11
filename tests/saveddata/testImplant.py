@@ -1,7 +1,7 @@
 import unittest
-from model.types import Implant, Fit, User, Ship
-from model import db
-import model.db.saveddata.queries
+from eos.types import Implant, Fit, User, Ship
+from eos import db
+import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
@@ -40,8 +40,8 @@ class TestImplant(unittest.TestCase):
             db.saveddata_session.flush()
 
             #Hack our way through changing the session temporarly
-            oldSession = model.db.saveddata.queries.saveddata_session
-            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            oldSession = eos.db.saveddata.queries.saveddata_session
+            eos.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             newfit = db.getFit(f.ID)
             i = 0
@@ -60,7 +60,7 @@ class TestImplant(unittest.TestCase):
             raise
         finally:
             #Undo our hack as to not fuck up anything
-            model.db.saveddata.queries.saveddata_session = oldSession
+            eos.db.saveddata.queries.saveddata_session = oldSession
 
     def test_copy(self):
         i = Implant(db.getItem("Halo Omega"))

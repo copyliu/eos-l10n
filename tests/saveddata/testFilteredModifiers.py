@@ -1,6 +1,6 @@
 import unittest
-from model import db
-from model.types import Fit, Drone
+from eos import db
+from eos.types import Fit, Drone
 
 class TestFilteredModifiers(unittest.TestCase):
     def setUp(self):

@@ -17,8 +17,8 @@
 # along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
-from model.effectHandlerHelpers import HandledItem
+from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
+from eos.effectHandlerHelpers import HandledItem
 
 class Ship(ItemAttrShortcut, HandledItem):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate",
