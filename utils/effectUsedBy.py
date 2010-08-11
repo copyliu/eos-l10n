@@ -1,111 +1,121 @@
 #!/usr/bin/env python3
-#===============================================================================
+#======================================================================
 # Copyright (C) 2010 Anton Vorobyov
 #
 # This file is part of eos.
 #
 # eos is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of
+# the License, or (at your option) any later version.
 #
 # eos is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
-# You should have received a copy of the GNU Affero General Public License
-# along with eos.  If not, see <http://www.gnu.org/licenses/>.
-#===============================================================================
+# You should have received a copy of the GNU Affero General Public
+# License along with eos.  If not, see <http://www.gnu.org/licenses/>.
+#======================================================================
+"""
+Go through all effects and fill them with 'used by' comments.
 
+There're several big stages:
+Stage 1. Gather all required data into 'global' dictionaries. We have
+2 dictionaries per grouping type, one which lists groups per typeID,
+and another which lists typeIDs per group.
+Stage 2. Cycle through each effect.
+Stage 2.1. Compose similar set of dictionaries like in stage 1, but
+this time we take into consideration typeIDs affected by effect picked
+in stage 2.
+Stage 2.2. Create several lists (1 per grouping type) which will keep
+IDs of these groups which will describe set of the typeIDs, and start
+iterating. Each iteration one ID will be appended to any of the lists.
+Stage 2.2.1. Compose score dictionaries per grouping type, and
+calculate total score for given grouping type.
+Stage 2.2.2. Pick grouping type with highest score, find winner group
+inside grouping type, append its ID to corresponding list created in
+stage 2.2. If score is less than certain value, stop iterating. If some
+items are not covered by set of winners from lists, they'll be
+presented as single items.
+Stage 2.3. Print results to file if anything has been changed.
 
-'''
-This script goes through all implemented effects and fills them with comments by which items effect is used
-'''
-#A bit of explanation. There're several big stages:
-#Stage 1. Gather all required data into 'global' dictionaries. We have
-#2 dictionaries per grouping type, one which lists groups per typeID,
-#and another which lists typeIDs per group.
-#Stage 2. Cycle through each effect.
-#Stage 2.1. Compose similar set of dictionaries like in stage 1, but this time
-#we take into consideration typeIDs affected by effect picked in stage 2.
-#Stage 2.2. Create several lists (1 per grouping type) which will keep IDs of
-#these groups which will describe set of the typeIDs, and start iterating.
-#Each iteration one ID will be appended to any of the lists.
-#Stage 2.2.1. Compose score dictionaries per grouping type, and calculate total
-#score for given grouping type
-#Stage 2.2.2. Pick grouping type with highest score, find winner group inside
-#grouping type, append its ID to corresponding list created in stage 2.2. If
-#score is less than certain value, stop iterating. If some items are not covered
-#by set of winners from lists, they'll be presented as single items.
-#Stage 2.3. Print results to file if anything has been changed
-#
-#Grouping types used are:
-#Groups (groupID of an item)
-#Categories (categoryID of groupID of an item)
-#BaseTypes (variations, like they appear on eve's variation tab)
-#Market groups + variations (market groups like usual, plus variations
-#of all items from it)
+Grouping types used are:
+Groups (groupID of an item);
+Categories (categoryID of groupID of an item);
+BaseTypes (variations, like they appear on eve's variation tab);
+Market groups + variations (marketGroupID of an item, plus variations
+of all items from given market group, excluding items with
+marketGroupID).
+TypeNames (various combinations of words taken from typeName of item).
+"""
 
-import sys
-sys.path.append("..")
-
-from optparse import OptionParser
-import sqlite3
+import copy
+import itertools
+import math
 import os.path
 import re
-import math
-import itertools
-import copy
+import sqlite3
+from optparse import OptionParser
 
 usage = "usage: %prog --database=DB [--debug=DEBUG]"
 parser = OptionParser(usage=usage)
-parser.add_option("-d", "--database", help="path to eve cache data dump in sqlite format, default pyfa database path is used if none specified", type="string", default=os.path.join("~", ".pyfa","eve.db"))
-parser.add_option("-u", "--debug", help="debug level, 0 by default", type="int", default=0)
+parser.add_option("-d", "--database", help="path to eve cache data dump in \
+                  sqlite format, default eos database path is used if none \
+                  specified",type="string",
+                  default=os.path.join("~", ".eos","eve.db"))
+parser.add_option("-u", "--debug", help="debug level, 0 by default",
+                  type="int", default=0)
 (options, args) = parser.parse_args()
 
-#show debugging prints?
-#0 - don't show debugging stuff and perform actual run through effect comments
-#1 - show only for first iteration
-#2 - show for all iterations
-debugLevel = options.debug
+# Show debugging prints?
+# 0 - Don't show debugging stuff and perform actual run
+# 1 - Show only for first iteration
+# 2 - Show for all iterations
+DEBUG_LEVEL = options.debug
 
-######################### Control #########################
-#Ways to control process:
-#Adjust grouping type weights (more number - better chance to pick this
-#grouping type)
-groupWeight = 1.0
-categoryWeight = 1.0
-baseTypeWeight = 1.0
-marketGroupWithVarsWeight = 0.3
-typeNameCombinationWeight = 1.0
-#If score drops below this value, remaining items will be
-#listed without any grouping
-lowestScore = 0.7
-#Adjust inner/outer score calculation formulae
-def calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, weight = 1.0):
-    #Percentage of items affected by effect out of total number of items in this group
-    coverageTotal = (affectedAndDecribed + affectedAndUndescribed)/total
-    #Same, but only described/undescribed items are taken
-    coverageDescribed = affectedAndDecribed/total
-    coverageUndescribed = affectedAndUndescribed/total
-    #Already described items should have less weight
-    coverageAdditionalFactor = coverageUndescribed + coverageDescribed*0
-    #If group has just one item it should have zero score
+# Ways to control process:
+# Adjust grouping type weights (more number - better chance to pick
+# this grouping type)
+GROUP_WEIGHT = 1.0
+CATEGORY_WEIGHT = 1.0
+BASETYPE_WEIGHT = 1.0
+MARKETGROUPWITHVARS_WEIGHT = 0.3
+TYPENAMECOMBINATIONS_WEIGHT = 1.0
+# If score drops below this value, remaining items will be listed
+# without any grouping
+LOWEST_SCORE = 0.7
+# Adjust scoring formulae
+def calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total,
+                     perEffect_totalAffected, weight=1.0):
+    """Inner score calculation formula"""
+    # Percentage of items affected by effect out of total number of
+    # items in this group
+    coverageTotal = (affectedAndDecribed + affectedAndUndescribed) / total
+    # Same, but only described/undescribed items are taken
+    coverageDescribed = affectedAndDecribed / total
+    coverageUndescribed = affectedAndUndescribed / total
+    # Already described items should have less weight
+    coverageAdditionalFactor = coverageUndescribed + coverageDescribed * 0
+    # If group has just one item - it should have zero score
     affectedTotalFactor = affectedAndDecribed + affectedAndUndescribed - 1
-    innerScore = (coverageTotal**0.23)*coverageAdditionalFactor*affectedTotalFactor*weight
+    innerScore = (coverageTotal ** 0.23) * coverageAdditionalFactor * \
+    affectedTotalFactor * weight
     return innerScore
-def calcOuterScore(innerScoreDict, perEffect_totalAffected, weight):
-    #Return just max of the inner scores, including weight factor
+def calc_outer_score(innerScoreDict, perEffect_totalAffected, weight):
+    """Outer score calculation formula"""
+    # Return just max of the inner scores, including weight factor
     if float(len(innerScoreDict)):
-        return innerScoreDict[max(innerScoreDict, key = lambda a: innerScoreDict.get(a))] * weight
+        outerScore = innerScoreDict[max(innerScoreDict, key=lambda a:
+        innerScoreDict.get(a))] * weight
+        return outerScore
     else: return 0.0
 
-#Connect to database and set up cursor
+# Connect to database and set up cursor
 db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
-#As we don't rely on pyfa's overrides, we need to set them manually
+# As we don't rely on eos's overrides, we need to set them manually
 overrides = '''
 UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
 UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
@@ -115,31 +125,51 @@ UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
 for statement in overrides.split(";\n"):
     cursor.execute(statement)
 
-#List of queries which will be used in the script
-queryAllEffects = 'SELECT dgmeffects.effectID, dgmeffects.effectName FROM dgmeffects'
-#Queries to get raw data
-#Limit categories to Celestials (2, only for wormhole effects), Ships (6), Modules (7), Charges (8), Skills (16), Drones (18), Implants (2), Subsystems (32)
-categoryLimiter = ' AND (invcategories.categoryID = 2 OR invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR invcategories.categoryID = 32)'
-queryPublishedTypeIDs = 'SELECT invtypes.typeID FROM invtypes INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1' + categoryLimiter
-queryTypeIDGroupID = 'SELECT invtypes.groupID FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
-queryGroupIDCategoryID = 'SELECT invgroups.categoryID FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
-queryTypeIDParentTypeID = 'SELECT invmetatypes.parentTypeID FROM invmetatypes WHERE invmetatypes.typeID = ? LIMIT 1'
-queryTypeIDMarketGroupID = 'SELECT invtypes.marketGroupID FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
-queryTypeIDTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE invtypes.typeID = ? LIMIT 1'
-queryMarketGroupIDParentGroupID = 'SELECT invmarketgroups.parentGroupID FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
-queryEffectIDTypeID = 'SELECT dgmtypeeffects.typeID FROM dgmtypeeffects WHERE dgmtypeeffects.effectID = ?'
-#Queries for printing
-queryGroupName = 'SELECT invgroups.groupName FROM invgroups WHERE invgroups.groupID = ? LIMIT 1'
-queryCategoryName = 'SELECT invcategories.categoryName FROM invcategories WHERE invcategories.categoryID = ? LIMIT 1'
-queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
+# List of queries which will be used in the script
+queryAllEffects = 'SELECT dgmeffects.effectID, dgmeffects.effectName \
+FROM dgmeffects'
+# Queries to get raw data
+# Limit categories to Celestials (2, only for wormhole effects),
+# Ships (6), Modules (7), Charges (8), Skills (16), Drones (18),
+# Implants (20), Subsystems (32)
+categoryLimiter = ' AND (invcategories.categoryID = 2 OR \
+invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR \
+invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR \
+invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR \
+invcategories.categoryID = 32)'
+queryPublishedTypeIDs = 'SELECT invtypes.typeID FROM invtypes INNER JOIN \
+invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN \
+invcategories ON invgroups.categoryID = invcategories.categoryID WHERE \
+invtypes.published = 1' + categoryLimiter
+queryTypeIDGroupID = 'SELECT invtypes.groupID FROM invtypes WHERE \
+invtypes.typeID = ? LIMIT 1'
+queryGroupIDCategoryID = 'SELECT invgroups.categoryID FROM invgroups WHERE \
+invgroups.groupID = ? LIMIT 1'
+queryTypeIDParentTypeID = 'SELECT invmetatypes.parentTypeID FROM \
+invmetatypes WHERE invmetatypes.typeID = ? LIMIT 1'
+queryTypeIDMarketGroupID = 'SELECT invtypes.marketGroupID FROM \
+invtypes WHERE invtypes.typeID = ? LIMIT 1'
+queryTypeIDTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE \
+invtypes.typeID = ? LIMIT 1'
+queryMarketGroupIDParentGroupID = 'SELECT invmarketgroups.parentGroupID FROM \
+invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
+queryEffectIDTypeID = 'SELECT dgmtypeeffects.typeID FROM \
+dgmtypeeffects WHERE dgmtypeeffects.effectID = ?'
+# Queries for printing
+queryGroupName = 'SELECT invgroups.groupName FROM invgroups WHERE \
+invgroups.groupID = ? LIMIT 1'
+queryCategoryName = 'SELECT invcategories.categoryName FROM \
+invcategories WHERE invcategories.categoryID = ? LIMIT 1'
+queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM \
+invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
 
 #Compose list of effects w/o symbols which eos doesn't take into consideration
 #we'll use it to find proper effect IDs from file names
-globalMap_effectNamePyfa_effectNameDB = {}
+globalMap_effectNameEos_effectNameDB = {}
 stripSpec = "[^A-Za-z0-9]"
 cursor.execute(queryAllEffects)
 for row in cursor:
-    globalMap_effectNamePyfa_effectNameDB[re.sub(stripSpec, "", row[1])] = row[0]
+    globalMap_effectNameEos_effectNameDB[re.sub(stripSpec, "", row[1])] = row[0]
 
 ######################### Stage 1 #########################
 
@@ -322,7 +352,7 @@ for effectFileName in os.listdir(effectsPath):
         ######################## Stage 2.1 ########################
         #Data regarding which items are affected by current effect
         perEffectList_usedByTypes = set()
-        cursor.execute(queryEffectIDTypeID, (globalMap_effectNamePyfa_effectNameDB[basename],))
+        cursor.execute(queryEffectIDTypeID, (globalMap_effectNameEos_effectNameDB[basename],))
         for rowTypes in cursor:
             typeID = rowTypes[0]
             if typeID in publishedTypes: perEffectList_usedByTypes.add(typeID)
@@ -374,7 +404,7 @@ for effectFileName in os.listdir(effectsPath):
                 perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0].add(typeID)
 
         stopDebugPrints = False
-        if debugLevel >= 1:
+        if DEBUG_LEVEL >= 1:
             print("\nEffect:", basename)
             print("Total items affected: {0}".format(perEffect_totalAffected))
 
@@ -411,21 +441,21 @@ for effectFileName in os.listdir(effectsPath):
                     #total number of items from this group (not necessarily affected by current effect)
                     total = len(globalMap_groupID_typeID[groupID])
                     #calculate inner score and push it into score dictionary for current grouping type
-                    groupScore[groupID] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+                    groupScore[groupID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
                     #Debug prints for inner data
-                    if debugLevel >= 1 and not stopDebugPrints:
+                    if DEBUG_LEVEL >= 1 and not stopDebugPrints:
                         cursor.execute(queryGroupName, (groupID,))
                         for row in cursor: groupName = row[0]
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
                         #If debug level is 1, we print results only for 1st iteration
-                        if debugLevel == 1: print("Group: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(groupName, affectedAndUndescribed, total, coverage, groupScore[groupID]))
+                        if DEBUG_LEVEL == 1: print("Group: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(groupName, affectedAndUndescribed, total, coverage, groupScore[groupID]))
                         #If it's 2, we print results for each iteration, so we need to
                         #include number of already described items
-                        if debugLevel == 2: print("Group: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(groupName, affectedAndUndescribed, affectedAndDecribed, total, coverage, groupScore[groupID]))
+                        if DEBUG_LEVEL == 2: print("Group: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(groupName, affectedAndUndescribed, affectedAndDecribed, total, coverage, groupScore[groupID]))
             #Calculate outer score for this grouping type
-            groupOuterScore = calcOuterScore(groupScore, perEffect_totalAffected, groupWeight)
+            groupOuterScore = calc_outer_score(groupScore, perEffect_totalAffected, GROUP_WEIGHT)
             #Debug print for outer data
-            if debugLevel >= 1 and not stopDebugPrints: print("Groups outer score: {0:.3}".format(groupOuterScore))
+            if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Groups outer score: {0:.3}".format(groupOuterScore))
 
             categoryScore = {}
             for categoryID in perEffectMap_categoryID_typeID:
@@ -434,15 +464,15 @@ for effectFileName in os.listdir(effectsPath):
                     affectedAndDecribed = len(affectedItemsFromCurrentCategory.intersection(perEffect_describedTypes))
                     affectedAndUndescribed =  len(affectedItemsFromCurrentCategory.difference(perEffect_describedTypes))
                     total = len(globalMap_categoryID_typeID[categoryID])
-                    categoryScore[categoryID] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
-                    if debugLevel >= 1 and not stopDebugPrints:
+                    categoryScore[categoryID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+                    if DEBUG_LEVEL >= 1 and not stopDebugPrints:
                         cursor.execute(queryCategoryName, (categoryID,))
                         for row in cursor: categoryName = row[0]
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if debugLevel == 1: print("Category: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(categoryName, affectedAndUndescribed, total, coverage, categoryScore[categoryID]))
-                        if debugLevel == 2: print("Category: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(categoryName, affectedAndUndescribed, affectedAndDecribed, total, coverage, categoryScore[categoryID]))
-            categoryOuterScore = calcOuterScore(categoryScore, perEffect_totalAffected, categoryWeight)
-            if debugLevel >= 1 and not stopDebugPrints: print("Category outer score: {0:.3}".format(categoryOuterScore))
+                        if DEBUG_LEVEL == 1: print("Category: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(categoryName, affectedAndUndescribed, total, coverage, categoryScore[categoryID]))
+                        if DEBUG_LEVEL == 2: print("Category: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(categoryName, affectedAndUndescribed, affectedAndDecribed, total, coverage, categoryScore[categoryID]))
+            categoryOuterScore = calc_outer_score(categoryScore, perEffect_totalAffected, CATEGORY_WEIGHT)
+            if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Category outer score: {0:.3}".format(categoryOuterScore))
 
             baseTypeScore = {}
             for baseTypeID in perEffectMap_baseTypeID_typeID:
@@ -451,16 +481,16 @@ for effectFileName in os.listdir(effectsPath):
                     affectedAndDecribed = len(affectedItemsFromCurrentBaseType.intersection(perEffect_describedTypes))
                     affectedAndUndescribed =  len(affectedItemsFromCurrentBaseType.difference(perEffect_describedTypes))
                     total = len(globalMap_baseTypeID_typeID[baseTypeID])
-                    baseTypeScore[baseTypeID] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
-                    if debugLevel >= 1 and not stopDebugPrints:
+                    baseTypeScore[baseTypeID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+                    if DEBUG_LEVEL >= 1 and not stopDebugPrints:
                         cursor.execute(queryTypeIDTypeName, (baseTypeID,))
                         for row in cursor: baseTypeName = row[0]
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if debugLevel == 1: print("Base item: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(baseTypeName, affectedAndUndescribed, total, coverage, baseTypeScore[baseTypeID]))
-                        if debugLevel == 2: print("Base item: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(baseTypeName, affectedAndUndescribed, affectedAndDecribed, total, coverage, baseTypeScore[baseTypeID]))
-            baseTypeOuterScore = calcOuterScore(baseTypeScore, perEffect_totalAffected, baseTypeWeight)
+                        if DEBUG_LEVEL == 1: print("Base item: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(baseTypeName, affectedAndUndescribed, total, coverage, baseTypeScore[baseTypeID]))
+                        if DEBUG_LEVEL == 2: print("Base item: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(baseTypeName, affectedAndUndescribed, affectedAndDecribed, total, coverage, baseTypeScore[baseTypeID]))
+            baseTypeOuterScore = calc_outer_score(baseTypeScore, perEffect_totalAffected, BASETYPE_WEIGHT)
             #Print outer data
-            if debugLevel >= 1 and not stopDebugPrints: print("Base item outer score: {0:.3}".format(baseTypeOuterScore))
+            if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Base item outer score: {0:.3}".format(baseTypeOuterScore))
 
             marketGroupWithVarsScore = {}
             for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
@@ -469,8 +499,8 @@ for effectFileName in os.listdir(effectsPath):
                     affectedAndDecribed = len(affectedItemsFromCurrentMarketGroupWithVars.intersection(perEffect_describedTypes))
                     affectedAndUndescribed =  len(affectedItemsFromCurrentMarketGroupWithVars.difference(perEffect_describedTypes))
                     total = len(globalMap_marketGroupID_typeIDWithVariations[marketGroupID])
-                    marketGroupWithVarsScore[marketGroupID] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
-                    if debugLevel >= 1 and not stopDebugPrints:
+                    marketGroupWithVarsScore[marketGroupID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+                    if DEBUG_LEVEL >= 1 and not stopDebugPrints:
                         cursor.execute(queryMarketGroupName, (marketGroupID,))
                         for row in cursor: marketGroupName = row[0]
                         #Prepend market group name with its parents names
@@ -486,10 +516,10 @@ for effectFileName in os.listdir(effectsPath):
                                 for row in cursor: marketGroupName = "{0} > {1}".format(row[0], marketGroupName)
                             else: break
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if debugLevel == 1: print("Market group with variations: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(marketGroupName, affectedAndUndescribed, total, coverage, marketGroupWithVarsScore[marketGroupID]))
-                        if debugLevel == 2: print("Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(marketGroupName, affectedAndUndescribed, affectedAndDecribed, total, coverage, marketGroupWithVarsScore[marketGroupID]))
-            marketGroupWithVarsOuterScore = calcOuterScore(marketGroupWithVarsScore, perEffect_totalAffected, marketGroupWithVarsWeight)
-            if debugLevel >= 1 and not stopDebugPrints: print("Market group outer score: {0:.3}".format(marketGroupWithVarsOuterScore))
+                        if DEBUG_LEVEL == 1: print("Market group with variations: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(marketGroupName, affectedAndUndescribed, total, coverage, marketGroupWithVarsScore[marketGroupID]))
+                        if DEBUG_LEVEL == 2: print("Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(marketGroupName, affectedAndUndescribed, affectedAndDecribed, total, coverage, marketGroupWithVarsScore[marketGroupID]))
+            marketGroupWithVarsOuterScore = calc_outer_score(marketGroupWithVarsScore, perEffect_totalAffected, MARKETGROUPWITHVARS_WEIGHT)
+            if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Market group outer score: {0:.3}".format(marketGroupWithVarsOuterScore))
 
             typeNameCombinationScore = {}
             for typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID:
@@ -508,26 +538,26 @@ for effectFileName in os.listdir(effectsPath):
                     #Then divide by number of items we checked, making it real average
                     averageCoverage = averageCoverage/len(itemsNamedLikeThis)
                     #Pass average coverage as additional balancing factor
-                    typeNameCombinationScore[typeNameCombinationTuple] = calcInnerScore(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, 0.2 + averageCoverage*0.8)
-                    if debugLevel >= 1 and not stopDebugPrints:
+                    typeNameCombinationScore[typeNameCombinationTuple] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, 0.2 + averageCoverage*0.8)
+                    if DEBUG_LEVEL >= 1 and not stopDebugPrints:
                         typeNameCombinationPrintable = " ".join(typeNameCombinationTuple[0])
                         coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if debugLevel == 1: print("Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, total, coverage, typeNameCombinationScore[typeNameCombinationTuple]))
-                        if debugLevel == 2: print("Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, affectedAndDecribed, total, coverage, typeNameCombinationScore[typeNameCombinationTuple]))
-            typeNameCombinationOuterScore = calcOuterScore(typeNameCombinationScore, perEffect_totalAffected, typeNameCombinationWeight)
-            if debugLevel >= 1 and not stopDebugPrints: print("Type name combination outer score: {0:.3}".format(typeNameCombinationOuterScore))
+                        if DEBUG_LEVEL == 1: print("Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, total, coverage, typeNameCombinationScore[typeNameCombinationTuple]))
+                        if DEBUG_LEVEL == 2: print("Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, affectedAndDecribed, total, coverage, typeNameCombinationScore[typeNameCombinationTuple]))
+            typeNameCombinationOuterScore = calc_outer_score(typeNameCombinationScore, perEffect_totalAffected, TYPENAMECOMBINATIONS_WEIGHT)
+            if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Type name combination outer score: {0:.3}".format(typeNameCombinationOuterScore))
 
             #Don't print anything after 1st iteration at 1st debugging level
-            if debugLevel == 1: stopDebugPrints = True
+            if DEBUG_LEVEL == 1: stopDebugPrints = True
             #Print separator for 2nd debugging level, to separate debug data of one
             #iteration from another
-            if debugLevel >= 2: print("---")
+            if DEBUG_LEVEL >= 2: print("---")
 
             ####################### Stage 2.2.2 #######################
             #Pick max score from outer scores of all grouping types
             maxOuterScore = max(groupOuterScore, categoryOuterScore, baseTypeOuterScore, marketGroupWithVarsOuterScore, typeNameCombinationOuterScore)
             #define lower limit for score, below which there will be no winners
-            if maxOuterScore >= lowestScore:
+            if maxOuterScore >= LOWEST_SCORE:
                 #If scores are similar, priorities are: category > group > name > marketGroup > baseType
                 if maxOuterScore == categoryOuterScore:
                     #pick ID of category which has highest score among other categories
@@ -565,7 +595,7 @@ for effectFileName in os.listdir(effectsPath):
             #Also stop if we described all items
             if perEffectList_usedByTypes.issubset(perEffect_describedTypes): iterate = False
         singleItems = set(perEffectList_usedByTypes).difference(perEffect_describedTypes)
-        if debugLevel >= 1:
+        if DEBUG_LEVEL >= 1:
             print("Effect will be described by:")
             print("Single item IDs:", singleItems)
             print("Group IDs:", describedByGroup)
@@ -701,10 +731,10 @@ for effectFileName in os.listdir(effectsPath):
         #Combine all lines into single string
         effectContentsProcessed = "\n".join(outputLines)
         #If we're not debugging and contents actually changed - write changes to the file
-        if debugLevel == 0 and (effectContentsProcessed != effectContentsSource):
+        if DEBUG_LEVEL == 0 and (effectContentsProcessed != effectContentsSource):
             effectFile = open(os.path.join(effectsPath, effectFileName), 'w')
             effectFile.write(effectContentsProcessed)
             effectFile.close()
-        elif debugLevel >= 2:
+        elif DEBUG_LEVEL >= 2:
             print("Comment to write to file:")
             print("\n".join(commentLines))
