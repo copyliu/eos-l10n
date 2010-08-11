@@ -1,6 +1,6 @@
 #Used by:
 #Modules from group: Armor Hardener (156 of 156)
-from eos.types import State          
+from model.types import State          
 type = "passive"
 def handler(fit, module, context):
     if module.state != State.ONLINE: return

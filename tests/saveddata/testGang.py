@@ -1,6 +1,6 @@
 import unittest
-from eos import db
-from eos.types import Gang, Wing, Squad, Ship, Fit, Module, Skill, Character
+from model import db
+from model.types import Gang, Wing, Squad, Ship, Fit, Module, Skill, Character
 
 class TestGang(unittest.TestCase):
     def setUp(self):

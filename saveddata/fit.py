@@ -1,30 +1,30 @@
 #===============================================================================
 # Copyright (C) 2010 Diego Duclos
 #
-# This file is part of pyfa.
+# This file is part of eos.
 #
-# pyfa is free software: you can redistribute it and/or modify
+# eos is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# pyfa is distributed in the hope that it will be useful,
+# eos is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
+# along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.effectHandlerHelpers import HandledList
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from model.effectHandlerHelpers import HandledList
+from model.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain, count
 from copy import deepcopy
 from math import sqrt, pi, exp
-from eos.solverMath import gaussian, solve
-from eos.types import Drone, Ship, Character, State, Hardpoint
+from model.solverMath import gaussian, solve
+from model.types import Drone, Ship, Character, State, Hardpoint
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -60,7 +60,7 @@ class Fit(object):
         self.build()
 
     def build(self):
-        from eos import db
+        from model import db
         self.__ehp = None
         self.__weaponDPS = None
         self.__weaponVolley = None

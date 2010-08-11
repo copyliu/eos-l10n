@@ -1,8 +1,8 @@
 import unittest
-from eos.types import Character, User, Fit, Skill, Ship
-from eos.saveddata.character import ReadOnlyException
-from eos import db
-import eos.db.saveddata.queries
+from model.types import Character, User, Fit, Skill, Ship
+from model.saveddata.character import ReadOnlyException
+from model import db
+import model.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
@@ -27,8 +27,8 @@ class TestCharacter(unittest.TestCase):
             db.saveddata_session.flush()
 
             #Hack our way through changing the session temporarly
-            oldSession = eos.db.saveddata.queries.saveddata_session
-            eos.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            oldSession = model.db.saveddata.queries.saveddata_session
+            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             newf = db.getFit(f.ID)
             newu = db.getUser(u.ID)
@@ -51,7 +51,7 @@ class TestCharacter(unittest.TestCase):
             raise
         finally:
             #Undo our hack as to not fuck up anything
-            eos.db.saveddata.queries.saveddata_session = oldSession
+            model.db.saveddata.queries.saveddata_session = oldSession
 
     def test_suppress(self):
         s = Skill(db.getItem("Caldari Frigate"))

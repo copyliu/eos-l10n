@@ -1,6 +1,6 @@
 import unittest
-from eos import db
-from eos.types import Fit, Implant, Character, Ship
+from model import db
+from model.types import Fit, Implant, Character, Ship
 
 class TestCR8(unittest.TestCase):
     def setUp(self):

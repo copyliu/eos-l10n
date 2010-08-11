@@ -1,6 +1,6 @@
 import unittest
-from eos import db
-from eos.types import Fit, Skill, Module, Character
+from model import db
+from model.types import Fit, Skill, Module, Character
 
 class TestGunnery(unittest.TestCase):
     def setUp(self):

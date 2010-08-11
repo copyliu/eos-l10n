@@ -1,6 +1,6 @@
 import unittest
-from eos import db
-from eos.types import Fit, DamagePattern, Ship, Module, State
+from model import db
+from model.types import Fit, DamagePattern, Ship, Module, State
 
 class TestDamagePattern(unittest.TestCase):
     def test_rawEhp(self):

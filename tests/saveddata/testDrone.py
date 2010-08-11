@@ -1,7 +1,7 @@
 import unittest
-from eos import db
-from eos.types import Drone, Fit, User, Ship
-import eos.db.saveddata.queries
+from model import db
+from model.types import Drone, Fit, User, Ship
+import model.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
@@ -36,8 +36,8 @@ class TestDrone(unittest.TestCase):
             fitID = f.ID
 
             #Hack our way through changing the session temporarly
-            oldSession = eos.db.saveddata.queries.saveddata_session
-            eos.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            oldSession = model.db.saveddata.queries.saveddata_session
+            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             f = db.getFit(fitID)
             self.assertNotEquals(id(f), f1id)
@@ -66,7 +66,7 @@ class TestDrone(unittest.TestCase):
             raise
         finally:
             #Undo our hack as to not fuck up anything
-            eos.db.saveddata.queries.saveddata_session = oldSession
+            model.db.saveddata.queries.saveddata_session = oldSession
 
     def test_copy(self):
         d = Drone(db.getItem("Hobgoblin I"))

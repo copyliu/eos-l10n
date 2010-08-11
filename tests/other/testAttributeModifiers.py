@@ -1,6 +1,6 @@
 import unittest
-from eos.types import Drone
-from eos import db
+from model.types import Drone
+from model import db
 class TestAttributeModifiers(unittest.TestCase):
     def test_Increase(self):
         d = Drone(db.getItem("Hobgoblin I"))

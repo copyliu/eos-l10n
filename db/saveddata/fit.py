@@ -1,32 +1,32 @@
 #===============================================================================
 # Copyright (C) 2010 Diego Duclos
 #
-# This file is part of pyfa.
+# This file is part of eos.
 #
-# pyfa is free software: you can redistribute it and/or modify
+# eos is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# pyfa is distributed in the hope that it will be useful,
+# eos is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with pyfa.  If not, see <http://www.gnu.org/licenses/>.
+# along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relation, mapper
 from sqlalchemy.sql import and_
 
-from eos.db import saveddata_meta
-from eos.db.saveddata.module import modules_table
-from eos.db.saveddata.drone import drones_table
-from eos.types import Fit, Module, User, Booster, Drone, Implant, Character, DamagePattern
-from eos.effectHandlerHelpers import HandledList
-from eos.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
+from model.db import saveddata_meta
+from model.db.saveddata.module import modules_table
+from model.db.saveddata.drone import drones_table
+from model.types import Fit, Module, User, Booster, Drone, Implant, Character, DamagePattern
+from model.effectHandlerHelpers import HandledList
+from model.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
  HandledProjectedModList, HandledProjectedDroneList, HandledProjectedFitList, \
  HandledModuleList
 
