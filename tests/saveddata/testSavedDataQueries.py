@@ -1,6 +1,6 @@
 import unittest
-from model.types import Fit, Character, User
-from model import db
+from eos.types import Fit, Character, User
+from eos import db
 
 #Some setup for this test
 db.saveddata_meta.create_all()

@@ -17,10 +17,10 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from model.effectHandlerHelpers import HandledItem
-from model.modifiedAttributeDict import ItemAttrShortcut
+from eos.effectHandlerHelpers import HandledItem
+from eos.modifiedAttributeDict import ItemAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
-from model.types import Item
+from eos.types import Item
 from copy import deepcopy
 
 class Character(object):
@@ -31,7 +31,7 @@ class Character(object):
     @classmethod
     def __getSkillCache(cls):
         if cls.__skillCache is None:
-            from model import db
+            from eos import db
             cls.__skillCache = db.getItemsByCategory("Skill")
 
         return cls.__skillCache
@@ -144,7 +144,7 @@ class Skill(HandledItem):
 
     @reconstructor
     def init(self):
-        from model import db
+        from eos import db
         self.__item = db.getItem(self.itemID)
         self.build(False)
 

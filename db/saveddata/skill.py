@@ -20,8 +20,8 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import mapper
 
-from model.db import saveddata_meta
-from model.types import Skill
+from eos.db import saveddata_meta
+from eos.types import Skill
 
 skills_table = Table("characterSkills", saveddata_meta,
                      Column("characterID", ForeignKey("characters.ID"), primary_key = True),

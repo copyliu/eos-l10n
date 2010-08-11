@@ -1,8 +1,8 @@
 import unittest
-from model import db
-from model.types import Booster, Fit, User, Ship
+from eos import db
+from eos.types import Booster, Fit, User, Ship
 import sqlalchemy.orm
-import model.db.saveddata.queries
+import eos.db.saveddata.queries
 from copy import deepcopy
 
 class TestBooster(unittest.TestCase):
@@ -64,8 +64,8 @@ class TestBooster(unittest.TestCase):
             b1id = id(b)
 
             #Hack our way through changing the session temporarly
-            oldSession = model.db.saveddata.queries.saveddata_session
-            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            oldSession = eos.db.saveddata.queries.saveddata_session
+            eos.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             f = db.getFit(fitID)
             self.assertNotEquals(f1id, id(f))
@@ -84,7 +84,7 @@ class TestBooster(unittest.TestCase):
             raise
         finally:
             #Undo our hack as to not fuck up anything
-            model.db.saveddata.queries.saveddata_session = oldSession
+            eos.db.saveddata.queries.saveddata_session = oldSession
 
     def test_copy(self):
         b = Booster(db.getItem("Strong Drop Booster"))

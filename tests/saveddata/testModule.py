@@ -1,7 +1,7 @@
 import unittest
-from model.types import Module, Fit, User, State, Ship, Slot, Hardpoint
-from model import db
-import model.db.saveddata.queries
+from eos.types import Module, Fit, User, State, Ship, Slot, Hardpoint
+from eos import db
+import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
@@ -145,8 +145,8 @@ class TestModule(unittest.TestCase):
             db.saveddata_session.flush()
 
             #Hack our way through changing the session temporarly
-            oldSession = model.db.saveddata.queries.saveddata_session
-            model.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
+            oldSession = eos.db.saveddata.queries.saveddata_session
+            eos.db.saveddata.queries.saveddata_session = sqlalchemy.orm.sessionmaker(bind=db.saveddata_engine)()
 
             newf = db.getFit(f.ID)
             self.assertNotEquals(id(newf), id(f))
@@ -174,7 +174,7 @@ class TestModule(unittest.TestCase):
             raise
         finally:
             #Undo our hack as to not fuck up anything
-            model.db.saveddata.queries.saveddata_session = oldSession
+            eos.db.saveddata.queries.saveddata_session = oldSession
 
     def test_copy(self):
         m = Module(db.getItem("Dual Light Pulse Laser I"))

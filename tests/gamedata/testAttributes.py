@@ -1,5 +1,5 @@
 import unittest
-from model import db
+from eos import db
 
 class TestAttributes(unittest.TestCase):
     def test_AttributeNamesMatch(self):

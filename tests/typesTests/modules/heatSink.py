@@ -1,7 +1,7 @@
 import unittest
-from model import db
-from model.types import Module, Fit
-from model.modifiedAttributeDict import ModifiedAttributeDict
+from eos import db
+from eos.types import Module, Fit
+from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestHeatSink(unittest.TestCase):
     def setUp(self):

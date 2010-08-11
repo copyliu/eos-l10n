@@ -1,6 +1,6 @@
 import unittest
-from model.types import Ship
-from model import db
+from eos.types import Ship
+from eos import db
 from copy import deepcopy
 class TestShip(unittest.TestCase):
     def test_clear(self):
