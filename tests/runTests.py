@@ -38,7 +38,7 @@ def iteratedir(dir, prefix = []):
             module = __import__(moduleName, fromlist = True)
             suite.addTest(loader.loadTestsFromModule(module))
 
-iteratedir(iteratedir(os.path.dirname(__file__)))
+iteratedir(os.path.dirname(__file__))
 
 if __name__ == "__main__":
 
