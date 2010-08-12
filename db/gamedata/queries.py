@@ -21,12 +21,16 @@ from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
 from eos.types import Item, Category, Group, MarketGroup
+from eos.db.queryCache import cachedQuery
+
+@cachedQuery
 def getItem(lookfor):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).filter(Item.name == lookfor).one()
     elif isinstance(lookfor, int):
         return gamedata_session.query(Item).filter(Item.ID == lookfor).one()
 
+@cachedQuery
 def getItemsByCategory(filter):
     if isinstance(filter, basestring):
         filter = Category.name == filter
@@ -35,6 +39,7 @@ def getItemsByCategory(filter):
 
     return gamedata_session.query(Item).join(Item.group, Group.category).filter(filter).all()
 
+@cachedQuery
 def searchItems(nameLike):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
@@ -42,10 +47,12 @@ def searchItems(nameLike):
     elif not "%" in nameLike and not "_" in nameLike: nameLike = "%" + nameLike + "%"
     return gamedata_session.query(Item).filter(Item.name.like(nameLike)).all()
 
+@cachedQuery
 def getVariations(item):
     if not isinstance(item, int): item = item.ID
     return gamedata_session.query(Item).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()
 
+@cachedQuery
 def getGroup(group):
     if isinstance(group, basestring):
         filter = Group.name == group
@@ -54,6 +61,7 @@ def getGroup(group):
 
     return gamedata_session.query(Group).filter(filter).one()
 
+@cachedQuery
 def getMarketGroup(group):
     if isinstance(group, basestring):
         filter = MarketGroup.name == group
