@@ -22,7 +22,7 @@ Go through all effects and fill them with 'used by' comments.
 
 There're several big stages:
 Stage 1. Gather all required data into 'global' dictionaries. We have
-2 dictionaries per grouping type, one which lists groups per typeID,
+2 dictionaries per grouping type, one which lists groups per typeid,
 and another which lists typeIDs per group.
 Stage 2. Cycle through each effect.
 Stage 2.1. Compose similar set of dictionaries like in stage 1, but
@@ -43,11 +43,11 @@ Stage 2.3. Print results to file if anything has been changed.
 Grouping types used are:
 Groups (groupID of an item);
 Categories (categoryID of groupID of an item);
-BaseTypes (variations, like they appear on eve's variation tab);
+Base types (variations, like they appear on eve's variation tab);
 Market groups + variations (marketGroupID of an item, plus variations
 of all items from given market group, excluding items with
 marketGroupID).
-TypeNames (various combinations of words taken from typeName of item).
+Type names (various combinations of words taken from typeName of item).
 """
 
 import copy
@@ -63,7 +63,7 @@ parser = OptionParser(usage=usage)
 parser.add_option("-d", "--database", help="path to eve cache data dump in \
                   sqlite format, default eos database path is used if none \
                   specified",type="string",
-                  default=os.path.join("~", ".eos","eve.db"))
+                  default=os.path.join("~", ".pyfa","eve.db"))
 parser.add_option("-u", "--debug", help="debug level, 0 by default",
                   type="int", default=0)
 (options, args) = parser.parse_args()
@@ -86,29 +86,29 @@ TYPENAMECOMBINATIONS_WEIGHT = 1.0
 # without any grouping
 LOWEST_SCORE = 0.7
 # Adjust scoring formulae
-def calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total,
-                     perEffect_totalAffected, weight=1.0):
+def calc_innerscore(affected_decribed, affected_undescribed, total,
+                    pereffect_totalaffected, weight=1.0):
     """Inner score calculation formula"""
     # Percentage of items affected by effect out of total number of
     # items in this group
-    coverageTotal = (affectedAndDecribed + affectedAndUndescribed) / total
+    coverage_total = (affected_decribed + affected_undescribed) / total
     # Same, but only described/undescribed items are taken
-    coverageDescribed = affectedAndDecribed / total
-    coverageUndescribed = affectedAndUndescribed / total
+    coverage_described = affected_decribed / total
+    coverage_undescribed = affected_undescribed / total
     # Already described items should have less weight
-    coverageAdditionalFactor = coverageUndescribed + coverageDescribed * 0
+    coverage_additionalfactor = coverage_undescribed + coverage_described * 0
     # If group has just one item - it should have zero score
-    affectedTotalFactor = affectedAndDecribed + affectedAndUndescribed - 1
-    innerScore = (coverageTotal ** 0.23) * coverageAdditionalFactor * \
-    affectedTotalFactor * weight
-    return innerScore
-def calc_outer_score(innerScoreDict, perEffect_totalAffected, weight):
+    affected_total_factor = affected_decribed + affected_undescribed - 1
+    innerscore = (coverage_total ** 0.23) * coverage_additionalfactor * \
+    affected_total_factor * weight
+    return innerscore
+def calc_outerscore(innerscore_dict, pereffect_totalaffected, weight):
     """Outer score calculation formula"""
     # Return just max of the inner scores, including weight factor
-    if float(len(innerScoreDict)):
-        outerScore = innerScoreDict[max(innerScoreDict, key=lambda a:
-        innerScoreDict.get(a))] * weight
-        return outerScore
+    if float(len(innerscore_dict)):
+        outerscore = innerscore_dict[max(innerscore_dict, key=lambda a:
+        innerscore_dict.get(a))] * weight
+        return outerscore
     else: return 0.0
 
 # Connect to database and set up cursor
@@ -116,233 +116,273 @@ db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
 # As we don't rely on eos's overrides, we need to set them manually
-overrides = '''
+OVERRIDES = '''
 UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
 UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
 UPDATE invtypes SET published = '1' WHERE typeName = 'Utu';
 UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
 '''
-for statement in overrides.split(";\n"):
+for statement in OVERRIDES.split(";\n"):
     cursor.execute(statement)
 
-# List of queries which will be used in the script
-queryAllEffects = 'SELECT dgmeffects.effectID, dgmeffects.effectName \
-FROM dgmeffects'
 # Queries to get raw data
+QUERY_ALLEFFECTS = 'SELECT effectID, effectName FROM dgmeffects'
 # Limit categories to Celestials (2, only for wormhole effects),
 # Ships (6), Modules (7), Charges (8), Skills (16), Drones (18),
 # Implants (20), Subsystems (32)
-categoryLimiter = ' AND (invcategories.categoryID = 2 OR \
-invcategories.categoryID = 6 OR invcategories.categoryID = 7 OR \
-invcategories.categoryID = 8 OR invcategories.categoryID = 16 OR \
-invcategories.categoryID = 18 OR invcategories.categoryID = 20 OR \
-invcategories.categoryID = 32)'
-queryPublishedTypeIDs = 'SELECT invtypes.typeID FROM invtypes INNER JOIN \
-invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN \
-invcategories ON invgroups.categoryID = invcategories.categoryID WHERE \
-invtypes.published = 1' + categoryLimiter
-queryTypeIDGroupID = 'SELECT invtypes.groupID FROM invtypes WHERE \
-invtypes.typeID = ? LIMIT 1'
-queryGroupIDCategoryID = 'SELECT invgroups.categoryID FROM invgroups WHERE \
-invgroups.groupID = ? LIMIT 1'
-queryTypeIDParentTypeID = 'SELECT invmetatypes.parentTypeID FROM \
-invmetatypes WHERE invmetatypes.typeID = ? LIMIT 1'
-queryTypeIDMarketGroupID = 'SELECT invtypes.marketGroupID FROM \
-invtypes WHERE invtypes.typeID = ? LIMIT 1'
-queryTypeIDTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE \
-invtypes.typeID = ? LIMIT 1'
-queryMarketGroupIDParentGroupID = 'SELECT invmarketgroups.parentGroupID FROM \
-invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
-queryEffectIDTypeID = 'SELECT dgmtypeeffects.typeID FROM \
-dgmtypeeffects WHERE dgmtypeeffects.effectID = ?'
+QUERY_PUBLISHEDTYPEIDS = 'SELECT it.typeID FROM invtypes AS it INNER JOIN \
+invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON \
+ig.categoryID = ic.categoryID WHERE it.published = 1 AND \
+(ic.categoryID = 2 OR ic.categoryID = 6 OR ic.categoryID = 7 OR \
+ic.categoryID = 8 OR ic.categoryID = 16 OR ic.categoryID = 18 OR \
+ic.categoryID = 20 OR ic.categoryID = 32)'
+QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
+QUERY_GROUPID_CATEGORYID = 'SELECT categoryID FROM invgroups WHERE \
+groupID = ? LIMIT 1'
+QUERY_TYPEID_PARENTTYPEID = 'SELECT parentTypeID FROM invmetatypes WHERE \
+typeID = ? LIMIT 1'
+QUERY_TYPEID_MARKETGROUPID = 'SELECT marketGroupID FROM invtypes WHERE \
+typeID = ? LIMIT 1'
+QUERY_TYPEID_TYPENAME = 'SELECT typeName FROM invtypes WHERE typeID = ? \
+LIMIT 1'
+QUERY_MARKETGROUPID_PARENTGROUPID = 'SELECT parentGroupID FROM \
+invmarketgroups WHERE marketGroupID = ? LIMIT 1'
+QUERY_EFFECTID_TYPEID = 'SELECT typeID FROM dgmtypeeffects WHERE effectID = ?'
 # Queries for printing
-queryGroupName = 'SELECT invgroups.groupName FROM invgroups WHERE \
-invgroups.groupID = ? LIMIT 1'
-queryCategoryName = 'SELECT invcategories.categoryName FROM \
-invcategories WHERE invcategories.categoryID = ? LIMIT 1'
-queryMarketGroupName = 'SELECT invmarketgroups.marketGroupName FROM \
-invmarketgroups WHERE invmarketgroups.marketGroupID = ? LIMIT 1'
+QUERY_GROUPID_GROUPNAME = 'SELECT groupName FROM invgroups WHERE groupID = ? \
+LIMIT 1'
+QUERY_CATEGORYID_CATEGORYNAME = 'SELECT categoryName FROM invcategories \
+WHERE categoryID = ? LIMIT 1'
+QUERY_MARKETGROUPID_MARKETGROUPNAME = 'SELECT marketGroupName FROM \
+invmarketgroups WHERE marketGroupID = ? LIMIT 1'
 
-#Compose list of effects w/o symbols which eos doesn't take into consideration
-#we'll use it to find proper effect IDs from file names
-globalMap_effectNameEos_effectNameDB = {}
-stripSpec = "[^A-Za-z0-9]"
-cursor.execute(queryAllEffects)
+# Compose list of effects w/o symbols which eos doesn't take into
+# consideration, we'll use it to find proper effect IDs from file
+# names
+globalmap_effectnameeos_effectid = {}
+STRIPSPEC = "[^A-Za-z0-9]"
+cursor.execute(QUERY_ALLEFFECTS)
 for row in cursor:
-    globalMap_effectNameEos_effectNameDB[re.sub(stripSpec, "", row[1])] = row[0]
+    effectid = row[0]
+    effectnamedb = row[1]
+    effectnameeos = re.sub(STRIPSPEC, "", effectnamedb)
+    globalmap_effectnameeos_effectid[effectnameeos] = effectid
 
-######################### Stage 1 #########################
+# Stage 1
 
-#Published types set
-publishedTypes = set()
-cursor.execute(queryPublishedTypeIDs)
+# Published types set
+publishedtypes = set()
+cursor.execute(QUERY_PUBLISHEDTYPEIDS)
 for row in cursor:
-    publishedTypes.add(row[0])
+    publishedtypes.add(row[0])
 
-#Compose group maps
-# { groupID : set(typeID) }
-globalMap_groupID_typeID = {}
-# { typeID : groupID }
-globalMap_typeID_groupID = {}
-for typeID in publishedTypes:
-    groupID = 0
-    cursor.execute(queryTypeIDGroupID, (typeID,))
-    for row in cursor: groupID = row[0]
-    if not groupID in globalMap_groupID_typeID: globalMap_groupID_typeID[groupID] = set()
-    globalMap_groupID_typeID[groupID].add(typeID)
-    globalMap_typeID_groupID[typeID] = groupID
+# Compose group maps
+# { groupid : set(typeid) }
+globalmap_groupid_typeid = {}
+# { typeid : groupid }
+globalmap_typeid_groupid = {}
+for typeid in publishedtypes:
+    groupid = 0
+    cursor.execute(QUERY_TYPEID_GROUPID, (typeid,))
+    for row in cursor:
+        groupid = row[0]
+    if not groupid in globalmap_groupid_typeid:
+        globalmap_groupid_typeid[groupid] = set()
+    globalmap_groupid_typeid[groupid].add(typeid)
+    globalmap_typeid_groupid[typeid] = groupid
 
-#Category maps
-# { categoryID : set(typeID) }
-globalMap_categoryID_typeID =  {}
-# { typeID : categoryID }
-globalMap_typeID_categoryID =  {}
-for typeID in publishedTypes:
-    categoryID = 0
-    cursor.execute(queryGroupIDCategoryID, (globalMap_typeID_groupID[typeID],))
-    for row in cursor: categoryID = row[0]
-    if not categoryID in globalMap_categoryID_typeID: globalMap_categoryID_typeID[categoryID] = set()
-    globalMap_categoryID_typeID[categoryID].add(typeID)
-    globalMap_typeID_categoryID[typeID] = categoryID
+# Category maps
+# { categoryid : set(typeid) }
+globalmap_categoryid_typeid =  {}
+# { typeid : categoryid }
+globalmap_typeid_categoryid =  {}
+for typeid in publishedtypes:
+    categoryid = 0
+    cursor.execute(QUERY_GROUPID_CATEGORYID,
+                   (globalmap_typeid_groupid[typeid],))
+    for row in cursor:
+        categoryid = row[0]
+    if not categoryid in globalmap_categoryid_typeid:
+        globalmap_categoryid_typeid[categoryid] = set()
+    globalmap_categoryid_typeid[categoryid].add(typeid)
+    globalmap_typeid_categoryid[typeid] = categoryid
 
-#BaseType maps
-# { baseTypeID : set(typeID) }
-globalMap_baseTypeID_typeID =  {}
-# { typeID : baseTypeID }
-globalMap_typeID_baseTypeID =  {}
-for typeID in publishedTypes:
-    #not all items in the database have baseTypeIDs, so
-    #assign some default value to it
-    baseTypeID = 0
-    cursor.execute(queryTypeIDParentTypeID, (typeID,))
-    for row in cursor: baseTypeID = row[0]
-    #if baseType is not published or is not set in database,
-    #consider item as variation of self
-    if baseTypeID not in publishedTypes: baseTypeID = typeID
-    if not baseTypeID in globalMap_baseTypeID_typeID: globalMap_baseTypeID_typeID[baseTypeID] = set()
-    globalMap_baseTypeID_typeID[baseTypeID].add(typeID)
-    globalMap_typeID_baseTypeID[typeID] = baseTypeID
+# Base type maps
+# { basetypeid : set(typeid) }
+globalmap_basetypeid_typeid =  {}
+# { typeid : basetypeid }
+globalmap_typeid_basetypeid =  {}
+for typeid in publishedtypes:
+    # Not all typeIDs in the database have baseTypeID, so assign some
+    # default value to it
+    basetypeid = 0
+    cursor.execute(QUERY_TYPEID_PARENTTYPEID, (typeid,))
+    for row in cursor:
+        basetypeid = row[0]
+    # If base type is not published or is not set in database, consider
+    # item as variation of self
+    if basetypeid not in publishedtypes:
+        basetypeid = typeid
+    if not basetypeid in globalmap_basetypeid_typeid:
+        globalmap_basetypeid_typeid[basetypeid] = set()
+    globalmap_basetypeid_typeid[basetypeid].add(typeid)
+    globalmap_typeid_basetypeid[typeid] = basetypeid
 
-#MarketGroup maps. We won't use this one for further processing,
-#just as helper for composing other maps
-# { marketGroupID : set(typeID) }
-globalMap_marketGroupID_typeID =  {}
-# { typeID : set(marketGroupID) }
-globalMap_typeID_marketGroupID =  {}
-for typeID in publishedTypes:
-    marketGroupID = 0
-    cursor.execute(queryTypeIDMarketGroupID, (typeID,))
-    for row in cursor: marketGroupID = row[0]
-    if not marketGroupID: continue
-    if not marketGroupID in globalMap_marketGroupID_typeID: globalMap_marketGroupID_typeID[marketGroupID] = set()
-    globalMap_marketGroupID_typeID[marketGroupID].add(typeID)
-#Copy items to all parent market groups
-intialMarketGroupIDList = []
-for marketGroupID in globalMap_marketGroupID_typeID: intialMarketGroupIDList.append(marketGroupID)
-for marketGroupID in intialMarketGroupIDList:
-    #Limit depths for case if database will refer to groups making the loop
-    cyclingMarketGroupID = marketGroupID
+# Market group maps - we won't use these for further processing, but
+# just as helper for composing other maps
+# { marketgroupid : set(typeid) }
+globalmap_marketgroupid_typeid =  {}
+# { typeid : set(marketgroupid) }
+globalmap_typeid_marketgroupid =  {}
+for typeid in publishedtypes:
+    marketgroupid = 0
+    cursor.execute(QUERY_TYPEID_MARKETGROUPID, (typeid,))
+    for row in cursor:
+        marketgroupid = row[0]
+    if not marketgroupid:
+        continue
+    if not marketgroupid in globalmap_marketgroupid_typeid:
+        globalmap_marketgroupid_typeid[marketgroupid] = set()
+    globalmap_marketgroupid_typeid[marketgroupid].add(typeid)
+# Copy items to all parent market groups
+INITIALMARKETGROUPIDS = tuple(globalmap_marketgroupid_typeid)
+for marketgroupid in INITIALMARKETGROUPIDS:
+    # Limit depths for case if database will refer to groups making
+    # the loop
+    cyclingmarketgroupid = marketgroupid
     for depth in range(20):
-        cursorParentMarket = db.cursor()
-        cursorParentMarket.execute(queryMarketGroupIDParentGroupID, (cyclingMarketGroupID,))
-        for row in cursorParentMarket:
-            cyclingMarketGroupID = row[0]
-        if cyclingMarketGroupID:
-            if not cyclingMarketGroupID in globalMap_marketGroupID_typeID: globalMap_marketGroupID_typeID[cyclingMarketGroupID] = set()
-            globalMap_marketGroupID_typeID[cyclingMarketGroupID] |= globalMap_marketGroupID_typeID[marketGroupID]
+        cursor_parentmarket = db.cursor()
+        cursor_parentmarket.execute(QUERY_MARKETGROUPID_PARENTGROUPID,
+                                    (cyclingmarketgroupid,))
+        for row in cursor_parentmarket:
+            cyclingmarketgroupid = row[0]
+        if cyclingmarketgroupid:
+            if not cyclingmarketgroupid in globalmap_marketgroupid_typeid:
+                globalmap_marketgroupid_typeid[cyclingmarketgroupid] = set()
+            globalmap_marketgroupid_typeid[cyclingmarketgroupid].update\
+            (globalmap_marketgroupid_typeid[marketgroupid])
         else: break
-#Now, make a reverse map
-for marketGroupID, typeIDSet in globalMap_marketGroupID_typeID.items():
-    for typeID in typeIDSet:
-        if not typeID in globalMap_typeID_marketGroupID: globalMap_typeID_marketGroupID[typeID] = set()
-        globalMap_typeID_marketGroupID[typeID].add(marketGroupID)
+# Now, make a reverse map
+for marketgroupid, typeidset in globalmap_marketgroupid_typeid.items():
+    for typeid in typeidset:
+        if not typeid in globalmap_typeid_marketgroupid:
+            globalmap_typeid_marketgroupid[typeid] = set()
+        globalmap_typeid_marketgroupid[typeid].add(marketgroupid)
 
-#Combining market groups and variations
-# { marketGroupID : set(typeIDWithVariations) }
-globalMap_marketGroupID_typeIDWithVariations = copy.deepcopy(globalMap_marketGroupID_typeID)
-# { typeIDWithVariations : set(marketGroupID) }
-globalMap_typeIDWithVariations_marketGroupID = {}
-for marketGroupID in globalMap_marketGroupID_typeIDWithVariations:
-    typesToAdd = set()
-    for typeID in globalMap_marketGroupID_typeIDWithVariations[marketGroupID]:
-        if typeID in globalMap_baseTypeID_typeID:
-            for variationID in globalMap_baseTypeID_typeID[typeID]:
-                #Do not include items which have market group, even if they're variation
-                if variationID in globalMap_typeID_marketGroupID: typesToAdd.add(variationID)
-    globalMap_marketGroupID_typeIDWithVariations[marketGroupID] |= typesToAdd
-#Make reverse map using simple way too
-for marketGroupID, typeIDWithVariationsSet in globalMap_marketGroupID_typeIDWithVariations.items():
-    for typeID in typeIDWithVariationsSet:
-        if not typeID in globalMap_typeIDWithVariations_marketGroupID: globalMap_typeIDWithVariations_marketGroupID[typeID] = set()
-        globalMap_typeIDWithVariations_marketGroupID[typeID].add(marketGroupID)
+# Combine market groups and variations
+# { marketgroupid : set(typeidwithvariations) }
+globalmap_marketgroupid_typeidwithvariations = \
+copy.deepcopy(globalmap_marketgroupid_typeid)
+# { typeidwithvariations : set(marketgroupid) }
+globalmap_typeidwithvariations_marketgroupid = {}
+for marketgroupid in globalmap_marketgroupid_typeidwithvariations:
+    typestoadd = set()
+    for typeid in globalmap_marketgroupid_typeidwithvariations[marketgroupid]:
+        if typeid in globalmap_basetypeid_typeid:
+            for variationid in globalmap_basetypeid_typeid[typeid]:
+                # Do not include items which have market group, even if
+                # they're variation
+                if variationid in globalmap_typeid_marketgroupid:
+                    typestoadd.add(variationid)
+    globalmap_marketgroupid_typeidwithvariations[marketgroupid].update\
+    (typestoadd)
+# Make reverse map using simple way too
+for marketgroupid, typeidwithvariationsset in \
+globalmap_marketgroupid_typeidwithvariations.items():
+    for typeid in typeidwithvariationsset:
+        if not typeid in globalmap_typeidwithvariations_marketgroupid:
+            globalmap_typeidwithvariations_marketgroupid[typeid] = set()
+        globalmap_typeidwithvariations_marketgroupid[typeid].add(marketgroupid)
 
-#Item names map
-#We need to include category ID to avoid combining items from
-#different categories (e.g. skills and modules)
-# { ((typeNameCombination), categoryID) : set(typeID) }
-globalMap_typeNameCombinationTuple_typeID =  {}
-# { typeID : (set((typeNameCombination)), len(typeName)) }
-globalMap_typeID_typeNameCombination =  {}
-for typeID in publishedTypes:
-    typeName = ""
-    cursor.execute(queryTypeIDTypeName, (typeID,))
-    for row in cursor: typeName = row[0]
-    #Let's split strings into separate words
-    typeNameSplitted = []
-    #Start from the whole typeName
-    remainingString = typeName
-    #We will pick word each iteration
+# Item names map
+# We need to include category ID to avoid combining items from different
+# categories (e.g. skills and modules) and length of original name to
+# assess word coverage of various type name combinations
+# { ((typenamecombination), categoryid) : set(typeid) }
+globalmap_typenamecombinationtuple_typeid =  {}
+# { typeid : (set((typenamecombination)), len(typename)) }
+globalmap_typeid_typenamecombinationtuple =  {}
+for typeid in publishedtypes:
+    typename = ""
+    cursor.execute(QUERY_TYPEID_TYPENAME, (typeid,))
+    for row in cursor:
+        typename = row[0]
+    # Split strings into separate words
+    typenamesplitted = []
+    # Start from the whole type name
+    remainingstring = typename
+    # We will pick word each iteration
     iterate = True
     while iterate:
-        #This regexp helps to split into words with spaces and dashes between them
-        #For example: CX|-|1, Hardwiring| - |Inherent, Zainou| |'Snapshot'
-        separatingPatternGeneral = "((?P<left_part>[^ -]+)(?P<separator>[ -]+)(?P<right_part>([^ -].*)))"
-        #This will help to split names like those used in implants, for exapmle ZET||500, EE||8
-        separatingPatternSeries = "((?P<left_part>[A-Za-z]{2,4})(?P<right_part>[0-9]{1,4}.*))"
-        #Check remaining string using both criteria
-        matchObjectGeneral = re.match(separatingPatternGeneral, remainingString)
-        matchObjectSeries = re.match(separatingPatternSeries, remainingString)
-        #Now, we need to find which criterion satisfies us
-        useGeneral = False
-        useSeries = False
-        #If remaining string meets both criteria
-        if matchObjectGeneral and matchObjectSeries:
-            #We check which occurs first and pick it
-            if len(matchObjectGeneral.group("left_part")) <= len(matchObjectSeries.group("left_part")): useGeneral = True
-            else: useSeries = True
-        #If only one criterion is met, just pick it
-        elif matchObjectGeneral:
-            useGeneral = True
-        elif matchObjectSeries:
-            useSeries = True
-        #Now, actually split string into word, separator and remaining string
-        #And append word to list of words of current typeName
-        if useGeneral:
-            newWord = matchObjectGeneral.group("left_part")
-            separator = matchObjectGeneral.group("separator")
-            remainingString = matchObjectGeneral.group("right_part")
-            typeNameSplitted.append(newWord)
-        elif useSeries:
-            newWord = matchObjectSeries.group("left_part")
+        # This regexp helps to split into words with spaces and dashes
+        # between them, for example: CX|-|1, Hardwiring| - |Inherent,
+        # Zainou| |'Snapshot'
+        separatingpattern_general = \
+        "((?P<left_part>[^ -]+)(?P<separator>[ -]+)(?P<right_part>([^ -].*)))"
+        # This will help to split names like those used in implants,
+        # for example: ZET||500, EE||8
+        separatingpattern_series = \
+        "((?P<left_part>[A-Za-z]{2,4})(?P<right_part>[0-9]{1,4}.*))"
+        # Check remainingstring using both criteria
+        matchobject_general = re.match(separatingpattern_general,
+                                       remainingstring)
+        matchobject_series = re.match(separatingpattern_series,
+                                      remainingstring)
+        # Now, we need to find which criterion satisfies us
+        usegeneral = False
+        useseries = False
+        # If remaining string meets both criteria
+        if matchobject_general and matchobject_series:
+            # We check which occurs first and pick it
+            if len(matchobject_general.group("left_part")) <= \
+            len(matchobject_series.group("left_part")):
+                usegeneral = True
+            else:
+                useseries = True
+        # If only one criterion is met, just pick it
+        elif matchobject_general:
+            usegeneral = True
+        elif matchobject_series:
+            useseries = True
+        # Now, actually split string into word, separator and remaining
+        # string and append word to list of words of current typename
+        if usegeneral:
+            newword = matchobject_general.group("left_part")
+            separator = matchobject_general.group("separator")
+            remainingstring = matchobject_general.group("right_part")
+            typenamesplitted.append(newword)
+        elif useseries:
+            newword = matchobject_series.group("left_part")
             separator = ""
-            remainingString = matchObjectSeries.group("right_part")
-            typeNameSplitted.append(newWord)
-        #If we didn't match any regexp, then we see last word.
-        #Append it too and stop iterating
+            remainingstring = matchobject_series.group("right_part")
+            typenamesplitted.append(newword)
+        # If we didn't match any regexp, then we see last word - append
+        # it too and stop iterating
         else:
-            typeNameSplitted.append(remainingString)
+            typenamesplitted.append(remainingstring)
             iterate = False
-    #Iterate  through number of words which will be used to compose combinations
-    for wordNumIndex in range(len(typeNameSplitted)):
-        #Iterate through all possible combinations
-        for typeNameCombination in itertools.combinations(typeNameSplitted, wordNumIndex + 1):
-            typeNameCombinationTuple = (typeNameCombination, globalMap_typeID_categoryID[typeID])
-            if not typeNameCombinationTuple in globalMap_typeNameCombinationTuple_typeID: globalMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple] = set()
-            globalMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple].add(typeID)
-            if not typeID in globalMap_typeID_typeNameCombination: globalMap_typeID_typeNameCombination[typeID] = (set(), len(typeNameSplitted))
-            globalMap_typeID_typeNameCombination[typeID][0].add(typeNameCombination)
+    # Iterate through number of words which will be used to compose
+    # combinations
+    for wordnumindex in range(len(typenamesplitted)):
+        # Iterate through all possible combinations
+        for typenamecombination in itertools.combinations(typenamesplitted,
+                                                          wordnumindex + 1):
+            typenamecombinationtuple = (typenamecombination,
+                                        globalmap_typeid_categoryid[typeid])
+            if not typenamecombinationtuple in \
+            globalmap_typenamecombinationtuple_typeid:
+                globalmap_typenamecombinationtuple_typeid\
+                [typenamecombinationtuple] = set()
+            globalmap_typenamecombinationtuple_typeid\
+            [typenamecombinationtuple].add(typeid)
+            if not typeid in globalmap_typeid_typenamecombinationtuple:
+                globalmap_typeid_typenamecombinationtuple[typeid] = \
+                (set(), len(typenamesplitted))
+            globalmap_typeid_typenamecombinationtuple[typeid][0].add\
+            (typenamecombination)
 
-######################### Stage 2 #########################
+# Stage 2
+
 #Go through effect files one-by-one
 effectsPath = os.path.join("..", "effects")
 for effectFileName in os.listdir(effectsPath):
@@ -352,61 +392,61 @@ for effectFileName in os.listdir(effectsPath):
         ######################## Stage 2.1 ########################
         #Data regarding which items are affected by current effect
         perEffectList_usedByTypes = set()
-        cursor.execute(queryEffectIDTypeID, (globalMap_effectNameEos_effectNameDB[basename],))
+        cursor.execute(QUERY_EFFECTID_TYPEID, (globalmap_effectnameeos_effectid[basename],))
         for rowTypes in cursor:
-            typeID = rowTypes[0]
-            if typeID in publishedTypes: perEffectList_usedByTypes.add(typeID)
+            typeid = rowTypes[0]
+            if typeid in publishedtypes: perEffectList_usedByTypes.add(typeid)
         #Number of items affected by current effect
-        perEffect_totalAffected = len(perEffectList_usedByTypes)
+        pereffect_totalaffected = len(perEffectList_usedByTypes)
 
         #Compose per-group map of items which are affected by current effect
-        # { groupID : (set(typeID), describes) }
+        # { groupID : (set(typeid), describes) }
         perEffectMap_groupID_typeID = {}
-        for typeID in perEffectList_usedByTypes:
-            groupID = globalMap_typeID_groupID[typeID]
+        for typeid in perEffectList_usedByTypes:
+            groupID = globalmap_typeid_groupid[typeid]
             if not groupID in perEffectMap_groupID_typeID: perEffectMap_groupID_typeID[groupID] = [set(), False]
-            perEffectMap_groupID_typeID[groupID][0].add(typeID)
+            perEffectMap_groupID_typeID[groupID][0].add(typeid)
 
         #Now, per-category map of items
-        # { categoryID : (set(typeID), describes) }
+        # { categoryid : (set(typeid), describes) }
         perEffectMap_categoryID_typeID = {}
-        for typeID in perEffectList_usedByTypes:
-            categoryID = globalMap_typeID_categoryID[typeID]
-            if not categoryID in perEffectMap_categoryID_typeID: perEffectMap_categoryID_typeID[categoryID] = [set(), False]
-            perEffectMap_categoryID_typeID[categoryID][0].add(typeID)
+        for typeid in perEffectList_usedByTypes:
+            categoryid = globalmap_typeid_categoryid[typeid]
+            if not categoryid in perEffectMap_categoryID_typeID: perEffectMap_categoryID_typeID[categoryid] = [set(), False]
+            perEffectMap_categoryID_typeID[categoryid][0].add(typeid)
 
         #Per-baseType map of variations
-        # { baseTypeID : (set(typeID), describes) }
+        # { basetypeid : (set(typeid), describes) }
         perEffectMap_baseTypeID_typeID = {}
-        for typeID in perEffectList_usedByTypes:
-            baseTypeID = globalMap_typeID_baseTypeID[typeID]
-            if not baseTypeID in perEffectMap_baseTypeID_typeID: perEffectMap_baseTypeID_typeID[baseTypeID] = [set(), False]
-            perEffectMap_baseTypeID_typeID[baseTypeID][0].add(typeID)
+        for typeid in perEffectList_usedByTypes:
+            basetypeid = globalmap_typeid_basetypeid[typeid]
+            if not basetypeid in perEffectMap_baseTypeID_typeID: perEffectMap_baseTypeID_typeID[basetypeid] = [set(), False]
+            perEffectMap_baseTypeID_typeID[basetypeid][0].add(typeid)
 
         #Per-marketGroup map with variations
-        # { marketGroupID : (set(typeIDWithVariations), describes) }
+        # { marketgroupid : (set(typeidwithvariations), describes) }
         perEffectMap_marketGroupID_typeIDWithVariations = {}
-        for typeID in perEffectList_usedByTypes:
-            if typeID in globalMap_typeID_marketGroupID: marketGroupIDs = globalMap_typeID_marketGroupID[typeID]
+        for typeid in perEffectList_usedByTypes:
+            if typeid in globalmap_typeid_marketgroupid: marketGroupIDs = globalmap_typeid_marketgroupid[typeid]
             else: marketGroupIDs = set()
-            for marketGroupID in marketGroupIDs:
-                if not marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations: perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID] = [set(), False]
-                perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0].add(typeID)
+            for marketgroupid in marketGroupIDs:
+                if not marketgroupid in perEffectMap_marketGroupID_typeIDWithVariations: perEffectMap_marketGroupID_typeIDWithVariations[marketgroupid] = [set(), False]
+                perEffectMap_marketGroupID_typeIDWithVariations[marketgroupid][0].add(typeid)
 
-        #Per-typeNameCombination map
-        # { ((typeNameCombination), categoryID) : (set(typeID), describes) }
+        #Per-typenamecombination map
+        # { ((typenamecombination), categoryid) : (set(typeid), describes) }
         perEffectMap_typeNameCombinationTuple_typeID = {}
-        for typeID in perEffectList_usedByTypes:
-            typeNameCombinations = globalMap_typeID_typeNameCombination[typeID][0]
-            for typeNameCombination in typeNameCombinations:
-                typeNameCombinationTuple = (typeNameCombination, globalMap_typeID_categoryID[typeID])
-                if not typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID: perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple] = [set(), False]
-                perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0].add(typeID)
+        for typeid in perEffectList_usedByTypes:
+            typeNameCombinations = globalmap_typeid_typenamecombinationtuple[typeid][0]
+            for typenamecombination in typeNameCombinations:
+                typenamecombinationtuple = (typenamecombination, globalmap_typeid_categoryid[typeid])
+                if not typenamecombinationtuple in perEffectMap_typeNameCombinationTuple_typeID: perEffectMap_typeNameCombinationTuple_typeID[typenamecombinationtuple] = [set(), False]
+                perEffectMap_typeNameCombinationTuple_typeID[typenamecombinationtuple][0].add(typeid)
 
         stopDebugPrints = False
         if DEBUG_LEVEL >= 1:
             print("\nEffect:", basename)
-            print("Total items affected: {0}".format(perEffect_totalAffected))
+            print("Total items affected: {0}".format(pereffect_totalaffected))
 
         ######################## Stage 2.2 ########################
         #This set holds all IDs of already described items
@@ -435,116 +475,116 @@ for effectFileName in os.listdir(effectsPath):
                     #Items from current group affected by current effect
                     affectedItemsFromCurrentGroup = perEffectMap_groupID_typeID[groupID][0]
                     #Number of affected items from current group; already described
-                    affectedAndDecribed = len(affectedItemsFromCurrentGroup.intersection(perEffect_describedTypes))
+                    affected_decribed = len(affectedItemsFromCurrentGroup.intersection(perEffect_describedTypes))
                     #yet undescribed
-                    affectedAndUndescribed =  len(affectedItemsFromCurrentGroup.difference(perEffect_describedTypes))
+                    affected_undescribed =  len(affectedItemsFromCurrentGroup.difference(perEffect_describedTypes))
                     #total number of items from this group (not necessarily affected by current effect)
-                    total = len(globalMap_groupID_typeID[groupID])
+                    total = len(globalmap_groupid_typeid[groupID])
                     #calculate inner score and push it into score dictionary for current grouping type
-                    groupScore[groupID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+                    groupScore[groupID] = calc_innerscore(affected_decribed, affected_undescribed, total, pereffect_totalaffected)
                     #Debug prints for inner data
                     if DEBUG_LEVEL >= 1 and not stopDebugPrints:
-                        cursor.execute(queryGroupName, (groupID,))
+                        cursor.execute(QUERY_GROUPID_GROUPNAME, (groupID,))
                         for row in cursor: groupName = row[0]
-                        coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
+                        coverage = (affected_decribed + affected_undescribed)/total * 100
                         #If debug level is 1, we print results only for 1st iteration
-                        if DEBUG_LEVEL == 1: print("Group: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(groupName, affectedAndUndescribed, total, coverage, groupScore[groupID]))
+                        if DEBUG_LEVEL == 1: print("Group: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(groupName, affected_undescribed, total, coverage, groupScore[groupID]))
                         #If it's 2, we print results for each iteration, so we need to
                         #include number of already described items
-                        if DEBUG_LEVEL == 2: print("Group: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(groupName, affectedAndUndescribed, affectedAndDecribed, total, coverage, groupScore[groupID]))
+                        if DEBUG_LEVEL == 2: print("Group: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(groupName, affected_undescribed, affected_decribed, total, coverage, groupScore[groupID]))
             #Calculate outer score for this grouping type
-            groupOuterScore = calc_outer_score(groupScore, perEffect_totalAffected, GROUP_WEIGHT)
+            groupOuterScore = calc_outerscore(groupScore, pereffect_totalaffected, GROUP_WEIGHT)
             #Debug print for outer data
             if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Groups outer score: {0:.3}".format(groupOuterScore))
 
             categoryScore = {}
-            for categoryID in perEffectMap_categoryID_typeID:
-                if not perEffectMap_categoryID_typeID[categoryID][1]:
-                    affectedItemsFromCurrentCategory = perEffectMap_categoryID_typeID[categoryID][0]
-                    affectedAndDecribed = len(affectedItemsFromCurrentCategory.intersection(perEffect_describedTypes))
-                    affectedAndUndescribed =  len(affectedItemsFromCurrentCategory.difference(perEffect_describedTypes))
-                    total = len(globalMap_categoryID_typeID[categoryID])
-                    categoryScore[categoryID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+            for categoryid in perEffectMap_categoryID_typeID:
+                if not perEffectMap_categoryID_typeID[categoryid][1]:
+                    affectedItemsFromCurrentCategory = perEffectMap_categoryID_typeID[categoryid][0]
+                    affected_decribed = len(affectedItemsFromCurrentCategory.intersection(perEffect_describedTypes))
+                    affected_undescribed =  len(affectedItemsFromCurrentCategory.difference(perEffect_describedTypes))
+                    total = len(globalmap_categoryid_typeid[categoryid])
+                    categoryScore[categoryid] = calc_innerscore(affected_decribed, affected_undescribed, total, pereffect_totalaffected)
                     if DEBUG_LEVEL >= 1 and not stopDebugPrints:
-                        cursor.execute(queryCategoryName, (categoryID,))
+                        cursor.execute(QUERY_CATEGORYID_CATEGORYNAME, (categoryid,))
                         for row in cursor: categoryName = row[0]
-                        coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if DEBUG_LEVEL == 1: print("Category: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(categoryName, affectedAndUndescribed, total, coverage, categoryScore[categoryID]))
-                        if DEBUG_LEVEL == 2: print("Category: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(categoryName, affectedAndUndescribed, affectedAndDecribed, total, coverage, categoryScore[categoryID]))
-            categoryOuterScore = calc_outer_score(categoryScore, perEffect_totalAffected, CATEGORY_WEIGHT)
+                        coverage = (affected_decribed + affected_undescribed)/total * 100
+                        if DEBUG_LEVEL == 1: print("Category: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(categoryName, affected_undescribed, total, coverage, categoryScore[categoryid]))
+                        if DEBUG_LEVEL == 2: print("Category: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(categoryName, affected_undescribed, affected_decribed, total, coverage, categoryScore[categoryid]))
+            categoryOuterScore = calc_outerscore(categoryScore, pereffect_totalaffected, CATEGORY_WEIGHT)
             if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Category outer score: {0:.3}".format(categoryOuterScore))
 
             baseTypeScore = {}
-            for baseTypeID in perEffectMap_baseTypeID_typeID:
-                if not perEffectMap_baseTypeID_typeID[baseTypeID][1]:
-                    affectedItemsFromCurrentBaseType = perEffectMap_baseTypeID_typeID[baseTypeID][0]
-                    affectedAndDecribed = len(affectedItemsFromCurrentBaseType.intersection(perEffect_describedTypes))
-                    affectedAndUndescribed =  len(affectedItemsFromCurrentBaseType.difference(perEffect_describedTypes))
-                    total = len(globalMap_baseTypeID_typeID[baseTypeID])
-                    baseTypeScore[baseTypeID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+            for basetypeid in perEffectMap_baseTypeID_typeID:
+                if not perEffectMap_baseTypeID_typeID[basetypeid][1]:
+                    affectedItemsFromCurrentBaseType = perEffectMap_baseTypeID_typeID[basetypeid][0]
+                    affected_decribed = len(affectedItemsFromCurrentBaseType.intersection(perEffect_describedTypes))
+                    affected_undescribed =  len(affectedItemsFromCurrentBaseType.difference(perEffect_describedTypes))
+                    total = len(globalmap_basetypeid_typeid[basetypeid])
+                    baseTypeScore[basetypeid] = calc_innerscore(affected_decribed, affected_undescribed, total, pereffect_totalaffected)
                     if DEBUG_LEVEL >= 1 and not stopDebugPrints:
-                        cursor.execute(queryTypeIDTypeName, (baseTypeID,))
+                        cursor.execute(QUERY_TYPEID_TYPENAME, (basetypeid,))
                         for row in cursor: baseTypeName = row[0]
-                        coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if DEBUG_LEVEL == 1: print("Base item: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(baseTypeName, affectedAndUndescribed, total, coverage, baseTypeScore[baseTypeID]))
-                        if DEBUG_LEVEL == 2: print("Base item: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(baseTypeName, affectedAndUndescribed, affectedAndDecribed, total, coverage, baseTypeScore[baseTypeID]))
-            baseTypeOuterScore = calc_outer_score(baseTypeScore, perEffect_totalAffected, BASETYPE_WEIGHT)
+                        coverage = (affected_decribed + affected_undescribed)/total * 100
+                        if DEBUG_LEVEL == 1: print("Base item: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(baseTypeName, affected_undescribed, total, coverage, baseTypeScore[basetypeid]))
+                        if DEBUG_LEVEL == 2: print("Base item: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(baseTypeName, affected_undescribed, affected_decribed, total, coverage, baseTypeScore[basetypeid]))
+            baseTypeOuterScore = calc_outerscore(baseTypeScore, pereffect_totalaffected, BASETYPE_WEIGHT)
             #Print outer data
             if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Base item outer score: {0:.3}".format(baseTypeOuterScore))
 
             marketGroupWithVarsScore = {}
-            for marketGroupID in perEffectMap_marketGroupID_typeIDWithVariations:
-                if not perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][1]:
-                    affectedItemsFromCurrentMarketGroupWithVars = perEffectMap_marketGroupID_typeIDWithVariations[marketGroupID][0]
-                    affectedAndDecribed = len(affectedItemsFromCurrentMarketGroupWithVars.intersection(perEffect_describedTypes))
-                    affectedAndUndescribed =  len(affectedItemsFromCurrentMarketGroupWithVars.difference(perEffect_describedTypes))
-                    total = len(globalMap_marketGroupID_typeIDWithVariations[marketGroupID])
-                    marketGroupWithVarsScore[marketGroupID] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected)
+            for marketgroupid in perEffectMap_marketGroupID_typeIDWithVariations:
+                if not perEffectMap_marketGroupID_typeIDWithVariations[marketgroupid][1]:
+                    affectedItemsFromCurrentMarketGroupWithVars = perEffectMap_marketGroupID_typeIDWithVariations[marketgroupid][0]
+                    affected_decribed = len(affectedItemsFromCurrentMarketGroupWithVars.intersection(perEffect_describedTypes))
+                    affected_undescribed =  len(affectedItemsFromCurrentMarketGroupWithVars.difference(perEffect_describedTypes))
+                    total = len(globalmap_marketgroupid_typeidwithvariations[marketgroupid])
+                    marketGroupWithVarsScore[marketgroupid] = calc_innerscore(affected_decribed, affected_undescribed, total, pereffect_totalaffected)
                     if DEBUG_LEVEL >= 1 and not stopDebugPrints:
-                        cursor.execute(queryMarketGroupName, (marketGroupID,))
+                        cursor.execute(QUERY_MARKETGROUPID_MARKETGROUPNAME, (marketgroupid,))
                         for row in cursor: marketGroupName = row[0]
                         #Prepend market group name with its parents names
-                        prependParentID = marketGroupID
+                        prependParentID = marketgroupid
                         #Limit depth in case if market groups form a loop
                         for depth in range(20):
-                            cursorParentMarket = db.cursor()
-                            cursorParentMarket.execute(queryMarketGroupIDParentGroupID, (prependParentID,))
-                            for row in cursorParentMarket:
+                            cursor_parentmarket = db.cursor()
+                            cursor_parentmarket.execute(QUERY_MARKETGROUPID_PARENTGROUPID, (prependParentID,))
+                            for row in cursor_parentmarket:
                                 prependParentID = row[0]
                             if prependParentID:
-                                cursor.execute(queryMarketGroupName, (prependParentID,))
+                                cursor.execute(QUERY_MARKETGROUPID_MARKETGROUPNAME, (prependParentID,))
                                 for row in cursor: marketGroupName = "{0} > {1}".format(row[0], marketGroupName)
                             else: break
-                        coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if DEBUG_LEVEL == 1: print("Market group with variations: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(marketGroupName, affectedAndUndescribed, total, coverage, marketGroupWithVarsScore[marketGroupID]))
-                        if DEBUG_LEVEL == 2: print("Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(marketGroupName, affectedAndUndescribed, affectedAndDecribed, total, coverage, marketGroupWithVarsScore[marketGroupID]))
-            marketGroupWithVarsOuterScore = calc_outer_score(marketGroupWithVarsScore, perEffect_totalAffected, MARKETGROUPWITHVARS_WEIGHT)
+                        coverage = (affected_decribed + affected_undescribed)/total * 100
+                        if DEBUG_LEVEL == 1: print("Market group with variations: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})".format(marketGroupName, affected_undescribed, total, coverage, marketGroupWithVarsScore[marketgroupid]))
+                        if DEBUG_LEVEL == 2: print("Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(marketGroupName, affected_undescribed, affected_decribed, total, coverage, marketGroupWithVarsScore[marketgroupid]))
+            marketGroupWithVarsOuterScore = calc_outerscore(marketGroupWithVarsScore, pereffect_totalaffected, MARKETGROUPWITHVARS_WEIGHT)
             if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Market group outer score: {0:.3}".format(marketGroupWithVarsOuterScore))
 
             typeNameCombinationScore = {}
-            for typeNameCombinationTuple in perEffectMap_typeNameCombinationTuple_typeID:
-                if not perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][1]:
-                    affectedItemsFromCurrenttypeNameCombination = perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0]
-                    affectedAndDecribed = len(affectedItemsFromCurrenttypeNameCombination.intersection(perEffect_describedTypes))
-                    affectedAndUndescribed =  len(affectedItemsFromCurrenttypeNameCombination.difference(perEffect_describedTypes))
-                    total = len(globalMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple])
-                    #typeNames are special: wee also need to consider how certain
-                    #word combination covers full typeName. We start from zero
+            for typenamecombinationtuple in perEffectMap_typeNameCombinationTuple_typeID:
+                if not perEffectMap_typeNameCombinationTuple_typeID[typenamecombinationtuple][1]:
+                    affectedItemsFromCurrenttypeNameCombination = perEffectMap_typeNameCombinationTuple_typeID[typenamecombinationtuple][0]
+                    affected_decribed = len(affectedItemsFromCurrenttypeNameCombination.intersection(perEffect_describedTypes))
+                    affected_undescribed =  len(affectedItemsFromCurrenttypeNameCombination.difference(perEffect_describedTypes))
+                    total = len(globalmap_typenamecombinationtuple_typeid[typenamecombinationtuple])
+                    #Type names are special: wee also need to consider how certain
+                    #word combination covers full type name. We start from zero
                     averageCoverage = 0
-                    itemsNamedLikeThis = perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationTuple][0]
-                    for typeID in itemsNamedLikeThis:
+                    itemsNamedLikeThis = perEffectMap_typeNameCombinationTuple_typeID[typenamecombinationtuple][0]
+                    for typeid in itemsNamedLikeThis:
                         #Add number of words in combination divided by total number of words from any given item
-                        averageCoverage += len(typeNameCombinationTuple[0])/globalMap_typeID_typeNameCombination[typeID][1]
+                        averageCoverage += len(typenamecombinationtuple[0])/globalmap_typeid_typenamecombinationtuple[typeid][1]
                     #Then divide by number of items we checked, making it real average
                     averageCoverage = averageCoverage/len(itemsNamedLikeThis)
                     #Pass average coverage as additional balancing factor
-                    typeNameCombinationScore[typeNameCombinationTuple] = calc_inner_score(affectedAndDecribed, affectedAndUndescribed, total, perEffect_totalAffected, 0.2 + averageCoverage*0.8)
+                    typeNameCombinationScore[typenamecombinationtuple] = calc_innerscore(affected_decribed, affected_undescribed, total, pereffect_totalaffected, 0.2 + averageCoverage*0.8)
                     if DEBUG_LEVEL >= 1 and not stopDebugPrints:
-                        typeNameCombinationPrintable = " ".join(typeNameCombinationTuple[0])
-                        coverage = (affectedAndDecribed + affectedAndUndescribed)/total * 100
-                        if DEBUG_LEVEL == 1: print("Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, total, coverage, typeNameCombinationScore[typeNameCombinationTuple]))
-                        if DEBUG_LEVEL == 2: print("Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(typeNameCombinationPrintable, affectedAndUndescribed, affectedAndDecribed, total, coverage, typeNameCombinationScore[typeNameCombinationTuple]))
-            typeNameCombinationOuterScore = calc_outer_score(typeNameCombinationScore, perEffect_totalAffected, TYPENAMECOMBINATIONS_WEIGHT)
+                        typeNameCombinationPrintable = " ".join(typenamecombinationtuple[0])
+                        coverage = (affected_decribed + affected_undescribed)/total * 100
+                        if DEBUG_LEVEL == 1: print("Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})".format(typeNameCombinationPrintable, affected_undescribed, total, coverage, typeNameCombinationScore[typenamecombinationtuple]))
+                        if DEBUG_LEVEL == 2: print("Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})".format(typeNameCombinationPrintable, affected_undescribed, affected_decribed, total, coverage, typeNameCombinationScore[typenamecombinationtuple]))
+            typeNameCombinationOuterScore = calc_outerscore(typeNameCombinationScore, pereffect_totalaffected, TYPENAMECOMBINATIONS_WEIGHT)
             if DEBUG_LEVEL >= 1 and not stopDebugPrints: print("Type name combination outer score: {0:.3}".format(typeNameCombinationOuterScore))
 
             #Don't print anything after 1st iteration at 1st debugging level
@@ -565,29 +605,29 @@ for effectFileName in os.listdir(effectsPath):
                     #Add it to the list of categories which describe set of items
                     describedByCategory.append(categoryWinner)
                     #add all items described by winning category into set of described items
-                    perEffect_describedTypes |= globalMap_categoryID_typeID[categoryWinner]
+                    perEffect_describedTypes |= globalmap_categoryid_typeid[categoryWinner]
                     #set 'describes' flag to avoid processing of this category
                     #during following iterations
                     perEffectMap_categoryID_typeID[categoryWinner][1] = True
                 elif maxOuterScore == groupOuterScore:
                     groupWinner = max(groupScore, key=groupScore.get)
                     describedByGroup.append(groupWinner)
-                    perEffect_describedTypes |= globalMap_groupID_typeID[groupWinner]
+                    perEffect_describedTypes |= globalmap_groupid_typeid[groupWinner]
                     perEffectMap_groupID_typeID[groupWinner][1] = True
                 elif maxOuterScore == typeNameCombinationOuterScore:
                     typeNameCombinationWinner = max(typeNameCombinationScore, key=typeNameCombinationScore.get)
                     describedByTypeNameCombination.append(typeNameCombinationWinner)
-                    perEffect_describedTypes |= globalMap_typeNameCombinationTuple_typeID[typeNameCombinationWinner]
+                    perEffect_describedTypes |= globalmap_typenamecombinationtuple_typeid[typeNameCombinationWinner]
                     perEffectMap_typeNameCombinationTuple_typeID[typeNameCombinationWinner][1] = True
                 elif maxOuterScore == marketGroupWithVarsOuterScore:
                     marketGroupWithVarsWinner = max(marketGroupWithVarsScore, key=marketGroupWithVarsScore.get)
                     describedByMarketGroupWithVars.append(marketGroupWithVarsWinner)
-                    perEffect_describedTypes |= globalMap_marketGroupID_typeIDWithVariations[marketGroupWithVarsWinner]
+                    perEffect_describedTypes |= globalmap_marketgroupid_typeidwithvariations[marketGroupWithVarsWinner]
                     perEffectMap_marketGroupID_typeIDWithVariations[marketGroupWithVarsWinner][1] = True
                 elif maxOuterScore == baseTypeOuterScore:
                     baseTypeWinner = max(baseTypeScore, key=baseTypeScore.get)
                     describedByBaseType.append(baseTypeWinner)
-                    perEffect_describedTypes |= globalMap_baseTypeID_typeID[baseTypeWinner]
+                    perEffect_describedTypes |= globalmap_basetypeid_typeid[baseTypeWinner]
                     perEffectMap_baseTypeID_typeID[baseTypeWinner][1] = True
             #Stop if we have score less than some critical value, all undescribed
             #items will be provided as plain list
@@ -630,60 +670,60 @@ for effectFileName in os.listdir(effectsPath):
 
         #Gather data for printing in the form of tuples
         #Each tuple has grouping type ID, human-readable name and category name
-        for typeID in singleItems:
-            typeName = ""
-            cursor.execute(queryTypeIDTypeName, (typeID,))
-            for row in cursor: typeName = row[0]
+        for typeid in singleItems:
+            typename = ""
+            cursor.execute(QUERY_TYPEID_TYPENAME, (typeid,))
+            for row in cursor: typename = row[0]
             categoryName = ""
-            cursor.execute(queryCategoryName, (globalMap_typeID_categoryID[typeID],))
+            cursor.execute(QUERY_CATEGORYID_CATEGORYNAME, (globalmap_typeid_categoryid[typeid],))
             for row in cursor: categoryName = row[0]
-            printing_types.append((typeID, typeName, categoryName))
+            printing_types.append((typeid, typename, categoryName))
         for groupID in describedByGroup:
             groupName = ""
-            cursor.execute(queryGroupName, (groupID,))
+            cursor.execute(QUERY_GROUPID_GROUPNAME, (groupID,))
             for row in cursor: groupName = row[0]
-            categoryID = 0
-            cursor.execute(queryGroupIDCategoryID, (groupID,))
-            for row in cursor: categoryID = row[0]
+            categoryid = 0
+            cursor.execute(QUERY_GROUPID_CATEGORYID, (groupID,))
+            for row in cursor: categoryid = row[0]
             categoryName = ""
-            cursor.execute(queryCategoryName, (categoryID,))
+            cursor.execute(QUERY_CATEGORYID_CATEGORYNAME, (categoryid,))
             for row in cursor: categoryName = row[0]
             printing_groups.append((groupID, groupName, categoryName))
-        for categoryID in describedByCategory:
+        for categoryid in describedByCategory:
             categoryName = ""
-            cursor.execute(queryCategoryName, (categoryID,))
+            cursor.execute(QUERY_CATEGORYID_CATEGORYNAME, (categoryid,))
             for row in cursor: categoryName = row[0]
-            printing_categories.append((categoryID, categoryName))
-        for baseTypeID in describedByBaseType:
+            printing_categories.append((categoryid, categoryName))
+        for basetypeid in describedByBaseType:
             baseTypeName = ""
-            cursor.execute(queryTypeIDTypeName, (baseTypeID,))
+            cursor.execute(QUERY_TYPEID_TYPENAME, (basetypeid,))
             for row in cursor: baseTypeName = row[0]
             categoryName = ""
-            cursor.execute(queryCategoryName, (globalMap_typeID_categoryID[baseTypeID],))
+            cursor.execute(QUERY_CATEGORYID_CATEGORYNAME, (globalmap_typeid_categoryid[basetypeid],))
             for row in cursor: categoryName = row[0]
-            printing_baseTypes.append((baseTypeID, baseTypeName, categoryName))
-        for marketGroupID in describedByMarketGroupWithVars:
-            cursor.execute(queryMarketGroupName, (marketGroupID,))
+            printing_baseTypes.append((basetypeid, baseTypeName, categoryName))
+        for marketgroupid in describedByMarketGroupWithVars:
+            cursor.execute(QUERY_MARKETGROUPID_MARKETGROUPNAME, (marketgroupid,))
             for row in cursor: marketGroupName = row[0]
             #Prepend market group name with its parents names
-            prependParentID = marketGroupID
+            prependParentID = marketgroupid
             #Limit depth to avoid looping, as usual
             for depth in range(20):
-                cursorParentMarket = db.cursor()
-                cursorParentMarket.execute(queryMarketGroupIDParentGroupID, (prependParentID,))
-                for row in cursorParentMarket:
+                cursor_parentmarket = db.cursor()
+                cursor_parentmarket.execute(QUERY_MARKETGROUPID_PARENTGROUPID, (prependParentID,))
+                for row in cursor_parentmarket:
                     prependParentID = row[0]
                 if prependParentID:
-                    cursor.execute(queryMarketGroupName, (prependParentID,))
+                    cursor.execute(QUERY_MARKETGROUPID_MARKETGROUPNAME, (prependParentID,))
                     for row in cursor: marketGroupName = "{0} > {1}".format(row[0], marketGroupName)
                 else: break
-            printing_marketGroupsWithVars.append((marketGroupID, marketGroupName))
-        for typeNameCombinationTuple in describedByTypeNameCombination:
-            typeNameCombinationPrint = " ".join(typeNameCombinationTuple[0])
+            printing_marketGroupsWithVars.append((marketgroupid, marketGroupName))
+        for typenamecombinationtuple in describedByTypeNameCombination:
+            typeNameCombinationPrint = " ".join(typenamecombinationtuple[0])
             categoryName = ""
-            cursor.execute(queryCategoryName, (typeNameCombinationTuple[1],))
+            cursor.execute(QUERY_CATEGORYID_CATEGORYNAME, (typenamecombinationtuple[1],))
             for row in cursor: categoryName = row[0]
-            printing_typeNameCombinationTuples.append((typeNameCombinationTuple, typeNameCombinationPrint, categoryName))
+            printing_typeNameCombinationTuples.append((typenamecombinationtuple, typeNameCombinationPrint, categoryName))
 
         #Use separate list per grouping type to easy grouping type sorting
         printing_typeLines = []
@@ -698,25 +738,25 @@ for effectFileName in os.listdir(effectsPath):
         printing_groups = sorted(printing_groups, key=lambda tuple: tuple[1])
         printing_groups = sorted(printing_groups, key=lambda tuple: tuple[2])
         for group in printing_groups:
-            printing_groupLines.append("#{0}s from group: {1} ({2} of {3})".format(group[2], group[1], len(perEffectMap_groupID_typeID[group[0]][0]), len(globalMap_groupID_typeID[group[0]])))
+            printing_groupLines.append("#{0}s from group: {1} ({2} of {3})".format(group[2], group[1], len(perEffectMap_groupID_typeID[group[0]][0]), len(globalmap_groupid_typeid[group[0]])))
         printing_categoryLines = []
         printing_categories = sorted(printing_categories, key=lambda tuple: tuple[1])
         for category in printing_categories:
-            printing_categoryLines.append("#Items from category: {0} ({1} of {2})".format(category[1], len(perEffectMap_categoryID_typeID[category[0]][0]), len(globalMap_categoryID_typeID[category[0]])))
+            printing_categoryLines.append("#Items from category: {0} ({1} of {2})".format(category[1], len(perEffectMap_categoryID_typeID[category[0]][0]), len(globalmap_categoryid_typeid[category[0]])))
         printing_baseTypeLines = []
         printing_baseTypes = sorted(printing_baseTypes, key=lambda tuple: tuple[1])
         printing_baseTypes = sorted(printing_baseTypes, key=lambda tuple: tuple[2])
         for baseType in printing_baseTypes:
-            printing_baseTypeLines.append("#Variations of {0}: {1} ({2} of {3})".format(baseType[2].lower(), baseType[1], len(perEffectMap_baseTypeID_typeID[baseType[0]][0]), len(globalMap_baseTypeID_typeID[baseType[0]])))
+            printing_baseTypeLines.append("#Variations of {0}: {1} ({2} of {3})".format(baseType[2].lower(), baseType[1], len(perEffectMap_baseTypeID_typeID[baseType[0]][0]), len(globalmap_basetypeid_typeid[baseType[0]])))
         printing_marketGroupWithVarsLines = []
         printing_marketGroupsWithVars = sorted(printing_marketGroupsWithVars, key=lambda tuple: tuple[1])
         for marketGroup in printing_marketGroupsWithVars:
-            printing_marketGroupWithVarsLines.append("#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalMap_marketGroupID_typeIDWithVariations[marketGroup[0]])))
+            printing_marketGroupWithVarsLines.append("#Items from market group: {0} ({1} of {2})".format(marketGroup[1], len(perEffectMap_marketGroupID_typeIDWithVariations[marketGroup[0]][0]), len(globalmap_marketgroupid_typeidwithvariations[marketGroup[0]])))
         printing_typeNameCombinationTupleLines = []
         printing_typeNameCombinationTuples = sorted(printing_typeNameCombinationTuples, key=lambda tuple: tuple[1])
         printing_typeNameCombinationTuples = sorted(printing_typeNameCombinationTuples, key=lambda tuple: tuple[2])
-        for typeNameCombination in printing_typeNameCombinationTuples:
-            printing_typeNameCombinationTupleLines.append("#{0}s named like: {1} ({2} of {3})".format(typeNameCombination[2], typeNameCombination[1], len(perEffectMap_typeNameCombinationTuple_typeID[typeNameCombination[0]][0]), len(globalMap_typeNameCombinationTuple_typeID[typeNameCombination[0]])))
+        for typenamecombination in printing_typeNameCombinationTuples:
+            printing_typeNameCombinationTupleLines.append("#{0}s named like: {1} ({2} of {3})".format(typenamecombination[2], typenamecombination[1], len(perEffectMap_typeNameCombinationTuple_typeID[typenamecombination[0]][0]), len(globalmap_typenamecombinationtuple_typeid[typenamecombination[0]])))
 
         #Compose single list of lines using custom sorting
         commentLines = printing_categoryLines + printing_groupLines + printing_typeNameCombinationTupleLines + printing_marketGroupWithVarsLines + printing_baseTypeLines + printing_typeLines
