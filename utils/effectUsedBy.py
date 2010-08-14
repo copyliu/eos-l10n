@@ -61,9 +61,8 @@ from optparse import OptionParser
 usage = "usage: %prog --database=DB [--debug=DEBUG]"
 parser = OptionParser(usage=usage)
 parser.add_option("-d", "--database", help="path to eve cache data dump in \
-                  sqlite format, default eos database path is used if none \
-                  specified",type="string",
-                  default=os.path.join("~", ".pyfa","eve.db"))
+sqlite format, default eos database path is used if none specified",
+type="string", default=os.path.join("~", ".pyfa","eve.db"))
 parser.add_option("-u", "--debug", help="debug level, 0 by default",
                   type="int", default=0)
 (options, args) = parser.parse_args()
