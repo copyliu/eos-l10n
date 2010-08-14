@@ -775,7 +775,7 @@ for effect_file in os.listdir(effects_path):
                     key=marketgroupwithvarsscore.get)
                     describedbymarketgroupwithvars.append\
                     (marketgroupwithvarswinner)
-                    effect_describedtypes.update
+                    effect_describedtypes.update\
                     (globalmap_marketgroupid_typeidwithvariations
                      [marketgroupwithvarswinner])
                     effectmap_marketgroupid_typeidwithvars\
