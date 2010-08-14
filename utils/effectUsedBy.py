@@ -726,10 +726,6 @@ for effect_file in os.listdir(effects_path):
             # level
             if DEBUG_LEVEL == 1:
                 stopdebugprints = True
-            # Print separator for 2nd debugging level, to separate
-            # debug data of one iteration from another
-            if DEBUG_LEVEL >= 2:
-                print("---")
 
             # Stage 2.2.2
             # Pick max score from outer scores of all grouping types
@@ -756,12 +752,18 @@ for effect_file in os.listdir(effects_path):
                     # Set 'describes' flag to avoid processing of this
                     # category during following iterations
                     effectmap_categoryid_typeid[categorywinner][1] = True
+                    if DEBUG_LEVEL >= 2:
+                        printstr = "Category winner: {0}"
+                        print(printstr.format(categorywinner))
                 elif maxouterscore == groupouterscore:
                     groupwinner = max(groupscore, key=groupscore.get)
                     describedbygroup.append(groupwinner)
                     effect_describedtypes.update\
                     (globalmap_groupid_typeid[groupwinner])
                     effectmap_groupid_typeid[groupwinner][1] = True
+                    if DEBUG_LEVEL >= 2:
+                        printstr = "Group winner: {0}"
+                        print(printstr.format(groupwinner))
                 elif maxouterscore == typenamecombouterscore:
                     typenamecombwinner = max(typenamecombscore,
                                              key=typenamecombscore.get)
@@ -770,6 +772,9 @@ for effect_file in os.listdir(effects_path):
                     (globalmap_typenamecombtuple_typeid[typenamecombwinner])
                     effectmap_typenamecombtuple_typeid[typenamecombwinner]\
                     [1] = True
+                    if DEBUG_LEVEL >= 2:
+                        printstr = "Named like winner: {0}"
+                        print(printstr.format(typenamecombwinner))
                 elif maxouterscore == marketgroupwithvarsouterscore:
                     marketgroupwithvarswinner = max(marketgroupwithvarsscore,
                     key=marketgroupwithvarsscore.get)
@@ -780,19 +785,31 @@ for effect_file in os.listdir(effects_path):
                      [marketgroupwithvarswinner])
                     effectmap_marketgroupid_typeidwithvars\
                     [marketgroupwithvarswinner][1] = True
+                    if DEBUG_LEVEL >= 2:
+                        printstr = "Market group with variations winner: {0}"
+                        print(printstr.format(marketgroupwithvarswinner))
                 elif maxouterscore == basetypeouterscore:
                     basetypewinner = max(basetypescore, key=basetypescore.get)
                     describedbybasetype.append(basetypewinner)
                     effect_describedtypes.update\
                     (globalmap_basetypeid_typeid[basetypewinner])
                     effectmap_basetypeid_typeid[basetypewinner][1] = True
+                    if DEBUG_LEVEL >= 2:
+                        printstr = "Base item winner: {0}"
+                        print(printstr.format(basetypewinner))
             # Stop if we have score less than some critical value,
             # all undescribed items will be provided as plain list
             else:
                 iterate = False
+                if DEBUG_LEVEL >= 2:
+                    print("No winners this iteration")
             # Also stop if we described all items
             if pereffectlist_usedbytypes.issubset(effect_describedtypes):
                 iterate = False
+            # Print separator for 2nd debugging level, to separate
+            # debug data of one iteration from another
+            if DEBUG_LEVEL >= 2:
+                print("---")
         singleitems = set(pereffectlist_usedbytypes).difference\
         (effect_describedtypes)
         if DEBUG_LEVEL >= 1:
