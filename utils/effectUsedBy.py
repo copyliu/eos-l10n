@@ -511,7 +511,8 @@ for effect_file in os.listdir(effects_path):
                         # If debug level is 1, print results only for
                         # 1st iteration
                         if DEBUG_LEVEL == 1:
-                            printstr = "Group: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})"
+                            printstr = "Group: {0}: {1}/{2} ({3:.3}%, inner \
+score: {4:.3})"
                             print(printstr.format(groupName,
                                   affected_undescribed, total, coverage,
                                   groupscore[groupid]))
@@ -519,7 +520,8 @@ for effect_file in os.listdir(effects_path):
                         # iteration, so we need to include number
                         # of already described items
                         if DEBUG_LEVEL == 2:
-                            printstr = "Group: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
+                            printstr = "Group: {0}: {1}+{2}/{3} ({4:.3}%, \
+inner score: {5:.3})"
                             print(printstr.format(groupName,
                                   affected_undescribed, affected_decribed,
                                   total, coverage, groupscore[groupid]))
@@ -553,12 +555,14 @@ for effect_file in os.listdir(effects_path):
                         coverage = (affected_decribed +
                         affected_undescribed) / total * 100
                         if DEBUG_LEVEL == 1:
-                            printstr = "Category: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})"
+                            printstr = "Category: {0}: {1}/{2} ({3:.3}%, \
+inner score: {4:.3})"
                             print(printstr.format(categoryname,
                                   affected_undescribed, total, coverage,
                                   categoryscore[categoryid]))
                         if DEBUG_LEVEL == 2:
-                            printstr = "Category: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
+                            printstr = "Category: {0}: {1}+{2}/{3} ({4:.3}%, \
+inner score: {5:.3})"
                             print(printstr.format(categoryname,
                                   affected_undescribed, affected_decribed,
                                   total, coverage, categoryscore[categoryid]))
@@ -589,12 +593,14 @@ for effect_file in os.listdir(effects_path):
                         coverage = (affected_decribed +
                         affected_undescribed) / total * 100
                         if DEBUG_LEVEL == 1:
-                            printstr = "Base item: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})"
+                            printstr = "Base item: {0}: {1}/{2} ({3:.3}%, \
+inner score: {4:.3})"
                             print(printstr.format(basetypename,
                                   affected_undescribed, total, coverage,
                                   basetypescore[basetypeid]))
                         if DEBUG_LEVEL == 2:
-                            printstr = "Base item: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
+                            printstr = "Base item: {0}: {1}+{2}/{3} ({4:.3}%, \
+inner score: {5:.3})"
                             print(printstr.format(basetypename,
                                   affected_undescribed, affected_decribed,
                                   total, coverage, basetypescore[basetypeid]))
@@ -650,12 +656,14 @@ for effect_file in os.listdir(effects_path):
                         coverage = (affected_decribed +
                         affected_undescribed) / total * 100
                         if DEBUG_LEVEL == 1:
-                            printstr = "Market group with variations: {0}: {1}/{2} ({3:.3}%, inner score: {4:.3})"
+                            printstr = "Market group with variations: {0}: \
+{1}/{2} ({3:.3}%, inner score: {4:.3})"
                             print(printstr.format(marketgroupname,
                                   affected_undescribed, total, coverage,
                                   marketgroupwithvarsscore[marketgroupid]))
                         if DEBUG_LEVEL == 2:
-                            printstr = "Market group with variations: {0}: {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
+                            printstr = "Market group with variations: {0}: \
+{1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
                             print(printstr.format(marketgroupname,
                                   affected_undescribed,
                                   affected_decribed, total, coverage,
@@ -705,12 +713,14 @@ for effect_file in os.listdir(effects_path):
                         coverage = (affected_decribed +
                                     affected_undescribed) / total * 100
                         if DEBUG_LEVEL == 1:
-                            printstr = "Type name combination: \"{0}\": {1}/{2} ({3:.3}%, inner score: {4:.3})"
+                            printstr = "Type name combination: \"{0}\": \
+{1}/{2} ({3:.3}%, inner score: {4:.3})"
                             print(printstr.format(typenamecombprintable,
                                   affected_undescribed, total, coverage,
                                   typenamecombscore[typenamecombtuple]))
                         if DEBUG_LEVEL == 2:
-                            printstr = "Type name combination: \"{0}\": {1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
+                            printstr = "Type name combination: \"{0}\": \
+{1}+{2}/{3} ({4:.3}%, inner score: {5:.3})"
                             print(printstr.format(typenamecombprintable,
                                   affected_undescribed, affected_decribed,
                                   total, coverage,
