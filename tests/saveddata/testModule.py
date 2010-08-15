@@ -122,6 +122,8 @@ class TestModule(unittest.TestCase):
             projMod = Module(item2)
             charge = db.getItem("Gamma S")
             mod = Module(item)
+            emptyDummy = Module.buildEmpty(Slot.LOW)
+            f.modules.append(emptyDummy)
             posMod1 = Module(item)
             posMod2 = Module(item)
             posMod3 = Module(item)
@@ -151,16 +153,17 @@ class TestModule(unittest.TestCase):
             newf = db.getFit(f.ID)
             self.assertNotEquals(id(newf), id(f))
 
-            newmod = newf.modules[0]
+            newmod = newf.modules[1]
             newprojMod = newf.projectedModules[0]
+            newdummy = newf.modules[0]
 
             i = 0
             while i < len(newf.modules):
-                if i == 0:
+                if i <= 1:
                     i += 1
                     continue
                 else:
-                    self.assertEquals(newf.modules[i].ID, posMods[i-1].ID)
+                    self.assertEquals(newf.modules[i].ID, posMods[i-2].ID)
                 i += 1
 
             self.assertEquals(newprojMod.item.name, "Stasis Webifier I")
@@ -169,6 +172,8 @@ class TestModule(unittest.TestCase):
             self.assertEquals(mod.state, newmod.state)
             self.assertEquals(mod.charge.ID, newmod.charge.ID)
             self.assertEquals(mod.item.ID, newmod.item.ID)
+
+            self.assertEquals(newdummy.slot, emptyDummy.slot)
         except:
             db.saveddata_session.rollback()
             raise
@@ -187,3 +192,6 @@ class TestModule(unittest.TestCase):
         self.assertEquals(m.item, c.item)
         self.assertEquals(m.charge, c.charge)
         self.assertEquals(m.state, c.state)
+
+    def test_EmptySlots(self):
+        pass

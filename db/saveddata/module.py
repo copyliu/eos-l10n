@@ -26,10 +26,12 @@ from eos.types import Module
 modules_table = Table("modules", saveddata_meta,
                       Column("ID", Integer, primary_key = True),
                       Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False),
-                      Column("itemID", Integer, nullable = False),
+                      Column("itemID", Integer, nullable = True),
+                      Column("dummySlot", Integer, nullable = True, default = None),
                       Column("chargeID", Integer),
                       Column("state", Integer, CheckConstraint("state >= -1"), CheckConstraint("state <= 2")),
                       Column("projected", Boolean, default = False, nullable = False),
-                      Column("position", Integer))
+                      Column("position", Integer),
+                      CheckConstraint("(dummySlot = NULL OR itemID = NULL) AND dummySlot != itemID"))
 
 mapper(Module, modules_table)
