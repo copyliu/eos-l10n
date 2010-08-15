@@ -192,6 +192,3 @@ class TestModule(unittest.TestCase):
         self.assertEquals(m.item, c.item)
         self.assertEquals(m.charge, c.charge)
         self.assertEquals(m.state, c.state)
-
-    def test_EmptySlots(self):
-        pass
