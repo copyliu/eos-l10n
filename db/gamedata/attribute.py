@@ -39,6 +39,6 @@ j = join(typeattributes_table, attributes_table, typeattributes_table.c.attribut
 
 mapper(Attribute, j,
        primary_key = [typeattributes_table.c.typeID, typeattributes_table.c.attributeID],
-       properties = {"icon" : relation(Icon),
+       properties = {"icon" : relation(Icon, lazy=False),
                      "name" : synonym("attributeName"),
                      "ID" : synonym("attributeID")})

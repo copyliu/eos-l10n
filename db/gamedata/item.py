@@ -38,7 +38,7 @@ items_table = Table("invtypes", gamedata_meta,
 from .metagroup import metatypes_table
 from .effect import typeeffects_table, effects_table
 mapper(Item, items_table,
-       properties = {"icon" : relation(Icon),
+       properties = {"icon" : relation(Icon, lazy=False),
                      "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
                      "effects" : relation(Effect, collection_class = attribute_mapped_collection('name'),
                                           primaryjoin = typeeffects_table.c.typeID == items_table.c.typeID,
