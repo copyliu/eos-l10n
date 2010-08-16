@@ -177,6 +177,9 @@ class Item(object):
             elif skill == s and (level is None or l == level):
                 return True
 
+            elif hasattr(skill, "item") and skill.item == s and (level is None or l == level):
+                return True
+
         return False
 
 
