@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Module, Fit, Ship
+from eos.types import Fit, Ship, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestSignalAmplifierTargetingSubsystemSubcontroller(unittest.TestCase):

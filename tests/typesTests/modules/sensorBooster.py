@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Module, Fit, Ship, State
+from eos.types import Fit, Ship, Module, State
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestSensorBooster(unittest.TestCase):

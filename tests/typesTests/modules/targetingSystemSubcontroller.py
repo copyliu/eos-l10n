@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Module, Fit, Ship
+from eos.types import Fit, Ship, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestTargetingSubsystemSubcontroller(unittest.TestCase):
@@ -14,8 +14,8 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.t2tssm1 = Module(self.t2tssi)
         self.t2tssm2 = Module(self.t2tssi)
 
-    #T1 and T2 rigs have different effects for scanning resolution boost,
-    #so we have to test them separately
+    # T1 and T2 rigs have different effects for scanning resolution boost,
+    # so we have to test them separately
     def test_scanResolutionT1(self):
         self.buildTested = 171215
         self.fit.modules.append(self.t1tssm1)
