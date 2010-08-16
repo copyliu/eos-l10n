@@ -32,6 +32,6 @@ categories_table = Table("invcategories", gamedata_meta,
 
 mapper(Category, categories_table,
        properties = {"groups" : relation(Group, backref = "category"),
-                     "icon" : relation(Icon),
+                     "icon" : relation(Icon, lazy=False),
                      "ID" : synonym("categoryID"),
                      "name" : synonym("categoryName")})

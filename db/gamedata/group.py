@@ -33,6 +33,6 @@ groups_table = Table("invgroups", gamedata_meta,
 
 mapper(Group, groups_table,
        properties = {"items" : relation(Item, backref = "group"),
-                     "icon" : relation(Icon),
+                     "icon" : relation(Icon, lazy=False),
                      "ID" : synonym("groupID"),
                      "name" : synonym("groupName")})

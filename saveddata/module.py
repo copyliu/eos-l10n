@@ -53,22 +53,38 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @reconstructor
     def init(self):
-        from eos import db
-        item = db.getItem(self.itemID)
-        self.__item = item
-        self.__slot = self.__calculateSlot(item)
-        self.__charge = db.getItem(self.chargeID) if self.chargeID is not None else None
+        if self.dummySlot is None:
+            from eos import db
+            item = db.getItem(self.itemID)
+            self.__item = item
+            self.__charge = db.getItem(self.chargeID) if self.chargeID is not None else None
+            self.build()
+        else:
+            self.__slot = self.dummySlot
+            self.__item = None
+            self.__charge = None
 
-        self.build()
+
 
     def build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__itemModifiedAttributes.original = self.item.attributes
+        if self.item is not None:
+            self.__itemModifiedAttributes.original = self.item.attributes
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         self.__hardpoint = self.__calculateHardpoint(self.item)
         self.__slot = self.__calculateSlot(self.item)
         if self.charge is not None:
             self.__chargeModifiedAttributes.original = self.charge.attributes
+
+    @classmethod
+    def buildEmpty(cls, slot):
+        empty = Module(None)
+        empty.__slot = slot
+        empty.dummySlot = slot
+        return empty
+
+    def isEmpty(self):
+        return self.item is None
 
     @property
     def hardpoint(self):
@@ -170,7 +186,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @validates("ID", "itemID", "ammoID", "state")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
-               "itemID" : lambda val: isinstance(val, int),
+               "itemID" : lambda val: val is None or isinstance(val, int),
                "state" : lambda val: isinstance(val, int) and val >= -1 and val <= 2 and
                                      (val < 1 or self.item.isType("active")) and (val < 2 or self.item.isType("overheat")),
                "ammoID" : lambda val: isinstance(val, int)}
