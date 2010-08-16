@@ -10,6 +10,7 @@ class TestAdvancedDroneInterfacing(unittest.TestCase):
         self.adii = db.getItem("Advanced Drone Interfacing")
         self.adil = 5
         self.char.addSkill(Skill(self.adii, self.adil))
+        self.fit.character = self.char
         self.dcui = db.getItem("Drone Control Unit I")
         self.dcum = Module(self.dcui)
         self.fit.modules.append(self.dcum)
