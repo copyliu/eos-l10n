@@ -7,18 +7,17 @@ class TestAdvancedDroneInterfacing(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.char = Character("testAdvancedDroneInterfacing")
-        self.adii = db.getItem("Advanced Drone Interfacing")
-        self.adil = 5
-        self.char.addSkill(Skill(self.adii, self.adil))
+        self.skill = db.getItem("Advanced Drone Interfacing")
+        self.skillLevel = 5
+        self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
-        self.dcui = db.getItem("Drone Control Unit I")
-        self.dcum = Module(self.dcui)
-        self.fit.modules.append(self.dcum)
+        self.droneControlUnit = Module(db.getItem("Drone Control Unit I"))
+        self.fit.modules.append(self.droneControlUnit)
         self.fit.calculateModifiedAttributes()
 
     def test_dcuMaxGroupActive(self):
         self.buildTested = 173608
         expected = ModifiedAttributeDict()
-        expected.original = self.dcum.item.attributes
-        expected.increase("maxGroupActive", 1 * self.adil)
-        self.assertAlmostEquals(expected["maxGroupActive"], self.dcum.getModifiedItemAttr("maxGroupActive"))
+        expected.original = self.droneControlUnit.item.attributes
+        expected.increase("maxGroupActive", 1 * self.skillLevel)
+        self.assertAlmostEquals(expected["maxGroupActive"], self.droneControlUnit.getModifiedItemAttr("maxGroupActive"))

@@ -7,31 +7,28 @@ class TestSignalAmplifierTargetingSubsystemSubcontroller(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.fit.ship = Ship(db.getItem("Rifter"))
-        self.sai = db.getItem("Signal Amplifier II")
-        self.t1tssi = db.getItem("Small Targeting System Subcontroller I")
-        self.t2tssi = db.getItem("Small Targeting System Subcontroller II")
-        self.sam = Module(self.sai)
-        self.t1tssm = Module(self.t1tssi)
-        self.t2tssm = Module(self.t2tssi)
+        self.signalAmplifier = Module(db.getItem("Signal Amplifier II"))
+        self.t1TargetingSystemSubcontroller = Module(db.getItem("Small Targeting System Subcontroller I"))
+        self.t2TargetingSystemSubcontroller = Module(db.getItem("Small Targeting System Subcontroller II"))
 
     def test_scanResolutionT1(self):
         self.buildTested = 171215
-        self.fit.modules.append(self.sam)
-        self.fit.modules.append(self.t1tssm)
+        self.fit.modules.append(self.signalAmplifier)
+        self.fit.modules.append(self.t1TargetingSystemSubcontroller)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost("scanResolution", self.sai.getAttribute("scanResolutionBonus"), stackingPenalties = False)
-        expected.multiply("scanResolution", self.t1tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
+        expected.boost("scanResolution", self.signalAmplifier.item.getAttribute("scanResolutionBonus"), stackingPenalties = False)
+        expected.multiply("scanResolution", self.t1TargetingSystemSubcontroller.item.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
 
     def test_scanResolutionT2(self):
         self.buildTested = 171215
-        self.fit.modules.append(self.sam)
-        self.fit.modules.append(self.t2tssm)
+        self.fit.modules.append(self.signalAmplifier)
+        self.fit.modules.append(self.t2TargetingSystemSubcontroller)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost("scanResolution", self.sai.getAttribute("scanResolutionBonus"), stackingPenalties = False)
-        expected.multiply("scanResolution", self.t2tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
+        expected.boost("scanResolution", self.signalAmplifier.item.getAttribute("scanResolutionBonus"), stackingPenalties = False)
+        expected.multiply("scanResolution", self.t2TargetingSystemSubcontroller.item.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
         self.assertAlmostEquals(expected["scanResolution"], self.fit.ship.getModifiedItemAttr("scanResolution"))
