@@ -7,7 +7,7 @@ class TestCombatDroneOperation(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.char = Character("testCombatDroneOperation")
-        self.skill = db.getItem("Caldari Drone Specialization")
+        self.skill = db.getItem("Combat Drone Operation")
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
