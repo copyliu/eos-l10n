@@ -4,5 +4,6 @@
 #Skill: Sentry Drone Interfacing
 type = "passive"
 def handler(fit, skill, context):
-    fit.drones.filteredItemBoost(lambda drone: drone.item.requiresSkill(skill),
-                                 "damageMultiplier", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)
+    for damageType in ("em", "explosive", "kinetic", "thermal"):
+        fit.drones.filteredItemBoost(lambda drone: drone.item.requiresSkill(skill),
+                                     damageType + "Damage", skill.getModifiedItemAttr("damageMultiplierBonus") * skill.level)

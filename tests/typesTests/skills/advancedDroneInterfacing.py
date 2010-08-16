@@ -18,7 +18,6 @@ class TestAdvancedDroneInterfacing(unittest.TestCase):
 
     def test_dcuMaxGroupActive(self):
         self.buildTested = 173608
-        original = self.dcum.item.getAttribute("maxGroupActive")
         expected = ModifiedAttributeDict()
         expected.original = self.dcum.item.attributes
         expected.increase("maxGroupActive", 1 * self.adil)
