@@ -18,7 +18,6 @@ class TestSensorBooster(unittest.TestCase):
 
     def test_scanResolution(self):
         self.buildTested = 171215
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("scanResolution", self.sbi.getAttribute("scanResolutionBonus"), stackingPenalties = True)
@@ -27,7 +26,6 @@ class TestSensorBooster(unittest.TestCase):
 
     def test_maxTargetRange(self):
         self.buildTested = 171215
-        original = self.fit.ship.item.getAttribute("maxTargetRange")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("maxTargetRange", self.sbi.getAttribute("maxTargetRangeBonus"), stackingPenalties = True)

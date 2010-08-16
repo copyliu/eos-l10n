@@ -20,7 +20,6 @@ class TestSensorBoosterTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.sbm)
         self.fit.modules.append(self.t1tssm)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("scanResolution", self.sbi.getAttribute("scanResolutionBonus"), stackingPenalties = False)
@@ -32,7 +31,6 @@ class TestSensorBoosterTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.sbm)
         self.fit.modules.append(self.t2tssm)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("scanResolution", self.sbi.getAttribute("scanResolutionBonus"), stackingPenalties = False)

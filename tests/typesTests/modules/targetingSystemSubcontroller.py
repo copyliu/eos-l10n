@@ -21,7 +21,6 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t1tssm2)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.multiply("scanResolution", self.t1tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
@@ -33,7 +32,6 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.t2tssm1)
         self.fit.modules.append(self.t2tssm2)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.multiply("scanResolution", self.t2tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = True)
@@ -45,7 +43,6 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t2tssm1)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.multiply("scanResolution", self.t1tssi.getAttribute("scanResolutionMultiplier"), stackingPenalties = False)
@@ -57,7 +54,6 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.t1tssm1)
         self.fit.modules.append(self.t2tssm2)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("shieldCapacity")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("shieldCapacity", self.t1tssi.getAttribute("drawback"), stackingPenalties = False)

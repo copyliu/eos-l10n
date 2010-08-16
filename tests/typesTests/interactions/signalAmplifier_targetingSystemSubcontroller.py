@@ -19,7 +19,6 @@ class TestSignalAmplifierTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.sam)
         self.fit.modules.append(self.t1tssm)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("scanResolution", self.sai.getAttribute("scanResolutionBonus"), stackingPenalties = False)
@@ -31,7 +30,6 @@ class TestSignalAmplifierTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.sam)
         self.fit.modules.append(self.t2tssm)
         self.fit.calculateModifiedAttributes()
-        original = self.fit.ship.item.getAttribute("scanResolution")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
         expected.boost("scanResolution", self.sai.getAttribute("scanResolutionBonus"), stackingPenalties = False)

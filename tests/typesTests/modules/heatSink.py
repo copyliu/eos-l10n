@@ -17,7 +17,6 @@ class TestHeatSink(unittest.TestCase):
         self.fit.calculateModifiedAttributes()
 
     def test_damageMultiplier(self):
-        original = self.etm.item.getAttribute("damageMultiplier")
         expected = ModifiedAttributeDict()
         expected.original = self.etm.item.attributes
         expected.multiply("damageMultiplier", self.hsi.getAttribute("damageMultiplier"), stackingPenalties = True)
@@ -25,7 +24,6 @@ class TestHeatSink(unittest.TestCase):
         self.assertAlmostEquals(expected["damageMultiplier"], self.etm.getModifiedItemAttr("damageMultiplier"))
 
     def test_speed(self):
-        original = self.etm.item.getAttribute("speed")
         expected = ModifiedAttributeDict()
         expected.original = self.etm.item.attributes
         expected.multiply("speed", self.hsi.getAttribute("speedMultiplier"), stackingPenalties = True)
