@@ -14,11 +14,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_civilian(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Civilian Hobgoblin"))
+        self.testItem = db.getItem("Civilian Hobgoblin")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -29,11 +30,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_light(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Caldari Navy Hornet"))
+        self.testItem = db.getItem("Caldari Navy Hornet")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -44,11 +46,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_medium(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Infiltrator II"))
+        self.testItem = db.getItem("Infiltrator II")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -59,11 +62,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_heavy(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("'Augmented' Wasp"))
+        self.testItem = db.getItem("'Augmented' Wasp")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -74,11 +78,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_sentry(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Imperial Navy Curator"))
+        self.testItem = db.getItem("Imperial Navy Curator")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -89,11 +94,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_fighter(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Einherji"))
+        self.testItem = db.getItem("Einherji")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -102,11 +108,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_fighterBomber(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Cyclops"))
+        self.testItem = db.getItem("Cyclops")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -115,11 +122,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_electronicWarfare(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Hobgoblin SD-300"))
+        self.testItem = db.getItem("Hobgoblin SD-300")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -130,11 +138,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_combatUtility(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Berserker SW-900"))
+        self.testItem = db.getItem("Berserker SW-900")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -145,11 +154,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_logistic(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Medium Armor Maintenance Bot II"))
+        self.testItem = db.getItem("Medium Armor Maintenance Bot II")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -160,11 +170,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_civilianMining(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Civilian Mining Drone"))
+        self.testItem = db.getItem("Civilian Mining Drone")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
@@ -173,11 +184,12 @@ class TestDroneDurability(unittest.TestCase):
 
     def test_mining(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Mining Drone I"))
+        self.testItem = db.getItem("Mining Drone I")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):

@@ -14,11 +14,12 @@ class TestCaldariDroneSpecialization(unittest.TestCase):
 
     def test_t2(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Vespa II"))
+        self.testItem = db.getItem("Vespa II")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
             skillBoost = self.skill.getAttribute("damageMultiplierBonus")
@@ -28,11 +29,12 @@ class TestCaldariDroneSpecialization(unittest.TestCase):
 
     def test_augmented(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("'Augmented' Vespa"))
+        self.testItem = db.getItem("'Augmented' Vespa")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
             skillBoost = self.skill.getAttribute("damageMultiplierBonus")
@@ -42,11 +44,12 @@ class TestCaldariDroneSpecialization(unittest.TestCase):
 
     def test_t1(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Vespa I"))
+        self.testItem = db.getItem("Vespa I")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
@@ -54,11 +57,12 @@ class TestCaldariDroneSpecialization(unittest.TestCase):
 
     def test_fighter(self):
         self.buildTested = 0
-        self.testDrone = Drone(db.getItem("Dragonfly"))
+        self.testItem = db.getItem("Dragonfly")
+        self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.testDrone.item.attributes
+        expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
