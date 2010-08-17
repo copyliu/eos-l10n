@@ -11,46 +11,55 @@ class TestCaldariDroneSpecialization(unittest.TestCase):
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
-        self.t1Vespa = Drone(db.getItem("Vespa I"))
-        self.t2Vespa = Drone(db.getItem("Vespa II"))
-        self.augmentedVespa = Drone(db.getItem("'Augmented' Vespa"))
-        self.dragonfly = Drone(db.getItem("Dragonfly"))
-        self.fit.drones.append(self.t1Vespa)
-        self.fit.drones.append(self.t2Vespa)
-        self.fit.drones.append(self.augmentedVespa)
-        self.fit.drones.append(self.dragonfly)
-        self.fit.calculateModifiedAttributes()
 
     def test_t2(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Vespa II"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.t2Vespa.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            expected.boost(damageAttribute, self.skill.getAttribute("damageMultiplierBonus") * self.skillLevel)
-            self.assertAlmostEquals(expected[damageAttribute], self.t2Vespa.getModifiedItemAttr(damageAttribute))
+            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_augmented(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("'Augmented' Vespa"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.augmentedVespa.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            expected.boost(damageAttribute, self.skill.getAttribute("damageMultiplierBonus") * self.skillLevel)
-            self.assertAlmostEquals(expected[damageAttribute], self.augmentedVespa.getModifiedItemAttr(damageAttribute))
+            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_t1(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Vespa I"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.t1Vespa.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            self.assertAlmostEquals(expected[damageAttribute], self.t1Vespa.getModifiedItemAttr(damageAttribute))
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_fighter(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Dragonfly"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.dragonfly.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            self.assertAlmostEquals(expected[damageAttribute], self.dragonfly.getModifiedItemAttr(damageAttribute))
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)

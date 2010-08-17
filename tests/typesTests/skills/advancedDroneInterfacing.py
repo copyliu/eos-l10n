@@ -20,4 +20,5 @@ class TestAdvancedDroneInterfacing(unittest.TestCase):
         expected = ModifiedAttributeDict()
         expected.original = self.droneControlUnit.item.attributes
         expected.increase("maxGroupActive", 1 * self.skillLevel)
-        self.assertAlmostEquals(expected["maxGroupActive"], self.droneControlUnit.getModifiedItemAttr("maxGroupActive"))
+        actual = self.droneControlUnit.getModifiedItemAttr("maxGroupActive")
+        self.assertAlmostEquals(expected["maxGroupActive"], actual)

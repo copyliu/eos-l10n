@@ -11,66 +11,79 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
-        self.civilianHobgoblin = Drone(db.getItem("Civilian Hobgoblin"))
-        self.t1Acolyte = Drone(db.getItem("Acolyte I"))
-        self.integratedValkyrie = Drone(db.getItem("'Integrated' Valkyrie"))
-        self.t2Praetor = Drone(db.getItem("Praetor II"))
-        self.caldariNavyWarden = Drone(db.getItem("Caldari Navy Warden"))
-        self.einherji = Drone(db.getItem("Einherji"))
-        self.fit.drones.append(self.civilianHobgoblin)
-        self.fit.drones.append(self.t1Acolyte)
-        self.fit.drones.append(self.integratedValkyrie)
-        self.fit.drones.append(self.t2Praetor)
-        self.fit.drones.append(self.caldariNavyWarden)
-        self.fit.drones.append(self.einherji)
-        self.fit.calculateModifiedAttributes()
 
     def test_civilian(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Civilian Hobgoblin"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.civilianHobgoblin.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            self.assertAlmostEquals(expected[damageAttribute], self.civilianHobgoblin.getModifiedItemAttr(damageAttribute))
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_light(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Acolyte I"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.t1Acolyte.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            expected.boost(damageAttribute, self.skill.getAttribute("damageMultiplierBonus") * self.skillLevel)
-            self.assertAlmostEquals(expected[damageAttribute], self.t1Acolyte.getModifiedItemAttr(damageAttribute))
+            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_medium(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("'Integrated' Valkyrie"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.integratedValkyrie.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            expected.boost(damageAttribute, self.skill.getAttribute("damageMultiplierBonus") * self.skillLevel)
-            self.assertAlmostEquals(expected[damageAttribute], self.integratedValkyrie.getModifiedItemAttr(damageAttribute))
+            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_heavy(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Praetor II"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.t2Praetor.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            self.assertAlmostEquals(expected[damageAttribute], self.t2Praetor.getModifiedItemAttr(damageAttribute))
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_sentry(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Caldari Navy Warden"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.caldariNavyWarden.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            self.assertAlmostEquals(expected[damageAttribute], self.caldariNavyWarden.getModifiedItemAttr(damageAttribute))
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_fighter(self):
         self.buildTested = 0
+        self.testDrone = Drone(db.getItem("Einherji"))
+        self.fit.drones.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
         expected = ModifiedAttributeDict()
-        expected.original = self.einherji.item.attributes
+        expected.original = self.testDrone.item.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            self.assertAlmostEquals(expected[damageAttribute], self.einherji.getModifiedItemAttr(damageAttribute))
+            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
+            self.assertAlmostEquals(expected[damageAttribute], actual)
