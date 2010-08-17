@@ -31,7 +31,7 @@ class TestSensorBoosterSignalAmplifier(unittest.TestCase):
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_maxTargetRange(self):
-        self.buildTested = 0
+        self.buildTested = 174282
         bonusAttrName = "maxTargetRangeBonus"
         targetAttrName = "maxTargetRange"
         penalize = True
