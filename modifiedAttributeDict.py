@@ -48,6 +48,7 @@ class ModifiedAttributeDict(object):
         self.__multipliers = {}
         self.__penalizedMultipliers = {}
         self.__affectedBy = {}
+        self.__forced = {}
         self.fit = fit
 
     def clear(self):
@@ -58,6 +59,7 @@ class ModifiedAttributeDict(object):
         self.__multipliers.clear()
         self.__penalizedMultipliers.clear()
         self.__affectedBy.clear()
+        self.__forced.clear()
 
     @property
     def original(self):
@@ -69,7 +71,9 @@ class ModifiedAttributeDict(object):
         self.__modified.clear()
 
     def __getitem__(self, key):
-        if key in self.__modified:
+        if key in self.__forced:
+            return self.__forced[key]
+        elif key in self.__modified:
             if self.__modified[key] == self.CalculationPlaceholder:
                 self.__modified[key] = self.__calculateValue(key)
             return self.__modified[key]
@@ -209,6 +213,9 @@ class ModifiedAttributeDict(object):
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
+
+    def force(self, attributeName, value):
+        self.__forced[attributeName] = value
 
 class Affliction():
     def __init__(self, type, amount):

@@ -40,3 +40,11 @@ class TestModifiedAttributeDict(unittest.TestCase):
         except KeyError:
             return
         self.fail("Expected KeyError, didn't get it.")
+
+    def test_force(self):
+        self.dict.original = self.i.attributes
+        self.dict.force("hp", 9000)
+        self.dict.increase("hp",284)
+        self.dict.multiply("hp", 2487)
+        self.dict["hp"] = 1
+        self.assertEqual(self.dict["hp"], 9000)
