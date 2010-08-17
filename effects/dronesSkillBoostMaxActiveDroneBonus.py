@@ -2,4 +2,5 @@
 #Skill: Drones
 type = "passive"
 def handler(fit, skill, context):
-    fit.maxActiveDrons += skill.getModifiedItemAttr("maxActiveDroneBonus") * skill.level
+    amount = skill.getModifiedItemAttr("maxActiveDroneBonus") * skill.level
+    fit.extraAttributes.increase("maxActiveDrones", amount)

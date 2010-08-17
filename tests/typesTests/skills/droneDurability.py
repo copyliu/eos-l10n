@@ -23,8 +23,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -39,8 +39,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -55,8 +55,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -71,8 +71,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -87,8 +87,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -131,8 +131,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -147,8 +147,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
@@ -163,8 +163,8 @@ class TestDroneDurability(unittest.TestCase):
         for layer, layerBonus in (("shieldCapacity", "shieldCapacityBonus"),
                                   ("armorHP", "armorHpBonus"),
                                   ("hp", "hullHpBonus")):
-            skillBoost = self.skill.getAttribute(layerBonus)
-            expected.boost(layer, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute(layerBonus)
+            expected.boost(layer, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 

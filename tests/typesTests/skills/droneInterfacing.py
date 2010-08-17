@@ -22,8 +22,8 @@ class TestDroneInterfacing(unittest.TestCase):
         expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
@@ -37,8 +37,8 @@ class TestDroneInterfacing(unittest.TestCase):
         expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
@@ -52,8 +52,8 @@ class TestDroneInterfacing(unittest.TestCase):
         expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
@@ -67,8 +67,8 @@ class TestDroneInterfacing(unittest.TestCase):
         expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
@@ -82,8 +82,8 @@ class TestDroneInterfacing(unittest.TestCase):
         expected.original = self.testItem.attributes
         for damageType in ("em", "explosive", "kinetic", "thermal"):
             damageAttribute = damageType + "Damage"
-            skillBoost = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBoost * self.skillLevel)
+            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
+            expected.boost(damageAttribute, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedItemAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
@@ -109,8 +109,8 @@ class TestDroneInterfacing(unittest.TestCase):
         targetAttrName = "miningAmount"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBoost = self.skill.getAttribute("miningAmountBonus")
-        expected.boost(targetAttrName, skillBoost * self.skillLevel)
+        skillBonus = self.skill.getAttribute("miningAmountBonus")
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
@@ -123,7 +123,7 @@ class TestDroneInterfacing(unittest.TestCase):
         targetAttrName = "miningAmount"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBoost = self.skill.getAttribute("miningAmountBonus")
-        expected.boost(targetAttrName, skillBoost * self.skillLevel)
+        skillBonus = self.skill.getAttribute("miningAmountBonus")
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
