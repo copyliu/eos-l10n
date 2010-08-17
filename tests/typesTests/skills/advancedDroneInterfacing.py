@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Fit, Ship, Character, Skill, Module
+from eos.types import Fit, Character, Skill, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestAdvancedDroneInterfacing(unittest.TestCase):

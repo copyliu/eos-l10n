@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Fit, Ship, Character, Skill, Drone
+from eos.types import Fit, Character, Skill, Drone
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestAmarrDroneSpecialization(unittest.TestCase):
