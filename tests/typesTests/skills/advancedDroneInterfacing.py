@@ -17,8 +17,9 @@ class TestAdvancedDroneInterfacing(unittest.TestCase):
 
     def test_dcuMaxGroupActive(self):
         self.buildTested = 173608
+        targetAttrName = "maxGroupActive"
         expected = ModifiedAttributeDict()
         expected.original = self.droneControlUnit.item.attributes
-        expected.increase("maxGroupActive", 1 * self.skillLevel)
-        actual = self.droneControlUnit.getModifiedItemAttr("maxGroupActive")
-        self.assertAlmostEquals(expected["maxGroupActive"], actual)
+        expected.increase(targetAttrName, 1 * self.skillLevel)
+        actual = self.droneControlUnit.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)

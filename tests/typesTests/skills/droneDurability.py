@@ -6,7 +6,7 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 class TestDroneDurability(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
-        self.char = Character("testDroneDurability")
+        self.char = Character("testSkill")
         self.skill = db.getItem("Drone Durability")
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))

@@ -6,7 +6,7 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 class TestDroneInterfacing(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
-        self.char = Character("testDroneInterfacing")
+        self.char = Character("testSkill")
         self.skill = db.getItem("Drone Interfacing")
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))
@@ -99,21 +99,23 @@ class TestDroneInterfacing(unittest.TestCase):
         self.testDrone = Drone(db.getItem("Civilian Mining Drone"))
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "miningAmount"
         expected = ModifiedAttributeDict()
         expected.original = self.testDrone.item.attributes
         skillBoost = self.skill.getAttribute("miningAmountBonus")
-        expected.boost("miningAmount", skillBoost * self.skillLevel)
-        actual = self.testDrone.getModifiedItemAttr("miningAmount")
-        self.assertAlmostEquals(expected["miningAmount"], actual)
+        expected.boost(targetAttrName, skillBoost * self.skillLevel)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_miningBonusT2(self):
         self.buildTested = 0
         self.testDrone = Drone(db.getItem("Mining Drone II"))
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "miningAmount"
         expected = ModifiedAttributeDict()
         expected.original = self.testDrone.item.attributes
         skillBoost = self.skill.getAttribute("miningAmountBonus")
-        expected.boost("miningAmount", skillBoost * self.skillLevel)
-        actual = self.testDrone.getModifiedItemAttr("miningAmount")
-        self.assertAlmostEquals(expected["miningAmount"], actual)
+        expected.boost(targetAttrName, skillBoost * self.skillLevel)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)

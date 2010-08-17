@@ -6,7 +6,7 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 class TestAmarrDroneSpecialization(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
-        self.char = Character("testAmarrDroneSpecialization")
+        self.char = Character("testSkill")
         self.skill = db.getItem("Amarr Drone Specialization")
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))
@@ -27,6 +27,7 @@ class TestAmarrDroneSpecialization(unittest.TestCase):
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
     def test_augmented(self):
+        self.buildTested = 0
         self.testDrone = Drone(db.getItem("'Augmented' Infiltrator"))
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
