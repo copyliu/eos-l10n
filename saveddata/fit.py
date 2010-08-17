@@ -285,21 +285,20 @@ class Fit(object):
         return self.__capRecharge
 
     def __generateDrain(self, variance):
-        def mapper(mod):
-            cycleTime = mod.getCycleTime()
-            drain = mod.getModifiedItemAttr("capacitorNeed")
-            def gauss(t):
-                return drain * gaussian(cycleTime / 2.0, variance)(t)
+        drains = []
+        totalDrain = 0
+        for mod in self.modules:
+            if mod.getModifiedItemAttr("capacitorNeed") is not None:
+                cycleTime = mod.getCycleTime()
+                drain = mod.getModifiedItemAttr("capacitorNeed")
+                drains.append((cycleTime, lambda t: drain * gaussian(cycleTime / 2.0, variance)(t)))
+                totalDrain += drain
 
-            return (cycleTime, gauss)
-
-        mods = filter(lambda mod: mod.getModifiedItemAttr("capacitorNeed") is not None, self.modules)
-        drains = map(mapper, mods)
         def result(t):
             m = map(lambda x: x[1](t % x[0]), drains)
             return sum(m)
 
-        return result
+        return result, totalDrain
 
     def calculateSustainableTank(self):
         if self.__sustainableTank is None:
@@ -405,14 +404,19 @@ class Fit(object):
             self.__capState = mid * 100
         else:
             VARIANCE = 0.1
+            d, totalDrain = self.__generateDrain(VARIANCE)
             capCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-            currentCap = capCapacity
-            #Solve the cap stuff by integrating and solving it
-            r = self.calculateCapRechargeAbs
-            d = self.__generateDrain(VARIANCE)
-            f_prime = lambda t, y: r(y) - d(t)
             self.__capStable = False
-            self.__capState = solve(f_prime, capCapacity)
+
+            #Check for a single cycle kill. Our algorithm doesn't calculate it right.
+            if totalDrain > capCapacity:
+                self.__capState = 0
+            else:
+                currentCap = capCapacity
+                #Solve the cap stuff by integrating and solving it
+                r = self.calculateCapRechargeAbs
+                f_prime = lambda t, y: r(y) - d(t)
+                self.__capState = solve(f_prime, capCapacity)
 
     def getEhp(self):
         if self.__ehp is None:
