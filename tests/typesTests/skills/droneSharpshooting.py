@@ -19,9 +19,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -33,9 +33,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -47,9 +47,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -61,9 +61,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -75,9 +75,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -101,9 +101,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -115,9 +115,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -129,9 +129,9 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
+        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)

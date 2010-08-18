@@ -19,9 +19,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -33,9 +33,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -47,9 +47,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -61,9 +61,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -99,9 +99,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -113,9 +113,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
@@ -127,9 +127,9 @@ class TestDroneNavigation(unittest.TestCase):
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxVelocity"
+        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        skillBonus = self.skill.getAttribute("droneMaxVelocityBonus")
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)

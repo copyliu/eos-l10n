@@ -18,12 +18,11 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "damageMultiplier"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_light(self):
         self.buildTested = 0
@@ -31,14 +30,13 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "damageMultiplier"
+        skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBonus * self.skillLevel)
-            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_medium(self):
         self.buildTested = 0
@@ -46,14 +44,13 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "damageMultiplier"
+        skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBonus * self.skillLevel)
-            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_heavy(self):
         self.buildTested = 0
@@ -61,12 +58,11 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "damageMultiplier"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_sentry(self):
         self.buildTested = 0
@@ -74,12 +70,11 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "damageMultiplier"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_fighter(self):
         self.buildTested = 0
@@ -87,9 +82,8 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.testDrone = Drone(self.testItem)
         self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
+        targetAttrName = "damageMultiplier"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            actual = self.testDrone.getModifiedItemAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
