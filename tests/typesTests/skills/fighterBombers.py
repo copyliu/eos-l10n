@@ -75,19 +75,3 @@ class TestFighterBombers(unittest.TestCase):
             expected.boost(damageAttribute, skillBonus * self.skillLevel)
             actual = self.testDrone.getModifiedChargeAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
-
-    def test_amarr(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Malleus")
-        self.testDrone = Drone(self.testItem)
-        self.testCharge = self.testDrone.charge
-        self.fit.drones.append(self.testDrone)
-        self.fit.calculateModifiedAttributes()
-        expected = ModifiedAttributeDict()
-        expected.original = self.testCharge.attributes
-        for damageType in ("em", "explosive", "kinetic", "thermal"):
-            damageAttribute = damageType + "Damage"
-            skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-            expected.boost(damageAttribute, skillBonus * self.skillLevel)
-            actual = self.testDrone.getModifiedChargeAttr(damageAttribute)
-            self.assertAlmostEquals(expected[damageAttribute], actual)
