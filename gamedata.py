@@ -123,7 +123,7 @@ class Item(object):
             #I'll discuss each of them as we do it
             #1: If a ship belongs to the ORE market group, it'll be tagged as ORE
             if self.marketGroup and self.marketGroup.name == "ORE":
-                return "ORE"
+                return "ore"
 
             #2: Items can only have a single raceID
             #   For pirate ships, we'll have to check the races of the skills
@@ -147,8 +147,8 @@ class Item(object):
 
             for matcher, race in map.iteritems():
                 match = True
-                for raceID in skillRaces:
-                    if not raceID in matcher:
+                for raceID in matcher:
+                    if not raceID in skillRaces:
                         match = False
                         break
                 if match:
