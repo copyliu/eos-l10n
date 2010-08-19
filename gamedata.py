@@ -145,18 +145,21 @@ class Item(object):
                    (4,): "amarr",
                    (8,): "gallente"}
 
-            for matcher, race in map.iteritems():
+            #Need to make sure the matchers are run in this order, the longest ones first.
+            order = ((1, 8), (1, 4), (2, 4), (2, 8), (1,), (2,), (4,), (8,))
+
+            for matcher in order:
                 match = True
                 for raceID in matcher:
                     if not raceID in skillRaces:
                         match = False
                         break
                 if match:
-                    self.__race = race
+                    self.__race = map[matcher]
                     break
 
             #3: Special handling for angel/serpentis
-            if race == "angelserp":
+            if self.__race == "angelserp":
                 if self.raceID == 2:
                     self.__race = "angel"
                 else:

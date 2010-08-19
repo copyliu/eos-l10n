@@ -8,7 +8,7 @@ class TestItem(unittest.TestCase):
         self.assertEqual(i.race, "angel")
 
         ii = db.getItem("Punisher")
-        self.assertEqual(i.race, "amarr")
+        self.assertEqual(ii.race, "amarr")
 
     def test_RequiredSkills(self):
         i = db.getItem("Dramiel")
