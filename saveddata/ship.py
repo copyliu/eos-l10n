@@ -23,7 +23,7 @@ from eos.effectHandlerHelpers import HandledItem
 class Ship(ItemAttrShortcut, HandledItem):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate",
                               "scanResolution", "signatureRadius", "hp", "armorHP", "shieldCapacity",
-                              "maxVelocity", "agility", "hiSlots", "medSlots", "lowSlots")
+                              "maxVelocity", "agility")
 
     def __init__(self, item):
         for requiredAttr in self.REQUIRED_ATTRIBUTES:
