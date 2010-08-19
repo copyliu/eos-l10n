@@ -24,7 +24,7 @@ from itertools import chain, count
 from copy import deepcopy
 from math import sqrt, pi, exp
 from eos.solverMath import gaussian, solve
-from eos.types import Drone, Ship, Character, State, Hardpoint
+from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -41,7 +41,7 @@ class Fit(object):
     PEAK_RECHARGE = -(sqrt(2) - 2 ) / 2
 
     def __init__(self):
-        self.__modules = HandledList()
+        self.__modules = HandledModuleList()
         self.__drones = HandledDroneList()
         self.__implants = HandledImplantBoosterList()
         self.__boosters = HandledImplantBoosterList()
@@ -228,6 +228,42 @@ class Fit(object):
 
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
+
+    def fill(self):
+        """
+        Fill this fit's module slots with enough dummy slots so that all slots are used.
+        This is mostly for making the life of gui's easier.
+        GUI's can call fill() and then stop caring about empty slots completely.
+        """
+        if self.ship is None:
+            return
+
+        slotsFree = {}
+        slots = {"lowSlots": Slot.LOW,
+                 "medSlots": Slot.MED,
+                 "hiSlots": Slot.HIGH,
+                 "rigSlots": Slot.RIG,
+                 "maxSubsystems": Slot.SUBSYSTEM}
+
+        for slotType, constant in slots.items():
+            slotsFree[constant] = self.ship.getModifiedItemAttr(slotType)
+
+        for mod in self.modules:
+            slotsFree[mod.slot] -= 1
+
+        for slotType, amount in slotsFree.items():
+            if amount > 0:
+                for i in xrange(int(amount)):
+                    self.modules.append(Module.buildEmpty(slotType))
+
+            if amount < 0:
+                #Look for any dummies of that type to remove
+                for mod in self.modules:
+                    if mod.isEmpty() and mod.slot == slotType:
+                        self.modules.remove(mod)
+                        amount += 1
+                        if amount == 0:
+                            break
 
     def getHardpointsUsed(self, type):
         amount = 0
@@ -496,8 +532,15 @@ class Fit(object):
 
 class HandledModuleList(HandledList):
     def append(self, mod):
-        l = len(self)
-        mod.position = l
+        for i in xrange(len(self)):
+            currMod = self[i]
+            if currMod.isEmpty() and not mod.isEmpty() and currMod.slot == mod.slot:
+                del self[i]
+                mod.position = i
+                HandledList.insert(self, i, mod)
+                return
+
+        mod.position = len(self)
         HandledList.append(self, mod)
 
     def insert(self, index, mod):
@@ -512,10 +555,8 @@ class HandledModuleList(HandledList):
         HandledList.remove(self, mod)
         oldPos = mod.position
         mod.position = None
-        i = oldPos
-        while i < len(self):
+        for i in xrange(oldPos, len(self)):
             self[i].position -= 1
-            i += 1
 
 class HandledDroneList(HandledList):
     def __init__(self):

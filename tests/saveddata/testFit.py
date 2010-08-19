@@ -1,5 +1,5 @@
 import unittest
-from eos.types import Fit, Character, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
+from eos.types import Fit, Character, Slot, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
 from eos import db
 import eos.db.saveddata.queries
 import sqlalchemy.orm
@@ -327,3 +327,18 @@ class TestFit(unittest.TestCase):
         f.modules.append(Module(db.getItem("Salvager I")))
         self.assertEquals(f.getHardpointsUsed(Hardpoint.MISSILE), 1)
         self.assertEquals(f.getHardpointsUsed(Hardpoint.TURRET), 1)
+
+    def test_fill(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.fill()
+        self.assertEquals(len(f.modules), 13)
+
+    def test_fillTooMuchDummies(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        for i in xrange(5):
+            f.modules.append(Module.buildEmpty(Slot.LOW))
+
+        f.fill()
+        self.assertEquals(len(f.modules), 13)
