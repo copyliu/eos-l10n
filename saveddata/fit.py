@@ -34,7 +34,7 @@ class Fit(object):
                         "capBoost": 0,
                         "capDrain": 0,
                         "maxActiveDrones": 0,
-                        "maxTargetsLockedFromSkill": 0,
+                        "maxTargetsLockedFromSkills": 0,
                         "droneControlRange": 0,
                         "cloaked": False}
 
