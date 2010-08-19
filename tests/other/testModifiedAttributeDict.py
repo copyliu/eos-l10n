@@ -48,3 +48,14 @@ class TestModifiedAttributeDict(unittest.TestCase):
         self.dict.multiply("hp", 2487)
         self.dict["hp"] = 1
         self.assertEqual(self.dict["hp"], 9000)
+
+    def test_newValue(self):
+        self.dict.original = {}
+        self.dict["test"] = 3
+        self.dict.increase("test", 5)
+        self.assertEqual(self.dict["test"], 8)
+
+    def test_increaseInexistent(self):
+        self.dict.original = {}
+        self.dict.increase("test", 5)
+        self.assertEquals(self.dict["test"], 5)
