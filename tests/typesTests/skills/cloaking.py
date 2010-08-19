@@ -1,11 +1,12 @@
 import unittest
 from eos import db
-from eos.types import Fit, Character, Skill, Module
+from eos.types import Fit, Ship, Character, Skill, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestCloaking(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
+        self.fit.ship = Ship(db.getItem("Anathema"))
         self.char = Character("testSkill")
         self.skill = db.getItem("Cloaking")
         self.skillLevel = 5
