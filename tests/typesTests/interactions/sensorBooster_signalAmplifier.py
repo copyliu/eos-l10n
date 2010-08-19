@@ -21,12 +21,12 @@ class TestSensorBoosterSignalAmplifier(unittest.TestCase):
         bonusAttrName = "scanResolutionBonus"
         targetAttrName = "scanResolution"
         penalize = True
-        bonusAttrVal1 = self.testItem1.getAttribute(bonusAttrName)
-        bonusAttrVal2 = self.testItem2.getAttribute(bonusAttrName)
+        mod1Bonus = self.testItem1.getAttribute(bonusAttrName)
+        mod2Bonus = self.testItem2.getAttribute(bonusAttrName)
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, bonusAttrVal1, stackingPenalties = penalize)
-        expected.boost(targetAttrName, bonusAttrVal2, stackingPenalties = penalize)
+        expected.boost(targetAttrName, mod1Bonus, stackingPenalties = penalize)
+        expected.boost(targetAttrName, mod2Bonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
@@ -35,11 +35,11 @@ class TestSensorBoosterSignalAmplifier(unittest.TestCase):
         bonusAttrName = "maxTargetRangeBonus"
         targetAttrName = "maxTargetRange"
         penalize = True
-        bonusAttrVal1 = self.testItem1.getAttribute(bonusAttrName)
-        bonusAttrVal2 = self.testItem2.getAttribute(bonusAttrName)
+        mod1Bonus = self.testItem1.getAttribute(bonusAttrName)
+        mod2Bonus = self.testItem2.getAttribute(bonusAttrName)
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, bonusAttrVal1, stackingPenalties = penalize)
-        expected.boost(targetAttrName, bonusAttrVal2, stackingPenalties = penalize)
+        expected.boost(targetAttrName, mod1Bonus, stackingPenalties = penalize)
+        expected.boost(targetAttrName, mod2Bonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)

@@ -16,38 +16,35 @@ class TestSignalAmplifier(unittest.TestCase):
 
     def test_scanResolution(self):
         self.buildTested = 171215
-        bonusAttrName = "scanResolutionBonus"
         targetAttrName = "scanResolution"
         penalize = True
-        bonusAttrVal = self.testItem.getAttribute(bonusAttrName)
+        modBonus = self.testItem.getAttribute("scanResolutionBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
-        expected.boost(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
+        expected.boost(targetAttrName, modBonus, stackingPenalties = penalize)
+        expected.boost(targetAttrName, modBonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_maxTargetRange(self):
         self.buildTested = 171215
-        bonusAttrName = "maxTargetRangeBonus"
         targetAttrName = "maxTargetRange"
         penalize = True
-        bonusAttrVal = self.testItem.getAttribute(bonusAttrName)
+        modBonus = self.testItem.getAttribute("maxTargetRangeBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
-        expected.boost(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
+        expected.boost(targetAttrName, modBonus, stackingPenalties = penalize)
+        expected.boost(targetAttrName, modBonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
     def test_maxLockedTargets(self):
         self.buildTested = 171215
-        bonusAttrName = "maxLockedTargetsBonus"
         targetAttrName = "maxLockedTargets"
-        bonusAttrVal = self.testItem.getAttribute(bonusAttrName)
+        modBonus = self.testItem.getAttribute("maxLockedTargetsBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.increase(targetAttrName, bonusAttrVal)
-        expected.increase(targetAttrName, bonusAttrVal)
+        expected.increase(targetAttrName, modBonus)
+        expected.increase(targetAttrName, modBonus)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)

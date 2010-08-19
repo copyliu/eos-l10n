@@ -21,14 +21,13 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.testModT1_1)
         self.fit.modules.append(self.testModT1_2)
         self.fit.calculateModifiedAttributes()
-        bonusAttrName = "scanResolutionMultiplier"
         targetAttrName = "scanResolution"
         penalize = True
-        bonusAttrVal = self.testItemT1.getAttribute(bonusAttrName)
+        modBonus = self.testItemT1.getAttribute("scanResolutionMultiplier")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.multiply(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
-        expected.multiply(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
+        expected.multiply(targetAttrName, modBonus, stackingPenalties = penalize)
+        expected.multiply(targetAttrName, modBonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
@@ -37,14 +36,13 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         self.fit.modules.append(self.testModT2_1)
         self.fit.modules.append(self.testModT2_2)
         self.fit.calculateModifiedAttributes()
-        bonusAttrName = "scanResolutionMultiplier"
         targetAttrName = "scanResolution"
         penalize = True
-        bonusAttrVal = self.testItemT2.getAttribute(bonusAttrName)
+        modBonus = self.testItemT2.getAttribute("scanResolutionMultiplier")
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.multiply(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
-        expected.multiply(targetAttrName, bonusAttrVal, stackingPenalties = penalize)
+        expected.multiply(targetAttrName, modBonus, stackingPenalties = penalize)
+        expected.multiply(targetAttrName, modBonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
@@ -56,12 +54,12 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         bonusAttrName = "scanResolutionMultiplier"
         targetAttrName = "scanResolution"
         penalize = False
-        bonusAttrVal1 = self.testItemT1.getAttribute(bonusAttrName)
-        bonusAttrVal2 = self.testItemT2.getAttribute(bonusAttrName)
+        mod1Bonus = self.testItemT1.getAttribute(bonusAttrName)
+        mod2Bonus = self.testItemT2.getAttribute(bonusAttrName)
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.multiply(targetAttrName, bonusAttrVal1, stackingPenalties = penalize)
-        expected.multiply(targetAttrName, bonusAttrVal2, stackingPenalties = penalize)
+        expected.multiply(targetAttrName, mod1Bonus, stackingPenalties = penalize)
+        expected.multiply(targetAttrName, mod2Bonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
@@ -73,11 +71,11 @@ class TestTargetingSubsystemSubcontroller(unittest.TestCase):
         bonusAttrName = "drawback"
         targetAttrName = "shieldCapacity"
         penalize = False
-        bonusAttrVal1 = self.testItemT1.getAttribute(bonusAttrName)
-        bonusAttrVal2 = self.testItemT2.getAttribute(bonusAttrName)
+        mod1Bonus = self.testItemT1.getAttribute(bonusAttrName)
+        mod2Bonus = self.testItemT2.getAttribute(bonusAttrName)
         expected = ModifiedAttributeDict()
         expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, bonusAttrVal1, stackingPenalties = penalize)
-        expected.boost(targetAttrName, bonusAttrVal2, stackingPenalties = penalize)
+        expected.boost(targetAttrName, mod1Bonus, stackingPenalties = penalize)
+        expected.boost(targetAttrName, mod2Bonus, stackingPenalties = penalize)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
