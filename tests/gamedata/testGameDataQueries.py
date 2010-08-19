@@ -24,3 +24,7 @@ class TestGameDataQueries(unittest.TestCase):
     def test_getGroup(self):
         g = db.getGroup(920)
         self.assertEquals(g.name, "Effect Beacon")
+
+    def test_getCategory(self):
+        c = db.getCategory(6)
+        self.assertEquals(c.name, "Ship")

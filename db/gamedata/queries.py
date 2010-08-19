@@ -62,6 +62,15 @@ def getGroup(group):
     return gamedata_session.query(Group).filter(filter).one()
 
 @cachedQuery
+def getCategory(category):
+    if isinstance(category, basestring):
+        filter = Category.name == category
+    elif isinstance(category, int):
+        filter = Category.ID == category
+
+    return gamedata_session.query(Category).filter(filter).one()
+
+@cachedQuery
 def getMarketGroup(group):
     if isinstance(group, basestring):
         filter = MarketGroup.name == group

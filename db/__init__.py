@@ -46,5 +46,5 @@ from .gamedata import *
 from .saveddata import *
 
 #Import queries
-from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup
+from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory
 from .saveddata.queries import getUser, getCharacter, getFit
