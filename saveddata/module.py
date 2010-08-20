@@ -18,8 +18,9 @@
 #===============================================================================
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
-from sqlalchemy.orm import validates, reconstructor
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
+import eos.db
+from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
 
 class State():
@@ -44,37 +45,45 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     """An instance of this class represents a module together with its charge and modified attributes"""
 
     def __init__(self, item):
-        self.__item = item
+        self.__item = item if item != None else 0
         self.itemID = item.ID if item is not None else None
-        self.__charge = None
+        self.__charge = 0
         self.projected = False
         self.state = State.ONLINE
-        self.build()
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        if item != None:
+            self.__itemModifiedAttributes.original = item.attributes
+            self.__hardpoint = self.__calculateHardpoint(item)
+            self.__slot = self.__calculateSlot(item)
+
+        self.__chargeModifiedAttributes = ModifiedAttributeDict()
 
     @reconstructor
     def init(self):
         if self.dummySlot is None:
-            from eos import db
-            item = db.getItem(self.itemID)
-            self.__item = item
-            self.__charge = db.getItem(self.chargeID) if self.chargeID is not None else None
-            self.build()
-        else:
-            self.__slot = self.dummySlot
             self.__item = None
             self.__charge = None
+        else:
+            self.__slot = self.dummySlot
+            self.__item = 0
+            self.__charge = 0
 
-
-
-    def build(self):
+    def __fetchItemInfo(self):
+        item = eos.db.getItem(self.itemID)
+        self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
-        if self.item is not None:
-            self.__itemModifiedAttributes.original = self.item.attributes
+        self.__itemModifiedAttributes.original = item.attributes
+        self.__hardpoint = self.__calculateHardpoint(item)
+        self.__slot = self.__calculateSlot(item)
+
+    def __fetchChargeInfo(self):
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
-        self.__hardpoint = self.__calculateHardpoint(self.item)
-        self.__slot = self.__calculateSlot(self.item)
-        if self.charge is not None:
-            self.__chargeModifiedAttributes.original = self.charge.attributes
+        if self.chargeID is not None:
+            charge = eos.db.getItem(self.chargeID)
+            self.__charge = charge
+            self.__chargeModifiedAttributes.original = charge.attributes
+        else:
+            self.__charge = 0
 
     @classmethod
     def buildEmpty(cls, slot):
@@ -88,6 +97,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def hardpoint(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__hardpoint
 
     @property
@@ -102,24 +114,39 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def slot(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__slot
 
 
     @property
     def itemModifiedAttributes(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__itemModifiedAttributes
 
     @property
     def chargeModifiedAttributes(self):
+        if self.__charge is None:
+            self.__fetchChargeInfo()
+
         return self.__chargeModifiedAttributes
 
     @property
     def item(self):
-        return self.__item
+        if self.__item is None:
+            self.__fetchItemInfo()
+
+        return self.__item if self.__item != 0 else None
 
     @property
     def charge(self):
-        return self.__charge
+        if self.__charge is None:
+            self.__fetchChargeInfo()
+
+        return self.__charge if self.__charge != 0 else None
 
     @charge.setter
     def charge(self, charge):

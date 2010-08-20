@@ -21,6 +21,7 @@ from eos.effectHandlerHelpers import HandledItem
 from eos.modifiedAttributeDict import ItemAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
 from eos.types import Item
+import eos.db
 from copy import deepcopy
 
 class Character(object):
@@ -144,9 +145,8 @@ class Skill(HandledItem):
 
     @reconstructor
     def init(self):
-        from eos import db
-        self.__item = db.getItem(self.itemID)
         self.build(False)
+        self.__item = None
 
     def build(self, ro):
         self.__ro = ro
@@ -154,6 +154,9 @@ class Skill(HandledItem):
 
     @property
     def item(self):
+        if self.__item is None:
+            self.__item = eos.db.getItem(self.itemID)
+
         return self.__item
 
     def getModifiedItemAttr(self, key):

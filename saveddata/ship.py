@@ -19,6 +19,7 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
+import eos.db
 
 class Ship(ItemAttrShortcut, HandledItem):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate",
@@ -26,17 +27,26 @@ class Ship(ItemAttrShortcut, HandledItem):
                               "maxVelocity", "agility")
 
     def __init__(self, item):
+        self.__item = item
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        if not isinstance(item, int):
+            self.__itemModifiedAttributes.original = item.attributes
+
         for requiredAttr in self.REQUIRED_ATTRIBUTES:
             if not requiredAttr in  item.attributes:
                 raise ValueError("Passed item is not a ship, missing: %s" % requiredAttr)
 
-        self.__item = item
-        self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__itemModifiedAttributes.original = item.attributes
         self.commandBonus = 0
+
+    def __fetchItemInfo(self):
+        self.__item = eos.db.getItem(self.__item)
+        self.__itemModifiedAttributes.original = self.__item.attributes
 
     @property
     def item(self):
+        if isinstance(self.__item, int):
+            self.__fetchItemInfo()
+
         return self.__item
 
     @property

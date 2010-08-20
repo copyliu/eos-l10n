@@ -19,6 +19,7 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
+import eos.db
 from sqlalchemy.orm import reconstructor, validates
 import traceback
 
@@ -28,16 +29,13 @@ class Booster(HandledItem, ItemAttrShortcut):
         self.itemID = item.ID
         self.__item = item
         self.active = True
-        self.__build()
+        self.build()
 
     @reconstructor
     def init(self):
-        from eos import db
-        self.__item = db.getItem(self.itemID)
-        self.__slot = self.__calculateSlot(self.__item)
-        self.__build()
+        self.__item = None
 
-    def __build(self):
+    def build(self):
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__itemModifiedAttributes.original = self.__item.attributes
         self.__sideEffects = []
@@ -47,6 +45,11 @@ class Booster(HandledItem, ItemAttrShortcut):
                 s.effect = effect
                 s.active = effect.ID in self.__activeSideEffectIDs
                 self.__sideEffects.append(s)
+
+    def __fetchItemInfo(self):
+        self.__item = eos.db.getItem(self.itemID)
+        self.__slot = self.__calculateSlot(self.__item)
+        self.build()
 
     def iterSideEffects(self):
         return self.__sideEffects.__iter__()
@@ -60,14 +63,23 @@ class Booster(HandledItem, ItemAttrShortcut):
 
     @property
     def itemModifiedAttributes(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__itemModifiedAttributes
 
     @property
     def slot(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__slot
 
     @property
     def item(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__item
 
     def __calculateSlot(self, item):

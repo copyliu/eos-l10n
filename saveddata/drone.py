@@ -18,56 +18,74 @@
 #===============================================================================
 
 from eos.types import Item
+import eos.db
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
+
 class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def __init__(self, item):
         if item.category.name != "Drone":
             raise ValueError("Passed item is not a drone")
 
         self.__item = item
+        self.__charge = None
         self.itemID = item.ID
         self.amount = 0
         self.amountActive = 0
         self.projected = False
-        self.build()
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.itemModifiedAttributes.original = self.item.attributes
 
     @reconstructor
     def init(self):
-        from eos import db
-        self.__item = db.getItem(self.itemID)
-        self.build()
+        self.__item = None
+        self.__charge = None
 
-    def build(self):
-        from eos import db
+    def __fetchItemInfo(self):
+        self.__item = eos.db.getItem(self.itemID)
+        self.__charge = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
-        self.__chargeModifiedAttributes = ModifiedAttributeDict()
-        self.itemModifiedAttributes.original = self.item.attributes
+        self.__itemModifiedAttributes.original = self.item.attributes
+
+    def __fetchChargeInfo(self):
         chargeID = self.getModifiedItemAttr("entityMissileTypeID")
+        self.__chargeModifiedAttributes = ModifiedAttributeDict()
         if chargeID is not None:
-            charge = db.getItem(int(chargeID))
+            charge = eos.db.getItem(int(chargeID))
             self.__charge = charge
-            self.__chargeModifiedAttributes = ModifiedAttributeDict()
+
             self.chargeModifiedAttributes.original = charge.attributes
         else:
-            self.__charge = None
+            self.__charge = 0
 
     @property
     def itemModifiedAttributes(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__itemModifiedAttributes
 
     @property
     def chargeModifiedAttributes(self):
+        if self.__charge is None:
+            self.__fetchChargeInfo()
+
         return self.__chargeModifiedAttributes
 
     @property
     def item(self):
+        if self.__item is None:
+            self.__fetchItemInfo()
+
         return self.__item
 
     @property
     def charge(self):
-        return self.__charge
+        if self.__charge is None:
+            self.__fetchChargeInfo()
+
+        return self.__charge if self.__charge != 0 else None
 
     @validates("ID", "itemID", "chargeID", "amount", "amountActive")
     def validator(self, key, val):
