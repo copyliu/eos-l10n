@@ -37,10 +37,11 @@ gamedata_session = sessionmaker(bind=gamedata_engine, autoflush = False)()
 #Make gamedata_session read only
 gamedata_session.flush = abort_ro
 
-saveddata_engine = create_engine(config.saveddata_connectionstring, echo = config.debug)
-saveddata_meta = MetaData()
-saveddata_meta.bind = saveddata_engine
-saveddata_session = sessionmaker(bind=saveddata_engine, autoflush = False)()
+if config.saveddata_connectionstring is not None:
+    saveddata_engine = create_engine(config.saveddata_connectionstring, echo = config.debug)
+    saveddata_meta = MetaData()
+    saveddata_meta.bind = saveddata_engine
+    saveddata_session = sessionmaker(bind=saveddata_engine, autoflush = False)()
 
 
 #Import all the definitions for all our database stuff
