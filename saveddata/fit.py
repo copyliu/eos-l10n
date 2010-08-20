@@ -513,7 +513,7 @@ class Fit(object):
     def __deepcopy__(self, memo):
         copy = Fit()
         #Character and owner are not copied
-        copy.character = self.character
+        copy.character = self.__character
         copy.owner = self.owner
         copy.ship = deepcopy(self.ship, memo)
         copy.name = "%s copy" % self.name
