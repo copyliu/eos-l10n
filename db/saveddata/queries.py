@@ -19,6 +19,7 @@
 
 from eos.db import saveddata_session
 from eos.types import User, Character, Fit
+from sqlalchemy.sql import and_
 
 def getUser(lookfor):
     if isinstance(lookfor, int): return saveddata_session.query(User).filter(User.ID == lookfor).one()
@@ -31,3 +32,14 @@ def getCharacter(lookfor):
 
 def getFit(fitID):
     return saveddata_session.query(Fit).filter(Fit.ID == fitID).one()
+
+def getFitsWithShip(shipID, ownerID=None):
+    """
+    Get all the fits using a certain ship.
+    If no user is passed, do this for all users.
+    """
+    filter = Fit.shipID == shipID
+    if ownerID is not None:
+        filter = _and(filter, Fit.ownerID == ownerID)
+
+    return saveddata_session.query(Fit).filter(filter).all()

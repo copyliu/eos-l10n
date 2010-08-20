@@ -32,7 +32,7 @@ from eos.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
 
 fits_table = Table("fits", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
-                         Column("ownerID", ForeignKey("users.ID"), nullable = False),
+                         Column("ownerID", ForeignKey("users.ID"), nullable = True),
                          Column("shipID", Integer, nullable = False),
                          Column("name", String, nullable = False),
                          Column("characterID", ForeignKey("characters.ID"), nullable = True),
