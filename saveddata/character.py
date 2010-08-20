@@ -183,7 +183,7 @@ class Skill(HandledItem):
 
     @validates("characterID", "skillID", "level")
     def validator(self, key, val):
-        if hasattr(self, "_Skill__ro") and self.__ro == True:
+        if hasattr(self, "_Skill__ro") and self.__ro == True and key != "characterID":
             raise ReadOnlyException()
 
         map = {"characterID": lambda val: isinstance(val, int),

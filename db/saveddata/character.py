@@ -28,7 +28,7 @@ characters_table = Table("characters", saveddata_meta,
                          Column("name", String, nullable = False),
                          Column("apiID", Integer),
                          Column("apiKey", String),
-                         Column("ownerID", ForeignKey("users.ID"), nullable = False))
+                         Column("ownerID", ForeignKey("users.ID"), nullable = True))
 
 mapper(Character, characters_table,
        properties = {"_Character__owner" : relation(User, backref = "characters"),
