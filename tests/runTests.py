@@ -22,6 +22,7 @@ path = os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))
 sys.path.append(os.path.realpath(os.path.join(path, "..", "..")))
 
 from eos import config
+from eos import db
 
 config.debug = False
 config.saveddata_connectionstring = "sqlite:///:memory:"

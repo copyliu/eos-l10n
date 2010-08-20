@@ -20,6 +20,7 @@
 from sqlalchemy import MetaData,  create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
 from eos import config
 
 class ReadOnlyException(Exception):
@@ -41,6 +42,7 @@ saveddata_meta = MetaData()
 saveddata_meta.bind = saveddata_engine
 saveddata_session = sessionmaker(bind=saveddata_engine, autoflush = False)()
 
+
 #Import all the definitions for all our database stuff
 from .gamedata import *
 from .saveddata import *
@@ -48,3 +50,7 @@ from .saveddata import *
 #Import queries
 from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory
 from .saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip
+
+#If using in memory saveddata, you'll want to reflect it so the data structure is good.
+if config.saveddata_connectionstring == "sqlite:///:memory:":
+    saveddata_meta.create_all()

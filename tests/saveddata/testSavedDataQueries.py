@@ -2,9 +2,6 @@ import unittest
 from eos.types import Fit, Character, User
 from eos import db
 
-#Some setup for this test
-db.saveddata_meta.create_all()
-
 #Add some test data
 u = User("test", "testy", False)
 c = Character("TESTY")
