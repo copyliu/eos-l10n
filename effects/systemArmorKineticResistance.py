@@ -3,4 +3,4 @@
 #Celestials named like: Wolf Rayet Effect Beacon Class (6 of 6)
 type = "projected"
 def handler(fit, beacon, context):
-    fit.ship.multiplyItemAttr("armorKineticDamageResonance", beacon.getModifiedItemAttr("armorKineticDamageResistanceBonus"))
+    fit.ship.boostItemAttr("armorKineticDamageResonance", beacon.getModifiedItemAttr("armorKineticDamageResistanceBonus"))
