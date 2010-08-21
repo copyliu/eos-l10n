@@ -21,7 +21,7 @@ from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relation, mapper, synonym
 
 from eos.db import gamedata_meta
-from eos.types import Item, Group, Icon
+from eos.types import Group, Icon, Category
 
 groups_table = Table("invgroups", gamedata_meta,
                      Column("groupID", Integer, primary_key = True),
@@ -32,7 +32,7 @@ groups_table = Table("invgroups", gamedata_meta,
                      Column("iconID", Integer, ForeignKey("icons.iconID")))
 
 mapper(Group, groups_table,
-       properties = {"items" : relation(Item, backref = "group"),
+       properties = {"category" : relation(Category, backref = "groups", lazy=False),
                      "icon" : relation(Icon, lazy=False),
                      "ID" : synonym("groupID"),
                      "name" : synonym("groupName")})

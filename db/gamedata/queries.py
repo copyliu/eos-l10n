@@ -44,7 +44,7 @@ def searchItems(nameLike):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
-    elif not "%" in nameLike and not "_" in nameLike: nameLike = "%" + nameLike + "%"
+    elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
     return gamedata_session.query(Item).filter(Item.name.like(nameLike)).all()
 
 @cachedQuery
