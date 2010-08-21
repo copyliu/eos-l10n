@@ -21,7 +21,6 @@ from eos.effectHandlerHelpers import HandledItem
 from eos.modifiedAttributeDict import ItemAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
 from eos.types import Item
-import eos.db
 from copy import deepcopy
 import sqlalchemy.orm.exc as exc
 
@@ -33,8 +32,8 @@ class Character(object):
     @classmethod
     def __getSkillCache(cls):
         if cls.__skillCache is None:
-            from eos import db
-            cls.__skillCache = db.getItemsByCategory("Skill")
+            import eos.db
+            cls.__skillCache = eos.db.getItemsByCategory("Skill")
 
         return cls.__skillCache
 
@@ -42,6 +41,7 @@ class Character(object):
     def getAll5(cls):
         if cls.__all5 is None:
             try:
+                import eos.db
                 all5 = eos.db.getCharacter("All 5")
             except exc.NoResultFound:
                 all5 = Character("All 5")
@@ -55,6 +55,7 @@ class Character(object):
     def getAll0(cls):
         if cls.__all0 is None:
             try:
+                import eos.db
                 all0 = eos.db.getCharacter("All 5")
             except exc.NoResultFound:
                 all0 = Character("All 0")
@@ -163,6 +164,7 @@ class Skill(HandledItem):
     @property
     def item(self):
         if self.__item is None:
+            import eos.db
             self.__item = eos.db.getItem(self.itemID)
 
         return self.__item

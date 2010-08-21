@@ -18,7 +18,6 @@
 #===============================================================================
 
 from eos.types import Item
-import eos.db
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
@@ -43,6 +42,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__charge = None
 
     def __fetchItemInfo(self):
+        import eos.db
         self.__item = eos.db.getItem(self.itemID)
         self.__charge = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
@@ -52,6 +52,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         chargeID = self.getModifiedItemAttr("entityMissileTypeID")
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         if chargeID is not None:
+            import eos.db
             charge = eos.db.getItem(int(chargeID))
             self.__charge = charge
 

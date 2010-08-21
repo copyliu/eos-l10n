@@ -19,7 +19,6 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
-import eos.db
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
 
@@ -69,6 +68,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__charge = 0
 
     def __fetchItemInfo(self):
+        import eos.db
         item = eos.db.getItem(self.itemID)
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
@@ -79,6 +79,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def __fetchChargeInfo(self):
         self.__chargeModifiedAttributes = ModifiedAttributeDict()
         if self.chargeID is not None:
+            import eos.db
             charge = eos.db.getItem(self.chargeID)
             self.__charge = charge
             self.__chargeModifiedAttributes.original = charge.attributes

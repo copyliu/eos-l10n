@@ -19,7 +19,6 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
-import eos.db
 from sqlalchemy.orm import reconstructor, validates
 import traceback
 
@@ -47,6 +46,7 @@ class Booster(HandledItem, ItemAttrShortcut):
                 self.__sideEffects.append(s)
 
     def __fetchItemInfo(self):
+        import eos.db
         self.__item = eos.db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
         self.build()

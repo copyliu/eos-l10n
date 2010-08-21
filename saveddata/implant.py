@@ -19,8 +19,8 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
-import eos.db
 from sqlalchemy.orm import validates, reconstructor
+
 class Implant(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
         self.__slot = self.__calculateSlot(item)
@@ -35,8 +35,10 @@ class Implant(HandledItem, ItemAttrShortcut):
         self.__item = None
 
     def __fetchItemInfo(self):
+        import eos.db
         self.__item = eos.db.getItem(self.itemID)
         self.__slot = self.__calculateSlot(self.__item)
+
     @property
     def itemModifiedAttributes(self):
         if self.__item is None:

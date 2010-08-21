@@ -19,7 +19,6 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
-import eos.db
 
 class Ship(ItemAttrShortcut, HandledItem):
     REQUIRED_ATTRIBUTES = ("cpuOutput", "powerOutput", "rechargeRate",
@@ -39,6 +38,7 @@ class Ship(ItemAttrShortcut, HandledItem):
         self.commandBonus = 0
 
     def __fetchItemInfo(self):
+        import eos.db
         self.__item = eos.db.getItem(self.__item)
         self.__itemModifiedAttributes.original = self.__item.attributes
 

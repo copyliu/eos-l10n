@@ -22,8 +22,8 @@ if __name__ == "__main__":
     import os.path
 
     #Add the good path to sys.path
-    path = os.path.realpath(os.path.join(sys.path[0], "..", ".."))
-    sys.path.append(path)
+    path = os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))
+    sys.path.append(os.path.realpath(os.path.join(path, "..", "..")))
 
     from eos.types import Effect
     from eos.gamedata import effectDummy
