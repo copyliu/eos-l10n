@@ -22,59 +22,73 @@ from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
 from eos.types import Item, Category, Group, MarketGroup
 from eos.db.queryCache import cachedQuery
+from sqlalchemy.orm import eagerload
+
+def processEager(eager):
+    if eager == None:
+        return tuple()
+    else:
+        l = []
+        if isinstance(eager, basestring):
+            eager = (eager,)
+
+        for e in eager:
+            l.append(eagerload(e))
+
+        return l
 
 @cachedQuery
-def getItem(lookfor):
+def getItem(lookfor, eager=None):
     if isinstance(lookfor, basestring):
-        return gamedata_session.query(Item).filter(Item.name == lookfor).one()
+        return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).one()
     elif isinstance(lookfor, int):
-        return gamedata_session.query(Item).filter(Item.ID == lookfor).one()
+        return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == lookfor).one()
 
 @cachedQuery
-def getItemsByCategory(filter):
+def getItemsByCategory(filter, eager=None):
     if isinstance(filter, basestring):
         filter = Category.name == filter
     elif isinstance(filter, int):
         filter = Category.ID == filter
 
-    return gamedata_session.query(Item).join(Item.group, Group.category).filter(filter).all()
+    return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
 
 @cachedQuery
-def searchItems(nameLike):
+def searchItems(nameLike, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
     elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
-    return gamedata_session.query(Item).filter(Item.name.like(nameLike)).all()
+    return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name.like(nameLike)).all()
 
 @cachedQuery
-def getVariations(item):
+def getVariations(item, eager=None):
     if not isinstance(item, int): item = item.ID
-    return gamedata_session.query(Item).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()
+    return gamedata_session.query(Item).options(*processEager(eager)).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()
 
 @cachedQuery
-def getGroup(group):
+def getGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = Group.name == group
     elif isinstance(group, int):
         filter = Group.ID == group
 
-    return gamedata_session.query(Group).filter(filter).one()
+    return gamedata_session.query(Group).options(*processEager(eager)).filter(filter).one()
 
 @cachedQuery
-def getCategory(category):
+def getCategory(category, eager=None):
     if isinstance(category, basestring):
         filter = Category.name == category
     elif isinstance(category, int):
         filter = Category.ID == category
 
-    return gamedata_session.query(Category).filter(filter).one()
+    return gamedata_session.query(Category).options(*processEager(eager)).filter(filter).one()
 
 @cachedQuery
-def getMarketGroup(group):
+def getMarketGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = MarketGroup.name == group
     elif isinstance(group, int):
         filter = MarketGroup.ID == group
 
-    return gamedata_session.query(MarketGroup).filter(filter).one()
+    return gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(filter).one()
