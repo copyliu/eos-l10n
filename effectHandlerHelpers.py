@@ -77,7 +77,6 @@ class HandledItem(object):
     def boostItemAttr(self, *args, **kwargs):
         self.itemModifiedAttributes.boost(*args, **kwargs)
 
-
 class HandledCharge(object):
     def increaseChargeAttr(self, *args, **kwargs):
         self.chargeModifiedAttributes.increase(*args, **kwargs)
