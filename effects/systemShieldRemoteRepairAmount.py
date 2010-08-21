@@ -3,4 +3,4 @@
 type= "projected"
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Shield Transporter",
-                                     "shieldBonus", module.getModifiedItemAttr("shieldBonusMultiplier"))
+                                     "shieldBonus", module.getModifiedItemAttr("shieldBonusMultiplierRemote"))
