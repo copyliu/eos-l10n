@@ -45,7 +45,6 @@ class TestProjectedElectronicCounterMeasures(unittest.TestCase):
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "duration"
-
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
