@@ -270,126 +270,174 @@ TABLE_MAP = {
 "typesByMarketGroups"           : None
 }
 
-def processTableValues(tableData):
-    for row in tableData:
-        for key in row.iterkeys():
-            t = type(row[key])
-            #text should be in singlequotes with singlequotes escaped by singlequotes
-            if t in (str, unicode): row[key] = "'{0}'".format(row[key].replace("'", "''"))
-            #bool values are used as tinyint(1) in database
-            #also convert to string for proper operation of join
-            elif t is bool: row[key] = str(int(row[key]))
-            #lists are converted to csv
-            elif t is list: row[key] = "'" + ",".join(map(str, row[key])) + "'"
-            #pass empty strings to sql in  case of no data
-            elif row[key] is None: row[key] = "''"
-            #convert everything else to str for proper operation of join
-            else: row[key] = str(row[key])
-    return
+def process_table(sourcetable, tablename):
+    """
+    Get all data from cache and write it to database
+    """
+    def get_source_headers(sourcetable):
+        """
+        Pull list of headers from the source table
+        """
+        sourceheaders = None
+        guid = getattr(sourcetable, "__guid__", "None")
+        # For IndexRowset and IndexedRowLists Reverence provides list of headers
+        if guid in ("util.IndexRowset", "util.FilterRowset"):
+            sourceheaders = list(sourcetable.header)
+        # For IndexedRowLists, we need to compose list ourselves
+        elif guid == "util.IndexedRowLists":
+            headerset = set()
+            for item in sourcetable:
+                for row in sourcetable[item]:
+                    for headername in row.__header__.Keys():
+                        headerset.add(headername)
+            sourceheaders = list(headerset)
+        return sourceheaders
 
-def insertTableValues(tableData, tableName):
-    for row in tableData:
-        headers = []
-        values = []
-        for header in row.iterkeys():
-            headers.append(header)
-            values.append(row[header])
-        query = "INSERT INTO {0} ({1}) VALUES({2})".format(tableName,",".join(headers),",".join(values))
-        c.execute(query)
-    return
+    def get_dest_headers(tablename):
+        """
+        Pull list of headers from database schema
+        """
+        c.execute("PRAGMA table_info({0})".format(tablename))
+        destheaders = [row[1] for row in c]
+        return destheaders
 
-def getSourceHeaders(sourceTable):
-    sourceHeaders = None
-    guid = getattr(sourceTable, "__guid__", "None")
-    if guid == "util.IndexRowset":
-        sourceHeaders = list(sourceTable.header)
-    elif guid == "util.FilterRowset":
-        sourceHeaders = list(sourceTable.header)
-    elif guid == "util.IndexedRowLists":
-        headerSet = set()
-        for item in sourceTable.iterkeys():
-            for row in sourceTable[item]:
-                for headerName in row.__header__.Keys():
-                    headerSet.add(headerName)
-        sourceHeaders = list(headerSet)
-    return sourceHeaders
+    def get_common_headers(sourceheaders, destheaders):
+        """
+        Compose list of headers common for both source and destination tables
+        """
+        # Transform lists to sets, find common items and transform back to list
+        headerlist = list(frozenset(sourceheaders).intersection(frozenset(destheaders)))
+        return headerlist
 
-def getDestHeaders(tableName):
-    c.execute("PRAGMA table_info({0})".format(tableName))
-    destHeaders = [row[1] for row in c]
-    return destHeaders
-
-def getCommonHeaders(sourceHeaders, destHeaders):
-    headerList = []
-    #fill header list with columns common for source and destination
-    for sourceHeader in sourceHeaders:
-        if sourceHeader in destHeaders:
-            headerList.append(sourceHeader)
-    return headerList
-
-def printNonCommonHeaders(headerList, sourceHeaders, destHeaders, tableName):
-    for sourceHeader in sourceHeaders:
-        if not sourceHeader in headerList:
-            print "Warning: data dump schema does not have column for", tableName + "." + sourceHeader
-    for destHeader in destHeaders:
-        if not destHeader in headerList:
-            print "Warning: source does not contain data for", tableName + "." + destHeader
-    return
-
-def getTableData(sourceTable, tableName, headerList):
-    dataRows = []
-    guid = getattr(sourceTable, "__guid__", "None")
-    if guid == "util.IndexRowset":
-        for values in sourceTable.Select(*headerList):
-            dataRow = {}
-            if len(headerList) != len(values):
-                print "Error: malformed data in source table", tableName
-                return None
-            for i in xrange(len(headerList)):
-                dataRow[headerList[i]] = values[i]
-            dataRows.append(dataRow)
-    elif guid == "util.FilterRowset" or guid == "util.IndexedRowLists":
-        for element in sourceTable.iterkeys():
-            for row in sourceTable[element]:
-                dataRow = {}
-                for header in headerList:
-                    value = getattr(row, header, None)
-                    if value or value == 0 or value == 0.0: dataRow[header] = value
-                dataRows.append(dataRow)
-    return dataRows
-
-def processTable(sourceTable, tableName):
-    #get headers from source table
-    sourceHeaders = getSourceHeaders(sourceTable)
-    if not sourceHeaders:
-        print "Error: unknown type for", tableName, "source table"
+    def print_noncommon_headers(headerlist, sourceheaders, destheaders, tablename):
+        """
+        Print list of headers which is ignored for export and import
+        """
+        ignored_source = frozenset(sourceheaders).difference(frozenset(headerlist))
+        ignored_dest = frozenset(destheaders).difference(frozenset(headerlist))
+        for sourceheader in sorted(ignored_source):
+            print "Warning: data dump schema does not have column for {0}.{1}".format(tablename, sourceheader)
+        for destheader in sorted(ignored_dest):
+            print "Warning: source does not contain data for {0}.{1}".format(tablename, destheader)
         return
-    #get column names from database schema
-    destHeaders = getDestHeaders(tableName)
-    #get map of common headers
-    headerList = getCommonHeaders(sourceHeaders, destHeaders)
-    #inform if we have no proper destination for data or source for existing destination
-    printNonCommonHeaders(headerList, sourceHeaders, destHeaders, tableName)
-    #get data from source and process it
-    tableData = getTableData(sourceTable, tableName, headerList)
-    #modify data to satisfy SQL query requirements
-    processTableValues(tableData)
-    #insert everything into table
-    insertTableValues(tableData, tableName)
+
+    def get_table_data(sourcetable, tablename, headerlist):
+        """
+        Pull data out of source table
+        """
+        # Each row is enclosed into dictionary, full table is list of these dictionaries
+        datarows = []
+        guid = getattr(sourcetable, "__guid__", "None")
+        # We have Select method for IndexRowset tables
+        if guid == "util.IndexRowset":
+            for values in sourcetable.Select(*headerlist):
+                headerlistlen = len(headerlist)
+                datarow = {}
+                # 1 row value should correspond to 1 header, if number or values doesn't
+                # correspond to number of headers then something went wrong
+                if headerlistlen != len(values):
+                    print "Error: malformed data in source table {0}".format(tablename)
+                    return None
+                # Fill row dictionary with values and append it to list
+                for i in xrange(headerlistlen):
+                    datarow[headerlist[i]] = values[i]
+                datarows.append(datarow)
+        # FilterRowset and IndexedRowLists are accessible almost like dictionaries
+        elif guid in ("util.FilterRowset", "util.IndexedRowLists"):
+            # Go through all source table elements
+            for element in sourcetable.iterkeys():
+                # Go through all rows of an element
+                for row in sourcetable[element]:
+                    datarow = {}
+                    # Fill row dictionary with values we need and append it to the list
+                    for header in headerlist:
+                        value = getattr(row, header, None)
+                        # None and zero values are different, and we want to write zero
+                        # values to database
+                        if value or value in (0, 0.0):
+                            datarow[header] = value
+                    datarows.append(datarow)
+        return datarows
+
+    def process_table_values(tabledata):
+        """
+        Modify values to satisfy SQL needs
+        """
+        def convert_list_value(value):
+            """
+            Convert values for list data type
+            """
+            if isinstance(value, basestring):
+                value = value.replace("'", "''")
+            else:
+                value = str(value)
+            return value
+
+        for row in tabledata:
+            for key in row:
+                # Text should be in singlequotes with singlequotes escaped by singlequotes
+                if isinstance(row[key], basestring):
+                    row[key] = "'{0}'".format(row[key].replace("'", "''"))
+                # Bool values are used as tinyint(1) in database; also we
+                # convert them to string for proper operation of join in insert function
+                elif isinstance(row[key], bool):
+                    row[key] = str(int(row[key]))
+                # Lists are converted to csv
+                elif isinstance(row[key], (list, tuple)):
+                    row[key] = "'" + ",".join(map(convert_list_value, row[key])) + "'"
+                # Pass empty strings to sql in  case of no data
+                elif row[key] is None:
+                    row[key] = "''"
+                # Convert everything else to str for proper operation of join
+                else:
+                    row[key] = str(row[key])
+        return
+
+    def insert_table_values(tabledata, tablename):
+        for row in tabledata:
+            headers = []
+            values = []
+            for header in row:
+                headers.append(header)
+                values.append(row[header])
+            query = "INSERT INTO {0} ({1}) VALUES({2})".format(tablename,",".join(headers),",".join(values))
+            c.execute(query)
+        return
+
+    # Get headers from source table
+    sourceheaders = get_source_headers(sourcetable)
+    if not sourceheaders:
+        print "Error: unknown type for", tablename, "source table"
+        return
+    # Get column names from database schema
+    destheaders = get_dest_headers(tablename)
+    # Get map of common headers
+    headerlist = get_common_headers(sourceheaders, destheaders)
+    # Inform if we have no proper destination for data or source for existing destination
+    print_noncommon_headers(headerlist, sourceheaders, destheaders, tablename)
+    # Get data from source and process it
+    tabledata = get_table_data(sourcetable, tablename, headerlist)
+    # Modify data to satisfy SQL query requirements
+    process_table_values(tabledata)
+    # Insert everything into table
+    insert_table_values(tabledata, tablename)
     return
 
 if __name__ == "__main__":
-    from optparse import OptionParser
-    from ConfigParser import ConfigParser
-    from reverence import blue
-    import sqlite3
-    import re
     import os
+    import re
+    import sqlite3
     import sys
-    #ugly trick to set encoding
+    from ConfigParser import ConfigParser
+    from optparse import OptionParser
+
+    from reverence import blue
+
+    # Ugly trick to set encoding
     reload(sys)
     sys.setdefaultencoding("utf8")
 
+    # Parse command line options
     usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
     parser = OptionParser(usage=usage)
     parser.add_option("-e", "--eve", help="path to eve folder")
@@ -399,62 +447,74 @@ if __name__ == "__main__":
     parser.add_option("-s", "--sisi", action="store_true", dest="singularity", help="if you're going to work with singulary test server data, use this option", default=False)
     (options, args) = parser.parse_args()
 
+    # Exit if we do not have any of required options
     if not options.eve or not options.cache or not options.dump:
         sys.stderr.write("You need to specify paths to eve folder, cache folder and dump file. Run script with --help option for further info.\n")
         sys.exit()
 
+    # We can deal either with singularity or tranquility servers
     if options.singularity: server = "singularity"
     else: server = "tranquility"
 
-    pathToEve = os.path.expanduser(options.eve)
-    pathToCache = os.path.expanduser(options.cache)
-    pathToDump = os.path.expanduser(options.dump)
-    metadata = {}
 
+    PATH_EVE = os.path.expanduser(options.eve)
+    PATH_CACHE = os.path.expanduser(options.cache)
+    PATH_DUMP = os.path.expanduser(options.dump)
+
+    # Get version of EVE client
     config = ConfigParser()
-    config.read(os.path.join(pathToEve, "common.ini"))
+    config.read(os.path.join(PATH_EVE, "common.ini"))
+
+    # Form metadata dictionary for corresponding table
+    metadata = {}
     metadata["version"] = config.getint("main", "build")
     metadata["release"] = options.release
 
-    #paths are taken from cmdline arguments
-    eve = blue.EVE(pathToEve, cachepath = pathToCache, server = server)
+    # Initialize Reverence ccache manager
+    eve = blue.EVE(PATH_EVE, cachepath = PATH_CACHE, server = server)
     cfg = eve.getconfigmgr()
 
-    if os.path.exists(pathToDump):
-        os.remove(pathToDump)
+    # Check if dump file already exists and remove it
+    if os.path.exists(PATH_DUMP):
+        os.remove(PATH_DUMP)
 
-    conn = sqlite3.connect(pathToDump)
+    # Connect to sqlite dump database
+    conn = sqlite3.connect(PATH_DUMP)
     c = conn.cursor()
-    #create structure
+
+    # Create structure
     for statement in SCHEMA.split(";\n"):
         c.execute(statement)
-    #fill with some static data (can't find where we can get it from reverence)
+
+    # Fill with some static data (can't find where we can get it from reverence)
     for statement in STATIC.split(";\n"):
         c.execute(statement)
-    #create table for version and put some  data into it
+
+    # Create table for version and put some  data into it
     c.execute(METADATA)
     query = "INSERT INTO dumpmetadata (fieldName, fieldValue) VALUES(?,?)"
-    for fieldName in metadata.iterkeys():
-        c.execute(query, (fieldName, metadata[fieldName]))
+    for fieldname in metadata:
+        c.execute(query, (fieldname, metadata[fieldname]))
 
-    #Warn about new tables in cache
+    # Warn about new tables in cache
     for table in cfg.tables:
-        if not table in TABLE_MAP.iterkeys():
+        if not table in TABLE_MAP:
             print "Warning: unmapped table", table
 
-    #compose list of tables from table map, filter those which have None interest for us
-    tableNameList = []
-    for table in TABLE_MAP.iterkeys():
-        if TABLE_MAP[table] is not None: tableNameList.append(table)
+    # Compose list of tables from table map, filter those which have no interest for us
+    tablenames = []
+    for table in TABLE_MAP:
+        if TABLE_MAP[table] is not None: tablenames.append(table)
 
-    #get data from cache (needs just login) and write it
-    for tableName in tableNameList:
-        sourceTable = getattr(cfg, tableName)
-        processTable(sourceTable, tableName)
+    # Get data from cache (you need to just login to eve for cache files to be written) and write it
+    for tablename in tablenames:
+        sourceTable = getattr(cfg, tablename)
+        process_table(sourceTable, tablename)
 
-    #market needs to be invited separately (do not forget to open it ingame to cache it)
-    marketTable = eve.RemoteSvc("marketProxy").GetMarketGroups()
-    processTable(marketTable, "invmarketgroups")
+    # Market needs to be invited separately (do not forget to open it ingame to cache it)
+    markettable = eve.RemoteSvc("marketProxy").GetMarketGroups()
+    process_table(markettable, "invmarketgroups")
 
+    # Commit results to dump file
     conn.commit()
     conn.close()
