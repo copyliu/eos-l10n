@@ -17,23 +17,28 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+from eos.db.util import processEager
 from eos.db import saveddata_session
 from eos.types import User, Character, Fit
 from sqlalchemy.sql import and_
 
-def getUser(lookfor):
-    if isinstance(lookfor, int): return saveddata_session.query(User).filter(User.ID == lookfor).one()
-    elif isinstance(lookfor, basestring): return saveddata_session.query(User).filter(User.username == lookfor).one()
+def getUser(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        return saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).one()
+    elif isinstance(lookfor, basestring):
+        return saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).one()
 
-def getCharacter(lookfor):
-    if isinstance(lookfor, int): return saveddata_session.query(Character).filter(Character.ID == lookfor).one()
-    elif isinstance(lookfor, basestring): return saveddata_session.query(Character).filter(Character.name == lookfor).one()
+def getCharacter(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).one()
+    elif isinstance(lookfor, basestring):
+        return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
 
-def getFit(fitID):
-    return saveddata_session.query(Fit).filter(Fit.ID == fitID).one()
+def getFit(fitID, eager=None):
+    return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
 
-def getFitsWithShip(shipID, ownerID=None):
+def getFitsWithShip(shipID, ownerID=None, eager=None):
     """
     Get all the fits using a certain ship.
     If no user is passed, do this for all users.
@@ -42,4 +47,21 @@ def getFitsWithShip(shipID, ownerID=None):
     if ownerID is not None:
         filter = _and(filter, Fit.ownerID == ownerID)
 
-    return saveddata_session.query(Fit).filter(filter).all()
+    return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+
+def searchFits(nameLike, where=None, eager=None):
+    #Check if the string contains * signs we need to convert to %
+    if "*" in nameLike: nameLike = nameLike.replace("*", "%")
+    #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
+    elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
+
+    #Add any extra components to the search to our where clause
+    clause = Fit.name.like(nameLike)
+    if where is not None:
+        if not hasattr(where, "__iter__"):
+            where = (where,)
+
+        for extraClause in where:
+            clause = and_(clause, extraClause)
+
+    return saveddaa_session.query(Fit).options(*processEager(eager)).filter(clause).all()

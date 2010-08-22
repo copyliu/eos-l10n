@@ -18,3 +18,17 @@ def cachedQuery(amount, *keywords):
         return checkAndReturn
 
     return deco
+
+
+def processEager(eager):
+    if eager == None:
+        return tuple()
+    else:
+        l = []
+        if isinstance(eager, basestring):
+            eager = (eager,)
+
+        for e in eager:
+            l.append(eagerload(e))
+
+        return l
