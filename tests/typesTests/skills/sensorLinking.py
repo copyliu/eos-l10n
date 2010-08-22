@@ -3,7 +3,7 @@ from eos import db
 from eos.types import Fit, Character, Skill, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
-class TestElectronicWarfare(unittest.TestCase):
+class TestSensorLinking(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.char = Character("testSkill")
