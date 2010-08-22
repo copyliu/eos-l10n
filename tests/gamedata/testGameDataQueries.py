@@ -1,5 +1,6 @@
 import unittest
 from eos import db
+from eos.types import Item
 
 class TestGameDataQueries(unittest.TestCase):
     def test_getItem(self):
@@ -10,6 +11,10 @@ class TestGameDataQueries(unittest.TestCase):
     def test_searchItems(self):
         i = db.searchItems("Gamma L")
         self.assertEqual(len(i), 7)
+
+    def test_searchItemsWhere(self):
+        i = db.searchItems("Gamma L", where=Item.published == 0)
+        self.assertEqual(len(i), 0)
 
     def test_getVariations(self):
         i = db.getItem("Gamma L")
