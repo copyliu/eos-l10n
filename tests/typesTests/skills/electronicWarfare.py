@@ -52,6 +52,18 @@ class TestElectronicWarfare(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
+    def test_remoteEccm(self):
+        self.buildTested = 0
+        self.testItem = db.getItem("Spot Pulsing ECCM I")
+        self.testMod = Module(self.testItem)
+        self.fit.modules.append(self.testMod)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "capacitorNeed"
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        actual = self.testMod.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
     def test_otherEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("DDO Photometry Tracking Disruptor I")
