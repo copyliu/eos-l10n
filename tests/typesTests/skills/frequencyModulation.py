@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Fit, Character, Skill, Module
+from eos.types import Fit, Character, Skill, Module, Drone
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestFrequencyModulation(unittest.TestCase):
@@ -92,6 +92,18 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
+    def test_cargoScanner(self):
+        self.buildTested = 0
+        self.testItem = db.getItem("Cargo Scanner II")
+        self.testMod = Module(self.testItem)
+        self.fit.modules.append(self.testMod)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "falloff"
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        actual = self.testMod.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
     def test_weapon(self):
         self.buildTested = 0
         self.testItem = db.getItem("200mm Railgun II")
@@ -102,4 +114,16 @@ class TestFrequencyModulation(unittest.TestCase):
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
+    def test_ewDrone(self):
+        self.buildTested = 0
+        self.testItem = db.getItem("Hammerhead SD-600")
+        self.testDrone = Drone(self.testItem)
+        self.fit.modules.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "falloff"
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)

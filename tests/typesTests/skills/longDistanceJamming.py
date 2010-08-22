@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Fit, Character, Skill, Module
+from eos.types import Fit, Character, Skill, Module, Drone
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestLongDistanceJamming(unittest.TestCase):
@@ -94,6 +94,18 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
+    def test_proplusionEwar(self):
+        self.buildTested = 0
+        self.testItem = db.getItem("Fleeting Propulsion Inhibitor I")
+        self.testMod = Module(self.testItem)
+        self.fit.modules.append(self.testMod)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "maxRange"
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        actual = self.testMod.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
     def test_weapon(self):
         self.buildTested = 0
         self.testItem = db.getItem("Shadow Serpentis Light Neutron Blaster")
@@ -105,3 +117,16 @@ class TestLongDistanceJamming(unittest.TestCase):
         expected.original = self.testItem.attributes
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
+
+    def test_ewDrone(self):
+        self.buildTested = 0
+        self.testItem = db.getItem("Hornet EC-300")
+        self.testDrone = Drone(self.testItem)
+        self.fit.modules.append(self.testDrone)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "maxRange"
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
