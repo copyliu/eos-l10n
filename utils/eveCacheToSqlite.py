@@ -331,6 +331,10 @@ def process_table(sourcetable, tablename):
         # We have Select method for IndexRowset tables
         if guid == "util.IndexRowset":
             for values in sourcetable.Select(*headerlist):
+                # When Select is asked to find single value, it is returned in its raw
+                # form. Convert is to tuple for proper further processing
+                if not isinstance(values, (list, tuple, set)):
+                    values = (values,)
                 headerlistlen = len(headerlist)
                 datarow = {}
                 # 1 row value should correspond to 1 header, if number or values doesn't
@@ -383,7 +387,7 @@ def process_table(sourcetable, tablename):
                 elif isinstance(row[key], bool):
                     row[key] = str(int(row[key]))
                 # Lists are converted to csv
-                elif isinstance(row[key], (list, tuple)):
+                elif isinstance(row[key], (list, tuple, set)):
                     row[key] = "'" + ",".join(map(convert_list_value, row[key])) + "'"
                 # Pass empty strings to sql in  case of no data
                 elif row[key] is None:
