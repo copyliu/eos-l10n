@@ -37,14 +37,14 @@ def processEager(eager):
 
         return l
 
-@cachedQuery
+@cachedQuery(1)
 def getItem(lookfor, eager=None):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).one()
     elif isinstance(lookfor, int):
         return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == lookfor).one()
 
-@cachedQuery
+@cachedQuery(1)
 def getItemsByCategory(filter, eager=None):
     if isinstance(filter, basestring):
         filter = Category.name == filter
@@ -53,20 +53,29 @@ def getItemsByCategory(filter, eager=None):
 
     return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
 
-@cachedQuery
-def searchItems(nameLike, eager=None):
+@cachedQuery(1, "where")
+def searchItems(nameLike, eager=None, where=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
     elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
-    return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name.like(nameLike)).all()
 
-@cachedQuery
+    #Add any extra components to the search to our where clause
+    clause = Item.name.like(nameLike)
+    if where is not None:
+        if not hasattr(where, "__iter__"):
+            where = (where,)
+
+        for extraClause in where:
+            clause = and_(clause, extraClause)
+    return gamedata_session.query(Item).options(*processEager(eager)).filter(clause).all()
+
+@cachedQuery(1)
 def getVariations(item, eager=None):
     if not isinstance(item, int): item = item.ID
     return gamedata_session.query(Item).options(*processEager(eager)).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()
 
-@cachedQuery
+@cachedQuery(1)
 def getGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = Group.name == group
@@ -75,7 +84,7 @@ def getGroup(group, eager=None):
 
     return gamedata_session.query(Group).options(*processEager(eager)).filter(filter).one()
 
-@cachedQuery
+@cachedQuery(1)
 def getCategory(category, eager=None):
     if isinstance(category, basestring):
         filter = Category.name == category
@@ -84,7 +93,7 @@ def getCategory(category, eager=None):
 
     return gamedata_session.query(Category).options(*processEager(eager)).filter(filter).one()
 
-@cachedQuery
+@cachedQuery(1)
 def getMarketGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = MarketGroup.name == group

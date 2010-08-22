@@ -1,9 +1,20 @@
-def cachedQuery(function):
+def cachedQuery(amount, *keywords):
     cache = {}
-    def checkAndReturn(*args, **kwargs):
-        if args[0] not in cache:
-            cache[args[0]] = function(*args, **kwargs)
 
-        return cache[args[0]]
+    def deco(function):
+        def checkAndReturn(*args, **kwargs):
+            kw = []
+            for keyword in keywords:
+                if keyword in kwargs:
+                    kw.append(kwargs[keyword])
 
-    return checkAndReturn
+            kw = tuple(kw)
+            cacheKey = (args[0:amount], kw)
+            if cacheKey not in cache:
+                cache[cacheKey] = function(*args, **kwargs)
+
+            return cache[cacheKey]
+
+        return checkAndReturn
+
+    return deco

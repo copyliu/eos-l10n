@@ -56,7 +56,7 @@ class Character(object):
         if cls.__all0 is None:
             try:
                 import eos.db
-                all0 = eos.db.getCharacter("All 5")
+                all0 = eos.db.getCharacter("All 0")
             except exc.NoResultFound:
                 all0 = Character("All 0")
 
