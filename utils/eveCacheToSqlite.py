@@ -18,7 +18,6 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-
 '''
 This script pulls data out of EVE cache and makes an SQLite dump
 Reverence library by Entity is used, check http://wiki.github.com/ntt/reverence/ for info
@@ -28,7 +27,7 @@ Tranquility: python2.6 eveCacheToSqlite.py --eve="~/.wine/drive_c/Program Files/
 Singularity: python2.6 eveCacheToSqlite.py --eve="~/.wine/drive_c/Program Files/CCP/EVE (Singularity)" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_(singularity)_singularity/cache" --sisi --dump="~/Desktop/evetest.db"
 '''
 
-schema = '''
+SCHEMA = '''
 CREATE TABLE "dgmattribs" (
   "attributeID" smallint(6) NOT NULL,
   "attributeName" varchar(100) default NULL,
@@ -99,6 +98,13 @@ CREATE TABLE "dgmtypeeffects" (
 );
 CREATE INDEX "dgmtypeeffects_IX_typeID" ON "dgmtypeeffects" ("typeID");
 CREATE INDEX "dgmtypeeffects_IX_effectID" ON "dgmtypeeffects" ("effectID");
+
+CREATE TABLE "eveunits" (
+  "unitID" smallint(6) NOT NULL,
+  "unitName" varchar(100) default NULL,
+  "displayName" varchar(100) default NULL,
+  PRIMARY KEY ("unitID")
+);
 
 CREATE TABLE "icons" (
   "iconID" smallint(6) NOT NULL,
@@ -198,7 +204,7 @@ CREATE INDEX "invtypes_IX_groupID" ON "invtypes" ("groupID");
 CREATE INDEX "invtypes_IX_marketGroupID" ON "invtypes" ("marketGroupID");
 '''
 
-staticData = '''
+STATIC = '''
 CREATE TABLE "dgmAttributeCategories" (
   "categoryID" tinyint(3) NOT NULL,
   "categoryName" varchar(50) default NULL,
@@ -207,7 +213,7 @@ CREATE TABLE "dgmAttributeCategories" (
 );
 '''
 
-metadataTable = '''
+METADATA = '''
 CREATE TABLE "dumpmetadata" (
   "fieldName" varchar(50) NOT NULL,
   "fieldValue" varchar(100) default NULL,
@@ -216,7 +222,7 @@ CREATE TABLE "dumpmetadata" (
 '''
 
 #{ source table name : dest table name }
-tableMap = {
+TABLE_MAP = {
 "allianceshortnames"            : None,
 "billtypes"                     : None,
 "certificaterelationships"      : None,
@@ -229,7 +235,7 @@ tableMap = {
 "evegraphics"                   : None,
 "evelocations"                  : None,
 "eveowners"                     : None,
-"eveunits"                      : None,
+"eveunits"                      : "eveunits",
 "groupsByCategories"            : None,
 "icons"                         : "icons",
 "invbptypes"                    : None,
@@ -420,26 +426,26 @@ if __name__ == "__main__":
     conn = sqlite3.connect(pathToDump)
     c = conn.cursor()
     #create structure
-    for statement in schema.split(";\n"):
+    for statement in SCHEMA.split(";\n"):
         c.execute(statement)
     #fill with some static data (can't find where we can get it from reverence)
-    for statement in staticData.split(";\n"):
+    for statement in STATIC.split(";\n"):
         c.execute(statement)
     #create table for version and put some  data into it
-    c.execute(metadataTable)
+    c.execute(METADATA)
     query = "INSERT INTO dumpmetadata (fieldName, fieldValue) VALUES(?,?)"
     for fieldName in metadata.iterkeys():
         c.execute(query, (fieldName, metadata[fieldName]))
 
     #Warn about new tables in cache
     for table in cfg.tables:
-        if not table in tableMap.iterkeys():
+        if not table in TABLE_MAP.iterkeys():
             print "Warning: unmapped table", table
 
     #compose list of tables from table map, filter those which have None interest for us
     tableNameList = []
-    for table in tableMap.iterkeys():
-        if tableMap[table] is not None: tableNameList.append(table)
+    for table in TABLE_MAP.iterkeys():
+        if TABLE_MAP[table] is not None: tableNameList.append(table)
 
     #get data from cache (needs just login) and write it
     for tableName in tableNameList:
