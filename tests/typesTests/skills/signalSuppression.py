@@ -88,7 +88,7 @@ class TestSignalSuppression(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_hardwiringLockRange(self):
+    def test_implantLockRange(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Harbinger"))
         self.testItem = db.getItem("Hardwiring - Zainou 'Gypsy' KPB-50")
@@ -101,7 +101,7 @@ class TestSignalSuppression(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_hardwiringScanRes(self):
+    def test_implantScanRes(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Lachesis"))
         self.testItem = db.getItem("Hardwiring - Zainou 'Gypsy' KNB-25")

@@ -50,7 +50,7 @@ class TestTurretDestabilization(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(turretMod)
             self.assertAlmostEquals(expected[turretMod], actual)
 
-    def test_hardwiringTrackingSpeed(self):
+    def test_implantTrackingSpeed(self):
         self.buildTested = 0
         self.testItem = db.getItem("Hardwiring - Eifyr and Co. 'Gunslinger' AX-2")
         self.testImplant = Implant(self.testItem)
