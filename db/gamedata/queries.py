@@ -22,7 +22,6 @@ from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
 from eos.types import Item, Category, Group, MarketGroup
 from eos.db.util import cachedQuery, processEager
-from sqlalchemy.orm import eagerload
 
 @cachedQuery(1)
 def getItem(lookfor, eager=None):
