@@ -18,6 +18,7 @@
 #===============================================================================
 
 from sqlalchemy.orm import eagerload
+from sqlalchemy.sql import and_
 
 def cachedQuery(amount, *keywords):
     cache = {}
@@ -53,3 +54,13 @@ def processEager(eager):
             l.append(eagerload(e))
 
         return l
+
+def processWhere(clause, where):
+    if where is not None:
+        if not hasattr(where, "__iter__"):
+            where = (where,)
+
+        for extraClause in where:
+            clause = and_(clause, extraClause)
+
+    return clause

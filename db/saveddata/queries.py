@@ -17,28 +17,28 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.db.util import processEager
+from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
 from eos.types import User, Character, Fit
 from sqlalchemy.sql import and_
 
-def getUser(lookfor, eager=None):
+def getUser(lookfor, where=None, eager=None):
     if isinstance(lookfor, int):
         return saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).one()
     elif isinstance(lookfor, basestring):
         return saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).one()
 
-def getCharacter(lookfor, eager=None):
+def getCharacter(lookfor, where=None, eager=None):
     if isinstance(lookfor, int):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).one()
     elif isinstance(lookfor, basestring):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
 
-def getFit(fitID, eager=None):
+def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
 
-def getFitsWithShip(shipID, ownerID=None, eager=None):
+def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     Get all the fits using a certain ship.
     If no user is passed, do this for all users.
@@ -47,6 +47,7 @@ def getFitsWithShip(shipID, ownerID=None, eager=None):
     if ownerID is not None:
         filter = _and(filter, Fit.ownerID == ownerID)
 
+    filter = processWhere(filter, where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
 
 def searchFits(nameLike, where=None, eager=None):
@@ -56,12 +57,5 @@ def searchFits(nameLike, where=None, eager=None):
     elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
 
     #Add any extra components to the search to our where clause
-    clause = Fit.name.like(nameLike)
-    if where is not None:
-        if not hasattr(where, "__iter__"):
-            where = (where,)
-
-        for extraClause in where:
-            clause = and_(clause, extraClause)
-
-    return saveddata_session.query(Fit).options(*processEager(eager)).filter(clause).all()
+    filter = processWhere(Fit.name.like(nameLike), where)
+    return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()

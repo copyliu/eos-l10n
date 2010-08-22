@@ -21,47 +21,43 @@ from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
 from eos.types import Item, Category, Group, MarketGroup
-from eos.db.util import cachedQuery, processEager
+from eos.db.util import cachedQuery, processEager, processWhere
 
-@cachedQuery(1)
+@cachedQuery(1, "lookfor")
 def getItem(lookfor, eager=None):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).one()
     elif isinstance(lookfor, int):
         return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == lookfor).one()
 
-@cachedQuery(1)
-def getItemsByCategory(filter, eager=None):
+@cachedQuery(2, "where", "filter")
+def getItemsByCategory(filter, where=None, eager=None):
     if isinstance(filter, basestring):
         filter = Category.name == filter
     elif isinstance(filter, int):
         filter = Category.ID == filter
 
+    filter = processWhere(filter, where)
     return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
 
-@cachedQuery(1, "where")
-def searchItems(nameLike, eager=None, where=None):
+@cachedQuery(2, "where", "nameLike")
+def searchItems(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
     elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
 
-    #Add any extra components to the search to our where clause
-    clause = Item.name.like(nameLike)
-    if where is not None:
-        if not hasattr(where, "__iter__"):
-            where = (where,)
+    filter = processWhere(Item.name.like(nameLike), where)
+    return gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
 
-        for extraClause in where:
-            clause = and_(clause, extraClause)
-    return gamedata_session.query(Item).options(*processEager(eager)).filter(clause).all()
-
-@cachedQuery(1)
-def getVariations(item, eager=None):
+@cachedQuery(2, "where", "item")
+def getVariations(item, where=None, eager=None):
     if not isinstance(item, int): item = item.ID
-    return gamedata_session.query(Item).options(*processEager(eager)).filter(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)).all()
 
-@cachedQuery(1)
+    filter = processWhere(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item), where)
+    return gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
+
+@cachedQuery(1, "group")
 def getGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = Group.name == group
@@ -70,7 +66,7 @@ def getGroup(group, eager=None):
 
     return gamedata_session.query(Group).options(*processEager(eager)).filter(filter).one()
 
-@cachedQuery(1)
+@cachedQuery(1, "category")
 def getCategory(category, eager=None):
     if isinstance(category, basestring):
         filter = Category.name == category
@@ -79,7 +75,7 @@ def getCategory(category, eager=None):
 
     return gamedata_session.query(Category).options(*processEager(eager)).filter(filter).one()
 
-@cachedQuery(1)
+@cachedQuery(1, "group")
 def getMarketGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = MarketGroup.name == group
