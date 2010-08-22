@@ -21,21 +21,8 @@ from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_
 from eos.types import Item, Category, Group, MarketGroup
-from eos.db.queryCache import cachedQuery
+from eos.db.util import cachedQuery, processEager
 from sqlalchemy.orm import eagerload
-
-def processEager(eager):
-    if eager == None:
-        return tuple()
-    else:
-        l = []
-        if isinstance(eager, basestring):
-            eager = (eager,)
-
-        for e in eager:
-            l.append(eagerload(e))
-
-        return l
 
 @cachedQuery(1)
 def getItem(lookfor, eager=None):
