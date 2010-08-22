@@ -129,4 +129,3 @@ class TestLongDistanceJamming(unittest.TestCase):
         expected.original = self.testItem.attributes
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
-
