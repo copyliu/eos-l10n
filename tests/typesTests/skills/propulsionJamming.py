@@ -1,131 +1,93 @@
 import unittest
 from eos import db
-from eos.types import Fit, Character, Skill, Module, Drone
+from eos.types import Fit, Character, Skill, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
-class TestLongDistanceJamming(unittest.TestCase):
+class TestPropulsionJamming(unittest.TestCase):
     def setUp(self):
         self.fit = Fit()
         self.char = Character("testSkill")
-        self.skill = db.getItem("Long Distance Jamming")
+        self.skill = db.getItem("Propulsion Jamming")
         self.skillLevel = 5
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_ecm(self):
+    def test_warpDisruptor(self):
         self.buildTested = 0
-        self.testItem = db.getItem("'Hypnos' Ion Field ECM I")
+        self.testItem = db.getItem("Warp Disruptor II")
         self.testMod = Module(self.testItem)
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
+        targetAttrName = "capacitorNeed"
+        skillBonus = self.skill.getAttribute("capNeedBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_sensorDamper(self):
+    def test_stasisWebifier(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Indirect Scanning Dampening Unit I")
+        self.testItem = db.getItem("X5 Prototype I Engine Enervator")
         self.testMod = Module(self.testItem)
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
+        targetAttrName = "capacitorNeed"
+        skillBonus = self.skill.getAttribute("capNeedBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_targetPainter(self):
+    def test_civilianWarpDisruptor(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Domination Target Painter")
+        self.testItem = db.getItem("Civilian Warp Disruptor")
         self.testMod = Module(self.testItem)
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
+        targetAttrName = "capacitorNeed"
+        skillBonus = self.skill.getAttribute("capNeedBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_trackingDisruptor(self):
+    def test_civilianStasisWebifier(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Tracking Disruptor II")
+        self.testItem = db.getItem("Civilian Stasis Webifier")
         self.testMod = Module(self.testItem)
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
+        targetAttrName = "capacitorNeed"
+        skillBonus = self.skill.getAttribute("capNeedBonus")
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecmBurst(self):
+    def test_stasisWarpDisruptionFieldGenerator(self):
         self.buildTested = 0
-        self.testItem = db.getItem("'Rash' ECM Emission I")
+        self.testItem = db.getItem("Warp Disruption Field Generator I")
         self.testMod = Module(self.testItem)
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
-        targetAttrName = "ecmBurstRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_remoteEcmBurst(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Remote ECM Burst I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
+        targetAttrName = "capacitorNeed"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_proplusionEwar(self):
+    def test_ewar(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Fleeting Propulsion Inhibitor I")
+        self.testItem = db.getItem("Target Painter I")
         self.testMod = Module(self.testItem)
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
+        targetAttrName = "capacitorNeed"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_weapon(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Shadow Serpentis Light Neutron Blaster")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_ewDrone(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Hornet EC-300")
-        self.testDrone = Drone(self.testItem)
-        self.fit.modules.append(self.testDrone)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
