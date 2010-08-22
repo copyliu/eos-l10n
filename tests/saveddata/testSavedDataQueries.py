@@ -1,5 +1,5 @@
 import unittest
-from eos.types import Fit, Character, User
+from eos.types import Fit, Character, User, Ship
 from eos import db
 
 #Add some test data
@@ -46,3 +46,12 @@ class TestSavedDataQueries(unittest.TestCase):
         db.saveddata_session.flush()
         l = db.getFitsWithShip(1)
         self.assertEquals(len(l), 1)
+
+    def test_5searchFits(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.owner = db.getUser("test")
+        f.name = "testety5"
+        db.saveddata_session.add(f)
+        db.saveddata_session.flush()
+        self.assertEquals(len(db.searchFits("testety5")), 1)

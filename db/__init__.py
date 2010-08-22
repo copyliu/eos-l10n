@@ -50,7 +50,7 @@ from .saveddata import *
 
 #Import queries
 from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory
-from .saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip
+from .saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits
 
 #If using in memory saveddata, you'll want to reflect it so the data structure is good.
 if config.saveddata_connectionstring == "sqlite:///:memory:":

@@ -64,4 +64,4 @@ def searchFits(nameLike, where=None, eager=None):
         for extraClause in where:
             clause = and_(clause, extraClause)
 
-    return saveddaa_session.query(Fit).options(*processEager(eager)).filter(clause).all()
+    return saveddata_session.query(Fit).options(*processEager(eager)).filter(clause).all()
