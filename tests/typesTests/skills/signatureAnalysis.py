@@ -12,7 +12,7 @@ class TestSignatureAnalysis(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_maxTargetRange(self):
+    def test_maxScanResolution(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Incursus"))
         self.fit.calculateModifiedAttributes()
