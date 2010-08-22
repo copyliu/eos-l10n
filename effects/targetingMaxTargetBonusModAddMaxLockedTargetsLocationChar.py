@@ -3,4 +3,5 @@
 #Skill: Targeting
 type = "passive"
 def handler(fit, skill, context):
-    fit.maxTargetsLocked += skill.getModifiedItemAttr("maxTargetBonus")
+    amount = skill.getModifiedItemAttr("maxTargetBonus") * skill.level
+    fit.extraAttributes.increase("maxTargetsLockedFromSkills", amount)
