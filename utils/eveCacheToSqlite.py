@@ -214,7 +214,7 @@ CREATE TABLE "dgmAttributeCategories" (
 '''
 
 METADATA = '''
-CREATE TABLE "dumpmetadata" (
+CREATE TABLE "metadata" (
   "fieldName" varchar(50) NOT NULL,
   "fieldValue" varchar(100) default NULL,
   PRIMARY KEY ("fieldName")
