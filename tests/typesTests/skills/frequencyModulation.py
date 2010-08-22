@@ -120,7 +120,7 @@ class TestFrequencyModulation(unittest.TestCase):
         self.buildTested = 0
         self.testItem = db.getItem("Hammerhead SD-600")
         self.testDrone = Drone(self.testItem)
-        self.fit.modules.append(self.testDrone)
+        self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "falloff"
         expected = ModifiedAttributeDict()

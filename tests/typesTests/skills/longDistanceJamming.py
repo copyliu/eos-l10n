@@ -122,7 +122,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         self.buildTested = 0
         self.testItem = db.getItem("Hornet EC-300")
         self.testDrone = Drone(self.testItem)
-        self.fit.modules.append(self.testDrone)
+        self.fit.drones.append(self.testDrone)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "maxRange"
         expected = ModifiedAttributeDict()
