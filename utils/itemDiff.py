@@ -43,6 +43,8 @@ if options.old is not None and options.new is not None:
     oldDB = sqlite3.connect(os.path.expanduser(options.old))
     newDB = sqlite3.connect(os.path.expanduser(options.new))
 else:
+    import sys
+
     sys.stderr.write("You need to specify at least 1 database file. Run script with --help option for further info.\n")
     sys.exit()
 
