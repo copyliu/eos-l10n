@@ -55,6 +55,7 @@ def getVariations(item, where=None, metaGroups=None, eager=None):
     if not isinstance(item, int): item = item.ID
 
     clause = and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)
+
     if metaGroups != None:
         if not hasattr(metaGroups, "__iter__"):
             metaGroups = (metaGroups,)
@@ -63,6 +64,7 @@ def getVariations(item, where=None, metaGroups=None, eager=None):
         i = 1
         while i < len(metaGroups):
             metaClause = or_(metaClause, metatypes_table.c.metaGroupID == metaGroups[i])
+            i += 1
 
         clause = and_(clause, metaClause)
 
