@@ -40,15 +40,21 @@ def getItemsByCategory(filter, where=None, eager=None):
     filter = processWhere(filter, where)
     return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
 
-@cachedQuery(2, "where", "nameLike")
-def searchItems(nameLike, where=None, eager=None):
+@cachedQuery(3, "where", "nameLike", "join")
+def searchItems(nameLike, where=None, join=None, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
     elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
 
+    if join is None:
+        join = tuple()
+
+    if not hasattr(join, "__iter__"):
+        join = (join,)
+
     filter = processWhere(Item.name.like(nameLike), where)
-    return gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
+    return gamedata_session.query(Item).options(*processEager(eager)).join(*join).filter(filter).all()
 
 @cachedQuery(3, "where", "item", "metaGroups")
 def getVariations(item, where=None, metaGroups=None, eager=None):
