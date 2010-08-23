@@ -22,6 +22,11 @@ class TestGameDataQueries(unittest.TestCase):
         for var in vars:
             self.assertEqual(var.metaGroup.parent, i)
 
+    def test_getVariationsMeta(self):
+        i = db.getItem("Gamma L")
+        vars = db.getVariations(i, metaGroups=4)
+        self.assertEquals(len(vars), 5)
+
     def test_getMarketGroup(self):
         m = db.getMarketGroup(157)
         self.assertEquals(m.name, "Drones")

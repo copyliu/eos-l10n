@@ -19,7 +19,7 @@
 
 from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
-from sqlalchemy.sql import and_
+from sqlalchemy.sql import and_, or_
 from eos.types import Item, Category, Group, MarketGroup
 from eos.db.util import cachedQuery, processEager, processWhere
 
@@ -50,11 +50,24 @@ def searchItems(nameLike, where=None, eager=None):
     filter = processWhere(Item.name.like(nameLike), where)
     return gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
 
-@cachedQuery(2, "where", "item")
-def getVariations(item, where=None, eager=None):
+@cachedQuery(3, "where", "item", "metaGroups")
+def getVariations(item, where=None, metaGroups=None, eager=None):
     if not isinstance(item, int): item = item.ID
 
-    filter = processWhere(and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item), where)
+    clause = and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)
+    if metaGroups != None:
+        if not hasattr(metaGroups, "__iter__"):
+            metaGroups = (metaGroups,)
+
+        metaClause = metatypes_table.c.metaGroupID == metaGroups[0]
+        i = 1
+        while i < len(metaGroups):
+            metaClause = or_(metaClause, metatypes_table.c.metaGroupID == metaGroups[i])
+
+        clause = and_(clause, metaClause)
+
+
+    filter = processWhere(clause, where)
     return gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
 
 @cachedQuery(1, "group")
