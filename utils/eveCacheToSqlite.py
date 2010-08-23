@@ -496,7 +496,7 @@ if __name__ == "__main__":
 
     # Create table for version and put some  data into it
     c.execute(METADATA)
-    query = "INSERT INTO dumpmetadata (fieldName, fieldValue) VALUES(?,?)"
+    query = "INSERT INTO metadata (fieldName, fieldValue) VALUES(?,?)"
     for fieldname in metadata:
         c.execute(query, (fieldname, metadata[fieldname]))
 
