@@ -30,7 +30,8 @@ class ReadOnlyException(Exception):
 def abort_ro():
     raise ReadOnlyException()
 
-gamedata_engine = create_engine(config.gamedata_connectionstring, echo = config.debug)
+gamedata_engine = create_engine(config.gamedata_connectionstring,
+                                echo = config.debug)
 gamedata_meta = MetaData()
 gamedata_meta.bind = gamedata_engine
 gamedata_session = sessionmaker(bind=gamedata_engine, autoflush = False)()
@@ -49,7 +50,7 @@ from .gamedata import *
 from .saveddata import *
 
 #Import queries
-from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory
+from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory, getAttributeInfo
 from .saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits
 
 #If using in memory saveddata, you'll want to reflect it so the data structure is good.

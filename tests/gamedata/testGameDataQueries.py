@@ -38,3 +38,7 @@ class TestGameDataQueries(unittest.TestCase):
     def test_getCategory(self):
         c = db.getCategory(6)
         self.assertEquals(c.name, "Ship")
+
+    def test_getAttributeInfo(self):
+        i = db.getAttributeInfo(3)
+        self.assertEquals(i.name, "isOnline")

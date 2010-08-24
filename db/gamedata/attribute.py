@@ -17,28 +17,38 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from sqlalchemy import Table, Column, Integer, Float, ForeignKey, String, Boolean
+from sqlalchemy import Table, Column, Integer, Float, Unicode, ForeignKey, String, Boolean
 from sqlalchemy.orm import relation, mapper, join, synonym
-from eos.types import Attribute, Icon
+from sqlalchemy.ext.associationproxy import association_proxy
+from eos.types import Attribute, Icon, AttributeInfo
 from eos.db import gamedata_meta
 typeattributes_table = Table("dgmtypeattribs", gamedata_meta,
                          Column("value", Float),
-                         Column("typeID", Integer, ForeignKey("invtypes.typeID")),
-                         Column("attributeID", ForeignKey("dgmattribs.attributeID")))
+                         Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key=True),
+                         Column("attributeID", ForeignKey("dgmattribs.attributeID"), primary_key=True))
 
 attributes_table = Table("dgmattribs", gamedata_meta,
                          Column("attributeID", Integer, primary_key = True),
                          Column("attributeName", String),
-                         Column("description", String),
+                         Column("description", Unicode),
                          Column("published", Boolean),
                          Column("displayName", String),
                          Column("highIsGood", Boolean),
                          Column("iconID", Integer, ForeignKey("icons.iconID")))
 
-j = join(typeattributes_table, attributes_table, typeattributes_table.c.attributeID == attributes_table.c.attributeID)
+mapper(Attribute, typeattributes_table,
+       properties = {"info": relation(AttributeInfo, lazy=False)})
 
-mapper(Attribute, j,
-       primary_key = [typeattributes_table.c.typeID, typeattributes_table.c.attributeID],
+mapper(AttributeInfo, attributes_table,
        properties = {"icon" : relation(Icon),
-                     "name" : synonym("attributeName"),
-                     "ID" : synonym("attributeID")})
+                     "ID": synonym("attributeID"),
+                     "name": synonym("attributeName")})
+
+Attribute.ID = association_proxy("info", "attributeID")
+Attribute.name = association_proxy("info", "attributeName")
+Attribute.description = association_proxy("info", "description")
+Attribute.published = association_proxy("info", "published")
+Attribute.displayName = association_proxy("info", "displayName")
+Attribute.highIsGood = association_proxy("info", "highIsGood")
+Attribute.iconID = association_proxy("info", "iconID")
+Attribute.icon = association_proxy("info", "icon")

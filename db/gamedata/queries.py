@@ -20,7 +20,7 @@
 from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_, or_
-from eos.types import Item, Category, Group, MarketGroup
+from eos.types import Item, Category, Group, MarketGroup, AttributeInfo
 from eos.db.util import cachedQuery, processEager, processWhere
 
 @cachedQuery(1, "lookfor")
@@ -104,3 +104,11 @@ def getMarketGroup(group, eager=None):
         filter = MarketGroup.ID == group
 
     return gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(filter).one()
+
+def getAttributeInfo(attr):
+    if isinstance(attr, basestring):
+        filter = AttributeInfo.name == attr
+    elif isinstance(attr, int):
+        filter = MarketGroup.ID == attr
+
+    return gamedata_session.query(AttributeInfo).filter(filter).one()

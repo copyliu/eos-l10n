@@ -17,7 +17,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup
+from eos.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup, AttributeInfo
 from eos.saveddata.user import User
 from eos.saveddata.damagePattern import DamagePattern
 from eos.saveddata.character import Character, Skill

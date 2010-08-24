@@ -185,6 +185,8 @@ class Item(object):
 
         return False
 
+class AttributeInfo(object):
+    pass
 
 class Attribute(object):
     pass
@@ -193,18 +195,14 @@ class Attribute(object):
 class Category(object):
     pass
 
-
 class Group(object):
     pass
-
 
 class Icon(object):
     pass
 
-
 class MarketGroup(object):
     pass
-
 
 class MetaGroup(object):
     pass
