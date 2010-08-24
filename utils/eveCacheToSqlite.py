@@ -503,7 +503,12 @@ if __name__ == "__main__":
     # Warn about new tables in cache
     for table in cfg.tables:
         if not table in TABLE_MAP:
-            print "Warning: unmapped table", table
+            print "Warning: unmapped table", table, "found in cache"
+
+    # Warn about missing tables
+    for table in TABLE_MAP:
+        if not table in cfg.tables:
+            print "Warning: mapped table", table, "cannot be found in cache"
 
     # Compose list of tables from table map, filter those which have no interest for us
     tablenames = []
