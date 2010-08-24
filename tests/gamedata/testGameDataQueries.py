@@ -40,5 +40,5 @@ class TestGameDataQueries(unittest.TestCase):
         self.assertEquals(c.name, "Ship")
 
     def test_getAttributeInfo(self):
-        i = db.getAttributeInfo(3)
+        i = db.getAttributeInfo(2)
         self.assertEquals(i.name, "isOnline")
