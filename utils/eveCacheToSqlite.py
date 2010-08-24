@@ -347,7 +347,7 @@ def process_table(sourcetable, tablename):
                     # If we've got ASCII string, convert it to unicode and exclude
                     # corrupted symbols from the results
                     if isinstance(values[i], str):
-                        datarow[headerlist[i]] = unicode(values[i], errors='ignore')
+                        datarow[headerlist[i]] = values[i].decode('cp1250')
                     else:
                         datarow[headerlist[i]] = values[i]
                 datarows.append(datarow)
@@ -409,7 +409,7 @@ def process_table(sourcetable, tablename):
             for header in row:
                 headers.append(header)
                 values.append(row[header])
-            query = u"INSERT INTO {0} ({1}) VALUES({2})".format(tablename,u",".join(headers),u",".join(values))
+            query = u"INSERT INTO {0} ({1}) VALUES({2})".format(tablename, u",".join(headers), u",".join(values))
             c.execute(query)
         return
 
