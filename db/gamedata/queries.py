@@ -109,6 +109,6 @@ def getAttributeInfo(attr):
     if isinstance(attr, basestring):
         filter = AttributeInfo.name == attr
     elif isinstance(attr, int):
-        filter = MarketGroup.ID == attr
+        filter = AttributeInfo.ID == attr
 
     return gamedata_session.query(AttributeInfo).filter(filter).one()
