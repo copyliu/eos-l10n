@@ -344,7 +344,12 @@ def process_table(sourcetable, tablename):
                     return None
                 # Fill row dictionary with values and append it to list
                 for i in xrange(headerlistlen):
-                    datarow[headerlist[i]] = values[i]
+                    # If we've got ASCII string, convert it to unicode and exclude
+                    # corrupted symbols from the results
+                    if isinstance(values[i], str):
+                        datarow[headerlist[i]] = unicode(values[i], errors='ignore')
+                    else:
+                        datarow[headerlist[i]] = values[i]
                 datarows.append(datarow)
         # FilterRowset and IndexedRowLists are accessible almost like dictionaries
         elif guid in ("util.FilterRowset", "util.IndexedRowLists"):
@@ -381,14 +386,14 @@ def process_table(sourcetable, tablename):
             for key in row:
                 # Text should be in singlequotes with singlequotes escaped by singlequotes
                 if isinstance(row[key], basestring):
-                    row[key] = "'{0}'".format(row[key].replace("'", "''"))
+                    row[key] = u"'{0}'".format(row[key].replace("'", "''"))
                 # Bool values are used as tinyint(1) in database; also we
                 # convert them to string for proper operation of join in insert function
                 elif isinstance(row[key], bool):
                     row[key] = str(int(row[key]))
                 # Lists are converted to csv
                 elif isinstance(row[key], (list, tuple, set)):
-                    row[key] = "'" + ",".join(map(convert_list_value, row[key])) + "'"
+                    row[key] = "'" + u",".join(map(convert_list_value, row[key])) + "'"
                 # Pass empty strings to sql in  case of no data
                 elif row[key] is None:
                     row[key] = "''"
@@ -404,7 +409,7 @@ def process_table(sourcetable, tablename):
             for header in row:
                 headers.append(header)
                 values.append(row[header])
-            query = "INSERT INTO {0} ({1}) VALUES({2})".format(tablename,",".join(headers),",".join(values))
+            query = u"INSERT INTO {0} ({1}) VALUES({2})".format(tablename,u",".join(headers),u",".join(values))
             c.execute(query)
         return
 
@@ -437,10 +442,6 @@ if __name__ == "__main__":
 
     from reverence import blue
 
-    # Ugly trick to set encoding
-    reload(sys)
-    sys.setdefaultencoding("utf8")
-
     # Parse command line options
     usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
     parser = OptionParser(usage=usage)
@@ -460,7 +461,7 @@ if __name__ == "__main__":
     if options.singularity: server = "singularity"
     else: server = "tranquility"
 
-
+    # Set static variables for paths
     PATH_EVE = os.path.expanduser(options.eve)
     PATH_CACHE = os.path.expanduser(options.cache)
     PATH_DUMP = os.path.expanduser(options.dump)
