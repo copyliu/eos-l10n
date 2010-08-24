@@ -131,10 +131,8 @@ QUERY_ALLEFFECTS = 'SELECT effectID, effectName FROM dgmeffects'
 # Implants (20), Subsystems (32)
 QUERY_PUBLISHEDTYPEIDS = 'SELECT it.typeID FROM invtypes AS it INNER JOIN \
 invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON \
-ig.categoryID = ic.categoryID WHERE it.published = 1 AND \
-(ic.categoryID = 2 OR ic.categoryID = 6 OR ic.categoryID = 7 OR \
-ic.categoryID = 8 OR ic.categoryID = 16 OR ic.categoryID = 18 OR \
-ic.categoryID = 20 OR ic.categoryID = 32)'
+ig.categoryID = ic.categoryID WHERE it.published = 1 AND ic.categoryID IN \
+(2, 6, 7, 8, 16, 18, 20, 32)'
 QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
 QUERY_GROUPID_CATEGORYID = 'SELECT categoryID FROM invgroups WHERE \
 groupID = ? LIMIT 1'
