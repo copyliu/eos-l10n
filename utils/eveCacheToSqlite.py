@@ -344,8 +344,7 @@ def process_table(sourcetable, tablename):
                     return None
                 # Fill row dictionary with values and append it to list
                 for i in xrange(headerlistlen):
-                    # If we've got ASCII string, convert it to unicode and exclude
-                    # corrupted symbols from the results
+                    # If we've got ASCII string, convert it to unicode
                     if isinstance(values[i], str):
                         datarow[headerlist[i]] = values[i].decode('cp1250')
                     else:
