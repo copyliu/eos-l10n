@@ -346,7 +346,7 @@ def process_table(sourcetable, tablename):
                 for i in xrange(headerlistlen):
                     # If we've got ASCII string, convert it to unicode
                     if isinstance(values[i], str):
-                        datarow[headerlist[i]] = values[i].decode('ISO-8859-1')
+                        datarow[headerlist[i]] = unicode(values[i], 'ISO-8859-1')
                     else:
                         datarow[headerlist[i]] = values[i]
                 datarows.append(datarow)
