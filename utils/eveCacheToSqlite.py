@@ -204,15 +204,6 @@ CREATE INDEX "invtypes_IX_groupID" ON "invtypes" ("groupID");
 CREATE INDEX "invtypes_IX_marketGroupID" ON "invtypes" ("marketGroupID");
 '''
 
-STATIC = '''
-CREATE TABLE "dgmAttributeCategories" (
-  "categoryID" tinyint(3) NOT NULL,
-  "categoryName" varchar(50) default NULL,
-  "categoryDescription" varchar(200) default NULL,
-  PRIMARY KEY ("categoryID")
-);
-'''
-
 METADATA = '''
 CREATE TABLE "metadata" (
   "fieldName" varchar(50) NOT NULL,
@@ -488,10 +479,6 @@ if __name__ == "__main__":
 
     # Create structure
     for statement in SCHEMA.split(";\n"):
-        c.execute(statement)
-
-    # Fill with some static data (can't find where we can get it from reverence)
-    for statement in STATIC.split(";\n"):
         c.execute(statement)
 
     # Create table for version and put some  data into it
