@@ -192,3 +192,14 @@ class TestModule(unittest.TestCase):
         self.assertEquals(m.item, c.item)
         self.assertEquals(m.charge, c.charge)
         self.assertEquals(m.state, c.state)
+
+    def test_maxRange(self):
+        m = Module(db.getItem("Remote ECM Burst I"))
+        self.assertEquals(m.maxRange, m.getModifiedItemAttr("maxRange"))
+
+        m2 = Module(db.getItem("ECM Burst I"))
+        self.assertEquals(m2.maxRange, m2.getModifiedItemAttr("ecmBurstRange"))
+
+        m3 = Module(db.getItem("Standard Missile Launcher I"))
+        m3.charge = db.getItem("Bloodclaw Light Missile")
+        self.assertEquals(m3.maxRange, m3.getModifiedChargeAttr("explosionDelay") * m3.getModifiedChargeAttr("maxVelocity"))
