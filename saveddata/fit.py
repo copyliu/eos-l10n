@@ -333,7 +333,8 @@ class Fit(object):
         return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
                            sqrt((2 * percent) - pow(percent, 2)))
 
-    def isCapStable(self):
+    @property
+    def capStable(self):
         if self.__capStable is None:
             self.simulateCap()
 
@@ -382,7 +383,7 @@ class Fit(object):
 
     def calculateSustainableTank(self):
         if self.__sustainableTank is None:
-            if self.isCapStable():
+            if self.capStable:
                 sustainable = {}
                 sustainable["armorRepair"] = self.extraAttributes["armorRepair"]
                 sustainable["shieldRepair"] = self.extraAttributes["shieldRepair"]

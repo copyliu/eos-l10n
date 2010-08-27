@@ -120,7 +120,7 @@ class TestFit(unittest.TestCase):
     def test_capacitorNoMods(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        self.assertEquals(f.isCapStable(), True)
+        self.assertEquals(f.capStable, True)
         self.assertAlmostEquals(f.capState, 100, 1)
 
     def test_capacitorUnstable(self):
@@ -129,7 +129,7 @@ class TestFit(unittest.TestCase):
         m = Module(db.getItem("100MN Afterburner I"))
         m.state = State.ACTIVE
         f.modules.append(m)
-        self.assertFalse(f.isCapStable())
+        self.assertFalse(f.capStable)
         self.assertTrue(f.capState < 15)
 
     def test_capacitorSingleCycleKill(self):
@@ -140,7 +140,7 @@ class TestFit(unittest.TestCase):
             m.state = State.ACTIVE
             f.modules.append(m)
 
-        self.assertFalse(f.isCapStable())
+        self.assertFalse(f.capStable)
         self.assertEquals(f.capState, 0)
 
     def test_copy(self):
