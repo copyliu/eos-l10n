@@ -207,4 +207,5 @@ class TestModule(unittest.TestCase):
     def test_buildDummy(self):
         m = Module.buildEmpty(Slot.LOW)
         self.assertEquals(m.slot, Slot.LOW)
+        self.assertEqual(m.hardpoint, Hardpoint.NONE)
 

@@ -90,6 +90,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def buildEmpty(cls, slot):
         empty = Module(None)
         empty.__slot = slot
+        empty.__hardpoint = Hardpoint.NONE
         empty.dummySlot = slot
         return empty
 
