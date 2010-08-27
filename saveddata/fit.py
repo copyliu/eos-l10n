@@ -265,6 +265,15 @@ class Fit(object):
                         if amount == 0:
                             break
 
+    def getAttrSum(self, attr):
+        amount = 0
+        for mod in self.modules:
+            add = mod.getModifiedItemAttr(attr)
+            if add is not None:
+                amount += add
+
+        return amount
+
     def getHardpointsUsed(self, type):
         amount = 0
         for mod in self.modules:
@@ -280,6 +289,9 @@ class Fit(object):
                 amount += 1
 
         return amount
+
+    def getCalibrationUsed(self):
+        return self.getAttrSum('upgradeCost')
 
     def calculateCapRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")

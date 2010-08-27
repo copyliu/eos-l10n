@@ -347,3 +347,9 @@ class TestFit(unittest.TestCase):
         f.modules.append(Module(db.getItem("Salvager I")))
         f.fill()
         self.assertEquals(f.getSlotsUsed(Slot.HIGH), 1)
+
+    def test_getCalibrationUsed(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.modules.append(Module(db.getItem("Large Trimark Armor Pump I")))
+        self.assertEquals(f.getCalibrationUsed(), 50)
