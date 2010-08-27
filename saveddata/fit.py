@@ -291,13 +291,13 @@ class Fit(object):
         return amount
 
     def getCalibrationUsed(self):
-        return self.getAttrSum(self.modules, 'upgradeCost')
+        return self.getItemAttrSum(self.modules, 'upgradeCost')
 
     def getPgUsed(self):
-        return self.getAttributeSum(self.modules, "power")
+        return self.getItemAttrSum(self.modules, "power")
 
     def getCpuUsed(self):
-        return self.getAttributeSum(self.modules, "cpu")
+        return self.getItemAttrSum(self.modules, "cpu")
 
     def calculateCapRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
