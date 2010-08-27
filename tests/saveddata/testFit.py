@@ -39,14 +39,6 @@ class TestFit(unittest.TestCase):
         f = Fit()
         self.assertRaises(ValueError, f.modules.remove, 1302)
 
-    def test_setNotAShip(self):
-        f = Fit()
-        try:
-            f.ship = Ship(db.getItem("Gamma L"))
-        except ValueError:
-            return
-        self.fail("Set Gamma L as ship, was expecting ValueError")
-
     def test_setShip(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
