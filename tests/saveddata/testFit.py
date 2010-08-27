@@ -353,3 +353,15 @@ class TestFit(unittest.TestCase):
         f.ship = Ship(db.getItem("Rifter"))
         f.modules.append(Module(db.getItem("Large Trimark Armor Pump I")))
         self.assertEquals(f.getCalibrationUsed(), 50)
+
+    def test_pgUsed(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.modules.append(Module(db.getItem("Salvager I")))
+        self.assertEquals(f.getPgUsed(), 1)
+
+    def test_cpuUsed(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.modules.append(Module(db.getItem("Salvager I")))
+        self.assertEquals(f.getCpuUsed(), 20)
