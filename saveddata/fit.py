@@ -243,7 +243,7 @@ class Fit(object):
                  "medSlots": Slot.MED,
                  "hiSlots": Slot.HIGH,
                  "rigSlots": Slot.RIG,
-                 "maxSubsystems": Slot.SUBSYSTEM}
+                 "maxSubSystems": Slot.SUBSYSTEM}
 
         for slotType, constant in slots.items():
             slotsFree[constant] = self.ship.getModifiedItemAttr(slotType)

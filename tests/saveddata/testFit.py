@@ -334,6 +334,12 @@ class TestFit(unittest.TestCase):
         f.fill()
         self.assertEquals(len(f.modules), 13)
 
+    def test_fillT3(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Tengu"))
+        f.fill()
+        self.assertEquals(len(f.modules), 8)
+
     def test_fillTooMuchDummies(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
