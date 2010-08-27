@@ -365,3 +365,15 @@ class TestFit(unittest.TestCase):
         f.ship = Ship(db.getItem("Rifter"))
         f.modules.append(Module(db.getItem("Salvager I")))
         self.assertEquals(f.getCpuUsed(), 20)
+
+    def test_droneBandwidthUsed(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.drones.append(Drone(db.getItem("Hobgoblin I")))
+        self.assertEquals(f.getDroneBandwidthUsed(), 5)
+
+    def test_droneBayUsed(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.drones.append(Drone(db.getItem("Hobgoblin I")))
+        self.assertEquals(f.getDroneBayUsed(), 5)

@@ -299,6 +299,16 @@ class Fit(object):
     def getCpuUsed(self):
         return self.getItemAttrSum(self.modules, "cpu")
 
+    def getDroneBandwidthUsed(self):
+        return self.getItemAttrSum(self.drones, "droneBandwidthUsed")
+
+    def getDroneBayUsed(self):
+        amount = 0
+        for d in self.drones:
+            amount += d.item.volume
+
+        return amount
+
     def calculateCapRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
         rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
