@@ -203,3 +203,8 @@ class TestModule(unittest.TestCase):
         m3 = Module(db.getItem("Standard Missile Launcher I"))
         m3.charge = db.getItem("Bloodclaw Light Missile")
         self.assertEquals(m3.maxRange, m3.getModifiedChargeAttr("explosionDelay") * m3.getModifiedChargeAttr("maxVelocity"))
+
+    def test_buildDummy(self):
+        m = Module.buildEmpty(Slot.LOW)
+        self.assertEquals(m.slot, Slot.LOW)
+
