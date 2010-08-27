@@ -121,7 +121,7 @@ class TestFit(unittest.TestCase):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         self.assertEquals(f.isCapStable(), True)
-        self.assertAlmostEquals(f.capState(), 100, 1)
+        self.assertAlmostEquals(f.capState, 100, 1)
 
     def test_capacitorUnstable(self):
         f = Fit()
@@ -130,7 +130,7 @@ class TestFit(unittest.TestCase):
         m.state = State.ACTIVE
         f.modules.append(m)
         self.assertFalse(f.isCapStable())
-        self.assertTrue(f.capState() < 15)
+        self.assertTrue(f.capState < 15)
 
     def test_capacitorSingleCycleKill(self):
         f = Fit()
@@ -141,7 +141,7 @@ class TestFit(unittest.TestCase):
             f.modules.append(m)
 
         self.assertFalse(f.isCapStable())
-        self.assertEquals(f.capState(), 0)
+        self.assertEquals(f.capState, 0)
 
     def test_copy(self):
         f = Fit()
@@ -258,7 +258,7 @@ class TestFit(unittest.TestCase):
         m = Module(db.getItem("Small Shield Booster I"))
         m.state = State.ACTIVE
         f.modules.append(m)
-        self.assertAlmostEquals(f.capState(), 16.6, 1)
+        self.assertAlmostEquals(f.capState, 16.6, 1)
 
     def test_weaponDPS(self):
         f = Fit()
@@ -352,28 +352,28 @@ class TestFit(unittest.TestCase):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         f.modules.append(Module(db.getItem("Large Trimark Armor Pump I")))
-        self.assertEquals(f.getCalibrationUsed(), 50)
+        self.assertEquals(f.calibrationUsed, 50)
 
     def test_pgUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         f.modules.append(Module(db.getItem("Salvager I")))
-        self.assertEquals(f.getPgUsed(), 1)
+        self.assertEquals(f.pgUsed, 1)
 
     def test_cpuUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         f.modules.append(Module(db.getItem("Salvager I")))
-        self.assertEquals(f.getCpuUsed(), 20)
+        self.assertEquals(f.cpuUsed, 20)
 
     def test_droneBandwidthUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         f.drones.append(Drone(db.getItem("Hobgoblin I")))
-        self.assertEquals(f.getDroneBandwidthUsed(), 5)
+        self.assertEquals(f.droneBandwidthUsed, 5)
 
     def test_droneBayUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         f.drones.append(Drone(db.getItem("Hobgoblin I")))
-        self.assertEquals(f.getDroneBayUsed(), 5)
+        self.assertEquals(f.droneBayUsed, 5)

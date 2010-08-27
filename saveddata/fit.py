@@ -290,19 +290,24 @@ class Fit(object):
 
         return amount
 
-    def getCalibrationUsed(self):
+    @property
+    def calibrationUsed(self):
         return self.getItemAttrSum(self.modules, 'upgradeCost')
 
-    def getPgUsed(self):
+    @property
+    def pgUsed(self):
         return self.getItemAttrSum(self.modules, "power")
 
-    def getCpuUsed(self):
+    @property
+    def cpuUsed(self):
         return self.getItemAttrSum(self.modules, "cpu")
 
-    def getDroneBandwidthUsed(self):
+    @property
+    def droneBandwidthUsed(self):
         return self.getItemAttrSum(self.drones, "droneBandwidthUsed")
 
-    def getDroneBayUsed(self):
+    @property
+    def droneBayUsed(self):
         amount = 0
         for d in self.drones:
             amount += d.item.volume
@@ -334,6 +339,7 @@ class Fit(object):
 
         return self.__capStable
 
+    @property
     def capState(self):
         """
         If the cap is stable, the capacitor state is the % at which it is stable.
@@ -344,12 +350,14 @@ class Fit(object):
 
         return self.__capState
 
+    @property
     def capUsed(self):
         if self.__capUsed is None:
             self.simulateCap()
 
         return self.__capUsed
 
+    @property
     def capRecharge(self):
         if self.__capRecharge is None:
             self.simulateCap()
@@ -394,7 +402,7 @@ class Fit(object):
                                  "Hull Repair Unit": "hullRepair",
                                  "Shield Booster": "shieldRepair"}
 
-                capUsed = self.capUsed()
+                capUsed = self.capUsed
                 for attr in ("shieldRepair", "armorRepair", "hullRepair"):
                     sustainable[attr] = self.extraAttributes[attr]
                     dict = self.extraAttributes.getAfflictions(attr)
@@ -412,7 +420,7 @@ class Fit(object):
                 #Loop through every module until we're above peak recharge
                 #Most efficient first, as we sorted earlier.
                 #calculate how much the repper can rep stability & add to total
-                totalPeakRecharge = self.capRecharge()
+                totalPeakRecharge = self.capRecharge
                 for mod in repairers:
                     if capUsed > totalPeakRecharge: break
                     cycleTime = mod.getCycleTime()
