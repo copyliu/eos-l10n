@@ -268,7 +268,15 @@ class Fit(object):
     def getHardpointsUsed(self, type):
         amount = 0
         for mod in self.modules:
-            if mod.hardpoint is type:
+            if mod.hardpoint is type and not mod.isEmpty():
+                amount += 1
+
+        return amount
+
+    def getSlotsUsed(self, type):
+        amount = 0
+        for mod in self.modules:
+            if mod.slot is type and not mod.isEmpty():
                 amount += 1
 
         return amount

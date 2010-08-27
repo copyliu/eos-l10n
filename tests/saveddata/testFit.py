@@ -340,3 +340,10 @@ class TestFit(unittest.TestCase):
 
         f.fill()
         self.assertEquals(len(f.modules), 13)
+
+    def test_getSlotsUsed(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.modules.append(Module(db.getItem("Salvager I")))
+        f.fill()
+        self.assertEquals(f.getSlotsUsed(Slot.HIGH), 1)
