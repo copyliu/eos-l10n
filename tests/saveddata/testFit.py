@@ -383,3 +383,13 @@ class TestFit(unittest.TestCase):
         rifter = db.getItem("Rifter")
         f.ship = Ship(rifter)
         self.assertEquals(f.extraAttributes["capacity"], rifter.capacity)
+
+    def test_addRemoveFit(self):
+        f = Fit()
+        rifter = db.getItem("Rifter")
+        f.ship = Ship(rifter)
+        f.fill()
+        db.saveddata_session.add(f)
+        db.saveddata_session.flush()
+        db.saveddata_session.delete(f)
+        db.saveddata_session.flush()
