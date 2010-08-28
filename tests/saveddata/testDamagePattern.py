@@ -10,13 +10,13 @@ class TestDamagePattern(unittest.TestCase):
         for type in ("shieldCapacity", "armorHP", "hp"):
             expected += f.ship.getModifiedItemAttr(type)
 
-        self.assertEquals(expected, sum(f.getEhp().values()))
+        self.assertEquals(expected, sum(f.ehp.values()))
 
     def test_uniformEhp(self):
         f = Fit()
         f.ship = Ship(db.getItem("Wolf"))
         f.damagePattern = DamagePattern(25, 25, 25 ,25)
-        self.assertAlmostEquals(3094, sum(f.getEhp().values()), 0)
+        self.assertAlmostEquals(3094, sum(f.ehp.values()), 0)
 
     def test_passiveRechargeUniform(self):
         f = Fit()
