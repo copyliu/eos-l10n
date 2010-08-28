@@ -624,9 +624,9 @@ class HandledModuleList(HandledList):
             self[i].position -= 1
 
     def toDummy(self, index):
-        mod = self[i]
+        mod = self[index]
         if not mod.isEmpty():
-            self[i] = Module.buildEmpty(mod.slot)
+            self[index] = Module.buildEmpty(mod.slot)
 
 class HandledDroneList(HandledList):
     def __init__(self):
