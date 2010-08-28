@@ -620,7 +620,7 @@ class HandledModuleList(HandledList):
         HandledList.remove(self, mod)
         oldPos = mod.position
         if oldPos is None:
-            oldPos = self.index(mod)
+            return
 
         mod.position = None
         for i in xrange(oldPos, len(self)):
