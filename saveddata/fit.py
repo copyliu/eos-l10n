@@ -159,7 +159,7 @@ class Fit(object):
 
     @property
     def maxTargets(self):
-        return min(self.extraAttributes["maxTargetsLockedFromSkills"], self.ship.getModifiedItemAttr("maxTargetsLocked"))
+        return min(self.extraAttributes["maxTargetsLockedFromSkills"], self.ship.getModifiedItemAttr("maxLockedTargets"))
 
     @property
     def scanStrength(self):
