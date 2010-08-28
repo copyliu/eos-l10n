@@ -623,6 +623,11 @@ class HandledModuleList(HandledList):
         for i in xrange(oldPos, len(self)):
             self[i].position -= 1
 
+    def toDummy(self, index):
+        mod = self[i]
+        if not mod.isEmpty():
+            self[i] = Module.buildEmpty(mod.slot)
+
 class HandledDroneList(HandledList):
     def __init__(self):
         self._findCache = {}
