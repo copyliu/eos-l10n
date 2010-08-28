@@ -157,6 +157,10 @@ class Fit(object):
     def totalDPS(self):
         return self.droneDPS + self.weaponDPS
 
+    @property
+    def maxTargets(self):
+        return min(self.extraAttributes["maxTargetsLockedFromSkills"], self.ship.getModifiedItemAttr("maxTargetsLocked"))
+
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
