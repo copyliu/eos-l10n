@@ -36,6 +36,7 @@ class Fit(object):
                         "maxActiveDrones": 0,
                         "maxTargetsLockedFromSkills": 0,
                         "droneControlRange": 0,
+                        "capacity": 0,
                         "cloaked": False}
 
     PEAK_RECHARGE = -(sqrt(2) - 2 ) / 2
@@ -103,6 +104,8 @@ class Fit(object):
     def ship(self, ship):
         self.__ship = ship
         self.shipID = ship.item.ID if ship is not None else None
+        self.extraAttributes["capacity"] = ship.item.capacity
+        self.clear()
 
     @property
     def drones(self):
