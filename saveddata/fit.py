@@ -625,24 +625,24 @@ class HandledModuleList(HandledList):
 
 class HandledDroneList(HandledList):
     def __init__(self):
-        self.__findCache = {}
+        self._findCache = {}
 
     def find(self, item):
-        if self.__findCache.has_key(item.ID):
-            return self.__findCache[item.ID]
+        if self._findCache.has_key(item.ID):
+            return self._findCache[item.ID]
         else:
             return None
 
     def append(self, drone):
-        if self.__findCache.has_key(drone.item.ID):
+        if self._findCache.has_key(drone.item.ID):
             raise ValueError("Drone already here, cannot add the same one multiple times")
 
-        HandledList.append(self, drone)
-        self.__findCache[drone.item.ID] = drone
+        list.append(self, drone)
+        self._findCache[drone.item.ID] = drone
 
     def remove(self, drone):
-        if self.__findCache.has_key(drone.item.ID):
-            del self.__findCache[drone.item.ID]
+        if self._findCache.has_key(drone.item.ID):
+            del self._findCache[drone.item.ID]
             HandledList.remove(self, drone)
         else:
             raise KeyError("Drone is not in the list")
@@ -680,7 +680,8 @@ class HandledImplantBoosterList(HandledList):
                 if replace: self.remove(booster)
                 else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True")
 
-        HandledList.append(self, booster)
+        list.append(self, booster)
+
 
 class HandledProjectedModList(HandledList):
     def append(self, proj):
@@ -690,7 +691,11 @@ class HandledProjectedModList(HandledList):
 class HandledProjectedDroneList(HandledDroneList):
     def append(self, proj):
         proj.projected = True
-        HandledDroneList.append(self, proj)
+        if self._findCache.has_key(proj.item.ID):
+            raise ValueError("Drone already here, cannot add the same one multiple times")
+
+        list.append(self, proj)
+        self._findCache[proj.item.ID] = proj
 
 class HandledProjectedFitList(list):
     """
