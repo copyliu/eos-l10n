@@ -74,9 +74,9 @@ class Fit(object):
         self.__capUsed = None
         self.__capRecharge = None
         self.__calculatedTargets = []
-        self.__ship = Ship(db.getItem(self.shipID)) if self.shipID is not None else None
         self.extraAttributes = ModifiedAttributeDict(self)
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
+        self.ship = Ship(db.getItem(self.shipID)) if self.shipID is not None else None
 
     @property
     def damagePattern(self):
@@ -104,8 +104,8 @@ class Fit(object):
     def ship(self, ship):
         self.__ship = ship
         self.shipID = ship.item.ID if ship is not None else None
-        self.extraAttributes["capacity"] = ship.item.capacity
-        self.clear()
+        if ship is not None:
+            self.extraAttributes["capacity"] = ship.item.capacity
 
     @property
     def drones(self):

@@ -377,3 +377,9 @@ class TestFit(unittest.TestCase):
         f.ship = Ship(db.getItem("Rifter"))
         f.drones.append(Drone(db.getItem("Hobgoblin I")))
         self.assertEquals(f.droneBayUsed, 5)
+
+    def test_cargoSpace(self):
+        f = Fit()
+        rifter = db.getItem("Rifter")
+        f.ship = Ship(rifter)
+        self.assertEquals(f.extraAttributes["capacity"], rifter.capacity)
