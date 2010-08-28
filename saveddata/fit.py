@@ -161,6 +161,11 @@ class Fit(object):
     def maxTargets(self):
         return min(self.extraAttributes["maxTargetsLockedFromSkills"], self.ship.getModifiedItemAttr("maxTargetsLocked"))
 
+    @property
+    def scanStrength(self):
+        return max([self.ship.getModifiedItemAttr("scan%sStrength" % scanType)
+                    for scanType in ("Magnetometric", "Ladar", "Radar", "Gravimetric")])
+
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
