@@ -381,6 +381,13 @@ class Fit(object):
 
         return result, totalDrain
 
+    @property
+    def sustainableTank(self):
+        if self.__sustainableTank is None:
+            self.calculateSustainableTank()
+
+        return self.__sustainableTank
+
     def calculateSustainableTank(self):
         if self.__sustainableTank is None:
             if self.capStable:
