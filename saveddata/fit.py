@@ -619,6 +619,9 @@ class HandledModuleList(HandledList):
     def remove(self, mod):
         HandledList.remove(self, mod)
         oldPos = mod.position
+        if oldPos is None:
+            oldPos = self.index(mod)
+
         mod.position = None
         for i in xrange(oldPos, len(self)):
             self[i].position -= 1
