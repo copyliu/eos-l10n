@@ -23,19 +23,15 @@ from sqlalchemy.orm import validates, reconstructor
 from eos.types import Item
 from copy import deepcopy
 import sqlalchemy.orm.exc as exc
+import eos.config
 
 class Character(object):
     __all5 = None
     __all0 = None
-    __skillCache = None
 
     @classmethod
-    def __getSkillCache(cls):
-        if cls.__skillCache is None:
-            import eos.db
-            cls.__skillCache = eos.db.getItemsByCategory("Skill")
-
-        return cls.__skillCache
+    def getSkillList(cls):
+        return eos.db.getItemsByCategory("Skill")
 
     @classmethod
     def getAll5(cls):
@@ -45,7 +41,7 @@ class Character(object):
                 all5 = eos.db.getCharacter("All 5")
             except exc.NoResultFound:
                 all5 = Character("All 5")
-                for skill in cls.__getSkillCache():
+                for skill in cls.getSkillList():
                     all5.addSkill(Skill(skill, 5, True))
 
             cls.__all5 = all5
@@ -60,7 +56,7 @@ class Character(object):
             except exc.NoResultFound:
                 all0 = Character("All 0")
 
-                for skill in cls.__getSkillCache():
+                for skill in cls.getSkillList():
                     all0.addSkill(Skill(skill, 0, True))
 
             cls.__all0 = all0
