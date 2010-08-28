@@ -499,7 +499,8 @@ class Fit(object):
                 f_prime = lambda t, y: r(y) - d(t)
                 self.__capState = solve(f_prime, capCapacity)
 
-    def getEhp(self):
+    @property
+    def ehp(self):
         if self.__ehp is None:
             if self.damagePattern is None:
                 ehp = {}
