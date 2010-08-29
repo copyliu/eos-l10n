@@ -578,7 +578,7 @@ class Fit(object):
             if mod.state == State.ACTIVE and \
             (mod.hardpoint == Hardpoint.TURRET or mod.hardpoint == Hardpoint.MISSILE):
                 cycleTime = mod.getCycleTime()
-                volley = sum(map(lambda attr: mod.getModifiedChargeAttr(attr), damageAttributes))
+                volley = sum(map(lambda attr: mod.getModifiedChargeAttr(attr) or 0, damageAttributes))
                 volley *= mod.getModifiedItemAttr("damageMultiplier") or 1
                 weaponVolley += volley
                 weaponDPS += volley / cycleTime
