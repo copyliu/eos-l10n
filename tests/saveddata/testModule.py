@@ -25,20 +25,10 @@ class TestModule(unittest.TestCase):
         self.assertEquals(self.m.itemID, self.i.ID)
 
     def test_setPassiveActive(self):
-        try:
-            self.m.state = State.ACTIVE
-        except ValueError:
-            return
-
-        self.fail("Expected a ValueError, didn't get it.")
+        self.assertFalse(self.m.isValidState(State.ACTIVE))
 
     def test_setPassiveOverload(self):
-        try:
-            self.m.state = State.OVERHEATED
-        except ValueError:
-            return
-
-        self.fail("Expected a ValueError, didn't get it.")
+        self.assertFalse(self.m.isValidState(State.OVERHEATED))
 
     def test_setActiveOverloadWhenGood(self):
         m = Module(db.getItem("Heavy Modulated Energy Beam I"))

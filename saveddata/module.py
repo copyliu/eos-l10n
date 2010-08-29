@@ -225,6 +225,19 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         return True
 
+    def isValidState(self, state):
+        #Check if we're within bounds
+        if state < -1 or state > 2:
+            return False
+
+        if state == State.ACTIVE and not self.item.isType("active"):
+            return False
+
+        if state == State.OVERHEATED and not self.item.isType("overheat"):
+            return False
+
+        return True
+
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
         if charge is None: return True
@@ -274,12 +287,10 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         raise ValueError("Passed item does not fit in any known slot")
 
-    @validates("ID", "itemID", "ammoID", "state")
+    @validates("ID", "itemID", "ammoID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
                "itemID" : lambda val: val is None or isinstance(val, int),
-               "state" : lambda val: isinstance(val, int) and val >= -1 and val <= 2 and
-                                     (val < 1 or self.item.isType("active")) and (val < 2 or self.item.isType("overheat")),
                "ammoID" : lambda val: isinstance(val, int)}
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
