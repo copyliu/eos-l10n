@@ -27,7 +27,7 @@ def gaussian(expected_value, variance):
   return lambda x: a * exp(-((x - b) ** 2) / (2 * c ** 2))
 
 
-def solve(f_prime, initial_value, h = 0.2, max_iterations = 10000):
+def solve(f_prime, initial_value, h = 0.5, max_iterations = 7200):
   t, y = 0.0, initial_value
   try:
     for i in xrange(max_iterations):
