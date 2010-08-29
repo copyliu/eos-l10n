@@ -392,6 +392,14 @@ class Fit(object):
 
         return result, totalDrain
 
+    def __generateRecharge(self, capacity, rechargeRate):
+        def result(currCap):
+            percent = currCap / capacity
+            return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
+                               sqrt((2 * percent) - percent ** 2))
+
+        return result
+
     @property
     def sustainableTank(self):
         if self.__sustainableTank is None:
@@ -504,7 +512,10 @@ class Fit(object):
         else:
             VARIANCE = 0.1
             d, totalDrain = self.__generateDrain(VARIANCE)
+
             capCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+            rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
+            r = self.__generateRecharge(capCapacity, rechargeRate)
             self.__capStable = False
 
             #Check for a single cycle kill. Our algorithm doesn't calculate it right.
@@ -512,8 +523,8 @@ class Fit(object):
                 self.__capState = 0
             else:
                 currentCap = capCapacity
+
                 #Solve the cap stuff by integrating and solving it
-                r = self.calculateCapRechargeAbs
                 f_prime = lambda t, y: r(y) - d(t)
                 self.__capState = solve(f_prime, capCapacity)
 
