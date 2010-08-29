@@ -227,3 +227,7 @@ class TestModule(unittest.TestCase):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         self.assertTrue(Module(db.getItem("Salvager I")).fits(f))
+
+    def test_dummyCalc(self):
+        m = Module.buildEmpty(Slot.LOW)
+        m.calculateModifiedAttributes(Fit(), "normal")

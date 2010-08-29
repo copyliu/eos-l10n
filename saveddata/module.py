@@ -304,14 +304,15 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             context = ("module",)
             projected = False
 
-        for effect in self.item.effects.itervalues():
-            if effect.runTime == runTime and \
-            (effect.isType("offline") or
-            (effect.isType("passive") and self.state >= State.ONLINE) or \
-            (effect.isType("active") and self.state >= State.ACTIVE) or \
-            (effect.isType("overheat") and self.state >= State.OVERHEATED)) and \
-            ((projected and effect.isType("projected")) or not projected):
-                    effect.handler(fit, self, context)
+        if self.item:
+            for effect in self.item.effects.itervalues():
+                if effect.runTime == runTime and \
+                (effect.isType("offline") or
+                (effect.isType("passive") and self.state >= State.ONLINE) or \
+                (effect.isType("active") and self.state >= State.ACTIVE) or \
+                (effect.isType("overheat") and self.state >= State.OVERHEATED)) and \
+                ((projected and effect.isType("projected")) or not projected):
+                        effect.handler(fit, self, context)
 
         if self.charge is not None and not projected:
             for effect in self.charge.effects.itervalues():
