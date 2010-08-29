@@ -247,7 +247,7 @@ class TestFit(unittest.TestCase):
             f.modules.append(m)
 
         f.calculateModifiedAttributes()
-        s = f.calculateSustainableTank()
+        s = f.sustainableTank
         self.assertAlmostEquals(s["shieldRepair"], 3.8, 1)
 
     def test_capCalcs(self):

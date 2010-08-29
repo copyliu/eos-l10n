@@ -184,6 +184,7 @@ class Fit(object):
         self.__weaponDPS = None
         self.__weaponVolley = None
         self.__effectiveSustainableTank = None
+        self.__sustainableTank = None
         self.__droneDPS = None
         self.__ehp = None
         self.__calculated = False
