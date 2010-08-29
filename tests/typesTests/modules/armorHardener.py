@@ -1,0 +1,19 @@
+import unittest
+from eos import db
+from eos.types import Module, Fit, Ship
+from eos.modifiedAttributeDict import ModifiedAttributeDict
+
+class TestArmorHardener(unittest.TestCase):
+    def setUp(self):
+        self.fit = Fit()
+        self.rifter = db.getItem("Rifter")
+        self.fit.ship = Ship(self.rifter)
+        self.hardener = Module(db.getItem("Armor EM Hardener II"))
+        self.fit.modules.append(self.hardener)
+        self.fit.calculateModifiedAttributes()
+
+    def test_hardening(self):
+        expected = ModifiedAttributeDict()
+        expected.original = self.rifter.attributes
+        expected.boost("armorEmDamageResonance", self.hardener.getModifiedItemAttr("emDamageResistanceBonus"))
+        self.assertEquals(expected["armorEmDamageResonance"], self.fit.ship.getModifiedItemAttr("armorEmDamageResonance"))
