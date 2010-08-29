@@ -32,7 +32,7 @@ class TestDamagePattern(unittest.TestCase):
         m.state = State.ACTIVE
         f.modules.append(m)
         f.calculateModifiedAttributes()
-        self.assertAlmostEquals(19.3, f.effectiveTank["armor"], 1)
+        self.assertAlmostEquals(19.3, f.effectiveTank["armorRepair"], 1)
 
     def test_shieldBoostUniform(self):
         f = Fit()
@@ -42,7 +42,7 @@ class TestDamagePattern(unittest.TestCase):
         m.state = State.ACTIVE
         f.modules.append(m)
         f.calculateModifiedAttributes()
-        self.assertAlmostEquals(26.3, f.effectiveTank["shield"],1)
+        self.assertAlmostEquals(26.3, f.effectiveTank["shieldRepair"],1)
 
     def test_hullRepairUniform(self):
         f = Fit()
@@ -52,4 +52,4 @@ class TestDamagePattern(unittest.TestCase):
         m.state = State.ACTIVE
         f.modules.append(m)
         f.calculateModifiedAttributes()
-        self.assertAlmostEquals(f.extraAttributes["hullRepair"], f.effectiveTank["hull"],1)
+        self.assertAlmostEquals(f.extraAttributes["hullRepair"], f.effectiveTank["hullRepair"],1)

@@ -548,7 +548,7 @@ class Fit(object):
             if self.damagePattern is None:
                 ehps = {"passiveShield" : self.calculateShieldRecharge()}
                 for type in ("shield", "armor", "hull"):
-                    ehps[type] = self.extraAttributes["%sRepair" % type]
+                    ehps["%sRepair" % type] = self.extraAttributes["%sRepair" % type]
             else:
                 ehps = self.damagePattern.calculateEffectiveTank(self, self.extraAttributes)
 

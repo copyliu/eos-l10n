@@ -40,7 +40,7 @@ class DamagePattern(object):
         passiveShield = fit.calculateShieldRecharge()
         ehps["passiveShield"] = self.effectivify(fit, passiveShield, "shield")
         for type in ("shield", "armor", "hull"):
-            ehps[type] = self.effectivify(fit, tankInfo["%sRepair" % type], type)
+            ehps["%sRepair" % type] = self.effectivify(fit, tankInfo["%sRepair" % type], type)
 
         return ehps
 
