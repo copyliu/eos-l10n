@@ -34,12 +34,13 @@ class DamagePattern(object):
             ehp[type] = self.effectivify(fit, rawCapacity, type)
 
         return ehp
-    def calculateEffectiveTank(self, fit):
+
+    def calculateEffectiveTank(self, fit, tankInfo):
         ehps = {}
         passiveShield = fit.calculateShieldRecharge()
         ehps["passiveShield"] = self.effectivify(fit, passiveShield, "shield")
         for type in ("shield", "armor", "hull"):
-            ehps[type] = self.effectivify(fit, fit.extraAttributes["%sRepair" % type], type)
+            ehps[type] = self.effectivify(fit, tankInfo["%sRepair" % type], type)
 
         return ehps
 

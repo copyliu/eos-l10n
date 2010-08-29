@@ -67,6 +67,7 @@ class Fit(object):
         self.__weaponVolley = None
         self.__droneDPS = None
         self.__sustainableTank = None
+        self.__effectiveSustainableTank = None
         self.__effectiveTank = None
         self.__calculated = False
         self.__capStable = None
@@ -182,6 +183,7 @@ class Fit(object):
         self.__effectiveTank = None
         self.__weaponDPS = None
         self.__weaponVolley = None
+        self.__effectiveSustainableTank = None
         self.__droneDPS = None
         self.__ehp = None
         self.__calculated = False
@@ -407,7 +409,7 @@ class Fit(object):
 
         return self.__sustainableTank
 
-    def calculateSustainableTank(self):
+    def calculateSustainableTank(self, effective=True):
         if self.__sustainableTank is None:
             if self.capStable:
                 sustainable = {}
@@ -540,18 +542,31 @@ class Fit(object):
             self.__ehp = ehp
         return self.__ehp
 
-    def getEffectiveTank(self):
+    @property
+    def effectiveTank(self):
         if self.__effectiveTank is None:
             if self.damagePattern is None:
                 ehps = {"passiveShield" : self.calculateShieldRecharge()}
                 for type in ("shield", "armor", "hull"):
                     ehps[type] = self.extraAttributes["%sRepair" % type]
             else:
-                ehps = self.damagePattern.calculateEffectiveTank(self)
+                ehps = self.damagePattern.calculateEffectiveTank(self, self.extraAttributes)
 
             self.__effectiveTank = ehps
 
         return self.__effectiveTank
+
+    @property
+    def effectiveSustainableTank(self):
+        if self.__effectiveSustainableTank is None:
+            if self.damagePattern is None:
+                eshps = self.sustainableTank
+            else:
+                eshps = self.damagePattern.calculateEffectiveTank(self, self.sustainableTank)
+
+            self.__effectiveSustainableTank = eshps
+
+        return self.__effectiveSustainableTank
 
     def calculateWeaponStats(self):
         weaponDPS = 0
