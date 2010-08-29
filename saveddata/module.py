@@ -66,6 +66,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__slot = self.dummySlot
             self.__item = 0
             self.__charge = 0
+            self.__hardpoint = Hardpoint.NONE
+            self.__itemModifiedAttributes = ModifiedAttributeDict()
 
     def __fetchItemInfo(self):
         import eos.db
@@ -91,7 +93,10 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         empty = Module(None)
         empty.__slot = slot
         empty.__hardpoint = Hardpoint.NONE
+        empty.__item = 0
+        empty.__charge = 0
         empty.dummySlot = slot
+        empty.__itemModifiedAttributes = ModifiedAttributeDict()
         return empty
 
     def isEmpty(self):
@@ -247,7 +252,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                               "useMissiles": Hardpoint.MISSILE}
 
         if item is None:
-            return None
+            return Hardpoint.NONE
 
         for effectName, slot in effectHardpointMap.iteritems():
             if effectName in item.effects:
