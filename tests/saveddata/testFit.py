@@ -258,7 +258,7 @@ class TestFit(unittest.TestCase):
         m = Module(db.getItem("Small Shield Booster I"))
         m.state = State.ACTIVE
         f.modules.append(m)
-        self.assertAlmostEquals(f.capState, 16.6, 1)
+        self.assertAlmostEquals(f.capState, 16.0, 1)
 
     def test_weaponDPS(self):
         f = Fit()

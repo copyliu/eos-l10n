@@ -25,6 +25,7 @@ from copy import deepcopy
 from math import sqrt, pi, exp
 from eos.solverMath import gaussian, solve
 from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
+import heapq
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -334,12 +335,6 @@ class Fit(object):
         return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
                            sqrt((2 * percent) - percent ** 2))
 
-    def calculateCapRechargeAbs(self, currCapacity):
-        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-        percent = currCapacity / capacity
-        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
-        return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
-                           sqrt((2 * percent) - percent ** 2))
 
     def calculateShieldRecharge(self, percent = PEAK_RECHARGE):
         capacity = self.ship.getModifiedItemAttr("shieldCapacity")
@@ -379,29 +374,6 @@ class Fit(object):
 
         return self.__capRecharge
 
-    def __generateDrain(self, variance):
-        drains = []
-        totalDrain = 0
-        for mod in self.modules:
-            if mod.getModifiedItemAttr("capacitorNeed") is not None:
-                cycleTime = mod.getCycleTime()
-                drain = mod.getModifiedItemAttr("capacitorNeed")
-                drains.append((cycleTime, lambda t: drain * gaussian(cycleTime / 2.0, variance)(t)))
-                totalDrain += drain
-
-        def result(t):
-            m = map(lambda x: x[1](t % x[0]), drains)
-            return sum(m)
-
-        return result, totalDrain
-
-    def __generateRecharge(self, capacity, rechargeRate):
-        def result(currCap):
-            percent = currCap / capacity
-            return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
-                               sqrt((2 * percent) - percent ** 2))
-
-        return result
 
     @property
     def sustainableTank(self):
@@ -469,6 +441,18 @@ class Fit(object):
 
         return self.__sustainableTank
 
+    def __generateDrain(self):
+        drains = []
+        heappush = heapq.heappush
+        for mod in self.modules:
+            cycleTime = mod.getCycleTime()
+            if cycleTime:
+                cycleTime *= 1000
+                capNeed = mod.getModifiedItemAttr("capacitorNeed")
+                heappush(drains, [0, capNeed, cycleTime])
+
+        return drains
+
     def simulateCap(self):
         #Figure out natural recharge is, boosted amount & drained amount.
         #Compute the total afterwards
@@ -488,48 +472,56 @@ class Fit(object):
                     capUse += capNeed / (cycleTime / 1000.0)
 
         self.__capUsed = capUse
-        if totalPeakLoad > capUse:
-            #Stable!
-            #We'll figure out where exactly its stable then.
-            #This is rather easy.
-            #lower bound = peak recharge
-            #Upper bound = 100%
-            #We need to find out at how many % capUse == capRecharge
-            #Algorithm: keep taking the average between low and up. Call it mid
-            #If our recharge at mid % is above our cap use, the mid becomes the new upper bound.
-            #If our recharge at mid % is under our cap use, mid becomes new lower bound.
-            #Note: This is a variant of binary search.
-            low = self.PEAK_RECHARGE
-            high = 1.0
-            diff = 10
-            while diff >= 0.01:
-                mid = (low + high) / 2
-                rechargeRate = self.calculateCapRecharge(mid) + capBoost
-                diff = abs(rechargeRate - capUse)
-                if rechargeRate > capUse:
-                    low = mid
-                else:
-                    high = mid
+
+        # Try simulating first
+
+        # Setup
+        drains = self.__generateDrain()
+        if len(drains) == 0:
             self.__capStable = True
-            self.__capState = mid * 100
+            self.__capState = 100
+            return
+
+        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate")
+        tau = (rechargeRate / 5.0)
+
+        t = 0
+        currCap = capacity
+
+        #Get some locals
+        heappop = heapq.heappop
+        heappush = heapq.heappush
+
+        # 86400000 == a day
+        while t <= 86400000:
+            #Pop the first drain
+            currDrain = heappop(drains)
+
+            # nextIteration = currDrain[0]
+            # capNeed = currDrain[1]
+            # cycleTime = currDrain[2]
+
+            #Change the drains's next iteration to its next cycle time
+            currDrain[0] += currDrain[2]
+
+            #Remove and add cap
+            currCap -= currDrain[1]
+            if currCap <= 0:
+                break
+
+            currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity
+
+            #Prepare next iteration
+            t = currDrain[0]
+            heappush(drains, currDrain)
+
+        if currCap > 0:
+            self.__capStable = True
+            self.__capState = currCap / capacity * 100
         else:
-            VARIANCE = 0.1
-            d, totalDrain = self.__generateDrain(VARIANCE)
-
-            capCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-            rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
-            r = self.__generateRecharge(capCapacity, rechargeRate)
             self.__capStable = False
-
-            #Check for a single cycle kill. Our algorithm doesn't calculate it right.
-            if totalDrain > capCapacity:
-                self.__capState = 0
-            else:
-                currentCap = capCapacity
-
-                #Solve the cap stuff by integrating and solving it
-                f_prime = lambda t, y: r(y) - d(t)
-                self.__capState = solve(f_prime, capCapacity)
+            self.__capState = t / 1000.0
 
     @property
     def ehp(self):
