@@ -4,5 +4,5 @@ type = "active"
 def handler(fit, module, context):
     for damageType in ("kinetic", "thermal", "explosive", "em"):
         fit.ship.boostItemAttr("armor%sDamageResonance" % damageType.capitalize(),
-                               module.getModifiedItemAttr("%sDamageResistanceBonus") % damageType,
+                               module.getModifiedItemAttr("%sDamageResistanceBonus" % damageType),
                                stackingPenalties = True)

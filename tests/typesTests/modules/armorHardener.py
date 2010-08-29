@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Module, Fit, Ship
+from eos.types import Module, Fit, Ship, State
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestArmorHardener(unittest.TestCase):
@@ -9,6 +9,7 @@ class TestArmorHardener(unittest.TestCase):
         self.rifter = db.getItem("Rifter")
         self.fit.ship = Ship(self.rifter)
         self.hardener = Module(db.getItem("Armor EM Hardener II"))
+        self.hardener.state = State.ACTIVE
         self.fit.modules.append(self.hardener)
         self.fit.calculateModifiedAttributes()
 
