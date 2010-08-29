@@ -209,3 +209,21 @@ class TestModule(unittest.TestCase):
         self.assertEquals(m.slot, Slot.LOW)
         self.assertEqual(m.hardpoint, Hardpoint.NONE)
 
+    def test_fitsShipRestriction(self):
+        f = Fit()
+        m = Module(db.getItem("Judgement"))
+        f.ship = Ship(db.getItem("Rifter"))
+        self.assertFalse(m.fits(f))
+
+    def test_fitsSlotsFull(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        for i in xrange(8):
+            f.modules.append(Module(db.getItem("Salvager I")))
+
+        self.assertFalse(Module(db.getItem("Salvager I")).fits(f))
+
+    def test_fits(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        self.assertTrue(Module(db.getItem("Salvager I")).fits(f))

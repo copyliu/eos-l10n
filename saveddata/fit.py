@@ -250,20 +250,8 @@ class Fit(object):
         if self.ship is None:
             return
 
-        slotsFree = {}
-        slots = {"lowSlots": Slot.LOW,
-                 "medSlots": Slot.MED,
-                 "hiSlots": Slot.HIGH,
-                 "rigSlots": Slot.RIG,
-                 "maxSubSystems": Slot.SUBSYSTEM}
-
-        for slotType, constant in slots.items():
-            slotsFree[constant] = self.ship.getModifiedItemAttr(slotType)
-
-        for mod in self.modules:
-            slotsFree[mod.slot] -= 1
-
-        for slotType, amount in slotsFree.items():
+        for slotType in (Slot.LOW, Slot.MED, Slot.HIGH, Slot.RIG, Slot.SUBSYSTEM):
+            amount = self.getSlotsFree(slotType, True)
             if amount > 0:
                 for i in xrange(int(amount)):
                     self.modules.append(Module.buildEmpty(slotType))
@@ -294,13 +282,24 @@ class Fit(object):
 
         return amount
 
-    def getSlotsUsed(self, type):
+    def getSlotsUsed(self, type, countDummies=False):
         amount = 0
         for mod in self.modules:
-            if mod.slot is type and not mod.isEmpty():
+            if mod.slot is type and (not mod.isEmpty() or countDummies):
                 amount += 1
 
         return amount
+
+    def getSlotsFree(self, type, countDummies=False):
+        slots = {Slot.LOW: "lowSlots",
+                 Slot.MED: "medSlots",
+                 Slot.HIGH: "hiSlots",
+                 Slot.RIG: "rigSlots",
+                 Slot.SUBSYSTEM: "maxSubSystems"}
+
+        slotsUsed = self.getSlotsUsed(type, countDummies)
+        totalSlots = self.ship.getModifiedItemAttr(slots[type]) or 0
+        return totalSlots - slotsUsed
 
     @property
     def calibrationUsed(self):

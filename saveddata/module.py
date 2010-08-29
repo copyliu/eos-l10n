@@ -166,6 +166,60 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         self.__itemModifiedAttributes.clear()
 
+    def fits(self, fit):
+        slot = self.slot
+        if fit.getSlotsFree(slot) <= 0:
+            return False
+
+        # Check ship type restrictions
+        fitsOn = set()
+        shipType = self.getModifiedItemAttr("fitsToShipType")
+        if shipType is not None:
+            fitsOn.add(shipType)
+
+        for i in xrange(1, 5):
+            shipType = self.getModifiedItemAttr("canFitShipType%d" % i)
+            if shipType is not None:
+                fitsOn.add(shipType)
+
+        if len(fitsOn) > 0 and fit.ship.item.ID not in fitsOn:
+            return False
+
+        # Check ship group restrictions
+        fitsOn = set()
+        for i in xrange(1, 5):
+            shipGroup = self.getModifiedItemAttr("canFitShipGroup%d" % i)
+            if shipGroup is not None:
+                fitsOn.add(shipGroup)
+
+        if len(fitsOn) > 0 and fit.ship.item.group.ID not in fitsOn:
+            return False
+
+        # If the mod is a subsystem, don't let two subs in the same slot fit
+        if self.slot == Slot.SUBSYSTEM:
+             subSlot = self.getModifiedItemAttr("subSystemSlot")
+             for mod in fit.modules:
+                 if mod.getModifiedItemAttr("subSystemSlot") == subSlot:
+                     return False
+
+        # Check rig sizes
+        if self.slot == Slot.RIG:
+            if self.getModifiedItemAttr("rigSize") != fit.ship.getModifiedItemAttr("rigSize"):
+                return False
+
+        # Check max group fitted
+        max = self.getModifiedItemAttr("maxGroupFitted")
+        if max is not None:
+            current = 0
+            for mod in fit.modules:
+                if mod.item.groupID == item.groupID:
+                    current += 1
+
+            if current >= max:
+                return False
+
+        return True
+
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
         if charge is None: return True
