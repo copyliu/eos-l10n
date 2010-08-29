@@ -8,4 +8,4 @@
 #Modules from group: Shield Recharger (6 of 6)
 type = "passive"
 def handler(fit, module, context):
-    fit.ship.multiplyItemAttr("shieldRechargeRate", module.getModifiedItemAttr("shieldRechargeRateMultiplier"))
+    fit.ship.multiplyItemAttr("shieldRechargeRate", module.getModifiedItemAttr("shieldRechargeRateMultiplier") or 1)
