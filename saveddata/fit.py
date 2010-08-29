@@ -502,7 +502,7 @@ class Fit(object):
             low = self.PEAK_RECHARGE
             high = 1.0
             diff = 10
-            while diff >= 0.000001:
+            while diff >= 0.01:
                 mid = (low + high) / 2
                 rechargeRate = self.calculateCapRecharge(mid) + capBoost
                 diff = abs(rechargeRate - capUse)
