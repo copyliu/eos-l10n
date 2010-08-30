@@ -486,12 +486,12 @@ class Fit(object):
 
         t = 0
         currCap = capacity
-
+        lowest = capacity
         #Get some locals
         heappop = heapq.heappop
         heappush = heapq.heappush
 
-        # 86400000 == a day
+        # 21600000 == 6h
         while t <= 21600000 and currCap >= 0:
             oldt = t
             #Pop the first drain
@@ -504,8 +504,9 @@ class Fit(object):
             #Change the drains's next iteration to its next cycle time
             currDrain[0] += currDrain[2]
 
-            #Remove and add cap
+            #Remove and add cap and keep track of lowest value
             currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity - currDrain[1]
+            lowest = min(currCap, lowest)
 
             #Prepare next iteration
             t = currDrain[0]
@@ -513,7 +514,7 @@ class Fit(object):
 
         if currCap > 0:
             self.__capStable = True
-            self.__capState = currCap / capacity * 100
+            self.__capState = lowest / capacity * 100
         else:
             self.__capStable = False
             self.__capState = oldt / 1000.0
