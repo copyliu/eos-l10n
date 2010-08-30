@@ -480,7 +480,6 @@ class Fit(object):
         if self.__capRecharge > self.__capUsed:
             self.__capStable = True
             self.__capState = self.calculateSustainableRange(-capUse)
-            print self.__capState
         else:
             # Setup
             drains = self.__generateDrain()
