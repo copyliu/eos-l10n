@@ -217,7 +217,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if max is not None:
             current = 0
             for mod in fit.modules:
-                if mod.item.groupID == item.groupID:
+                if mod.item.groupID == self.item.groupID:
                     current += 1
 
             if current >= max:

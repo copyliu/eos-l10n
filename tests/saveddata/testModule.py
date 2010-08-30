@@ -221,3 +221,10 @@ class TestModule(unittest.TestCase):
     def test_dummyCalc(self):
         m = Module.buildEmpty(Slot.LOW)
         m.calculateModifiedAttributes(Fit(), "normal")
+
+    def test_fits_maxGroupFitted(self):
+        f = Fit()
+        f.modules.append(Module(db.getItem("Salvager I")))
+        m = Module(db.getItem("Damage Control II"))
+        f.ship = Ship(db.getItem("Rifter"))
+        self.assertTrue(m.fits(f))
