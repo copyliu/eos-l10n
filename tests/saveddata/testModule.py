@@ -227,4 +227,5 @@ class TestModule(unittest.TestCase):
         f.modules.append(Module(db.getItem("Salvager I")))
         m = Module(db.getItem("Damage Control II"))
         f.ship = Ship(db.getItem("Rifter"))
+        f.fill()
         self.assertTrue(m.fits(f))
