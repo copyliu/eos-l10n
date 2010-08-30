@@ -38,7 +38,7 @@ class Fit(object):
                         "capacity": 0,
                         "cloaked": False}
 
-    PEAK_RECHARGE = -(sqrt(2) - 2 ) / 2
+    PEAK_RECHARGE = 1 - 1 / sqrt(2)
 
     def __init__(self):
         self.__modules = HandledModuleList()
@@ -439,6 +439,12 @@ class Fit(object):
 
         return self.__sustainableTank
 
+    def calculateSustainableRange(self, p):
+        C = self.ship.getModifiedItemAttr("capacitorCapacity") / self.ship.getModifiedItemAttr("rechargeRate")
+        first = 1 - 0.5 * sqrt(2 - 2 * sqrt(1 - 0.162081 * C  ** 2))
+        second = 1 - 0.5 * sqrt(2 + 2 * sqrt(1 - 0.162081 * C  ** 2))
+        return (first, second)
+
     def __generateDrain(self):
         drains = []
         heappush = heapq.heappush
@@ -466,49 +472,52 @@ class Fit(object):
 
         self.__capUsed = capUse
 
-        # Setup
-        drains = self.__generateDrain()
-        if len(drains) == 0:
+        if capUse == 0:
             self.__capStable = True
             self.__capState = 100
             return
 
-        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate")
-        tau = (rechargeRate / 5.0)
-
-        t = 0
-        currCap = capacity
-        lowest = capacity
-        #Get some locals
-        heappop = heapq.heappop
-        heappush = heapq.heappush
-
-        # 21600000 == 6h
-        while t <= 21600000 and currCap >= 0:
-            oldt = t
-            #Pop the first drain
-            currDrain = heappop(drains)
-
-            # nextIteration = currDrain[0]
-            # capNeed = currDrain[1]
-            # cycleTime = currDrain[2]
-
-            #Change the drains's next iteration to its next cycle time
-            currDrain[0] += currDrain[2]
-
-            #Remove and add cap and keep track of lowest value
-            currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity - currDrain[1]
-            lowest = min(currCap, lowest)
-
-            #Prepare next iteration
-            t = currDrain[0]
-            heappush(drains, currDrain)
-
-        if currCap > 0:
+        if self.__capRecharge > self.__capUsed:
             self.__capStable = True
-            self.__capState = lowest / capacity * 100
+            self.__capState = self.calculateSustainableRange(-capUse)
+            print self.__capState
         else:
+            # Setup
+            drains = self.__generateDrain()
+
+            capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+            rechargeRate = self.ship.getModifiedItemAttr("rechargeRate")
+            tau = (rechargeRate / 5.0)
+
+            t = 0
+            currCap = capacity
+            lowest = capacity
+            #Get some locals
+            heappop = heapq.heappop
+            heappush = heapq.heappush
+
+            # 21600000 == 6h
+            while t <= 21600000 and currCap >= 0:
+                oldt = t
+                #Pop the first drain
+                currDrain = heappop(drains)
+
+                # nextIteration = currDrain[0]
+                # capNeed = currDrain[1]
+                # cycleTime = currDrain[2]
+
+                #Change the drains's next iteration to its next cycle time
+                currDrain[0] += currDrain[2]
+
+                #Remove and add cap and keep track of lowest value
+                currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity - currDrain[1]
+                lowest = min(currCap, lowest)
+
+                #Prepare next iteration
+                t = currDrain[0]
+                heappush(drains, currDrain)
+
+
             self.__capStable = False
             self.__capState = oldt / 1000.0
 
