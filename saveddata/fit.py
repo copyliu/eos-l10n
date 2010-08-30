@@ -439,12 +439,6 @@ class Fit(object):
 
         return self.__sustainableTank
 
-    def calculateSustainableRange(self, p):
-        C = self.ship.getModifiedItemAttr("capacitorCapacity") / self.ship.getModifiedItemAttr("rechargeRate")
-        first = 1 - 0.5 * sqrt(2 - 2 * sqrt(1 - 0.162081 * C  ** 2))
-        second = 1 - 0.5 * sqrt(2 + 2 * sqrt(1 - 0.162081 * C  ** 2))
-        return (first, second)
-
     def __generateDrain(self):
         drains = []
         heappush = heapq.heappush
@@ -479,7 +473,21 @@ class Fit(object):
 
         if self.__capRecharge > self.__capUsed:
             self.__capStable = True
-            self.__capState = self.calculateSustainableRange(-capUse)
+            state = []
+            for low, high in ((self.PEAK_RECHARGE, 0), (self.PEAK_RECHARGE, 1.0)):
+                diff = 10
+                while diff >= 0.01:
+                    mid = (low + high) / 2
+                    rechargeRate = self.calculateCapRecharge(mid)
+                    diff = abs(rechargeRate - capUse)
+                    if rechargeRate > capUse:
+                        low = mid
+                    else:
+                        high = mid
+
+                state.append(mid * 100)
+
+            self.__capState = tuple(state)
         else:
             # Setup
             drains = self.__generateDrain()
