@@ -1,6 +1,6 @@
 #Used by:
 #Modules from group: Damage Control (14 of 14)
-type = "passive"
+type = "active"
 def handler(fit, module, context):
     for layer, attrPrefix in (('shield', 'shield'), ('armor', 'armor'), ('hull', '')):
         for damageType in ('Kinetic', 'Thermal', 'Explosive', 'Em'):
