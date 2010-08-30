@@ -447,7 +447,7 @@ class Fit(object):
         for mod in self.modules:
             cycleTime = mod.getCycleTime()
             if cycleTime:
-                cycleTime *= 1000
+                cycleTime = int(cycleTime * 1000)
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
                 heappush(drains, [0, capNeed, cycleTime])
 
@@ -473,8 +473,6 @@ class Fit(object):
 
         self.__capUsed = capUse
 
-        # Try simulating first
-
         # Setup
         drains = self.__generateDrain()
         if len(drains) == 0:
@@ -494,7 +492,8 @@ class Fit(object):
         heappush = heapq.heappush
 
         # 86400000 == a day
-        while t <= 86400000:
+        while t <= 21600000 and currCap >= 0:
+            oldt = t
             #Pop the first drain
             currDrain = heappop(drains)
 
@@ -506,11 +505,7 @@ class Fit(object):
             currDrain[0] += currDrain[2]
 
             #Remove and add cap
-            currCap -= currDrain[1]
-            if currCap <= 0:
-                break
-
-            currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity
+            currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity - currDrain[1]
 
             #Prepare next iteration
             t = currDrain[0]
@@ -521,7 +516,7 @@ class Fit(object):
             self.__capState = currCap / capacity * 100
         else:
             self.__capStable = False
-            self.__capState = t / 1000.0
+            self.__capState = oldt / 1000.0
 
     @property
     def ehp(self):
