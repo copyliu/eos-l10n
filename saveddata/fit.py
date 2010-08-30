@@ -32,8 +32,6 @@ class Fit(object):
     EXTRA_ATTRIBUTES = {"armorRepair": 0,
                         "hullRepair": 0,
                         "shieldRepair": 0,
-                        "capBoost": 0,
-                        "capDrain": 0,
                         "maxActiveDrones": 0,
                         "maxTargetsLockedFromSkills": 0,
                         "droneControlRange": 0,
@@ -454,16 +452,12 @@ class Fit(object):
         return drains
 
     def simulateCap(self):
-        #Figure out natural recharge is, boosted amount & drained amount.
-        #Compute the total afterwards
-        peakRecharge = self.calculateCapRecharge(self.PEAK_RECHARGE)
-        capBoost = self.extraAttributes["capBoost"]
-        capDrain = self.extraAttributes["capDrain"]
-        totalPeakLoad = peakRecharge + capBoost
-        self.__capRecharge = totalPeakLoad
+        #TODO: Factor in stuff like neuts & cap boosters
+
+        self.__capRecharge = self.calculateCapRecharge(self.PEAK_RECHARGE)
 
         #Figure out how much cap we're using
-        capUse = capDrain
+        capUse = 0
         for mod in self.modules:
             if mod.state >= State.ACTIVE:
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
