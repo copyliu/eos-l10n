@@ -443,9 +443,8 @@ class Fit(object):
         drains = []
         heappush = heapq.heappush
         for mod in self.modules:
-            cycleTime = mod.getCycleTime()
-            if cycleTime:
-                cycleTime = int(cycleTime * 1000)
+            if mod.state == State.ACTIVE:
+                cycleTime = int(mod.getCycleTime() * 1000)
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
                 heappush(drains, [0, capNeed, cycleTime])
 
