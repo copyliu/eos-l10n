@@ -16,7 +16,7 @@ class TestAdvancedDroneInterfacing(unittest.TestCase):
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
 
-    def test_dcuMaxGroupActive(self):
+    def test_maxGroupActive(self):
         self.buildTested = 173608
         targetAttrName = "maxGroupActive"
         expected = ModifiedAttributeDict()

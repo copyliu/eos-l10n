@@ -1,6 +1,6 @@
 #Used by:
 #Modules from group: Shield Hardener (91 of 91)
-from eos.types import State          
+from eos.types import State
 type = "passive"
 def handler(fit, module, context):
     if module.state != State.ONLINE: return
@@ -9,6 +9,6 @@ def handler(fit, module, context):
             dn = "Thermic"
         else:
             dn = damageType
-        fit.ship.boostItemAttr("shield%sDamageResonance" % damageType,
-                               module.getModifiedItemAttr("passive%sDamageResistanceBonus" % dn),
+        fit.ship.boostItemAttr("shield" + damageType + "DamageResonance",
+                               module.getModifiedItemAttr("passive" + dn + "DamageResistanceBonus"),
                                stackingPenalties = True)
