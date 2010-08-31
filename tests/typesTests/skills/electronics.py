@@ -12,9 +12,33 @@ class TestElectronics(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_cpuOutputShip(self):
+    def test_cpuOutputShipNormal(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Crow"))
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "cpuOutput"
+        skillBonus = self.skill.getAttribute("cpuOutputBonus2")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
+    def test_cpuOutputShipCapital(self):
+        self.buildTested = 0
+        self.fit.ship = Ship(db.getItem("Phoenix"))
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "cpuOutput"
+        skillBonus = self.skill.getAttribute("cpuOutputBonus2")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
+    def test_cpuOutputShipCapital(self):
+        self.buildTested = 0
+        self.fit.ship = Ship(db.getItem("Velator"))
         self.fit.calculateModifiedAttributes()
         targetAttrName = "cpuOutput"
         skillBonus = self.skill.getAttribute("cpuOutputBonus2")

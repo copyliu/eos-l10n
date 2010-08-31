@@ -12,7 +12,7 @@ class TestSignatureAnalysis(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_maxScanResolution(self):
+    def test_scanResolutionNormal(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Incursus"))
         self.fit.calculateModifiedAttributes()
@@ -23,3 +23,28 @@ class TestSignatureAnalysis(unittest.TestCase):
         expected.boost(targetAttrName, skillBonus * self.skillLevel)
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
+
+    def test_scanResolutionCapital(self):
+        self.buildTested = 0
+        self.fit.ship = Ship(db.getItem("Avatar"))
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "scanResolution"
+        skillBonus = self.skill.getAttribute("scanResolutionBonus")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
+    def test_scanResolutionCivilian(self):
+        self.buildTested = 0
+        self.fit.ship = Ship(db.getItem("Impairor"))
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "scanResolution"
+        skillBonus = self.skill.getAttribute("scanResolutionBonus")
+        expected = ModifiedAttributeDict()
+        expected.original = self.fit.ship.item.attributes
+        expected.boost(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
