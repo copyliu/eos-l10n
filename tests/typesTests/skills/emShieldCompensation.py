@@ -92,6 +92,21 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
+    def test_activeBonus_shieldHardenerOffline(self):
+        self.buildTested = 0
+        self.testItem = db.getItem("Pith C-Type Photon Scattering Field")
+        self.testMod = Module(self.testItem)
+        self.testMod.state = State.OFFLINE
+        self.fit.modules.append(self.testMod)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "passiveEmDamageResistanceBonus"
+        skillBonus = self.skill.getAttribute("hardeningbonus2")
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        expected.multiply(targetAttrName, skillBonus * self.skillLevel)
+        actual = self.testMod.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)
+
     def test_activeBonus_shieldHardenerCivilianOnline(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Photon Scattering Field")
