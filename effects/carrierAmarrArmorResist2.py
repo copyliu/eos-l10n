@@ -4,5 +4,6 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Carrier").level
-    for armorType in ("Explosive" ,"Kinetic", "Em", "Thermal"):
-        fit.ship.boostItemAttr("armor%sDamageResonance" % armorType, ship.getModifiedItemAttr("carrierAmarrBonus2") * level)
+    for resType in ("Explosive", "Kinetic", "Em", "Thermal"):
+        fit.ship.boostItemAttr("armor" + resType + "DamageResonance",
+                               ship.getModifiedItemAttr("carrierAmarrBonus2") * level)
