@@ -120,18 +120,6 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_shieldAmplifier(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Domination Magnetic Scattering Amplifier")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "passiveEmDamageResistanceBonus"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
     def test_activeBonus_armorHardenerOnline(self):
         self.buildTested = 0
         self.testItem = db.getItem("Ammatar Navy Armor EM Hardener")
