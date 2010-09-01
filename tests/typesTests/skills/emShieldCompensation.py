@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module, State
+from eos.types import Fit, Character, Skill, Ship, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestEmShieldCompensation(unittest.TestCase):
@@ -77,11 +77,10 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_shieldHardenerOnline(self):
+    def test_activeBonus_shieldHardener(self):
         self.buildTested = 0
         self.testItem = db.getItem("Photon Scattering Field II")
         self.testMod = Module(self.testItem)
-        self.testMod.state = State.ONLINE
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "passiveEmDamageResistanceBonus"
@@ -92,26 +91,10 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_shieldHardenerOffline(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Pith C-Type Photon Scattering Field")
-        self.testMod = Module(self.testItem)
-        self.testMod.state = State.OFFLINE
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "passiveEmDamageResistanceBonus"
-        skillBonus = self.skill.getAttribute("hardeningbonus2")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.multiply(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_activeBonus_shieldHardenerCivilianOnline(self):
+    def test_activeBonus_shieldHardenerCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Photon Scattering Field")
         self.testMod = Module(self.testItem)
-        self.testMod.state = State.ONLINE
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "passiveEmDamageResistanceBonus"
@@ -122,25 +105,10 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_shieldHardenerActive(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Photon Scattering Field II")
-        self.testMod = Module(self.testItem)
-        self.testMod.state = State.ACTIVE
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "passiveEmDamageResistanceBonus"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.multiply(targetAttrName, 0)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_activeBonus_armorHardenerOnline(self):
+    def test_activeBonus_armorHardener(self):
         self.buildTested = 0
         self.testItem = db.getItem("Ammatar Navy Armor EM Hardener")
         self.testMod = Module(self.testItem)
-        self.testMod.state = State.ONLINE
         self.fit.modules.append(self.testMod)
         self.fit.calculateModifiedAttributes()
         targetAttrName = "passiveEmDamageResistanceBonus"

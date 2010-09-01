@@ -3,9 +3,8 @@
 from eos.types import State
 type = "active"
 def handler(fit, module, context):
-    if module.state >= State.ACTIVE:
-        for damageType in ("kinetic", "thermal", "explosive", "em"):
-            fit.ship.boostItemAttr("shield" + damageType.capitalize() + "DamageResonance",
-                                   module.getModifiedItemAttr(damageType + "DamageResistanceBonus"),
-                                   stackingPenalties = True)
-            module.multiplyItemAttr("passive" + damageType.capitalize() + "DamageResistanceBonus", 0)
+    for damageType in ("kinetic", "thermal", "explosive", "em"):
+        fit.ship.boostItemAttr("shield" + damageType.capitalize() + "DamageResonance",
+                               module.getModifiedItemAttr(damageType + "DamageResistanceBonus"),
+                               stackingPenalties = True)
+        module.multiplyItemAttr("passive" + damageType.capitalize() + "DamageResistanceBonus", 0)
