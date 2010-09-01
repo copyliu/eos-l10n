@@ -12,7 +12,7 @@ class TestMinmatarDroneSpecialization(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_t2(self):
+    def test_damageMultiplier_droneT2(self):
         self.buildTested = 0
         self.testItem = db.getItem("Warrior II")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestMinmatarDroneSpecialization(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_augmented(self):
+    def test_damageMultiplier_droneAugmented(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Augmented' Warrior")
         self.testDrone = Drone(self.testItem)
@@ -40,7 +40,7 @@ class TestMinmatarDroneSpecialization(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_t1(self):
+    def test_damageMultiplier_droneT1(self):
         self.buildTested = 0
         self.testItem = db.getItem("Warrior I")
         self.testDrone = Drone(self.testItem)
@@ -52,7 +52,7 @@ class TestMinmatarDroneSpecialization(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_fighter(self):
+    def test_damageMultiplier_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Einherji")
         self.testDrone = Drone(self.testItem)

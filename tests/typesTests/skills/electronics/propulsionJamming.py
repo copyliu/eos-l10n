@@ -12,7 +12,7 @@ class TestPropulsionJamming(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_warpDisruptor(self):
+    def test_capacitorNeed_warpDisruptor(self):
         self.buildTested = 0
         self.testItem = db.getItem("Warp Disruptor II")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestPropulsionJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_stasisWebifier(self):
+    def test_capacitorNeed_stasisWebifier(self):
         self.buildTested = 0
         self.testItem = db.getItem("X5 Prototype I Engine Enervator")
         self.testMod = Module(self.testItem)
@@ -40,7 +40,7 @@ class TestPropulsionJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_civilianWarpDisruptor(self):
+    def test_capacitorNeed_warpDisruptorCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Warp Disruptor")
         self.testMod = Module(self.testItem)
@@ -54,7 +54,7 @@ class TestPropulsionJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_civilianStasisWebifier(self):
+    def test_capacitorNeed_stasisWebifierCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Stasis Webifier")
         self.testMod = Module(self.testItem)
@@ -68,7 +68,7 @@ class TestPropulsionJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_stasisWarpDisruptionFieldGenerator(self):
+    def test_capacitorNeed_warpDisruptionFieldGenerator(self):
         self.buildTested = 0
         self.testItem = db.getItem("Warp Disruption Field Generator I")
         self.testMod = Module(self.testItem)
@@ -80,7 +80,7 @@ class TestPropulsionJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ewar(self):
+    def test_capacitorNeed_otherEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("Target Painter I")
         self.testMod = Module(self.testItem)

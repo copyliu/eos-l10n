@@ -12,7 +12,7 @@ class TestEngineering(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_powerOutputShipNormal(self):
+    def test_powerOutput_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Vengeance"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestEngineering(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_powerOutputShipCapital(self):
+    def test_powerOutput_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Avatar"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestEngineering(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_powerOutputShipCivilian(self):
+    def test_powerOutput_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Velator"))
         self.fit.calculateModifiedAttributes()
@@ -48,7 +48,7 @@ class TestEngineering(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_powerOutputSubsystem(self):
+    def test_powerOutput_subsystemEngineering(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Proteus"))
         self.testItem = db.getItem("Proteus Engineering - Supplemental Coolant Injector")

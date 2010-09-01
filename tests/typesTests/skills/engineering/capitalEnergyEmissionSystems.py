@@ -12,7 +12,7 @@ class TestCapitalEnergyEmissionSystems(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_capacitorNeedCapital(self):
+    def test_capacitorNeed_energyTransferCapital(self):
         self.buildTested = 0
         self.testItem = db.getItem("Capital Energy Transfer Array I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestCapitalEnergyEmissionSystems(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorNeedNormal(self):
+    def test_capacitorNeed_energyTransfer(self):
         self.buildTested = 0
         self.testItem = db.getItem("Medium Energy Transfer Array II")
         self.testMod = Module(self.testItem)
@@ -38,7 +38,7 @@ class TestCapitalEnergyEmissionSystems(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorNeedCapitalOther(self):
+    def test_capacitorNeed_otherModCapital(self):
         self.buildTested = 0
         self.testItem = db.getItem("Capital Shield Transporter I")
         self.testMod = Module(self.testItem)

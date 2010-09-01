@@ -12,7 +12,7 @@ class TestEnergyManagement(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_capacitorCapacityShipNormal(self):
+    def test_capacitorCapacity_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Crusader"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestEnergyManagement(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorCapacityShipCapital(self):
+    def test_capacitorCapacity_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Revelation"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestEnergyManagement(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorCapacityShipCivilian(self):
+    def test_capacitorCapacity_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Impairor"))
         self.fit.calculateModifiedAttributes()
@@ -48,7 +48,7 @@ class TestEnergyManagement(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorCapacitySubsystem(self):
+    def test_capacitorCapacity_subsystemEngineering(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Legion"))
         self.testItem = db.getItem("Legion Engineering - Power Core Multiplier")
@@ -61,7 +61,7 @@ class TestEnergyManagement(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorCapacityDrone(self):
+    def test_capacitorCapacity_drone(self):
         self.buildTested = 0
         self.testItem = db.getItem("Curator II")
         self.testDrone = Drone(self.testItem)

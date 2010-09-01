@@ -12,7 +12,7 @@ class TestRepairDroneOperation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_armor(self):
+    def test_armorDamageAmount_droneLogistic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Heavy Armor Maintenance Bot II")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestRepairDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shield(self):
+    def test_shieldBonus_droneLogistic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Medium Shield Maintenance Bot I")
         self.testDrone = Drone(self.testItem)
@@ -40,7 +40,7 @@ class TestRepairDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_moduleArmor(self):
+    def test_armorDamageAmount_module(self):
         self.buildTested = 0
         self.testItem = db.getItem("Large Remote Armor Repair System II")
         self.testMod = Module(self.testItem)
@@ -52,7 +52,7 @@ class TestRepairDroneOperation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_moduleShield(self):
+    def test_shieldBonus_module(self):
         self.buildTested = 0
         self.testItem = db.getItem("Medium Murky Shield Screen Transmitter I")
         self.testMod = Module(self.testItem)

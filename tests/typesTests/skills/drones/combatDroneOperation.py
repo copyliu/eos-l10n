@@ -12,7 +12,7 @@ class TestCombatDroneOperation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_civilian(self):
+    def test_damageMultiplier_droneCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Hobgoblin")
         self.testDrone = Drone(self.testItem)
@@ -24,7 +24,7 @@ class TestCombatDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_light(self):
+    def test_damageMultiplier_droneLight(self):
         self.buildTested = 0
         self.testItem = db.getItem("Acolyte I")
         self.testDrone = Drone(self.testItem)
@@ -38,7 +38,7 @@ class TestCombatDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_medium(self):
+    def test_damageMultiplier_droneMedium(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Integrated' Valkyrie")
         self.testDrone = Drone(self.testItem)
@@ -52,7 +52,7 @@ class TestCombatDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_heavy(self):
+    def test_damageMultiplier_droneHeavy(self):
         self.buildTested = 0
         self.testItem = db.getItem("Praetor II")
         self.testDrone = Drone(self.testItem)
@@ -64,7 +64,7 @@ class TestCombatDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_sentry(self):
+    def test_damageMultiplier_droneSentry(self):
         self.buildTested = 0
         self.testItem = db.getItem("Caldari Navy Warden")
         self.testDrone = Drone(self.testItem)
@@ -76,7 +76,7 @@ class TestCombatDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_fighter(self):
+    def test_damageMultiplier_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Einherji")
         self.testDrone = Drone(self.testItem)

@@ -12,7 +12,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_ecm(self):
+    def test_maxRange_ecm(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Hypnos' Ion Field ECM I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_sensorDamper(self):
+    def test_maxRange_sensorDamper(self):
         self.buildTested = 0
         self.testItem = db.getItem("Indirect Scanning Dampening Unit I")
         self.testMod = Module(self.testItem)
@@ -40,7 +40,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_targetPainter(self):
+    def test_maxRange_targetPainter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Domination Target Painter")
         self.testMod = Module(self.testItem)
@@ -54,7 +54,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_trackingDisruptor(self):
+    def test_maxRange_trackingDisruptor(self):
         self.buildTested = 0
         self.testItem = db.getItem("Tracking Disruptor II")
         self.testMod = Module(self.testItem)
@@ -68,7 +68,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecmBurst(self):
+    def test_maxRange_ecmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Rash' ECM Emission I")
         self.testMod = Module(self.testItem)
@@ -82,7 +82,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_remoteEcmBurst(self):
+    def test_maxRange_remoteEcmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote ECM Burst I")
         self.testMod = Module(self.testItem)
@@ -94,7 +94,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_proplusionEwar(self):
+    def test_maxRange_propulsionEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("Fleeting Propulsion Inhibitor I")
         self.testMod = Module(self.testItem)
@@ -106,7 +106,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_weapon(self):
+    def test_maxRange_weapon(self):
         self.buildTested = 0
         self.testItem = db.getItem("Shadow Serpentis Light Neutron Blaster")
         self.testMod = Module(self.testItem)
@@ -118,7 +118,7 @@ class TestLongDistanceJamming(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ewDrone(self):
+    def test_maxRange_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Hornet EC-300")
         self.testDrone = Drone(self.testItem)

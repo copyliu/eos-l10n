@@ -12,7 +12,7 @@ class TestTurretDestabilization(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_trackingDisruptor(self):
+    def test_turrets_trackingDisruptor(self):
         self.buildTested = 0
         self.testItem = db.getItem("Balmer Series Tracking Disruptor I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestTurretDestabilization(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(turretMod)
             self.assertAlmostEquals(expected[turretMod], actual)
 
-    def test_trackingLink(self):
+    def test_turrets_trackingLink(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Tycoon' Tracking Link I")
         self.testMod = Module(self.testItem)
@@ -38,7 +38,7 @@ class TestTurretDestabilization(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(turretMod)
             self.assertAlmostEquals(expected[turretMod], actual)
 
-    def test_otherMod(self):
+    def test_turrets_otherMod(self):
         self.buildTested = 0
         self.testItem = db.getItem("Domination Tracking Enhancer")
         self.testMod = Module(self.testItem)
@@ -50,7 +50,7 @@ class TestTurretDestabilization(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(turretMod)
             self.assertAlmostEquals(expected[turretMod], actual)
 
-    def test_implantTrackingSpeed(self):
+    def test_trackingSpeedBonus_implantHardwiring(self):
         self.buildTested = 0
         self.testItem = db.getItem("Hardwiring - Eifyr and Co. 'Gunslinger' AX-2")
         self.testImplant = Implant(self.testItem)
@@ -62,7 +62,7 @@ class TestTurretDestabilization(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_implantMaxRange(self):
+    def test_maxRangeBonus_implant(self):
         self.buildTested = 0
         self.testItem = db.getItem("Low-grade Harvest Alpha")
         self.testImplant = Implant(self.testItem)
@@ -75,7 +75,7 @@ class TestTurretDestabilization(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_implantFalloff(self):
+    def test_falloffBonus_implantHardwiring(self):
         self.buildTested = 0
         self.testItem = db.getItem("Hardwiring - Zainou 'Deadeye' ZGC100")
         self.testImplant = Implant(self.testItem)
@@ -87,7 +87,7 @@ class TestTurretDestabilization(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shipMaxRange(self):
+    def test_maxRangeBonus_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Thrasher"))
         self.fit.calculateModifiedAttributes()
@@ -97,7 +97,7 @@ class TestTurretDestabilization(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_boosterFalloff(self):
+    def test_falloffBonus_booster(self):
         self.buildTested = 0
         self.testItem = db.getItem("Standard Sooth Sayer Booster")
         self.testBooster = Booster(self.testItem)

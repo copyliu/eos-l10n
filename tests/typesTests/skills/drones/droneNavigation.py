@@ -12,7 +12,7 @@ class TestDroneNavigation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_civilianCombat(self):
+    def test_maxVelocity_droneCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Hobgoblin")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_light(self):
+    def test_maxVelocity_droneLight(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Integrated' Hornet")
         self.testDrone = Drone(self.testItem)
@@ -40,7 +40,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_medium(self):
+    def test_maxVelocity_droneMedium(self):
         self.buildTested = 0
         self.testItem = db.getItem("Federation Navy Hammerhead")
         self.testDrone = Drone(self.testItem)
@@ -54,7 +54,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_heavy(self):
+    def test_maxVelocity_droneHeavy(self):
         self.buildTested = 0
         self.testItem = db.getItem("Praetor I")
         self.testDrone = Drone(self.testItem)
@@ -68,7 +68,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_fighter(self):
+    def test_maxVelocity_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Firbolg")
         self.testDrone = Drone(self.testItem)
@@ -80,7 +80,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_fighterBomber(self):
+    def test_maxVelocity_fighterBomber(self):
         self.buildTested = 0
         self.testItem = db.getItem("Malleus")
         self.testDrone = Drone(self.testItem)
@@ -92,7 +92,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_electronicWarfare(self):
+    def test_maxVelocity_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Infiltrator TD-600")
         self.testDrone = Drone(self.testItem)
@@ -106,7 +106,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_combatUtility(self):
+    def test_maxVelocity_droneCombatUtility(self):
         self.buildTested = 0
         self.testItem = db.getItem("Praetor EV-900")
         self.testDrone = Drone(self.testItem)
@@ -120,7 +120,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_logistic(self):
+    def test_maxVelocity_droneLogistic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Light Shield Maintenance Bot I")
         self.testDrone = Drone(self.testItem)
@@ -134,7 +134,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_civilianMining(self):
+    def test_maxVelocity_droneMiningCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Mining Drone")
         self.testDrone = Drone(self.testItem)
@@ -146,7 +146,7 @@ class TestDroneNavigation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_mining(self):
+    def test_maxVelocity_droneMining(self):
         self.buildTested = 0
         self.testItem = db.getItem("Harvester Mining Drone")
         self.testDrone = Drone(self.testItem)

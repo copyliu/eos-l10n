@@ -12,7 +12,7 @@ class TestCapitalShieldOperation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_capacitorNeedCapital(self):
+    def test_capacitorNeed_shieldBoosterCapital(self):
         self.buildTested = 0
         self.testItem = db.getItem("Capital Shield Booster I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestCapitalShieldOperation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorNeedNormal(self):
+    def test_capacitorNeed_shieldBooster(self):
         self.buildTested = 0
         self.testItem = db.getItem("Medium Clarity Ward Booster I")
         self.testMod = Module(self.testItem)
@@ -38,7 +38,7 @@ class TestCapitalShieldOperation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorNeedCivilian(self):
+    def test_capacitorNeed_shieldBoosterCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Shield Booster I")
         self.testMod = Module(self.testItem)
@@ -50,7 +50,7 @@ class TestCapitalShieldOperation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorNeedCapitalOther(self):
+    def test_capacitorNeed_otherModCapital(self):
         self.buildTested = 0
         self.testItem = db.getItem("Capital Shield Transporter I")
         self.testMod = Module(self.testItem)

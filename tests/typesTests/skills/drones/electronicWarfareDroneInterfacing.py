@@ -12,7 +12,7 @@ class TestElectronicWarfareDroneInterfacing(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_droneControlRangeNormal(self):
+    def test_droneControlRange_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Abaddon"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestElectronicWarfareDroneInterfacing(unittest.TestCase):
         actual = self.fit.extraAttributes[targetAttrName]
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_droneControlRangeCapital(self):
+    def test_droneControlRange_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Revelation"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestElectronicWarfareDroneInterfacing(unittest.TestCase):
         actual = self.fit.extraAttributes[targetAttrName]
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_droneControlRangeCivilian(self):
+    def test_droneControlRange_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Reaper"))
         self.fit.calculateModifiedAttributes()

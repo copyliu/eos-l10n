@@ -12,7 +12,7 @@ class TestSignatureFocusing(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_targetPainter(self):
+    def test_signatureRadiusBonus_targetPainter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Phased Weapon Navigation Array Generation Extron")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestSignatureFocusing(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ewDrone(self):
+    def test_signatureRadiusBonus_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Valkyrie TP-600")
         self.testDrone = Drone(self.testItem)
@@ -38,7 +38,7 @@ class TestSignatureFocusing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherMod(self):
+    def test_signatureRadiusBonus_otherMod(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Executioner"))
         self.testItem = db.getItem("Inertia Stabilizers II")
@@ -51,7 +51,7 @@ class TestSignatureFocusing(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_implant(self):
+    def test_signatureRadiusBonus_implant(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Dramiel"))
         self.testItem = db.getItem("Halo Epsilon")
@@ -65,7 +65,7 @@ class TestSignatureFocusing(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_booster(self):
+    def test_signatureRadiusBonus_booster(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Kitsune"))
         self.testItem = db.getItem("Synth X-Instinct Booster")
@@ -78,7 +78,7 @@ class TestSignatureFocusing(unittest.TestCase):
         actual = self.testBooster.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_charge(self):
+    def test_signatureRadiusBonus_charge(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Golem"))
         self.testItem = db.getItem("Siege Missile Launcher II")

@@ -12,7 +12,7 @@ class TestTargetPainting(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_targetPainter(self):
+    def test_capacitorNeed_targetPainter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Target Painter I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestTargetPainting(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherEwar(self):
+    def test_capacitorNeed_otherEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote Sensor Dampener II")
         self.testMod = Module(self.testItem)

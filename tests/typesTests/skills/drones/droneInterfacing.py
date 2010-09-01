@@ -12,7 +12,7 @@ class TestDroneInterfacing(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_dmgBonusCivilian(self):
+    def test_damageMultiplier_droneCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Hobgoblin")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_dmgBonusLight(self):
+    def test_damageMultiplier_droneLight(self):
         self.buildTested = 0
         self.testItem = db.getItem("Warrior II")
         self.testDrone = Drone(self.testItem)
@@ -40,7 +40,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_dmgBonusMedium(self):
+    def test_damageMultiplier_droneMedium(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Augmented' Hammerhead")
         self.testDrone = Drone(self.testItem)
@@ -54,7 +54,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_dmgBonusHeavy(self):
+    def test_damageMultiplier_droneHeavy(self):
         self.buildTested = 0
         self.testItem = db.getItem("Berserker I")
         self.testDrone = Drone(self.testItem)
@@ -68,7 +68,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_dmgBonusSentry(self):
+    def test_damageMultiplier_droneSentry(self):
         self.buildTested = 0
         self.testItem = db.getItem("Garde II")
         self.testDrone = Drone(self.testItem)
@@ -82,7 +82,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_dmgBonusFighter(self):
+    def test_damageMultiplier_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Firbolg")
         self.testDrone = Drone(self.testItem)
@@ -94,7 +94,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_miningBonusCivilian(self):
+    def test_miningAmount_droneMiningCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Mining Drone")
         self.testDrone = Drone(self.testItem)
@@ -108,7 +108,7 @@ class TestDroneInterfacing(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_miningBonusT2(self):
+    def test_miningAmount_droneMiningT2(self):
         self.buildTested = 0
         self.testItem = db.getItem("Mining Drone II")
         self.testDrone = Drone(self.testItem)

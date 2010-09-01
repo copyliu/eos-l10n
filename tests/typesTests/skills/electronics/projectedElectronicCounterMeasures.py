@@ -12,7 +12,7 @@ class TestProjectedElectronicCounterMeasures(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_remoteEcmBurst(self):
+    def test_duration_remoteEcmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote ECM Burst I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestProjectedElectronicCounterMeasures(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecmBurst(self):
+    def test_duration_ecmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("ECM Burst II")
         self.testMod = Module(self.testItem)
@@ -38,7 +38,7 @@ class TestProjectedElectronicCounterMeasures(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecm(self):
+    def test_duration_ecm(self):
         self.buildTested = 0
         self.testItem = db.getItem("ECM - Spatial Destabilizer I")
         self.testMod = Module(self.testItem)

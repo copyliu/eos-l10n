@@ -12,7 +12,7 @@ class TestSensorLinking(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_sensorDamper(self):
+    def test_capacitorNeed_sensorDamper(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote Sensor Dampener II")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestSensorLinking(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_remoteSensorBooster(self):
+    def test_capacitorNeed_remoteSensorBooster(self):
         self.buildTested = 0
         self.testItem = db.getItem("Linked I Sensor Network")
         self.testMod = Module(self.testItem)
@@ -40,7 +40,7 @@ class TestSensorLinking(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherEwar(self):
+    def test_capacitorNeed_otherEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("Tracking Disruptor I")
         self.testMod = Module(self.testItem)

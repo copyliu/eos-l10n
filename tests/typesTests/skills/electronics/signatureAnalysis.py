@@ -1,6 +1,6 @@
 import unittest
 from eos import db
-from eos.types import Fit, Character, Skill, Ship
+from eos.types import Fit, Character, Skill, Ship, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class TestSignatureAnalysis(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestSignatureAnalysis(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_scanResolutionNormal(self):
+    def test_scanResolution_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Incursus"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestSignatureAnalysis(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_scanResolutionCapital(self):
+    def test_scanResolution_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Avatar"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestSignatureAnalysis(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_scanResolutionCivilian(self):
+    def test_scanResolution_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Impairor"))
         self.fit.calculateModifiedAttributes()
@@ -48,3 +48,15 @@ class TestSignatureAnalysis(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
+    def test_cpuOutput_subsystemElectronics(self):
+        self.buildTested = 0
+        self.fit.ship = Ship(db.getItem("Proteus"))
+        self.testItem = db.getItem("Proteus Electronics - CPU Efficiency Gate")
+        self.testMod = Module(self.testItem)
+        self.fit.modules.append(self.testMod)
+        self.fit.calculateModifiedAttributes()
+        targetAttrName = "scanResolution"
+        expected = ModifiedAttributeDict()
+        expected.original = self.testItem.attributes
+        actual = self.testMod.getModifiedItemAttr(targetAttrName)
+        self.assertAlmostEquals(expected[targetAttrName], actual)

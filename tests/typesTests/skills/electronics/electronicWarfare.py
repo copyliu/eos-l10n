@@ -12,7 +12,7 @@ class TestElectronicWarfare(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_ecm(self):
+    def test_capacitorNeed_ecm(self):
         self.buildTested = 0
         self.testItem = db.getItem("Legion ECM White Noise Generator")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestElectronicWarfare(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecmBurst(self):
+    def test_capacitorNeed_ecmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Cetus' ECM Shockwave I")
         self.testMod = Module(self.testItem)
@@ -40,7 +40,7 @@ class TestElectronicWarfare(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_remoteEcmBurst(self):
+    def test_capacitorNeed_remoteEcmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote ECM Burst I")
         self.testMod = Module(self.testItem)
@@ -52,7 +52,7 @@ class TestElectronicWarfare(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_remoteEccm(self):
+    def test_capacitorNeed_remoteEccm(self):
         self.buildTested = 0
         self.testItem = db.getItem("Spot Pulsing ECCM I")
         self.testMod = Module(self.testItem)
@@ -64,7 +64,7 @@ class TestElectronicWarfare(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherEwar(self):
+    def test_capacitorNeed_otherEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("DDO Photometry Tracking Disruptor I")
         self.testMod = Module(self.testItem)
@@ -76,7 +76,7 @@ class TestElectronicWarfare(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherProplusionEwar(self):
+    def test_capacitorNeed_otherPropulsionEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("True Sansha Stasis Webifier")
         self.testMod = Module(self.testItem)

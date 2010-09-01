@@ -12,7 +12,7 @@ class TestDroneDurability(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_civilian(self):
+    def test_hp_droneCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Hobgoblin")
         self.testDrone = Drone(self.testItem)
@@ -28,7 +28,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_light(self):
+    def test_hp_droneLight(self):
         self.buildTested = 0
         self.testItem = db.getItem("Caldari Navy Hornet")
         self.testDrone = Drone(self.testItem)
@@ -44,7 +44,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_medium(self):
+    def test_hp_droneMedium(self):
         self.buildTested = 0
         self.testItem = db.getItem("Infiltrator II")
         self.testDrone = Drone(self.testItem)
@@ -60,7 +60,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_heavy(self):
+    def test_hp_droneHeavy(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Augmented' Wasp")
         self.testDrone = Drone(self.testItem)
@@ -76,7 +76,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_sentry(self):
+    def test_hp_droneSentry(self):
         self.buildTested = 0
         self.testItem = db.getItem("Imperial Navy Curator")
         self.testDrone = Drone(self.testItem)
@@ -92,7 +92,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_fighter(self):
+    def test_hp_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Einherji")
         self.testDrone = Drone(self.testItem)
@@ -106,7 +106,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_fighterBomber(self):
+    def test_hp_fighterBomber(self):
         self.buildTested = 0
         self.testItem = db.getItem("Cyclops")
         self.testDrone = Drone(self.testItem)
@@ -120,7 +120,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_electronicWarfare(self):
+    def test_hp_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Hobgoblin SD-300")
         self.testDrone = Drone(self.testItem)
@@ -136,7 +136,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_combatUtility(self):
+    def test_hp_droneCombatUtility(self):
         self.buildTested = 0
         self.testItem = db.getItem("Berserker SW-900")
         self.testDrone = Drone(self.testItem)
@@ -152,7 +152,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_logistic(self):
+    def test_hp_droneLogistic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Medium Armor Maintenance Bot II")
         self.testDrone = Drone(self.testItem)
@@ -168,7 +168,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_civilianMining(self):
+    def test_hp_droneMiningCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Mining Drone")
         self.testDrone = Drone(self.testItem)
@@ -182,7 +182,7 @@ class TestDroneDurability(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(layer)
             self.assertAlmostEquals(expected[layer], actual)
 
-    def test_mining(self):
+    def test_hp_droneMining(self):
         self.buildTested = 0
         self.testItem = db.getItem("Mining Drone I")
         self.testDrone = Drone(self.testItem)

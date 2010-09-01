@@ -12,7 +12,7 @@ class TestFighterBombers(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_amarr(self):
+    def test_damage_fighterAmarr(self):
         self.buildTested = 0
         self.testItem = db.getItem("Malleus")
         self.testDrone = Drone(self.testItem)
@@ -28,7 +28,7 @@ class TestFighterBombers(unittest.TestCase):
             actual = self.testDrone.getModifiedChargeAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
-    def test_caldari(self):
+    def test_damage_fighterCaldari(self):
         self.buildTested = 0
         self.testItem = db.getItem("Mantis")
         self.testDrone = Drone(self.testItem)
@@ -44,7 +44,7 @@ class TestFighterBombers(unittest.TestCase):
             actual = self.testDrone.getModifiedChargeAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
-    def test_gallente(self):
+    def test_damage_fighterGallente(self):
         self.buildTested = 0
         self.testItem = db.getItem("Cyclops")
         self.testDrone = Drone(self.testItem)
@@ -60,7 +60,7 @@ class TestFighterBombers(unittest.TestCase):
             actual = self.testDrone.getModifiedChargeAttr(damageAttribute)
             self.assertAlmostEquals(expected[damageAttribute], actual)
 
-    def test_minmatar(self):
+    def test_damage_fighterMinmatar(self):
         self.buildTested = 0
         self.testItem = db.getItem("Tyrfing")
         self.testDrone = Drone(self.testItem)

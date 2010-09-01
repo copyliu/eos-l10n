@@ -12,7 +12,7 @@ class TestTargeting(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_maxTargetsLockedFromSkillsNormal(self):
+    def test_maxTargetsLockedFromSkills_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Maelstrom"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestTargeting(unittest.TestCase):
         actual = self.fit.extraAttributes[targetAttrName]
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_maxTargetsLockedFromSkillsCapital(self):
+    def test_maxTargetsLockedFromSkills_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Archon"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestTargeting(unittest.TestCase):
         actual = self.fit.extraAttributes[targetAttrName]
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_maxTargetsLockedFromSkillsCivilian(self):
+    def test_maxTargetsLockedFromSkills_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Impairor"))
         self.fit.calculateModifiedAttributes()

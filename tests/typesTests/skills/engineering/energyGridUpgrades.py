@@ -12,7 +12,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_capacitorBattery(self):
+    def test_cpu_capacitorBattery(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Guardian"))
         self.testItem = db.getItem("Large Capacitor Battery II")
@@ -27,7 +27,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorBatteryMicroT1(self):
+    def test_cpu_capacitorBatteryMicroT1(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Retribution"))
         self.testItem = db.getItem("Micro Ohm Capacitor Reserve I")
@@ -40,7 +40,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorFluxCoil(self):
+    def test_cpu_capacitorFluxCoil(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Paladin"))
         self.testItem = db.getItem("Beta Reactor Control: Capacitor Flux I")
@@ -55,7 +55,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorFluxCoilBasic(self):
+    def test_cpu_capacitorFluxCoilBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Thorax"))
         self.testItem = db.getItem("Type-E Power Core Modification: Capacitor Flux")
@@ -70,7 +70,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorPowerRelay(self):
+    def test_cpu_capacitorPowerRelay(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Onyx"))
         self.testItem = db.getItem("True Sansha Capacitor Power Relay")
@@ -85,7 +85,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorPowerRelayBasic(self):
+    def test_cpu_capacitorPowerRelayBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Drake"))
         self.testItem = db.getItem("Marked Generator Refitting: Capacitor Power Relay")
@@ -100,7 +100,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorRecharger(self):
+    def test_cpu_capacitorRecharger(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Onyx"))
         self.testItem = db.getItem("Eutectic I Capacitor Charge Array")
@@ -115,7 +115,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorRechargerBasic(self):
+    def test_cpu_capacitorRechargerBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Drake"))
         self.testItem = db.getItem("Industrial Capacitor Recharger")
@@ -130,7 +130,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_powerDiagnosticSystem(self):
+    def test_cpu_powerDiagnosticSystem(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Brutix"))
         self.testItem = db.getItem("Power Diagnostic System II")
@@ -145,7 +145,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_powerDiagnosticSystemBasic(self):
+    def test_cpu_powerDiagnosticSystemBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Phoenix"))
         self.testItem = db.getItem("Alpha Reactor Control: Diagnostic System")
@@ -160,7 +160,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_reactorControlUnit(self):
+    def test_cpu_reactorControlUnit(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Imicus"))
         self.testItem = db.getItem("Shadow Serpentis Reactor Control Unit")
@@ -175,7 +175,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_reactorControlUnitBasic(self):
+    def test_cpu_reactorControlUnitBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Purifier"))
         self.testItem = db.getItem("Type-E Power Core Modification: Reaction Control")
@@ -190,7 +190,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shieldFluxCoil(self):
+    def test_cpu_shieldFluxCoil(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Raven"))
         self.testItem = db.getItem("Local Power Plant Manager: Reaction Shield Flux I")
@@ -205,7 +205,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shieldFluxCoilBasic(self):
+    def test_cpu_shieldFluxCoilBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Punisher"))
         self.testItem = db.getItem("Alpha Reactor Shield Flux")
@@ -220,7 +220,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shieldPowerRelay(self):
+    def test_cpu_shieldPowerRelay(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Megathron"))
         self.testItem = db.getItem("Shield Power Relay I")
@@ -235,7 +235,7 @@ class TestEnergyGridUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shieldPowerRelayBasic(self):
+    def test_cpu_shieldPowerRelayBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Rapier"))
         self.testItem = db.getItem("Basic Shield Power Relay")

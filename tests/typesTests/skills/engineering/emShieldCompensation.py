@@ -13,7 +13,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         self.fit.character = self.char
         self.fit.ship = Ship(db.getItem("Wyvern"))
 
-    def test_passiveBonus_shieldAmplifier(self):
+    def test_emDamageResistanceBonus_shieldAmplifier(self):
         self.buildTested = 0
         self.testItem = db.getItem("Pithum A-Type Magnetic Scattering Amplifier")
         self.testMod = Module(self.testItem)
@@ -27,7 +27,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_passiveBonus_shieldAmplifierBasic(self):
+    def test_emDamageResistanceBonus_shieldAmplifierBasic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Azeotropic EM Ward Salubrity")
         self.testMod = Module(self.testItem)
@@ -41,7 +41,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_passiveBonus_shieldHardener(self):
+    def test_emDamageResistanceBonus_shieldHardener(self):
         self.buildTested = 0
         self.testItem = db.getItem("Domination Photon Scattering Field")
         self.testMod = Module(self.testItem)
@@ -53,7 +53,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_passiveBonus_shieldRig(self):
+    def test_emDamageResistanceBonus_shieldRig(self):
         self.buildTested = 0
         self.testItem = db.getItem("Medium Anti-EM Screen Reinforcer II")
         self.testMod = Module(self.testItem)
@@ -65,7 +65,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_passiveBonus_other(self):
+    def test_emDamageResistanceBonus_other(self):
         self.buildTested = 0
         self.testItem = db.getItem("Energized Adaptive Nano Membrane I")
         self.testMod = Module(self.testItem)
@@ -77,7 +77,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_shieldHardener(self):
+    def test_passiveEmDamageResistanceBonus_shieldHardener(self):
         self.buildTested = 0
         self.testItem = db.getItem("Photon Scattering Field II")
         self.testMod = Module(self.testItem)
@@ -91,7 +91,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_shieldHardenerCivilian(self):
+    def test_passiveEmDamageResistanceBonus_shieldHardenerCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Photon Scattering Field")
         self.testMod = Module(self.testItem)
@@ -105,7 +105,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_activeBonus_armorHardener(self):
+    def test_passiveEmDamageResistanceBonus_armorHardener(self):
         self.buildTested = 0
         self.testItem = db.getItem("Ammatar Navy Armor EM Hardener")
         self.testMod = Module(self.testItem)

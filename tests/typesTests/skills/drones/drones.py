@@ -12,7 +12,7 @@ class TestDrones(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_maxActiveDronesNormal(self):
+    def test_maxActiveDrones_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Maller"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestDrones(unittest.TestCase):
         actual = self.fit.extraAttributes[targetAttrName]
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_maxActiveDronesCapital(self):
+    def test_maxActiveDrones_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Moros"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestDrones(unittest.TestCase):
         actual = self.fit.extraAttributes[targetAttrName]
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_maxActiveDronesCivilian(self):
+    def test_maxActiveDrones_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Velator"))
         self.fit.calculateModifiedAttributes()

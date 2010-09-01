@@ -12,7 +12,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_civilianCombat(self):
+    def test_maxRange_droneCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Hobgoblin")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_light(self):
+    def test_maxRange_droneLight(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Integrated' Hobgoblin")
         self.testDrone = Drone(self.testItem)
@@ -40,7 +40,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_medium(self):
+    def test_maxRange_droneMedium(self):
         self.buildTested = 0
         self.testItem = db.getItem("Valkyrie I")
         self.testDrone = Drone(self.testItem)
@@ -54,7 +54,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_heavy(self):
+    def test_maxRange_droneHeavy(self):
         self.buildTested = 0
         self.testItem = db.getItem("Republic Fleet Berserker")
         self.testDrone = Drone(self.testItem)
@@ -68,7 +68,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_sentry(self):
+    def test_maxRange_droneSentry(self):
         self.buildTested = 0
         self.testItem = db.getItem("Caldari Navy Warden")
         self.testDrone = Drone(self.testItem)
@@ -82,7 +82,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_fighter(self):
+    def test_maxRange_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Templar")
         self.testDrone = Drone(self.testItem)
@@ -94,7 +94,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_electronicWarfare(self):
+    def test_maxRange_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Ogre SD-900")
         self.testDrone = Drone(self.testItem)
@@ -108,7 +108,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_combatUtility(self):
+    def test_maxRange_droneCombatUtility(self):
         self.buildTested = 0
         self.testItem = db.getItem("Acolyte EV-300")
         self.testDrone = Drone(self.testItem)
@@ -122,7 +122,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_logistic(self):
+    def test_maxRange_droneLogistic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Heavy Shield Maintenance Bot II")
         self.testDrone = Drone(self.testItem)
@@ -136,7 +136,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_civilianMining(self):
+    def test_maxRange_droneMiningCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Mining Drone")
         self.testDrone = Drone(self.testItem)
@@ -148,7 +148,7 @@ class TestDroneSharpshooting(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_mining(self):
+    def test_maxRange_droneMining(self):
         self.buildTested = 0
         self.testItem = db.getItem("Mining Drone II")
         self.testDrone = Drone(self.testItem)
@@ -159,4 +159,3 @@ class TestDroneSharpshooting(unittest.TestCase):
         expected.original = self.testItem.attributes
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
-

@@ -12,7 +12,7 @@ class TestFighters(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_fighter(self):
+    def test_damageMultiplier_fighter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Templar")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestFighters(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_drone(self):
+    def test_damageMultiplier_drone(self):
         self.buildTested = 0
         self.testItem = db.getItem("Ogre II")
         self.testDrone = Drone(self.testItem)

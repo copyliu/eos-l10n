@@ -12,7 +12,7 @@ class TestElectronicsUpgrades(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_sensorBackupArray(self):
+    def test_cpu_sensorBackupArray(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Hound"))
         self.testItem = db.getItem("Multi Sensor Firewall")
@@ -27,7 +27,7 @@ class TestElectronicsUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_sensorBackupArrayBasic(self):
+    def test_cpu_sensorBackupArrayBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Absolution"))
         self.testItem = db.getItem("F-42 Reiterative Multi-Frequency Backup Sensors")
@@ -40,7 +40,7 @@ class TestElectronicsUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_signalAmplifier(self):
+    def test_cpu_signalAmplifier(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Stiletto"))
         self.testItem = db.getItem("Signal Amplifier II")
@@ -55,7 +55,7 @@ class TestElectronicsUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_signalAmplifierBasic(self):
+    def test_cpu_signalAmplifierBasic(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Ares"))
         self.testItem = db.getItem("F-90 Positional Signal Amplifier")
@@ -68,7 +68,7 @@ class TestElectronicsUpgrades(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_other(self):
+    def test_cpu_other(self):
         self.buildTested = 0
         self.testItem = db.getItem("Indirect Target Acquisition I")
         self.testMod = Module(self.testItem)

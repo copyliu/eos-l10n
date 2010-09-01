@@ -12,7 +12,7 @@ class TestSignalSuppression(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_sensorDamper(self):
+    def test_sensors_sensorDamper(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote Sensor Dampener I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestSignalSuppression(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(sensorMod)
             self.assertAlmostEquals(expected[sensorMod], actual)
 
-    def test_sensorBooster(self):
+    def test_sensors_sensorBooster(self):
         self.buildTested = 0
         self.testItem = db.getItem("Shadow Serpentis Sensor Booster")
         self.testMod = Module(self.testItem)
@@ -38,7 +38,7 @@ class TestSignalSuppression(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(sensorMod)
             self.assertAlmostEquals(expected[sensorMod], actual)
 
-    def test_signalAmplifier(self):
+    def test_sensors_signalAmplifier(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Cruor"))
         self.testItem = db.getItem("Signal Amplifier II")
@@ -51,7 +51,7 @@ class TestSignalSuppression(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(sensorMod)
             self.assertAlmostEquals(expected[sensorMod], actual)
 
-    def test_remoteSensorBooster(self):
+    def test_sensors_remoteSensorBooster(self):
         self.buildTested = 0
         self.testItem = db.getItem("Connected Scanning I CPU Uplink")
         self.testMod = Module(self.testItem)
@@ -63,7 +63,9 @@ class TestSignalSuppression(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(sensorMod)
             self.assertAlmostEquals(expected[sensorMod], actual)
 
-    def test_warpCoreStabilizer(self):
+    # scanResolutionBonus isn't tested because it's in form of multiplier
+    # for warp core stabilizers
+    def test_maxTargetRangeBonus_warpCoreStabilizer(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Ferox"))
         self.testItem = db.getItem("'Halcyon' Core Equalizer I")
@@ -76,7 +78,7 @@ class TestSignalSuppression(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_mindlink(self):
+    def test_maxTargetRangeBonus_implantMindlink(self):
         self.buildTested = 0
         self.testItem = db.getItem("Information Warfare Mindlink")
         self.testImplant = Implant(self.testItem)
@@ -88,7 +90,7 @@ class TestSignalSuppression(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_implantLockRange(self):
+    def test_maxTargetRangeBonus_implantHardwiring(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Harbinger"))
         self.testItem = db.getItem("Hardwiring - Zainou 'Gypsy' KPB-50")
@@ -101,7 +103,7 @@ class TestSignalSuppression(unittest.TestCase):
         actual = self.testImplant.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_implantScanRes(self):
+    def test_scanResolutionBonus_implantHardwiring(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Lachesis"))
         self.testItem = db.getItem("Hardwiring - Zainou 'Gypsy' KNB-25")

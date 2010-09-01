@@ -12,7 +12,7 @@ class TestElectronics(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_cpuOutputShipNormal(self):
+    def test_cpuOutput_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Crow"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestElectronics(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_cpuOutputShipCapital(self):
+    def test_cpuOutput_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Phoenix"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestElectronics(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_cpuOutputShipCivilian(self):
+    def test_cpuOutput_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Velator"))
         self.fit.calculateModifiedAttributes()
@@ -48,7 +48,7 @@ class TestElectronics(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_cpuOutputSubsystem(self):
+    def test_cpuOutput_subsystemElectronics(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Tengu"))
         self.testItem = db.getItem("Tengu Electronics - CPU Efficiency Gate")

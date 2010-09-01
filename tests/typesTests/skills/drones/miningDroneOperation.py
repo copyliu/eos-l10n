@@ -12,7 +12,7 @@ class TestMiningDroneOperation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_civilian(self):
+    def test_miningAmount_droneMiningCivilian(self):
         self.buildTested = 0
         self.testItem = db.getItem("Civilian Mining Drone")
         self.testDrone = Drone(self.testItem)
@@ -26,7 +26,7 @@ class TestMiningDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_t2(self):
+    def test_miningAmount_droneMiningT2(self):
         self.buildTested = 0
         self.testItem = db.getItem("Mining Drone II")
         self.testDrone = Drone(self.testItem)
@@ -40,7 +40,7 @@ class TestMiningDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_harvester(self):
+    def test_miningAmount_droneMiningHarvester(self):
         self.buildTested = 0
         self.testItem = db.getItem("Harvester Mining Drone")
         self.testDrone = Drone(self.testItem)
@@ -54,7 +54,7 @@ class TestMiningDroneOperation(unittest.TestCase):
         actual = self.testDrone.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_module(self):
+    def test_miningAmount_module(self):
         self.buildTested = 0
         self.testItem = db.getItem("Miner II")
         self.testMod = Module(self.testItem)

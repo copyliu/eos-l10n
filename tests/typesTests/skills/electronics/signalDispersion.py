@@ -12,7 +12,7 @@ class TestSignalDispersion(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_ecm(self):
+    def test_scanStrengthBonus_ecm(self):
         self.buildTested = 0
         self.testItem = db.getItem("Estamel's Modified ECM Multispectral Jammer")
         self.testMod = Module(self.testItem)
@@ -27,7 +27,7 @@ class TestSignalDispersion(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(targetAttrName)
             self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecmBurst(self):
+    def test_scanStrengthBonus_ecmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("ECM Burst II")
         self.testMod = Module(self.testItem)
@@ -42,7 +42,7 @@ class TestSignalDispersion(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(targetAttrName)
             self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_remoteEcmBurst(self):
+    def test_scanStrengthBonus_remoteEcmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote ECM Burst I")
         self.testMod = Module(self.testItem)
@@ -55,7 +55,7 @@ class TestSignalDispersion(unittest.TestCase):
             actual = self.testMod.getModifiedItemAttr(targetAttrName)
             self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ewDrone(self):
+    def test_scanStrengthBonus_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Wasp EC-900")
         self.testDrone = Drone(self.testItem)
@@ -68,7 +68,7 @@ class TestSignalDispersion(unittest.TestCase):
             actual = self.testDrone.getModifiedItemAttr(targetAttrName)
             self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_bomb(self):
+    def test_scanStrengthBonus_bomb(self):
         self.buildTested = 0
         self.testItem = db.getItem("Bomb Launcher I")
         self.testCharge = db.getItem("Lockbreaker Bomb")

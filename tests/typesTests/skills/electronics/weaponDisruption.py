@@ -12,7 +12,7 @@ class TestWeaponDisruption(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_trackingDisruptor(self):
+    def test_capacitorNeed_trackingDisruptor(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Distributor' Tracking Disruptor I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestWeaponDisruption(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherEwar(self):
+    def test_capacitorNeed_otherEwar(self):
         self.buildTested = 0
         self.testItem = db.getItem("ECM - Phase Inverter II")
         self.testMod = Module(self.testItem)

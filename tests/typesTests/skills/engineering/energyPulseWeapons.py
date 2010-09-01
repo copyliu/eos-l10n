@@ -12,7 +12,7 @@ class TestEnergyPulseWeapons(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_durationSmartbomb(self):
+    def test_duration_smartbomb(self):
         self.buildTested = 0
         self.testItem = db.getItem("Imperial Navy Large EMP Smartbomb")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestEnergyPulseWeapons(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_durationOther(self):
+    def test_duration_otherMod(self):
         self.buildTested = 0
         self.testItem = db.getItem("Domination Small Shield Booster")
         self.testMod = Module(self.testItem)

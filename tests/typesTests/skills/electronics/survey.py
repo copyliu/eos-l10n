@@ -12,7 +12,7 @@ class TestSurvey(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_cargoScanner(self):
+    def test_duration_cargoScanner(self):
         self.buildTested = 0
         self.testItem = db.getItem("Cargo Scanner II")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestSurvey(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_shipScanner(self):
+    def test_duration_shipScanner(self):
         self.buildTested = 0
         self.testItem = db.getItem("Ship Scanner II")
         self.testMod = Module(self.testItem)
@@ -40,7 +40,7 @@ class TestSurvey(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_surveyScanner(self):
+    def test_duration_surveyScanner(self):
         self.buildTested = 0
         self.testItem = db.getItem("Survey Scanner II")
         self.testMod = Module(self.testItem)
@@ -54,7 +54,7 @@ class TestSurvey(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_otherMod(self):
+    def test_duration_otherMod(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Rupture"))
         self.testItem = db.getItem("Y-T8 Overcharged Hydrocarbon I Microwarpdrive")

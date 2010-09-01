@@ -12,7 +12,7 @@ class TestCynosuralFieldTheory(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_plain(self):
+    def test_consumptionQuantity_cynogen(self):
         self.buildTested = 0
         self.testItem = db.getItem("Cynosural Field Generator I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestCynosuralFieldTheory(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_covert(self):
+    def test_consumptionQuantity_cynogenCovert(self):
         self.buildTested = 0
         self.testItem = db.getItem("Covert Cynosural Field Generator I")
         self.testMod = Module(self.testItem)
@@ -42,7 +42,7 @@ class TestCynosuralFieldTheory(unittest.TestCase):
 
     # We're testing it because it also has same target attribute and
     # consumes same fuel type
-    def test_clone(self):
+    def test_consumptionQuantity_clonevat(self):
         self.buildTested = 0
         self.testItem = db.getItem("Clone Vat Bay I")
         self.testMod = Module(self.testItem)

@@ -12,7 +12,7 @@ class TestEnergySystemsOperation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_capacitorRechargeShipNormal(self):
+    def test_rechargeRate_ship(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Helios"))
         self.fit.calculateModifiedAttributes()
@@ -24,7 +24,7 @@ class TestEnergySystemsOperation(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorRechargeShipCapital(self):
+    def test_rechargeRate_shipCapital(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Leviathan"))
         self.fit.calculateModifiedAttributes()
@@ -36,7 +36,7 @@ class TestEnergySystemsOperation(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorRechargeShipCivilian(self):
+    def test_rechargeRate_shipCivilian(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Reaper"))
         self.fit.calculateModifiedAttributes()
@@ -48,7 +48,7 @@ class TestEnergySystemsOperation(unittest.TestCase):
         actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorRechargeSubsystem(self):
+    def test_rechargeRate_subsystemEngineering(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Loki"))
         self.testItem = db.getItem("Loki Engineering - Capacitor Regeneration Matrix")
@@ -61,7 +61,7 @@ class TestEnergySystemsOperation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_capacitorRechargeDrone(self):
+    def test_rechargeRate_drone(self):
         self.buildTested = 0
         self.testItem = db.getItem("Heavy Armor Maintenance Bot I")
         self.testDrone = Drone(self.testItem)

@@ -12,7 +12,7 @@ class TestCloaking(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_plain(self):
+    def test_cloakingTargetingDelay_cloak(self):
         self.buildTested = 0
         self.fit.ship = Ship(db.getItem("Maller"))
         self.testItem = db.getItem("Syndicate Cloaking Device")
@@ -27,7 +27,7 @@ class TestCloaking(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_covops(self):
+    def test_cloakingTargetingDelay_cloakCovops(self):
         self.buildTested = 0
         self.testItem = db.getItem("'Smokescreen' Covert Ops Cloaking Device II")
         self.testMod = Module(self.testItem)

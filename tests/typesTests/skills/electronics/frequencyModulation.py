@@ -12,7 +12,7 @@ class TestFrequencyModulation(unittest.TestCase):
         self.char.addSkill(Skill(self.skill, self.skillLevel))
         self.fit.character = self.char
 
-    def test_ecm(self):
+    def test_falloff_ecm(self):
         self.buildTested = 0
         self.testItem = db.getItem("Faint Phase Inversion ECM I")
         self.testMod = Module(self.testItem)
@@ -26,7 +26,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_sensorDamper(self):
+    def test_falloff_sensorDamper(self):
         self.buildTested = 0
         self.testItem = db.getItem("Low Frequency Sensor Suppressor I")
         self.testMod = Module(self.testItem)
@@ -40,7 +40,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_targetPainter(self):
+    def test_falloff_targetPainter(self):
         self.buildTested = 0
         self.testItem = db.getItem("Peripheral Weapon Navigation Diameter")
         self.testMod = Module(self.testItem)
@@ -54,7 +54,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_trackingDisruptor(self):
+    def test_falloff_trackingDisruptor(self):
         self.buildTested = 0
         self.testItem = db.getItem("F-392 Baker Nunn Tracking Disruptor I")
         self.testMod = Module(self.testItem)
@@ -68,7 +68,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ecmBurst(self):
+    def test_falloff_ecmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("1Z-3 Subversive ECM Eruption")
         self.testMod = Module(self.testItem)
@@ -80,7 +80,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_remoteEcmBurst(self):
+    def test_falloff_remoteEcmBurst(self):
         self.buildTested = 0
         self.testItem = db.getItem("Remote ECM Burst I")
         self.testMod = Module(self.testItem)
@@ -92,7 +92,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_cargoScanner(self):
+    def test_falloff_cargoScanner(self):
         self.buildTested = 0
         self.testItem = db.getItem("Cargo Scanner II")
         self.testMod = Module(self.testItem)
@@ -104,7 +104,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_weapon(self):
+    def test_falloff_weapon(self):
         self.buildTested = 0
         self.testItem = db.getItem("200mm Railgun II")
         self.testMod = Module(self.testItem)
@@ -116,7 +116,7 @@ class TestFrequencyModulation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_ewDrone(self):
+    def test_falloff_droneElectronicWarfare(self):
         self.buildTested = 0
         self.testItem = db.getItem("Hammerhead SD-600")
         self.testDrone = Drone(self.testItem)
