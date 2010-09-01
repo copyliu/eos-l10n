@@ -1,6 +1,5 @@
 #Used by:
 #Modules from group: Shield Hardener (91 of 91)
-from eos.types import State
 type = "active"
 def handler(fit, module, context):
     for damageType in ("kinetic", "thermal", "explosive", "em"):
