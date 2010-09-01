@@ -27,7 +27,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 
-    def test_passiveBonus_shieldAmplifierSpecial(self):
+    def test_passiveBonus_shieldAmplifierBasic(self):
         self.buildTested = 0
         self.testItem = db.getItem("Azeotropic EM Ward Salubrity")
         self.testMod = Module(self.testItem)
