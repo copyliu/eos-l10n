@@ -132,6 +132,7 @@ class TestEmShieldCompensation(unittest.TestCase):
         targetAttrName = "passiveEmDamageResistanceBonus"
         expected = ModifiedAttributeDict()
         expected.original = self.testItem.attributes
+        expected.multiply(targetAttrName, 0)
         actual = self.testMod.getModifiedItemAttr(targetAttrName)
         self.assertAlmostEquals(expected[targetAttrName], actual)
 

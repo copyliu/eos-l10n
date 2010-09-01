@@ -6,3 +6,4 @@ def handler(fit, module, context):
         fit.ship.boostItemAttr("shield" + damageType.capitalize() + "DamageResonance",
                                module.getModifiedItemAttr(damageType + "DamageResistanceBonus"),
                                stackingPenalties = True)
+        module.multiplyItemAttr("passive" + damageType.capitalize() + "DamageResistanceBonus", 0)
