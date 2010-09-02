@@ -7,7 +7,7 @@ class Test(unittest.TestCase):
     def setUp(self):
         self.testSkill = db.getItem("Advanced Drone Interfacing")
         self.testShip = db.getItem("Thanatos")
-        self.testItem = db.getItem("Drone Control Unit I")
+        self.testItem = db.getItem("Gas Cloud Harvester I")
         self.testAttrName = "maxGroupActive"
         # Define inital setup
         self.initFit = Fit()
@@ -35,21 +35,19 @@ class Test(unittest.TestCase):
     def test_init_eos_theory(self):
         initTheory = ModifiedAttributeDict()
         initTheory.original = self.testItem.attributes
-        initTheory.increase(self.testAttrName, 1 * self.initSkillLvl)
         self.assertEquals(self.initEos, initTheory[self.testAttrName])
 
-    def test_init_eos_ingame(self):
-        self.buildTested = 0
-        initIngame = 1
-        self.assertEquals(self.initEos, initIngame)
+    #def test_init_eos_ingame(self):
+    #    self.buildTested = 0
+    #    initIngame = 0
+    #    self.assertEquals(self.initEos, initIngame)
 
     def test_final_eos_theory(self):
         finalTheory = ModifiedAttributeDict()
         finalTheory.original = self.testItem.attributes
-        finalTheory.increase(self.testAttrName, 1 * self.finalSkillLvl)
         self.assertEquals(self.finalEos, finalTheory[self.testAttrName])
 
-    def test_final_eos_ingame(self):
-        self.buildTested = 0
-        finalIngame = 4
-        self.assertEquals(self.finalEos, finalIngame)
+    #def test_final_eos_ingame(self):
+    #    self.buildTested = 0
+    #    finalIngame = 0
+    #    self.assertEquals(self.finalEos, finalIngame)
