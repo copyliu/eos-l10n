@@ -57,7 +57,7 @@ class Character(object):
                 all0 = Character("All 0")
 
                 for skill in cls.getSkillList():
-                    all0.addSkill(Skill(skill, 0, True))
+                    all0.addSkill(Skill(skill, 0, True, False))
 
             cls.__all0 = all0
         return cls.__all0
@@ -141,21 +141,39 @@ class Character(object):
         else: return val
 
 class Skill(HandledItem):
-    def __init__(self, item, level = 0, ro = False):
+    def __init__(self, item, level = 0, ro = False, learned = True):
         self.__item = item
         self.itemID = item.ID
-        self.level = level
+        self.__level = level if learned else None
         self.commandBonus = 0
+        self.learned = learned
         self.build(ro)
 
     @reconstructor
     def init(self):
         self.build(False)
+        self.learned = self.__level is not None
         self.__item = None
 
     def build(self, ro):
         self.__ro = ro
         self.__suppressed = False
+
+    @property
+    def level(self):
+        if not self.learned: return 0
+        else: return self.__level or 0
+
+    @level.setter
+    def level(self, level):
+        if level < 0 or level > 5:
+            raise ValueError(str(level) + " is not a valid value for level")
+
+        if hasattr(self, "_Skill__ro") and self.__ro == True:
+            raise ReadOnlyException()
+
+        self.__level = level
+        self.learned = True
 
     @property
     def item(self):
@@ -169,7 +187,7 @@ class Skill(HandledItem):
         return self.item.attributes[key].value
 
     def calculateModifiedAttributes(self, fit, runTime):
-        if self.__suppressed or self.level == 0: return
+        if self.__suppressed or not self.learned: return
         for effect in self.item.effects.itervalues():
                 if effect.runTime == runTime and effect.isType("passive"):
                     try:
@@ -193,8 +211,7 @@ class Skill(HandledItem):
             raise ReadOnlyException()
 
         map = {"characterID": lambda val: isinstance(val, int),
-               "skillID" : lambda val: isinstance(val, int),
-               "level" : lambda val: isinstance(val, int) and val >= 0 and val <= 5}
+               "skillID" : lambda val: isinstance(val, int)}
 
         if map[key](val) == False: raise ValueError(str(val) + " is not a valid value for " + key)
         else: return val

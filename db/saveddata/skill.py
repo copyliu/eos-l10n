@@ -26,6 +26,6 @@ from eos.types import Skill
 skills_table = Table("characterSkills", saveddata_meta,
                      Column("characterID", ForeignKey("characters.ID"), primary_key = True),
                      Column("itemID", Integer, primary_key = True),
-                     Column("level", Integer, nullable = False))
+                     Column("_Skill__level", Integer, nullable = True))
 
 mapper(Skill, skills_table)
