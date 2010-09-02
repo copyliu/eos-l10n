@@ -5,51 +5,54 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.testSkill = db.getItem("Advanced Drone Interfacing")
-        self.testShip = db.getItem("Thanatos")
-        self.testItem = db.getItem("Drone Control Unit I")
-        self.testAttrName = "maxGroupActive"
+        self.targetAttrName = "maxGroupActive"
+        self.skill = db.getItem("Advanced Drone Interfacing")
+        self.skillBonus = 1
+        self.ship = db.getItem("Thanatos")
+        self.item = db.getItem("Drone Control Unit I")
         # Define inital setup
-        self.initFit = Fit()
-        self.initSkillLvl = 1
-        self.initChar = Character("initSkills")
-        self.initChar.addSkill(Skill(self.testSkill, self.initSkillLvl))
-        self.initFit.character = self.initChar
-        self.initFit.ship = Ship(self.testShip)
-        self.initTestMod = Module(self.testItem)
-        self.initFit.modules.append(self.initTestMod)
-        self.initFit.calculateModifiedAttributes()
-        self.initEos = self.initTestMod.getModifiedItemAttr(self.testAttrName)
+        self.iFit = Fit()
+        self.iSkillLvl = 1
+        self.iChar = Character("initSkills")
+        self.iChar.addSkill(Skill(self.skill, self.iSkillLvl))
+        self.iFit.character = self.iChar
+        self.iFit.ship = Ship(self.ship)
+        self.iTestMod = Module(self.item)
+        self.iFit.modules.append(self.iTestMod)
+        self.iFit.calculateModifiedAttributes()
+        self.iEos = self.iTestMod.getModifiedItemAttr(self.targetAttrName)
         # Define final setup
-        self.finalFit = Fit()
-        self.finalSkillLvl = 4
-        self.finalChar = Character("finalSkills")
-        self.finalChar.addSkill(Skill(self.testSkill, self.finalSkillLvl))
-        self.finalFit.character = self.finalChar
-        self.finalFit.ship = Ship(self.testShip)
-        self.finalTestMod = Module(self.testItem)
-        self.finalFit.modules.append(self.finalTestMod)
-        self.finalFit.calculateModifiedAttributes()
-        self.finalEos = self.finalTestMod.getModifiedItemAttr(self.testAttrName)
+        self.fFit = Fit()
+        self.fSkillLvl = 4
+        self.fChar = Character("finalSkills")
+        self.fChar.addSkill(Skill(self.skill, self.fSkillLvl))
+        self.fFit.character = self.fChar
+        self.fFit.ship = Ship(self.ship)
+        self.fTestMod = Module(self.item)
+        self.fFit.modules.append(self.fTestMod)
+        self.fFit.calculateModifiedAttributes()
+        self.fEos = self.fTestMod.getModifiedItemAttr(self.targetAttrName)
 
     def test_init_eos_theory(self):
-        initTheory = ModifiedAttributeDict()
-        initTheory.original = self.testItem.attributes
-        initTheory.increase(self.testAttrName, 1 * self.initSkillLvl)
-        self.assertEquals(self.initEos, initTheory[self.testAttrName])
+        # Affected by skill
+        iTheory = ModifiedAttributeDict()
+        iTheory.original = self.item.attributes
+        iTheory.increase(self.targetAttrName, self.skillBonus * self.iSkillLvl)
+        self.assertEquals(self.iEos, iTheory[self.targetAttrName])
 
     #def test_init_eos_ingame(self):
     #    self.buildTested = 0
-    #    initIngame = 1
-    #    self.assertEquals(self.initEos, initIngame)
+    #    iIngame = 1
+    #    self.assertEquals(self.iEos, iIngame)
 
     def test_final_eos_theory(self):
-        finalTheory = ModifiedAttributeDict()
-        finalTheory.original = self.testItem.attributes
-        finalTheory.increase(self.testAttrName, 1 * self.finalSkillLvl)
-        self.assertEquals(self.finalEos, finalTheory[self.testAttrName])
+        # Affected by skill
+        fTheory = ModifiedAttributeDict()
+        fTheory.original = self.item.attributes
+        fTheory.increase(self.targetAttrName, self.skillBonus * self.fSkillLvl)
+        self.assertEquals(self.fEos, fTheory[self.targetAttrName])
 
     #def test_final_eos_ingame(self):
     #    self.buildTested = 0
-    #    finalIngame = 4
-    #    self.assertEquals(self.finalEos, finalIngame)
+    #    fIngame = 4
+    #    self.assertEquals(self.fEos, fIngame)
