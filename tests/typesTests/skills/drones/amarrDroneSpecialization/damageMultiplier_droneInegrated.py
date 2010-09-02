@@ -9,7 +9,7 @@ class Test(unittest.TestCase):
         self.skill = db.getItem("Amarr Drone Specialization")
         self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         self.ship = db.getItem("Archon")
-        self.item = db.getItem("'Augmented' Infiltrator")
+        self.item = db.getItem("'Integrated' Infiltrator")
         # Define inital setup
         self.iFit = Fit()
         self.iSkillLvl = 1
@@ -34,17 +34,15 @@ class Test(unittest.TestCase):
         self.fValEos = self.fDrone.getModifiedItemAttr(self.targetAttrName)
 
     def test_init_eos_theory(self):
-        # Affected by skill
+        # Not affected by skill
         iValTheory = ModifiedAttributeDict()
         iValTheory.original = self.item.attributes
-        iValTheory.boost(self.targetAttrName, self.skillBonus * self.iSkillLvl)
         self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
     def test_final_eos_theory(self):
-        # Affected by skill
+        # Not affected by skill
         fTheory = ModifiedAttributeDict()
         fTheory.original = self.item.attributes
-        fTheory.boost(self.targetAttrName, self.skillBonus * self.fSkillLvl)
         self.assertEquals(self.fValEos, fTheory[self.targetAttrName])
 
     #def test_diff_eos_ingame(self):
