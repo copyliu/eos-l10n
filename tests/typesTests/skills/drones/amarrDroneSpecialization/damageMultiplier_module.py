@@ -10,7 +10,7 @@ class Test(unittest.TestCase):
         self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         self.ship = db.getItem("Retribution")
         self.item = db.getItem("Medium Pulse Laser II")
-        # Define inital setup
+        # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
         self.iChar = Character("initSkills")

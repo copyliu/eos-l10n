@@ -10,7 +10,7 @@ class Test(unittest.TestCase):
         self.skillBonus = 1
         self.ship = db.getItem("Thanatos")
         self.item = db.getItem("Drone Control Unit I")
-        # Define inital setup
+        # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
         self.iChar = Character("initSkills")
