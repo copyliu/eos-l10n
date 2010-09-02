@@ -17,10 +17,10 @@ class Test(unittest.TestCase):
         self.iChar.addSkill(Skill(self.skill, self.iSkillLvl))
         self.iFit.character = self.iChar
         self.iFit.ship = Ship(self.ship)
-        self.iTestMod = Module(self.item)
-        self.iFit.modules.append(self.iTestMod)
+        self.iMod = Module(self.item)
+        self.iFit.modules.append(self.iMod)
         self.iFit.calculateModifiedAttributes()
-        self.iValEos = self.iTestMod.getModifiedItemAttr(self.targetAttrName)
+        self.iValEos = self.iMod.getModifiedItemAttr(self.targetAttrName)
         # Define final setup
         self.fFit = Fit()
         self.fSkillLvl = 4
@@ -28,10 +28,10 @@ class Test(unittest.TestCase):
         self.fChar.addSkill(Skill(self.skill, self.fSkillLvl))
         self.fFit.character = self.fChar
         self.fFit.ship = Ship(self.ship)
-        self.fTestMod = Module(self.item)
-        self.fFit.modules.append(self.fTestMod)
+        self.fMod = Module(self.item)
+        self.fFit.modules.append(self.fMod)
         self.fFit.calculateModifiedAttributes()
-        self.fValEos = self.fTestMod.getModifiedItemAttr(self.targetAttrName)
+        self.fValEos = self.fMod.getModifiedItemAttr(self.targetAttrName)
 
     def test_init_eos_theory(self):
         # Affected by skill
