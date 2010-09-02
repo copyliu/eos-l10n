@@ -20,7 +20,7 @@ class Test(unittest.TestCase):
         self.iTestMod = Module(self.item)
         self.iFit.modules.append(self.iTestMod)
         self.iFit.calculateModifiedAttributes()
-        self.iEos = self.iTestMod.getModifiedItemAttr(self.targetAttrName)
+        self.iValEos = self.iTestMod.getModifiedItemAttr(self.targetAttrName)
         # Define final setup
         self.fFit = Fit()
         self.fSkillLvl = 4
@@ -31,28 +31,28 @@ class Test(unittest.TestCase):
         self.fTestMod = Module(self.item)
         self.fFit.modules.append(self.fTestMod)
         self.fFit.calculateModifiedAttributes()
-        self.fEos = self.fTestMod.getModifiedItemAttr(self.targetAttrName)
+        self.fValEos = self.fTestMod.getModifiedItemAttr(self.targetAttrName)
 
     def test_init_eos_theory(self):
         # Affected by skill
-        iTheory = ModifiedAttributeDict()
-        iTheory.original = self.item.attributes
-        iTheory.increase(self.targetAttrName, self.skillBonus * self.iSkillLvl)
-        self.assertEquals(self.iEos, iTheory[self.targetAttrName])
+        iValTheory = ModifiedAttributeDict()
+        iValTheory.original = self.item.attributes
+        iValTheory.increase(self.targetAttrName, self.skillBonus * self.iSkillLvl)
+        self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
     #def test_init_eos_ingame(self):
     #    self.buildTested = 0
-    #    iIngame = 1
-    #    self.assertEquals(self.iEos, iIngame)
+    #    iValIngame = 1
+    #    self.assertEquals(self.iValEos, iValIngame)
 
     def test_final_eos_theory(self):
         # Affected by skill
         fTheory = ModifiedAttributeDict()
         fTheory.original = self.item.attributes
         fTheory.increase(self.targetAttrName, self.skillBonus * self.fSkillLvl)
-        self.assertEquals(self.fEos, fTheory[self.targetAttrName])
+        self.assertEquals(self.fValEos, fTheory[self.targetAttrName])
 
     #def test_final_eos_ingame(self):
     #    self.buildTested = 0
-    #    fIngame = 4
-    #    self.assertEquals(self.fEos, fIngame)
+    #    fValIngame = 4
+    #    self.assertEquals(self.fValEos, fValIngame)
