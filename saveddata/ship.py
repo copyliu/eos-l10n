@@ -21,12 +21,18 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
 
 class Ship(ItemAttrShortcut, HandledItem):
+    MOVE_ATTRIBUTES = ("mass",)
     def __init__(self, item):
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         if not isinstance(item, int):
+            orig = {}
+            orig.update(item.attributes)
+            for attr in self.MOVE_ATTRIBUTES:
+                orig[attr] = getattr(item, attr)
+
             self.__itemModifiedAttributes.original = item.attributes
-            
+
         self.commandBonus = 0
 
     def __fetchItemInfo(self):
