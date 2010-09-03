@@ -31,7 +31,7 @@ class Ship(ItemAttrShortcut, HandledItem):
             for attr in self.MOVE_ATTRIBUTES:
                 orig[attr] = getattr(item, attr)
 
-            self.__itemModifiedAttributes.original = item.attributes
+            self.__itemModifiedAttributes.original = orig
 
         self.commandBonus = 0
 
