@@ -442,10 +442,11 @@ class Fit(object):
         capUsed = 0
         for mod in self.modules:
             if mod.state == State.ACTIVE:
-                cycleTime = mod.getCycleTime()
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                capUsed += capNeed / cycleTime
-                drains.append((int(cycleTime * 1000), capNeed, 0))
+                if capNeed != 0:
+                    cycleTime = mod.getCycleTime()
+                    capUsed += capNeed / cycleTime
+                    drains.append((int(cycleTime * 1000), capNeed, 0))
 
         return drains, capUsed
 
@@ -462,8 +463,8 @@ class Fit(object):
             sim.reload = False
             sim.run()
 
-            self.__capStable = sim.lowest_cap > 0
-            self.__capState = sim.lowest_cap / sim.capacitorCapacity * 100 if self.__capStable else sim.t / 1000.0
+            self.__capStable = sim.cap_stable_eve > 0
+            self.__capState = sim.cap_stable_eve * 100 if self.__capStable else sim.t / 1000.0
         else:
             self.__capStable = True
             self.__capState = 100
