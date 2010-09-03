@@ -194,6 +194,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if self.__dps == None:
             if self.isEmpty():
                 self.__dps = 0
+                self.__volley = 0
             else:
                 if self.state == State.ACTIVE and \
                 (self.hardpoint == Hardpoint.TURRET or self.hardpoint == Hardpoint.MISSILE):
@@ -204,6 +205,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     self.__dps = volley / cycleTime
                 else:
                     self.__dps = 0
+                    self.__volley = 0
 
         return self.__dps, self.__volley
 
