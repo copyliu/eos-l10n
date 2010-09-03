@@ -182,7 +182,7 @@ class CapSimulator(object):
         self.t = t_last
         self.iterations = iterations
         self.lowest_cap = cap_lowest
-        self.lowest_cap_pre = cap_lowest_pre
+        #self.lowest_cap_pre = cap_lowest_pre
         self.runtime = time.time()-start
 
 
