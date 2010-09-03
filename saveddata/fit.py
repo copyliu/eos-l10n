@@ -21,11 +21,11 @@ from eos.effectHandlerHelpers import HandledList
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain, count
+from eos import capSim
 from copy import deepcopy
 from math import sqrt, pi, exp
 from eos.solverMath import gaussian, solve
 from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
-import heapq
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -38,7 +38,7 @@ class Fit(object):
                         "capacity": 0,
                         "cloaked": False}
 
-    PEAK_RECHARGE = 1 - 1 / sqrt(2)
+    PEAK_RECHARGE = 0.25
 
     def __init__(self):
         self.__modules = HandledModuleList()
@@ -327,18 +327,6 @@ class Fit(object):
 
         return amount
 
-    def calculateCapRecharge(self, percent = PEAK_RECHARGE):
-        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
-        return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
-                           sqrt((2 * percent) - percent ** 2))
-
-
-    def calculateShieldRecharge(self, percent = PEAK_RECHARGE):
-        capacity = self.ship.getModifiedItemAttr("shieldCapacity")
-        rechargeRate = self.ship.getModifiedItemAttr("shieldRechargeRate") / 1000.0
-        return capacity * ((4.9678 / rechargeRate) * (1 - percent) *
-                           sqrt((2 * percent) - pow(percent, 2)))
 
     @property
     def capStable(self):
@@ -439,95 +427,46 @@ class Fit(object):
 
         return self.__sustainableTank
 
+    def calculateCapRecharge(self, percent = PEAK_RECHARGE):
+        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+        rechargeRate = self.ship.getModifiedItemAttr("rechargeRate") / 1000.0
+        return 10 / rechargeRate * sqrt(percent) * (1 - sqrt(percent)) * capacity
+
+    def calculateShieldRecharge(self, percent = PEAK_RECHARGE):
+        capacity = self.ship.getModifiedItemAttr("shieldCapacity")
+        rechargeRate = self.ship.getModifiedItemAttr("shieldRechargeRate") / 1000.0
+        return 10 / rechargeRate * sqrt(percent) * (1 - sqrt(percent)) * capacity
+
     def __generateDrain(self):
         drains = []
-        heappush = heapq.heappush
+        capUsed = 0
         for mod in self.modules:
             if mod.state == State.ACTIVE:
-                cycleTime = int(mod.getCycleTime() * 1000)
+                cycleTime = mod.getCycleTime()
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                heappush(drains, [0, capNeed, cycleTime])
+                capUsed += capNeed / cycleTime
+                drains.append((int(cycleTime * 1000), capNeed, 0))
 
-        return drains
+        return drains, capUsed
 
     def simulateCap(self):
-        #TODO: Factor in stuff like neuts & cap boosters
+        drains, self.__capUsed = self.__generateDrain()
+        self.__capRecharge = self.calculateCapRecharge()
+        if len(drains) > 0:
+            sim = capSim.CapSimulator()
+            sim.init(drains)
+            sim.capacitorCapacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+            sim.capacitorRecharge = self.ship.getModifiedItemAttr("rechargeRate")
+            sim.stagger = True
+            sim.scale = False
+            sim.reload = False
+            sim.run()
 
-        self.__capRecharge = self.calculateCapRecharge(self.PEAK_RECHARGE)
-
-        #Figure out how much cap we're using
-        capUse = 0
-        for mod in self.modules:
-            if mod.state >= State.ACTIVE:
-                capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                cycleTime = mod.getModifiedItemAttr("speed") or mod.getModifiedItemAttr("duration")
-                if capNeed is not None and cycleTime is not None:
-                    capUse += capNeed / (cycleTime / 1000.0)
-
-        self.__capUsed = capUse
-
-        if capUse == 0:
+            self.__capStable = sim.lowest_cap > 0
+            self.__capState = sim.lowest_cap / sim.capacitorCapacity * 100 if self.__capStable else sim.t / 1000.0
+        else:
             self.__capStable = True
             self.__capState = 100
-            return
-
-        if self.__capRecharge > self.__capUsed:
-            self.__capStable = True
-            state = []
-            for low, high in ((self.PEAK_RECHARGE, 0), (self.PEAK_RECHARGE, 1.0)):
-                diff = 10
-                while diff >= 0.01:
-                    mid = (low + high) / 2
-                    rechargeRate = self.calculateCapRecharge(mid)
-                    diff = abs(rechargeRate - capUse)
-                    if rechargeRate > capUse:
-                        low = mid
-                    else:
-                        high = mid
-
-                state.append(mid * 100)
-
-            self.__capState = tuple(state)
-        else:
-            # Setup
-            drains = self.__generateDrain()
-
-            capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
-            rechargeRate = self.ship.getModifiedItemAttr("rechargeRate")
-            tau = (rechargeRate / 5.0)
-
-            t = 0
-            currCap = capacity
-            lowest = capacity
-            #Get some locals
-            heappop = heapq.heappop
-            heappush = heapq.heappush
-
-            # 21600000 == 6h
-            while t <= 21600000 and currCap >= 0:
-                oldt = t
-                #Pop the first drain
-                currDrain = heappop(drains)
-
-                # nextIteration = currDrain[0]
-                # capNeed = currDrain[1]
-                # cycleTime = currDrain[2]
-
-                #Change the drains's next iteration to its next cycle time
-                currDrain[0] += currDrain[2]
-
-                #Remove and add cap and keep track of lowest value
-                currCap = ((1.0 + (sqrt(currCap / capacity) - 1.0) * exp((t - currDrain[0])/tau)) ** 2) * capacity - currDrain[1]
-                lowest = min(currCap, lowest)
-
-                #Prepare next iteration
-                t = currDrain[0]
-                heappush(drains, currDrain)
-
-
-            self.__capStable = False
-            self.__capState = oldt / 1000.0
-
     @property
     def ehp(self):
         if self.__ehp is None:

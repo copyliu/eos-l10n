@@ -22,7 +22,7 @@ class TestDamagePattern(unittest.TestCase):
         f = Fit()
         f.ship = Ship(db.getItem("Wolf"))
         f.damagePattern = DamagePattern(25, 25, 25, 25)
-        self.assertAlmostEquals(3.8, f.effectiveTank["passiveShield"], 1)
+        self.assertAlmostEquals(3.86, f.effectiveTank["passiveShield"], 2)
 
     def test_armorRepairUniform(self):
         f = Fit()
