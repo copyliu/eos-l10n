@@ -274,7 +274,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     def __calculateHardpoint(self, item):
         effectHardpointMap = {"turretFitted" : Hardpoint.TURRET,
-                              "useMissiles": Hardpoint.MISSILE}
+                              "launcherFitted": Hardpoint.MISSILE}
 
         if item is None:
             return Hardpoint.NONE
