@@ -110,6 +110,18 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         return self.__hardpoint
 
     @property
+    def numCharges(self):
+        if self.charge is None:
+            return 0
+        else:
+            chargeSize = self.charge.volume
+            containerSize = self.item.capacity
+            if chargeSize is None or containerSize is None:
+                return 0
+
+            return int(containerSize / chargeSize)
+
+    @property
     def maxRange(self):
         attrs = ("maxRange", "empFieldRange", "ecmBurstRange")
         for attr in attrs:

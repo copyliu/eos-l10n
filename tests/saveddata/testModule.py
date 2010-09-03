@@ -64,6 +64,7 @@ class TestModule(unittest.TestCase):
         m = Module(i)
         a = db.getItem("Gamma S")
         m.charge = a
+        self.assertEquals(m.numCharges, 1)
         self.assertEquals(m.itemID, i.ID)
         self.assertEquals(m.chargeID, a.ID)
 

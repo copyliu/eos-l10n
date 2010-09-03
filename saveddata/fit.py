@@ -446,7 +446,7 @@ class Fit(object):
                 if capNeed != 0:
                     cycleTime = mod.getCycleTime()
                     capUsed += capNeed / cycleTime
-                    drains.append((int(cycleTime * 1000), capNeed, 0))
+                    drains.append((int(cycleTime * 1000), capNeed, mod.numCharges))
 
         return drains, capUsed
 
