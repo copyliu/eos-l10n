@@ -443,7 +443,7 @@ class Fit(object):
         for mod in self.modules:
             if mod.state == State.ACTIVE:
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                if capNeed != 0:
+                if capNeed != 0 and capNeed is not None:
                     cycleTime = mod.getCycleTime()
                     capUsed += capNeed / cycleTime
                     drains.append((int(cycleTime * 1000), capNeed, mod.numCharges))
