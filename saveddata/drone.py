@@ -23,6 +23,8 @@ from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor
 
 class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
+    DAMAGE_ATTRIBUTES = ("emDamage", "kineticDamage", "explosiveDamage", "thermalDamage")
+
     def __init__(self, item):
         if item.category.name != "Drone":
             raise ValueError("Passed item is not a drone")
@@ -32,12 +34,14 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.itemID = item.ID
         self.amount = 0
         self.amountActive = 0
+        self.__dps = None
         self.projected = False
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.itemModifiedAttributes.original = self.item.attributes
 
     @reconstructor
     def init(self):
+        self.__dps = None
         self.__item = None
         self.__charge = None
 
@@ -88,6 +92,36 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         return self.__charge if self.__charge != 0 else None
 
+    @property
+    def dealsDamage(self):
+        for attr in ("emDamage", "kineticDamage", "explosiveDamage", "thermalDamage"):
+            if attr in self.itemModifiedAttributes or attr in self.chargeModifiedAttributes:
+                return True
+
+    @property
+    def hasAmmo(self):
+        return self.charge is not None
+
+    @property
+    def dps(self):
+        if self.__dps == None:
+            if self.active and self.dealsDamage:
+                if self.hasAmmo:
+                    attr = "missileLaunchDuration"
+                    getter = self.getModifiedChargeAttr
+                else:
+                    attr =  "speed"
+                    getter = self.getModifiedItemAttr
+
+                cycleTime = self.getModifiedItemAttr(attr) / 1000.0
+                volley = sum(map(lambda d: getter(d), self.DAMAGE_ATTRIBUTES)) * self.amount
+                volley *= self.getModifiedItemAttr("damageMultiplier") or 1
+                self.__dps = volley / cycleTime
+            else:
+                self.__dps = 0
+
+        return self.__dps
+
     @validates("ID", "itemID", "chargeID", "amount", "amountActive")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -100,16 +134,9 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         else: return val
 
     def clear(self):
+        self.__dps = None
         self.itemModifiedAttributes.clear()
         self.chargeModifiedAttributes.clear()
-
-    def dealsDamage(self):
-        for attr in ("emDamage", "kineticDamage", "explosiveDamage", "thermalDamage"):
-            if attr in self.itemModifiedAttributes or attr in self.chargeModifiedAttributes:
-                return True
-
-    def hasAmmo(self):
-        return self.charge is not None
 
     def calculateModifiedAttributes(self, fit, runTime, forceProjected = False):
         if self.projected or forceProjected:

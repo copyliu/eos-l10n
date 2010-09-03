@@ -42,6 +42,7 @@ class Hardpoint():
 
 class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     """An instance of this class represents a module together with its charge and modified attributes"""
+    DAMAGE_ATTRIBUTES = ("emDamage", "kineticDamage", "explosiveDamage", "thermalDamage")
 
     def __init__(self, item):
         self.__item = item if item != None else 0
@@ -49,6 +50,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__charge = 0
         self.projected = False
         self.state = State.ONLINE
+        self.__dps = None
+        self.__volley = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         if item != None:
             self.__itemModifiedAttributes.original = item.attributes
@@ -62,10 +65,13 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if self.dummySlot is None:
             self.__item = None
             self.__charge = None
+            self.__volley = None
+            self.__dps = None
         else:
             self.__slot = self.dummySlot
             self.__item = 0
             self.__charge = 0
+            self.__dps = 0
             self.__hardpoint = Hardpoint.NONE
             self.__itemModifiedAttributes = ModifiedAttributeDict()
 
@@ -182,6 +188,24 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__chargeModifiedAttributes.original = None
 
         self.__itemModifiedAttributes.clear()
+
+    @property
+    def damageStats(self):
+        if self.__dps == None:
+            if self.isEmpty():
+                self.__dps = 0
+            else:
+                if self.state == State.ACTIVE and \
+                (self.hardpoint == Hardpoint.TURRET or self.hardpoint == Hardpoint.MISSILE):
+                    cycleTime = self.getCycleTime()
+                    volley = sum(map(lambda attr: self.getModifiedChargeAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
+                    volley *= self.getModifiedItemAttr("damageMultiplier") or 1
+                    self.__volley = volley
+                    self.__dps = volley / cycleTime
+                else:
+                    self.__dps = 0
+
+        return self.__dps, self.__volley
 
     def fits(self, fit):
         slot = self.slot
@@ -309,6 +333,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         else: return val
 
     def clear(self):
+        self.__dps = None
+        self.__volley = None
         self.itemModifiedAttributes.clear()
         self.chargeModifiedAttributes.clear()
 

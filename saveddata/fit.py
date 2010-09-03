@@ -23,7 +23,7 @@ from sqlalchemy.orm import validates, reconstructor
 from itertools import chain, count
 from eos import capSim
 from copy import deepcopy
-from math import sqrt, pi, exp
+from math import sqrt, pi, exp, log
 from eos.solverMath import gaussian, solve
 from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
 
@@ -168,6 +168,13 @@ class Fit(object):
     def scanStrength(self):
         return max([self.ship.getModifiedItemAttr("scan%sStrength" % scanType)
                     for scanType in ("Magnetometric", "Ladar", "Radar", "Gravimetric")])
+
+    @property
+    def alignTime(self):
+        agility = self.ship.getModifiedItemAttr("agility")
+        mass = self.ship.getModifiedItemAttr("mass")
+
+        return -log(0.25) * agility * mass / 1000000
 
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
@@ -510,29 +517,14 @@ class Fit(object):
         weaponDPS = 0
         droneDPS = 0
         weaponVolley = 0
-        damageAttributes = ("emDamage", "kineticDamage", "explosiveDamage", "thermalDamage")
+
         for mod in self.modules:
-            if mod.state == State.ACTIVE and \
-            (mod.hardpoint == Hardpoint.TURRET or mod.hardpoint == Hardpoint.MISSILE):
-                cycleTime = mod.getCycleTime()
-                volley = sum(map(lambda attr: mod.getModifiedChargeAttr(attr) or 0, damageAttributes))
-                volley *= mod.getModifiedItemAttr("damageMultiplier") or 1
-                weaponVolley += volley
-                weaponDPS += volley / cycleTime
+            dps, volley = mod.damageStats
+            weaponDPS += dps
+            weaponVolley += volley
 
         for drone in self.drones:
-            if drone.active and drone.dealsDamage():
-                if drone.hasAmmo():
-                    attr = "missileLaunchDuration"
-                    getter = drone.getModifiedChargeAttr
-                else:
-                    attr =  "speed"
-                    getter = drone.getModifiedItemAttr
-
-                cycleTime = drone.getModifiedItemAttr(attr) / 1000.0
-                volley = sum(map(lambda d: getter(d), damageAttributes)) * drone.amount
-                volley *= drone.getModifiedItemAttr("damageMultiplier") or 1
-                droneDPS += volley / cycleTime
+            droneDPS += drone.dps
 
         self.__weaponDPS = weaponDPS
         self.__weaponVolley = weaponVolley
