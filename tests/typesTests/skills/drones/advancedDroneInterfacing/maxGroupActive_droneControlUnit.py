@@ -36,7 +36,7 @@ class Test(unittest.TestCase):
     def test_init_eos_theory(self):
         # Affected by skill
         iValTheory = ModifiedAttributeDict()
-        iValTheory.original = self.item.attributes
+        iValTheory.original = self.iMod.itemModifiedAttributes.original
         iValTheory.increase(self.targetAttrName, self.skillBonus * self.iSkillLvl)
         self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
@@ -48,7 +48,7 @@ class Test(unittest.TestCase):
     def test_final_eos_theory(self):
         # Affected by skill
         fTheory = ModifiedAttributeDict()
-        fTheory.original = self.item.attributes
+        fTheory.original = self.fMod.itemModifiedAttributes.original
         fTheory.increase(self.targetAttrName, self.skillBonus * self.fSkillLvl)
         self.assertEquals(self.fValEos, fTheory[self.targetAttrName])
 
