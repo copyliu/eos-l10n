@@ -17,7 +17,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table, Float
 from sqlalchemy.orm import relation, mapper, synonym
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm.collections import attribute_mapped_collection
@@ -30,9 +30,9 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("typeName", String),
                     Column("description", String),
                     Column("raceID", Integer),
-                    Column("volume", Integer),
-                    Column("mass", Integer),
-                    Column("capacity", Integer),
+                    Column("volume", Float),
+                    Column("mass", Float),
+                    Column("capacity", Float),
                     Column("published", Boolean),
                     Column("marketGroupID", Integer, ForeignKey("invmarketgroups.marketGroupID")),
                     Column("iconID", Integer, ForeignKey("icons.iconID")),

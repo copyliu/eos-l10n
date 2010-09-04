@@ -26,19 +26,22 @@ class Ship(ItemAttrShortcut, HandledItem):
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         if not isinstance(item, int):
-            orig = {}
-            orig.update(item.attributes)
-            for attr in self.MOVE_ATTRIBUTES:
-                orig[attr] = getattr(item, attr)
-
-            self.__itemModifiedAttributes.original = orig
+            self.__buildOriginal()
 
         self.commandBonus = 0
 
     def __fetchItemInfo(self):
         import eos.db
         self.__item = eos.db.getItem(self.__item)
-        self.__itemModifiedAttributes.original = self.__item.attributes
+        self.__buildOriginal()
+
+    def __buildOriginal(self):
+        orig = {}
+        orig.update(self.item.attributes)
+        for attr in self.MOVE_ATTRIBUTES:
+            orig[attr] = getattr(self.item, attr)
+
+        self.__itemModifiedAttributes.original = orig
 
     @property
     def item(self):
@@ -49,6 +52,9 @@ class Ship(ItemAttrShortcut, HandledItem):
 
     @property
     def itemModifiedAttributes(self):
+        if isinstance(self.__item, int):
+            self.__fetchItemInfo()
+
         return self.__itemModifiedAttributes
 
     def clear(self):
