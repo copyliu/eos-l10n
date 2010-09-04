@@ -84,4 +84,4 @@ class TestDrone(unittest.TestCase):
         d.amount = 3
         d.amountActive = 1
 
-        self.assertEquals(d.dps, 18)
+        self.assertEquals(d.dps, 6)
