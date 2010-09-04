@@ -170,6 +170,18 @@ class Fit(object):
                     for scanType in ("Magnetometric", "Ladar", "Radar", "Gravimetric")])
 
     @property
+    def scanType(self):
+        type = None
+        str = 0
+        for scanType in ("Magnetometric", "Ladar", "Radar", "Gravimetric"):
+            currStr = self.ship.getModifiedItemAttr("scan%sStrength" % scanType)
+            if currStr > str:
+                type = scanType
+                str = currStr
+
+        return type
+
+    @property
     def alignTime(self):
         agility = self.ship.getModifiedItemAttr("agility")
         mass = self.ship.getModifiedItemAttr("mass")

@@ -408,3 +408,8 @@ class TestFit(unittest.TestCase):
         gob = db.getItem("Hobgoblin I")
         f.drones.appendItem(gob)
         f.drones.removeItem(gob, 1)
+
+    def test_scanStr(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        self.assertEquals("Ladar", f.scanType)
