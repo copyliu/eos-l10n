@@ -552,13 +552,19 @@ class Fit(object):
 
 class HandledModuleList(HandledList):
     def append(self, mod):
+        emptyPosition = float("Inf")
         for i in xrange(len(self)):
             currMod = self[i]
             if currMod.isEmpty() and not mod.isEmpty() and currMod.slot == mod.slot:
-                del self[i]
-                mod.position = i
-                HandledList.insert(self, i, mod)
-                return
+                currPos = mod.position or i
+                if currPos < emptyPosition:
+                    emptyPosition = currPos
+
+        if emptyPosition < len(self):
+            del self[emptyPosition]
+            mod.position = emptyPosition
+            HandledList.insert(self, emptyPosition, mod)
+            return
 
         mod.position = len(self)
         HandledList.append(self, mod)
@@ -574,8 +580,6 @@ class HandledModuleList(HandledList):
     def remove(self, mod):
         HandledList.remove(self, mod)
         oldPos = mod.position
-        if oldPos is None:
-            return
 
         mod.position = None
         for i in xrange(oldPos, len(self)):
@@ -584,7 +588,9 @@ class HandledModuleList(HandledList):
     def toDummy(self, index):
         mod = self[index]
         if not mod.isEmpty():
-            self[index] = Module.buildEmpty(mod.slot)
+            dummy = Module.buildEmpty(mod.slot)
+            dummy.position = index
+            self[index] = dummy
 
 class HandledDroneList(HandledList):
     def __init__(self):

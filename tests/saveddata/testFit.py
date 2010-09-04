@@ -341,6 +341,13 @@ class TestFit(unittest.TestCase):
         f.fill()
         self.assertEquals(len(f.modules), 13)
 
+    def test_fillOrdering(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
+        f.fill()
+        for i, mod in enumerate(f.modules):
+            self.assertEquals(i, mod.position)
+
     def test_getSlotsUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
