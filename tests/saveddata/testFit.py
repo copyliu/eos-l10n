@@ -304,6 +304,7 @@ class TestFit(unittest.TestCase):
         d = Drone(db.getItem("Cyclops"))
         d.active = True
         d.amount = 2
+        d.amountActive = 1
         f.drones.append(d)
         expected = 0
         for type in ("emDamage", "thermalDamage", "kineticDamage", "explosiveDamage"):

@@ -78,3 +78,10 @@ class TestDrone(unittest.TestCase):
         self.assertEquals(d.item, c.item)
         self.assertEquals(d.amount, c.amount)
         self.assertEquals(d.amountActive, c.amountActive)
+
+    def test_dps(self):
+        d = Drone(db.getItem("Hobgoblin I"))
+        d.amount = 3
+        d.amountActive = 1
+
+        self.assertEquals(d.dps, 18)

@@ -105,7 +105,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def dps(self):
         if self.__dps == None:
-            if self.active and self.dealsDamage:
+            if self.dealsDamage:
                 if self.hasAmmo:
                     attr = "missileLaunchDuration"
                     getter = self.getModifiedChargeAttr
@@ -115,7 +115,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
                 cycleTime = self.getModifiedItemAttr(attr) / 1000.0
                 volley = sum(map(lambda d: getter(d), self.DAMAGE_ATTRIBUTES)) * self.amount
-                volley *= self.getModifiedItemAttr("damageMultiplier") or 1
+                volley *= self.getModifiedItemAttr("damageMultiplier") or 1 * self.amountActive
                 self.__dps = volley / cycleTime
             else:
                 self.__dps = 0
