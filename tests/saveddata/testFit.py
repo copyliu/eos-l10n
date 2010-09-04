@@ -401,3 +401,9 @@ class TestFit(unittest.TestCase):
         db.saveddata_session.flush()
         db.saveddata_session.delete(f)
         db.saveddata_session.flush()
+
+    def test_removeDrone(self):
+        f = Fit()
+        gob = db.getItem("Hobgoblin I")
+        f.drones.appendItem(gob)
+        f.drones.removeItem(gob, 1)

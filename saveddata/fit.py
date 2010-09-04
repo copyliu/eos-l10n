@@ -628,7 +628,7 @@ class HandledDroneList(HandledList):
 
     def removeItem(self, item, amount):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
-        d = self.findDrone(item)
+        d = self.find(item)
         if d is None: return
         d.amount -= amount
         if d.amount <= 0:
