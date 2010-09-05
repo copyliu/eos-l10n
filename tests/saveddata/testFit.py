@@ -378,13 +378,13 @@ class TestFit(unittest.TestCase):
     def test_droneBandwidthUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        f.drones.append(Drone(db.getItem("Hobgoblin I")))
+        f.drones.appendItem(db.getItem("Hobgoblin I"))
         self.assertEquals(f.droneBandwidthUsed, 5)
 
     def test_droneBayUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        f.drones.append(Drone(db.getItem("Hobgoblin I")))
+        f.drones.appendItem(db.getItem("Hobgoblin I"))
         self.assertEquals(f.droneBayUsed, 5)
 
     def test_cargoSpace(self):

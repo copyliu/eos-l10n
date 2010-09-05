@@ -336,13 +336,17 @@ class Fit(object):
 
     @property
     def droneBandwidthUsed(self):
-        return self.getItemAttrSum(self.drones, "droneBandwidthUsed")
+        amount = 0
+        for d in self.drones:
+            amount += d.getModifiedItemAttr("droneBandwidthUsed") * d.amount
+
+        return amount
 
     @property
     def droneBayUsed(self):
         amount = 0
         for d in self.drones:
-            amount += d.item.volume
+            amount += d.item.volume * d.amount
 
         return amount
 
