@@ -23,10 +23,11 @@ from eos.db import saveddata_meta
 from eos.types import Drone
 
 drones_table = Table("drones", saveddata_meta,
-                     Column("fitID", Integer, ForeignKey("fits.ID"), primary_key = True),
-                     Column("itemID", Integer, primary_key = True),
+                     Column("groupID", Integer, primary_key=True),
+                     Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False),
+                     Column("itemID", Integer, nullable = False),
                      Column("amount", Integer, nullable = False),
                      Column("amountActive", Integer, nullable = False),
-                     Column("projected", Boolean, default = False, primary_key = True))
+                     Column("projected", Boolean, default = False))
 
 mapper(Drone, drones_table)
