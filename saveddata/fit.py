@@ -619,9 +619,6 @@ class HandledDroneList(HandledList):
             return None
 
     def append(self, drone):
-        if self._findCache.has_key(drone.item.ID):
-            raise ValueError("Drone already here, cannot add the same one multiple times")
-
         list.append(self, drone)
         self._findCache[drone.item.ID] = drone
 
