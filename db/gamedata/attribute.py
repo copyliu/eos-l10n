@@ -20,7 +20,7 @@
 from sqlalchemy import Table, Column, Integer, Float, Unicode, ForeignKey, String, Boolean
 from sqlalchemy.orm import relation, mapper, join, synonym
 from sqlalchemy.ext.associationproxy import association_proxy
-from eos.types import Attribute, Icon, AttributeInfo
+from eos.types import Attribute, Icon, AttributeInfo, Unit
 from eos.db import gamedata_meta
 typeattributes_table = Table("dgmtypeattribs", gamedata_meta,
                          Column("value", Float),
@@ -34,13 +34,15 @@ attributes_table = Table("dgmattribs", gamedata_meta,
                          Column("published", Boolean),
                          Column("displayName", String),
                          Column("highIsGood", Boolean),
-                         Column("iconID", Integer, ForeignKey("icons.iconID")))
+                         Column("iconID", Integer, ForeignKey("icons.iconID")),
+                         Column("unitID", Integer, ForeignKey("eveunits.unitID")))
 
 mapper(Attribute, typeattributes_table,
        properties = {"info": relation(AttributeInfo, lazy=False)})
 
 mapper(AttributeInfo, attributes_table,
        properties = {"icon" : relation(Icon),
+                     "unit": relation(Unit),
                      "ID": synonym("attributeID"),
                      "name": synonym("attributeName")})
 

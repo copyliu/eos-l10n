@@ -17,15 +17,17 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, MetaGroup, AttributeInfo, Unit
-from eos.saveddata.user import User
-from eos.saveddata.damagePattern import DamagePattern
-from eos.saveddata.character import Character, Skill
-from eos.saveddata.module import Module, State, Slot, Hardpoint
-from eos.saveddata.drone import Drone
-from eos.saveddata.implant import Implant
-from eos.saveddata.booster import SideEffect
-from eos.saveddata.booster import Booster
-from eos.saveddata.ship import Ship
-from eos.saveddata.fit import Fit
-from eos.saveddata.gang import Gang, Wing, Squad
+from sqlalchemy import Column, Table, Integer, String
+from sqlalchemy.orm import mapper, synonym
+
+from eos.db import gamedata_meta
+from eos.types import Unit
+
+groups_table = Table("eveunits", gamedata_meta,
+                     Column("unitID", Integer, primary_key = True),
+                     Column("unitName", String),
+                     Column("displayName", String))
+
+mapper(Unit, groups_table,
+       properties = {"ID" : synonym("unitID"),
+                     "name" : synonym("unitName")})

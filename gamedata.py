@@ -206,3 +206,6 @@ class MarketGroup(object):
 
 class MetaGroup(object):
     pass
+
+class Unit(object):
+    pass
