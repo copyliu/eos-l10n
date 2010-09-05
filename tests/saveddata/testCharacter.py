@@ -104,3 +104,5 @@ class TestCharacter(unittest.TestCase):
         news = copy.getSkill("Leadership")
         self.assertNotEquals(id(s), id(news))
         self.assertEquals(s.level, news.level)
+
+

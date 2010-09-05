@@ -17,6 +17,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+
 from eos.effectHandlerHelpers import HandledItem
 from eos.modifiedAttributeDict import ItemAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
@@ -24,6 +25,7 @@ from eos.types import Item
 from copy import deepcopy
 import sqlalchemy.orm.exc as exc
 import eos.config
+from eos import eveapi
 
 class Character(object):
     __all5 = None
@@ -31,6 +33,7 @@ class Character(object):
 
     @classmethod
     def getSkillList(cls):
+        import eos.db
         return eos.db.getItemsByCategory("Skill")
 
     @classmethod
@@ -65,8 +68,26 @@ class Character(object):
     def __init__(self, name):
         self.name = name
         self.__owner = None
-        self.__skills = set()
+        self.__skills = []
         self.apiKey = None
+
+    def apiFetch(self, charName):
+        api = eveapi.EVEAPIConnection()
+        auth = api.auth(userID=self.apiID, apiKey=self.apiKey)
+        apiResult = auth.account.Characters()
+        charID = None
+        for char in apiResult.characters:
+            if char.name == charName:
+                charID = char.characterID
+
+        if charID == None:
+            return
+
+        import eos.db
+        sheet = auth.character(charID).CharacterSheet()
+        for skillRow in sheet.skills:
+            item = eos.db.getItem(skillRow["typeID"])
+            self.addSkill(Skill(item, skillRow["level"]))
 
     @property
     def owner(self):
@@ -77,7 +98,7 @@ class Character(object):
         self.__owner = owner
 
     def addSkill(self, skill):
-        self.__skills.add(skill)
+        self.__skills.append(skill)
 
     def getSkill(self, item):
         for skill in self.__skills:

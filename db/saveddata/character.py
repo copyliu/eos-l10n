@@ -32,4 +32,4 @@ characters_table = Table("characters", saveddata_meta,
 
 mapper(Character, characters_table,
        properties = {"_Character__owner" : relation(User, backref = "characters"),
-                     "_Character__skills" : relation(Skill, collection_class = set)})
+                     "_Character__skills" : relation(Skill)})

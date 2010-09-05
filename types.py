@@ -29,3 +29,4 @@ from eos.saveddata.booster import Booster
 from eos.saveddata.ship import Ship
 from eos.saveddata.fit import Fit
 from eos.saveddata.gang import Gang, Wing, Squad
+import eos.db
