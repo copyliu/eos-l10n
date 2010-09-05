@@ -34,6 +34,8 @@ def getCharacter(lookfor, where=None, eager=None):
     elif isinstance(lookfor, basestring):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
+def getCharacterList(eager=None):
+    return saveddata_session.query(Character).all()
 
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
