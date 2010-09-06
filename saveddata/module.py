@@ -72,9 +72,11 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__item = 0
             self.__charge = 0
             self.__dps = 0
+            self.__volley = 0
             self.__hardpoint = Hardpoint.NONE
             self.__itemModifiedAttributes = ModifiedAttributeDict()
             self.__chargeModifiedAttributes = ModifiedAttributeDict()
+
     def __fetchItemInfo(self):
         import eos.db
         item = eos.db.getItem(self.itemID)
