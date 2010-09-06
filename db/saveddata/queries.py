@@ -61,3 +61,7 @@ def searchFits(nameLike, where=None, eager=None):
     #Add any extra components to the search to our where clause
     filter = processWhere(Fit.name.like(nameLike), where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+
+def save(stuff):
+    saveddata_session.add(stuff)
+    saveddata_session.commit()

@@ -46,12 +46,12 @@ if config.saveddata_connectionstring is not None:
 
 
 #Import all the definitions for all our database stuff
-from .gamedata import *
-from .saveddata import *
+from eos.db.gamedata import *
+from eos.db.saveddata import *
 
 #Import queries
-from .gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory, getAttributeInfo
-from .saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits, getCharacterList
+from eos.db.gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, getMarketGroup, getGroup, getCategory, getAttributeInfo
+from eos.db.saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits, getCharacterList, save
 
 #If using in memory saveddata, you'll want to reflect it so the data structure is good.
 if config.saveddata_connectionstring == "sqlite:///:memory:":
