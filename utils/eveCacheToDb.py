@@ -170,17 +170,24 @@ def insert_table_values(tabledata, tableclass):
     for row in tabledata:
         instance = tableclass()
         for header in row:
-            setattr(instance, header, process_value(row[header]))
+            setattr(instance, header, process_value(row[header], tableclass, header))
 
         eos.db.gamedata_session.add(instance)
 
     eos.db.gamedata_session.commit()
 
-def process_value(value):
-    if value == 0:
+def process_value(value, tableclass, header):
+    info = tableclass._sa_class_manager.mapper.c.get(header)
+    if info is None:
+        return
+
+    # NULL out non-existent foreign key relations, don't touch anything else.
+    foreign_key = len(info.foreign_keys) > 0
+    if value == 0 and foreign_key:
         return None
     else:
         return value
+
 if __name__ == "__main__":
     import os
     import re
