@@ -47,6 +47,8 @@ class Character(object):
                 for skill in cls.getSkillList():
                     all5.addSkill(Skill(skill, 5, True))
 
+                eos.db.saveddata_session.add(all5)
+
             cls.__all5 = all5
         return cls.__all5
 
@@ -61,6 +63,8 @@ class Character(object):
 
                 for skill in cls.getSkillList():
                     all0.addSkill(Skill(skill, 0, True, False))
+
+                eos.db.saveddata_session.add(all0)
 
             cls.__all0 = all0
         return cls.__all0
