@@ -42,7 +42,7 @@ def get_map():
             "dgmeffects": EffectInfo,
             "dgmtypeattribs": Attribute,
             "dgmtypeeffects": Effect,
-            "evegraphics": Icon,
+            "evegraphics": None,
             "evelocations": None,
             "eveowners": None,
             "eveunits": Unit,
@@ -170,10 +170,6 @@ def get_table_data(sourcetable, tablename, headerlist):
     return datarows
 
 def insert_table_values(tabledata, tableclass):
-    if tableclass == MarketGroup:
-        #Order our tabledata
-        tabledata.sort(key=lambda row: row["marketGroupID"])
-
     i = 0
     y = 0
     for row in tabledata:
@@ -213,7 +209,7 @@ def process_value(value, tableclass, header):
     if len(foreign_keys) > 0:
         for key in foreign_keys:
             col = key.column
-            if not query_existence(col, value):
+            if not query_existence(col, value) and not key.deferrable:
                 if info.nullable:
                     return None
                 else:
