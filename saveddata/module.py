@@ -109,6 +109,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         return empty
 
+    @property
     def isEmpty(self):
         return self.dummySlot is not None
 
@@ -196,7 +197,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def damageStats(self):
         if self.__dps == None:
-            if self.isEmpty():
+            if self.isEmpty:
                 self.__dps = 0
                 self.__volley = 0
             else:

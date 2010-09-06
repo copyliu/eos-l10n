@@ -280,7 +280,7 @@ class Fit(object):
             if amount < 0:
                 #Look for any dummies of that type to remove
                 for mod in self.modules:
-                    if mod.isEmpty() and mod.slot == slotType:
+                    if mod.isEmpty and mod.slot == slotType:
                         self.modules.remove(mod)
                         amount += 1
                         if amount == 0:
@@ -298,7 +298,7 @@ class Fit(object):
     def getHardpointsUsed(self, type):
         amount = 0
         for mod in self.modules:
-            if mod.hardpoint is type and not mod.isEmpty():
+            if mod.hardpoint is type and not mod.isEmpty:
                 amount += 1
 
         return amount
@@ -306,7 +306,7 @@ class Fit(object):
     def getSlotsUsed(self, type, countDummies=False):
         amount = 0
         for mod in self.modules:
-            if mod.slot is type and (not mod.isEmpty() or countDummies):
+            if mod.slot is type and (not mod.isEmpty or countDummies):
                 amount += 1
 
         return amount
@@ -571,7 +571,7 @@ class HandledModuleList(HandledList):
         emptyPosition = float("Inf")
         for i in xrange(len(self)):
             currMod = self[i]
-            if currMod.isEmpty() and not mod.isEmpty() and currMod.slot == mod.slot:
+            if currMod.isEmpty and not mod.isEmpty and currMod.slot == mod.slot:
                 currPos = mod.position or i
                 if currPos < emptyPosition:
                     emptyPosition = currPos
@@ -603,7 +603,7 @@ class HandledModuleList(HandledList):
 
     def toDummy(self, index):
         mod = self[index]
-        if not mod.isEmpty():
+        if not mod.isEmpty:
             dummy = Module.buildEmpty(mod.slot)
             dummy.position = index
             self[index] = dummy
