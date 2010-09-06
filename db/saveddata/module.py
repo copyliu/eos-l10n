@@ -32,6 +32,6 @@ modules_table = Table("modules", saveddata_meta,
                       Column("state", Integer, CheckConstraint("state >= -1"), CheckConstraint("state <= 2")),
                       Column("projected", Boolean, default = False, nullable = False),
                       Column("position", Integer),
-                      CheckConstraint("(dummySlot = NULL OR itemID = NULL) AND dummySlot != itemID"))
+                      CheckConstraint('("dummySlot" = NULL OR "itemID" = NULL) AND "dummySlot" != "itemID"'))
 
 mapper(Module, modules_table)
