@@ -37,5 +37,6 @@ mapper(MetaGroup, metagroups_table,
                      "name" : synonym("metaGroupName")})
 
 mapper(MetaType, metatypes_table,
-       properties = {"parent" : relation(Item, primaryjoin = metatypes_table.c.parentTypeID == items_table.c.typeID),
+       properties = {"ID" : synonym("metaGroupID"),
+                     "parent" : relation(Item, primaryjoin = metatypes_table.c.parentTypeID == items_table.c.typeID),
                      "items" : relation(Item, primaryjoin = metatypes_table.c.typeID == items_table.c.typeID)})
