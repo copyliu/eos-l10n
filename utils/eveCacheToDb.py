@@ -277,6 +277,10 @@ if __name__ == "__main__":
         if not table in cfg.tables:
             print "Warning: mapped table", table, "cannot be found in cache"
 
+    # Market needs to be invited separately (do not forget to open it ingame to cache it)
+    markettable = eve.RemoteSvc("marketProxy").GetMarketGroups()
+    process_table(markettable, "invmarketgroups", MarketGroup)
+
     # Get data from cache (you need to just login to eve for cache files to be written) and write it
     for tablename in get_order():
         tableclass = TABLE_MAP[tablename]
@@ -285,6 +289,3 @@ if __name__ == "__main__":
             sourceTable = getattr(cfg, tablename)
             process_table(sourceTable, tablename, tableclass)
 
-    # Market needs to be invited separately (do not forget to open it ingame to cache it)
-    markettable = eve.RemoteSvc("marketProxy").GetMarketGroups()
-    process_table(markettable, "invmarketgroups", MarketGroup)
