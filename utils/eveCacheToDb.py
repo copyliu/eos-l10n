@@ -185,12 +185,12 @@ def insert_table_values(tabledata, tableclass):
             for header in row:
                 setattr(instance, header, process_value(row[header], tableclass, header))
 
-            y += 1
             eos.db.gamedata_session.add(instance)
+            y += 1
         except ValueError:
             i += 1
 
-    print "\nskipped %d rows" % i
+    print "\nInserted %d rows. skipped %d rows" % (y, i)
     eos.db.gamedata_session.commit()
 
 cache = {}
