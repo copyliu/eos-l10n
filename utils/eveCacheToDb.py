@@ -167,10 +167,6 @@ def get_table_data(sourcetable, tablename, headerlist):
                         datarow[header] = value
                 datarows.append(datarow)
 
-    #hack to add some unexistent iconIDs
-    if tablename == "icons":
-        datarows.append({"iconID": 1, "description": "Unknown", "iconFile": "07_15"})
-
     return datarows
 
 def insert_table_values(tabledata, tableclass):
@@ -226,7 +222,7 @@ def process_value(value, tableclass, header):
                 return value
     #Turn bools into actual bools, don't leave them as ints
     elif type(info.type) == Boolean:
-        bool(value)
+        return bool(value)
     else:
         return value
 
