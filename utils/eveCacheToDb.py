@@ -184,9 +184,10 @@ def process_value(value, tableclass, header):
         return
 
     # NULL out non-existent foreign key relations, don't touch anything else.
-    foreign_key = len(info.foreign_keys) > 0
-    if value == 0 and foreign_key:
+    if value == 0 and len(info.foreign_keys) > 0:
         return None
+    elif type(info.type) == Boolean:
+        bool(value)
     else:
         return value
 
@@ -200,7 +201,7 @@ if __name__ == "__main__":
     from reverence import blue
     import sqlalchemy
     import eos.config
-    from sqlalchemy import Column, Table, String
+    from sqlalchemy import Column, Table, String, Boolean
     from sqlalchemy.orm import mapper
 
     # Parse command line options
