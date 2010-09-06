@@ -72,3 +72,4 @@ def remove(stuff):
 
 def commit():
     saveddata_session.commit()
+    saveddata_session.flush()
