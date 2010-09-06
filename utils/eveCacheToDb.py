@@ -22,13 +22,13 @@
 This script pulls data out of EVE cache and makes an SQLite dump
 Reverence library by Entity is used, check http://wiki.github.com/ntt/reverence/ for info
 As reverence uses the same python version as EVE client (2.x series), script cannot be converted to python3
-Example commands to run the script for default paths:
-Tranquility: python eveCacheToSqlite.py --eve="~/.wine/drive_c/Program Files/CCP/EVE" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/cache" --dump="~/Desktop/eve.db"
-Singularity: python eveCacheToSqlite.py --eve="~/.wine/drive_c/Program Files/CCP/EVE (Singularity)" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_(singularity)_singularity/cache" --sisi --dump="~/Desktop/evetest.db"
+Example commands to run the script under linux with default eve paths for getting sqlite dump:
+Tranquility: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/EVE" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/cache" --dump="sqlite:////home/"$USER"/Desktop/eve.db"
+Singularity: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/EVE (Singularity)" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_(singularity)_singularity/cache" --sisi --dump="sqlite:////home/"$USER"/Desktop/evetest.db"
 '''
 
 import sys, os
-#Add the good path to sys.path
+# Add the good path to sys.path
 path = os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))
 sys.path.append(os.path.realpath(os.path.join(path, "..", "..")))
 
@@ -171,7 +171,7 @@ def get_table_data(sourcetable, tablename, headerlist):
 
 def insert_table_values(tabledata, tableclass):
     if tableclass == MarketGroup:
-        #Order our tabledata
+        # Order our tabledata
         tabledata.sort(key=lambda row: row["marketGroupID"])
 
     i = 0
