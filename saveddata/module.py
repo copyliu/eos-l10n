@@ -110,7 +110,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         return empty
 
     def isEmpty(self):
-        return self.item is None and self.itemID is None
+        return self.dummySlot is not None
 
     @property
     def hardpoint(self):
