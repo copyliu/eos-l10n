@@ -24,7 +24,7 @@ from eos.types import Attribute, Icon, AttributeInfo, Unit
 from eos.db import gamedata_meta
 typeattributes_table = Table("dgmtypeattribs", gamedata_meta,
                          Column("value", Float),
-                         Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key=True),
+                         Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key=True, index=True),
                          Column("attributeID", ForeignKey("dgmattribs.attributeID"), primary_key=True))
 
 attributes_table = Table("dgmattribs", gamedata_meta,

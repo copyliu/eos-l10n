@@ -80,7 +80,6 @@ class Effect(object):
 def effectDummy(*args, **kwargs):
     pass
 
-
 class Item(object):
     @reconstructor
     def init(self):
@@ -185,6 +184,9 @@ class Item(object):
 
         return False
 
+class EffectInfo(object):
+    pass
+
 class AttributeInfo(object):
     pass
 
@@ -205,6 +207,9 @@ class MarketGroup(object):
     pass
 
 class MetaGroup(object):
+    pass
+
+class MetaType(object):
     pass
 
 class Unit(object):

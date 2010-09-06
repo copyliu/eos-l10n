@@ -23,11 +23,11 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
 from eos.db import gamedata_meta
-from eos.types import Icon, Attribute, Item, Effect, MetaGroup, Group
+from eos.types import Icon, Attribute, Item, Effect, MetaType, Group
 
 items_table = Table("invtypes", gamedata_meta,
                     Column("typeID", Integer, primary_key = True),
-                    Column("typeName", String),
+                    Column("typeName", String, index=True),
                     Column("description", String),
                     Column("raceID", Integer),
                     Column("volume", Float),
@@ -44,11 +44,8 @@ mapper(Item, items_table,
        properties = {"group" : relation(Group, backref = "items", lazy=False),
                      "icon" : relation(Icon, lazy=False),
                      "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
-                     "effects" : relation(Effect, collection_class = attribute_mapped_collection('name'),
-                                          primaryjoin = typeeffects_table.c.typeID == items_table.c.typeID,
-                                          secondaryjoin = effects_table.c.effectID == typeeffects_table.c.effectID,
-                                          secondary = typeeffects_table),
-                     "metaGroup" : relation(MetaGroup,
+                     "effects" : relation(Effect, collection_class = attribute_mapped_collection('name')),
+                     "metaGroup" : relation(MetaType,
                                             primaryjoin = metatypes_table.c.typeID == items_table.c.typeID,
                                             uselist = False),
                      "ID" : synonym("typeID"),
