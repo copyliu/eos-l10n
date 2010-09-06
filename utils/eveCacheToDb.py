@@ -54,6 +54,7 @@ def get_map():
             "invcontrabandTypesByType": None,
             "invgroups": Group,
             "invmetagroups": MetaGroup,
+            "invmarketgroups": MarketGroup,
             "invmetatypes": MetaType,
             "invmetatypesByTypeID": None,
             "invreactiontypes": None,
@@ -81,6 +82,7 @@ def get_map():
 
 def get_order():
     return ("icons",
+            "invmarketgroups",
             "eveunits",
             "dgmattribs",
             "dgmeffects",
@@ -274,18 +276,14 @@ if __name__ == "__main__":
 
     # Warn about missing tables
     for table in TABLE_MAP:
-        if not table in cfg.tables:
+        if not table in cfg.tables and table != "invmarketgroups":
             print "Warning: mapped table", table, "cannot be found in cache"
-
-    # Market needs to be invited separately (do not forget to open it ingame to cache it)
-    markettable = eve.RemoteSvc("marketProxy").GetMarketGroups()
-    process_table(markettable, "invmarketgroups", MarketGroup)
 
     # Get data from cache (you need to just login to eve for cache files to be written) and write it
     for tablename in get_order():
         tableclass = TABLE_MAP[tablename]
         if tableclass is not None:
             print "processing: %s" % (tablename)
-            sourceTable = getattr(cfg, tablename)
+            sourceTable = getattr(cfg, tablename) if tablename != "invmarketgroups" else eve.RemoteSvc("marketProxy").GetMarketGroups()
             process_table(sourceTable, tablename, tableclass)
 
