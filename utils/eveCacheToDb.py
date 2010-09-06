@@ -170,12 +170,17 @@ def insert_table_values(tabledata, tableclass):
     for row in tabledata:
         instance = tableclass()
         for header in row:
-            setattr(instance, header, row[header])
+            setattr(instance, header, process_value(row[header]))
 
         eos.db.gamedata_session.add(instance)
 
     eos.db.gamedata_session.commit()
 
+def process_value(value):
+    if value == 0:
+        return None
+    else:
+        return value
 if __name__ == "__main__":
     import os
     import re
