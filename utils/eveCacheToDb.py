@@ -81,9 +81,9 @@ def get_map():
 
 def get_order():
     return ("icons",
+            "eveunits",
             "dgmattribs",
             "dgmeffects",
-            "eveunits",
             "invcategories",
             "invgroups",
             "invmetagroups",
