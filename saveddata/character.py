@@ -60,10 +60,6 @@ class Character(object):
                 all0 = eos.db.getCharacter("All 0")
             except exc.NoResultFound:
                 all0 = Character("All 0")
-
-                for skill in cls.getSkillList():
-                    all0.addSkill(Skill(skill, 0, True, False))
-
                 eos.db.saveddata_session.add(all0)
 
             cls.__all0 = all0
@@ -109,13 +105,14 @@ class Character(object):
             if skill.item.ID == item or skill.item == item or skill.item.name == item:
                 return skill
 
-        #Haven't found it
-        if self != self.getAll0():
-            skill = self.getAll0().getSkill(item)
-            if skill is not None:
-                s = Skill(skill.item, 0)
-                self.addSkill(s)
-                return s
+        import eos.db
+        if not hasattr(item, "category"):
+            item = eos.db.getItem(item)
+
+        if item.category.name == "Skill":
+            s = Skill(item, 0, False, False)
+            self.addSkill(s)
+            return s
 
     def iterSkills(self):
         return self.__skills.__iter__()
