@@ -42,7 +42,7 @@ def get_map():
             "dgmeffects": EffectInfo,
             "dgmtypeattribs": Attribute,
             "dgmtypeeffects": Effect,
-            "evegraphics": None,
+            "evegraphics": Icon,
             "evelocations": None,
             "eveowners": None,
             "eveunits": Unit,
@@ -89,8 +89,8 @@ def get_order():
             "invcategories",
             "invgroups",
             "invmetagroups",
-            "invmetatypes",
             "invtypes",
+            "invmetatypes",
             "dgmtypeattribs",
             "dgmtypeeffects")
 
@@ -166,32 +166,72 @@ def get_table_data(sourcetable, tablename, headerlist):
                     if value or value in (0, 0.0):
                         datarow[header] = value
                 datarows.append(datarow)
+
+    #hack to add some unexistent iconIDs
+    if tablename == "icons":
+        datarows.append({"iconID": 1, "description": "Unknown", "iconFile": "07_15"})
+
     return datarows
 
 def insert_table_values(tabledata, tableclass):
+    if tableclass == MarketGroup:
+        #Order our tabledata
+        tabledata.sort(key=lambda row: row["marketGroupID"])
+
+    i = 0
+    y = 0
     for row in tabledata:
         instance = tableclass()
-        for header in row:
-            setattr(instance, header, process_value(row[header], tableclass, header))
+        if y / 1000.0 == int(y / 1000.0):
+            sys.stdout.write(".")
+            sys.stdout.flush()
+        try:
+            for header in row:
+                setattr(instance, header, process_value(row[header], tableclass, header))
 
-        eos.db.gamedata_session.add(instance)
+            y += 1
+            eos.db.gamedata_session.add(instance)
+        except ValueError:
+            i += 1
 
+    print "\nskipped %d rows" % i
     eos.db.gamedata_session.commit()
+
+cache = {}
+def query_existence(col, value):
+    key = (col, col.table, value)
+    info = cache.get(key)
+    if info is None:
+        info = eos.db.gamedata_session.query(col.table).filter(col == value).count() > 0
+        cache[key] = info
+
+    return info
 
 def process_value(value, tableclass, header):
     info = tableclass._sa_class_manager.mapper.c.get(header)
     if info is None:
         return
 
-    # NULL out non-existent foreign key relations, don't touch anything else.
-    if value == 0 and len(info.foreign_keys) > 0:
-        return None
+    # NULL out non-existent foreign key relations
+    foreign_keys = info.foreign_keys
+    if len(foreign_keys) > 0:
+        for key in foreign_keys:
+            col = key.column
+            if not query_existence(col, value):
+                if info.nullable:
+                    return None
+                else:
+                    raise ValueError("Integrity check failed")
+            else:
+                return value
+    #Turn bools into actual bools, don't leave them as ints
     elif type(info.type) == Boolean:
         bool(value)
     else:
         return value
 
 if __name__ == "__main__":
+    import copy
     import os
     import re
     import sqlite3
@@ -230,6 +270,7 @@ if __name__ == "__main__":
     PATH_DUMP = os.path.expanduser(options.dump)
 
     eos.config.gamedata_connectionstring = PATH_DUMP
+    eos.config.debug = False
 
     from eos.gamedata import *
     import eos.db

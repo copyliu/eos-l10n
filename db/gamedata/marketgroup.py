@@ -28,7 +28,7 @@ marketgroups_table = Table("invmarketgroups", gamedata_meta,
                            Column("marketGroupName", String),
                            Column("description", String),
                            Column("hasTypes", Boolean),
-                           Column("parentGroupID", Integer, ForeignKey("invmarketgroups.marketGroupID", deferrable=True)),
+                           Column("parentGroupID", Integer, ForeignKey("invmarketgroups.marketGroupID", initially="DEFERRED", deferrable=True)),
                            Column("iconID", Integer, ForeignKey("icons.iconID")))
 
 mapper(MarketGroup, marketgroups_table,

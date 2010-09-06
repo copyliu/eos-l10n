@@ -9,11 +9,11 @@ class TestGameDataQueries(unittest.TestCase):
         self.assertEqual(i.ID, 261)
 
     def test_searchItems(self):
-        i = db.searchItems("Gamma L")
+        i = db.searchItems("Gamma L",where=Item.published == True)
         self.assertEqual(len(i), 7)
 
     def test_searchItemsWhere(self):
-        i = db.searchItems("Gamma L", where=Item.published == 0)
+        i = db.searchItems("Gamma L", where=Item.published == False)
         self.assertEqual(len(i), 0)
 
     def test_getVariations(self):

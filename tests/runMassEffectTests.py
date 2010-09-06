@@ -46,6 +46,7 @@ if __name__ == "__main__":
         i += 1
         if i / 50.0 == int(i / 50.0):
             sys.stdout.write(".")
+            sys.stdout.flush()
 
         e = Effect()
         e.name = unicode(moduleName)
