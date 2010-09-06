@@ -64,4 +64,11 @@ def searchFits(nameLike, where=None, eager=None):
 
 def save(stuff):
     saveddata_session.add(stuff)
+    commit()
+
+def remove(stuff):
+    saveddata_session.delete(stuff)
+    commit()
+
+def commit():
     saveddata_session.commit()
