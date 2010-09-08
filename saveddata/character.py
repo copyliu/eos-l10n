@@ -78,6 +78,12 @@ class Character(object):
         for skill in self.__skills:
             self.__skillIdMap[skill.itemID] = skill
 
+    def apiCharList(self):
+        api = eveapi.EVEAPIConnection()
+        auth = api.auth(userID=self.apiID, apiKey=self.apiKey)
+        apiResult = auth.account.Characters()
+        return map(lambda c: c.name, apiResult.characters)
+
     def apiFetch(self, charName):
         api = eveapi.EVEAPIConnection()
         auth = api.auth(userID=self.apiID, apiKey=self.apiKey)
@@ -93,8 +99,7 @@ class Character(object):
         import eos.db
         sheet = auth.character(charID).CharacterSheet()
         for skillRow in sheet.skills:
-            item = eos.db.getItem(skillRow["typeID"])
-            self.addSkill(Skill(item, skillRow["level"]))
+            self.addSkill(Skill(skillRow["typeID"], skillRow["level"]))
 
     @property
     def owner(self):
