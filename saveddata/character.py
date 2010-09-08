@@ -69,7 +69,14 @@ class Character(object):
         self.name = name
         self.__owner = None
         self.__skills = []
+        self.__skillIdMap = {}
         self.apiKey = None
+
+    @reconstructor
+    def init(self):
+        self.__skillIdMap = {}
+        for skill in self.__skills:
+            self.__skillIdMap[skill.itemID] = skill
 
     def apiFetch(self, charName):
         api = eveapi.EVEAPIConnection()
@@ -99,14 +106,20 @@ class Character(object):
 
     def addSkill(self, skill):
         self.__skills.append(skill)
+        self.__skillIdMap[skill.itemID] = skill
 
     def getSkill(self, item):
-        for skill in self.__skills:
-            if skill.item.ID == item or skill.item == item or skill.item.name == item:
-                return skill
+        if isinstance(item, basestring):
+            import eos.db
+            item = eos.db.getItem(item)
 
-        import eos.db
-        if not hasattr(item, "category"):
+        ID = getattr(item, "ID", None)
+        skill = self.__skillIdMap.get(ID if ID is not None else item)
+        if skill:
+            return skill
+
+        if isinstance(item, int):
+            import eos.db
             item = eos.db.getItem(item)
 
         if item.category.name == "Skill":
@@ -146,11 +159,9 @@ class Character(object):
         copy.apiKey = self.apiKey
         copy.apiID = self.apiID
         for skill in self.iterSkills():
-            copy.addSkill(deepcopy(skill, memo))
+            copy.addSkill(Skill(skill.itemID, skill.level, False, skill.learned))
 
         return copy
-
-
 
     @validates("ID", "name", "apiKey", "ownerID")
     def validator(self, key, val):
@@ -164,8 +175,8 @@ class Character(object):
 
 class Skill(HandledItem):
     def __init__(self, item, level = 0, ro = False, learned = True):
-        self.__item = item
-        self.itemID = item.ID
+        self.__item = item if not isinstance(item, int) else None
+        self.itemID = item.ID if not isinstance(item, int) else item
         self.__level = level if learned else None
         self.commandBonus = 0
         self.learned = learned
