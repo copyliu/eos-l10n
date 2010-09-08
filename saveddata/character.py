@@ -98,6 +98,8 @@ class Character(object):
 
         import eos.db
         sheet = auth.character(charID).CharacterSheet()
+        del self.__skills[:]
+        self.__skillIdMap.clear()
         for skillRow in sheet.skills:
             self.addSkill(Skill(skillRow["typeID"], skillRow["level"]))
 
