@@ -24,8 +24,16 @@ from eos.db import saveddata_meta
 from eos.types import Implant
 
 implants_table = Table("implants", saveddata_meta,
-                     Column("fitID", Integer, ForeignKey("fits.ID"), primary_key = True),
-                     Column("itemID", Integer, primary_key = True),
+                     Column("ID", Integer, primary_key = True),
+                     Column("itemID", Integer),
                      Column("active", Boolean))
+
+fitImplants_table = Table("fitImplants", saveddata_meta,
+                          Column("fitID", ForeignKey("fits.ID")),
+                          Column("implantID", ForeignKey("implants.ID"), primary_key = True))
+
+charImplants_table = Table("charImplants", saveddata_meta,
+                           Column("charID", ForeignKey("characters.ID")),
+                           Column("implantID", ForeignKey("implants.ID"), primary_key = True))
 
 mapper(Implant, implants_table)

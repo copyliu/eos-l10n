@@ -24,12 +24,12 @@ from sqlalchemy.sql import and_
 from eos.db import saveddata_meta
 from eos.db.saveddata.module import modules_table
 from eos.db.saveddata.drone import drones_table
+from eos.db.saveddata.implant import fitImplants_table
 from eos.types import Fit, Module, User, Booster, Drone, Implant, Character, DamagePattern
 from eos.effectHandlerHelpers import HandledList
-from eos.saveddata.fit import HandledDroneList, HandledImplantBoosterList, \
- HandledProjectedModList, HandledProjectedDroneList, HandledProjectedFitList, \
- HandledModuleList
-
+from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDroneList, \
+HandledImplantBoosterList, HandledProjectedModList, HandledProjectedDroneList, \
+HandledProjectedFitList
 fits_table = Table("fits", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
                          Column("ownerID", ForeignKey("users.ID"), nullable = True),
@@ -54,7 +54,10 @@ mapper(Fit, fits_table,
                                                primaryjoin = and_(drones_table.c.fitID == fits_table.c.ID, drones_table.c.projected == False)),
                      "_Fit__projectedDrones" : relation(Drone, collection_class = HandledProjectedDroneList, cascade='all,delete-orphan', single_parent=True,
                                                primaryjoin = and_(drones_table.c.fitID == fits_table.c.ID, drones_table.c.projected == True)),
-                     "_Fit__implants" : relation(Implant, collection_class = HandledImplantBoosterList, cascade='all,delete-orphan', single_parent=True),
+                     "_Fit__implants" : relation(Implant, collection_class = HandledImplantBoosterList, cascade='all,delete-orphan', single_parent=True,
+                                                 primaryjoin = fitImplants_table.c.fitID == fits_table.c.ID,
+                                                 secondaryjoin = fitImplants_table.c.implantID == Implant.ID,
+                                                 secondary = fitImplants_table),
                      "_Fit__character" : relation(Character, backref = "fits"),
                      "_Fit__damagePattern" : relation(DamagePattern, cascade='all,delete-orphan', single_parent=True),
                      "_Fit__projectedFits" : relation(Fit,

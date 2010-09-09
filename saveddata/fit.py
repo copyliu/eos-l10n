@@ -17,7 +17,9 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.effectHandlerHelpers import HandledList
+from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDroneList, \
+HandledImplantBoosterList, HandledProjectedModList, HandledProjectedDroneList, \
+HandledProjectedFitList
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain, count
@@ -188,6 +190,18 @@ class Fit(object):
 
         return -log(0.25) * agility * mass / 1000000
 
+    @property
+    def appliedImplants(self):
+        implantsBySlot = {}
+        if self.character:
+            for implant in self.character.implants:
+                implantsBySlot[implant.slot] = implant
+
+        for implant in self.implants:
+            implantsBySlot[implant.slot] = implant
+
+        return implantsBySlot.values()
+
     @validates("ID", "ownerID", "shipID")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
@@ -243,6 +257,8 @@ class Fit(object):
             return
         else:
             self.__calculated = True
+
+
         #There's a few things to keep in mind here
         #1: Early effects first, then regular ones, then late ones, regardless of anything else
         #2: Some effects aren't implemented
@@ -250,7 +266,7 @@ class Fit(object):
         #4: Errors should be handled gracefully and preferably without crashing unless serious
         for runTime in ("early", "normal", "late"):
             #Build a little chain of stuff
-            c = chain((self.character, self.ship), self.drones, self.boosters, self.implants, self.modules,
+            c = chain((self.character, self.ship), self.drones, self.boosters, self.appliedImplants, self.modules,
                       self.projectedDrones, self.projectedModules)
 
             for item in c:
@@ -565,124 +581,3 @@ class Fit(object):
             copy.projectedFits.append(fit)
 
         return copy
-
-class HandledModuleList(HandledList):
-    def append(self, mod):
-        emptyPosition = float("Inf")
-        for i in xrange(len(self)):
-            currMod = self[i]
-            if currMod.isEmpty and not mod.isEmpty and currMod.slot == mod.slot:
-                currPos = mod.position or i
-                if currPos < emptyPosition:
-                    emptyPosition = currPos
-
-        if emptyPosition < len(self):
-            del self[emptyPosition]
-            mod.position = emptyPosition
-            HandledList.insert(self, emptyPosition, mod)
-            return
-
-        mod.position = len(self)
-        HandledList.append(self, mod)
-
-    def insert(self, index, mod):
-        mod.position = index
-        i = index
-        while i < len(self):
-            self[i].position += 1
-            i += 1
-        HandledList.insert(self, index, mod)
-
-    def remove(self, mod):
-        HandledList.remove(self, mod)
-        oldPos = mod.position
-
-        mod.position = None
-        for i in xrange(oldPos, len(self)):
-            self[i].position -= 1
-
-    def toDummy(self, index):
-        mod = self[index]
-        if not mod.isEmpty:
-            dummy = Module.buildEmpty(mod.slot)
-            dummy.position = index
-            self[index] = dummy
-
-class HandledDroneList(HandledList):
-    def __init__(self):
-        self._findCache = {}
-
-    def find(self, item):
-        if self._findCache.has_key(item.ID):
-            return self._findCache[item.ID]
-        else:
-            return None
-
-    def append(self, drone):
-        list.append(self, drone)
-        self._findCache[drone.item.ID] = drone
-
-    def remove(self, drone):
-        if self._findCache.has_key(drone.item.ID):
-            del self._findCache[drone.item.ID]
-            HandledList.remove(self, drone)
-        else:
-            raise KeyError("Drone is not in the list")
-
-    def appendItem(self, item, amount = 1):
-        if amount < 1: ValueError("Amount of drones to add should be >= 1")
-        d = self.find(item)
-        if d is None:
-            d = Drone(item)
-            self.append(d)
-
-        d.amount += amount
-        return d
-
-    def removeItem(self, item, amount):
-        if amount < 1: ValueError("Amount of drones to add should be >= 1")
-        d = self.find(item)
-        if d is None: return
-        d.amount -= amount
-        if d.amount <= 0:
-            self.remove(d)
-            return None
-
-        return d
-
-
-class HandledImplantBoosterList(HandledList):
-    def __init__(self):
-        self.__slotCache = {}
-
-    def append(self, booster, replace = False):
-        if self.__slotCache.has_key(booster.slot):
-            if replace: self.remove(booster)
-            else:
-                if replace: self.remove(booster)
-                else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True")
-
-        list.append(self, booster)
-
-
-class HandledProjectedModList(HandledList):
-    def append(self, proj):
-        proj.projected = True
-        HandledList.append(self, proj)
-
-class HandledProjectedDroneList(HandledDroneList):
-    def append(self, proj):
-        proj.projected = True
-        if self._findCache.has_key(proj.item.ID):
-            raise ValueError("Drone already here, cannot add the same one multiple times")
-
-        list.append(self, proj)
-        self._findCache[proj.item.ID] = proj
-
-class HandledProjectedFitList(list):
-    """
-    Use list here, handledList kills sqlalchemy for some unknown reason.
-    """
-    def append(self, proj):
-        proj.projected = True
-        list.append(self, proj)

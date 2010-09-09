@@ -21,7 +21,9 @@ from sqlalchemy import Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relation, mapper
 
 from eos.db import saveddata_meta
-from eos.types import Character, User, Skill
+from eos.db.saveddata.implant import charImplants_table
+from eos.types import Character, User, Skill, Implant
+from eos.effectHandlerHelpers import HandledImplantBoosterList
 
 characters_table = Table("characters", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
@@ -32,4 +34,8 @@ characters_table = Table("characters", saveddata_meta,
 
 mapper(Character, characters_table,
        properties = {"_Character__owner" : relation(User, backref = "characters"),
-                     "_Character__skills" : relation(Skill)})
+                     "_Character__skills" : relation(Skill),
+                     "_Character__implants" : relation(Implant, collection_class = HandledImplantBoosterList, cascade='all,delete-orphan', single_parent=True,
+                                                       primaryjoin = charImplants_table.c.charID == characters_table.c.ID,
+                                                       secondaryjoin = charImplants_table.c.implantID == Implant.ID,
+                                                       secondary = charImplants_table),})

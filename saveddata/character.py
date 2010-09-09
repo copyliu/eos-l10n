@@ -70,6 +70,7 @@ class Character(object):
         self.__owner = None
         self.__skills = []
         self.__skillIdMap = {}
+        self.__implants = eos.saveddata.fit.HandledImplantBoosterList()
         self.apiKey = None
 
     @reconstructor
@@ -133,6 +134,10 @@ class Character(object):
             s = Skill(item, 0, False, False)
             self.addSkill(s)
             return s
+
+    @property
+    def implants(self):
+        return self.__implants
 
     def iterSkills(self):
         return self.__skills.__iter__()
