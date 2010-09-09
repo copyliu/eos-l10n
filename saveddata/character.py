@@ -30,11 +30,27 @@ from eos import eveapi
 class Character(object):
     __all5 = None
     __all0 = None
+    __skillList = None
+    __skillMap = None
 
     @classmethod
     def getSkillList(cls):
-        import eos.db
-        return eos.db.getItemsByCategory("Skill")
+        if cls.__skillList is None:
+            import eos.db
+            cls.__skillList = eos.db.getItemsByCategory("Skill")
+
+        return cls.__skillList
+
+    @classmethod
+    def getSkillMap(cls):
+        if cls.__skillMap is None:
+            map = {}
+            for skill in cls.getSkillList():
+                map[skill.ID] = skill
+
+            cls.__skillMap = map
+
+        return cls.__skillMap
 
     @classmethod
     def getAll5(cls):
@@ -121,16 +137,14 @@ class Character(object):
             import eos.db
             item = eos.db.getItem(item)
 
-        ID = getattr(item, "ID", None)
-        skill = self.__skillIdMap.get(ID if ID is not None else item)
+        ID = getattr(item, "ID", item)
+        skill = self.__skillIdMap.get(ID)
         if skill:
             return skill
 
-        if isinstance(item, int):
-            import eos.db
-            item = eos.db.getItem(item)
-
-        if item.category.name == "Skill":
+        map = self.getSkillMap()
+        item = map.get(ID)
+        if item is not None:
             s = Skill(item, 0, False, False)
             self.addSkill(s)
             return s
