@@ -106,7 +106,7 @@ class HandledModuleList(HandledList):
     def toDummy(self, index):
         mod = self[index]
         if not mod.isEmpty:
-            dummy = Module.buildEmpty(mod.slot)
+            dummy = eos.types.Module.buildEmpty(mod.slot)
             dummy.position = index
             self[index] = dummy
 
