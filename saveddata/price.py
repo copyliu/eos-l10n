@@ -54,6 +54,7 @@ class Price(object):
         for price in prices:
             priceObjByTypeID[price.typeID] = price
 
+        t = time.time()
         xml = minidom.parse(f)
         marketStat = xml.getElementsByTagName("evemetrics").item(0)
         if marketStat is not None:
@@ -62,4 +63,6 @@ class Price(object):
                 typeID = int(type.getAttribute("id"))
                 sell = type.getElementsByTagName("sell").item(0)
                 price = float(sell.getElementsByTagName("median").item(0).firstChild.data)
-                priceObjByTypeID[typeID].price = price
+                p = priceObjByTypeID[typeID]
+                p.price = price
+                p.time = t
