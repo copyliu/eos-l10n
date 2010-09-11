@@ -49,7 +49,7 @@ class Price(object):
     @classmethod
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
-        request = urllib2.Request(cls.REQUEST_URL % ",".join(map(lambda p: p.typeID, prices)),
+        request = urllib2.Request(cls.REQUEST_URL % ",".join(map(lambda p: str(p.typeID), prices)),
                                   None, {"User-Agent" : "eos"})
 
         try:
@@ -67,5 +67,6 @@ class Price(object):
             types = marketStat.getElementsByTagName("type")
             for type in types:
                 typeID = int(type.getAttribute("id"))
+                sell = type.getElementsByTagName("sell").item(0)
                 price = float(sell.getElementsByTagName("median").item(0).firstChild.data)
                 priceObjByTypeID[typeID].price = price
