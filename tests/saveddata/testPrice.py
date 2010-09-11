@@ -12,3 +12,7 @@ class TestPrice(unittest.TestCase):
         p = Price(1)
         p.time = time.time() - Price.VALIDITY - 1000
         self.assertFalse(p.isValid)
+
+    def test_newObjectInvalid(self):
+        p = Price(1)
+        self.assertFalse(p.isValid)

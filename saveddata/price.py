@@ -27,6 +27,7 @@ class Price(object):
     VALIDITY = 86400
 
     def __init__(self, typeID):
+        self.time = 0
         self.typeID = typeID
         self.__item = None
 
