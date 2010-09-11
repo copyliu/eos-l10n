@@ -53,7 +53,7 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
 
 def getPrice(typeID):
-    return saveddata_session.query(Price).filter(Price.typeID == typeID)
+    return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
 
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
