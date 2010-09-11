@@ -52,7 +52,8 @@ class Price(object):
 
         priceObjByTypeID = {}
         for price in prices:
-            priceObjByTypeID[price.typeID] = price
+            if not price.isValid:
+                priceObjByTypeID[price.typeID] = price
 
         t = time.time()
         xml = minidom.parse(f)
