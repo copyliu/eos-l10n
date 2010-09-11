@@ -38,14 +38,6 @@ class Price(object):
     def isValid(self):
         return time.time() - self.time < self.VALIDITY
 
-    @property
-    def item(self):
-        if self.__item is None:
-            import eos.db
-            self.__item = eos.db.getItem(self.typeID)
-
-        return self.__item
-
     @classmethod
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
