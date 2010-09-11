@@ -6,9 +6,9 @@ from eos import db
 u = User("test", "testy", False)
 c = Character("TESTY")
 c.owner = u
-
 db.saveddata_session.add(u)
 db.saveddata_session.add(c)
+db.saveddata_session.commit()
 db.saveddata_session.flush()
 
 class TestSavedDataQueries(unittest.TestCase):
@@ -23,8 +23,8 @@ class TestSavedDataQueries(unittest.TestCase):
         self.assertEqual(len(u.characters), 1)
 
     def test_3addCharacter(self):
-        cc = Character("Testo")
         u = db.getUser("test")
+        cc = Character("Testo")
         cc.owner = u
         for char in u.characters:
             if char == cc: return
