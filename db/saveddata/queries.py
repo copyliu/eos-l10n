@@ -19,7 +19,7 @@
 
 from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
-from eos.types import User, Character, Fit
+from eos.types import User, Character, Fit, Price
 from sqlalchemy.sql import and_
 
 def getUser(lookfor, where=None, eager=None):
@@ -51,6 +51,9 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
 
     filter = processWhere(filter, where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+
+def getPrice(typeID):
+    return saveddat_session.query(Price).filter(Price.typeID == typeID)
 
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
