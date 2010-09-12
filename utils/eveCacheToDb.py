@@ -226,30 +226,31 @@ if __name__ == "__main__":
     import copy
     import os
     import re
-    import sqlite3
     import sys
     from ConfigParser import ConfigParser
     from optparse import OptionParser
-    from reverence import blue
+
     import sqlalchemy
-    import eos.config
     from sqlalchemy import Column, Table, String, Boolean
     from sqlalchemy.orm import mapper
+
+    from reverence import blue
+    import eos.config
 
     # Parse command line options
     usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
     parser = OptionParser(usage=usage)
     parser.add_option("-e", "--eve", help="path to eve folder")
     parser.add_option("-c", "--cache", help="path to eve cache folder")
-    parser.add_option("-d", "--dump", help="the sqlalchemy connectionstring of where we should place our stuff")
+    parser.add_option("-d", "--dump", help="the SQL Alchemy connection string of where we should place our final dump")
     parser.add_option("-r", "--release", help="database release number, defaults to 1", default="1")
-    parser.add_option("-s", "--sisi", action="store_true", dest="singularity", help="if you're going to work with singulary test server data, use this option", default=False)
+    parser.add_option("-s", "--sisi", action="store_true", dest="singularity", help="if you're going to work with Singulary test server data, use this option", default=False)
     (options, args) = parser.parse_args()
 
 
     # Exit if we do not have any of required options
     if not options.eve or not options.cache or not options.dump:
-        sys.stderr.write("You need to specify paths to eve folder, cache folder and dump file. Run script with --help option for further info.\n")
+        sys.stderr.write("You need to specify paths to eve folder, cache folder and SQL Alchemy connection string. Run script with --help option for further info.\n")
         sys.exit()
 
     # We can deal either with singularity or tranquility servers
@@ -276,11 +277,11 @@ if __name__ == "__main__":
     metadata["version"] = config.getint("main", "build")
     metadata["release"] = options.release
 
-    # Initialize Reverence ccache manager
+    # Initialize Reverence cache manager
     eve = blue.EVE(PATH_EVE, cachepath=PATH_CACHE, server=server)
     cfg = eve.getconfigmgr()
 
-    #Add a custom metadata table
+    # Add a custom metadata table
     class MetaData(object):
         def __init__(self, name, val):
             self.fieldName = name
@@ -292,16 +293,16 @@ if __name__ == "__main__":
 
     mapper(MetaData, metadata_table)
 
-    #Create all our tables now
+    # Create all our tables now
     eos.db.gamedata_meta.create_all()
 
-    #Add versioning info to the metadata table
+    # Add versioning info to the metadata table
     for fieldname in metadata:
         eos.db.gamedata_session.add(MetaData(fieldname, metadata[fieldname]))
 
     eos.db.gamedata_session.commit()
 
-    #Grab table map
+    # Grab table map
     TABLE_MAP = get_map()
     # Warn about new tables in cache
     for table in cfg.tables:
@@ -313,7 +314,8 @@ if __name__ == "__main__":
         if not table in cfg.tables and table != "invmarketgroups":
             print "Warning: mapped table", table, "cannot be found in cache"
 
-    # Get data from cache (you need to just login to eve for cache files to be written) and write it
+    # Get data from cache (you need to just login to eve for cache files to be written) and write it.
+    # For invmarketgroups table, you need to open market tree in game
     for tablename in get_order():
         tableclass = TABLE_MAP[tablename]
         if tableclass is not None:
