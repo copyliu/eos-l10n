@@ -65,4 +65,4 @@ class Price(object):
                 price = float(sell.getElementsByTagName("median").item(0).firstChild.data)
                 p = priceObjByTypeID[typeID]
                 p.price = price
-                p.time = t
+                p.time = t if price is not None else 0
