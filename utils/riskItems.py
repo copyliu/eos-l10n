@@ -262,13 +262,13 @@ if options.grp and options.srq:
         for item in sorted(nontarget, key=lambda item: gettypename(item)):
             nontarget_groups.add(map_typeid_groupid[item])
             print("    {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
-        print("  Groupss:")
-        for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
-            nontarget_cats.add(map_groupid_categoryid[group])
-            print("    {0} ({1})".format(getgroupname(group), getcatname(map_groupid_categoryid[group])))
-        print("  Categories:")
-        for cat in sorted(nontarget_cats, key=lambda cat: getcatname(cat)):
-            print("    {0}".format(getcatname(cat)))
+        #print("  Groups:")
+        #for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
+        #    nontarget_cats.add(map_groupid_categoryid[group])
+        #    print("    {0} ({1})".format(getgroupname(group), getcatname(map_groupid_categoryid[group])))
+        #print("  Categories:")
+        #for cat in sorted(nontarget_cats, key=lambda cat: getcatname(cat)):
+        #    print("    {0}".format(getcatname(cat)))
 
 elif options.grp:
     # Set of items which are supposed to be affected
@@ -304,16 +304,28 @@ elif options.grp:
     nontarget_groups = set()
     nontarget_cats = set()
     print("  Not belonging to {0} group:".format(getgroupname(global_groupid)))
+
+    removeitms = set()
+    # Check 1 unaffected item with each skill requirement, if some items with it were affected
+    for skillrq in sorted(targetitems_skillrqs, key=lambda srq: gettypename(srq)):
+        if nontarget.intersection(map_skillrq_typeid[skillrq]):
+            print("    With {0} skill requirement:".format(gettypename(skillrq)))
+        for item in sorted(nontarget.intersection(map_skillrq_typeid[skillrq]), key=lambda item: gettypename(item)):
+            print("      {0}".format(gettypename(item)))
+        removeitms.update(map_skillrq_typeid[skillrq])
+    nontarget.difference_update(removeitms)
+
+    print("    With other skill requirements:")
     for item in sorted(nontarget, key=lambda item: gettypename(item)):
         nontarget_groups.add(map_typeid_groupid[item])
-        print("    {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
-    print("  Groups:")
-    for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
-        nontarget_cats.add(map_groupid_categoryid[group])
-        print("    {0} ({1})".format(getgroupname(group), getcatname(map_groupid_categoryid[group])))
-    print("  Categories:")
-    for cat in sorted(nontarget_cats, key=lambda cat: getcatname(cat)):
-        print("    {0}".format(getcatname(cat)))
+        print("      {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
+    #print("    Groups:")
+    #for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
+    #    nontarget_cats.add(map_groupid_categoryid[group])
+    #    print("      {0} ({1})".format(getgroupname(group), getcatname(map_groupid_categoryid[group])))
+    #print("    Categories:")
+    #for cat in sorted(nontarget_cats, key=lambda cat: getcatname(cat)):
+    #    print("      {0}".format(getcatname(cat)))
 
 elif options.srq:
     # Set of items which are supposed to be affected
@@ -340,16 +352,27 @@ elif options.srq:
     nontarget_groups = set()
     nontarget_cats = set()
     print("  Without {0} skill requirement:".format(gettypename(global_skillrqid)))
+    removeitms = set()
+    # Check 1 unaffected item from each group where some items were affected
+    for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
+        if nontarget.intersection(map_groupid_typeid[groupid]):
+            print("    From {0} group:".format(getgroupname(groupid)))
+        for item in sorted(nontarget.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
+            print("      {0}".format(gettypename(item)))
+        removeitms.update(map_groupid_typeid[groupid])
+    nontarget.difference_update(removeitms)
+    # Check any other unaffected item
+    print("    From other groups:")
     for item in sorted(nontarget, key=lambda item: gettypename(item)):
         nontarget_groups.add(map_typeid_groupid[item])
-        print("    {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
-    print("  Groups:")
-    for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
-        nontarget_cats.add(map_groupid_categoryid[group])
-        print("    {0} ({1})".format(getgroupname(group), getcatname(map_groupid_categoryid[group])))
-    print("  Categories:")
-    for cat in sorted(nontarget_cats, key=lambda cat: getcatname(cat)):
-        print("    {0}".format(getcatname(cat)))
+        print("      {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
+    #print("    Groups:")
+    #for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
+    #    nontarget_cats.add(map_groupid_categoryid[group])
+    #    print("      {0} ({1})".format(getgroupname(group), getcatname(map_groupid_categoryid[group])))
+    #print("    Categories:")
+    #for cat in sorted(nontarget_cats, key=lambda cat: getcatname(cat)):
+    #    print("      {0}".format(getcatname(cat)))
 
 else:
     print("Affected items")
