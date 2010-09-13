@@ -9,7 +9,7 @@ class Test(unittest.TestCase):
         self.skill = db.getItem("Amarr Drone Specialization")
         self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         self.ship = db.getItem("Archon")
-        self.item = db.getItem("Infiltrator II")
+        self.item = db.getItem("Acolyte II")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
