@@ -332,8 +332,10 @@ elif options.srq:
     targetitems = copy.deepcopy(map_skillrq_typeid[global_skillrqid])
     # All groups of items which are supposed to be affected
     targetitems_groups = set()
+    targetitems_cats = set()
     for itemid in targetitems:
         targetitems_groups.add(map_typeid_groupid[itemid])
+        targetitems_cats.add(map_typeid_categoryid[itemid])
     # Print items which are supposed to be affected
     print("Affected items")
     print("  Assumed set of items (with {0} skill requirement):".format(gettypename(global_skillrqid)))
@@ -361,8 +363,15 @@ elif options.srq:
             print("      {0}".format(gettypename(item)))
         removeitms.update(map_groupid_typeid[groupid])
     nontarget.difference_update(removeitms)
+    for catid in sorted(targetitems_cats, key=lambda cat: getcatname(cat)):
+        if nontarget.intersection(map_categoryid_typeid[catid]):
+            print("    From {0} category:".format(getcatname(catid)))
+        for item in sorted(nontarget.intersection(map_categoryid_typeid[catid]), key=lambda item: gettypename(item)):
+            print("      {0}".format(gettypename(item)))
+        removeitms.update(map_categoryid_typeid[catid])
+    nontarget.difference_update(removeitms)
     # Check any other unaffected item
-    print("    From other groups:")
+    print("    Remaining items:")
     for item in sorted(nontarget, key=lambda item: gettypename(item)):
         nontarget_groups.add(map_typeid_groupid[item])
         print("      {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
