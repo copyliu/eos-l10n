@@ -5,11 +5,11 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.targetAttrName = "damageMultiplier"
-        self.skill = db.getItem("Amarr Drone Specialization")
-        self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-        self.ship = db.getItem("Retribution")
-        self.item = db.getItem("Medium Pulse Laser II")
+        self.targetAttrName = "maxGroupActive"
+        self.skill = db.getItem("Advanced Drone Interfacing")
+        self.skillBonus = 1
+        self.ship = db.getItem("Thanatos")
+        self.item = db.getItem("Gas Cloud Harvester I")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
@@ -34,21 +34,23 @@ class Test(unittest.TestCase):
         self.fValEos = self.fMod.getModifiedItemAttr(self.targetAttrName)
 
     def test_init_eos_theory(self):
-        # Not affected by skill
+        # Not affected
         iValTheory = ModifiedAttributeDict()
         iValTheory.original = self.iMod.itemModifiedAttributes.original
         self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
-    def test_final_eos_theory(self):
-        # Affected by skill
-        fTheory = ModifiedAttributeDict()
-        fTheory.original = self.fMod.itemModifiedAttributes.original
-        self.assertEquals(self.fValEos, fTheory[self.targetAttrName])
-
-    #def test_diff_eos_ingame(self):
+    #def test_init_eos_ingame(self):
     #    self.buildTested = 0
     #    iValIngame = 0
+    #    self.assertEquals(self.iValEos, iValIngame)
+
+    def test_final_eos_theory(self):
+        # Not affected
+        fValTheory = ModifiedAttributeDict()
+        fValTheory.original = self.fMod.itemModifiedAttributes.original
+        self.assertEquals(self.fValEos, fValTheory[self.targetAttrName])
+
+    #def test_final_eos_ingame(self):
+    #    self.buildTested = 0
     #    fValIngame = 0
-    #    dValIngame = fValIngame/iValIngame
-    #    dValEos = self.fValEos/self.iValEos
-    #    self.assertEquals(dValEos, dValIngame)
+    #    self.assertEquals(self.fValEos, fValIngame)

@@ -6,10 +6,10 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 class Test(unittest.TestCase):
     def setUp(self):
         self.targetAttrName = "damageMultiplier"
-        self.skill = db.getItem("Caldari Drone Specialization")
+        self.skill = db.getItem("Combat Drone Operation")
         self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-        self.ship = db.getItem("Chimera")
-        self.item = db.getItem("Hornet II")
+        self.ship = db.getItem("Ishkur")
+        self.item = db.getItem("Warrior I")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
@@ -34,14 +34,14 @@ class Test(unittest.TestCase):
         self.fValEos = self.fDrone.getModifiedItemAttr(self.targetAttrName)
 
     def test_init_eos_theory(self):
-        # Affected by skill
+        # Affected
         iValTheory = ModifiedAttributeDict()
         iValTheory.original = self.iDrone.itemModifiedAttributes.original
         iValTheory.boost(self.targetAttrName, self.skillBonus * self.iSkillLvl)
         self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
     def test_final_eos_theory(self):
-        # Affected by skill
+        # Affected
         fTheory = ModifiedAttributeDict()
         fTheory.original = self.fDrone.itemModifiedAttributes.original
         fTheory.boost(self.targetAttrName, self.skillBonus * self.fSkillLvl)
