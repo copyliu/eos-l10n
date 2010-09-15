@@ -5,11 +5,12 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.targetAttrName = "damageMultiplier"
-        self.skill = db.getItem("Combat Drone Operation")
-        self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-        self.ship = db.getItem("Armageddon")
-        self.item = db.getItem("Bouncer I")
+        self.skill = db.getItem("Drone Durability")
+        self.bonusMap = {"shieldCapacity" : "shieldCapacityBonus",
+                         "armorHP" : "armorHpBonus",
+                         "hp" : "hullHpBonus"}
+        self.ship = db.getItem("Thanatos")
+        self.item = db.getItem("Berserker SW-900")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
@@ -20,7 +21,8 @@ class Test(unittest.TestCase):
         self.iDrone = Drone(self.item)
         self.iFit.drones.append(self.iDrone)
         self.iFit.calculateModifiedAttributes()
-        self.iValEos = self.iDrone.getModifiedItemAttr(self.targetAttrName)
+        for layer in self.bonusMap:
+            setattr(self, "iValEos" + layer, self.iDrone.getModifiedItemAttr(layer))
         # Define final setup
         self.fFit = Fit()
         self.fSkillLvl = 4
@@ -31,24 +33,36 @@ class Test(unittest.TestCase):
         self.fDrone = Drone(self.item)
         self.fFit.drones.append(self.fDrone)
         self.fFit.calculateModifiedAttributes()
-        self.fValEos = self.fDrone.getModifiedItemAttr(self.targetAttrName)
+        for layer in self.bonusMap:
+            setattr(self, "fValEos" + layer, self.fDrone.getModifiedItemAttr(layer))
 
     def test_init_eos_theory(self):
-        # Not affected
+        # Affected
         iValTheory = ModifiedAttributeDict()
         iValTheory.original = self.iDrone.itemModifiedAttributes.original
-        self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
+        for layer in self.bonusMap:
+            skillBonus = self.skill.getAttribute(self.bonusMap[layer])
+            iValTheory.boost(layer, skillBonus * self.iSkillLvl)
+            self.assertEquals(getattr(self, "iValEos" + layer), iValTheory[layer])
 
     def test_final_eos_theory(self):
-        # Not affected
+        # Affected
         fValTheory = ModifiedAttributeDict()
         fValTheory.original = self.fDrone.itemModifiedAttributes.original
-        self.assertEquals(self.fValEos, fValTheory[self.targetAttrName])
+        for layer in self.bonusMap:
+            skillBonus = self.skill.getAttribute(self.bonusMap[layer])
+            fValTheory.boost(layer, skillBonus * self.fSkillLvl)
+            self.assertEquals(getattr(self, "fValEos" + layer), fValTheory[layer])
 
     #def test_diff_eos_ingame(self):
     #    self.buildTested = 0
-    #    iValIngame = 0
-    #    fValIngame = 0
+    #    iValIngame = 1.05
+    #    fValIngame = 1.2
     #    dValIngame = fValIngame/iValIngame
-    #    dValEos = self.fValEos/self.iValEos
-    #    self.assertEquals(dValEos, dValIngame)
+    #    iValEos = 0
+    #    fValEos = 0
+    #    for layer in self.bonusMap:
+    #        iValEos += getattr(self, "iValEos" + layer)
+    #        fValEos += getattr(self, "fValEos" + layer)
+    #    dValEos = fValEos/iValEos
+    #    self.assertAlmostEquals(dValEos, dValIngame)

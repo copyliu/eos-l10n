@@ -18,7 +18,7 @@ type="string", default="")
 if not options.attr:
     import sys
 
-    sys.stderr.write("You need to specify at attribute name.\n")
+    sys.stderr.write("You need to specify an attribute name.\n")
     sys.exit()
 
 # Connect to database and set up cursor
@@ -43,7 +43,7 @@ QUERY_PUBLISHEDTYPEIDS = 'SELECT it.typeID FROM invtypes AS it INNER JOIN \
 invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON \
 ig.categoryID = ic.categoryID WHERE it.published = 1 AND ic.categoryID IN \
 (2, 6, 7, 8, 16, 18, 20, 32)'
-QUERY_ATTRIBUTEID_TYPEID = "SELECT it.typeID FROM invtypes AS it INNER JOIN \
+QUERY_ATTRIBUTENAME_TYPEID = "SELECT it.typeID FROM invtypes AS it INNER JOIN \
 dgmtypeattribs AS dta ON it.typeID = dta.typeID INNER JOIN dgmattribs AS da \
 ON dta.attributeID = da.attributeID WHERE da.attributeName = ?"
 QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
@@ -102,17 +102,24 @@ cursor.execute(QUERY_PUBLISHEDTYPEIDS)
 for row in cursor:
     publishedtypes.add(row[0])
 
-# We'll use list of items with given attribute as base for any operations
+# We'll use list of items with given attributes as base for any operations
 # Term item means item with given attribute
 typeswithattr = set()
-cursor.execute(QUERY_ATTRIBUTEID_TYPEID, (options.attr,))
-for row in cursor:
-    if row[0] in publishedtypes:
-        typeswithattr.add(row[0])
+first = True
+for attr in options.attr.split(","):
+    tmp = set()
+    cursor.execute(QUERY_ATTRIBUTENAME_TYPEID, (attr,))
+    for row in cursor:
+        if row[0] in publishedtypes:
+            tmp.add(row[0])
+    if first:
+        typeswithattr = copy.deepcopy(tmp)
+    else:
+        typeswithattr.intersection_update(tmp)
 if len(typeswithattr) == 0:
-    import sys
-    sys.stderr.write("No items found with this attribute.\n")
-    sys.exit()
+        import sys
+        sys.stderr.write("No items found with supplied attributes.\n")
+        sys.exit()
 
 # Compose group maps
 # { groupid : set(typeid) }
