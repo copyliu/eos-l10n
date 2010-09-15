@@ -7,8 +7,8 @@ class Test(unittest.TestCase):
     def setUp(self):
         self.targetAttrName = "damageMultiplier"
         self.skill = db.getItem("Amarr Drone Specialization")
-        self.ship = db.getItem("Archon")
-        self.item = db.getItem("Acolyte I")
+        self.ship = db.getItem("Nidhoggur")
+        self.item = db.getItem("Einherji")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1

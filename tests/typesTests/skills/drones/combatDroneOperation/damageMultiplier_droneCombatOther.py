@@ -7,7 +7,6 @@ class Test(unittest.TestCase):
     def setUp(self):
         self.targetAttrName = "damageMultiplier"
         self.skill = db.getItem("Combat Drone Operation")
-        self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         self.ship = db.getItem("Armageddon")
         self.item = db.getItem("Bouncer I")
         # Define initial setup
