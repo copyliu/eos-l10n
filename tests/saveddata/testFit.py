@@ -331,8 +331,11 @@ class TestFit(unittest.TestCase):
     def test_fillT3(self):
         f = Fit()
         f.ship = Ship(db.getItem("Tengu"))
+        f.modules.append(Module(db.getItem("Tengu Defensive - Adaptive Shielding")))
+        f.clear()
+        f.calculateModifiedAttributes()
         f.fill()
-        self.assertEquals(len(f.modules), 8)
+        self.assertEquals(len(f.modules), 10)
 
     def test_fillTooMuchDummies(self):
         f = Fit()

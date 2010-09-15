@@ -2,4 +2,4 @@
 #Subsystems from group: Defensive Systems (16 of 16)
 type = "passive"
 def handler(fit, module, context):
-    fit.ship.increaseItemAttr("capacity", module.getModifiedItemAttr("capacity"))
+    fit.ship.increaseItemAttr("capacity", module.getModifiedItemAttr("capacity") or 0)
