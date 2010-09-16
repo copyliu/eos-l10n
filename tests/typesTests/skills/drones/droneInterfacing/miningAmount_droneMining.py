@@ -5,11 +5,11 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.targetAttrName = "damageMultiplier"
-        self.skill = db.getItem("Caldari Drone Specialization")
-        self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
-        self.ship = db.getItem("Chimera")
-        self.item = db.getItem("Hornet II")
+        self.targetAttrName = "miningAmount"
+        self.skill = db.getItem("Drone Interfacing")
+        self.skillBonus = self.skill.getAttribute("miningAmountBonus")
+        self.ship = db.getItem("Deimos")
+        self.item = db.getItem("Harvester Mining Drone")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1

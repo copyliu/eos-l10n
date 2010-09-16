@@ -42,10 +42,10 @@ class Test(unittest.TestCase):
 
     def test_final_eos_theory(self):
         # Affected
-        fTheory = ModifiedAttributeDict()
-        fTheory.original = self.fDrone.itemModifiedAttributes.original
-        fTheory.boost(self.targetAttrName, self.skillBonus * self.fSkillLvl)
-        self.assertEquals(self.fValEos, fTheory[self.targetAttrName])
+        fValTheory = ModifiedAttributeDict()
+        fValTheory.original = self.fDrone.itemModifiedAttributes.original
+        fValTheory.boost(self.targetAttrName, self.skillBonus * self.fSkillLvl)
+        self.assertEquals(self.fValEos, fValTheory[self.targetAttrName])
 
     #def test_diff_eos_ingame(self):
     #    self.buildTested = 0

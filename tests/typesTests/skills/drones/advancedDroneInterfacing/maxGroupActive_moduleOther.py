@@ -7,7 +7,6 @@ class Test(unittest.TestCase):
     def setUp(self):
         self.targetAttrName = "maxGroupActive"
         self.skill = db.getItem("Advanced Drone Interfacing")
-        self.skillBonus = 1
         self.ship = db.getItem("Thanatos")
         self.item = db.getItem("Gas Cloud Harvester I")
         # Define initial setup

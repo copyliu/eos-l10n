@@ -7,7 +7,6 @@ class Test(unittest.TestCase):
     def setUp(self):
         self.targetAttrName = "damageMultiplier"
         self.skill = db.getItem("Combat Drone Operation")
-        self.skillBonus = self.skill.getAttribute("damageMultiplierBonus")
         self.ship = db.getItem("Armageddon")
         self.item = db.getItem("Bouncer I")
         # Define initial setup
@@ -41,9 +40,9 @@ class Test(unittest.TestCase):
 
     def test_final_eos_theory(self):
         # Not affected
-        fTheory = ModifiedAttributeDict()
-        fTheory.original = self.fDrone.itemModifiedAttributes.original
-        self.assertEquals(self.fValEos, fTheory[self.targetAttrName])
+        fValTheory = ModifiedAttributeDict()
+        fValTheory.original = self.fDrone.itemModifiedAttributes.original
+        self.assertEquals(self.fValEos, fValTheory[self.targetAttrName])
 
     #def test_diff_eos_ingame(self):
     #    self.buildTested = 0
