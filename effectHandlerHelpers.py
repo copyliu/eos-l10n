@@ -177,6 +177,8 @@ class HandledImplantBoosterList(HandledList):
             self.remove(booster)
         except ValueError:
             return False
+        except KeyError:
+            return False
 
         return True
 
