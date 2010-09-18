@@ -37,7 +37,7 @@ class Character(object):
     def getSkillList(cls):
         if cls.__skillList is None:
             import eos.db
-            cls.__skillList = eos.db.getItemsByCategory("Skill", eager=("attributes", "effects"))
+            cls.__skillList = eos.db.getItemsByCategory("Skill")
 
         return cls.__skillList
 
