@@ -81,3 +81,11 @@ class TestImplant(unittest.TestCase):
             return
 
         self.fail("Expected ValueError, didn't get it")
+
+    def test_freeSlot(self):
+        f = Fit()
+        i = Implant(db.getItem("Halo Omega"))
+        f.implants.append(i)
+        self.assertEquals(len(f.implants), 1)
+        f.implants.freeSlot(i)
+        self.assertEquals(len(f.implants), 0)
