@@ -172,12 +172,13 @@ class HandledImplantBoosterList(HandledList):
         if hasattr(slot, "slot"):
             slot = slot.slot
 
-        booster = self.__slotCache[slot]
+        try:
+            booster = self.__slotCache[slot]
+        except KeyError:
+            return False
         try:
             self.remove(booster)
         except ValueError:
-            return False
-        except KeyError:
             return False
 
         return True
