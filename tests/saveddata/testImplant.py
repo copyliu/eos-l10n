@@ -70,3 +70,14 @@ class TestImplant(unittest.TestCase):
         self.assertNotAlmostEqual(id(i), id(c))
         self.assertEquals(i.item, c.item)
         self.assertEquals(i.active, c.active)
+
+    def test_duplicateImplant(self):
+        f = Fit()
+
+        f.implants.append(Implant(db.getItem("Halo Omega")))
+        try:
+            f.implants.append(Implant(db.getItem("Halo Omega")))
+        except ValueError:
+            return
+
+        self.fail("Expected ValueError, didn't get it")

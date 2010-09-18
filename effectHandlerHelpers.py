@@ -164,8 +164,12 @@ class HandledImplantBoosterList(HandledList):
                 if replace: self.remove(booster)
                 else: raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True")
 
+        self.__slotCache[booster.slot] = booster
         list.append(self, booster)
 
+    def remove(self, booster):
+        list.remove(self, booster)
+        del self.__slotCache[booster.slot]
 
 class HandledProjectedModList(HandledList):
     def append(self, proj):
