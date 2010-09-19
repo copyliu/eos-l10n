@@ -157,7 +157,14 @@ class Character(object):
         return self.__implants
 
     def iterSkills(self):
-        return self.__skills.__iter__()
+        if self.defaultLevel is not None:
+            return self.iterDefaultLevel()
+        else:
+            return self.__skills.__iter__()
+
+    def iterDefaultLevel(self):
+        for item in self.getSkillList():
+            yield self.getSkill(item)
 
     def filteredSkillIncrease(self, filter, *args, **kwargs):
         for element in self.iterSkills():
