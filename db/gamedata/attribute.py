@@ -18,10 +18,11 @@
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, Float, Unicode, ForeignKey, String, Boolean
-from sqlalchemy.orm import relation, mapper, join, synonym
+from sqlalchemy.orm import relation, join, synonym
 from sqlalchemy.ext.associationproxy import association_proxy
 from eos.types import Attribute, Icon, AttributeInfo, Unit
-from eos.db import gamedata_meta
+from eos.db import gamedata_meta, gamedata_session
+
 typeattributes_table = Table("dgmtypeattribs", gamedata_meta,
                          Column("value", Float),
                          Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key=True, index=True),
@@ -37,10 +38,10 @@ attributes_table = Table("dgmattribs", gamedata_meta,
                          Column("iconID", Integer, ForeignKey("icons.iconID")),
                          Column("unitID", Integer, ForeignKey("eveunits.unitID")))
 
-mapper(Attribute, typeattributes_table,
-       properties = {"info": relation(AttributeInfo, lazy=False)})
+gamedata_session.mapper(Attribute, typeattributes_table,
+                        properties = {"info": relation(AttributeInfo, lazy=False)})
 
-mapper(AttributeInfo, attributes_table,
+gamedata_session.mapper(AttributeInfo, attributes_table,
        properties = {"icon" : relation(Icon),
                      "unit": relation(Unit),
                      "ID": synonym("attributeID"),

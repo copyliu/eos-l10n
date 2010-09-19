@@ -18,11 +18,11 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table, Float
-from sqlalchemy.orm import relation, mapper, synonym
+from sqlalchemy.orm import relation, synonym
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
-from eos.db import gamedata_meta
+from eos.db import gamedata_meta, gamedata_session
 from eos.types import Icon, Attribute, Item, Effect, MetaType, Group
 
 items_table = Table("invtypes", gamedata_meta,
@@ -40,7 +40,8 @@ items_table = Table("invtypes", gamedata_meta,
 
 from .metagroup import metatypes_table
 from .effect import typeeffects_table, effects_table
-mapper(Item, items_table,
+
+gamedata_session.mapper(Item, items_table,
        properties = {"group" : relation(Group, backref = "items", lazy=False),
                      "icon" : relation(Icon, lazy=False),
                      "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),

@@ -18,9 +18,9 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, Table
-from sqlalchemy.orm import mapper, synonym
+from sqlalchemy.orm import synonym
 
-from eos.db import gamedata_meta
+from eos.db import gamedata_meta, gamedata_session
 from eos.types import Icon
 
 icons_table = Table("icons", gamedata_meta,
@@ -28,5 +28,5 @@ icons_table = Table("icons", gamedata_meta,
                     Column("description", String),
                     Column("iconFile", String))
 
-mapper(Icon, icons_table,
-       properties = {"ID" : synonym("iconID")})
+gamedata_session.mapper(Icon, icons_table,
+                        properties = {"ID" : synonym("iconID")})
