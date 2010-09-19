@@ -147,7 +147,7 @@ class Character(object):
             if self.defaultLevel is None:
                 s = Skill(item, 0, False, False)
             else:
-                s = Skill(item, defaultLevel, False, True)
+                s = Skill(item, self.defaultLevel, False, True)
 
             self.addSkill(s)
             return s
