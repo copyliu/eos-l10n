@@ -19,9 +19,9 @@
 
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
 from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import join, synonym, relation
+from sqlalchemy.orm import mapper, join, synonym, relation
 from eos.types import Effect, EffectInfo
-from eos.db import gamedata_meta, gamedata_session
+from eos.db import gamedata_meta
 
 typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
                           Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key=True, index=True),
@@ -34,13 +34,13 @@ effects_table = Table("dgmeffects", gamedata_meta,
                       Column("published", Boolean))
 
 
-gamedata_session.mapper(EffectInfo, effects_table,
-                        properties = {"ID" : synonym("effectID"),
-                                      "name" : synonym("effectName")})
+mapper(EffectInfo, effects_table,
+       properties = {"ID" : synonym("effectID"),
+                     "name" : synonym("effectName")})
 
-gamedata_session.mapper(Effect, typeeffects_table,
-                        properties = {"ID": synonym("effectID"),
-                                      "info": relation(EffectInfo, lazy=False)})
+mapper(Effect, typeeffects_table,
+       properties = {"ID": synonym("effectID"),
+                     "info": relation(EffectInfo, lazy=False)})
 
 Effect.name = association_proxy("info", "name")
 Effect.description = association_proxy("info", "description")

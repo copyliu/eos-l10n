@@ -18,9 +18,9 @@
 #===============================================================================
 
 from sqlalchemy import Column, Table, Integer, String
-from sqlalchemy.orm import synonym
+from sqlalchemy.orm import mapper, synonym
 
-from eos.db import gamedata_meta, gamedata_session
+from eos.db import gamedata_meta
 from eos.types import Unit
 
 groups_table = Table("eveunits", gamedata_meta,
@@ -28,6 +28,6 @@ groups_table = Table("eveunits", gamedata_meta,
                      Column("unitName", String),
                      Column("displayName", String))
 
-gamedata_session.mapper(Unit, groups_table,
+mapper(Unit, groups_table,
        properties = {"ID" : synonym("unitID"),
                      "name" : synonym("unitName")})

@@ -18,8 +18,8 @@
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
-from sqlalchemy.orm import relation, join, synonym
-from eos.db import gamedata_meta, gamedata_session
+from sqlalchemy.orm import relation, mapper, join, synonym
+from eos.db import gamedata_meta
 from eos.db.gamedata.item import items_table
 from eos.types import MetaGroup, Item, MetaType
 
@@ -32,11 +32,11 @@ metatypes_table = Table("invmetatypes", gamedata_meta,
                         Column("parentTypeID", Integer, ForeignKey("invtypes.typeID")),
                         Column("metaGroupID", Integer, ForeignKey("invmetagroups.metaGroupID")))
 
-gamedata_session.mapper(MetaGroup, metagroups_table,
+mapper(MetaGroup, metagroups_table,
        properties = {"ID" : synonym("metaGroupID"),
                      "name" : synonym("metaGroupName")})
 
-gamedata_session.mapper(MetaType, metatypes_table,
+mapper(MetaType, metatypes_table,
        properties = {"ID" : synonym("metaGroupID"),
                      "parent" : relation(Item, primaryjoin = metatypes_table.c.parentTypeID == items_table.c.typeID),
                      "items" : relation(Item, primaryjoin = metatypes_table.c.typeID == items_table.c.typeID)})

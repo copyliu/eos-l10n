@@ -18,9 +18,9 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, Table
-from sqlalchemy.orm import relation, synonym
+from sqlalchemy.orm import relation, mapper, synonym
 
-from eos.db import gamedata_meta, gamedata_session
+from eos.db import gamedata_meta
 from eos.types import Category, Group, Icon
 
 categories_table = Table("invcategories", gamedata_meta,
@@ -30,7 +30,7 @@ categories_table = Table("invcategories", gamedata_meta,
                          Column("published", Boolean),
                          Column("iconID", Integer, ForeignKey("icons.iconID")))
 
-gamedata_session.mapper(Category, categories_table,
-                        properties = {"icon" : relation(Icon),
+mapper(Category, categories_table,
+       properties = {"icon" : relation(Icon),
                      "ID" : synonym("categoryID"),
                      "name" : synonym("categoryName")})
