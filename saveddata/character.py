@@ -60,9 +60,7 @@ class Character(object):
                 all5 = eos.db.getCharacter("All 5")
             except exc.NoResultFound:
                 all5 = Character("All 5")
-                for skill in cls.getSkillList():
-                    all5.addSkill(Skill(skill, 5, True))
-
+                all5.defaultLevel = 5
                 eos.db.saveddata_session.add(all5)
 
             cls.__all5 = all5
@@ -84,6 +82,7 @@ class Character(object):
     def __init__(self, name):
         self.name = name
         self.__owner = None
+        self.defaultLevel = None
         self.__skills = []
         self.__skillIdMap = {}
         self.__implants = eos.saveddata.fit.HandledImplantBoosterList()
@@ -145,7 +144,11 @@ class Character(object):
         map = self.getSkillMap()
         item = map.get(ID)
         if item is not None:
-            s = Skill(item, 0, False, False)
+            if self.defaultLevel is None:
+                s = Skill(item, 0, False, False)
+            else:
+                s = Skill(item, defaultLevel, False, True)
+
             self.addSkill(s)
             return s
 
