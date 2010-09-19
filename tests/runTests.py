@@ -36,7 +36,7 @@ def iteratedir(dir, prefix = []):
         if os.path.isdir(os.path.join(dir, filename)):
             iteratedir(os.path.join(dir, filename), prefix + [filename])
         moduleName, ext = os.path.splitext(filename)
-        if ext == ".py" and moduleName != "__init__":
+        if ext == ".py" and moduleName not in ("__init__", "runTests", "runMassEffectTests"):
             moduleName = '.'.join(prefix + [moduleName])
             module = __import__(moduleName, fromlist = True)
             suite.addTest(loader.loadTestsFromModule(module))
