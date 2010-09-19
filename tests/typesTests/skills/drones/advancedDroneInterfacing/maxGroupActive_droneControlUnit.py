@@ -40,11 +40,6 @@ class Test(unittest.TestCase):
         iValTheory.increase(self.targetAttrName, self.skillBonus * self.iSkillLvl)
         self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
-    #def test_init_eos_ingame(self):
-    #    self.buildTested = 0
-    #    iValIngame = 1
-    #    self.assertEquals(self.iValEos, iValIngame)
-
     def test_final_eos_theory(self):
         # Affected
         fValTheory = ModifiedAttributeDict()
@@ -52,7 +47,10 @@ class Test(unittest.TestCase):
         fValTheory.increase(self.targetAttrName, self.skillBonus * self.fSkillLvl)
         self.assertEquals(self.fValEos, fValTheory[self.targetAttrName])
 
-    #def test_final_eos_ingame(self):
+    #def test_diff_eos_ingame(self):
     #    self.buildTested = 0
-    #    fValIngame = 4
-    #    self.assertEquals(self.fValEos, fValIngame)
+    #    iValIngame = 0
+    #    fValIngame = 0
+    #    dValIngame = fValIngame - iValIngame
+    #    dValEos = self.fValEos - self.iValEos
+    #    self.assertEquals(dValEos, dValIngame)

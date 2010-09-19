@@ -5,10 +5,10 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.targetAttrName = "maxGroupActive"
-        self.skill = db.getItem("Advanced Drone Interfacing")
-        self.ship = db.getItem("Thanatos")
-        self.item = db.getItem("Gas Cloud Harvester I")
+        self.targetAttrName = "droneControlRange"
+        self.skill = db.getItem("Electronic Warfare Drone Interfacing")
+        self.skillBonus = self.skill.getAttribute("droneRangeBonus")
+        self.ship = db.getItem("Ishkur")
         # Define initial setup
         self.iFit = Fit()
         self.iSkillLvl = 1
@@ -16,10 +16,8 @@ class Test(unittest.TestCase):
         self.iChar.addSkill(Skill(self.skill, self.iSkillLvl))
         self.iFit.character = self.iChar
         self.iFit.ship = Ship(self.ship)
-        self.iMod = Module(self.item)
-        self.iFit.modules.append(self.iMod)
         self.iFit.calculateModifiedAttributes()
-        self.iValEos = self.iMod.getModifiedItemAttr(self.targetAttrName)
+        self.iValEos = self.iFit.extraAttributes[self.targetAttrName]
         # Define final setup
         self.fFit = Fit()
         self.fSkillLvl = 4
@@ -27,21 +25,21 @@ class Test(unittest.TestCase):
         self.fChar.addSkill(Skill(self.skill, self.fSkillLvl))
         self.fFit.character = self.fChar
         self.fFit.ship = Ship(self.ship)
-        self.fMod = Module(self.item)
-        self.fFit.modules.append(self.fMod)
         self.fFit.calculateModifiedAttributes()
-        self.fValEos = self.fMod.getModifiedItemAttr(self.targetAttrName)
+        self.fValEos = self.fFit.extraAttributes[self.targetAttrName]
 
     def test_init_eos_theory(self):
-        # Not affected
+        # Affected
         iValTheory = ModifiedAttributeDict()
-        iValTheory.original = self.iMod.itemModifiedAttributes.original
+        iValTheory.original = self.iFit.EXTRA_ATTRIBUTES
+        iValTheory.increase(self.targetAttrName, self.skillBonus * self.iSkillLvl)
         self.assertEquals(self.iValEos, iValTheory[self.targetAttrName])
 
     def test_final_eos_theory(self):
-        # Not affected
+        # Affected
         fValTheory = ModifiedAttributeDict()
-        fValTheory.original = self.fMod.itemModifiedAttributes.original
+        fValTheory.original = self.fFit.EXTRA_ATTRIBUTES
+        fValTheory.increase(self.targetAttrName, self.skillBonus * self.fSkillLvl)
         self.assertEquals(self.fValEos, fValTheory[self.targetAttrName])
 
     #def test_diff_eos_ingame(self):
