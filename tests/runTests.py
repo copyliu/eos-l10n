@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #===============================================================================
 # This file is part of eos.
 #
@@ -28,7 +29,7 @@ config.debug = False
 from eos import db
 config.saveddata_connectionstring = "sqlite:///:memory:"
 
-suite = unittest.TestSuite()
+discover = unittest.TestSuite()
 loader = unittest.defaultTestLoader
 
 def iteratedir(dir, prefix = []):
@@ -39,10 +40,9 @@ def iteratedir(dir, prefix = []):
         if ext == ".py" and moduleName not in ("__init__", "runTests", "runMassEffectTests"):
             moduleName = '.'.join(prefix + [moduleName])
             module = __import__(moduleName, fromlist = True)
-            suite.addTest(loader.loadTestsFromModule(module))
+            discover.addTest(loader.loadTestsFromModule(module))
 
 iteratedir(os.path.dirname(__file__))
 
 if __name__ == "__main__":
-
-    unittest.TextTestRunner().run(suite)
+    unittest.main()
