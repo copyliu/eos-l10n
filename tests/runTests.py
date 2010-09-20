@@ -45,4 +45,4 @@ def iteratedir(dir, prefix = []):
 iteratedir(os.path.dirname(__file__))
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(defaultTest="discover")
