@@ -29,20 +29,37 @@ config.debug = False
 from eos import db
 config.saveddata_connectionstring = "sqlite:///:memory:"
 
-discover = unittest.TestSuite()
-loader = unittest.defaultTestLoader
+class Loader(unittest.TestLoader):
+    def loadTestsFromName(self, name, module = None):
+        if name == "discover":
+            return iteratedir(os.path.dirname(__file__))
+        else:
+            prefix = name.split(".")
+            fullpath = os.path.join(os.path.dirname(__file__), *prefix)
+            if os.path.isdir(os.path.join(fullpath)):
+                return iteratedir(fullpath, prefix)
+            else:
+                module = __import__(name, fromlist=True)
+                return self.loadTestsFromModule(module)
 
-def iteratedir(dir, prefix = []):
+loader = Loader()
+def iteratedir(dir, prefix = [], suite = None):
+    suite = suite if suite is not None else unittest.TestSuite()
     for filename in os.listdir(dir or '.'):
-        if os.path.isdir(os.path.join(dir, filename)):
-            iteratedir(os.path.join(dir, filename), prefix + [filename])
         moduleName, ext = os.path.splitext(filename)
-        if ext == ".py" and moduleName not in ("__init__", "runTests", "runMassEffectTests"):
-            moduleName = '.'.join(prefix + [moduleName])
-            module = __import__(moduleName, fromlist = True)
-            discover.addTest(loader.loadTestsFromModule(module))
+        moduleName = '.'.join(prefix + [moduleName])
 
-iteratedir(os.path.dirname(__file__))
+        if os.path.isdir(os.path.join(dir, filename)):
+            module = __import__(moduleName + ".__init__", fromlist = True)
+            subSuite = unittest.TestSuite()
+            suite.addTest(subSuite)
+            iteratedir(os.path.join(dir, filename), prefix + [filename], subSuite)
+
+        if ext == ".py" and moduleName not in ("__init__", "runTests", "runMassEffectTests"):
+            module = __import__(moduleName, fromlist = True)
+            suite.addTest(loader.loadTestsFromModule(module))
+
+    return suite
 
 if __name__ == "__main__":
-    unittest.main(defaultTest="discover")
+    unittest.main(defaultTest="discover", testLoader=loader)
