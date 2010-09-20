@@ -17,3 +17,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
+
+import unittest
+import eos.db
+
+class TestBase(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        eos.db.saveddata_meta.create_all()
+
+    @classmethod
+    def tearDownClass(self):
+        eos.db.saveddata_meta.drop_all()
