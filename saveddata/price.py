@@ -42,17 +42,19 @@ class Price(object):
     @classmethod
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
-        request = urllib2.Request(cls.REQUEST_URL % ",".join(map(lambda p: str(p.typeID), prices)),
+
+        priceObjByTypeID = {}
+        for price in prices:
+            if not price.isValid:
+                priceObjByTypeID[price.typeID] = price
+
+        request = urllib2.Request(cls.REQUEST_URL % ",".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
                                   None, {"User-Agent" : "eos"})
 
         try:
             f = urllib2.urlopen(request)
         except:
             return
-
-        priceObjByTypeID = {}
-        for price in prices:
-            priceObjByTypeID[price.typeID] = price
 
         t = time.time()
         xml = minidom.parse(f)
