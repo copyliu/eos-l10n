@@ -19,13 +19,41 @@
 #===============================================================================
 
 import unittest
-import eos.db
+
+from eos import db
+from eos.types import Fit, Character, Skill, Ship, Drone
 
 class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        eos.db.saveddata_meta.create_all()
+        db.saveddata_meta.create_all()
 
     @classmethod
     def tearDownClass(self):
-        eos.db.saveddata_meta.drop_all()
+        db.saveddata_meta.drop_all()
+
+    @classmethod
+    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr):
+        fit = Fit()
+        char = Character("test")
+        skill = db.getItem(skillname)
+        char.addSkill(Skill(skill, lvl))
+        fit.character = char
+        # Use any ship to just make items which have
+        # influence on ship attributes work
+        fit.ship = Ship(db.getItem("Rifter"))
+        item = db.getItem(itemname)
+        cat = item.category.name.lower()
+        if cat == "drone":
+            from eos.types import Drone
+            itemInst = Drone(item)
+            fit.drones.append(itemInst)
+        elif cat == "module":
+            from eos.types import Module
+            itemInst = Module(item)
+            fit.modules.append(itemInst)
+        else:
+            return None
+        fit.calculateModifiedAttributes()
+        result = itemInst.getModifiedItemAttr(attr)
+        return result
