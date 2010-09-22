@@ -36,7 +36,7 @@ if config.saveddata_connectionstring is not None:
     saveddata_engine = create_engine(config.saveddata_connectionstring, echo=config.debug, poolclass=pool.StaticPool)
     saveddata_meta = MetaData()
     saveddata_meta.bind = saveddata_engine
-    saveddata_session = sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False)()
+    saveddata_session = scoped_session(sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False))
 
 
 #Import all the definitions for all our database stuff
