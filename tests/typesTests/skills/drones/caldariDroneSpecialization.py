@@ -3,7 +3,7 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.skill = "Amarr Drone Specialization"
+        self.skill = "Caldari Drone Specialization"
 
     def tearDown(self):
         TestBase.tearDown(self)
@@ -11,7 +11,7 @@ class Test(TestBase):
     def test_damageMultiplier_droneWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Acolyte II"
+        item = "Hornet II"
         iLvl = 1
         iIngame = 1.02
         fLvl = 4
@@ -25,7 +25,7 @@ class Test(TestBase):
     def test_damageMultiplier_droneCombatNoSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Acolyte I"
+        item = "Hornet I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4

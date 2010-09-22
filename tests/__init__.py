@@ -24,16 +24,14 @@ from eos import db
 from eos.types import Fit, Character, Skill, Ship, Drone
 
 class TestBase(unittest.TestCase):
-    @classmethod
-    def setUpClass(self):
+    def setUp(self):
         db.saveddata_meta.create_all()
 
-    @classmethod
-    def tearDownClass(self):
+    def tearDown(self):
         db.saveddata_meta.drop_all()
 
     @classmethod
-    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr):
+    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, cont=""):
         fit = Fit()
         char = Character("test")
         skill = db.getItem(skillname)
@@ -52,8 +50,31 @@ class TestBase(unittest.TestCase):
             from eos.types import Module
             itemInst = Module(item)
             fit.modules.append(itemInst)
+        elif cat == "charge" and cont:
+            from eos.types import Module
+            itemInst = Module(db.getItem(cont))
+            itemInst.charge = item
+            fit.modules.append(itemInst)
         else:
             return None
         fit.calculateModifiedAttributes()
-        result = itemInst.getModifiedItemAttr(attr)
+        if (cat == "drone" and getCharge) or (cat == "charge" and cont):
+            result = itemInst.getModifiedChargeAttr(attr)
+        else:
+            result = itemInst.getModifiedItemAttr(attr)
+        return result
+
+    @classmethod
+    def skillTestGetShipAttr(self, skillname, lvl, attr):
+        fit = Fit()
+        char = Character("test")
+        skill = db.getItem(skillname)
+        char.addSkill(Skill(skill, lvl))
+        fit.character = char
+        fit.ship = Ship(db.getItem("Rifter"))
+        fit.calculateModifiedAttributes()
+        if attr in fit.extraAttributes:
+            result = fit.extraAttributes[attr]
+        else:
+            result = fit.ship.getModifiedItemAttr(attr)
         return result
