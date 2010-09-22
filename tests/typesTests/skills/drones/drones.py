@@ -5,9 +5,6 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Drones"
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_maxActiveDrones(self):
         self.buildTested = 0
         attr = "maxActiveDrones"

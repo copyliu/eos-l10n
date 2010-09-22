@@ -5,9 +5,6 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Mining Drone Operation"
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_miningAmount_droneMining(self):
         self.buildTested = 0
         attr = "miningAmount"

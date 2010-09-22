@@ -5,9 +5,6 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Drone Sharpshooting"
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_maxRange_droneCombat(self):
         self.buildTested = 0
         attr = "maxRange"

@@ -5,9 +5,6 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Fighters"
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_damageMultiplier_droneFighter(self):
         self.buildTested = 0
         attr = "damageMultiplier"

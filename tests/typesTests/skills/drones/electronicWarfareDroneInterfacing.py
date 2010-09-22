@@ -5,9 +5,6 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Electronic Warfare Drone Interfacing"
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_droneControlRange(self):
         self.buildTested = 0
         attr = "droneControlRange"

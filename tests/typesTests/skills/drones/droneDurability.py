@@ -6,9 +6,6 @@ class Test(TestBase):
         self.skill = "Drone Durability"
         self.layers = ("shieldCapacity", "armorHP", "hp")
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_hp_droneCombat(self):
         self.buildTested = 0
         item = "Berserker I"

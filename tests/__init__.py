@@ -30,7 +30,6 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         db.saveddata_meta.drop_all()
 
-    @classmethod
     def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, cont=""):
         fit = Fit()
         char = Character("test")
@@ -64,7 +63,6 @@ class TestBase(unittest.TestCase):
             result = itemInst.getModifiedItemAttr(attr)
         return result
 
-    @classmethod
     def skillTestGetShipAttr(self, skillname, lvl, attr):
         fit = Fit()
         char = Character("test")

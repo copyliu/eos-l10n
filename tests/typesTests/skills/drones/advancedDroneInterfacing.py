@@ -5,9 +5,6 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Advanced Drone Interfacing"
 
-    def tearDown(self):
-        TestBase.tearDown(self)
-
     def test_maxGroupActive_droneControlUnit(self):
         self.buildTested = 0
         attr = "maxGroupActive"
