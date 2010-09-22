@@ -247,8 +247,7 @@ class Skill(HandledItem):
     @property
     def item(self):
         if self.__item is None:
-            import eos.db
-            self.__item = eos.db.getItem(self.itemID)
+            self.__item = Character.getSkillMap()[self.itemID]
 
         return self.__item
 
