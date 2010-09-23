@@ -1,8 +1,9 @@
 #Used by:
 #Implants from group: Cyberimplant (20 of 138)
 type = "passive"
-def handler(fit, module, context):
+def handler(fit, implant, context):
     for type in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):
-        fit.ship.boostItemAttr("scan%sStrength" % type,
-                               module.getModifiedItemAttr("scan%sStrengthPercent" % type),
-                               stackingPenalties = True)
+        sensorType = "scan{0}Strength".format(type)
+        sensorBoost = "scan{0}StrengthPercent".format(type)
+        if sensorBoost in implant.item.attributes:
+            fit.ship.boostItemAttr(sensorType, implant.getModifiedItemAttr(sensorBoost))

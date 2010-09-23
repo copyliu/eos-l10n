@@ -5,4 +5,4 @@ type = "passive"
 def handler(fit, implant, context):
     fit.implants.filteredItemMultiply(lambda implant: "implantSetCaldariNavy" in implant.itemModifiedAttributes and\
                                       "scanGravimetricStrengthPercent" in implant.itemModifiedAttributes,
-                                      "scanGravimetricStrengthPercent", implant.getModifiedAttribute("implantSetCaldariNavy"))
+                                      "scanGravimetricStrengthPercent", implant.getModifiedItemAttr("implantSetCaldariNavy"))
