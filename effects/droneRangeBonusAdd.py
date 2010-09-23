@@ -3,4 +3,4 @@
 type = "passive"
 def handler(fit, module, context):
     amount = module.getModifiedItemAttr("droneRangeBonus")
-    fit.extraAttributes["droneControlRange"].increase(amount)
+    fit.extraAttributes.increase("droneControlRange", amount)
