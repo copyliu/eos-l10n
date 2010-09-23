@@ -18,9 +18,9 @@
 #===============================================================================
 
 from sqlalchemy.orm import reconstructor
+from eqBase import EqBase
 
-
-class Effect(object):
+class Effect(EqBase):
     #Filter to change names of effects to valid python method names
     nameFilter = dict(zip(map(ord, u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'), u''))
 
@@ -80,7 +80,7 @@ class Effect(object):
 def effectDummy(*args, **kwargs):
     pass
 
-class Item(object):
+class Item(EqBase):
     @reconstructor
     def init(self):
         self.__race = None
@@ -184,33 +184,32 @@ class Item(object):
 
         return False
 
-class EffectInfo(object):
+class EffectInfo(EqBase):
     pass
 
-class AttributeInfo(object):
+class AttributeInfo(EqBase):
     pass
 
-class Attribute(object):
+class Attribute(EqBase):
     pass
 
-
-class Category(object):
+class Category(EqBase):
     pass
 
-class Group(object):
+class Group(EqBase):
     pass
 
-class Icon(object):
+class Icon(EqBase):
     pass
 
-class MarketGroup(object):
+class MarketGroup(EqBase):
     pass
 
-class MetaGroup(object):
+class MetaGroup(EqBase):
     pass
 
-class MetaType(object):
+class MetaType(EqBase):
     pass
 
-class Unit(object):
+class Unit(EqBase):
     pass
