@@ -37,6 +37,8 @@ class Implant(HandledItem, ItemAttrShortcut):
     def __fetchItemInfo(self):
         import eos.db
         self.__item = eos.db.getItem(self.itemID)
+        self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__itemModifiedAttributes.original = self.__item.attributes
         self.__slot = self.__calculateSlot(self.__item)
 
     @property
