@@ -1,63 +1,34 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Module
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestCapitalShieldOperation(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Capital Shield Operation")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Capital Shield Operation"
 
-    def test_capacitorNeed_shieldBoosterCapital(self):
+    def test_capacitorNeed_moduleShieldBoosterSkillrq(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Capital Shield Booster I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("shieldBoostCapacitorBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Capital Shield Booster I"
+        iLvl = 1
+        iIngame = 0.98
+        fLvl = 4
+        fIngame = 0.92
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_shieldBooster(self):
+    def test_capacitorNeed_moduleShieldBoosterNoSkillrq(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Medium Clarity Ward Booster I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_capacitorNeed_shieldBoosterCivilian(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Civilian Shield Booster I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_capacitorNeed_otherModCapital(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Capital Shield Transporter I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Small Shield Booster I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)

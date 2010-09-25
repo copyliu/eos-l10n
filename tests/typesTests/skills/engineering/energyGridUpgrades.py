@@ -1,251 +1,146 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestEnergyGridUpgrades(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Energy Grid Upgrades")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Energy Grid Upgrades"
 
-    def test_cpu_capacitorBattery(self):
+    def test_cpu_moduleCapacitorBattery(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Guardian"))
-        self.testItem = db.getItem("Large Capacitor Battery II")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Medium Capacitor Battery I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorBatteryMicroT1(self):
+    def test_cpu_moduleCapacitorBatteryNoSkillrq(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Retribution"))
-        self.testItem = db.getItem("Micro Ohm Capacitor Reserve I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Micro Capacitor Battery I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorFluxCoil(self):
+    def test_cpu_moduleCapacitorFluxCoil(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Paladin"))
-        self.testItem = db.getItem("Beta Reactor Control: Capacitor Flux I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Capacitor Flux Coil I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorFluxCoilBasic(self):
+    def test_cpu_moduleCapacitorPowerRelay(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Thorax"))
-        self.testItem = db.getItem("Type-E Power Core Modification: Capacitor Flux")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Capacitor Power Relay I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorPowerRelay(self):
+    def test_cpu_moduleCapacitorRecharger(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Onyx"))
-        self.testItem = db.getItem("True Sansha Capacitor Power Relay")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Cap Recharger I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorPowerRelayBasic(self):
+    def test_cpu_modulePowerDiagnosticSystem(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Drake"))
-        self.testItem = db.getItem("Marked Generator Refitting: Capacitor Power Relay")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Power Diagnostic System I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorRecharger(self):
+    def test_cpu_moduleReactorControlUnit(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Onyx"))
-        self.testItem = db.getItem("Eutectic I Capacitor Charge Array")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Reactor Control Unit I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_capacitorRechargerBasic(self):
+    def test_cpu_moduleShieldFluxCoil(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Drake"))
-        self.testItem = db.getItem("Industrial Capacitor Recharger")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Shield Flux Coil I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_powerDiagnosticSystem(self):
+    def test_cpu_moduleShieldPowerRelay(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Brutix"))
-        self.testItem = db.getItem("Power Diagnostic System II")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Shield Power Relay I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_cpu_powerDiagnosticSystemBasic(self):
+    def test_cpu_moduleOther(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Phoenix"))
-        self.testItem = db.getItem("Alpha Reactor Control: Diagnostic System")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_cpu_reactorControlUnit(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Imicus"))
-        self.testItem = db.getItem("Shadow Serpentis Reactor Control Unit")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_cpu_reactorControlUnitBasic(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Purifier"))
-        self.testItem = db.getItem("Type-E Power Core Modification: Reaction Control")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_cpu_shieldFluxCoil(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Raven"))
-        self.testItem = db.getItem("Local Power Plant Manager: Reaction Shield Flux I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_cpu_shieldFluxCoilBasic(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Punisher"))
-        self.testItem = db.getItem("Alpha Reactor Shield Flux")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_cpu_shieldPowerRelay(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Megathron"))
-        self.testItem = db.getItem("Shield Power Relay I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_cpu_shieldPowerRelayBasic(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Rapier"))
-        self.testItem = db.getItem("Basic Shield Power Relay")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "cpu"
-        skillBonus = self.skill.getAttribute("cpuNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "cpu"
+        item = "Miner I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)

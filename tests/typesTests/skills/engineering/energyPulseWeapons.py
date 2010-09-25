@@ -1,39 +1,34 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Module
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestEnergyPulseWeapons(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Energy Pulse Weapons")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Energy Pulse Weapons"
 
-    def test_duration_smartbomb(self):
+    def test_duration_moduleSmartBomb(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Imperial Navy Large EMP Smartbomb")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "duration"
-        skillBonus = self.skill.getAttribute("durationBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "duration"
+        item = "Medium EMP Smartbomb I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_duration_otherMod(self):
+    def test_duration_moduleOther(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Domination Small Shield Booster")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "duration"
+        item = "Ice Harvester I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)

@@ -1,118 +1,90 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestExplosiveShieldCompensation(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Explosive Shield Compensation")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
-        self.fit.ship = Ship(db.getItem("Kronos"))
+        TestBase.setUp(self)
+        self.skill = "Explosive Shield Compensation"
 
-    def test_explosiveDamageResistanceBonus_shieldAmplifier(self):
+    def test_explosiveDamageResistanceBonus_moduleShieldAmplifierSkillrqShieldUpgrades(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Caldari Navy Explosion Dampening Amplifier")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "explosiveDamageResistanceBonus"
-        skillBonus = self.skill.getAttribute("hardeningBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "explosiveDamageResistanceBonus"
+        item = "Explosion Dampening Amplifier I"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamageResistanceBonus_shieldAmplifierBasic(self):
+    def test_explosiveDamageResistanceBonus_moduleShieldAmplifierSkillrqEngineering(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Basic Explosion Dampening Amplifier")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "explosiveDamageResistanceBonus"
-        skillBonus = self.skill.getAttribute("hardeningBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "explosiveDamageResistanceBonus"
+        item = "Basic Explosion Dampening Amplifier"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamageResistanceBonus_shieldHardener(self):
+    def test_explosiveDamageResistanceBonus_moduleOther(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Snake Eyes Explosion Dampening Field")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "explosiveDamageResistanceBonus"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "explosiveDamageResistanceBonus"
+        item = "Small Anti-Explosive Screen Reinforcer I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamageResistanceBonus_shieldRig(self):
+    def test_passiveExplosiveDamageResistanceBonus_moduleShieldHardenerSkillrqTacticalShieldManipulation(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Large Anti-Explosive Screen Reinforcer I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "explosiveDamageResistanceBonus"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "passiveExplosiveDamageResistanceBonus"
+        item = "Explosion Dampening Field I"
+        iLvl = 1
+        iIngame = 3.0
+        fLvl = 4
+        fIngame = 12.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamageResistanceBonus_other(self):
+    def test_passiveExplosiveDamageResistanceBonus_moduleShieldHardenerSkillrqEngineering(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Large Anti-Explosive Pump I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "explosiveDamageResistanceBonus"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "passiveExplosiveDamageResistanceBonus"
+        item = "Civilian Explosion Dampening Field"
+        iLvl = 1
+        iIngame = 3.0
+        fLvl = 4
+        fIngame = 12.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_passiveExplosiveDamageResistanceBonus_shieldHardener(self):
+    def test_passiveExplosiveDamageResistanceBonus_moduleOther(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Dread Guristas Explosion Dampening Field")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "passiveExplosiveDamageResistanceBonus"
-        skillBonus = self.skill.getAttribute("hardeningbonus2")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.multiply(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_passiveExplosiveDamageResistanceBonus_shieldHardenerCivilian(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Civilian Explosion Dampening Field")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "passiveExplosiveDamageResistanceBonus"
-        skillBonus = self.skill.getAttribute("hardeningbonus2")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.multiply(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_passiveExplosiveDamageResistanceBonus_armorHardener(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Armor Explosive Hardener I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "passiveExplosiveDamageResistanceBonus"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "passiveExplosiveDamageResistanceBonus"
+        item = "Armor Explosive Hardener I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)

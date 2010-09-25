@@ -1,74 +1,33 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module, Drone
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestEnergyManagement(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Energy Management")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Energy Management"
 
     def test_capacitorCapacity_ship(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Crusader"))
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorCapacity"
-        skillBonus = self.skill.getAttribute("capacitorCapacityBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorCapacity"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
+        iEos = self.skillTestGetShipAttr(self.skill, iLvl, attr)
+        fEos = self.skillTestGetShipAttr(self.skill, fLvl, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorCapacity_shipCapital(self):
+    def test_capacitorCapacity_subsystem(self):
         self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Revelation"))
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorCapacity"
-        skillBonus = self.skill.getAttribute("capacitorCapacityBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_capacitorCapacity_shipCivilian(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Impairor"))
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorCapacity"
-        skillBonus = self.skill.getAttribute("capacitorCapacityBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.fit.ship.item.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.fit.ship.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_capacitorCapacity_subsystemEngineering(self):
-        self.buildTested = 0
-        self.fit.ship = Ship(db.getItem("Legion"))
-        self.testItem = db.getItem("Legion Engineering - Power Core Multiplier")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorCapacity"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_capacitorCapacity_drone(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Curator II")
-        self.testDrone = Drone(self.testItem)
-        self.fit.drones.append(self.testDrone)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorCapacity"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorCapacity"
+        item = "Legion Engineering - Augmented Capacitor Reservoir"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
