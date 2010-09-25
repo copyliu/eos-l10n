@@ -176,15 +176,21 @@ for groupid in map_groupid_typeid:
 map_skillrq_typeid =  {}
 # { typeid : set(skillid) }
 map_typeid_skillrq =  {}
+# list of items without skill requirements
+set_typeid_noskillrq = set()
 for typeid in typeswithattr:
     map_typeid_skillrq[typeid] = set()
     cursor.execute(QUERY_TYPEID_SKILLRQ, (typeid,))
+    no_rqs = True
     for row in cursor:
+        no_rqs = False
         skillid = row[0]
         if not skillid in map_skillrq_typeid:
             map_skillrq_typeid[skillid] = set()
         map_skillrq_typeid[skillid].add(typeid)
         map_typeid_skillrq[typeid].add(skillid)
+    if no_rqs:
+        set_typeid_noskillrq.add(typeid)
 
 def gettypename(typeid):
     typename = ""
@@ -210,6 +216,7 @@ def getcatname(catid):
 if options.grp and options.srq:
     # Set of items which are supposed to be affected
     targetitems = map_groupid_typeid[global_groupid].intersection(map_skillrq_typeid[global_skillrqid])
+    targetitems_noskillrqs = targetitems.intersection(set_typeid_noskillrq)
     # All skill requirements of items which are supposed to be affected
     targetitems_skillrqs = set()
     for itemid in targetitems:
@@ -239,6 +246,10 @@ if options.grp and options.srq:
                 print("    {0}".format(gettypename(item)))
             else:
                 print("WARNING: Bad things happened, we never should get here")
+    if targetitems_noskillrqs:
+        print("  Item requiring no skills:")
+        for item in sorted(targetitems_noskillrqs, key=lambda item: gettypename(item)):
+            print("    {0}".format(gettypename(item)))
 
     print("\nUnaffected items")
 
@@ -288,6 +299,7 @@ elif options.grp:
     targetitems_skillrqs = set()
     for itemid in targetitems:
         targetitems_skillrqs.update(map_typeid_skillrq[itemid])
+    targetitems_noskillrqs = targetitems.intersection(set_typeid_noskillrq)
     # Print items which are supposed to be affected
     print("Affected items")
     print("  Assumed set of items ({0} group):".format(getgroupname(global_groupid)))
@@ -307,7 +319,10 @@ elif options.grp:
                 print("    {0}".format(gettypename(item)))
             else:
                 print("WARNING: Bad things happened, we never should get here")
-
+    if targetitems_noskillrqs:
+        print("  Requiring no skills:")
+        for item in sorted(targetitems_noskillrqs, key=lambda item: gettypename(item)):
+            print("    {0}".format(gettypename(item)))
     print("\nUnaffected items")
 
     # List items which are supposed to be unaffected
@@ -325,11 +340,11 @@ elif options.grp:
             print("      {0}".format(gettypename(item)))
         removeitms.update(map_skillrq_typeid[skillrq])
     nontarget.difference_update(removeitms)
-
-    print("    With other skill requirements:")
+    print("    With other or no skill requirements:")
     for item in sorted(nontarget, key=lambda item: gettypename(item)):
         nontarget_groups.add(map_typeid_groupid[item])
         print("      {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
+
     #print("    Groups:")
     #for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
     #    nontarget_cats.add(map_groupid_categoryid[group])
