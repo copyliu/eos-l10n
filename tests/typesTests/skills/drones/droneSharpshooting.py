@@ -75,6 +75,20 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    def test_maxRange_droneMining(self):
+        self.buildTested = 0
+        attr = "maxRange"
+        item = "Mining Drone I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
     def test_maxRange_droneOther(self):
         self.buildTested = 0
         attr = "maxRange"
