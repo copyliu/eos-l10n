@@ -13,6 +13,7 @@ parser.add_option("-s", "--srq", help="find items with this skill requirement",
 type="string", default="")
 parser.add_option("-g", "--grp", help="find items from this group",
 type="string", default="")
+parser.add_option("-z", "--nozero", action="store_true", help="ignore attributes with zero values", default=False)
 (options, args) = parser.parse_args()
 
 if not options.attr:
@@ -43,7 +44,7 @@ QUERY_PUBLISHEDTYPEIDS = 'SELECT it.typeID FROM invtypes AS it INNER JOIN \
 invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON \
 ig.categoryID = ic.categoryID WHERE it.published = 1 AND ic.categoryID IN \
 (2, 6, 7, 8, 16, 18, 20, 32)'
-QUERY_ATTRIBUTENAME_TYPEID = "SELECT it.typeID FROM invtypes AS it INNER JOIN \
+QUERY_ATTRIBUTENAME_TYPEID = "SELECT it.typeID, dta.value FROM invtypes AS it INNER JOIN \
 dgmtypeattribs AS dta ON it.typeID = dta.typeID INNER JOIN dgmattribs AS da \
 ON dta.attributeID = da.attributeID WHERE da.attributeName = ?"
 QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
@@ -110,8 +111,12 @@ for attr in options.attr.split(","):
     tmp = set()
     cursor.execute(QUERY_ATTRIBUTENAME_TYPEID, (attr,))
     for row in cursor:
-        if row[0] in publishedtypes:
-            tmp.add(row[0])
+        if options.nozero:
+            if row[0] in publishedtypes and row[1] not in (None, 0, 0.0):
+                tmp.add(row[0])
+        else:
+            if row[0] in publishedtypes:
+                tmp.add(row[0])
     if first:
         typeswithattr = copy.deepcopy(tmp)
     else:
