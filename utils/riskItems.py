@@ -44,9 +44,9 @@ QUERY_PUBLISHEDTYPEIDS = 'SELECT it.typeID FROM invtypes AS it INNER JOIN \
 invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON \
 ig.categoryID = ic.categoryID WHERE it.published = 1 AND ic.categoryID IN \
 (2, 6, 7, 8, 16, 18, 20, 32)'
-QUERY_ATTRIBUTENAME_TYPEID = "SELECT it.typeID, dta.value FROM invtypes AS it INNER JOIN \
+QUERY_ATTRIBUTEID_TYPEID = "SELECT it.typeID, dta.value FROM invtypes AS it INNER JOIN \
 dgmtypeattribs AS dta ON it.typeID = dta.typeID INNER JOIN dgmattribs AS da \
-ON dta.attributeID = da.attributeID WHERE da.attributeName = ?"
+ON dta.attributeID = da.attributeID WHERE da.attributeID = ?"
 QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
 QUERY_GROUPID_CATEGORYID = 'SELECT categoryID FROM invgroups WHERE \
 groupID = ? LIMIT 1'
@@ -71,6 +71,7 @@ WHERE categoryID = ? LIMIT 1'
 QUERY_MARKETGROUPID_MARKETGROUPNAME = 'SELECT marketGroupName FROM \
 invmarketgroups WHERE marketGroupID = ? LIMIT 1'
 
+QUERY_ATTRIBUTENAME_ATTRIBUTEID = 'SELECT attributeID FROM dgmattribs WHERE attributeName = ?'
 QUERY_TYPENAME_TYPEID = 'SELECT typeID FROM invtypes WHERE typeName = ?'
 QUERY_GROUPNAME_GROUPID = 'SELECT groupID FROM invgroups WHERE groupName = ?'
 
@@ -109,7 +110,16 @@ typeswithattr = set()
 first = True
 for attr in options.attr.split(","):
     tmp = set()
-    cursor.execute(QUERY_ATTRIBUTENAME_TYPEID, (attr,))
+    cursor.execute(QUERY_ATTRIBUTENAME_ATTRIBUTEID, (attr,))
+    noattr = True
+    for row in cursor:
+        noattr = False
+        attrid = row[0]
+    if noattr:
+        import sys
+        sys.stderr.write("No \"{0}\" attribute found.\n".format(attr))
+        sys.exit()
+    cursor.execute(QUERY_ATTRIBUTEID_TYPEID, (attrid,))
     for row in cursor:
         if options.nozero:
             if row[0] in publishedtypes and row[1] not in (None, 0, 0.0):
@@ -118,12 +128,13 @@ for attr in options.attr.split(","):
             if row[0] in publishedtypes:
                 tmp.add(row[0])
     if first:
+        first = False
         typeswithattr = copy.deepcopy(tmp)
     else:
         typeswithattr.intersection_update(tmp)
 if len(typeswithattr) == 0:
         import sys
-        sys.stderr.write("No items found with supplied attributes.\n")
+        sys.stderr.write("No items found with all of supplied attributes.\n")
         sys.exit()
 
 # Compose group maps
@@ -215,7 +226,10 @@ def getcatname(catid):
 
 if options.grp and options.srq:
     # Set of items which are supposed to be affected
-    targetitems = map_groupid_typeid[global_groupid].intersection(map_skillrq_typeid[global_skillrqid])
+    if global_groupid in map_groupid_typeid and global_skillrqid in map_skillrq_typeid:
+        targetitems = map_groupid_typeid[global_groupid].intersection(map_skillrq_typeid[global_skillrqid])
+    else:
+        targetitems = set()
     targetitems_noskillrqs = targetitems.intersection(set_typeid_noskillrq)
     # All skill requirements of items which are supposed to be affected
     targetitems_skillrqs = set()
@@ -225,31 +239,32 @@ if options.grp and options.srq:
     # we can use that argument when needed manually, and it
     # covers all targetitems which we don't want to do with single skill
     targetitems_skillrqs.remove(global_skillrqid)
-    # Print items which are supposed to be affected
-    print("Affected items")
-    print("  Assumed set of items ({0} group, {1} skill requirement):".format(getgroupname(global_groupid), gettypename(global_skillrqid)))
-    for item in sorted(targetitems, key=lambda item: gettypename(item)):
-        print("    {0}".format(gettypename(item)))
-    # Cycle through all required skills
-    for skillrq in sorted(targetitems_skillrqs, key=lambda sk: gettypename(sk)):
-        print("  Item requiring {0} skill:".format(gettypename(skillrq)))
-        for item in sorted(targetitems.intersection(map_skillrq_typeid[skillrq]), key=lambda item: gettypename(item)):
-            # If item has 3rd skill requirement (besides supplied as argument and
-            # included into header of current section), mention it
-            if len(map_typeid_skillrq[item]) == 3:
-                otherskillrq = copy.deepcopy(map_typeid_skillrq[item])
-                otherskillrq.discard(skillrq)
-                otherskillrq.discard(global_skillrqid)
-                print("    {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(id) for id in otherskillrq))))
-            # Just print item names if there're only 2 skill requirements
-            elif len(map_typeid_skillrq[item]) == 2:
-                print("    {0}".format(gettypename(item)))
-            else:
-                print("WARNING: Bad things happened, we never should get here")
-    if targetitems_noskillrqs:
-        print("  Item requiring no skills:")
-        for item in sorted(targetitems_noskillrqs, key=lambda item: gettypename(item)):
+    if targetitems:
+        # Print items which are supposed to be affected
+        print("Affected items")
+        print("  Assumed set of items ({0} group, {1} skill requirement):".format(getgroupname(global_groupid), gettypename(global_skillrqid)))
+        for item in sorted(targetitems, key=lambda item: gettypename(item)):
             print("    {0}".format(gettypename(item)))
+        # Cycle through all required skills
+        for skillrq in sorted(targetitems_skillrqs, key=lambda sk: gettypename(sk)):
+            print("  Item requiring {0} skill:".format(gettypename(skillrq)))
+            for item in sorted(targetitems.intersection(map_skillrq_typeid[skillrq]), key=lambda item: gettypename(item)):
+                # If item has 3rd skill requirement (besides supplied as argument and
+                # included into header of current section), mention it
+                if len(map_typeid_skillrq[item]) == 3:
+                    otherskillrq = copy.deepcopy(map_typeid_skillrq[item])
+                    otherskillrq.discard(skillrq)
+                    otherskillrq.discard(global_skillrqid)
+                    print("    {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(id) for id in otherskillrq))))
+                # Just print item names if there're only 2 skill requirements
+                elif len(map_typeid_skillrq[item]) == 2:
+                    print("    {0}".format(gettypename(item)))
+                else:
+                    print("WARNING: Bad things happened, we never should get here")
+        if targetitems_noskillrqs:
+            print("  Item requiring no skills:")
+            for item in sorted(targetitems_noskillrqs, key=lambda item: gettypename(item)):
+                print("    {0}".format(gettypename(item)))
 
     print("\nUnaffected items")
 
@@ -294,35 +309,40 @@ if options.grp and options.srq:
 
 elif options.grp:
     # Set of items which are supposed to be affected
-    targetitems = copy.deepcopy(map_groupid_typeid[global_groupid])
+    if global_groupid in map_groupid_typeid:
+        targetitems = copy.deepcopy(map_groupid_typeid[global_groupid])
+    else:
+        targetitems = set()
     # All skill requirements of items which are supposed to be affected
     targetitems_skillrqs = set()
     for itemid in targetitems:
         targetitems_skillrqs.update(map_typeid_skillrq[itemid])
     targetitems_noskillrqs = targetitems.intersection(set_typeid_noskillrq)
-    # Print items which are supposed to be affected
-    print("Affected items")
-    print("  Assumed set of items ({0} group):".format(getgroupname(global_groupid)))
-    for item in sorted(targetitems, key=lambda item: gettypename(item)):
-        print("    {0}".format(gettypename(item)))
-    # Cycle through all required skills
-    for skillrq in sorted(targetitems_skillrqs, key=lambda sk: gettypename(sk)):
-        print("  Requiring {0} skill:".format(gettypename(skillrq)))
-        for item in sorted(targetitems.intersection(map_skillrq_typeid[skillrq]), key=lambda item: gettypename(item)):
-            # If item has other skill requirements, print them
-            if len(map_typeid_skillrq[item]) == 3 or len(map_typeid_skillrq[item]) == 2:
-                otherskillrq = copy.deepcopy(map_typeid_skillrq[item])
-                otherskillrq.discard(skillrq)
-                print("    {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(id) for id in otherskillrq))))
-            # Just print item names if there're only 2 skill requirements
-            elif len(map_typeid_skillrq[item]) == 1:
-                print("    {0}".format(gettypename(item)))
-            else:
-                print("WARNING: Bad things happened, we never should get here")
-    if targetitems_noskillrqs:
-        print("  Requiring no skills:")
-        for item in sorted(targetitems_noskillrqs, key=lambda item: gettypename(item)):
+    if targetitems:
+        # Print items which are supposed to be affected
+        print("Affected items")
+        print("  Assumed set of items ({0} group):".format(getgroupname(global_groupid)))
+        for item in sorted(targetitems, key=lambda item: gettypename(item)):
             print("    {0}".format(gettypename(item)))
+        # Cycle through all required skills
+        for skillrq in sorted(targetitems_skillrqs, key=lambda sk: gettypename(sk)):
+            print("  Requiring {0} skill:".format(gettypename(skillrq)))
+            for item in sorted(targetitems.intersection(map_skillrq_typeid[skillrq]), key=lambda item: gettypename(item)):
+                # If item has other skill requirements, print them
+                if len(map_typeid_skillrq[item]) == 3 or len(map_typeid_skillrq[item]) == 2:
+                    otherskillrq = copy.deepcopy(map_typeid_skillrq[item])
+                    otherskillrq.discard(skillrq)
+                    print("    {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(id) for id in otherskillrq))))
+                # Just print item names if there're only 2 skill requirements
+                elif len(map_typeid_skillrq[item]) == 1:
+                    print("    {0}".format(gettypename(item)))
+                else:
+                    print("WARNING: Bad things happened, we never should get here")
+        if targetitems_noskillrqs:
+            print("  Requiring no skills:")
+            for item in sorted(targetitems_noskillrqs, key=lambda item: gettypename(item)):
+                print("    {0}".format(gettypename(item)))
+
     print("\nUnaffected items")
 
     # List items which are supposed to be unaffected
@@ -355,23 +375,27 @@ elif options.grp:
 
 elif options.srq:
     # Set of items which are supposed to be affected
-    targetitems = copy.deepcopy(map_skillrq_typeid[global_skillrqid])
+    if global_skillrqid in map_skillrq_typeid:
+        targetitems = copy.deepcopy(map_skillrq_typeid[global_skillrqid])
+    else:
+        targetitems = set()
     # All groups of items which are supposed to be affected
     targetitems_groups = set()
     targetitems_cats = set()
     for itemid in targetitems:
         targetitems_groups.add(map_typeid_groupid[itemid])
         targetitems_cats.add(map_typeid_categoryid[itemid])
-    # Print items which are supposed to be affected
-    print("Affected items")
-    print("  Assumed set of items (with {0} skill requirement):".format(gettypename(global_skillrqid)))
-    for item in sorted(targetitems, key=lambda item: gettypename(item)):
-        print("    {0}".format(gettypename(item)))
-    # Cycle through groups
-    for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
-        print("  From {0} group:".format(getgroupname(groupid)))
-        for item in sorted(targetitems.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
+    if targetitems:
+        # Print items which are supposed to be affected
+        print("Affected items")
+        print("  Assumed set of items (with {0} skill requirement):".format(gettypename(global_skillrqid)))
+        for item in sorted(targetitems, key=lambda item: gettypename(item)):
             print("    {0}".format(gettypename(item)))
+        # Cycle through groups
+        for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
+            print("  From {0} group:".format(getgroupname(groupid)))
+            for item in sorted(targetitems.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
+                print("    {0}".format(gettypename(item)))
 
     print("\nUnaffected items")
 
