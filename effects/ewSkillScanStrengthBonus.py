@@ -3,7 +3,8 @@
 #Skill: Signal Dispersion
 type = "passive"
 def handler(fit, container, context):
+    groups = ("ECM", "ECM Burst")
     level = container.level if "skill" in context else 1
-    for scanType in ("Gravimetric", "Radar", "Ladar", "Magnetometric"):
-        fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "ECM" or mod.item.group.name == "ECM Burst",
+    for scanType in ("Gravimetric", "Ladar", "Magnetometric", "Radar"):
+        fit.modules.filteredItemBoost(lambda mod: mod.item.group.name in groups,
                                       "scan{0}StrengthBonus".format(scanType), container.getModifiedItemAttr("scanSkillEwStrengthBonus") * level)

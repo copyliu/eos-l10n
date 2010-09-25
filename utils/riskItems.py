@@ -139,6 +139,11 @@ if len(typeswithattr) == 0:
         sys.stderr.write("No items found with all of supplied attributes.\n")
         sys.exit()
 
+print("Attributes:")
+for attr in sorted(options.attr.split(",")):
+    print(attr)
+print("")
+
 # Compose group maps
 # { groupid : set(typeid) }
 map_groupid_typeid = {}
@@ -394,10 +399,7 @@ elif options.srq:
         targetitems_cats.add(map_typeid_categoryid[itemid])
     if targetitems:
         # Print items which are supposed to be affected
-        print("Affected items")
-        print("    Assumed set of items (with {0} skill requirement):".format(gettypename(global_skillrqid)))
-        for item in sorted(targetitems, key=lambda item: gettypename(item)):
-            print("        {0}".format(gettypename(item)))
+        print("Affected items:")
         # Cycle through groups
         for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
             print("    From {0} group:".format(getgroupname(groupid)))
