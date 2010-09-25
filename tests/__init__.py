@@ -45,7 +45,7 @@ class TestBase(unittest.TestCase):
             from eos.types import Drone
             itemInst = Drone(item)
             fit.drones.append(itemInst)
-        elif cat == "module":
+        elif cat in ("module", "subsystem"):
             from eos.types import Module
             itemInst = Module(item)
             fit.modules.append(itemInst)
