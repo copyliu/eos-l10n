@@ -177,14 +177,13 @@ map_skillrq_typeid =  {}
 # { typeid : set(skillid) }
 map_typeid_skillrq =  {}
 for typeid in typeswithattr:
+    map_typeid_skillrq[typeid] = set()
     cursor.execute(QUERY_TYPEID_SKILLRQ, (typeid,))
     for row in cursor:
         skillid = row[0]
         if not skillid in map_skillrq_typeid:
             map_skillrq_typeid[skillid] = set()
         map_skillrq_typeid[skillid].add(typeid)
-        if not typeid in map_typeid_skillrq:
-            map_typeid_skillrq[typeid] = set()
         map_typeid_skillrq[typeid].add(skillid)
 
 def gettypename(typeid):
