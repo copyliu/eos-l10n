@@ -1,131 +1,118 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Module, Drone
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestLongDistanceJamming(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Long Distance Jamming")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Long Distance Jamming"
 
-    def test_maxRange_ecm(self):
+    def test_maxRange_moduleEcmSkillrqEwar(self):
         self.buildTested = 0
-        self.testItem = db.getItem("'Hypnos' Ion Field ECM I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "maxRange"
+        item = "ECM - Multispectral Jammer I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_sensorDamper(self):
+    def test_maxRange_moduleOtherSkillrqEwar(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Indirect Scanning Dampening Unit I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "maxRange"
+        item = "ECCM Projector I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_targetPainter(self):
+    def test_ecmBurstRange_moduleEcmBurst(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Domination Target Painter")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "ecmBurstRange"
+        item = "ECM Burst I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_trackingDisruptor(self):
+    def test_ecmBurstRange_moduleOther(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Tracking Disruptor II")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "ecmBurstRange"
+        item = "Remote ECM Burst I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_ecmBurst(self):
+    def test_maxRange_moduleRemoteSensorDamperSkillrqSenslink(self):
         self.buildTested = 0
-        self.testItem = db.getItem("'Rash' ECM Emission I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "ecmBurstRange"
-        skillBonus = self.skill.getAttribute("rangeSkillBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "maxRange"
+        item = "Remote Sensor Dampener I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_remoteEcmBurst(self):
+    def test_maxRange_moduleOtherSkillrqSenslink(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Remote ECM Burst I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "maxRange"
+        item = "Tracking Link I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_propulsionEwar(self):
+    def test_maxRange_moduleTrackingDisruptor(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Fleeting Propulsion Inhibitor I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "maxRange"
+        item = "Tracking Disruptor I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_maxRange_weapon(self):
+    def test_maxRange_moduleTargetPainter(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Shadow Serpentis Light Neutron Blaster")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_maxRange_droneElectronicWarfare(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Hornet EC-300")
-        self.testDrone = Drone(self.testItem)
-        self.fit.drones.append(self.testDrone)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "maxRange"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testDrone.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "maxRange"
+        item = "Target Painter I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)

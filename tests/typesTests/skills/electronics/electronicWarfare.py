@@ -33,7 +33,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_moduleEcmBurstSkillrq(self):
+    def test_capacitorNeed_moduleOtherSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "ECCM - Omni I"

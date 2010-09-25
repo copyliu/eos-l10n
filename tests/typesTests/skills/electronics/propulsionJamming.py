@@ -1,93 +1,76 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Module
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestPropulsionJamming(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Propulsion Jamming")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Propulsion Jamming"
 
-    def test_capacitorNeed_warpDisruptor(self):
+    def test_capacitorNeed_moduleWarpDisruptor(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Warp Disruptor II")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("capNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Warp Disruptor I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_stasisWebifier(self):
+    def test_capacitorNeed_moduleWarpDisruptorNoSkillrq(self):
         self.buildTested = 0
-        self.testItem = db.getItem("X5 Prototype I Engine Enervator")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("capNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Civilian Warp Disruptor"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_warpDisruptorCivilian(self):
+    def test_capacitorNeed_moduleStasisWebifier(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Civilian Warp Disruptor")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("capNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Stasis Webifier I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_stasisWebifierCivilian(self):
+    def test_capacitorNeed_moduleStasisWebifierNoSkillrq(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Civilian Stasis Webifier")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("capNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Civilian Stasis Webifier"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_warpDisruptionFieldGenerator(self):
+    def test_capacitorNeed_moduleOtherSkillrq(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Warp Disruption Field Generator I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
-
-    def test_capacitorNeed_otherEwar(self):
-        self.buildTested = 0
-        self.testItem = db.getItem("Target Painter I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Warp Disruption Field Generator I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)

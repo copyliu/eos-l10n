@@ -1,53 +1,48 @@
-import unittest
-from eos import db
-from eos.types import Fit, Character, Skill, Module
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.tests import TestBase
 
-class TestSensorLinking(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
-        self.fit = Fit()
-        self.char = Character("testSkill")
-        self.skill = db.getItem("Sensor Linking")
-        self.skillLevel = 5
-        self.char.addSkill(Skill(self.skill, self.skillLevel))
-        self.fit.character = self.char
+        TestBase.setUp(self)
+        self.skill = "Sensor Linking"
 
-    def test_capacitorNeed_sensorDamper(self):
+    def test_capacitorNeed_moduleRemoteSensorBooster(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Remote Sensor Dampener II")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("capNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Remote Sensor Booster I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_remoteSensorBooster(self):
+    def test_capacitorNeed_moduleRemoteSensorDamper(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Linked I Sensor Network")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        skillBonus = self.skill.getAttribute("capNeedBonus")
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        expected.boost(targetAttrName, skillBonus * self.skillLevel)
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Remote Sensor Dampener I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_otherEwar(self):
+    def test_capacitorNeed_moduleOtherSkillrq(self):
         self.buildTested = 0
-        self.testItem = db.getItem("Tracking Disruptor I")
-        self.testMod = Module(self.testItem)
-        self.fit.modules.append(self.testMod)
-        self.fit.calculateModifiedAttributes()
-        targetAttrName = "capacitorNeed"
-        expected = ModifiedAttributeDict()
-        expected.original = self.testItem.attributes
-        actual = self.testMod.getModifiedItemAttr(targetAttrName)
-        self.assertAlmostEquals(expected[targetAttrName], actual)
+        attr = "capacitorNeed"
+        item = "Tracking Link I"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
