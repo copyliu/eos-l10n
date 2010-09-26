@@ -9,11 +9,12 @@ sqlite format, default eos database path is used if none specified",
 type="string", default=os.path.join("~", ".pyfa","eve.db"))
 parser.add_option("-a", "--attr", help="find items with all of these attributes",
 type="string", default="")
-parser.add_option("-s", "--srq", help="find items with this skill requirement",
+parser.add_option("-s", "--srq", help="find items with any of these skill requirements",
 type="string", default="")
 parser.add_option("-g", "--grp", help="find items from any of these groups",
 type="string", default="")
-parser.add_option("-z", "--nozero", action="store_true", help="ignore attributes with zero values", default=False)
+parser.add_option("-z", "--nozero", action="store_true", help="ignore attributes with zero values",
+default=False)
 (options, args) = parser.parse_args()
 
 if not options.attr:
@@ -76,14 +77,18 @@ QUERY_TYPENAME_TYPEID = 'SELECT typeID FROM invtypes WHERE typeName = ?'
 QUERY_GROUPNAME_GROUPID = 'SELECT groupID FROM invgroups WHERE groupName = ?'
 
 if options.srq:
-    global_skillrqid = 0
-    cursor.execute(QUERY_TYPENAME_TYPEID, (options.srq,))
-    for row in cursor:
-        global_skillrqid = row[0]
-    if not global_skillrqid:
-        import sys
-        sys.stderr.write("You need to specify proper skill requirement name.\n")
-        sys.exit()
+    global_skillrqids = set()
+    for srq in options.srq.split(","):
+        srqid = 0
+        cursor.execute(QUERY_TYPENAME_TYPEID, (srq,))
+        for row in cursor:
+            srqid = row[0]
+        if not srqid:
+            import sys
+            sys.stderr.write("You need to specify proper skill requirement name.\n")
+            sys.exit()
+        else:
+            global_skillrqids.add(srqid)
 
 if options.grp:
     global_groupids = set()
@@ -235,8 +240,9 @@ if options.grp and options.srq:
     # Set of items which are supposed to be affected
     targetitems = set()
     for groupid in global_groupids:
-        if groupid in map_groupid_typeid and global_skillrqid in map_skillrq_typeid:
-            targetitems.update(map_groupid_typeid[groupid].intersection(map_skillrq_typeid[global_skillrqid]))
+        for srqid in global_skillrqids:
+            if groupid in map_groupid_typeid and srqid in map_skillrq_typeid:
+                targetitems.update(map_groupid_typeid[groupid].intersection(map_skillrq_typeid[srqid]))
     targetitems_noskillrqs = targetitems.intersection(set_typeid_noskillrq)
     # All skill requirements of items which are supposed to be affected
     targetitems_skillrqs = set()
@@ -245,7 +251,8 @@ if options.grp and options.srq:
     # Remove skill requirement supplied as argument to script
     # we can use that argument when needed manually, and it
     # covers all targetitems which we don't want to do with single skill
-    targetitems_skillrqs.remove(global_skillrqid)
+    for srqid in global_skillrqids:
+        targetitems_skillrqs.remove(srqid)
 
     if targetitems:
         # Print items which are supposed to be affected
@@ -255,7 +262,8 @@ if options.grp and options.srq:
             print("    Items from {0} group:".format(getgroupname(groupid)))
             # Cycle through all required skills
             targetitems_skillrqs_withgiven = copy.deepcopy(targetitems_skillrqs)
-            targetitems_skillrqs_withgiven.add(global_skillrqid)
+            for srqid in global_skillrqids:
+                targetitems_skillrqs_withgiven.add(srqid)
             for skillrq in sorted(targetitems_skillrqs_withgiven, key=lambda sk: gettypename(sk)):
                 targetitems_grp_srq = targetitems_grp.intersection(map_skillrq_typeid[skillrq])
                 if targetitems_grp_srq:
@@ -279,27 +287,32 @@ if options.grp and options.srq:
     items_in_groups = set()
     for groupid in global_groupids:
         items_in_groups.update(map_groupid_typeid[groupid])
+    items_with_skillrqs = set()
+    for srqid in global_skillrqids:
+        items_with_skillrqs.update(map_skillrq_typeid[srqid])
     # List items which do not belong to given group, but have given skill requirement
-    wskill = typeswithattr.intersection(map_skillrq_typeid[global_skillrqid])
+    wskill = typeswithattr.intersection(items_with_skillrqs)
     wogroup = typeswithattr.difference(items_in_groups)
     nontarget_wskill_wogroup = wskill.intersection(wogroup)
     if nontarget_wskill_wogroup:
-        print("    With {0} skill requirement, not belonging to {1} groups:".format(gettypename(global_skillrqid), ", ".join(sorted(getgroupname(grid) for grid in global_groupids))))
+        print("    With {0} skill requirements, not belonging to {1} groups:".format(", ".join(sorted(gettypename(id) for id in global_skillrqids)), ", ".join(sorted(getgroupname(grid) for grid in global_groupids))))
     for item in sorted(nontarget_wskill_wogroup, key=lambda item: gettypename(item)):
         print("        {0}".format(gettypename(item)))
 
     # List items which belong to given group, but do not have given skill requirement
-    woskill = typeswithattr.difference(map_skillrq_typeid[global_skillrqid])
+    woskill = typeswithattr.difference(items_with_skillrqs)
     wgroup = typeswithattr.intersection(items_in_groups)
     nontarget_woskill_wgroup = woskill.intersection(wgroup)
     if nontarget_woskill_wgroup:
-        print("    Without {0} skill requirement, belonging to {1} group:".format(gettypename(global_skillrqid), ", ".join(sorted(getgroupname(grid) for grid in global_groupids))))
+        print("    Without {0} skill requirement, belonging to {1} group:".format(", ".join(sorted(gettypename(id) for id in global_skillrqids)), ", ".join(sorted(getgroupname(grid) for grid in global_groupids))))
     for item in sorted(nontarget_woskill_wgroup, key=lambda item: gettypename(item)):
         print("        {0}".format(gettypename(item)))
 
     # If any of the above lists is missing, list all unaffected items
     if not nontarget_wskill_wogroup or not nontarget_woskill_wgroup:
-        nontarget = typeswithattr.difference(items_in_groups, map_skillrq_typeid[global_skillrqid])
+        nontarget = typeswithattr.difference(items_in_groups)
+        for srqid in global_skillrqids:
+            nontarget.difference_update(map_skillrq_typeid[srqid])
         if nontarget_wskill_wogroup:
             nontarget.difference_update(nontarget_wskill_wogroup)
         if nontarget_woskill_wgroup:
@@ -387,10 +400,11 @@ elif options.grp:
 
 elif options.srq:
     # Set of items which are supposed to be affected
-    if global_skillrqid in map_skillrq_typeid:
-        targetitems = copy.deepcopy(map_skillrq_typeid[global_skillrqid])
-    else:
-        targetitems = set()
+    targetitems = set()
+    for srqid in global_skillrqids:
+        if srqid in map_skillrq_typeid:
+            targetitems.update(map_skillrq_typeid[srqid])
+
     # All groups of items which are supposed to be affected
     targetitems_groups = set()
     targetitems_cats = set()
@@ -400,11 +414,19 @@ elif options.srq:
     if targetitems:
         # Print items which are supposed to be affected
         print("Affected items:")
-        # Cycle through groups
-        for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
-            print("    From {0} group:".format(getgroupname(groupid)))
-            for item in sorted(targetitems.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
-                print("        {0}".format(gettypename(item)))
+        for srqid in sorted(global_skillrqids, key=lambda itm: gettypename(itm)):
+            print("    With {0} skill requirements:".format(gettypename(srqid)))
+            targetitems_srq = targetitems.intersection(map_skillrq_typeid[srqid])
+            targetitems_srq_groups = set()
+            targetitems_srq_cats = set()
+            for itemid in targetitems_srq:
+                targetitems_srq_groups.add(map_typeid_groupid[itemid])
+                targetitems_srq_cats.add(map_typeid_categoryid[itemid])
+            # Cycle through groups
+            for groupid in sorted(targetitems_srq_groups, key=lambda grp: getgroupname(grp)):
+                print("        From {0} group:".format(getgroupname(groupid)))
+                for item in sorted(targetitems_srq.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
+                    print("            {0}".format(gettypename(item)))
 
     print("\nUnaffected items")
 
@@ -412,7 +434,7 @@ elif options.srq:
     nontarget = typeswithattr.difference(targetitems)
     nontarget_groups = set()
     nontarget_cats = set()
-    print("    Without {0} skill requirement:".format(gettypename(global_skillrqid)))
+    print("    Without {0} skill requirement:".format(", ".join(gettypename(id) for id in global_skillrqids)))
     removeitms = set()
     # Check 1 unaffected item from each group where some items were affected
     for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
@@ -429,11 +451,12 @@ elif options.srq:
             print("            {0}".format(gettypename(item)))
         removeitms.update(map_categoryid_typeid[catid])
     nontarget.difference_update(removeitms)
-    # Check any other unaffected item
-    print("        Remaining items:")
-    for item in sorted(nontarget, key=lambda item: gettypename(item)):
-        nontarget_groups.add(map_typeid_groupid[item])
-        print("            {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
+    if nontarget:
+        # Check any other unaffected item
+        print("        Remaining items:")
+        for item in sorted(nontarget, key=lambda item: gettypename(item)):
+            nontarget_groups.add(map_typeid_groupid[item])
+            print("            {0} ({1})".format(gettypename(item), getgroupname(map_typeid_groupid[item])))
     #print("    Groups:")
     #for group in sorted(nontarget_groups, key=lambda grp: getgroupname(grp)):
     #    nontarget_cats.add(map_groupid_categoryid[group])
