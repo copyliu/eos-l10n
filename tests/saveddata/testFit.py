@@ -10,6 +10,11 @@ class TestFit(unittest.TestCase):
     def setUp(self):
         self.m = Module(db.getItem("Heat Sink I"))
 
+    def test_addDrain(self):
+        f = Fit()
+        f.addDrain(5, 500, 0)
+        self.assertEquals(f.capUsed, 100)
+
     def test_setCharacter(self):
         f = Fit()
         f.character = Character("Testety")

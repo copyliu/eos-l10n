@@ -63,6 +63,7 @@ class Fit(object):
 
     def build(self):
         from eos import db
+        self.__extraDrains = []
         self.__ehp = None
         self.__weaponDPS = None
         self.__weaponVolley = None
@@ -225,6 +226,7 @@ class Fit(object):
         self.__capUsed = None
         self.__capRecharge = None
         del self.__calculatedTargets[:]
+        del self.__extraDrains[:]
         if self.ship is not None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
@@ -476,6 +478,9 @@ class Fit(object):
         rechargeRate = self.ship.getModifiedItemAttr("shieldRechargeRate") / 1000.0
         return 10 / rechargeRate * sqrt(percent) * (1 - sqrt(percent)) * capacity
 
+    def addDrain(self, cycleTime, capNeed, clipSize=0):
+        self.__extraDrains.append((int(cycleTime * 1000), capNeed, clipSize))
+
     def __generateDrain(self):
         drains = []
         capUsed = 0
@@ -486,6 +491,10 @@ class Fit(object):
                     cycleTime = mod.getCycleTime()
                     capUsed += capNeed / cycleTime
                     drains.append((int(cycleTime * 1000), capNeed, mod.numCharges))
+
+        for drain in self.__extraDrains:
+            drains.append(drain)
+            capUsed += drain[1]
 
         return drains, capUsed
 
