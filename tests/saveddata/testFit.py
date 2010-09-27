@@ -12,6 +12,7 @@ class TestFit(unittest.TestCase):
 
     def test_addDrain(self):
         f = Fit()
+        f.ship = Ship(db.getItem("Rifter"))
         f.addDrain(5, 500, 0)
         self.assertEquals(f.capUsed, 100)
 
