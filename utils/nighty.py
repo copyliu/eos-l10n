@@ -103,6 +103,6 @@ if __name__ == "__main__":
 
     sys.stdout = oldstd
     if os.path.isdir(destination):
-        print os.path.join(destination, tmpFile)
+        print os.path.join(destination, os.path.split(tmpFile)[1])
     else:
         print destination
