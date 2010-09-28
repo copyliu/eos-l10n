@@ -89,7 +89,7 @@ if __name__ == "__main__":
         print "closing"
         archive.close()
         print "copying archive to ", destination
-        shutil.copy(tmpFile, destination)
+        shutil.move(tmpFile, destination)
     except:
         print "encountered an error"
         raise
@@ -102,3 +102,7 @@ if __name__ == "__main__":
             pass
 
     sys.stdout = oldstd
+    if os.path.isdir(destination):
+        print os.path.join(destination, tmpFile)
+    else:
+        print destination
