@@ -8,18 +8,30 @@ import sys
 import tarfile
 import datetime
 
+class FileStub():
+    def write(self, *args):
+        pass
+
+    def flush(self, *args):
+        pass
+
 if __name__ == "__main__":
+    oldstd = sys.stdout
     parser = OptionParser()
     parser.add_option("-s", "--skeleton", dest="skeleton", help="Location of skeleton directory")
     parser.add_option("-b", "--base", dest="base", help="location of the base directory")
     parser.add_option("-d", "--destination", dest="destination", help="where to copy our archive")
     parser.add_option("-t", "--static", dest="static", help="directory containing static files")
+    parser.add_option("-q", "--quiet", dest="silent", action="store_true")
     options, args = parser.parse_args()
 
     if options.skeleton is None or options.base is None or options.destination is None:
         print "Need --skeleton argument as well as --base and --destination argument"
         parser.print_help()
         sys.exit()
+
+    if options.silent:
+        sys.stdout = FileStub()
 
     infoDict = {}
     skeleton = os.path.expanduser(options.skeleton)
@@ -88,3 +100,5 @@ if __name__ == "__main__":
             os.unlink(tmpFile)
         except:
             pass
+
+    sys.stdout = oldstd
