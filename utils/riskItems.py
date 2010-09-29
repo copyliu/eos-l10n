@@ -407,9 +407,11 @@ elif options.srq:
 
     # All groups of items which are supposed to be affected
     targetitems_groups = set()
+    targetitems_srqs = set()
     targetitems_cats = set()
     for itemid in targetitems:
         targetitems_groups.add(map_typeid_groupid[itemid])
+        targetitems_srqs.update(map_typeid_skillrq[itemid])
         targetitems_cats.add(map_typeid_categoryid[itemid])
     if targetitems:
         # Print items which are supposed to be affected
@@ -426,7 +428,7 @@ elif options.srq:
             for groupid in sorted(targetitems_srq_groups, key=lambda grp: getgroupname(grp)):
                 print("        From {0} group:".format(getgroupname(groupid)))
                 for item in sorted(targetitems_srq.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
-                    print("            {0}".format(gettypename(item)))
+                    print("            {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(itm) for itm in map_typeid_skillrq[item].difference(global_skillrqids))) or "None"))
 
     print("\nUnaffected items")
 
@@ -434,15 +436,25 @@ elif options.srq:
     nontarget = typeswithattr.difference(targetitems)
     nontarget_groups = set()
     nontarget_cats = set()
-    print("    Without {0} skill requirement:".format(", ".join(gettypename(id) for id in global_skillrqids)))
+    print("    Without {0} skills requirement:".format(", ".join(gettypename(id) for id in global_skillrqids)))
     removeitms = set()
     # Check 1 unaffected item from each group where some items were affected
     for groupid in sorted(targetitems_groups, key=lambda grp: getgroupname(grp)):
         if nontarget.intersection(map_groupid_typeid[groupid]):
             print("        From {0} group:".format(getgroupname(groupid)))
-        for item in sorted(nontarget.intersection(map_groupid_typeid[groupid]), key=lambda item: gettypename(item)):
-            print("            {0}".format(gettypename(item)))
-        removeitms.update(map_groupid_typeid[groupid])
+            for skillrqid in sorted(targetitems_srqs.difference(global_skillrqids), key=lambda srq: gettypename(srq)):
+                itmset = nontarget.intersection(map_groupid_typeid[groupid]).intersection(map_skillrq_typeid[skillrqid])
+                if itmset:
+                    print("            Items with {0} skill requirement:".format(gettypename(skillrqid)))
+                    for item in sorted(itmset, key=lambda itm: gettypename(itm)):
+                        print("                {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(itm) for itm in map_typeid_skillrq[item].difference(global_skillrqids).remove(skillrqid))) or "None"))
+                    removeitms.update(itmset)
+            nosk = nontarget.intersection(map_groupid_typeid[groupid]).intersection(set_typeid_noskillrq)
+            if nosk:
+                print("            Items with no skill requirement:")
+                for item in sorted(nosk, key=lambda itm: gettypename(itm)):
+                    print("                {0} (None)".format(gettypename(item)))
+            removeitms.update(nosk)
     nontarget.difference_update(removeitms)
     for catid in sorted(targetitems_cats, key=lambda cat: getcatname(cat)):
         if nontarget.intersection(map_categoryid_typeid[catid]):
