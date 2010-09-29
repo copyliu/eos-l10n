@@ -82,6 +82,10 @@ if __name__ == "__main__":
             static = os.path.expanduser(options.static)
             shutil.copytree(static, os.path.join(base, "staticdata"))
 
+        print "removing .git folder(s)"
+        if os.path.exists(os.path.join(dst, ".git")):
+            os.unlink(os.path.join(dst, ".git"))
+
         print "copying done, making archive: ", tmpFile
         archive = tarfile.open(tmpFile, "w:bz2")
         print "making archive"
