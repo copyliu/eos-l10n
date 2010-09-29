@@ -80,7 +80,7 @@ if __name__ == "__main__":
         if options.static is not None and os.path.exists(os.path.expanduser(options.static)):
             print "copying static data to ", os.path.join(base, "staticdata")
             static = os.path.expanduser(options.static)
-            shutil.copytree(static, os.path.join(base, "staticdata"))
+            shutil.copytree(static, os.path.join(base, "staticdata"), ignore=loginfo)
 
         print "removing .git folder(s)"
         if os.path.exists(os.path.join(dst, ".git")):
