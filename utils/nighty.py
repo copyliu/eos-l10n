@@ -84,7 +84,13 @@ if __name__ == "__main__":
 
         print "removing .git folder(s)"
         if os.path.exists(os.path.join(dst, ".git")):
-            os.unlink(os.path.join(dst, ".git"))
+            shutil.rmtree(os.path.join(dst, ".git"))
+
+        if os.path.exists(os.path.join(base, ".git")):
+            shutil.rmtree(os.path.join(base, ".git"))
+
+        if os.path.exists(os.path.join(base, "staticdata", ".git")):
+            shutil.rmtree(os.path.join(base, "staticdata", ".git"))
 
         print "copying done, making archive: ", tmpFile
         archive = tarfile.open(tmpFile, "w:bz2")
