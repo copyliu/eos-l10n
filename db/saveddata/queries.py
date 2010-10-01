@@ -58,6 +58,14 @@ def getPrice(typeID):
 def getDamagePatternList(eager=None):
     return saveddata_session.query(DamagePattern).otions(*processEager(eager)).all()
 
+def getDamagePattern(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        filter = DamagePattern.ID == lookfor
+    elif isinstance(lookfor, basestring):
+        filter = DamagePattern.name == lookfor
+
+    return saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(filter).one()
+
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")

@@ -25,6 +25,7 @@ from eos.types import DamagePattern
 
 damagePatterns_table = Table("damagePatterns", saveddata_meta,
                              Column("ID", Integer, primary_key = True),
+                             Column("name", String),
                              Column("emAmount", Integer),
                              Column("thermalAmount", Integer),
                              Column("kineticAmount", Integer),
