@@ -37,7 +37,7 @@ if __name__ == "__main__":
     skeleton = os.path.expanduser(options.skeleton)
     info = execfile(os.path.join(skeleton, "info.py"), infoDict)
     now = datetime.datetime.now()
-    now = "%d%d%d" % (now.year, now.month, now.day)
+    now = "%04d%02d%02d" % (now.year, now.month, now.day)
     dirName = "nighty-build-%s" % now
     dst = os.path.join(tempfile.gettempdir(), dirName)
     tmpFile = os.path.join(tempfile.gettempdir(), "nighty-build-%s-%s.tar.bz2" % (now, infoDict["os"]))
