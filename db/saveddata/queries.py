@@ -56,7 +56,7 @@ def getPrice(typeID):
     return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
 
 def getDamagePatternList(eager=None):
-    return saveddata_session.query(DamagePattern).otions(*processEager(eager)).all()
+    return saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
 
 def getDamagePattern(lookfor, eager=None):
     if isinstance(lookfor, int):
