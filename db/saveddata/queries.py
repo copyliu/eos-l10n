@@ -35,7 +35,7 @@ def getCharacter(lookfor, where=None, eager=None):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
 def getCharacterList(eager=None):
-    return saveddata_session.query(Character).otions(*processEager(eager)).all()
+    return saveddata_session.query(Character).options(*processEager(eager)).all()
 
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
