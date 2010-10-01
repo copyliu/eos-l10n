@@ -19,7 +19,7 @@
 
 from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
-from eos.types import User, Character, Fit, Price
+from eos.types import User, Character, Fit, Price, DamagePattern
 from sqlalchemy.sql import and_
 
 def getUser(lookfor, where=None, eager=None):
@@ -35,7 +35,7 @@ def getCharacter(lookfor, where=None, eager=None):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
 def getCharacterList(eager=None):
-    return saveddata_session.query(Character).all()
+    return saveddata_session.query(Character).options(*processEager(eager)).all()
 
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
@@ -54,6 +54,17 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
 
 def getPrice(typeID):
     return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
+
+def getDamagePatternList(eager=None):
+    return saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
+
+def getDamagePattern(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        filter = DamagePattern.ID == lookfor
+    elif isinstance(lookfor, basestring):
+        filter = DamagePattern.name == lookfor
+
+    return saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(filter).one()
 
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
