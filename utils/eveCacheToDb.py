@@ -108,6 +108,7 @@ def get_order():
 
 def get_customcalls():
     """
+    Return custom table - call to get data for it map
     """
     return {"invmarketgroups": eve.RemoteSvc("marketProxy").GetMarketGroups()}
 

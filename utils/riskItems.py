@@ -1,3 +1,7 @@
+"""
+This is ugly, tricky and unreadable script which helps to detect which items should be tested,
+based on how its current effects work.
+"""
 import sqlite3
 import os.path
 import copy
