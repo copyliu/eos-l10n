@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #===============================================================================
 # Copyright (C) 2010 Anton Vorobyov
+# Copyright (C) 2010 Diego Duclos
 #
 # This file is part of eos.
 #
@@ -19,20 +20,28 @@
 #===============================================================================
 
 '''
-This script pulls data out of EVE cache and makes an SQLite dump
+This script pulls data out of EVE cache and makes a database dump. To get most of the data,
+you need to just log into game; however, for some special data sometimes you need to dump
+it by executing corresponding action in game, for example - open market tree to get data for
+invmarketgroups table.
 Reverence library by Entity is used, check http://wiki.github.com/ntt/reverence/ for info
-As reverence uses the same python version as EVE client (2.x series), script cannot be converted to python3
-Example commands to run the script under linux with default eve paths for getting sqlite dump:
+As reverence uses the same Python version as EVE client (2.x series), script cannot be converted to python3
+Example commands to run the script under Linux with default eve paths for getting SQLite dump:
 Tranquility: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/EVE" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/cache" --dump="sqlite:////home/"$USER"/Desktop/eve.db"
 Singularity: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/EVE (Singularity)" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_(singularity)_singularity/cache" --sisi --dump="sqlite:////home/"$USER"/Desktop/evetest.db"
 '''
 
-import sys, os
-# Add the good path to sys.path
+import os
+import sys
+
+# Add eos root path to sys.path
 path = os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))
 sys.path.append(os.path.realpath(os.path.join(path, "..", "..")))
 
 def get_map():
+    """
+    Return table name - table class map
+    """
     return {"allianceshortnames": None,
             "billtypes": None,
             "certificaterelationships": None,
@@ -81,6 +90,9 @@ def get_map():
             "typesByMarketGroups": None}
 
 def get_order():
+    """
+    Return order for table processing
+    """
     return ("icons",
             "invmarketgroups",
             "eveunits",
@@ -94,24 +106,11 @@ def get_order():
             "dgmtypeattribs",
             "dgmtypeeffects")
 
-def get_source_headers(sourcetable):
+def get_customcalls():
     """
-    Pull list of headers from the source table
+    Return custom table - call to get data for it map
     """
-    sourceheaders = None
-    guid = getattr(sourcetable, "__guid__", "None")
-    # For IndexRowset and IndexedRowLists Reverence provides list of headers
-    if guid in ("util.IndexRowset", "util.FilterRowset"):
-        sourceheaders = list(sourcetable.header)
-    # For IndexedRowLists, we need to compose list ourselves
-    elif guid == "util.IndexedRowLists":
-        headerset = set()
-        for item in sourcetable:
-            for row in sourcetable[item]:
-                for headername in row.__header__.Keys():
-                    headerset.add(headername)
-        sourceheaders = list(headerset)
-    return sourceheaders
+    return {"invmarketgroups": eve.RemoteSvc("marketProxy").GetMarketGroups()}
 
 def process_table(sourcetable, tablename, tableclass):
     """
@@ -121,8 +120,28 @@ def process_table(sourcetable, tablename, tableclass):
     tabledata = get_table_data(sourcetable, tablename, get_source_headers(sourcetable))
     # Insert everything into table
     insert_table_values(tabledata, tableclass)
+    return
 
-def get_table_data(sourcetable, tablename, headerlist):
+def get_source_headers(sourcetable):
+    """
+    Pull list of headers from the source table
+    """
+    sourceheaders = None
+    guid = getattr(sourcetable, "__guid__", "None")
+    # For IndexRowset and IndexedRowLists Reverence provides list of headers
+    if guid in ("util.IndexRowset", "util.FilterRowset"):
+        sourceheaders = tuple(sourcetable.header)
+    # For IndexedRowLists, we need to compose list ourselves
+    elif guid == "util.IndexedRowLists":
+        headerset = set()
+        for item in sourcetable:
+            for row in sourcetable[item]:
+                for headername in row.__header__.Keys():
+                    headerset.add(headername)
+        sourceheaders = tuple(headerset)
+    return sourceheaders
+
+def get_table_data(sourcetable, tablename, headers):
     """
     Pull data out of source table
     """
@@ -131,25 +150,25 @@ def get_table_data(sourcetable, tablename, headerlist):
     guid = getattr(sourcetable, "__guid__", "None")
     # We have Select method for IndexRowset tables
     if guid == "util.IndexRowset":
-        for values in sourcetable.Select(*headerlist):
+        for values in sourcetable.Select(*headers):
             # When Select is asked to find single value, it is returned in its raw
             # form. Convert is to tuple for proper further processing
             if not isinstance(values, (list, tuple, set)):
                 values = (values,)
-            headerlistlen = len(headerlist)
+            headerslen = len(headers)
             datarow = {}
             # 1 row value should correspond to 1 header, if number or values doesn't
             # correspond to number of headers then something went wrong
-            if headerlistlen != len(values):
+            if headerslen != len(values):
                 print "Error: malformed data in source table {0}".format(tablename)
                 return None
             # Fill row dictionary with values and append it to list
-            for i in xrange(headerlistlen):
-                # If we've got ASCII string, convert it to unicode
+            for i in xrange(headerslen):
+                # If we've got ASCII string, convert it to Unicode
                 if isinstance(values[i], str):
-                    datarow[headerlist[i]] = unicode(values[i], 'ISO-8859-1')
+                    datarow[headers[i]] = unicode(values[i], 'ISO-8859-1')
                 else:
-                    datarow[headerlist[i]] = values[i]
+                    datarow[headers[i]] = values[i]
             datarows.append(datarow)
     # FilterRowset and IndexedRowLists are accessible almost like dictionaries
     elif guid in ("util.FilterRowset", "util.IndexedRowLists"):
@@ -159,7 +178,7 @@ def get_table_data(sourcetable, tablename, headerlist):
             for row in sourcetable[element]:
                 datarow = {}
                 # Fill row dictionary with values we need and append it to the list
-                for header in headerlist:
+                for header in headers:
                     value = getattr(row, header, None)
                     # None and zero values are different, and we want to write zero
                     # values to database
@@ -170,41 +189,37 @@ def get_table_data(sourcetable, tablename, headerlist):
     return datarows
 
 def insert_table_values(tabledata, tableclass):
-    i = 0
-    y = 0
+    """
+    Insert values into tables and show progress
+    """
+    rows = 0
+    rows_skipped = 0
+    # Go through all table rows
     for row in tabledata:
         instance = tableclass()
-        if y / 1000.0 == int(y / 1000.0):
+        # Print dot each 1k inserted rows
+        if rows / 1000.0 == int(rows / 1000.0):
             sys.stdout.write(".")
             sys.stdout.flush()
         try:
+            # Go through all fields of a row, process them and insert
             for header in row:
                 setattr(instance, header, process_value(row[header], tableclass, header))
-
             eos.db.gamedata_session.add(instance)
-            y += 1
+            rows += 1
         except ValueError:
-            i += 1
-
-    print "\nInserted %d rows. skipped %d rows" % (y, i)
+            rows_skipped += 1
+    # Print out results and actually commit results to database
+    print "\nInserted {0} rows. skipped {1} rows".format(rows, rows_skipped)
     eos.db.gamedata_session.commit()
 
-cache = {}
-def query_existence(col, value):
-    key = (col, col.table, value)
-    info = cache.get(key)
-    if info is None:
-        info = eos.db.gamedata_session.query(col.table).filter(col == value).count() > 0
-        cache[key] = info
-
-    return info
-
 def process_value(value, tableclass, header):
+    # Get column info
     info = tableclass._sa_class_manager.mapper.c.get(header)
     if info is None:
         return
 
-    # NULL out non-existent foreign key relations
+    # Null out non-existent foreign key relations
     foreign_keys = info.foreign_keys
     if len(foreign_keys) > 0:
         for key in foreign_keys:
@@ -216,15 +231,24 @@ def process_value(value, tableclass, header):
                     raise ValueError("Integrity check failed")
             else:
                 return value
-    #Turn bools into actual bools, don't leave them as ints
+    #Turn booleans into actual booleans, don't leave them as integers
     elif type(info.type) == Boolean:
         return bool(value)
     else:
         return value
 
+existence_cache = {}
+def query_existence(col, value):
+    key = (col, col.table, value)
+    info = existence_cache.get(key)
+    if info is None:
+        info = eos.db.gamedata_session.query(col.table).filter(col == value).count() > 0
+        existence_cache[key] = info
+
+    return info
+
 if __name__ == "__main__":
     import copy
-    import os
     import re
     import sys
     from ConfigParser import ConfigParser
@@ -244,7 +268,7 @@ if __name__ == "__main__":
     parser.add_option("-c", "--cache", help="path to eve cache folder")
     parser.add_option("-d", "--dump", help="the SQL Alchemy connection string of where we should place our final dump")
     parser.add_option("-r", "--release", help="database release number, defaults to 1", default="1")
-    parser.add_option("-s", "--sisi", action="store_true", dest="singularity", help="if you're going to work with Singulary test server data, use this option", default=False)
+    parser.add_option("-s", "--sisi", action="store_true", dest="singularity", help="if you're going to work with Singularity test server data, use this option", default=False)
     (options, args) = parser.parse_args()
 
 
@@ -260,9 +284,8 @@ if __name__ == "__main__":
     # Set static variables for paths
     PATH_EVE = os.path.expanduser(options.eve)
     PATH_CACHE = os.path.expanduser(options.cache)
-    PATH_DUMP = os.path.expanduser(options.dump)
 
-    eos.config.gamedata_connectionstring = PATH_DUMP
+    eos.config.gamedata_connectionstring = options.dump
     eos.config.debug = False
 
     from eos.gamedata import *
@@ -290,10 +313,9 @@ if __name__ == "__main__":
     metadata_table = Table("metadata", eos.db.gamedata_meta,
                            Column("fieldName", String, primary_key=True),
                            Column("fieldValue", String))
-
     mapper(MetaData, metadata_table)
 
-    # Create all our tables now
+    # Create all tables we need
     eos.db.gamedata_meta.create_all()
 
     # Add versioning info to the metadata table
@@ -302,24 +324,35 @@ if __name__ == "__main__":
 
     eos.db.gamedata_session.commit()
 
-    # Grab table map
+    # Get table map, processing order and special table data
     TABLE_MAP = get_map()
+    TABLE_ORDER = get_order()
+    CUSTOM_CALLS = get_customcalls()
+
     # Warn about new tables in cache
     for table in cfg.tables:
         if not table in TABLE_MAP:
-            print "Warning: unmapped table", table, "found in cache"
+            print "Warning: unmapped table {0} found in cache".format(table)
 
-    # Warn about missing tables
     for table in TABLE_MAP:
-        if not table in cfg.tables and table != "invmarketgroups":
-            print "Warning: mapped table", table, "cannot be found in cache"
+        if TABLE_MAP[table] is not None:
+            # Warn about missing tables
+            if not table in cfg.tables and table not in CUSTOM_CALLS:
+                print "Warning: mapped table {0} cannot be found in cache".format(table)
+            # Warn about mapped tables not specified in processing order
+            if not table in TABLE_ORDER:
+                print "Warning: mapped table {0} is missing in processing order and will be skipped".format(table)
 
-    # Get data from cache (you need to just login to eve for cache files to be written) and write it.
-    # For invmarketgroups table, you need to open market tree in game
-    for tablename in get_order():
+    for table in TABLE_ORDER:
+        if TABLE_MAP[table] is None:
+            print "Warning: unmapped table {0} is specified in processing order, it will be skipped".format(tablename)
+
+    # Get data from reverence and write it
+    for tablename in TABLE_ORDER:
         tableclass = TABLE_MAP[tablename]
         if tableclass is not None:
-            print "processing: %s" % (tablename)
-            sourceTable = getattr(cfg, tablename) if tablename != "invmarketgroups" else eve.RemoteSvc("marketProxy").GetMarketGroups()
-            process_table(sourceTable, tablename, tableclass)
-
+            # Print currently processed table name
+            print "Processing: {0}".format(tablename)
+            # Get table object from the Reverence and process it
+            source_table = getattr(cfg, tablename) if tablename not in CUSTOM_CALLS else CUSTOM_CALLS[tablename]
+            process_table(source_table, tablename, tableclass)
