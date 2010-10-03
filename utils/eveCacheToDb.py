@@ -249,7 +249,6 @@ def query_existence(col, value):
 
 if __name__ == "__main__":
     import copy
-    import os
     import re
     import sys
     from ConfigParser import ConfigParser
@@ -285,9 +284,8 @@ if __name__ == "__main__":
     # Set static variables for paths
     PATH_EVE = os.path.expanduser(options.eve)
     PATH_CACHE = os.path.expanduser(options.cache)
-    PATH_DUMP = os.path.expanduser(options.dump)
 
-    eos.config.gamedata_connectionstring = PATH_DUMP
+    eos.config.gamedata_connectionstring = options.dump
     eos.config.debug = False
 
     from eos.gamedata import *
