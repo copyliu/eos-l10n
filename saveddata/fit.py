@@ -226,6 +226,7 @@ class Fit(object):
         self.__capUsed = None
         self.__capRecharge = None
         del self.__calculatedTargets[:]
+        del self.__extraDrains[:]
         if self.ship is not None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
