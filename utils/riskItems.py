@@ -451,7 +451,9 @@ elif options.srq:
                 if itmset:
                     print("            Items with {0} skill requirement:".format(gettypename(skillrqid)))
                     for item in sorted(itmset, key=lambda itm: gettypename(itm)):
-                        print("                {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(itm) for itm in map_typeid_skillrq[item].difference(global_skillrqids).remove(skillrqid))) or "None"))
+                        otherskrqs = map_typeid_skillrq[item].difference(global_skillrqids)
+                        otherskrqs.remove(skillrqid)
+                        print("                {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(itm) for itm in otherskrqs)) or "None"))
                     removeitms.update(itmset)
             nosk = nontarget.intersection(map_groupid_typeid[groupid]).intersection(set_typeid_noskillrq)
             if nosk:
