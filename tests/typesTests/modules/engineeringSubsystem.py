@@ -13,5 +13,4 @@ class TestEngineeringSubsystem(unittest.TestCase):
         self.fit.calculateModifiedAttributes()
 
     def test_hardening(self):
-        print self.fit.ship.getModifiedItemAttr("powerOutput")
         self.assertGreater(self.fit.ship.getModifiedItemAttr("powerOutput"), 0)
