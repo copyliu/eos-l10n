@@ -19,15 +19,16 @@
 
 from sqlalchemy.orm import reconstructor
 from eqBase import EqBase
+import re
 
 class Effect(EqBase):
     #Filter to change names of effects to valid python method names
-    nameFilter = dict(zip(map(ord, u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~\n'), u''))
+    nameFilter = re.compile("[^A-Za-z0-9]")
 
     @reconstructor
     def init(self):
         self.__generated = False
-        self.handlerName = self.name.translate(Effect.nameFilter)
+        self.handlerName = re.sub(self.nameFilter, "", self.name)
 
     @property
     def handler(self):
