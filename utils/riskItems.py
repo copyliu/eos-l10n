@@ -355,18 +355,20 @@ elif options.grp:
             targetitems_noskillrqs_grp = targetitems_noskillrqs.intersection(map_groupid_typeid[groupid])
             # Cycle through all required skills
             for skillrq in sorted(targetitems_skillrqs, key=lambda sk: gettypename(sk)):
-                print("        Requiring {0} skill:".format(gettypename(skillrq)))
-                for item in sorted(targetitems_grp.intersection(map_skillrq_typeid[skillrq]), key=lambda item: gettypename(item)):
-                    # If item has other skill requirements, print them
-                    if len(map_typeid_skillrq[item]) == 3 or len(map_typeid_skillrq[item]) == 2:
-                        otherskillrq = copy.deepcopy(map_typeid_skillrq[item])
-                        otherskillrq.discard(skillrq)
-                        print("            {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(id) for id in otherskillrq))))
-                    # Just print item names if there're only 2 skill requirements
-                    elif len(map_typeid_skillrq[item]) == 1:
-                        print("            {0}".format(gettypename(item)))
-                    else:
-                        print("WARNING: Bad things happened, we never should get here")
+                items_grpsrq = targetitems_grp.intersection(map_skillrq_typeid[skillrq])
+                if items_grpsrq:
+                    print("        Requiring {0} skill:".format(gettypename(skillrq)))
+                    for item in sorted(items_grpsrq, key=lambda item: gettypename(item)):
+                        # If item has other skill requirements, print them
+                        if len(map_typeid_skillrq[item]) == 3 or len(map_typeid_skillrq[item]) == 2:
+                            otherskillrq = copy.deepcopy(map_typeid_skillrq[item])
+                            otherskillrq.discard(skillrq)
+                            print("            {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(id) for id in otherskillrq))))
+                        # Just print item names if there're only 2 skill requirements
+                        elif len(map_typeid_skillrq[item]) == 1:
+                            print("            {0}".format(gettypename(item)))
+                        else:
+                            print("WARNING: Bad things happened, we never should get here")
             if targetitems_noskillrqs:
                 print("        Requiring no skills:")
                 for item in sorted(targetitems_noskillrqs_grp, key=lambda item: gettypename(item)):
@@ -455,6 +457,13 @@ elif options.srq:
                         otherskrqs.remove(skillrqid)
                         print("                {0} ({1})".format(gettypename(item), ", ".join(sorted(gettypename(itm) for itm in otherskrqs)) or "None"))
                     removeitms.update(itmset)
+            nontarget.difference_update(removeitms)
+            otsk = nontarget.intersection(map_groupid_typeid[groupid]).difference(set_typeid_noskillrq)
+            if otsk:
+                print("            Items with other skill requirements:")
+                for item in sorted(otsk, key=lambda itm: gettypename(itm)):
+                    print("                {0} (None)".format(gettypename(item)))
+            removeitms.update(otsk)
             nosk = nontarget.intersection(map_groupid_typeid[groupid]).intersection(set_typeid_noskillrq)
             if nosk:
                 print("            Items with no skill requirement:")
