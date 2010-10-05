@@ -22,7 +22,7 @@ from eqBase import EqBase
 
 class Effect(EqBase):
     #Filter to change names of effects to valid python method names
-    nameFilter = dict(zip(map(ord, u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'), u''))
+    nameFilter = dict(zip(map(ord, u'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~\n'), u''))
 
     @reconstructor
     def init(self):
