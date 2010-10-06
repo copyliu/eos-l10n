@@ -51,6 +51,10 @@ class Effect(EqBase):
 
         return self.__type
 
+    @property
+    def isImplemented(self):
+        return self.handler != effectDummy
+
     def isType(self, type):
         return self.type is not None and type in self.type
 
