@@ -3,13 +3,13 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.skill = "Citadel Cruise Missiles"
+        self.skill = "Citadel Torpedoes"
 
-    def test_emDamage_chargeMissileCitadelCruise(self):
+    def test_emDamage_chargeMissileCitadelTorpedo(self):
         self.buildTested = 0
         attr = "emDamage"
-        item = "Thunar Citadel Cruise Missile"
-        cont = "Citadel Cruise Launcher I"
+        item = "Thor Citadel Torpedo"
+        cont = "Citadel Torpedo Launcher I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -23,8 +23,8 @@ class Test(TestBase):
     def test_emDamage_chargeOther(self):
         self.buildTested = 0
         attr = "emDamage"
-        item = "Gremlin Rocket"
-        cont = "Rocket Launcher I"
+        item = "Sabretooth Light Missile"
+        cont = "Standard Missile Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -35,11 +35,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamage_chargeMissileCitadelCruise(self):
+    def test_explosiveDamage_chargeMissileCitadelTorpedo(self):
         self.buildTested = 0
         attr = "explosiveDamage"
-        item = "Catastrophe Citadel Cruise Missile"
-        cont = "Citadel Cruise Launcher I"
+        item = "Doom Citadel Torpedo"
+        cont = "Citadel Torpedo Launcher I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -53,8 +53,8 @@ class Test(TestBase):
     def test_explosiveDamage_chargeOther(self):
         self.buildTested = 0
         attr = "explosiveDamage"
-        item = "Fulmination Assault Missile"
-        cont = "Heavy Assault Missile Launcher I"
+        item = "Phalanx Rocket"
+        cont = "Rocket Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -65,11 +65,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_kineticDamage_chargeMissileCitadelCruise(self):
+    def test_kineticDamage_chargeMissileCitadelTorpedo(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Rajas Citadel Cruise Missile"
-        cont = "Citadel Cruise Launcher I"
+        item = "Rift Citadel Torpedo"
+        cont = "Citadel Torpedo Launcher I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -83,8 +83,8 @@ class Test(TestBase):
     def test_kineticDamage_chargeOther(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Juggernaut Torpedo"
-        cont = "Siege Missile Launcher I"
+        item = "Terror Assault Missile"
+        cont = "Heavy Assault Missile Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -95,11 +95,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_thermalDamage_chargeMissileCitadelCruise(self):
+    def test_thermalDamage_chargeMissileCitadelTorpedo(self):
         self.buildTested = 0
         attr = "thermalDamage"
-        item = "Sol Citadel Cruise Missile"
-        cont = "Citadel Cruise Launcher I"
+        item = "Purgatory Citadel Torpedo"
+        cont = "Citadel Torpedo Launcher I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -113,8 +113,8 @@ class Test(TestBase):
     def test_thermalDamage_chargeOther(self):
         self.buildTested = 0
         attr = "thermalDamage"
-        item = "Flameburst Light Missile"
-        cont = "Standard Missile Launcher I"
+        item = "Widowmaker Heavy Missile"
+        cont = "Heavy Missile Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4

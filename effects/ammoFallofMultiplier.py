@@ -7,4 +7,4 @@
 #Charges from group: Advanced Railgun Ammo (6 of 6)
 type = "passive"
 def handler(fit, module, context):
-    module.multipleItemAttr("falloff", module.getModifiedChargeAttr("fallofMultiplier"))
+    module.multiplyItemAttr("falloff", module.getModifiedChargeAttr("fallofMultiplier") or 1)
