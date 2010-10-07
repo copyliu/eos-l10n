@@ -21,7 +21,7 @@
 import unittest
 
 from eos import db
-from eos.types import Fit, Character, Skill, Ship, Drone
+from eos.types import Fit, Character, Skill, Ship, Module, Drone
 
 class TestBase(unittest.TestCase):
     def setUp(self):
@@ -42,15 +42,12 @@ class TestBase(unittest.TestCase):
         item = db.getItem(itemname)
         cat = item.category.name.lower()
         if cat == "drone":
-            from eos.types import Drone
             itemInst = Drone(item)
             fit.drones.append(itemInst)
         elif cat in ("module", "subsystem"):
-            from eos.types import Module
             itemInst = Module(item)
             fit.modules.append(itemInst)
         elif cat == "charge" and cont:
-            from eos.types import Module
             itemInst = Module(db.getItem(cont))
             itemInst.charge = item
             fit.modules.append(itemInst)
