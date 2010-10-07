@@ -3,176 +3,56 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.skill = "Standard Missiles"
+        self.skill = "Missile Bombardment"
 
-    def test_emDamage_chargeMissileLight(self):
+    def test_explosionDelay_chargeMissileRocket(self):
         self.buildTested = 0
-        attr = "emDamage"
-        item = "Sabretooth Light Missile"
-        cont = "Standard Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_emDamage_chargeMissileLightAdvanced(self):
-        self.buildTested = 0
-        attr = "emDamage"
-        item = "Sabretooth Fury Light Missile"
-        cont = "Standard Missile Launcher II"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_emDamage_chargeMissileLightFof(self):
-        self.buildTested = 0
-        attr = "emDamage"
-        item = "Seeker F.O.F. Light Missile I"
-        cont = "Standard Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_emDamage_chargeOther(self):
-        self.buildTested = 0
-        attr = "emDamage"
-        item = "Gremlin Rocket"
+        attr = "explosionDelay"
+        item = "Foxfire Rocket"
         cont = "Rocket Launcher I"
         iLvl = 1
-        iIngame = 1.0
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.0
+        fIngame = 1.4
         iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
         fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamage_chargeMissileLight(self):
+    def test_explosionDelay_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
-        attr = "explosiveDamage"
-        item = "Piranha Light Missile"
-        cont = "Standard Missile Launcher I"
+        attr = "explosionDelay"
+        item = "Gremlin Rage Rocket"
+        cont = "Rocket Launcher II"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
         fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_explosiveDamage_chargeMissileLightAdvanced(self):
+    def test_explosionDelay_chargeMissileLight(self):
         self.buildTested = 0
-        attr = "explosiveDamage"
-        item = "Piranha Precision Light Missile"
-        cont = "Standard Missile Launcher II"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_explosiveDamage_chargeMissileLightFof(self):
-        self.buildTested = 0
-        attr = "explosiveDamage"
-        item = "Exterminator F.O.F. Light Missile I"
-        cont = "Standard Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_explosiveDamage_chargeOther(self):
-        self.buildTested = 0
-        attr = "explosiveDamage"
-        item = "Havoc Heavy Missile"
-        cont = "Heavy Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.0
-        fLvl = 4
-        fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_kineticDamage_chargeMissileLight(self):
-        self.buildTested = 0
-        attr = "kineticDamage"
+        attr = "explosionDelay"
         item = "Bloodclaw Light Missile"
         cont = "Standard Missile Launcher I"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
         fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_kineticDamage_chargeMissileLightAdvanced(self):
+    def test_explosionDelay_chargeMissileLightNoSkillrqMissileOp(self):
         self.buildTested = 0
-        attr = "kineticDamage"
-        item = "Bloodclaw Fury Light Missile"
-        cont = "Standard Missile Launcher II"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_kineticDamage_chargeMissileLightFof(self):
-        self.buildTested = 0
-        attr = "kineticDamage"
-        item = "Serpent F.O.F. Light Missile I"
-        cont = "Standard Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_kineticDamage_chargeMissileLightNoSkillrq(self):
-        self.buildTested = 0
-        attr = "kineticDamage"
+        attr = "explosionDelay"
         item = "Civilian Bloodclaw Light Missile"
         cont = "Standard Missile Launcher I"
         iLvl = 1
@@ -185,71 +65,236 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_kineticDamage_chargeOther(self):
+    def test_explosionDelay_chargeMissileLightAdvanced(self):
         self.buildTested = 0
-        attr = "kineticDamage"
-        item = "Juggernaut Torpedo"
-        cont = "Siege Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.0
-        fLvl = 4
-        fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_thermalDamage_chargeMissileLight(self):
-        self.buildTested = 0
-        attr = "thermalDamage"
-        item = "Flameburst Light Missile"
-        cont = "Standard Missile Launcher I"
-        iLvl = 1
-        iIngame = 1.05
-        fLvl = 4
-        fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_thermalDamage_chargeMissileLightAdvanced(self):
-        self.buildTested = 0
-        attr = "thermalDamage"
-        item = "Flameburst Fury Light Missile"
+        attr = "explosionDelay"
+        item = "Sabretooth Fury Light Missile"
         cont = "Standard Missile Launcher II"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
         fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_thermalDamage_chargeMissileLightFof(self):
+    def test_explosionDelay_chargeMissileLightFof(self):
         self.buildTested = 0
-        attr = "thermalDamage"
+        attr = "explosionDelay"
         item = "Firefly F.O.F. Light Missile I"
         cont = "Standard Missile Launcher I"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
         fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_thermalDamage_chargeOther(self):
+    def test_explosionDelay_chargeMissileAssault(self):
         self.buildTested = 0
-        attr = "thermalDamage"
+        attr = "explosionDelay"
+        item = "Torrent Assault Missile"
+        cont = "Heavy Assault Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileAssaultAdvanced(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Terror Javelin Assault Missile"
+        cont = "Heavy Assault Missile Launcher II"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileHeavy(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Havoc Heavy Missile"
+        cont = "Heavy Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileHeavyAdvanced(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Scourge Fury Heavy Missile"
+        cont = "Heavy Missile Launcher II"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileHeavyFof(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Hellhound F.O.F. Heavy Missile I"
+        cont = "Heavy Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileTorpedo(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Inferno Torpedo"
+        cont = "Siege Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileTorpedoAdvanced(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Mjolnir Javelin Torpedo"
+        cont = "Siege Missile Launcher II"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileCruise(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Cataclysm Cruise Missile"
+        cont = "Cruise Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileCruiseAdvanced(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Devastator Precision Cruise Missile"
+        cont = "Cruise Missile Launcher II"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileCruiseFof(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Hunter F.O.F. Cruise Missile I"
+        cont = "Cruise Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileCitadelTorpedo(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Rift Citadel Torpedo"
+        cont = "Citadel Torpedo Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileCitadelCruise(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
         item = "Sol Citadel Cruise Missile"
         cont = "Citadel Cruise Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeMissileDefender(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Defender I"
+        cont = "Heavy Missile Launcher I"
+        iLvl = 1
+        iIngame = 1.1
+        fLvl = 4
+        fIngame = 1.4
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_explosionDelay_chargeOther(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Electron Bomb"
+        cont = "Bomb Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
