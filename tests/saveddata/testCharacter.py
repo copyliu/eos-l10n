@@ -1,4 +1,4 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Character, User, Fit, Skill, Ship
 from eos.saveddata.character import ReadOnlyException
 from eos import db
@@ -6,8 +6,8 @@ import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
-class TestCharacter(unittest.TestCase):
-    def test_DatabaseConsistency(self):
+class Test(TestBase):
+    def test_databaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
         try:
@@ -70,7 +70,7 @@ class TestCharacter(unittest.TestCase):
         self.assertEquals(c.getSkill(s1.item.ID), s1)
         self.assertEquals(c.getSkill(s1.item), s1)
 
-    def test_ReadOnly(self):
+    def test_readOnly(self):
         s = Skill(db.getItem("Caldari Frigate"), 3, True)
         try:
             s.level = 5
@@ -104,5 +104,3 @@ class TestCharacter(unittest.TestCase):
         news = copy.getSkill("Leadership")
         self.assertNotEquals(id(s), id(news))
         self.assertEquals(s.level, news.level)
-
-

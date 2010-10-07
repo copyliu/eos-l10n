@@ -1,8 +1,8 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Fit, DamagePattern, Ship, Module, State
 
-class TestDamagePattern(unittest.TestCase):
+class Test(TestBase):
     def test_rawEhp(self):
         f = Fit()
         f.ship = Ship(db.getItem("Wolf"))

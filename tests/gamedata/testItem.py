@@ -1,16 +1,16 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Skill
 
-class TestItem(unittest.TestCase):
-    def test_Race(self):
+class Test(TestBase):
+    def test_race(self):
         i = db.getItem("Dramiel")
         self.assertEqual(i.race, "angel")
 
         ii = db.getItem("Punisher")
         self.assertEqual(ii.race, "amarr")
 
-    def test_RequiredSkills(self):
+    def test_requiredSkills(self):
         i = db.getItem("Dramiel")
         self.assertEquals(len(i.requiredSkills), 2)
         skills = ("Minmatar Frigate", "Gallente Frigate")

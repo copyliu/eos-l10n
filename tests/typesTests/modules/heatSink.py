@@ -1,10 +1,11 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Module, Fit
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
-class TestHeatSink(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.fit = Fit()
         self.hsi = db.getItem("Heat Sink II")
         self.eti = db.getItem("Heavy Modulated Energy Beam I")

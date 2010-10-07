@@ -1,10 +1,10 @@
-import unittest
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Module, Fit, Ship, State
 
-class TestStasisWebifier(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.i = db.getItem("Stasis Webifier I")
         self.f = Fit()
         self.f.ship = Ship(db.getItem("Rifter"))

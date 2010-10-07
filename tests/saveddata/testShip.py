@@ -1,8 +1,9 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Ship
 from eos import db
 from copy import deepcopy
-class TestShip(unittest.TestCase):
+
+class Test(TestBase):
     def test_clear(self):
         s = Ship(db.getItem("Rifter"))
         orig = s.getModifiedItemAttr("hp")

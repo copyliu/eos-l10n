@@ -1,6 +1,7 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import User
-class TestUser(unittest.TestCase):
+
+class Test(TestBase):
     def testPasswordEncryption(self):
         u = User("MOOBAR")
         u.encodeAndSetPassword("FOOBAR")

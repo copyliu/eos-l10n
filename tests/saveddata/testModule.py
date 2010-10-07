@@ -1,12 +1,13 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Module, Fit, User, State, Ship, Slot, Hardpoint
 from eos import db
 import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
-class TestModule(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.i = db.getItem("Heat Sink I")
         self.m = Module(self.i)
 
@@ -100,7 +101,7 @@ class TestModule(unittest.TestCase):
         m = Module(db.getItem("Salvager I"))
         self.assertEquals(m.hardpoint, Hardpoint.NONE)
 
-    def test_DatabaseConsistency(self):
+    def test_databaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
         try:

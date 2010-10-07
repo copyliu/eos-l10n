@@ -1,9 +1,10 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Gang, Wing, Squad, Ship, Fit, Module, Skill, Character
 
-class TestGang(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         g = Gang()
         w = Wing()
         s = Squad()
@@ -19,7 +20,7 @@ class TestGang(unittest.TestCase):
         f.ship = Ship(db.getItem("Rifter"))
         f.character = Character("testety")
 
-    def test_SkillGang(self):
+    def test_skillGang(self):
         self.s.leader.character.getSkill("Leadership").level = 5
         self.g.calculateModifiedAttributes()
         new = self.s.leader.ship.getModifiedItemAttr("scanResolution")
@@ -33,7 +34,7 @@ class TestGang(unittest.TestCase):
         new = self.s.leader.ship.getModifiedItemAttr("shieldKineticDamageResonance")
         self.assertEquals(expected, new)
 
-    def test_ShipGang(self):
+    def test_shipGang(self):
         self.s.leader.character.getSkill("Gallente Titan").level = 1
         self.s.leader.ship = Ship(db.getItem("Erebus"))
         self.g.calculateModifiedAttributes()

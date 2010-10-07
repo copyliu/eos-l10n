@@ -1,17 +1,19 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Fit, Character, User, Ship
 from eos import db
 
-#Add some test data
-u = User("test", "testy", False)
-c = Character("TESTY")
-c.owner = u
-db.saveddata_session.add(u)
-db.saveddata_session.add(c)
-db.saveddata_session.commit()
-db.saveddata_session.flush()
+class Test(TestBase):
+    def setUp(self):
+        TestBase.setUp(self)
+        #Add some test data
+        u = User("test", "testy", False)
+        c = Character("TESTY")
+        c.owner = u
+        db.saveddata_session.add(u)
+        db.saveddata_session.add(c)
+        db.saveddata_session.commit()
+        db.saveddata_session.flush()
 
-class TestSavedDataQueries(unittest.TestCase):
     def test_1getCharacter(self):
         c = db.getCharacter("TESTY")
         self.assertEquals(c.name, "TESTY")

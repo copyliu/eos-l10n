@@ -1,14 +1,14 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Booster, Fit, User, Ship
 import sqlalchemy.orm
 import eos.db.saveddata.queries
 from copy import deepcopy
 
-class TestBooster(unittest.TestCase):
-    def test_SetInvalidBooster(self):
+class Test(TestBase):
+    def test_setInvalidBooster(self):
         try:
-            b = Booster(db.getItem("Gamma L"))
+            Booster(db.getItem("Gamma L"))
         except ValueError:
             return
         self.fail("Expected a ValueError when trying to use Gamma L as a booster")
@@ -42,7 +42,7 @@ class TestBooster(unittest.TestCase):
         b.clear()
         self.assertEquals(b.getModifiedItemAttr("trackingSpeedMultiplier"), orig)
 
-    def test_DatabaseConsistency(self):
+    def test_databaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
         try:

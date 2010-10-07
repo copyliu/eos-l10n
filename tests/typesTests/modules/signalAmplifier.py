@@ -1,10 +1,11 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Fit, Ship, Module
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 
-class TestSignalAmplifier(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.fit = Fit()
         self.fit.ship = Ship(db.getItem("Rifter"))
         self.testItem = db.getItem("Signal Amplifier II")

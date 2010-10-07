@@ -1,4 +1,4 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Fit, Character, Slot, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
 from eos import db
 import eos.db.saveddata.queries
@@ -6,8 +6,9 @@ import sqlalchemy.orm
 from copy import deepcopy
 from itertools import count
 
-class TestFit(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.m = Module(db.getItem("Heat Sink I"))
 
     def test_addDrain(self):
@@ -19,7 +20,6 @@ class TestFit(unittest.TestCase):
     def test_setCharacter(self):
         f = Fit()
         f.character = Character("Testety")
-
 
     def test_addNotAModule(self):
         try:
@@ -55,7 +55,7 @@ class TestFit(unittest.TestCase):
         f.clear()
         self.assertEqual(f.extraAttributes["cloaked"], False)
 
-    def test_DatabaseConsistency(self):
+    def test_databaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
         try:
@@ -227,7 +227,7 @@ class TestFit(unittest.TestCase):
         s = f.calculateSustainableTank()
         self.assertEquals(s["armorRepair"], f.extraAttributes["armorRepair"])
 
-    def test_ZeroSustainable(self):
+    def test_zeroSustainable(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         for i in count(1):

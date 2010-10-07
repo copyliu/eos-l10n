@@ -1,20 +1,19 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Drone, Fit, User, Ship
 import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
-class TestDrone(unittest.TestCase):
+class Test(TestBase):
     def test_clear(self):
         d = Drone(db.getItem("Hobgoblin I"))
         orig = d.getModifiedItemAttr("hp")
-
         d.itemModifiedAttributes["hp"] = 5
         d.clear()
         self.assertEquals(d.getModifiedItemAttr("hp"), orig)
 
-    def test_DatabaseConsistency(self):
+    def test_databaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
         try:

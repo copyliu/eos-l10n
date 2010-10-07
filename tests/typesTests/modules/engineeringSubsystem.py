@@ -1,10 +1,10 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
-from eos.types import Module, Fit, Ship, State
-from eos.modifiedAttributeDict import ModifiedAttributeDict
+from eos.types import Module, Fit, Ship
 
-class TestEngineeringSubsystem(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.fit = Fit()
         self.tengu = db.getItem("Tengu")
         self.fit.ship = Ship(self.tengu)

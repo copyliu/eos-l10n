@@ -1,8 +1,8 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 
-class TestAttributes(unittest.TestCase):
-    def test_AttributeNamesMatch(self):
+class Test(TestBase):
+    def test_attributeNamesMatch(self):
         i = db.getItem("Gamma L")
         for attrName, attr in i.attributes.iteritems():
             self.assertEquals(attrName, attr.name)

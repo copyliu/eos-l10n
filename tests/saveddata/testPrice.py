@@ -1,8 +1,8 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Price
 import time
 
-class TestPrice(unittest.TestCase):
+class Test(TestBase):
     def test_valid(self):
         p = Price(1)
         p.time = time.time() - Price.VALIDITY + 1000
