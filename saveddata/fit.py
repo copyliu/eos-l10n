@@ -236,9 +236,9 @@ class Fit(object):
     #so we can correctly map "Affected By"
     def __register(self, currModifier):
         self.__modifier = currModifier
-        if hasattr(self, "itemModifiedAttributes"):
+        if hasattr(currModifier, "itemModifiedAttributes"):
             currModifier.itemModifiedAttributes.fit = self
-        if hasattr(self, "chargeModifiedAttributes"):
+        if hasattr(currModifier, "chargeModifiedAttributes"):
             currModifier.chargeModifiedAttributes.fit = self
 
     def getModifier(self):
