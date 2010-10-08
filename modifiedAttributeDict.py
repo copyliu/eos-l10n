@@ -162,7 +162,7 @@ class ModifiedAttributeDict(object):
     def iterAfflictions(self):
         return self.__affectedBy.__iter__()
 
-    def __afflict(self, key, modifier, bonus):
+    def __afflict(self, key, operation, bonus):
         if self.fit is None:
             return
 
@@ -175,7 +175,7 @@ class ModifiedAttributeDict(object):
 
         stuff = stuff[self.fit]
         modifier = self.fit.getModifier()
-        stuff.add((modifier, modifier, bonus))
+        stuff.add((modifier, operation, bonus))
 
 
 
