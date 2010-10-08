@@ -175,6 +175,7 @@ class ModifiedAttributeDict(object):
 
         stuff = stuff[self.fit]
         modifier = self.fit.getModifier()
+        print key, operation
         stuff.add((modifier, operation, bonus))
 
 
@@ -214,7 +215,7 @@ class ModifiedAttributeDict(object):
         self.__placehold(attributeName)
 
         if multiplier != 1:
-            self.__afflict(attributeName, "%s*" % "s" if stackingPenalties else "", multiplier)
+            self.__afflict(attributeName, "%s*" % ("s" if stackingPenalties else ""), multiplier)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
