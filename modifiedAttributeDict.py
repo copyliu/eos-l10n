@@ -194,7 +194,8 @@ class ModifiedAttributeDict(object):
 
         tbl[attributeName] += increase
         self.__placehold(attributeName)
-        self.__afflict(attributeName)
+        if increase != 0:
+            self.__afflict(attributeName)
 
     def multiply(self, attributeName, multiplier, stackingPenalties=False, penaltyGroup="default"):
         if stackingPenalties:
@@ -211,7 +212,9 @@ class ModifiedAttributeDict(object):
             self.__multipliers[attributeName] *= multiplier
 
         self.__placehold(attributeName)
-        self.__afflict(attributeName)
+
+        if multiplier != 1:
+            self.__afflict(attributeName)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
