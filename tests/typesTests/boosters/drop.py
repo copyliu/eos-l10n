@@ -1,9 +1,10 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Fit, Booster, Character, Ship, Module
 
-class TestDrop(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.f = Fit()
         self.c = Character("testDrop")
         self.f.character = self.c

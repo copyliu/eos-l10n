@@ -1,9 +1,10 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Module, Fit, Ship, Character, Skill
 
-class TestThrasher(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.c = Character("ThrasherTest")
         self.c.addSkill(Skill(db.getItem("Destroyers"), 5))
         self.i = db.getItem("125mm Gatling AutoCannon I")

@@ -1,9 +1,10 @@
-import unittest
+from eos.tests import TestBase
 from eos import db
 from eos.types import Fit, Implant, Character, Ship
 
-class TestCR8(unittest.TestCase):
+class Test(TestBase):
     def setUp(self):
+        TestBase.setUp(self)
         self.f = Fit()
         self.c = Character("testCR8")
         self.f.character = self.c

@@ -1,14 +1,14 @@
-import unittest
+from eos.tests import TestBase
 from eos.types import Implant, Fit, User, Ship
 from eos import db
 import eos.db.saveddata.queries
 import sqlalchemy.orm
 from copy import deepcopy
 
-class TestImplant(unittest.TestCase):
-    def test_InvalidImplant(self):
+class Test(TestBase):
+    def test_invalidImplant(self):
         try:
-            i = Implant(db.getItem("Gamma L"))
+            Implant(db.getItem("Gamma L"))
         except ValueError:
             return
         self.fail("Was expected a ValueError when setting Gamma L as implant, didn't get it")
@@ -25,7 +25,7 @@ class TestImplant(unittest.TestCase):
         i = Implant(db.getItem("Halo Omega"))
         self.assertEquals(i.slot, 6)
 
-    def test_DatabaseConsistency(self):
+    def test_databaseConsistency(self):
         oldSession = db.saveddata_session
         oldSession.commit()
         try:
