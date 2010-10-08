@@ -175,10 +175,8 @@ class ModifiedAttributeDict(object):
 
         stuff = stuff[self.fit]
         modifier = self.fit.getModifier()
-        print key, operation
+
         stuff.add((modifier, operation, bonus))
-
-
 
     def increase(self, attributeName, increase, position="pre"):
         if position == "pre":
