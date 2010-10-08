@@ -37,33 +37,22 @@ class Test(TestBase):
         m.state = State.OVERHEATED
 
     def test_setWrongAmmoType(self):
-        try:
-            m = Module(db.getItem("125mm Gatling AutoCannon I"))
-            m.charge = db.getItem("Gamma L")
-        except ValueError:
-            return
-        self.fail("Expected a ValueError, didn't get it.")
+        m = Module(db.getItem("125mm Gatling AutoCannon I"))
+        self.assertFalse(m.isValidCharge(db.getItem("Gamma L")))
 
     def test_setWrongAmmoSize(self):
-        try:
-            m = Module(db.getItem("Dual Light Pulse Laser I"))
-            m.charge = db.getItem("Gamma M")
-        except ValueError:
-            return
-        self.fail("Expected a ValueError, didn't get it.")
+        m = Module(db.getItem("Dual Light Pulse Laser I"))
+        self.assertFalse(m.isValidCharge(db.getItem("Gamma M")))
 
     def test_setWrongAmmoSubGroup(self):
-        try:
-            m = Module(db.getItem("Dual Light Pulse Laser I"))
-            m.charge = db.getItem("Scorch S")
-        except ValueError:
-            return
-        self.fail("Expected a ValueError, didn't get it.")
+        m = Module(db.getItem("Dual Light Pulse Laser I"))
+        self.assertFalse(m.isValidCharge(db.getItem("Scorch S")))
 
     def test_setCorrectAmmo(self):
         i = db.getItem("Dual Light Pulse Laser I")
         m = Module(i)
         a = db.getItem("Gamma S")
+        self.assertTrue(m.isValidCharge(a))
         m.charge = a
         self.assertEquals(m.numCharges, 1)
         self.assertEquals(m.itemID, i.ID)
@@ -194,7 +183,7 @@ class Test(TestBase):
 
         m3 = Module(db.getItem("Standard Missile Launcher I"))
         m3.charge = db.getItem("Bloodclaw Light Missile")
-        self.assertEquals(m3.maxRange, m3.getModifiedChargeAttr("explosionDelay") * m3.getModifiedChargeAttr("maxVelocity"))
+        self.assertEquals(m3.maxRange, m3.getModifiedChargeAttr("explosionDelay") / 1000.0 * m3.getModifiedChargeAttr("maxVelocity"))
 
     def test_buildDummy(self):
         m = Module.buildEmpty(Slot.LOW)

@@ -143,7 +143,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 delay = self.getModifiedChargeAttr("explosionDelay")
                 speed = self.getModifiedChargeAttr("maxVelocity")
                 if delay is not None and speed is not None:
-                    return delay * speed
+                    return delay / 1000.0 * speed
 
     @property
     def slot(self):
