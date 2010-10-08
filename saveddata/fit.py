@@ -510,7 +510,7 @@ class Fit(object):
             else:
                 capAdded += capNeed / cycleTime
 
-        return drains, capUsed
+        return drains, capUsed, capAdded
 
     def simulateCap(self):
         drains, self.__capUsed, self.__capRecharge = self.__generateDrain()
