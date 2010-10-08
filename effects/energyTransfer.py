@@ -5,4 +5,4 @@ def handler(fit, module, context):
     if "projected" not in context: return
     amount = module.getModifiedItemAttr("powerTransferAmount")
     duration = module.getModifiedItemAttr("duration") / 1000.0
-    fit.extraAttributes["capBoost"].increase(amount / duration)
+    fit.addDrain(duration, -amount, 0)
