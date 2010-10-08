@@ -496,7 +496,7 @@ class Fit(object):
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
                 if capNeed != 0 and capNeed is not None:
                     cycleTime = mod.getCycleTime()
-                    if capUsed > 0:
+                    if capNeed > 0:
                         capUsed += capNeed / cycleTime
                     else:
                         capAdded += -capNeed / cycleTime
@@ -505,7 +505,7 @@ class Fit(object):
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
             drains.append((int(cycleTime * 1000), capNeed, clipSize))
-            if capUsed > 0:
+            if capNeed > 0:
                 capUsed += capNeed / cycleTime
             else:
                 capAdded += -capNeed / cycleTime
