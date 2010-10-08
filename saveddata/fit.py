@@ -237,7 +237,7 @@ class Fit(object):
 
     #Methods to register and get the thing currently affecting the fit,
     #so we can correctly map "Affected By"
-    def __register(self, currModifier):
+    def register(self, currModifier):
         self.__modifier = currModifier
         if hasattr(currModifier, "itemModifiedAttributes"):
             currModifier.itemModifiedAttributes.fit = self
@@ -277,7 +277,7 @@ class Fit(object):
             for item in c:
                 #Registering the item about to affect the fit allows us to track "Affected By" relations correctly
                 if item is not None:
-                    targetFit.__register(item)
+                    targetFit.register(item)
                     item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
 
         for fit in self.projectedFits:

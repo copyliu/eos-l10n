@@ -171,12 +171,11 @@ class ModifiedAttributeDict(object):
 
         stuff = self.__affectedBy[key]
         if self.fit not in stuff:
-            stuff[self.fit] = {}
+            stuff[self.fit] = set()
 
         stuff = stuff[self.fit]
         modifier = self.fit.getModifier()
-        if modifier not in stuff:
-            stuff[modifier] = []
+        stuff.add(modifier)
 
 
 

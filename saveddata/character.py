@@ -184,6 +184,7 @@ class Character(object):
     def calculateModifiedAttributes(self, fit, runTime, forceProjected = False):
         if forceProjected: return
         for skill in self.iterSkills():
+            fit.register(skill)
             skill.calculateModifiedAttributes(fit, runTime)
 
     def clear(self):
