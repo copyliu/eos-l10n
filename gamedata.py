@@ -26,6 +26,11 @@ class Effect(EqBase):
     The effect handling class, it is used to proxy and load effect handler code,
     as well as a container for extra information regarding effects coming
     from the gamedata db.
+
+    @ivar ID: the ID of this effect
+    @ivar name: The name of this effect
+    @ivar description: The description of this effect, this is usualy pretty useless
+    @ivar published: Wether this effect is published or not, unpublished effects are typicaly unused.
     '''
     #Filter to change names of effects to valid python method names
     nameFilter = re.compile("[^A-Za-z0-9]")
