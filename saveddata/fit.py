@@ -499,7 +499,7 @@ class Fit(object):
                     if capUsed > 0:
                         capUsed += capNeed / cycleTime
                     else:
-                        capAdded += capNeed / cycleTime
+                        capAdded += -capNeed / cycleTime
 
                     drains.append((int(cycleTime * 1000), capNeed, mod.numCharges))
 
@@ -508,7 +508,7 @@ class Fit(object):
             if capUsed > 0:
                 capUsed += capNeed / cycleTime
             else:
-                capAdded += capNeed / cycleTime
+                capAdded += -capNeed / cycleTime
 
         return drains, capUsed, capAdded
 
