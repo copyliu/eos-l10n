@@ -439,7 +439,7 @@ class Fit(object):
                     sustainable[attr] = self.extraAttributes[attr]
                     dict = self.extraAttributes.getAfflictions(attr)
                     if self in dict:
-                        for mod in dict[self]:
+                        for mod, modifier, amount in dict[self]:
                             capUsed -= mod.getCapUsage()
                             cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
                             amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])

@@ -162,7 +162,7 @@ class ModifiedAttributeDict(object):
     def iterAfflictions(self):
         return self.__affectedBy.__iter__()
 
-    def __afflict(self, key):
+    def __afflict(self, key, modifier, bonus):
         if self.fit is None:
             return
 
@@ -175,7 +175,7 @@ class ModifiedAttributeDict(object):
 
         stuff = stuff[self.fit]
         modifier = self.fit.getModifier()
-        stuff.add(modifier)
+        stuff.add((modifier, modifier, bonus))
 
 
 
@@ -195,7 +195,7 @@ class ModifiedAttributeDict(object):
         tbl[attributeName] += increase
         self.__placehold(attributeName)
         if increase != 0:
-            self.__afflict(attributeName)
+            self.__afflict(attributeName, "+", increase)
 
     def multiply(self, attributeName, multiplier, stackingPenalties=False, penaltyGroup="default"):
         if stackingPenalties:
@@ -214,7 +214,7 @@ class ModifiedAttributeDict(object):
         self.__placehold(attributeName)
 
         if multiplier != 1:
-            self.__afflict(attributeName)
+            self.__afflict(attributeName, "%s*" % "s" if stackingPenalties else "", multiplier)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
