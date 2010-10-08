@@ -94,7 +94,7 @@ class ModifiedAttributeDict(object):
         return (key for key in all)
 
     def __contains__(self, key):
-        return (self.__original is not None and key in self.__original) or key in self.__modified
+        return (self.__original is not None and key in self.__original) or key in self.__modified or key in self.__intermediary
 
     def iterkeys(self):
         for key in self:
