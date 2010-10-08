@@ -490,23 +490,31 @@ class Fit(object):
     def __generateDrain(self):
         drains = []
         capUsed = 0
+        capAdded = 0
         for mod in self.modules:
             if mod.state == State.ACTIVE:
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
                 if capNeed != 0 and capNeed is not None:
                     cycleTime = mod.getCycleTime()
-                    capUsed += capNeed / cycleTime
+                    if capUsed > 0:
+                        capUsed += capNeed / cycleTime
+                    else:
+                        capAdded += capNeed / cycleTime
+
                     drains.append((int(cycleTime * 1000), capNeed, mod.numCharges))
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
             drains.append((int(cycleTime * 1000), capNeed, clipSize))
-            capUsed += capNeed / cycleTime
+            if capUsed > 0:
+                capUsed += capNeed / cycleTime
+            else:
+                capAdded += capNeed / cycleTime
 
         return drains, capUsed
 
     def simulateCap(self):
-        drains, self.__capUsed = self.__generateDrain()
-        self.__capRecharge = self.calculateCapRecharge()
+        drains, self.__capUsed, self.__capRecharge = self.__generateDrain()
+        self.__capRecharge += self.calculateCapRecharge()
         if len(drains) > 0:
             sim = capSim.CapSimulator()
             sim.init(drains)
