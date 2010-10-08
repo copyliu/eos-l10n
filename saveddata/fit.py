@@ -227,10 +227,13 @@ class Fit(object):
         self.__capRecharge = None
         del self.__calculatedTargets[:]
         del self.__extraDrains[:]
+
         if self.ship is not None: self.ship.clear()
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
             if stuff is not None: stuff.clear()
+        if self.ship is not None:
+            self.extraAttributes["capacity"] = self.ship.item.capacity
 
     #Methods to register and get the thing currently affecting the fit,
     #so we can correctly map "Affected By"
