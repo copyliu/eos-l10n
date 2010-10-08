@@ -183,7 +183,6 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @charge.setter
     def charge(self, charge):
-        if not self.isValidCharge(charge): raise ValueError("Ammo does not fit in that slot")
         self.__charge = charge
         if charge is not None:
             self.chargeID = charge.ID
