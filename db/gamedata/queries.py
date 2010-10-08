@@ -105,10 +105,11 @@ def getMarketGroup(group, eager=None):
 
     return gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(filter).one()
 
-def getAttributeInfo(attr):
+@cachedQuery(1, "attr")
+def getAttributeInfo(attr, eager=None):
     if isinstance(attr, basestring):
         filter = AttributeInfo.name == attr
     elif isinstance(attr, int):
         filter = AttributeInfo.ID == attr
 
-    return gamedata_session.query(AttributeInfo).filter(filter).one()
+    return gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
