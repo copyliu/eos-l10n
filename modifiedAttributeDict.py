@@ -159,6 +159,9 @@ class ModifiedAttributeDict(object):
     def getAfflictions(self, key):
         return self.__affectedBy[key] if key in self.__affectedBy else {}
 
+    def iterAfflictions(self):
+        return self.__affectedBy.__iter__()
+
     def __afflict(self, key):
         if self.fit is None:
             return
