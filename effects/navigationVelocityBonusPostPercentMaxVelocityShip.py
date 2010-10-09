@@ -4,5 +4,6 @@
 #Skill: Navigation
 type = "passive"
 def handler(fit, container, context):
-    fit.ship.boostItemAttr("maxVelocity", container.getModifiedItemAttr("velocityBonus"),
+    level = container.level if "skill" in context else 1
+    fit.ship.boostItemAttr("maxVelocity", container.getModifiedItemAttr("velocityBonus") * level,
                            stackingPenalties = "skill" not in context and "implant" not in context)
