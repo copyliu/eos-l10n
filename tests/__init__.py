@@ -49,7 +49,7 @@ class TestBase(unittest.TestCase):
             fit.modules.append(itemInst)
         elif cat == "charge":
             # Use dummy container for any charge
-            itemInst = Module(db.getItem("Rocket Launcher I"))
+            itemInst = Module(db.getItem("Bomb Launcher I"))
             itemInst.charge = item
             fit.modules.append(itemInst)
         else:

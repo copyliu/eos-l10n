@@ -3,4 +3,4 @@
 #Charges from group: Tracking Script (2 of 2)
 type = "passive"
 def handler(fit, module, context):
-    module.boostItemAttr("trackingSpeedBonus", module.getModifiedChargeAttr("trackingSpeedBonus"))
+    module.boostItemAttr("trackingSpeedBonus", module.getModifiedChargeAttr("trackingSpeedBonusBonus"))
