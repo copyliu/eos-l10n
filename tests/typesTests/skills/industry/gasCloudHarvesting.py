@@ -3,12 +3,12 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.skill = "Advanced Drone Interfacing"
+        self.skill = "Gas Cloud Harvesting"
 
-    def test_maxGroupActive_moduleDroneControlUnit(self):
+    def test_maxGroupActive_moduleGasCloudHarvester(self):
         self.buildTested = 0
         attr = "maxGroupActive"
-        item = "Drone Control Unit I"
+        item = "Gas Cloud Harvester I"
         iLvl = 1
         iIngame = 1
         fLvl = 4
@@ -22,7 +22,7 @@ class Test(TestBase):
     def test_maxGroupActive_moduleOther(self):
         self.buildTested = 0
         attr = "maxGroupActive"
-        item = "Gas Cloud Harvester I"
+        item = "10MN Afterburner I"
         iLvl = 1
         iIngame = 0
         fLvl = 4
