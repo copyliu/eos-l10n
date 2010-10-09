@@ -27,15 +27,15 @@ from eos.db.util import cachedQuery, processEager, processWhere
 def getItem(lookfor, eager=None):
     if isinstance(lookfor, basestring):
         return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).one()
-    elif isinstance(lookfor, int):
-        return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == lookfor).one()
+    elif isinstance(lookfor, (int, float)):
+        return gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == int(lookfor)).one()
 
 @cachedQuery(2, "where", "filter")
 def getItemsByCategory(filter, where=None, eager=None):
     if isinstance(filter, basestring):
         filter = Category.name == filter
-    elif isinstance(filter, int):
-        filter = Category.ID == filter
+    elif isinstance(filter, (int, float)):
+        filter = Category.ID == int(filter)
 
     filter = processWhere(filter, where)
     return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
@@ -58,7 +58,10 @@ def searchItems(nameLike, where=None, join=None, eager=None):
 
 @cachedQuery(3, "where", "item", "metaGroups")
 def getVariations(item, where=None, metaGroups=None, eager=None):
-    if not isinstance(item, int): item = item.ID
+    if not isinstance(item, (int, float)):
+        item = item.ID
+    else:
+        item = int(item)
 
     clause = and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)
 
@@ -82,8 +85,8 @@ def getVariations(item, where=None, metaGroups=None, eager=None):
 def getGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = Group.name == group
-    elif isinstance(group, int):
-        filter = Group.ID == group
+    elif isinstance(group, (int, float)):
+        filter = Group.ID == int(group)
 
     return gamedata_session.query(Group).options(*processEager(eager)).filter(filter).one()
 
@@ -91,8 +94,8 @@ def getGroup(group, eager=None):
 def getCategory(category, eager=None):
     if isinstance(category, basestring):
         filter = Category.name == category
-    elif isinstance(category, int):
-        filter = Category.ID == category
+    elif isinstance(category, (int, float)):
+        filter = Category.ID == int(category)
 
     return gamedata_session.query(Category).options(*processEager(eager)).filter(filter).one()
 
@@ -100,8 +103,8 @@ def getCategory(category, eager=None):
 def getMarketGroup(group, eager=None):
     if isinstance(group, basestring):
         filter = MarketGroup.name == group
-    elif isinstance(group, int):
-        filter = MarketGroup.ID == group
+    elif isinstance(group, (int, float)):
+        filter = MarketGroup.ID == int(group)
 
     return gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(filter).one()
 
@@ -109,7 +112,7 @@ def getMarketGroup(group, eager=None):
 def getAttributeInfo(attr, eager=None):
     if isinstance(attr, basestring):
         filter = AttributeInfo.name == attr
-    elif isinstance(attr, int):
-        filter = AttributeInfo.ID == attr
+    elif isinstance(attr, (int, float)):
+        filter = AttributeInfo.ID == int(attr)
 
     return gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
