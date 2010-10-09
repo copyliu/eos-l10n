@@ -30,7 +30,7 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         db.saveddata_meta.drop_all()
 
-    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, cont=""):
+    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False):
         fit = Fit()
         char = Character("test")
         skill = db.getItem(skillname)
@@ -47,14 +47,15 @@ class TestBase(unittest.TestCase):
         elif cat in ("module", "subsystem"):
             itemInst = Module(item)
             fit.modules.append(itemInst)
-        elif cat == "charge" and cont:
-            itemInst = Module(db.getItem(cont))
+        elif cat == "charge":
+            # Use dummy container for any charge
+            itemInst = Module(db.getItem("Rocket Launcher I"))
             itemInst.charge = item
             fit.modules.append(itemInst)
         else:
             return None
         fit.calculateModifiedAttributes()
-        if (cat == "drone" and getCharge) or (cat == "charge" and cont):
+        if (cat == "drone" and getCharge) or cat == "charge":
             result = itemInst.getModifiedChargeAttr(attr)
         else:
             result = itemInst.getModifiedItemAttr(attr)
