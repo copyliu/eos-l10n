@@ -9,13 +9,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Foxfire Rocket"
-        cont = "Rocket Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -24,13 +23,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Gremlin Rage Rocket"
-        cont = "Rocket Launcher II"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -39,13 +37,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Bloodclaw Light Missile"
-        cont = "Standard Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -54,13 +51,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Civilian Bloodclaw Light Missile"
-        cont = "Standard Missile Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -69,13 +65,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Sabretooth Fury Light Missile"
-        cont = "Standard Missile Launcher II"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -84,13 +79,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Firefly F.O.F. Light Missile I"
-        cont = "Standard Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -99,13 +93,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Torrent Assault Missile"
-        cont = "Heavy Assault Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -114,13 +107,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Terror Javelin Assault Missile"
-        cont = "Heavy Assault Missile Launcher II"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -129,13 +121,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Havoc Heavy Missile"
-        cont = "Heavy Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -144,13 +135,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Scourge Fury Heavy Missile"
-        cont = "Heavy Missile Launcher II"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -159,13 +149,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Hellhound F.O.F. Heavy Missile I"
-        cont = "Heavy Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -174,13 +163,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Inferno Torpedo"
-        cont = "Siege Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -189,13 +177,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Mjolnir Javelin Torpedo"
-        cont = "Siege Missile Launcher II"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -204,13 +191,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Cataclysm Cruise Missile"
-        cont = "Cruise Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -219,13 +205,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Devastator Precision Cruise Missile"
-        cont = "Cruise Missile Launcher II"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -234,13 +219,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Hunter F.O.F. Cruise Missile I"
-        cont = "Cruise Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -249,13 +233,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Rift Citadel Torpedo"
-        cont = "Citadel Torpedo Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -264,13 +247,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Sol Citadel Cruise Missile"
-        cont = "Citadel Cruise Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -279,13 +261,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Defender I"
-        cont = "Heavy Missile Launcher I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
         fIngame = 1.4
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -294,13 +275,12 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "explosionDelay"
         item = "Electron Bomb"
-        cont = "Bomb Launcher I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr, cont=cont)
-        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr, cont=cont)
+        iEos = self.skillTestGetItemAttr(self.skill, iLvl, item, attr)
+        fEos = self.skillTestGetItemAttr(self.skill, fLvl, item, attr)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
