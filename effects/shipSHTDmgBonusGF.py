@@ -5,6 +5,7 @@
 #Ship: Helios
 #Ship: Maulus
 #Ship: Tristan
+#Ship: Velator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

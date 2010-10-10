@@ -3,6 +3,7 @@
 #Ship: Crucifier
 #Ship: Crusader
 #Ship: Executioner
+#Ship: Impairor
 #Ship: Punisher
 #Ship: Retribution
 type = "passive"
