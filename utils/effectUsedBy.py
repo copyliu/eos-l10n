@@ -116,14 +116,10 @@ db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
 # As we don't rely on eos's overrides, we need to set them manually
-OVERRIDES = '''
-UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
-UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
-UPDATE invtypes SET published = '1' WHERE typeName = 'Utu';
-UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
-'''
-for statement in OVERRIDES.split(";\n"):
-    cursor.execute(statement)
+forcepub_types = ("Freki", "Mimir", "Utu", "Adrestia", "Ibis", "Impairor", "Velator", "Reaper")
+OVERRIDES_TYPEPUB = 'UPDATE invtypes SET published = 1 WHERE typeName = ?'
+for typename in forcepub_types:
+    cursor.execute(OVERRIDES_TYPEPUB, (typename,))
 
 # Queries to get raw data
 QUERY_ALLEFFECTS = 'SELECT effectID, effectName FROM dgmeffects'
