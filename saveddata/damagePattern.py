@@ -61,4 +61,6 @@ class DamagePattern(object):
         return amount / (specificDivider or 1)
 
     def __deepcopy__(self, memo):
-        return DamagePattern(self.emAmount, self.thermalAmount, self.kineticAmount, self.explosiveAmount)
+        p = DamagePattern(self.emAmount, self.thermalAmount, self.kineticAmount, self.explosiveAmount)
+        p.name = "%s copy" % self.name
+        return p
