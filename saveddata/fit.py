@@ -595,6 +595,7 @@ class Fit(object):
         copy.owner = self.owner
         copy.ship = deepcopy(self.ship, memo)
         copy.name = "%s copy" % self.name
+        copy.damagePattern = self.damagePattern
 
         toCopy = ("modules", "drones", "implants", "boosters", "projectedModules", "projectedDrones")
         for name in toCopy:
