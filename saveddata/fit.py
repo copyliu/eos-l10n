@@ -59,6 +59,13 @@ class Fit(object):
         self.name = ""
         self.build()
 
+    @classmethod
+    def importAuto(cls, string):
+        if string[0] == "<":
+            return "XML", cls.importXml(string)
+        else:
+            return "EFT", cls.importEft(string)
+
     typeNameRe = re.compile("\\[(.*), (.*)\\]")
     @classmethod
     def importEft(cls, eftString):
