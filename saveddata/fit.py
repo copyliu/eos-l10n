@@ -28,6 +28,7 @@ from copy import deepcopy
 from math import sqrt, pi, exp, log
 from eos.solverMath import gaussian, solve
 from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
+import re
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -56,6 +57,54 @@ class Fit(object):
         self.projected = False
         self.name = ""
         self.build()
+
+    typeNameRe = re.compile("\\[(.*), (.*)\\]")
+    @classmethod
+    def importEft(cls, eftString):
+        from eos import db
+        fit = cls()
+        eftString = eftString.strip()
+        lines = re.split('[\n\r]+', eftString)
+        shipType, fitName = re.match(cls.typeNameRe, lines[0]).groups()
+        try:
+            fit.ship = Ship(db.getItem(shipType))
+            fit.name = fitName
+        except:
+            return
+
+        for i in range(1, len(lines)):
+            line = lines[i]
+            modAmmo = line.split(",")
+            modDrone = modAmmo[0].split(" x")
+            if len(modAmmo) == 2: ammoName = modAmmo[1].strip()
+            else: ammoName = None
+            modName = modDrone[0].strip()
+            if len(modDrone) == 2: droneAmount = modDrone[1].strip()
+            else: droneAmount = None
+            try:
+                item = db.getItem(modName, eager="group.category")
+            except:
+                try:
+                    item = db.getItem(modAmmo[0], eager="group.category")
+                except:
+                    return
+
+            if item.category.name == "Drone":
+                droneAmount = int(droneAmount) if droneAmount is not None else 1
+                d = Drone(item)
+                d.amount = droneAmount
+                fit.drones.append(d)
+            else:
+                m = Module(item)
+                if ammoName:
+                    m.charge = db.getItem(ammoName)
+
+                if m.isValidState(State.ACTIVE):
+                    m.state = State.ACTIVE
+
+                fit.modules.append(m)
+
+        return fit
 
     @reconstructor
     def init(self):

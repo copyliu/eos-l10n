@@ -32,6 +32,17 @@ class Test(TestBase):
         f = Fit()
         f.modules.append(self.m)
 
+    def test_EftImport(self):
+        f = Fit.importEft('''[Rifter, Test]
+Salvager I
+Hobgoblin I x4''')
+
+        self.assertEquals(f.name, "Test")
+        self.assertEquals(f.ship.item.name, "Rifter")
+        self.assertEquals(f.modules[0].item.name, "Salvager I")
+        self.assertEquals(f.drones[0].amount, 4)
+        self.assertEquals(f.drones[0].item.name, "Hobgoblin I")
+
     def test_removeModuleNotExists(self):
         f = Fit()
         self.assertRaises(ValueError, f.modules.remove, self.m)
