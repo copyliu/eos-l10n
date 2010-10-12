@@ -32,7 +32,7 @@ class Test(TestBase):
         f = Fit()
         f.modules.append(self.m)
 
-    def test_EftImport(self):
+    def test_importEft(self):
         f = Fit.importEft('''[Rifter, Test]
                              Salvager I
                              Hobgoblin I x4''')
@@ -42,6 +42,21 @@ class Test(TestBase):
         self.assertEquals(f.modules[0].item.name, "Salvager I")
         self.assertEquals(f.drones[0].amount, 4)
         self.assertEquals(f.drones[0].item.name, "Hobgoblin I")
+
+    def test_importXml(self):
+        fits = Fit.importXml('''<?xml version="1.0" ?>
+                            <fittings>
+                                <fitting name="Test">
+                                    <description value=""/>
+                                    <shipType value="Rifter"/>
+                                    <hardware slot="hi slot 0" type="Salvager II"/>
+                                </fitting>
+                            </fittings>''')
+
+        f = fits[0]
+        self.assertEquals(f.name, "Test")
+        self.assertEquals(f.ship.item.name, "Rifter")
+        self.assertEquals(f.modules[0].item.name, "Salvager II")
 
     def test_removeModuleNotExists(self):
         f = Fit()

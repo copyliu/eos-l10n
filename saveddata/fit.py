@@ -120,6 +120,7 @@ class Fit(object):
         fittings = doc.getElementsByTagName("fittings").item(0)
         fittings = fittings.getElementsByTagName("fitting")
         fits = []
+        from eos import db
         for fitting in fittings:
             try:
                 f = Fit()
@@ -140,10 +141,10 @@ class Fit(object):
                             if m.isValidState(State.ACTIVE):
                                 m.state = State.ACTIVE
 
-                            self.modules.append(m)
+                            f.modules.append(m)
 
                 fits.append(f)
-            except:
+            except Exception, e:
                 pass
 
         return fits
