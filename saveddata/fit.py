@@ -29,6 +29,7 @@ from math import sqrt, pi, exp, log
 from eos.solverMath import gaussian, solve
 from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
 import re
+import xml.dom
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -105,6 +106,40 @@ class Fit(object):
                 fit.modules.append(m)
 
         return fit
+
+    @classmethod
+    def importXml(cls, text):
+        doc = xml.dom.minidom.parseString(text)
+        fittings = doc.getElementsByTagName("fittings").item(0)
+        fittings = fittings.getElementsByTagName("fitting")
+        fits = []
+        for fitting in fittings:
+            try:
+                f = Fit()
+                f.name = fitting.getAttribute("name")
+                shipType = fitting.getElementsByTagName("shipType").item(0).getAttribute("value")
+                f.ship = Ship(db.getItem(shipType))
+                hardwares = fitting.getElementsByTagName("hardware")
+                for hardware in hardwares:
+                    moduleName = hardware.getAttribute("type")
+                    item = db.getItem(moduleName, eager="group.category")
+                    if item:
+                        if item.group.name == "Drone":
+                            d = Drone(item)
+                            d.amount = int(hardware.getAttribute("qty"))
+                            f.drones.append(d)
+                        else:
+                            m = Module(item)
+                            if m.isValidState(State.ACTIVE):
+                                m.state = State.ACTIVE
+
+                            self.modules.append(m)
+
+                fits.append(f)
+            except:
+                pass
+
+        return fits
 
     @reconstructor
     def init(self):
