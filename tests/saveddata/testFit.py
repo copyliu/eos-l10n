@@ -34,8 +34,8 @@ class Test(TestBase):
 
     def test_EftImport(self):
         f = Fit.importEft('''[Rifter, Test]
-Salvager I
-Hobgoblin I x4''')
+                             Salvager I
+                             Hobgoblin I x4''')
 
         self.assertEquals(f.name, "Test")
         self.assertEquals(f.ship.item.name, "Rifter")
