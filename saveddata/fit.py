@@ -61,12 +61,37 @@ class Fit(object):
 
     @classmethod
     def importAuto(cls, string):
+        string = string.strip()
         if string[0] == "<":
             return "XML", cls.importXml(string)
-        else:
+        elif string[0] == "[":
             return "EFT", (cls.importEft(string),)
+        else:
+            return "DNA", (cls.importDna(string),)
+
+    @classmethod
+    def importDna(cls, string):
+        from eos import db
+        info = string.split(":")
+        f = Fit()
+        f.ship = Ship(db.getItem(int(info[0])))
+        f.name = "%s - DNA Imported" % f.ship.item.name
+        for itemInfo in info[1:]:
+            if itemInfo:
+                itemID, amount = itemInfo.split(";")
+                item = db.getItem(int(itemID), eager="group.category")
+
+                if item.category.name == "Drone":
+                    d = Drone(item)
+                    d.amount = amount
+                    f.drones.append(d)
+                else:
+                    f.modules.append(Module(item))
+
+        return f
 
     typeNameRe = re.compile("\\[(.*), (.*)\\]")
+
     @classmethod
     def importEft(cls, eftString):
         from eos import db
@@ -149,7 +174,7 @@ class Fit(object):
 
         return fits
 
-    EXPORT_ORDER = [Slot.SUBSYSTEM, Slot.HIGH, Slot.MED, Slot.LOW, Slot.RIG]
+    EXPORT_ORDER_EFT = [Slot.SUBSYSTEM, Slot.HIGH, Slot.MED, Slot.LOW, Slot.RIG]
     def exportEft(self):
         export = "[%s, %s]\n" % (self.ship.item.name, self.name)
         stuff = {}
@@ -162,7 +187,7 @@ class Fit(object):
             curr += "\n"
             stuff[slot].append(curr)
 
-        for slotType in self.EXPORT_ORDER:
+        for slotType in self.EXPORT_ORDER_EFT:
             data = stuff.get(slotType)
             if data is not None:
                 export += "\n"
@@ -174,6 +199,17 @@ class Fit(object):
             export += "%s x%s\n" % (drone.item.name, drone.amount)
 
         return export
+
+    def exportDna(self):
+        dna = str(self.shipID)
+        for mod in self.modules:
+            if not mod.isEmpty:
+                dna += ":%d;1" % mod.itemID
+
+        for drone in self.drones:
+            dna += ":%d;%d" % (drone.itemID, drone.amount)
+
+        return dna + "::"
 
     @classmethod
     def exportXml(self, *fits):
