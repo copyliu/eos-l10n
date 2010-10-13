@@ -175,6 +175,46 @@ class Fit(object):
 
         return export
 
+    @classmethod
+    def exportXml(self, *fits):
+        doc = xml.dom.minidom.Document()
+        fittings = doc.createElement("fittings")
+        doc.appendChild(fittings)
+
+        for fit in fits:
+            fitting = doc.createElement("fitting")
+            fitting.setAttribute("name", fit.name)
+            fittings.appendChild(fitting)
+            description = doc.createElement("description")
+            description.setAttribute("value", "")
+            fitting.appendChild(description)
+            shipType = doc.createElement("shipType")
+            shipType.setAttribute("value", fit.ship.item.name)
+            fitting.appendChild(shipType)
+
+            slotNum = {}
+            for module in fit.modules:
+                if module.isEmpty:
+                    continue
+
+                slot = module.slot
+                if not slot in slotNum: slotNum[slot] = 0
+                slotId = slotNum[slot]
+                slotNum[slot] += 1
+                hardware = doc.createElement("hardware")
+                hardware.setAttribute("type", module.item.name)
+                hardware.setAttribute("slot", "%s slot %d" % (Slot.getName(slot), slotId))
+                fitting.appendChild(hardware)
+
+            for drone in fit.drones:
+                hardware = doc.createElement("hardware")
+                hardware.setAttribute("qty", "%d" % drone.amount)
+                hardware.setAttribute("slot", "drone bay")
+                hardware.setAttribute("type", drone.item.name)
+                fitting.appendChild(hardware)
+
+        return doc.toprettyxml()
+
     @reconstructor
     def init(self):
         self.build()
