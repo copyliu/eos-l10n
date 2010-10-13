@@ -212,7 +212,7 @@ class Fit(object):
         return dna + "::"
 
     @classmethod
-    def exportXml(self, *fits):
+    def exportXml(cls, *fits):
         doc = xml.dom.minidom.Document()
         fittings = doc.createElement("fittings")
         doc.appendChild(fittings)
