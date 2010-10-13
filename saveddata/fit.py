@@ -64,7 +64,7 @@ class Fit(object):
         if string[0] == "<":
             return "XML", cls.importXml(string)
         else:
-            return "EFT", cls.importEft(string)
+            return "EFT", (cls.importEft(string),)
 
     typeNameRe = re.compile("\\[(.*), (.*)\\]")
     @classmethod
