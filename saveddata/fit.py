@@ -83,7 +83,7 @@ class Fit(object):
 
                 if item.category.name == "Drone":
                     d = Drone(item)
-                    d.amount = amount
+                    d.amount = int(amount)
                     f.drones.append(d)
                 else:
                     f.modules.append(Module(item))
