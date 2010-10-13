@@ -95,7 +95,7 @@ class Fit(object):
                 try:
                     item = db.getItem(modAmmo[0], eager="group.category")
                 except:
-                    return
+                    continue
 
             if item.category.name == "Drone":
                 droneAmount = int(droneAmount) if droneAmount is not None else 1
