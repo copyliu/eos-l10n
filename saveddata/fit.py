@@ -149,6 +149,32 @@ class Fit(object):
 
         return fits
 
+    EXPORT_ORDER = [Slot.SUBSYSTEM, Slot.HIGH, Slot.MED, Slot.LOW, Slot.RIG]
+    def exportEft(self):
+        export = "[%s, %s]\n" % (self.ship.item.name, self.name)
+        stuff = {}
+        for module in self.modules:
+            slot = module.slot
+            if not slot in stuff: stuff[slot] = []
+            curr = module.item.name if module.item else ("[Empty %s slot]" % Slot.getName(slot).capitalize() if slot is not None else "")
+            if module.charge:
+                curr += ", %s" % module.charge.name
+            curr += "\n"
+            stuff[slot].append(curr)
+
+        for slotType in self.EXPORT_ORDER:
+            data = stuff.get(slotType)
+            if data is not None:
+                export += "\n"
+                for curr in data:
+                    export += curr
+
+        export += "\n\n"
+        for drone in self.drones:
+            export += "%s x%s\n" % (drone.item.name, drone.amount)
+
+        return export
+
     @reconstructor
     def init(self):
         self.build()
