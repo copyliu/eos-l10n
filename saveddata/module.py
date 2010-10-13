@@ -19,23 +19,24 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
+from eos.enum import Enum
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
 
-class State():
+class State(Enum):
     OFFLINE = -1
     ONLINE = 0
     ACTIVE = 1
     OVERHEATED = 2
 
-class Slot():
+class Slot(Enum):
     LOW = 1
     MED = 2
     HIGH = 3
     RIG = 4
     SUBSYSTEM = 5
 
-class Hardpoint():
+class Hardpoint(Enum):
     NONE = 0
     MISSILE = 1
     TURRET = 2
