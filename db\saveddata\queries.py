@@ -140,6 +140,7 @@ def getDamagePattern(lookfor, eager=None):
 
     return saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(filter).one()
 
+@cachedQuery(Fit, 2, "namelike", "where")
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")

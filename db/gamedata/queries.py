@@ -26,9 +26,9 @@ import eos.config
 
 configVal = getattr(eos.config, "gamedataCache", None)
 if configVal is True:
-    cache = {}
     def cachedQuery(amount, *keywords):
         def deco(function):
+            cache = {}
             def checkAndReturn(*args, **kwargs):
                 cacheKey = []
                 cacheKey.extend(args)
