@@ -40,22 +40,28 @@ if configVal is True:
                 cacheKey = tuple(cacheKey)
                 info = localQueryCache.get(cacheKey)
                 if info is None:
-                    _, IDs = info
                     items = function(*args, **kwargs)
-                    localQueryCache[cacheKey] = IDs = (isinstance(items, list), set())
-                    items = items if isinstance(items, list) else items
-                    for item in items:
-                        ID = item.ID
+                    IDs = set()
+                    localQueryCache[cacheKey] = (isinstance(items, list), IDs)
+                    stuff = items if isinstance(items, list) else (items,)
+                    for item in stuff:
+                        ID = getattr(item, "ID", None)
+                        if ID is None:
+                            #Some uncachable data, don't cache this query
+                            del localQueryCache[cacheKey]
+                            break
                         localItemCache[ID] = item
                         IDs.add(ID)
                 else:
-                    list, IDs = info
-                    if list:
+                    l, IDs = info
+                    if l:
                         items = []
                         for ID in IDs:
                             items.append(localItemCache[ID])
                     else:
-                        items = localItemCache[IDs]
+                        for ID in IDs:
+                            items = localItemCache[ID]
+                            break
 
                 return items
             return checkAndReturn
