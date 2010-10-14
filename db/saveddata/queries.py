@@ -28,10 +28,10 @@ if configVal is True:
     itemCache = {}
     queryCache = {}
     def cachedQuery(type, amount, *keywords):
+        itemCache[type] = localItemCache = {}
+        queryCache[type] = typeQueryCache = {}
         def deco(function):
-            itemCache[type] = localItemCache = {}
-            queryCache[type] = {}
-            queryCache[type][function] = localQueryCache = {}
+            localQueryCache = typeQueryCache[type] = {}
             def checkAndReturn(*args, **kwargs):
                 cacheKey = []
                 cacheKey.extend(args)
@@ -140,7 +140,6 @@ def getDamagePattern(lookfor, eager=None):
 
     return saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(filter).one()
 
-@cachedQuery(Fit, 2, "namelike", "where")
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
