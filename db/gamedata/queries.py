@@ -21,7 +21,40 @@ from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_, or_
 from eos.types import Item, Category, Group, MarketGroup, AttributeInfo
-from eos.db.util import cachedQuery, processEager, processWhere
+from eos.db.util import processEager, processWhere
+import eos.config
+
+configVal = getattr(eos.config, "gamedataCache", None)
+if configVal is True:
+    cache = {}
+    def cachedQuery(amount, *keywords):
+        def deco(function):
+            def checkAndReturn(*args, **kwargs):
+                cacheKey = []
+                cacheKey.extend(args)
+                for keyword in keywords:
+                    cacheKey.append(kwargs.get(keyword))
+
+                cacheKey = tuple(cacheKey)
+                handler = cache.get(cacheKey)
+                if handler is None:
+                    handler = cache[cacheKey] = function(*args, **kwargs)
+
+                return handler
+
+            return checkAndReturn
+        return deco
+
+elif callable(configVal):
+    cachedQuery = eos.config.gamedataCache
+else:
+    def cachedQuery(amount, *keywords):
+        def deco(function):
+            def checkAndReturn(*args, **kwargs):
+                return function(*args, **kwargs)
+
+            return checkAndReturn
+        return deco
 
 @cachedQuery(1, "lookfor")
 def getItem(lookfor, eager=None):

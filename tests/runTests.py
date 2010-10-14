@@ -26,6 +26,7 @@ from eos import config
 
 config.debug = False
 config.saveddata_connectionstring = "sqlite:///:memory:"
+config.saveddataCache = None
 
 class Loader(unittest.TestLoader):
     def loadTestsFromName(self, name, module = None):

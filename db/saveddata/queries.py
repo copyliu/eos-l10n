@@ -21,25 +21,84 @@ from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
 from eos.types import User, Character, Fit, Price, DamagePattern
 from sqlalchemy.sql import and_
+import eos.config
 
+configVal = getattr(eos.config, "saveddataCache", None)
+if configVal is True:
+    itemCache = {}
+    queryCache = {}
+    def cachedQuery(type, amount, *keywords):
+        itemCache[type] = localItemCache = {}
+        queryCache[type] = localQueryCache = {}
+        def deco(function):
+            def checkAndReturn(*args, **kwargs):
+                cacheKey = []
+                cacheKey.extend(args)
+                for keyword in keywords:
+                    cacheKey.append(kwargs.get(keyword))
+
+                cacheKey = tuple(cacheKey)
+                IDs = localQueryCache.get(cacheKey)
+                if IDs is None:
+                    items = function(*args, **kwargs)
+                    localQueryCache[cacheKey] = IDs = set()
+                    items = items if isinstance(items, list) else (items,)
+                    for item in items:
+                        ID = item.ID
+                        localItemCache[ID] = item
+                        IDs.add(ID)
+                else:
+                    items = []
+                    for ID in IDs:
+                        items.append(localItemCache[ID])
+
+                return items if len(items) > 1 else items[0]
+            return checkAndReturn
+        return deco
+
+    def removeCachedEntry(type, ID):
+        localCache = queryCache[type]
+        for cacheKey, IDs in localCache.iteritems():
+            if ID in IDs:
+                del localCache[cacheKey]
+
+elif callable(configVal):
+    cachedQuery, removeCachedEntry = eos.config.gamedataCache
+else:
+    def cachedQuery(amount, *keywords):
+        def deco(function):
+            def checkAndReturn(*args, **kwargs):
+                return function(*args, **kwargs)
+
+            return checkAndReturn
+        return deco
+
+    def removeCachedEntry(*args, **kwargs):
+        return
+
+@cachedQuery(User, 2, "lookfor", "where")
 def getUser(lookfor, where=None, eager=None):
     if isinstance(lookfor, int):
         return saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).one()
     elif isinstance(lookfor, basestring):
         return saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).one()
 
+@cachedQuery(Character, 2, "lookfor", "where")
 def getCharacter(lookfor, where=None, eager=None):
     if isinstance(lookfor, int):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).one()
     elif isinstance(lookfor, basestring):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
+@cachedQuery(Character, 0)
 def getCharacterList(eager=None):
     return saveddata_session.query(Character).options(*processEager(eager)).all()
 
+@cachedQuery(Fit, 2, "fitID", "where")
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
 
+@cachedQuery(Fit, 3, "shipID", "ownerID", "where")
 def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     Get all the fits using a certain ship.
@@ -52,12 +111,15 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     filter = processWhere(filter, where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
 
+@cachedQuery(Price, 1, "typeID")
 def getPrice(typeID):
     return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
 
+@cachedQuery(DamagePattern, 0)
 def getDamagePatternList(eager=None):
     return saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
 
+@cachedQuery(DamagePattern, 1, "lookfor")
 def getDamagePattern(lookfor, eager=None):
     if isinstance(lookfor, int):
         filter = DamagePattern.ID == lookfor
@@ -66,6 +128,7 @@ def getDamagePattern(lookfor, eager=None):
 
     return saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(filter).one()
 
+@cachedQuery(Fit, 2, "namelike", "where")
 def searchFits(nameLike, where=None, eager=None):
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
@@ -81,6 +144,7 @@ def save(stuff):
     commit()
 
 def remove(stuff):
+    removeCachedEntry(type(stuff), stuff.ID)
     saveddata_session.delete(stuff)
     commit()
 

@@ -19,33 +19,6 @@
 
 from sqlalchemy.orm import eagerload
 from sqlalchemy.sql import and_
-import eos.config
-
-def cachedQuery(amount, *keywords):
-    cache = {}
-
-    def deco(function):
-        if eos.config.cache is False:
-            return function
-        elif callable(eos.config.cache):
-            return eos.config.cache(amount, *keywords)
-        def checkAndReturn(*args, **kwargs):
-            kw = []
-            for keyword in keywords:
-                if keyword in kwargs:
-                    kw.append(kwargs[keyword])
-
-            kw = tuple(kw)
-            cacheKey = (args[0:amount], kw)
-            if cacheKey not in cache:
-                cache[cacheKey] = function(*args, **kwargs)
-
-            return cache[cacheKey]
-
-        return checkAndReturn
-
-    return deco
-
 
 def processEager(eager):
     if eager == None:
