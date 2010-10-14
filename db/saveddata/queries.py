@@ -28,9 +28,10 @@ if configVal is True:
     itemCache = {}
     queryCache = {}
     def cachedQuery(type, amount, *keywords):
-        itemCache[type] = localItemCache = {}
-        queryCache[type] = localQueryCache = {}
         def deco(function):
+            itemCache[type] = localItemCache = {}
+            queryCache[type] = {}
+            queryCache[type][function] = localQueryCache = {}
             def checkAndReturn(*args, **kwargs):
                 cacheKey = []
                 cacheKey.extend(args)
