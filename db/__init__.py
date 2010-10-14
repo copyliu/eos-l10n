@@ -26,14 +26,22 @@ from eos import config
 class ReadOnlyException(Exception):
     pass
 
-gamedata_engine = create_engine(config.gamedata_connectionstring,
-                                echo = config.debug)
+gamedata_connectionstring = config.gamedata_connectionstring
+if callable(gamedata_connectionstring):
+    create_engine(creator=gamedata_connectionstring, echo = config.debug)
+else:
+    gamedata_engine = create_engine(gamedata_connectionstring, echo = config.debug)
+
 gamedata_meta = MetaData()
 gamedata_meta.bind = gamedata_engine
 gamedata_session = scoped_session(sessionmaker(bind=gamedata_engine, autoflush=False, expire_on_commit=False))
 
-if config.saveddata_connectionstring is not None:
-    saveddata_engine = create_engine(config.saveddata_connectionstring, echo=config.debug, poolclass=pool.StaticPool)
+saveddata_connectionstring = config.saveddata_connectionstring
+if saveddata_connectionstring is not None:
+    if callable(saveddata_connectionstring):
+        saveddata_engine = create_engine(creator=saveddata_connectionstring, echo=config.debug, poolclass=pool.StaticPool)
+    else:
+        saveddata_engine = create_engine(saveddata_connectionstring, echo=config.debug, poolclass=pool.StaticPool)
     saveddata_meta = MetaData()
     saveddata_meta.bind = saveddata_engine
     saveddata_session = scoped_session(sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False))
