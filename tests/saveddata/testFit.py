@@ -413,7 +413,10 @@ class Test(TestBase):
     def test_droneBandwidthUsed(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        f.drones.appendItem(db.getItem("Hobgoblin I"))
+        d = Drone(db.getItem("Hobgoblin I"))
+        d.amount = 1
+        d.amountActive = 1
+        f.drones.append(d)
         self.assertEquals(f.droneBandwidthUsed, 5)
 
     def test_droneBayUsed(self):

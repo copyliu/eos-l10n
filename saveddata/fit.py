@@ -553,7 +553,7 @@ class Fit(object):
     def droneBandwidthUsed(self):
         amount = 0
         for d in self.drones:
-            amount += d.getModifiedItemAttr("droneBandwidthUsed") * d.amount
+            amount += d.getModifiedItemAttr("droneBandwidthUsed") * d.amountActive
 
         return amount
 
