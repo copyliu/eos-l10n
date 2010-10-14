@@ -38,21 +38,26 @@ if configVal is True:
                     cacheKey.append(kwargs.get(keyword))
 
                 cacheKey = tuple(cacheKey)
-                IDs = localQueryCache.get(cacheKey)
-                if IDs is None:
+                info = localQueryCache.get(cacheKey)
+                if info is None:
+                    _, IDs = info
                     items = function(*args, **kwargs)
-                    localQueryCache[cacheKey] = IDs = set()
-                    items = items if isinstance(items, list) else (items,)
+                    localQueryCache[cacheKey] = IDs = (isinstance(items, list), set())
+                    items = items if isinstance(items, list) else items
                     for item in items:
                         ID = item.ID
                         localItemCache[ID] = item
                         IDs.add(ID)
                 else:
-                    items = []
-                    for ID in IDs:
-                        items.append(localItemCache[ID])
+                    list, IDs = info
+                    if list:
+                        items = []
+                        for ID in IDs:
+                            items.append(localItemCache[ID])
+                    else:
+                        items = localItemCache[IDs]
 
-                return items if len(items) > 1 else items[0]
+                return items
             return checkAndReturn
         return deco
 
