@@ -102,7 +102,6 @@ def getCharacter(lookfor, where=None, eager=None):
     elif isinstance(lookfor, basestring):
         return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
 
-@cachedQuery(Character, 0)
 def getCharacterList(eager=None):
     return saveddata_session.query(Character).options(*processEager(eager)).all()
 
@@ -110,7 +109,6 @@ def getCharacterList(eager=None):
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
 
-@cachedQuery(Fit, 3, "shipID", "ownerID", "where")
 def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     Get all the fits using a certain ship.
@@ -127,7 +125,6 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
 def getPrice(typeID):
     return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
 
-@cachedQuery(DamagePattern, 0)
 def getDamagePatternList(eager=None):
     return saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
 
