@@ -61,13 +61,13 @@ class TestBase(unittest.TestCase):
             result = itemInst.getModifiedItemAttr(attr)
         return result
 
-    def skillTestGetShipAttr(self, skillname, lvl, attr):
+    def skillTestGetShipAttr(self, skillname, lvl, attr, ship="Rifter"):
         fit = Fit()
         char = Character("test")
         skill = db.getItem(skillname)
         char.addSkill(Skill(skill, lvl))
         fit.character = char
-        fit.ship = Ship(db.getItem("Rifter"))
+        fit.ship = Ship(db.getItem(ship))
         fit.calculateModifiedAttributes()
         if attr in fit.extraAttributes:
             result = fit.extraAttributes[attr]
