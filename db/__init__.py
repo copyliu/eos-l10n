@@ -28,7 +28,7 @@ class ReadOnlyException(Exception):
 
 gamedata_connectionstring = config.gamedata_connectionstring
 if callable(gamedata_connectionstring):
-    create_engine(creator=gamedata_connectionstring, echo = config.debug)
+    gamedata_engine = create_engine("sqlite://", creator=gamedata_connectionstring, echo = config.debug)
 else:
     gamedata_engine = create_engine(gamedata_connectionstring, echo = config.debug)
 
