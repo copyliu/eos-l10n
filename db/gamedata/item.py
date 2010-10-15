@@ -36,7 +36,7 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("published", Boolean),
                     Column("marketGroupID", Integer, ForeignKey("invmarketgroups.marketGroupID")),
                     Column("iconID", Integer, ForeignKey("icons.iconID")),
-                    Column("groupID", Integer, ForeignKey("invgroups.groupID")))
+                    Column("groupID", Integer, ForeignKey("invgroups.groupID"), index=True))
 
 from .metagroup import metatypes_table
 
