@@ -118,7 +118,7 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     filter = Fit.shipID == shipID
     if ownerID is not None:
-        filter = _and(filter, Fit.ownerID == ownerID)
+        filter = and_(filter, Fit.ownerID == ownerID)
 
     filter = processWhere(filter, where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
