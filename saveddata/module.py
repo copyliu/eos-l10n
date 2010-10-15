@@ -53,6 +53,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__dps = None
         self.__volley = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
+        self.__slot = None
+
         if item != None:
             self.__itemModifiedAttributes.original = item.attributes
             self.__hardpoint = self.__calculateHardpoint(item)
@@ -387,7 +389,11 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 return capUse / speed
 
     def __deepcopy__(self, memo):
-        copy = Module(self.item)
+        item = self.item
+        if item is None:
+            copy = Module.buildEmpty(self.slot)
+        else:
+            copy = Module(self.item)
         copy.charge = self.charge
         copy.state = self.state
         return copy
