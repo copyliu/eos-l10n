@@ -18,16 +18,14 @@
 #===============================================================================
 
 from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDroneList, \
-HandledImplantBoosterList, HandledProjectedModList, HandledProjectedDroneList, \
-HandledProjectedFitList
+HandledImplantBoosterList, HandledProjectedDroneList
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
-from itertools import chain, count
+from itertools import chain
 from eos import capSim
 from copy import deepcopy
-from math import sqrt, pi, exp, log
-from eos.solverMath import gaussian, solve
-from eos.types import Drone, Ship, Character, State, Hardpoint, Slot, Module
+from math import sqrt, log
+from eos.types import Drone, Ship, Character, State, Slot, Module
 import re
 import xml.dom
 
@@ -169,7 +167,7 @@ class Fit(object):
                             f.modules.append(m)
 
                 fits.append(f)
-            except Exception, e:
+            except Exception:
                 pass
 
         return fits
@@ -489,7 +487,7 @@ class Fit(object):
         for slotType in (Slot.LOW, Slot.MED, Slot.HIGH, Slot.RIG, Slot.SUBSYSTEM):
             amount = self.getSlotsFree(slotType, True)
             if amount > 0:
-                for i in xrange(int(amount)):
+                for _ in xrange(int(amount)):
                     self.modules.append(Module.buildEmpty(slotType))
 
             if amount < 0:
@@ -616,9 +614,7 @@ class Fit(object):
             else:
                 sustainable = {}
 
-                groups = ("Armor Repair Unit", "Hull Repair Unit", "Shield Booster")
                 repairers = []
-                extraRep = {}
                 #Map a repairer type to the attribute it uses
                 groupAttrMap = {"Armor Repair Unit": "armorDamageAmount",
                      "Hull Repair Unit": "structureDamageAmount",
@@ -633,7 +629,7 @@ class Fit(object):
                     sustainable[attr] = self.extraAttributes[attr]
                     dict = self.extraAttributes.getAfflictions(attr)
                     if self in dict:
-                        for mod, modifier, amount in dict[self]:
+                        for mod, _, amount in dict[self]:
                             capUsed -= mod.getCapUsage()
                             cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
                             amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])

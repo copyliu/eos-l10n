@@ -22,7 +22,6 @@ class Test(TestBase):
 
     def test_sensorDamp_moduleOtherSkillrqSenslink(self):
         self.buildTested = 0
-        attrs = ("maxTargetRangeBonus", "scanResolutionBonus")
         item = "Remote Sensor Booster I"
         iLvl = 1
         iIngame = 1.0

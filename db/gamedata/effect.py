@@ -19,7 +19,7 @@
 
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
 from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import mapper, join, synonym, relation
+from sqlalchemy.orm import mapper, synonym, relation
 from eos.types import Effect, EffectInfo
 from eos.db import gamedata_meta
 

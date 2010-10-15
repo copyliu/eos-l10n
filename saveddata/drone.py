@@ -17,7 +17,6 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.types import Item
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from sqlalchemy.orm import validates, reconstructor

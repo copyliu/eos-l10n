@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
-from sqlalchemy.orm import relation, mapper
+from sqlalchemy.orm import mapper
 
 from eos.db import saveddata_meta
 from eos.types import DamagePattern

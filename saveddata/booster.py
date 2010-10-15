@@ -20,7 +20,6 @@
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import reconstructor, validates
-import traceback
 
 class Booster(HandledItem, ItemAttrShortcut):
     def __init__(self, item):

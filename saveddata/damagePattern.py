@@ -28,7 +28,6 @@ class DamagePattern(object):
 
     def calculateEhp(self, fit):
         ehp = {}
-        totalDamage = sum((self.emAmount, self.thermalAmount, self.kineticAmount, self.explosiveAmount))
         for (type, attr) in (('shield', 'shieldCapacity'), ('armor', 'armorHP'), ('hull', 'hp')):
             rawCapacity = fit.ship.getModifiedItemAttr(attr)
             ehp[type] = self.effectivify(fit, rawCapacity, type)

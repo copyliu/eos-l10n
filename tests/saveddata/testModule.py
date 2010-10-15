@@ -199,7 +199,7 @@ class Test(TestBase):
     def test_fitsSlotsFull(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        for i in xrange(8):
+        for _ in xrange(8):
             f.modules.append(Module(db.getItem("Salvager I")))
 
         self.assertFalse(Module(db.getItem("Salvager I")).fits(f))

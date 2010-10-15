@@ -19,13 +19,10 @@
 
 
 from eos.effectHandlerHelpers import HandledItem
-from eos.modifiedAttributeDict import ItemAttrShortcut
 from sqlalchemy.orm import validates, reconstructor
-from eos.types import Item
-from copy import deepcopy
 import sqlalchemy.orm.exc as exc
-import eos.config
 from eos import eveapi
+import eos
 
 class Character(object):
     __all5 = None
@@ -112,7 +109,6 @@ class Character(object):
         if charID == None:
             return
 
-        import eos.db
         sheet = auth.character(charID).CharacterSheet()
         del self.__skills[:]
         self.__skillIdMap.clear()

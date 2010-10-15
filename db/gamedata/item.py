@@ -39,7 +39,7 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("groupID", Integer, ForeignKey("invgroups.groupID")))
 
 from .metagroup import metatypes_table
-from .effect import typeeffects_table, effects_table
+
 mapper(Item, items_table,
        properties = {"group" : relation(Group, backref = "items", lazy=False),
                      "icon" : relation(Icon),

@@ -21,7 +21,6 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, C
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from eos.enum import Enum
 from sqlalchemy.orm import validates, reconstructor
-from itertools import chain
 
 class State(Enum):
     OFFLINE = -1
@@ -245,10 +244,10 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         # If the mod is a subsystem, don't let two subs in the same slot fit
         if self.slot == Slot.SUBSYSTEM:
-             subSlot = self.getModifiedItemAttr("subSystemSlot")
-             for mod in fit.modules:
-                 if mod.getModifiedItemAttr("subSystemSlot") == subSlot:
-                     return False
+            subSlot = self.getModifiedItemAttr("subSystemSlot")
+            for mod in fit.modules:
+                if mod.getModifiedItemAttr("subSystemSlot") == subSlot:
+                    return False
 
         # Check rig sizes
         if self.slot == Slot.RIG:

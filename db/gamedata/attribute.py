@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, Float, Unicode, ForeignKey, String, Boolean
-from sqlalchemy.orm import relation, mapper, join, synonym
+from sqlalchemy.orm import relation, mapper, synonym
 from sqlalchemy.ext.associationproxy import association_proxy
 from eos.types import Attribute, Icon, AttributeInfo, Unit
 from eos.db import gamedata_meta

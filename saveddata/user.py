@@ -30,7 +30,6 @@ class User(object):
 
     def encodeAndSetPassword(self, pw):
         h = hashlib.new("sha256")
-        r = random.seed()
         salt = "".join([random.choice(string.letters) for _ in xrange(32)])
         h.update(pw)
         h.update(salt)

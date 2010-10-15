@@ -17,7 +17,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from sqlalchemy import Table, Column, Integer, ForeignKey, CheckConstraint, Boolean
+from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import mapper, relation
 
 from eos.db import saveddata_meta

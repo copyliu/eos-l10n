@@ -167,7 +167,7 @@ class Test(TestBase):
     def test_capacitorSingleCycleKill(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        for i in xrange(5):
+        for _ in xrange(5):
             m = Module(db.getItem("100MN Afterburner I"))
             m.state = State.ACTIVE
             f.modules.append(m)
@@ -372,7 +372,7 @@ class Test(TestBase):
     def test_fillTooMuchDummies(self):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
-        for i in xrange(5):
+        for _ in xrange(5):
             f.modules.append(Module.buildEmpty(Slot.LOW))
 
         f.fill()

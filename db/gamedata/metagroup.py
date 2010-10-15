@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, String
-from sqlalchemy.orm import relation, mapper, join, synonym
+from sqlalchemy.orm import relation, mapper, synonym
 from eos.db import gamedata_meta
 from eos.db.gamedata.item import items_table
 from eos.types import MetaGroup, Item, MetaType
