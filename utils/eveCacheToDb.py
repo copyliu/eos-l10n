@@ -345,7 +345,7 @@ if __name__ == "__main__":
 
     for table in TABLE_ORDER:
         if TABLE_MAP[table] is None:
-            print "Warning: unmapped table {0} is specified in processing order, it will be skipped".format(tablename)
+            print "Warning: unmapped table {0} is specified in processing order, it will be skipped".format(table)
 
     # Get data from reverence and write it
     for tablename in TABLE_ORDER:
