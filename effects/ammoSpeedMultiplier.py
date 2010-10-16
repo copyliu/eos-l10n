@@ -10,4 +10,4 @@
 #Charge: Warp Disrupt Probe
 type = "passive"
 def handler(fit, module, context):
-    module.multiplyItemAttr("speed", module.getModifiedChargeAttr("speedMultiplier"))
+    module.multiplyItemAttr("speed", module.getModifiedChargeAttr("speedMultiplier") or 1)
