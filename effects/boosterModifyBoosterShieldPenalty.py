@@ -5,9 +5,7 @@
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1
-    fit.boosters.filteredItemBoost(lambda booster: "boosterShieldCapacityPenalty" in booster.itemModifiedAttributes,
-                                   "boosterShieldCapacityPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)
-    fit.boosters.filteredItemBoost(lambda booster: "shieldBoostMultiplier" in booster.itemModifiedAttributes,
-                                   "shieldBoostMultiplier", container.getModifiedItemAttr("boosterAttributeModifier") * level)
-    fit.boosters.filteredItemBoost(lambda booster: "boosterShieldBoostAmountPenalty" in booster.itemModifiedAttributes,
-                                   "boosterShieldBoostAmountPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)
+    attrs = ("boosterShieldBoostAmountPenalty", "boosterShieldCapacityPenalty", "shieldBoostMultiplier")
+    for attr in attrs:
+        fit.boosters.filteredItemBoost(lambda booster: attr in booster.itemModifiedAttributes,
+                                       attr, container.getModifiedItemAttr("boosterAttributeModifier") * level)

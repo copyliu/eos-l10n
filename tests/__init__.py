@@ -21,7 +21,7 @@
 import unittest
 
 from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module, Drone
+from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster
 
 class TestBase(unittest.TestCase):
     def setUp(self):
@@ -41,6 +41,7 @@ class TestBase(unittest.TestCase):
         fit.ship = Ship(db.getItem("Rifter"))
         item = db.getItem(itemname)
         cat = item.category.name.lower()
+        grp = item.group.name.lower()
         if cat == "drone":
             itemInst = Drone(item)
             fit.drones.append(itemInst)
@@ -52,6 +53,9 @@ class TestBase(unittest.TestCase):
             itemInst = Module(db.getItem("Bomb Launcher I"))
             itemInst.charge = item
             fit.modules.append(itemInst)
+        elif cat == "implant" and grp == "booster":
+            itemInst = Booster(item)
+            fit.boosters.append(itemInst)
         else:
             return None
         fit.calculateModifiedAttributes()
