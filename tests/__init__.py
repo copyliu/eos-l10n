@@ -21,7 +21,7 @@
 import unittest
 
 from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster
+from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster, Gang, Wing, Squad
 
 class TestBase(unittest.TestCase):
     def setUp(self):
@@ -65,14 +65,31 @@ class TestBase(unittest.TestCase):
             result = itemInst.getModifiedItemAttr(attr)
         return result
 
-    def skillTestGetShipAttr(self, skillname, lvl, attr, ship="Rifter"):
+    def skillTestGetShipAttr(self, skillname, lvl, attr, ship="Rifter", gang=False):
         fit = Fit()
         char = Character("test")
-        skill = db.getItem(skillname)
-        char.addSkill(Skill(skill, lvl))
+        if not gang:
+            skill = db.getItem(skillname)
+            char.addSkill(Skill(skill, lvl))
         fit.character = char
         fit.ship = Ship(db.getItem(ship))
         fit.calculateModifiedAttributes()
+        if gang:
+            squad_fit = Fit()
+            squad_char = Character("squad_test")
+            squad_skill = db.getItem(skillname)
+            squad_char.addSkill(Skill(squad_skill, lvl))
+            squad_fit.character = squad_char
+            squad_fit.ship = Ship(db.getItem(ship))
+            squad_fit.calculateModifiedAttributes()
+            squad = Squad()
+            squad.leader = squad_fit
+            squad.members.append(fit)
+            wing = Wing()
+            wing.squads.append(squad)
+            fleet = Gang()
+            fleet.wings.append(wing)
+            fleet.calculateModifiedAttributes()
         if attr in fit.extraAttributes:
             result = fit.extraAttributes[attr]
         else:
