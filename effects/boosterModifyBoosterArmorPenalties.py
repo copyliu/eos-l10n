@@ -7,5 +7,5 @@ def handler(fit, container, context):
     level = container.level if "skill" in context else 1
     attrs = ("boosterArmorHPPenalty", "boosterArmorRepairAmountPenalty")
     for attr in attrs:
-        fit.boosters.filteredItemBoost(lambda booster: attr in booster.itemModifiedAttributes,
-                                       attr, container.getModifiedItemAttr("boosterAttributeModifier") * level)
+        fit.boosters.filteredItemBoost(lambda booster: True, attr,
+                                       container.getModifiedItemAttr("boosterAttributeModifier") * level)
