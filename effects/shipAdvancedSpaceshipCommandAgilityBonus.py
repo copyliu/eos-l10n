@@ -9,5 +9,4 @@
 type = "passive"
 def handler(fit, ship, context):
     skill = fit.character.getSkill("Advanced Spaceship Command")
-    level = skill.level
-    fit.ship.boostItemAttr("agility", skill.getModifiedItemAttr("agilityBonus") * level)
+    fit.ship.boostItemAttr("agility", skill.getModifiedItemAttr("agilityBonus") * skill.level)
