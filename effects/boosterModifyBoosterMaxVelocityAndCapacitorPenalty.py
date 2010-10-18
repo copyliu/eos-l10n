@@ -5,7 +5,7 @@
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1
-    fit.boosters.filteredItemBoost(lambda booster: "boosterCapacitorCapacityPenalty" in booster.itemModifiedAttributes,
-                                   "boosterCapacitorCapacityPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)
-    fit.boosters.filteredItemBoost(lambda booster: "boosterMaxVelocityPenalty" in booster.itemModifiedAttributes,
-                                   "boosterMaxVelocityPenalty", container.getModifiedItemAttr("boosterAttributeModifier") * level)
+    attrs = ("boosterCapacitorCapacityPenalty", "boosterMaxVelocityPenalty")
+    for attr in attrs:
+        fit.boosters.filteredItemBoost(lambda booster: True, attr,
+                                       container.getModifiedItemAttr("boosterAttributeModifier") * level)

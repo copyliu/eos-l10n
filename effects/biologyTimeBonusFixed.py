@@ -4,4 +4,4 @@
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1
-    fit.boosters.filteredItemIncrease(lambda: True, "boosterDuration", container.getModifiedItemAttr("durationBonus") * level)
+    fit.boosters.filteredItemBoost(lambda bst: True, "boosterDuration", container.getModifiedItemAttr("durationBonus") * level)
