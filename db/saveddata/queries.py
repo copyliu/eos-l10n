@@ -21,8 +21,6 @@ from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
 from eos.types import User, Character, Fit, Price, DamagePattern
 from sqlalchemy.sql import and_
-from sqlalchemy.orm import make_transient
-from sqlalchemy.exc import InvalidRequestError
 import eos.config
 
 configVal = getattr(eos.config, "saveddataCache", None)
@@ -156,7 +154,6 @@ def save(stuff):
 def remove(stuff):
     removeCachedEntry(type(stuff), stuff.ID)
     saveddata_session.delete(stuff)
-    saveddata_session.expunge(stuff)
     commit()
 
 def commit():
