@@ -31,7 +31,7 @@ if configVal is True:
         itemCache[type] = localItemCache = {}
         queryCache[type] = typeQueryCache = {}
         def deco(function):
-            localQueryCache = typeQueryCache[type] = {}
+            localQueryCache = typeQueryCache[function] = {}
             def checkAndReturn(*args, **kwargs):
                 cacheKey = []
                 cacheKey.extend(args)
@@ -69,10 +69,18 @@ if configVal is True:
         return deco
 
     def removeCachedEntry(type, ID):
-        localCache = queryCache[type]
-        for cacheKey, IDs in localCache.iteritems():
-            if ID in IDs:
+        functionCache = queryCache[type]
+        for _, localCache in functionCache.iteritems():
+            toDelete = set()
+            for cacheKey, info in localCache.iteritems():
+                IDs = info[1]
+                if ID in IDs:
+                    toDelete.add(cacheKey)
+
+            for cacheKey in toDelete:
                 del localCache[cacheKey]
+
+            del itemCache[type][ID]
 
 elif callable(configVal):
     cachedQuery, removeCachedEntry = eos.config.gamedataCache
