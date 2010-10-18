@@ -237,7 +237,9 @@ class Fit(object):
                 slotNum[slot] += 1
                 hardware = doc.createElement("hardware")
                 hardware.setAttribute("type", module.item.name)
-                hardware.setAttribute("slot", "%s slot %d" % (Slot.getName(slot).lower(), slotId))
+                slotName = Slot.getName(slot).lower()
+                slotName = slotName if slotName != "high" else "hi"
+                hardware.setAttribute("slot", "%s slot %d" % (slotName, slotId))
                 fitting.appendChild(hardware)
 
             for drone in fit.drones:
