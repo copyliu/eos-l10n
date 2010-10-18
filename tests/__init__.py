@@ -30,11 +30,12 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         db.saveddata_meta.drop_all()
 
-    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False):
+    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, gang=False):
         fit = Fit()
         char = Character("test")
-        skill = db.getItem(skillname)
-        char.addSkill(Skill(skill, lvl))
+        if not gang:
+            skill = db.getItem(skillname)
+            char.addSkill(Skill(skill, lvl))
         fit.character = char
         # Use any ship to just make items which have
         # influence on ship attributes work
@@ -59,6 +60,23 @@ class TestBase(unittest.TestCase):
         else:
             return None
         fit.calculateModifiedAttributes()
+        if gang:
+            squad_fit = Fit()
+            squad_char = Character("squad_test")
+            squad_skill = db.getItem(skillname)
+            squad_char.addSkill(Skill(squad_skill, lvl))
+            squad_fit.character = squad_char
+            squad_fit.ship = Ship(db.getItem("Rifter"))
+            squad_fit.calculateModifiedAttributes()
+            squad = Squad()
+            squad.leader = squad_fit
+            squad.members.append(squad_fit)
+            squad.members.append(fit)
+            wing = Wing()
+            wing.squads.append(squad)
+            fleet = Gang()
+            fleet.wings.append(wing)
+            fleet.calculateModifiedAttributes()
         if (cat == "drone" and getCharge) or cat == "charge":
             result = itemInst.getModifiedChargeAttr(attr)
         else:
