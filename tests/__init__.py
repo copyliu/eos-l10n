@@ -84,6 +84,7 @@ class TestBase(unittest.TestCase):
             squad_fit.calculateModifiedAttributes()
             squad = Squad()
             squad.leader = squad_fit
+            squad.members.append(squad_fit)
             squad.members.append(fit)
             wing = Wing()
             wing.squads.append(squad)
