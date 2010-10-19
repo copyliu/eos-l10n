@@ -8,7 +8,7 @@ class Test(TestBase):
     def test_miningAmount_moduleMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
-        item = "Modulated Strip Miner II"
+        item = "Miner I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -22,7 +22,7 @@ class Test(TestBase):
     def test_miningAmount_moduleFrequencyMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
-        item = "Miner I"
+        item = "Modulated Strip Miner II"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
