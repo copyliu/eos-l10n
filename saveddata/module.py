@@ -304,6 +304,19 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         return False
 
+    def getValidCharges(self):
+        validCharges = set()
+        import eos.db
+        for i in range(5):
+            itemChargeGroup = self.getModifiedItemAttr('chargeGroup' + str(i))
+            if itemChargeGroup is not None:
+                g = eos.db.getGroup(itemChargeGroup)
+                for i in g.items:
+                    if self.isValidCharge(i):
+                        validCharges.add(i)
+
+        return validCharges
+
     def __calculateHardpoint(self, item):
         effectHardpointMap = {"turretFitted" : Hardpoint.TURRET,
                               "launcherFitted": Hardpoint.MISSILE}
