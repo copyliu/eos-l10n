@@ -30,7 +30,7 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         db.saveddata_meta.drop_all()
 
-    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, gang=False):
+    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, gang=False, ship="Rifter"):
         fit = Fit()
         char = Character("test")
         if not gang:
@@ -39,7 +39,7 @@ class TestBase(unittest.TestCase):
         fit.character = char
         # Use any ship to just make items which have
         # influence on ship attributes work
-        fit.ship = Ship(db.getItem("Rifter"))
+        fit.ship = Ship(db.getItem(ship))
         item = db.getItem(itemname)
         cat = item.category.name.lower()
         grp = item.group.name.lower()
@@ -66,7 +66,7 @@ class TestBase(unittest.TestCase):
             squad_skill = db.getItem(skillname)
             squad_char.addSkill(Skill(squad_skill, lvl))
             squad_fit.character = squad_char
-            squad_fit.ship = Ship(db.getItem("Rifter"))
+            squad_fit.ship = Ship(db.getItem(ship))
             squad_fit.calculateModifiedAttributes()
             squad = Squad()
             squad.leader = squad_fit
