@@ -510,6 +510,15 @@ class Fit(object):
 
         return amount
 
+    def getItemAttrOnlineSum(self, dict, attr):
+        amount = 0
+        for mod in dict:
+            add = mod.getModifiedItemAttr(attr) if mod.state >= State.ONLINE else None
+            if add is not None:
+                amount += add
+
+        return amount
+
     def getHardpointsUsed(self, type):
         amount = 0
         for mod in self.modules:
@@ -543,11 +552,11 @@ class Fit(object):
 
     @property
     def pgUsed(self):
-        return self.getItemAttrSum(self.modules, "power")
+        return self.getItemAttrOnlineSum(self.modules, "power")
 
     @property
     def cpuUsed(self):
-        return self.getItemAttrSum(self.modules, "cpu")
+        return self.getItemAttrOnlineSum(self.modules, "cpu")
 
     @property
     def droneBandwidthUsed(self):
