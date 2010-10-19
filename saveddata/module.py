@@ -285,8 +285,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
         if charge is None: return True
-        chargeVolume = charge.getAttribute("volume")
-        moduleCapacity = self.getModifiedItemAttr("capacity")
+        chargeVolume = charge.volume
+        moduleCapacity = self.item.capacity
         if chargeVolume is not None and moduleCapacity is not None and chargeVolume > moduleCapacity:
             return False
 
