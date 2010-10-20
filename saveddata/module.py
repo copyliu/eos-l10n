@@ -312,7 +312,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             if itemChargeGroup is not None:
                 g = eos.db.getGroup(itemChargeGroup)
                 for i in g.items:
-                    if self.isValidCharge(i):
+                    if i.published and self.isValidCharge(i):
                         validCharges.add(i)
 
         return validCharges
