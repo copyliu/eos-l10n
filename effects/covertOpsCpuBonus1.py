@@ -7,7 +7,7 @@
 type = "passive"
 def handler(fit, container, context):
     # Cloak CPU consumption static multiplier
-    staticBonus = container.getModifiedItemAttr("cloakingCpuNeedBonus") or 1
+    staticBonus = container.getModifiedItemAttr("cloakingCpuNeedBonus")
     containerGroup = container.item.group.name
 
     # Map of items which are affected
