@@ -22,6 +22,7 @@ from sqlalchemy.orm import relation, mapper, synonym
 from eos.db import gamedata_meta
 from eos.db.gamedata.item import items_table
 from eos.types import MetaGroup, Item, MetaType
+from sqlalchemy.ext.associationproxy import association_proxy
 
 metagroups_table = Table("invmetagroups", gamedata_meta,
                          Column("metaGroupID", Integer, primary_key = True),
