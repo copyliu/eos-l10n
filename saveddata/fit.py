@@ -84,7 +84,10 @@ class Fit(object):
                     d.amount = int(amount)
                     f.drones.append(d)
                 else:
-                    f.modules.append(Module(item))
+                    m = Module(item)
+                    f.modules.append(m)
+                    if m.isValidState(State.ACTIVE):
+                        m.state = State.ACTIVE
 
         return f
 
