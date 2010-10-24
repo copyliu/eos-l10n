@@ -170,15 +170,80 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-#    def test_role_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
-#        item = "Stasis Webifier I"
-#    def test_role_capacitorNeed_moduleStasisWebNoSkillrqPropulsionJamming(self):
-#        item = "Civilian Stasis Webifier"
-#    def test_role_capacitorNeed_moduleWarpScramblerSkillrqPropulsionJamming(self):
-#        item = "Warp Scrambler I"
-#    def test_role_capacitorNeed_moduleWarpScramblerNoSkillrqPropulsionJamming(self):
-#        item = "Civilian Warp Disruptor"
-#    def test_role_capacitorNeed_moduleOtherSkillrqPropulsionJamming(self):
-#        item = "Warp Disruption Field Generator I"
-#    def test_role_capacitorNeed_moduleOther(self):
-#        item = "Small Shield Booster I"
+    def test_role_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Stasis Webifier I"
+        ship_other = "Rifter"
+        iIngame = 1.0
+        fIngame = 0.2
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_role_capacitorNeed_moduleStasisWebNoSkillrqPropulsionJamming(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Civilian Stasis Webifier"
+        ship_other = "Rifter"
+        iIngame = 1.0
+        fIngame = 0.2
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_role_capacitorNeed_moduleWarpScramblerSkillrqPropulsionJamming(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Warp Scrambler I"
+        ship_other = "Rifter"
+        iIngame = 1.0
+        fIngame = 0.2
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_role_capacitorNeed_moduleWarpScramblerNoSkillrqPropulsionJamming(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Civilian Warp Disruptor"
+        ship_other = "Rifter"
+        iIngame = 1.0
+        fIngame = 0.2
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_role_capacitorNeed_moduleOtherSkillrqPropulsionJamming(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Warp Disruption Field Generator I"
+        ship_other = "Rifter"
+        iIngame = 1.0
+        fIngame = 1.0
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_role_capacitorNeed_moduleOther(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Small Shield Booster I"
+        ship_other = "Rifter"
+        iIngame = 1.0
+        fIngame = 1.0
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
