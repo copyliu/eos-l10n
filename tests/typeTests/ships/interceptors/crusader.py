@@ -14,8 +14,8 @@ class Test(TestBase):
         iIngame = 0.9
         fLvl = 4
         fIngame = 0.6
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -29,8 +29,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -44,8 +44,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -59,8 +59,8 @@ class Test(TestBase):
         iIngame = 1.05
         fLvl = 4
         fIngame = 1.2
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -74,8 +74,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -89,8 +89,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -104,8 +104,8 @@ class Test(TestBase):
         iIngame = 0.85
         fLvl = 4
         fIngame = 0.4
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -119,8 +119,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -134,8 +134,8 @@ class Test(TestBase):
         iIngame = 1.075
         fLvl = 4
         fIngame = 1.3
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -149,8 +149,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -164,8 +164,8 @@ class Test(TestBase):
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.skillTestGetItemAttr(skill, iLvl, item, attr, ship=self.ship)
-        fEos = self.skillTestGetItemAttr(skill, fLvl, item, attr, ship=self.ship)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
