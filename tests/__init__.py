@@ -30,44 +30,58 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         db.saveddata_meta.drop_all()
 
-    def skillTestGetItemAttr(self, skillname, lvl, itemname, attr, getCharge=False, gang=False, ship="Rifter"):
+    def testItemAttr(self, attr, item, skill=None, ship="Rifter", getCharge=False, gang=False):
+        # Create a fit which will be tested
         fit = Fit()
+        # Create character for fit and assign it
         char = Character("test")
-        if not gang:
-            skill = db.getItem(skillname)
-            char.addSkill(Skill(skill, lvl))
+        # Assign skills to character only when requested
+        if not gang and skill:
+            skill_itm = db.getItem(skill[0])
+            skill_lvl = skill[1]
+            char.addSkill(Skill(skill_itm, skill_lvl))
         fit.character = char
-        # Use any ship to just make items which have
-        # influence on ship attributes work
+        # Create ship and assign to fit; use default Rifter dummy
+        # in any case as some items affect ship attrbutes, they can't
+        # be tested w/o ship
         fit.ship = Ship(db.getItem(ship))
-        item = db.getItem(itemname)
-        cat = item.category.name.lower()
-        grp = item.group.name.lower()
+        # Create an item which will be tested
+        item_itm = db.getItem(item)
+        cat = item_itm.category.name.lower()
+        grp = item_itm.group.name.lower()
+        # Append it to proper category
         if cat == "drone":
-            itemInst = Drone(item)
-            fit.drones.append(itemInst)
+            item_inst = Drone(item_itm)
+            fit.drones.append(item_inst)
         elif cat in ("module", "subsystem"):
-            itemInst = Module(item)
-            fit.modules.append(itemInst)
+            item_inst = Module(item_itm)
+            fit.modules.append(item_inst)
         elif cat == "charge":
             # Use dummy container for any charge
-            itemInst = Module(db.getItem("Bomb Launcher I"))
-            itemInst.charge = item
-            fit.modules.append(itemInst)
+            item_inst = Module(db.getItem("Bomb Launcher I"))
+            item_inst.charge = item_itm
+            fit.modules.append(item_inst)
         elif cat == "implant" and grp == "booster":
-            itemInst = Booster(item)
-            fit.boosters.append(itemInst)
+            item_inst = Booster(item_itm)
+            fit.boosters.append(item_inst)
         else:
             return None
+        # Finish composing of tested fit by calculating its attributes
         fit.calculateModifiedAttributes()
+        # Use special fit as gang booster when requested
         if gang:
+            # Do the same for character which will be
+            # squad booster
             squad_fit = Fit()
             squad_char = Character("squad_test")
-            squad_skill = db.getItem(skillname)
-            squad_char.addSkill(Skill(squad_skill, lvl))
+            if skill:
+                squad_skill_itm = db.getItem(skill[0])
+                squad_skill_lvl = skill[1]
+                squad_char.addSkill(Skill(squad_skill_itm, squad_skill_lvl))
             squad_fit.character = squad_char
             squad_fit.ship = Ship(db.getItem(ship))
             squad_fit.calculateModifiedAttributes()
+            # Create full fleet structure and assign roles
             squad = Squad()
             squad.leader = squad_fit
             squad.members.append(squad_fit)
@@ -76,41 +90,48 @@ class TestBase(unittest.TestCase):
             wing.squads.append(squad)
             fleet = Gang()
             fleet.wings.append(wing)
+            # Calculate fleet relationships
             fleet.calculateModifiedAttributes()
+        # Use charge as an item when it was requested to be tested,
+        # and passed item itself in all other cases
         if (cat == "drone" and getCharge) or cat == "charge":
-            result = itemInst.getModifiedChargeAttr(attr)
+            result = item_inst.getModifiedChargeAttr(attr)
         else:
-            result = itemInst.getModifiedItemAttr(attr)
+            result = item_inst.getModifiedItemAttr(attr)
         return result
 
-    def skillTestGetShipAttr(self, skillname, lvl, attr, ship="Rifter", gang=False):
-        fit = Fit()
-        char = Character("test")
-        if not gang:
-            skill = db.getItem(skillname)
-            char.addSkill(Skill(skill, lvl))
-        fit.character = char
-        fit.ship = Ship(db.getItem(ship))
-        fit.calculateModifiedAttributes()
-        if gang:
-            squad_fit = Fit()
-            squad_char = Character("squad_test")
-            squad_skill = db.getItem(skillname)
-            squad_char.addSkill(Skill(squad_skill, lvl))
-            squad_fit.character = squad_char
-            squad_fit.ship = Ship(db.getItem(ship))
-            squad_fit.calculateModifiedAttributes()
-            squad = Squad()
-            squad.leader = squad_fit
-            squad.members.append(squad_fit)
-            squad.members.append(fit)
-            wing = Wing()
-            wing.squads.append(squad)
-            fleet = Gang()
-            fleet.wings.append(wing)
-            fleet.calculateModifiedAttributes()
-        if attr in fit.extraAttributes:
-            result = fit.extraAttributes[attr]
-        else:
-            result = fit.ship.getModifiedItemAttr(attr)
-        return result
+#    def testShipAttr(self, attr, ship="Rifter", skill=None, gang=False):
+#        # Create a fit for testing
+#        fit = Fit()
+#        # Create character for fit
+#        char = Character("test")
+#        # Assign skills only when we need to do so
+#        if not gang and skill:
+#            skill_itm = db.getItem(skill[0])
+#            skill_lvl = skill[1]
+#            char.addSkill(Skill(skill_itm, skill_lvl))
+#        fit.character = char
+#        fit.ship = Ship(db.getItem(ship))
+#        fit.calculateModifiedAttributes()
+#        if gang:
+#            squad_fit = Fit()
+#            squad_char = Character("squad_test")
+#            squad_skill = db.getItem(skillname)
+#            squad_char.addSkill(Skill(squad_skill, lvl))
+#            squad_fit.character = squad_char
+#            squad_fit.ship = Ship(db.getItem(ship))
+#            squad_fit.calculateModifiedAttributes()
+#            squad = Squad()
+#            squad.leader = squad_fit
+#            squad.members.append(squad_fit)
+#            squad.members.append(fit)
+#            wing = Wing()
+#            wing.squads.append(squad)
+#            fleet = Gang()
+#            fleet.wings.append(wing)
+#            fleet.calculateModifiedAttributes()
+#        if attr in fit.extraAttributes:
+#            result = fit.extraAttributes[attr]
+#        else:
+#            result = fit.ship.getModifiedItemAttr(attr)
+#        return result
