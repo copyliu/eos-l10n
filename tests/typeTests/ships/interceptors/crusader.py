@@ -222,19 +222,6 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_capacitorNeed_moduleOtherSkillrqPropulsionJamming(self):
-        self.buildTested = 0
-        attr = "capacitorNeed"
-        item = "Warp Disruption Field Generator I"
-        ship_other = "Rifter"
-        iIngame = 1.0
-        fIngame = 1.0
-        iEos = self.getItemAttr(attr, item, ship=ship_other)
-        fEos = self.getItemAttr(attr, item, ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
     def test_role_capacitorNeed_moduleOther(self):
         self.buildTested = 0
         attr = "capacitorNeed"

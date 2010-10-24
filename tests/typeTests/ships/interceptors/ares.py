@@ -3,13 +3,13 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.ship = "Raptor"
+        self.ship = "Ares"
 
-    def test_caldariFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
+    def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "75mm Gatling Rail I"
-        skill = "Caldari Frigate"
+        item = "Light Neutron Blaster I"
+        skill = "Gallente Frigate"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -20,11 +20,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariFrigate_damageMultiplier_moduleHybridWeaponOther(self):
+    def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponOther(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Dual 150mm Railgun I"
-        skill = "Caldari Frigate"
+        item = "Heavy Electron Blaster I"
+        skill = "Gallente Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -35,26 +35,26 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariFrigate_maxRange_moduleHybridWeaponSmall(self):
+    def test_gallenteFrigate_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0
-        attr = "maxRange"
-        item = "Light Neutron Blaster I"
-        skill = "Caldari Frigate"
+        attr = "trackingSpeed"
+        item = "Light Electron Blaster I"
+        skill = "Gallente Frigate"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.07
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.28
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariFrigate_maxRange_moduleHybridWeaponOther(self):
+    def test_gallenteFrigate_trackingSpeed_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "maxRange"
-        item = "Heavy Ion Blaster I"
-        skill = "Caldari Frigate"
+        attr = "trackingSpeed"
+        item = "250mm Railgun I"
+        skill = "Gallente Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -83,7 +83,7 @@ class Test(TestBase):
     def test_interceptors_signatureRadiusBonus_moduleOther(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
-        item = "Inertia Stabilizers I"
+        item = "Target Painter I"
         skill = "Interceptors"
         iLvl = 1
         iIngame = 1.0
@@ -98,7 +98,7 @@ class Test(TestBase):
     def test_interceptors_maxRange_moduleWarpScramblerSkillrqPropJamming(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "Warp Scrambler I"
+        item = "Warp Disruptor I"
         skill = "Interceptors"
         iLvl = 1
         iIngame = 1.05
@@ -195,7 +195,7 @@ class Test(TestBase):
     def test_role_capacitorNeed_moduleOther(self):
         self.buildTested = 0
         attr = "capacitorNeed"
-        item = "Quad Light Beam Laser I"
+        item = "Ship Scanner I"
         ship_other = "Rifter"
         iIngame = 1.0
         fIngame = 1.0
