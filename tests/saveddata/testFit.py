@@ -13,7 +13,7 @@ class Test(TestBase):
 
     def test_tankNumbers(self):
         f = Fit()
-        f.ship = Ship(db.getItem("Drake"))
+        f.ship = Ship(db.getItem("Erebus"))
         f.modules.append(Module(db.getItem("Small Shield Booster II")))
         f.modules.append(Module(db.getItem("Small Armor Repairer II")))
         f.modules.append(Module(db.getItem("Small Hull Repairer II")))
@@ -26,6 +26,10 @@ class Test(TestBase):
         self.assertEquals(len(f.effectiveTank), len(f.tank))
         for k in f.effectiveTank.iterkeys():
             self.assertGreater(f.effectiveTank[k], f.tank[k])
+
+        self.assertEquals(len(f.effectiveSustainableTank), len(f.sustainableTank))
+        for k in f.effectiveSustainableTank.iterkeys():
+            self.assertGreater(f.effectiveSustainableTank[k], f.sustainableTank[k])
 
     def test_addDrain(self):
         f = Fit()

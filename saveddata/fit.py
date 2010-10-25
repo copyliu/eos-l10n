@@ -670,7 +670,7 @@ class Fit(object):
                         sustainable[groupStoreMap[mod.item.group.name]] += sustainability * (amount / cycleTime)
                         capUsed += capPerSec
 
-
+            sustainable["passiveShield"] = self.calculateShieldRecharge()
             self.__sustainableTank = sustainable
 
         return self.__sustainableTank
