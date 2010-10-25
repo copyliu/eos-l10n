@@ -768,7 +768,7 @@ class Fit(object):
     def effectiveTank(self):
         if self.__effectiveTank is None:
             if self.damagePattern is None:
-                ehps = self.hps
+                ehps = self.tank
             else:
                 ehps = self.damagePattern.calculateEffectiveTank(self, self.extraAttributes)
 
