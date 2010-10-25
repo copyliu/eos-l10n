@@ -1,5 +1,5 @@
 from eos.tests import TestBase
-from eos.types import Fit, Character, Slot, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint
+from eos.types import Fit, Character, Slot, Module, Ship, User, State, Drone, Implant, Booster, Hardpoint, DamagePattern
 from eos import db
 import eos.db.saveddata.queries
 import sqlalchemy.orm
@@ -10,6 +10,22 @@ class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
         self.m = Module(db.getItem("Heat Sink I"))
+
+    def test_tankNumbers(self):
+        f = Fit()
+        f.ship = Ship(db.getItem("Drake"))
+        f.modules.append(Module(db.getItem("Small Shield Booster II")))
+        f.modules.append(Module(db.getItem("Small Armor Repairer II")))
+        f.modules.append(Module(db.getItem("Small Hull Repairer II")))
+        f.modules.append(Module(db.getItem("Damage Control II")))
+        f.damagePattern = DamagePattern(25, 25, 25, 25)
+        for m in f.modules:
+            m.state = State.ACTIVE
+        f.calculateModifiedAttributes()
+
+        self.assertEquals(len(f.effectiveTank), len(f.tank))
+        for k in f.effectiveTank.iterkeys():
+            self.assertGreater(f.effectiveTank[k], f.tank[k])
 
     def test_addDrain(self):
         f = Fit()

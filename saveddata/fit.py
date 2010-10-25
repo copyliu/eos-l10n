@@ -737,25 +737,38 @@ class Fit(object):
         else:
             self.__capStable = True
             self.__capState = 100
+
+    @property
+    def hp(self):
+        hp = {}
+        for (type, attr) in (('shield', 'shieldCapacity'), ('armor', 'armorHP'), ('hull', 'hp')):
+            hp[type] = self.ship.getModifiedItemAttr(attr)
+
+        return hp
+
     @property
     def ehp(self):
         if self.__ehp is None:
             if self.damagePattern is None:
-                ehp = {}
-                for (type, attr) in (('shield', 'shieldCapacity'), ('armor', 'armorHP'), ('hull', 'hp')):
-                    ehp[type] = self.ship.getModifiedItemAttr(attr)
+                ehp = self.hp
             else:
                 ehp = self.damagePattern.calculateEhp(self)
             self.__ehp = ehp
         return self.__ehp
 
     @property
+    def tank(self):
+        hps = {"passiveShield" : self.calculateShieldRecharge()}
+        for type in ("shield", "armor", "hull"):
+            hps["%sRepair" % type] = self.extraAttributes["%sRepair" % type]
+
+        return hps
+
+    @property
     def effectiveTank(self):
         if self.__effectiveTank is None:
             if self.damagePattern is None:
-                ehps = {"passiveShield" : self.calculateShieldRecharge()}
-                for type in ("shield", "armor", "hull"):
-                    ehps["%sRepair" % type] = self.extraAttributes["%sRepair" % type]
+                ehps = self.hps
             else:
                 ehps = self.damagePattern.calculateEffectiveTank(self, self.extraAttributes)
 
