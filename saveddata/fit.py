@@ -718,7 +718,7 @@ class Fit(object):
                     if capNeed > 0:
                         capUsed += capNeed
                     else:
-                        capUsed -= capAdded
+                        capAdded -= capNeed
 
                     drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed"), mod.numCharges))
 
