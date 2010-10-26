@@ -414,7 +414,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             if capNeed > 0:
                 capUsed = capNeed / (reloadedCycleTime if factorReload else cycleTime)
             else:
-                capUsed = -capNeed / reloadedCycleTime
+                capUsed = capNeed / reloadedCycleTime
 
             return capUsed
 
