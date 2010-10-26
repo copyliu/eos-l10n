@@ -578,7 +578,7 @@ class Fit(object):
         return amount
 
     @property
-    def usedDronesActive(self):
+    def activeDrones(self):
         amount = 0
         for d in self.drones:
             amount +=d.amountActive
@@ -586,8 +586,8 @@ class Fit(object):
         return amount
 
     @property
-    def totalDronesActive(self):
-        return 5 
+    def maxDronesActive(self):
+        return 5
 
 
     @property
