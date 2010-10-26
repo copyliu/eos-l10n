@@ -3,28 +3,28 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.ship = "Harpy"
+        self.ship = "Enyo"
 
-    def test_caldariFrigate_maxRange_moduleHybridWeaponSmall(self):
+    def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
-        attr = "maxRange"
-        item = "150mm Railgun I"
-        skill = "Caldari Frigate"
+        attr = "damageMultiplier"
+        item = "75mm Gatling Rail I"
+        skill = "Gallente Frigate"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariFrigate_maxRange_moduleHybridWeaponOtherl(self):
+    def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "maxRange"
-        item = "Dual 150mm Railgun I"
-        skill = "Caldari Frigate"
+        attr = "damageMultiplier"
+        item = "Heavy Electron Blaster I"
+        skill = "Gallente Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -38,7 +38,7 @@ class Test(TestBase):
     def test_assaultShips_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "Light Neutron Blaster I"
+        item = "125mm Railgun I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.1
@@ -53,7 +53,7 @@ class Test(TestBase):
     def test_assaultShips_maxRange_moduleHybridWeaponOther(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "Heavy Electron Blaster I"
+        item = "200mm Railgun I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.0
@@ -65,25 +65,25 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_assaultShips_damageMultiplier_moduleHybridWeaponSmall(self):
+    def test_assaultShips_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0
-        attr = "damageMultiplier"
-        item = "Light Ion Blaster I"
+        attr = "trackingSpeed"
+        item = "Light Electron Blaster I"
         skill = "Assault Ships"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_assaultShips_damageMultiplier_moduleHybridWeaponOther(self):
+    def test_assaultShips_trackingSpeed_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "damageMultiplier"
-        item = "250mm Railgun I"
+        attr = "trackingSpeed"
+        item = "Heavy Electron Blaster I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.0
