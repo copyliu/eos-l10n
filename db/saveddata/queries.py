@@ -129,6 +129,9 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     filter = processWhere(filter, where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
 
+def getFitList(eager=None):
+    return saveddata_session.query(Fit).options(*processEager(eager)).all()
+
 @cachedQuery(Price, 1, "typeID")
 def getPrice(typeID):
     return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
