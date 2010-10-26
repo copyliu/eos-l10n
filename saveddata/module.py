@@ -374,6 +374,12 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             context = ("module",)
             projected = False
 
+        if self.charge is not None and not projected:
+            for effect in self.charge.effects.itervalues():
+                if effect.runTime == runTime:
+                    print "running charge effect: ", effect.name
+                    effect.handler(fit, self, ("moduleCharge",))
+
         if self.item:
             for effect in self.item.effects.itervalues():
                 if effect.runTime == runTime and \
@@ -382,12 +388,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 (effect.isType("active") and self.state >= State.ACTIVE) or \
                 (effect.isType("overheat") and self.state >= State.OVERHEATED)) and \
                 ((projected and effect.isType("projected")) or not projected):
+                        print "running item effect: ", effect.name
                         effect.handler(fit, self, context)
 
-        if self.charge is not None and not projected:
-            for effect in self.charge.effects.itervalues():
-                if effect.runTime == runTime:
-                    effect.handler(fit, self, ("moduleCharge",))
 
     def getCycleTime(self):
         speed =  self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
