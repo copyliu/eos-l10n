@@ -4,6 +4,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Carrier").level
-    fit.drones.filteredItemBoost(lambda dron: dron.requiresSkill("Fighters"),
+    fit.drones.filteredItemBoost(lambda drone: drone.item.requiresSkill("Fighters"),
                                  "damageMultiplier", ship.getModifiedItemAttr("carrierGallenteBonus2") * level)
-    
