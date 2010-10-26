@@ -657,7 +657,7 @@ class Fit(object):
                     dict = self.extraAttributes.getAfflictions(attr)
                     if self in dict:
                         for mod, _, amount in dict[self]:
-                            capUsed -= mod.getCapUsage()
+                            capUsed -= mod.capUse
                             cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
                             amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
                             sustainable[attr] -= amount / cycleTime
@@ -672,8 +672,8 @@ class Fit(object):
                 totalPeakRecharge = self.capRecharge
                 for mod in repairers:
                     if capUsed > totalPeakRecharge: break
-                    cycleTime = mod.getCycleTime()
-                    capPerSec = mod.getCapUsage()
+                    cycleTime = mod.cycleTime
+                    capPerSec = mod.capUse
                     if capPerSec is not None and cycleTime is not None:
                         #Check how much this repper can work
                         sustainability = min(1, (totalPeakRecharge - capUsed) / capPerSec)
@@ -713,17 +713,14 @@ class Fit(object):
         capAdded = 0
         for mod in self.modules:
             if mod.state == State.ACTIVE:
-                capNeed = mod.getModifiedItemAttr("capacitorNeed")
-                if capNeed != 0 and capNeed is not None:
-                    numCharges = mod.numCharges
-                    cycleTime = mod.getCycleTime()
-                    reloadedCycleTime = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
+                    capNeed = mod.capUse
+                    cycleTime = mod.rawCycleTime
                     if capNeed > 0:
-                        capUsed += capNeed / (reloadedCycleTime if self.factorReload else cycleTime)
+                        capUsed += capNeed
                     else:
-                        capAdded += -capNeed / reloadedCycleTime
+                        capUsed -= capAdded
 
-                    drains.append((int(cycleTime * 1000), capNeed, numCharges))
+                    drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed"), mod.numCharges))
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
             drains.append((int(cycleTime * 1000), capNeed, clipSize))

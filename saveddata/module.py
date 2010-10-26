@@ -204,7 +204,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             else:
                 if self.state == State.ACTIVE and \
                 (self.hardpoint == Hardpoint.TURRET or self.hardpoint == Hardpoint.MISSILE):
-                    cycleTime = self.getCycleTime()
+                    cycleTime = self.cycleTime
                     volley = sum(map(lambda attr: self.getModifiedChargeAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
                     volley *= self.getModifiedItemAttr("damageMultiplier") or 1
                     self.__volley = volley
@@ -390,17 +390,33 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                         effect.handler(fit, self, context)
 
 
-    def getCycleTime(self):
+    @property
+    def cycleTime(self):
+        speed = self.rawCycleTime
+        if self.owner.factorReload:
+            speed = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
+
+        return speed
+
+    @property
+    def rawCycleTime(self):
         speed =  self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
         return speed / 1000.0 if speed is not None else speed
 
-    def getCapUsage(self):
-        speed = self.getCycleTime()
-        if speed is not None:
-            capUse = self.getModifiedItemAttr("capacitorNeed")
-            if capUse is not None:
-                speed = speed
-                return capUse / speed
+    @property
+    def capUse(self):
+        capNeed = self.getModifiedItemAttr("capacitorNeed")
+        if capNeed != 0 and capNeed is not None:
+            factorReload = self.owner.factorReload
+            numCharges = self.numCharges
+            cycleTime = (self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")) / 1000.0
+            reloadedCycleTime = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
+            if capNeed > 0:
+                capUsed = capNeed / (reloadedCycleTime if factorReload else cycleTime)
+            else:
+                capUsed = -capNeed / reloadedCycleTime
+
+            return capUsed
 
     def __deepcopy__(self, memo):
         item = self.item
