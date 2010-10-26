@@ -5,7 +5,7 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Crusader"
 
-    def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponSkillrqSmallEnergyTurret(self):
+    def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Dual Light Beam Laser I"
@@ -20,7 +20,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponNoSkillrqSmallEnergyTurret(self):
+    def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponOther(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Focused Medium Beam Laser I"
@@ -50,7 +50,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponSkillrqSmallEnergyTurret(self):
+    def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
         item = "Dual Light Pulse Laser I"
@@ -65,7 +65,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponNoSkillrqSmallEnergyTurret(self):
+    def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponOther(self):
         self.buildTested = 0
         attr = "damageMultiplier"
         item = "Heavy Pulse Laser I"
@@ -125,7 +125,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_interceptors_trackingSpeed_moduleEnergyWeaponSkillrqSmallEnergyTurret(self):
+    def test_interceptors_trackingSpeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
         item = "Gatling Pulse Laser I"
@@ -140,7 +140,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_interceptors_trackingSpeed_moduleEnergyWeaponNoSkillrqSmallEnergyTurret(self):
+    def test_interceptors_trackingSpeed_moduleEnergyWeaponOther(self):
         self.buildTested = 0
         attr = "trackingSpeed"
         item = "Quad Light Beam Laser I"

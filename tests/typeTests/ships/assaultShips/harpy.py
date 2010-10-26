@@ -3,28 +3,28 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.ship = "Retribution"
+        self.ship = "Harpy"
 
-    def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponSmall(self):
+    def test_caldariFrigate_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
-        attr = "capacitorNeed"
-        item = "Medium Pulse Laser I"
-        skill = "Amarr Frigate"
+        attr = "maxRange"
+        item = "150mm Railgun I"
+        skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 0.9
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 0.6
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponOther(self):
+    def test_caldariFrigate_maxRange_moduleHybridWeaponOtherl(self):
         self.buildTested = 0
-        attr = "capacitorNeed"
-        item = "Focused Medium Pulse Laser I"
-        skill = "Amarr Frigate"
+        attr = "maxRange"
+        item = "Dual 150mm Railgun I"
+        skill = "Caldari Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -35,10 +35,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_assaultShips_maxRange_moduleEnergyWeaponSmall(self):
+    def test_assaultShips_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "Medium Beam Laser I"
+        item = "Light Neutron Blaster I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.1
@@ -50,10 +50,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_assaultShips_maxRange_moduleEnergyWeaponOther(self):
+    def test_assaultShips_maxRange_moduleHybridWeaponOtherl(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "Heavy Beam Laser I"
+        item = "Heavy Electron Blaster I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.0
@@ -65,10 +65,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_assaultShips_damageMultiplier_moduleEnergyWeaponSmall(self):
+    def test_assaultShips_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Gatling Pulse Laser I"
+        item = "Light Ion Blaster I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.05
@@ -80,10 +80,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_assaultShips_damageMultiplier_moduleEnergyWeaponOther(self):
+    def test_assaultShips_damageMultiplier_moduleHybridWeaponOtherl(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Focused Medium Pulse Laser I"
+        item = "250mm Railgun I"
         skill = "Assault Ships"
         iLvl = 1
         iIngame = 1.0
