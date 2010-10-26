@@ -104,7 +104,7 @@ class Fit(object):
             fit.ship = Ship(db.getItem(shipType))
             fit.name = fitName
         except:
-            retursn
+            return
 
         for i in range(1, len(lines)):
             line = lines[i]
