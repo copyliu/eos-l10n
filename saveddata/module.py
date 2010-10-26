@@ -377,7 +377,6 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if self.charge is not None and not projected:
             for effect in self.charge.effects.itervalues():
                 if effect.runTime == runTime:
-                    print "running charge effect: ", effect.name
                     effect.handler(fit, self, ("moduleCharge",))
 
         if self.item:
@@ -388,7 +387,6 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 (effect.isType("active") and self.state >= State.ACTIVE) or \
                 (effect.isType("overheat") and self.state >= State.OVERHEATED)) and \
                 ((projected and effect.isType("projected")) or not projected):
-                        print "running item effect: ", effect.name
                         effect.handler(fit, self, context)
 
 
