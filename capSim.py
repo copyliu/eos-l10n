@@ -54,7 +54,6 @@ class CapSimulator(object):
                     # only adjust if the adjustment is less than 1%
                     duration += mod
                     capNeed += float(mod)/duration * capNeed
-                    print duration, capNeed
                     break
 
         return duration, capNeed

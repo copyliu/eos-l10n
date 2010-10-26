@@ -274,6 +274,7 @@ class Fit(object):
         self.__capUsed = None
         self.__capRecharge = None
         self.__calculatedTargets = []
+        self.factorReload = False
         self.extraAttributes = ModifiedAttributeDict(self)
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
         self.ship = Ship(db.getItem(self.shipID)) if self.shipID is not None else None
@@ -714,13 +715,15 @@ class Fit(object):
             if mod.state == State.ACTIVE:
                 capNeed = mod.getModifiedItemAttr("capacitorNeed")
                 if capNeed != 0 and capNeed is not None:
+                    numCharges = mod.numCharges
                     cycleTime = mod.getCycleTime()
+                    reloadedCycleTime = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
                     if capNeed > 0:
-                        capUsed += capNeed / cycleTime
+                        capUsed += capNeed / (reloadedCycleTime if self.factorReload else cycleTime)
                     else:
-                        capAdded += -capNeed / cycleTime
+                        capAdded += -capNeed / reloadedCycleTime
 
-                    drains.append((int(cycleTime * 1000), capNeed, mod.numCharges))
+                    drains.append((int(cycleTime * 1000), capNeed, numCharges))
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
             drains.append((int(cycleTime * 1000), capNeed, clipSize))
