@@ -586,7 +586,7 @@ class Fit(object):
         return amount
 
     @property
-    def maxDronesActive(self):
+    def maxActiveDrones(self):
         return 5
 
 
