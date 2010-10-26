@@ -394,7 +394,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def cycleTime(self):
         speed = self.rawCycleTime
         if self.owner.factorReload:
-            speed = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
+            numCharges = self.numCharges
+            speed = (speed * numCharges + 10) / numCharges if numCharges > 0 else speed
 
         return speed
 
