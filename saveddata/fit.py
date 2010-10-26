@@ -36,7 +36,7 @@ class Fit(object):
                         "shieldRepair": 0,
                         "maxActiveDrones": 0,
                         "maxTargetsLockedFromSkills": 2,
-                        "droneControlRange": 0,
+                        "droneControlRange": 20000,
                         "capacity": 0,
                         "cloaked": False}
 
