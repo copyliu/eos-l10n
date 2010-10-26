@@ -104,7 +104,7 @@ class Fit(object):
             fit.ship = Ship(db.getItem(shipType))
             fit.name = fitName
         except:
-            return
+            retursn
 
         for i in range(1, len(lines)):
             line = lines[i]
@@ -576,6 +576,18 @@ class Fit(object):
             amount += d.item.volume * d.amount
 
         return amount
+
+    @property
+    def usedDronesActive(self):
+        amount = 0
+        for d in self.drones:
+            amount +=d.amountActive
+
+        return amount
+
+    @property
+    def totalDronesActive(self):
+        return 5 
 
 
     @property
