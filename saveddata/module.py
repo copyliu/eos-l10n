@@ -418,6 +418,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 capUsed = capNeed / reloadedCycleTime
 
             return capUsed
+        else:
+            return 0
 
     def __deepcopy__(self, memo):
         item = self.item

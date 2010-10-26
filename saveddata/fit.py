@@ -720,7 +720,7 @@ class Fit(object):
                     else:
                         capAdded -= capNeed
 
-                    drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed"), mod.numCharges))
+                    drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numCharges))
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
             drains.append((int(cycleTime * 1000), capNeed, clipSize))
