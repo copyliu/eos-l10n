@@ -587,11 +587,6 @@ class Fit(object):
         return amount
 
     @property
-    def maxActiveDrones(self):
-        return 5
-
-
-    @property
     def capStable(self):
         if self.__capStable is None:
             self.simulateCap()
