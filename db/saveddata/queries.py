@@ -25,13 +25,30 @@ import eos.config
 
 configVal = getattr(eos.config, "saveddataCache", None)
 if configVal is True:
+    import weakref
     itemCache = {}
     queryCache = {}
     def cachedQuery(type, amount, *keywords):
-        itemCache[type] = localItemCache = {}
+        itemCache[type] = localItemCache = weakref.WeakValueDictionary()
         queryCache[type] = typeQueryCache = {}
         def deco(function):
             localQueryCache = typeQueryCache[function] = {}
+            def setCache(cacheKey, args, kwargs):
+                items = function(*args, **kwargs)
+                IDs = set()
+                localQueryCache[cacheKey] = (isinstance(items, list), IDs)
+                stuff = items if isinstance(items, list) else (items,)
+                for item in stuff:
+                    ID = getattr(item, "ID", None)
+                    if ID is None:
+                        #Some uncachable data, don't cache this query
+                        del localQueryCache[cacheKey]
+                        break
+                    localItemCache[ID] = item
+                    IDs.add(ID)
+
+                return items
+
             def checkAndReturn(*args, **kwargs):
                 cacheKey = []
                 cacheKey.extend(args)
@@ -41,24 +58,18 @@ if configVal is True:
                 cacheKey = tuple(cacheKey)
                 info = localQueryCache.get(cacheKey)
                 if info is None:
-                    items = function(*args, **kwargs)
-                    IDs = set()
-                    localQueryCache[cacheKey] = (isinstance(items, list), IDs)
-                    stuff = items if isinstance(items, list) else (items,)
-                    for item in stuff:
-                        ID = getattr(item, "ID", None)
-                        if ID is None:
-                            #Some uncachable data, don't cache this query
-                            del localQueryCache[cacheKey]
-                            break
-                        localItemCache[ID] = item
-                        IDs.add(ID)
+                    items = setCache(cacheKey, args, kwargs)
                 else:
                     l, IDs = info
                     if l:
                         items = []
                         for ID in IDs:
-                            items.append(localItemCache[ID])
+                            data = localItemCache.get(ID)
+                            if data is None:
+                                #Fuck, some of our stuff isn't cached it seems.
+                                items = setCache(cacheKey, args, kwargs)
+                                break
+                            items.append(data)
                     else:
                         for ID in IDs:
                             items = localItemCache[ID]
