@@ -740,8 +740,9 @@ class Fit(object):
             sim.reload = False
             sim.run()
 
-            self.__capStable = sim.cap_stable_eve > 0
-            self.__capState = min(100, sim.cap_stable_eve * 100) if self.__capStable else sim.t / 1000.0
+            capState = (sim.cap_stable_low + sim.cap_stable_high) / 2
+            self.__capStable = capState > 0
+            self.__capState = min(100, capState * 100) if self.__capStable else sim.t / 1000.0
         else:
             self.__capStable = True
             self.__capState = 100
