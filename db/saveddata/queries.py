@@ -80,7 +80,8 @@ if configVal is True:
             for cacheKey in toDelete:
                 del localCache[cacheKey]
 
-            del itemCache[type][ID]
+            if ID in itemCache[type]:
+                del itemCache[type][ID]
 
 elif callable(configVal):
     cachedQuery, removeCachedEntry = eos.config.gamedataCache
