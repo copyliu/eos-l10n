@@ -135,6 +135,19 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             return int(containerSize / chargeSize)
 
     @property
+    def numShots(self):
+        numCharges = self.numCharges
+        if self.numCharges is None:
+            return None
+
+        chargeRate = self.getModifiedItemAttr("chargeRate")
+        if chargeRate is None:
+            return 0 #Zero means infinite
+
+        return numCharges / float(chargeRate)
+
+
+    @property
     def maxRange(self):
         attrs = ("maxRange", "empFieldRange", "ecmBurstRange")
         for attr in attrs:

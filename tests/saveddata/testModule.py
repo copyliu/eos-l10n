@@ -235,3 +235,12 @@ class Test(TestBase):
         self.assertFalse(ab.canHaveState(State.ACTIVE))
         self.assertFalse(mwd.canHaveState(State.ACTIVE))
         self.assertTrue(salv.canHaveState(State.ACTIVE))
+
+    def test_numShots(self):
+        laser = Module(db.getItem("Dual Giga Pulse Laser I"))
+        laser.charge = db.getItem("Multifrequency XL")
+        arty = Module(db.getItem("1200mm Artillery Cannon I"))
+        arty.charge = db.getItem("Phased Plasma L")
+        self.assertEquals(laser.numShots, 0)
+        self.assertGreater(arty.numShots, 0)
+

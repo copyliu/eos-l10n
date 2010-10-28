@@ -720,7 +720,7 @@ class Fit(object):
                         else:
                             capAdded -= capNeed
 
-                        drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numCharges))
+                        drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numShots or 0))
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
             drains.append((int(cycleTime * 1000), capNeed, clipSize))
@@ -741,7 +741,7 @@ class Fit(object):
             sim.capacitorRecharge = self.ship.getModifiedItemAttr("rechargeRate")
             sim.stagger = True
             sim.scale = False
-            sim.reload = False
+            sim.reload = self.factorReload
             sim.run()
 
             capState = (sim.cap_stable_low + sim.cap_stable_high) / 2
