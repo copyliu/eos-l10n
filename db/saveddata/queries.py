@@ -72,7 +72,9 @@ if configVal is True:
                             items.append(data)
                     else:
                         for ID in IDs:
-                            items = localItemCache[ID]
+                            items = localItemCache.get(ID)
+                            if items is None:
+                                items = setCache(cacheKey, args, kwargs)
                             break
 
                 return items
