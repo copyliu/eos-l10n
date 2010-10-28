@@ -302,7 +302,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         group = item.group.name
         for mod in self.owner.modules:
             currItem = getattr(mod, "item", None)
-            if currItem is not None and currItem.group.name == group:
+            if mod.state >= State.ACTIVE and currItem is not None and currItem.group.name == group:
                 currActive += 1
 
             if currActive > maxGroupActive:
