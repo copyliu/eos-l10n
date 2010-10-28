@@ -127,14 +127,26 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if self.charge is None:
             return 0
         else:
-            # Convert terminating floats to ints to avoid rounding errors
-            # Magic constant needed to be OVER 9000
+            # Convert terminating floats to avoid rounding errors
+            # Magic constant should be over 9000.
             chargeSize = int(self.charge.volume*10000)
             containerSize = int(self.item.capacity*10000)
             if chargeSize is None or containerSize is None:
                 return 0
 
             return containerSize / chargeSize
+
+    @property
+    def numShots(self):
+        numCharges = self.numCharges
+        if self.numCharges is None:
+            return None
+
+        chargeRate = self.getModifiedItemAttr("chargeRate")
+        if chargeRate is None:
+            return 0 #Zero means infinite
+
+        return numCharges / float(chargeRate)
 
 
     @property
@@ -273,6 +285,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         return True
 
     def isValidState(self, state):
+        """
+        Check if the state is valid for this module, without considering other modules at all
+        """
         #Check if we're within bounds
         if state < -1 or state > 2:
             return False
@@ -284,6 +299,31 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             return False
 
         return True
+
+    def canHaveState(self, state=None):
+        """
+        Check with other modules if there are restrictions that might not allow this module to be activated
+        """
+        item = self.item
+        if state < State.ACTIVE:
+            return True
+
+        ##Check if the module is over it's max limit
+        maxGroupActive = self.getModifiedItemAttr("maxGroupActive")
+        if maxGroupActive is None:
+            return True
+
+        currActive = 0
+        group = item.group.name
+        for mod in self.owner.modules:
+            currItem = getattr(mod, "item", None)
+            if mod.state >= State.ACTIVE and currItem is not None and currItem.group.name == group:
+                currActive += 1
+
+            if currActive > maxGroupActive:
+                break
+
+        return currActive <= maxGroupActive
 
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit
