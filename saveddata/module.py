@@ -127,12 +127,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if self.charge is None:
             return 0
         else:
-            chargeSize = self.charge.volume
-            containerSize = self.item.capacity
+            # Convert terminating floats to avoid rounding errors
+            # Magic constant should be over 9000.
+            chargeSize = int(self.charge.volume*10000)
+            containerSize = int(self.item.capacity*10000)
             if chargeSize is None or containerSize is None:
                 return 0
 
-            return int(containerSize / chargeSize)
+            return containerSize / chargeSize
 
     @property
     def numShots(self):
