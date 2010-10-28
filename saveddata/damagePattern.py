@@ -55,7 +55,7 @@ class DamagePattern(object):
             resonance = fit.ship.getModifiedItemAttr(attrName)
             damage = getattr(self, "%sAmount" % damageType)
 
-            specificDivider += damage / float(totalDamage) * resonance
+            specificDivider += damage / float(totalDamage or 1) * resonance
 
         return amount / (specificDivider or 1)
 
