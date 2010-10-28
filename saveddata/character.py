@@ -39,6 +39,10 @@ class Character(object):
         return cls.__skillList
 
     @classmethod
+    def setSkillList(cls, list):
+        cls.__skillList = list
+
+    @classmethod
     def getSkillMap(cls):
         if cls.__skillMap is None:
             map = {}
