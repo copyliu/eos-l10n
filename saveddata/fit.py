@@ -587,6 +587,10 @@ class Fit(object):
         return amount
 
     @property
+    def warpSpeed(self):
+        return self.ship.getModifiedItemAttr("warpSpeedMultiplier") * 3
+
+    @property
     def capStable(self):
         if self.__capStable is None:
             self.simulateCap()
