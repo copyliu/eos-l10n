@@ -220,3 +220,18 @@ class Test(TestBase):
         f.ship = Ship(db.getItem("Rifter"))
         f.fill()
         self.assertTrue(m.fits(f))
+
+    def test_canHaveState(self):
+        f = Fit()
+        ab = Module(db.getItem("1MN Afterburner II"))
+        ab.state = State.ACTIVE
+        mwd = Module(db.getItem("1MN MicroWarpdrive II"))
+        mwd.state = State.ACTIVE
+        salv = Module(db.getItem("Salvager I"))
+        salv.state = State.ACTIVE
+        f.modules.append(salv)
+        f.modules.append(ab)
+        f.modules.append(mwd)
+        self.assertFalse(ab.canHaveState(State.ACTIVE))
+        self.assertFalse(mwd.canHaveState(State.ACTIVE))
+        self.assertTrue(salv.canHaveState(State.ACTIVE))
