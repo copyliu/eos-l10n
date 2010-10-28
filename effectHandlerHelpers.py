@@ -112,6 +112,7 @@ class HandledModuleList(HandledList):
 
     def freeSlot(self, slot):
         for i in range(len(self) -1, -1, -1):
+            mod = self[i]
             if mod.getModifiedItemAttr("subSystemSlot") == slot:
                 del self[i]
 
