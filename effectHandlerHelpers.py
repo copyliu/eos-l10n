@@ -118,9 +118,9 @@ class HandledModuleList(HandledList):
 
 class HandledDroneList(HandledList):
     def find(self, item):
-        for i in self:
-            if i == item:
-                return i
+        for d in self:
+            if d.item == item:
+                return d
 
     def append(self, drone):
         list.append(self, drone)
