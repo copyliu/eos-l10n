@@ -715,7 +715,7 @@ class Fit(object):
         capUsed = 0
         capAdded = 0
         for mod in self.modules:
-            if mod.state == State.ACTIVE:
+            if mod.state >= State.ACTIVE:
                     cycleTime = mod.rawCycleTime
                     if cycleTime is not None:
                         capNeed = mod.capUse
