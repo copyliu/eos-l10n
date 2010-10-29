@@ -744,7 +744,7 @@ class Fit(object):
             sim.reload = self.factorReload
             sim.run()
 
-            capState = (sim.cap_stable_low + sim.cap_stable_high) / 2
+            capState = (sim.cap_stable_low + sim.cap_stable_high) / (2 * sim.capacitorCapacity)
             self.__capStable = capState > 0
             self.__capState = min(100, capState * 100) if self.__capStable else sim.t / 1000.0
         else:
