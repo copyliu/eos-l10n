@@ -10,6 +10,7 @@ def handler(fit, container, context):
     staticBonus = container.getModifiedItemAttr("cloakingCpuNeedBonus")
     containerGroup = container.item.group.name
 
+    # TODO: remove hardcoding if it's possible
     # Map of items which are affected
     # { container group : ( bonus skill, bonus per level) }
     cloakyItems = { "Transport Ship" : ("Transport Ships", 0.0015),
