@@ -48,6 +48,9 @@ class Price(object):
             if not price.isValid:
                 priceObjByTypeID[price.typeID] = price
 
+        if len(priceObjByTypeID) == 0:
+            return
+
         request = urllib2.Request(cls.REQUEST_URL % ",".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
                                   None, {"User-Agent" : "eos"})
 
