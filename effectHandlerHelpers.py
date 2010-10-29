@@ -197,9 +197,6 @@ class HandledProjectedModList(HandledList):
 class HandledProjectedDroneList(HandledDroneList):
     def append(self, proj):
         proj.projected = True
-        if self._findCache.has_key(proj.item.ID):
-            raise ValueError("Drone already here, cannot add the same one multiple times")
-
         list.append(self, proj)
         self._findCache[proj.item.ID] = proj
 
