@@ -35,11 +35,7 @@ class Test(TestBase):
 
     def test_originalNone(self):
         self.dict.original = {}
-        try:
-            self.dict["maeazhtg"]
-        except KeyError:
-            return
-        self.fail("Expected KeyError, didn't get it.")
+        self.assertEquals(self.dict["maeazhtg"], None)
 
     def test_force(self):
         self.dict.original = self.i.attributes
