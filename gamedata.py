@@ -239,6 +239,11 @@ class Item(EqBase):
 
         return False
 
+class MetaData(EqBase):
+    def __init__(self, name, val):
+        self.fieldName = name
+        self.fieldValue = val
+
 class EffectInfo(EqBase):
     pass
 

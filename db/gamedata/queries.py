@@ -20,7 +20,7 @@
 from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
 from sqlalchemy.sql import and_, or_
-from eos.types import Item, Category, Group, MarketGroup, AttributeInfo
+from eos.types import Item, Category, Group, MarketGroup, AttributeInfo, MetaData
 from eos.db.util import processEager, processWhere
 import eos.config
 
@@ -149,3 +149,7 @@ def getAttributeInfo(attr, eager=None):
         filter = AttributeInfo.ID == int(attr)
 
     return gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
+
+@cachedQuery(1, "field")
+def getMetaData(field):
+    return gamedata_session.query(MetaData).filter(MetaData.fieldName == field).one()

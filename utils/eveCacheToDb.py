@@ -304,17 +304,6 @@ if __name__ == "__main__":
     eve = blue.EVE(PATH_EVE, cachepath=PATH_CACHE, server=server)
     cfg = eve.getconfigmgr()
 
-    # Add a custom metadata table
-    class MetaData(object):
-        def __init__(self, name, val):
-            self.fieldName = name
-            self.fieldValue = val
-
-    metadata_table = Table("metadata", eos.db.gamedata_meta,
-                           Column("fieldName", String, primary_key=True),
-                           Column("fieldValue", String))
-    mapper(MetaData, metadata_table)
-
     # Create all tables we need
     eos.db.gamedata_meta.create_all()
 

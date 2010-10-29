@@ -53,7 +53,7 @@ from eos.db.saveddata import *
 
 #Import queries
 from eos.db.gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory,\
-                                    getMarketGroup, getGroup, getCategory, getAttributeInfo
+                                    getMarketGroup, getGroup, getCategory, getAttributeInfo, getMetaData
 from eos.db.saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits, \
                                      getCharacterList, getPrice, getDamagePatternList, getDamagePattern, \
                                      getFitList, save, remove, commit
