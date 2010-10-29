@@ -423,12 +423,16 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     effect.handler(fit, self, ("moduleCharge",))
 
         if self.item:
+            if self.state >= State.OVERHEATED:
+                for effect in self.item.effects.itervalues():
+                    if effect.runTime == runTime and effect.isType("overheat"):
+                        effect.handler(fit, self, context)
+
             for effect in self.item.effects.itervalues():
                 if effect.runTime == runTime and \
                 (effect.isType("offline") or
                 (effect.isType("passive") and self.state >= State.ONLINE) or \
-                (effect.isType("active") and self.state >= State.ACTIVE) or \
-                (effect.isType("overheat") and self.state >= State.OVERHEATED)) and \
+                (effect.isType("active") and self.state >= State.ACTIVE)) and \
                 ((projected and effect.isType("projected")) or not projected):
                         effect.handler(fit, self, context)
 
