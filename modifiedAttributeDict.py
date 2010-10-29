@@ -18,6 +18,7 @@
 #===============================================================================
 
 from math import exp
+import collections
 
 class ItemAttrShortcut(object):
     def getModifiedItemAttr(self, key):
@@ -35,7 +36,7 @@ class ChargeAttrShortcut(object):
             return None
 
 
-class ModifiedAttributeDict(object):
+class ModifiedAttributeDict(collections.MutableMapping):
     class CalculationPlaceholder():
         pass
 
@@ -82,6 +83,12 @@ class ModifiedAttributeDict(object):
         else:
             return self.getOriginal(key)
 
+    def __delitem__(self, key):
+        if key in self.__modified:
+            del self.__modified[key]
+        if key in self.__intermediary:
+            del self.__intermediary[key]
+
     def getOriginal(self, key):
         val = self.__original[key]
         return val.value if hasattr(val, "value") else val
@@ -96,28 +103,18 @@ class ModifiedAttributeDict(object):
     def __contains__(self, key):
         return (self.__original is not None and key in self.__original) or key in self.__modified or key in self.__intermediary
 
-    def iterkeys(self):
-        for key in self:
-            yield key
-
-    def itervalues(self):
-        for key in self:
-            yield self[key]
-
-    def iteritems(self):
-        for key in self:
-            yield key, self[key]
-
-    iter = __iter__
-    items = iteritems
-    keys = iterkeys
-    values = itervalues
-
     def __placehold(self, key):
         if key in self.__modified and self.__modified[key] != self.CalculationPlaceholder:
             self.__intermediary[key] = self.__modified[key]
 
         self.__modified[key] = self.CalculationPlaceholder
+
+    def __len__(self):
+        keys = set()
+        keys.update(self.__original.iterkeys())
+        keys.update(self.__modified.iterkeys())
+        keys.update(self.__intermediary.iterkeys())
+        return len(keys)
 
     def __calculateValue(self, key):
         #Grab our values if they're there, otherwise we'll take default values.
