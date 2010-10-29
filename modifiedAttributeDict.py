@@ -90,7 +90,10 @@ class ModifiedAttributeDict(collections.MutableMapping):
             del self.__intermediary[key]
 
     def getOriginal(self, key):
-        val = self.__original[key]
+        val = self.__original.get(key)
+        if val is None:
+            return None
+
         return val.value if hasattr(val, "value") else val
 
     def __setitem__(self, key, val):
