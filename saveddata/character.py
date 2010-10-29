@@ -236,7 +236,7 @@ class Skill(HandledItem):
 
     @level.setter
     def level(self, level):
-        if level < 0 or level > 5:
+        if (level < 0 or level > 5) and level is not None:
             raise ValueError(str(level) + " is not a valid value for level")
 
         if hasattr(self, "_Skill__ro") and self.__ro == True:
