@@ -117,25 +117,16 @@ class HandledModuleList(HandledList):
                 del self[i]
 
 class HandledDroneList(HandledList):
-    def __init__(self):
-        self._findCache = {}
-
     def find(self, item):
-        if self._findCache.has_key(item.ID):
-            return self._findCache[item.ID]
-        else:
-            return None
+        for i in self:
+            if i == item:
+                return i
 
     def append(self, drone):
         list.append(self, drone)
-        self._findCache[drone.item.ID] = drone
 
     def remove(self, drone):
-        if self._findCache.has_key(drone.item.ID):
-            del self._findCache[drone.item.ID]
-            HandledList.remove(self, drone)
-        else:
-            raise KeyError("Drone is not in the list")
+        HandledList.remove(self, drone)
 
     def appendItem(self, item, amount = 1):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
@@ -148,7 +139,7 @@ class HandledDroneList(HandledList):
         return d
 
     def removeItem(self, item, amount):
-        if amount < 1: ValueError("Amount of drones to add should be >= 1")
+        if amount < 1: ValueError("Amount of drones to remove should be >= 1")
         d = self.find(item)
         if d is None: return
         d.amount -= amount
@@ -198,7 +189,6 @@ class HandledProjectedDroneList(HandledDroneList):
     def append(self, proj):
         proj.projected = True
         list.append(self, proj)
-        self._findCache[proj.item.ID] = proj
 
 class HandledProjectedFitList(list):
     """
