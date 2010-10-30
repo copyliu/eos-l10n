@@ -813,7 +813,7 @@ class Fit(object):
 
     def calculateLockTime(self, targetSigRad):
         scanRes = self.ship.getModifiedItemAttr("scanResolution")
-        return 40 / scanRes / (math.log(radius + math.sqrt(radius * radius + 1)) ** 2.0)
+        return 40 / scanRes / (log(radius + sqrt(radius * radius + 1)) ** 2.0)
 
     def calculateWeaponStats(self):
         weaponDPS = 0
