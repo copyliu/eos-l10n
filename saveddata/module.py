@@ -292,7 +292,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if state < -1 or state > 2:
             return False
 
-        if state == State.ACTIVE and not self.item.isType("active"):
+        if state >= State.ACTIVE and not self.item.isType("active"):
             return False
 
         if state == State.OVERHEATED and not self.item.isType("overheat"):
