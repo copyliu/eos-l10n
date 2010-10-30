@@ -34,6 +34,7 @@ fits_table = Table("fits", saveddata_meta,
                          Column("ownerID", ForeignKey("users.ID"), nullable = True),
                          Column("shipID", Integer, nullable = False),
                          Column("name", String, nullable = False),
+                         Column("timestamp", Integer, nullable = False),
                          Column("characterID", ForeignKey("characters.ID"), nullable = True),
                          Column("damagePatternID", ForeignKey("damagePatterns.ID"), nullable=True))
 

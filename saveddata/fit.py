@@ -28,6 +28,7 @@ from math import sqrt, log
 from eos.types import Drone, Ship, Character, State, Slot, Module
 import re
 import xml.dom
+import time
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -55,6 +56,7 @@ class Fit(object):
         self.shipID = None
         self.projected = False
         self.name = ""
+        self.timestamp = time.time()
         self.build()
 
     @classmethod
