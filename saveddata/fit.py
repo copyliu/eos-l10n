@@ -660,11 +660,13 @@ class Fit(object):
                     dict = self.extraAttributes.getAfflictions(attr)
                     if self in dict:
                         for mod, _, amount in dict[self]:
-                            capUsed -= mod.capUse
-                            cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
-                            amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
-                            sustainable[attr] -= amount / cycleTime
-                            repairers.append(mod)
+                            if mod.projected is False:
+                                capUsed -= mod.capUse
+                                cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
+                                amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
+                                sustainable[attr] -= amount / cycleTime
+                                repairers.append(mod)
+
 
                 #Sort repairers by efficiency. We want to use the most efficient repairers first
                 repairers.sort(key=lambda mod: mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name]) / mod.getModifiedItemAttr("capacitorNeed"), reverse = True)
