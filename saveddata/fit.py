@@ -857,9 +857,6 @@ class Fit(object):
         chain = itertools.chain(self.modules, self.drones, self.projectedDrones,
                                 self.projectedModules, self.implants, self.boosters)
 
-        if self.ship is not None:
-            self.ship.make_transient()
-
         for victim in chain:
             victim.make_transient()
 
