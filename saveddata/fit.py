@@ -160,7 +160,7 @@ class Fit(object):
                     moduleName = hardware.getAttribute("type")
                     item = db.getItem(moduleName, eager="group.category")
                     if item:
-                        if item.group.name == "Drone":
+                        if item.category.name == "Drone":
                             d = Drone(item)
                             d.amount = int(hardware.getAttribute("qty"))
                             f.drones.append(d)
