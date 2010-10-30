@@ -809,6 +809,10 @@ class Fit(object):
 
         return self.__effectiveSustainableTank
 
+    def calculateLockTime(self, targetSigRad):
+        scanRes = self.ship.getModifiedItemAttr("scanResolution")
+        return 40 / scanRes / (math.log(radius + math.sqrt(radius * radius + 1)) ** 2.0)
+
     def calculateWeaponStats(self):
         weaponDPS = 0
         droneDPS = 0
