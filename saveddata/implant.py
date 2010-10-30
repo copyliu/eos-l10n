@@ -20,6 +20,7 @@
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates, reconstructor
+from sqlalchemy.orm.session import make_transient
 
 class Implant(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
@@ -91,3 +92,8 @@ class Implant(HandledItem, ItemAttrShortcut):
         copy = Implant(self.item)
         copy.active = self.active
         return copy
+
+    def make_transient(self):
+        make_transient(self)
+
+
