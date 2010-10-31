@@ -21,7 +21,6 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, C
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from eos.enum import Enum
 from sqlalchemy.orm import validates, reconstructor
-from sqlalchemy.orm.session import make_transient
 
 class State(Enum):
     OFFLINE = -1
@@ -478,8 +477,3 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         copy.charge = self.charge
         copy.state = self.state
         return copy
-
-    def make_transient(self):
-        make_transient(self)
-
-

@@ -21,7 +21,6 @@ from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDron
 HandledImplantBoosterList, HandledProjectedDroneList
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
-from sqlalchemy.orm.session import make_transient
 from itertools import chain
 from eos import capSim
 from copy import deepcopy
@@ -30,7 +29,6 @@ from eos.types import Drone, Ship, Character, State, Slot, Module
 import re
 import xml.dom
 import time
-import itertools
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -852,15 +850,3 @@ class Fit(object):
             copy.projectedFits.append(fit)
 
         return copy
-
-    def make_transient(self):
-        chain = itertools.chain(self.modules, self.drones, self.projectedDrones,
-                                self.projectedModules, self.implants, self.boosters)
-
-        if self.ship is not None:
-            self.ship.make_transient()
-
-        for victim in chain:
-            victim.make_transient()
-
-        make_transient(self)
