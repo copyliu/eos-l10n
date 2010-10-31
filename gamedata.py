@@ -136,10 +136,40 @@ def effectDummy(*args, **kwargs):
     pass
 
 class Item(EqBase):
+    MOVE_ATTRS = (4,  #mass
+                  38, #capacity
+                  161)#volume
+
+    MOVE_ATTR_INFO = {}
+    def getMoveAttrInfo(self):
+        sess_id = self._sa_instance_state.session_id
+        sess_info = self.MOVE_ATTR_INFO.get(sess_id)
+
+        if sess_info is None:
+            self.MOVE_ATTR_INFO[sess_id] = sess_info = {}
+            import eos.db
+            for id in self.MOVE_ATTRS:
+                sess_info[id] = eos.db.getAttributeInfo(id)
+
+        return sess_info
+
+    def moveAttrs(self):
+        moveInfo = self.getMoveAttrInfo()
+        for id, info in moveInfo.iteritems():
+            val = getattr(self, info.name, 0)
+            if val != 0:
+                attr = Attribute()
+                attr.info = info
+                attr.typeID = self.typeID
+                attr.value = val
+                self.attributes[info.name] = attr
+
     @reconstructor
     def init(self):
         self.__race = None
         self.__requiredSkills = None
+        self.moveAttrs()
+
 
     def getAttribute(self, key):
         if key in self.attributes:

@@ -21,7 +21,6 @@ from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDron
 HandledImplantBoosterList, HandledProjectedDroneList
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
-from sqlalchemy.orm.session import make_transient
 from itertools import chain
 from eos import capSim
 from copy import deepcopy
@@ -30,7 +29,6 @@ from eos.types import Drone, Ship, Character, State, Slot, Module
 import re
 import xml.dom
 import time
-import itertools
 
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
@@ -40,7 +38,6 @@ class Fit(object):
                         "maxActiveDrones": 0,
                         "maxTargetsLockedFromSkills": 2,
                         "droneControlRange": 20000,
-                        "capacity": 0,
                         "cloaked": False}
 
     PEAK_RECHARGE = 0.25
@@ -309,8 +306,6 @@ class Fit(object):
     def ship(self, ship):
         self.__ship = ship
         self.shipID = ship.item.ID if ship is not None else None
-        if ship is not None:
-            self.extraAttributes["capacity"] = ship.item.capacity
 
     @property
     def drones(self):
@@ -434,8 +429,6 @@ class Fit(object):
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
             if stuff is not None: stuff.clear()
-        if self.ship is not None:
-            self.extraAttributes["capacity"] = self.ship.item.capacity
 
     #Methods to register and get the thing currently affecting the fit,
     #so we can correctly map "Affected By"
@@ -854,12 +847,3 @@ class Fit(object):
             copy.projectedFits.append(fit)
 
         return copy
-
-    def make_transient(self):
-        chain = itertools.chain(self.modules, self.drones, self.projectedDrones,
-                                self.projectedModules, self.implants, self.boosters)
-
-        for victim in chain:
-            victim.make_transient()
-
-        make_transient(self)

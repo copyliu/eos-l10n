@@ -29,3 +29,9 @@ class Test(TestBase):
         self.assertFalse(i.requiresSkill("Moo Management"), 9000)
 
         self.assertTrue(i.requiresSkill(Skill(skill)))
+
+    def test_attrMover(self):
+        i = db.getItem("Rifter")
+        self.assertEquals(i.capacity, i.getAttribute("capacity"))
+        self.assertEquals(i.volume, i.getAttribute("volume"))
+        self.assertEquals(i.mass, i.getAttribute("mass"))

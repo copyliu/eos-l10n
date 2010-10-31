@@ -19,10 +19,8 @@
 
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
-from sqlalchemy.orm.session import make_transient
 
 class Ship(ItemAttrShortcut, HandledItem):
-    MOVE_ATTRIBUTES = ("mass",)
     def __init__(self, item):
         self.__item = item
         self.__itemModifiedAttributes = ModifiedAttributeDict()
@@ -37,12 +35,7 @@ class Ship(ItemAttrShortcut, HandledItem):
         self.__buildOriginal()
 
     def __buildOriginal(self):
-        orig = {}
-        orig.update(self.item.attributes)
-        for attr in self.MOVE_ATTRIBUTES:
-            orig[attr] = getattr(self.item, attr)
-
-        self.__itemModifiedAttributes.original = orig
+        self.__itemModifiedAttributes.original = self.item.attributes
 
     @property
     def item(self):
@@ -71,8 +64,3 @@ class Ship(ItemAttrShortcut, HandledItem):
     def __deepcopy__(self, memo):
         copy = Ship(self.item)
         return copy
-
-    def make_transient(self):
-        make_transient(self)
-
-

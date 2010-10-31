@@ -20,7 +20,6 @@
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut
 from eos.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import reconstructor, validates
-from sqlalchemy.orm.session import make_transient
 
 class Booster(HandledItem, ItemAttrShortcut):
     def __init__(self, item):
@@ -159,6 +158,3 @@ class SideEffect(object):
             raise TypeError("Need an effect with a handler")
 
         self.__effect = effect
-
-    def make_transient(self):
-        make_transient(self)
