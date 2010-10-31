@@ -38,7 +38,6 @@ class Fit(object):
                         "maxActiveDrones": 0,
                         "maxTargetsLockedFromSkills": 2,
                         "droneControlRange": 20000,
-                        "capacity": 0,
                         "cloaked": False}
 
     PEAK_RECHARGE = 0.25
@@ -307,8 +306,6 @@ class Fit(object):
     def ship(self, ship):
         self.__ship = ship
         self.shipID = ship.item.ID if ship is not None else None
-        if ship is not None:
-            self.extraAttributes["capacity"] = ship.item.capacity
 
     @property
     def drones(self):
@@ -432,8 +429,6 @@ class Fit(object):
         c = chain(self.modules, self.drones, self.boosters, self.implants, self.projectedDrones, self.projectedModules, self.projectedFits, (self.character, self.extraAttributes))
         for stuff in c:
             if stuff is not None: stuff.clear()
-        if self.ship is not None:
-            self.extraAttributes["capacity"] = self.ship.item.capacity
 
     #Methods to register and get the thing currently affecting the fit,
     #so we can correctly map "Affected By"

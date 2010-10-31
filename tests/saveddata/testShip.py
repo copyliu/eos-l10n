@@ -17,8 +17,3 @@ class Test(TestBase):
 
         self.assertNotEquals(id(s), id(c))
         self.assertEquals(s.item, c.item)
-
-    def test_massAttribute(self):
-        r = db.getItem("Rifter")
-        s = Ship(r)
-        self.assertEquals(s.getModifiedItemAttr("mass"), r.mass)

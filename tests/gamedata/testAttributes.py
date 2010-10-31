@@ -7,10 +7,6 @@ class Test(TestBase):
         for attrName, attr in i.attributes.iteritems():
             self.assertEquals(attrName, attr.name)
 
-    def test_attributeAmount(self):
-        i = db.getItem("Gamma L")
-        self.assertEqual(len(i.attributes), 18)
-
     def test_attributeUnit(self):
         a = db.getAttributeInfo("maxVelocity")
         self.assertEquals(a.unit.name, "Acceleration")
