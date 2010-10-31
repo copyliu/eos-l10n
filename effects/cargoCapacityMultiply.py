@@ -3,4 +3,4 @@
 #Modules from group: Overdrive Injector System (14 of 14)
 type = "passive"
 def handler(fit, module, context):
-    fit.ship.multiplyItemAttr("capacity", module.getModifiedItemAttr("cargoCapacityMultiplier"))
+    fit.extraAttributes.multiply("capacity", module.getModifiedItemAttr("cargoCapacityMultiplier"))
