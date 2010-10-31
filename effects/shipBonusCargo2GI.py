@@ -5,5 +5,9 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Industrial").level
-    bonus = "shipBonusGI" if "Iteron" in ship.item.name else "shipBonusGI2"
-    fit.extraAttributes.boost("capacity", ship.getModifiedItemAttr(bonus) * level)
+    # Viator doesn't have GI bonus
+    if "shipBonusGI" in fit.ship.item.attributes:
+        bonusAttr = "shipBonusGI"
+    else:
+        bonusAttr = "shipBonusGI2"
+    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr(bonusAttr) * level)
