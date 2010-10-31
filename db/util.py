@@ -38,7 +38,6 @@ def _replacements(e):
     for r in replace:
         l = len(r)
         if e[0:l] == r:
-            print "0", e, r
             return _replacements(replace[r] + e[l:])
         original = ".%s" % r
         l = len(original)
@@ -46,7 +45,6 @@ def _replacements(e):
             return _replacements(e[:-l] + ".%s" % replace[r])
         original = ".%s." % r
         if original in e:
-            print "2", e, r
             return _replacements(str.replace(original, ".%s." % replace[r]))
 
     return e
