@@ -140,20 +140,22 @@ class Item(EqBase):
                   38, #capacity
                   161)#volume
 
-    MOVE_ATTR_INFO = None
-    @classmethod
-    def populateMoveAttrInfo(cls):
-        if cls.MOVE_ATTR_INFO is not None:
-            return
+    MOVE_ATTR_INFO = {}
+    def getMoveAttrInfo(self):
+        sess_id = self._sa_instance_state.session_id
+        sess_info = self.MOVE_ATTR_INFO.get(sess_id)
 
-        cls.MOVE_ATTR_INFO = {}
-        import eos.db
-        for id in cls.MOVE_ATTRS:
-            cls.MOVE_ATTR_INFO[id] = eos.db.getAttributeInfo(id)
+        if sess_info is None:
+            self.MOVE_ATTR_INFO[sess_id] = sess_info = {}
+            import eos.db
+            for id in self.MOVE_ATTRS:
+                sess_info[id] = eos.db.getAttributeInfo(id)
+
+        return sess_info
 
     def moveAttrs(self):
-        self.populateMoveAttrInfo()
-        for id, info in self.MOVE_ATTR_INFO.iteritems():
+        moveInfo = self.getMoveAttrInfo()
+        for id, info in moveInfo.iteritems():
             val = getattr(self, info.name, 0)
             if val != 0:
                 attr = Attribute()
