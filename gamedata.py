@@ -168,8 +168,15 @@ class Item(EqBase):
     def init(self):
         self.__race = None
         self.__requiredSkills = None
-        self.moveAttrs()
+        self.__moved = False
 
+    @property
+    def attributes(self):
+        if not self.__moved:
+            self.__moved = True
+            self.moveAttrs()
+
+        return self.__attributes
 
     def getAttribute(self, key):
         if key in self.attributes:

@@ -43,7 +43,7 @@ from .metagroup import metatypes_table
 mapper(Item, items_table,
        properties = {"group" : relation(Group, backref = "items", lazy=False),
                      "icon" : relation(Icon),
-                     "attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
+                     "_Item__attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
                      "effects" : relation(Effect, collection_class = attribute_mapped_collection('name')),
                      "metaGroup" : relation(MetaType,
                                             primaryjoin = metatypes_table.c.typeID == items_table.c.typeID,
