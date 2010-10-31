@@ -140,43 +140,41 @@ class Item(EqBase):
                   38, #capacity
                   161)#volume
 
-    MOVE_ATTR_INFO = {}
-    def getMoveAttrInfo(self):
-        sess_id = self._sa_instance_state.session_id
-        sess_info = self.MOVE_ATTR_INFO.get(sess_id)
+    MOVE_ATTR_INFO = None
 
-        if sess_info is None:
-            self.MOVE_ATTR_INFO[sess_id] = sess_info = {}
+    @classmethod
+    def getMoveAttrInfo(cls):
+        if cls.MOVE_ATTR_INFO is None:
+            cls.MOVE_ATTR_INFO = info = []
             import eos.db
-            for id in self.MOVE_ATTRS:
-                sess_info[id] = eos.db.getAttributeInfo(id)
+            for id in cls.MOVE_ATTRS:
+                info.append(eos.db.getAttributeInfo(id))
 
-        return sess_info
+        return cls.MOVE_ATTR_INFO
 
     def moveAttrs(self):
-        moveInfo = self.getMoveAttrInfo()
-        for id, info in moveInfo.iteritems():
+        self.__movedAttributes = movedAttributes = {}
+        movedAttributes.update(self.__attributes)
+        for info in self.getMoveAttrInfo():
             val = getattr(self, info.name, 0)
             if val != 0:
                 attr = Attribute()
                 attr.info = info
-                attr.typeID = self.typeID
                 attr.value = val
-                self.attributes[info.name] = attr
+                movedAttributes[info.name] = attr
 
     @reconstructor
     def init(self):
         self.__race = None
         self.__requiredSkills = None
-        self.__moved = False
+        self.__movedAttributes = None
 
     @property
     def attributes(self):
-        if not self.__moved:
-            self.__moved = True
+        if self.__movedAttributes is None:
             self.moveAttrs()
 
-        return self.__attributes
+        return self.__movedAttributes
 
     def getAttribute(self, key):
         if key in self.attributes:
