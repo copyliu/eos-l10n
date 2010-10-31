@@ -20,6 +20,7 @@
 from sqlalchemy.orm import eagerload
 from sqlalchemy.sql import and_
 
+replace = {"attributes": "_Item__attributes"}
 def processEager(eager):
     if eager == None:
         return tuple()
@@ -29,9 +30,26 @@ def processEager(eager):
             eager = (eager,)
 
         for e in eager:
-            l.append(eagerload(e))
+            l.append(eagerload(_replacements(e)))
 
         return l
+
+def _replacements(e):
+    for r in replace:
+        l = len(r)
+        if e[0:l] == r:
+            print "0", e, r
+            return _replacements(replace[r] + e[l:])
+        original = ".%s" % r
+        l = len(original)
+        if e[-l:] == original:
+            return _replacements(e[:-l] + ".%s" % replace[r])
+        original = ".%s." % r
+        if original in e:
+            print "2", e, r
+            return _replacements(str.replace(original, ".%s." % replace[r]))
+
+    return e
 
 def processWhere(clause, where):
     if where is not None:
