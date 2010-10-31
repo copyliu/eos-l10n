@@ -29,11 +29,11 @@ implants_table = Table("implants", saveddata_meta,
                      Column("active", Boolean))
 
 fitImplants_table = Table("fitImplants", saveddata_meta,
-                          Column("fitID", ForeignKey("fits.ID")),
+                          Column("fitID", ForeignKey("fits.ID"), index = True),
                           Column("implantID", ForeignKey("implants.ID"), primary_key = True))
 
 charImplants_table = Table("charImplants", saveddata_meta,
-                           Column("charID", ForeignKey("characters.ID")),
+                           Column("charID", ForeignKey("characters.ID"), index = True),
                            Column("implantID", ForeignKey("implants.ID"), primary_key = True))
 
 mapper(Implant, implants_table)

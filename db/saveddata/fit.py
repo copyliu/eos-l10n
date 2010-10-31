@@ -31,8 +31,8 @@ HandledImplantBoosterList, HandledProjectedModList, HandledProjectedDroneList, \
 HandledProjectedFitList
 fits_table = Table("fits", saveddata_meta,
                          Column("ID", Integer, primary_key = True),
-                         Column("ownerID", ForeignKey("users.ID"), nullable = True),
-                         Column("shipID", Integer, nullable = False),
+                         Column("ownerID", ForeignKey("users.ID"), nullable = True, index = True),
+                         Column("shipID", Integer, nullable = False, index = True),
                          Column("name", String, nullable = False),
                          Column("timestamp", Integer, nullable = False),
                          Column("characterID", ForeignKey("characters.ID"), nullable = True),

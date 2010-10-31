@@ -24,7 +24,7 @@ from eos.types import Drone
 
 drones_table = Table("drones", saveddata_meta,
                      Column("groupID", Integer, primary_key=True),
-                     Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False),
+                     Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False, index = True),
                      Column("itemID", Integer, nullable = False),
                      Column("amount", Integer, nullable = False),
                      Column("amountActive", Integer, nullable = False),

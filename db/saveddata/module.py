@@ -25,7 +25,7 @@ from eos.types import Module
 
 modules_table = Table("modules", saveddata_meta,
                       Column("ID", Integer, primary_key = True),
-                      Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False),
+                      Column("fitID", Integer, ForeignKey("fits.ID"), nullable = False, index = True),
                       Column("itemID", Integer, nullable = True),
                       Column("dummySlot", Integer, nullable = True, default = None),
                       Column("chargeID", Integer),
