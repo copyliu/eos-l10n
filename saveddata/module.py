@@ -291,14 +291,12 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         #Check if we're within bounds
         if state < -1 or state > 2:
             return False
-
-        if state >= State.ACTIVE and not self.item.isType("active"):
+        elif state >= State.ACTIVE and not self.item.isType("active"):
             return False
-
-        if state == State.OVERHEATED and not self.item.isType("overheat"):
+        elif state == State.OVERHEATED and not self.item.isType("overheat"):
             return False
-
-        return True
+        else:
+            return True
 
     def canHaveState(self, state=None):
         """

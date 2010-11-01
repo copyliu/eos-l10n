@@ -808,7 +808,7 @@ class Fit(object):
         scanRes = self.ship.getModifiedItemAttr("scanResolution")
         # Yes, this function returns time in seconds, not miliseconds.
         # 40,000 is indeed the correct constant here.
-        return 40000 / scanRes / asinh(radius)**2
+        return min(40000 / scanRes / asinh(radius)**2, 30*60)
 
     def calculateWeaponStats(self):
         weaponDPS = 0
