@@ -805,11 +805,15 @@ class Fit(object):
 
         return self.__effectiveSustainableTank
 
-    def calculateLockTime(self, radius):
+    @property
+    def lockTime(self, radius):
         scanRes = self.ship.getModifiedItemAttr("scanResolution")
-        # Yes, this function returns time in seconds, not miliseconds.
-        # 40,000 is indeed the correct constant here.
-        return min(40000 / scanRes / asinh(radius)**2, 30*60)
+        if scanRes is not None and scanRes > 0:
+            # Yes, this function returns time in seconds, not miliseconds.
+            # 40,000 is indeed the correct constant here.
+            return min(40000 / scanRes / asinh(radius)**2, 30*60)
+        else:
+            return self.ship.getModifiedItemAttr("scanSpeed") / 1000.0
 
     def calculateWeaponStats(self):
         weaponDPS = 0
