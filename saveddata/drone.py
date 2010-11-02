@@ -121,6 +121,20 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
         return self.__dps
 
+    @property
+    def maxRange(self):
+        attrs = ["shieldTransferRange", "powerTransferRange", 
+                 "energyDestabilizationRange", "empFieldRange", 
+                 "ecmBurstRange", "maxRange"]
+        for attr in attrs:
+            maxRange = self.getModifiedItemAttr(attr)
+            if maxRange is not None: return maxRange
+        if self.charge is not None:
+            delay = self.getModifiedChargeAttr("explosionDelay")
+            speed = self.getModifiedChargeAttr("maxVelocity")
+            if delay is not None and speed is not None:
+                return delay / 1000.0 * speed
+
     @validates("ID", "itemID", "chargeID", "amount", "amountActive")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),
