@@ -805,8 +805,8 @@ class Fit(object):
 
         return self.__effectiveSustainableTank
 
-    @property
-    def lockTime(self, radius):
+
+    def calculateLockTime(self, radius):
         scanRes = self.ship.getModifiedItemAttr("scanResolution")
         if scanRes is not None and scanRes > 0:
             # Yes, this function returns time in seconds, not miliseconds.
