@@ -24,7 +24,7 @@ from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
 from eos import capSim
 from copy import deepcopy
-from math import sqrt, log
+from math import sqrt, log, asinh
 from eos.types import Drone, Ship, Character, State, Slot, Module
 import re
 import xml.dom
@@ -808,7 +808,7 @@ class Fit(object):
         scanRes = self.ship.getModifiedItemAttr("scanResolution")
         # Yes, this function returns time in seconds, not miliseconds.
         # 40,000 is indeed the correct constant here.
-        return 40000 / scanRes / (log(radius + sqrt(radius * radius + 1)) ** 2.0)
+        return min(40000 / scanRes / asinh(radius)**2, 30*60)
 
     def calculateWeaponStats(self):
         weaponDPS = 0
