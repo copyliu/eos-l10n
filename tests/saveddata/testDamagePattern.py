@@ -53,3 +53,17 @@ class Test(TestBase):
         f.modules.append(m)
         f.calculateModifiedAttributes()
         self.assertAlmostEquals(f.extraAttributes["hullRepair"], f.effectiveTank["hullRepair"],1)
+
+    def test_importPattern(self):
+        d = DamagePattern.importPatterns("Test = EM:5, THERM:42, KIN:1302, EXP:6")[0]
+        self.assertEquals(d.name, "Test")
+        self.assertEquals(d.emAmount, 5)
+        self.assertEquals(d.thermalAmount, 42)
+        self.assertEquals(d.kineticAmount, 1302)
+        self.assertEquals(d.explosiveAmount, 6)
+
+    def test_exportPattern(self):
+        d = DamagePattern(5, 42, 1302, 6)
+        d.name = "Test"
+        self.assertEquals(DamagePattern.exportPatterns(d), "Test = EM:5, THERM:42, KIN:1302, EXP:6")
+

@@ -17,6 +17,8 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+import re
+
 class DamagePattern(object):
     DAMAGE_TYPES = ("em", "thermal", "kinetic", "explosive")
 
@@ -58,6 +60,35 @@ class DamagePattern(object):
             specificDivider += damage / float(totalDamage or 1) * resonance
 
         return amount / (specificDivider or 1)
+
+    @classmethod
+    def importPatterns(cls, text):
+        lines = re.split('[\n\r]+', text)
+        patterns = []
+        for line in lines:
+            line = line.split('#',1)[0] # allows for comments
+            name, data = line.rsplit('=',1)
+            name, data = name.strip(), ''.join(data.split()) # whitespace
+
+            fields = data.split(',')
+
+            for idx,field in enumerate(fields):
+                fields[idx] = int(field.split(':')[1])
+
+            pattern = DamagePattern(*fields)
+            pattern.name = name
+            patterns.append(pattern)
+
+        return patterns
+
+    EXPORT_FORMAT = "%s = EM:%d, THERM:%d, KIN:%d, EXP:%d\n"
+    @classmethod
+    def exportPatterns(cls, *patterns):
+        out = ""
+        for dp in patterns:
+            out += cls.EXPORT_FORMAT % (dp.name, dp.emAmount, dp.thermalAmount, dp.kineticAmount, dp.explosiveAmount)
+
+        return out.strip()
 
     def __deepcopy__(self, memo):
         p = DamagePattern(self.emAmount, self.thermalAmount, self.kineticAmount, self.explosiveAmount)
