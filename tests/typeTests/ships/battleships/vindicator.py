@@ -3,28 +3,28 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.ship = "Cyclone"
+        self.ship = "Vindicator"
 
-    def test_battlecruisers_speed_moduleProjectileWeaponMedium(self):
+    def test_gallenteBattleship_trackingSpeed_moduleHybridWeaponLarge(self):
         self.buildTested = 0
-        attr = "speed"
-        item = "220mm Vulcan AutoCannon I"
-        skill = "Battlecruisers"
+        attr = "trackingSpeed"
+        item = "Electron Blaster Cannon I"
+        skill = "Gallente Battleship"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_speed_moduleProjectileWeaponOther(self):
+    def test_gallenteBattleship_trackingSpeed_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "speed"
-        item = "150mm Light AutoCannon I"
-        skill = "Battlecruisers"
+        attr = "trackingSpeed"
+        item = "150mm Railgun I"
+        skill = "Gallente Battleship"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -35,56 +35,41 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_shieldBonus_moduleShieldBooster(self):
+    def test_minmatarBattleship_speedFactor_moduleStasisWeb(self):
         self.buildTested = 0
-        attr = "shieldBonus"
-        item = "Large Shield Booster I"
-        skill = "Battlecruisers"
+        attr = "speedFactor"
+        item = "Stasis Webifier I"
+        skill = "Minmatar Battleship"
         iLvl = 1
-        iIngame = 1.075
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.3
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_shieldBonus_moduleShieldBoosterCapital(self):
+    def test_minmatarBattleship_speedFactor_moduleStasisCivilian(self):
         self.buildTested = 0
-        attr = "shieldBonus"
-        item = "Capital Shield Booster I"
-        skill = "Battlecruisers"
+        attr = "speedFactor"
+        item = "Civilian Stasis Webifier"
+        skill = "Minmatar Battleship"
         iLvl = 1
-        iIngame = 1.075
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.3
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_shieldBonus_moduleShieldBoosterCivilian(self):
+    def test_minmatarBattleship_speedFactor_moduleOther(self):
         self.buildTested = 0
-        attr = "shieldBonus"
-        item = "Civilian Shield Booster I"
-        skill = "Battlecruisers"
-        iLvl = 1
-        iIngame = 1.075
-        fLvl = 4
-        fIngame = 1.3
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_battlecruisers_shieldBonus_moduleOther(self):
-        self.buildTested = 0
-        attr = "shieldBonus"
-        item = "Medium Shield Transporter I"
-        skill = "Battlecruisers"
+        attr = "speedFactor"
+        item = "100MN Afterburner I"
+        skill = "Minmatar Battleship"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -95,23 +80,23 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
+    def test_static_damageMultiplier_moduleHybridWeaponLarge(self):
         self.buildTested = 0
-        attr = "cpu"
-        item = "Siege Warfare Link - Shield Efficiency"
+        attr = "damageMultiplier"
+        item = "Neutron Blaster Cannon I"
         ship_other = "Abaddon"
         iIngame = 1.0
-        fIngame = 0.01
+        fIngame = 1.375
         iEos = self.getItemAttr(attr, item, ship=ship_other)
         fEos = self.getItemAttr(attr, item, ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_cpu_moduleGangCoordinatorNoSkillrqLeadership(self):
+    def test_static_damageMultiplier_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "cpu"
-        item = "Command Processor I"
+        attr = "damageMultiplier"
+        item = "Light Neutron Blaster I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 1.0

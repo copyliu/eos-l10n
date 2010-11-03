@@ -3,13 +3,13 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.ship = "Brutix"
+        self.ship = "Machariel"
 
-    def test_battlecruisers_damageMultiplier_moduleHybridWeaponMedium(self):
+    def test_minmatarBattleship_damageMultiplier_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Heavy Neutron Blaster I"
-        skill = "Battlecruisers"
+        item = "1400mm Howitzer Artillery I"
+        skill = "Minmatar Battleship"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -20,11 +20,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_damageMultiplier_moduleHybridWeaponOther(self):
+    def test_minmatarBattleship_damageMultiplier_moduleProjectileWeaponOther(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "150mm Railgun I"
-        skill = "Battlecruisers"
+        item = "220mm Vulcan AutoCannon I"
+        skill = "Minmatar Battleship"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -35,56 +35,26 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_armorDamageAmount_moduleArmorRepairer(self):
+    def test_gallenteBattleship_falloff_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
-        attr = "armorDamageAmount"
-        item = "Small Armor Repairer I"
-        skill = "Battlecruisers"
+        attr = "falloff"
+        item = "800mm Repeating Artillery I"
+        skill = "Gallente Battleship"
         iLvl = 1
-        iIngame = 1.075
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.3
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_battlecruisers_armorDamageAmount_moduleArmorRepairerCapital(self):
+    def test_gallenteBattleship_falloff_moduleProjectileWeaponOther(self):
         self.buildTested = 0
-        attr = "armorDamageAmount"
-        item = "Capital Armor Repairer I"
-        skill = "Battlecruisers"
-        iLvl = 1
-        iIngame = 1.075
-        fLvl = 4
-        fIngame = 1.3
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_battlecruisers_armorDamageAmount_moduleArmorRepairerCivilian(self):
-        self.buildTested = 0
-        attr = "armorDamageAmount"
-        item = "Civilian Armor Repairer"
-        skill = "Battlecruisers"
-        iLvl = 1
-        iIngame = 1.075
-        fLvl = 4
-        fIngame = 1.3
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_battlecruisers_armorDamageAmount_moduleOther(self):
-        self.buildTested = 0
-        attr = "armorDamageAmount"
-        item = "Small Remote Armor Repair System I"
-        skill = "Battlecruisers"
+        attr = "falloff"
+        item = "425mm AutoCannon I"
+        skill = "Gallente Battleship"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -95,23 +65,23 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
+    def test_static_speed_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
-        attr = "cpu"
-        item = "Skirmish Warfare Link - Interdiction Maneuvers"
+        attr = "speed"
+        item = "Dual 425mm AutoCannon I"
         ship_other = "Abaddon"
         iIngame = 1.0
-        fIngame = 0.01
+        fIngame = 0.75
         iEos = self.getItemAttr(attr, item, ship=ship_other)
         fEos = self.getItemAttr(attr, item, ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_cpu_moduleGangCoordinatorNoSkillrqLeadership(self):
+    def test_static_speed_moduleProjectileWeaponOther(self):
         self.buildTested = 0
-        attr = "cpu"
-        item = "Command Processor I"
+        attr = "speed"
+        item = "650mm Artillery Cannon I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 1.0
