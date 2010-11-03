@@ -28,7 +28,8 @@ class Character(object):
     __all5 = None
     __all0 = None
     __skillList = None
-    __skillMap = None
+    __skillIDMap = None
+    __skillNameMap = None
 
     @classmethod
     def getSkillList(cls):
@@ -43,15 +44,26 @@ class Character(object):
         cls.__skillList = list
 
     @classmethod
-    def getSkillMap(cls):
-        if cls.__skillMap is None:
+    def getSkillIDMap(cls):
+        if cls.__skillIDMap is None:
             map = {}
             for skill in cls.getSkillList():
                 map[skill.ID] = skill
 
-            cls.__skillMap = map
+            cls.__skillIDMap = map
 
-        return cls.__skillMap
+        return cls.__skillIDMap
+
+    @classmethod
+    def getSkillNameMap(cls):
+        if cls.__skillNameMap is None:
+            map = {}
+            for skill in cls.getSkillList():
+                map[skill.name] = skill
+
+            cls.__skillIDMap = map
+
+        return cls.__skillIDMap
 
     @classmethod
     def getAll5(cls):
@@ -133,15 +145,14 @@ class Character(object):
 
     def getSkill(self, item):
         if isinstance(item, basestring):
-            import eos.db
-            item = eos.db.getItem(item)
+            item = self.getSkillNameMap()[item]
 
         ID = getattr(item, "ID", item)
         skill = self.__skillIdMap.get(ID)
         if skill:
             return skill
 
-        map = self.getSkillMap()
+        map = self.getSkillIDMap()
         item = map.get(ID)
         if item is not None:
             if self.defaultLevel is None:
@@ -248,7 +259,7 @@ class Skill(HandledItem):
     @property
     def item(self):
         if self.__item is None:
-            self.__item = Character.getSkillMap()[self.itemID]
+            self.__item = Character.getSkillIDMap()[self.itemID]
 
         return self.__item
 
