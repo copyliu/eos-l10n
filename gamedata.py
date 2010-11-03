@@ -144,37 +144,37 @@ class Item(EqBase):
 
     @classmethod
     def getMoveAttrInfo(cls):
-        if cls.MOVE_ATTR_INFO is None:
+        info = getattr(cls, "MOVE_ATTR_INFO", None)
+        if info is None:
             cls.MOVE_ATTR_INFO = info = []
             import eos.db
             for id in cls.MOVE_ATTRS:
                 info.append(eos.db.getAttributeInfo(id))
 
-        return cls.MOVE_ATTR_INFO
+        return info
 
     def moveAttrs(self):
-        self.__movedAttributes = movedAttributes = {}
-        movedAttributes.update(self.__attributes)
+        self.__moved = True
         for info in self.getMoveAttrInfo():
             val = getattr(self, info.name, 0)
             if val != 0:
                 attr = Attribute()
                 attr.info = info
                 attr.value = val
-                movedAttributes[info.name] = attr
+                self.__attributes[info.name] = attr
 
     @reconstructor
     def init(self):
         self.__race = None
         self.__requiredSkills = None
-        self.__movedAttributes = None
+        self.__moved = False
 
     @property
     def attributes(self):
-        if self.__movedAttributes is None:
+        if not self.__moved:
             self.moveAttrs()
 
-        return self.__movedAttributes
+        return self.__attributes
 
     def getAttribute(self, key):
         if key in self.attributes:

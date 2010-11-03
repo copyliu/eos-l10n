@@ -28,13 +28,13 @@ class ReadOnlyException(Exception):
 
 gamedata_connectionstring = config.gamedata_connectionstring
 if callable(gamedata_connectionstring):
-    gamedata_engine = create_engine("sqlite://", creator=gamedata_connectionstring, echo = config.debug)
+    gamedata_engine = create_engine("sqlite://", creator=gamedata_connectionstring, echo = config.debug, poolclass=pool.StaticPool)
 else:
-    gamedata_engine = create_engine(gamedata_connectionstring, echo = config.debug)
+    gamedata_engine = create_engine(gamedata_connectionstring, echo = config.debug, poolclass=pool.StaticPool)
 
 gamedata_meta = MetaData()
 gamedata_meta.bind = gamedata_engine
-gamedata_session = scoped_session(sessionmaker(bind=gamedata_engine, autoflush=False, expire_on_commit=False))
+gamedata_session = sessionmaker(bind=gamedata_engine, autoflush=False, expire_on_commit=False)()
 
 saveddata_connectionstring = config.saveddata_connectionstring
 if saveddata_connectionstring is not None:
@@ -44,7 +44,7 @@ if saveddata_connectionstring is not None:
         saveddata_engine = create_engine(saveddata_connectionstring, echo=config.debug, poolclass=pool.StaticPool)
     saveddata_meta = MetaData()
     saveddata_meta.bind = saveddata_engine
-    saveddata_session = scoped_session(sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False))
+    saveddata_session = sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False)()
 
 
 #Import all the definitions for all our database stuff
