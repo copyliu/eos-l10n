@@ -451,9 +451,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         return speed / 1000.0 if speed is not None else speed
 
     @property
-    def capUse(self):
+     def capUse(self):
         capNeed = self.getModifiedItemAttr("capacitorNeed")
-        if capNeed != 0 and capNeed is not None:
+        if capNeed and self.state >= State.ACTIVE:
             factorReload = self.owner.factorReload
             numCharges = self.numCharges
             cycleTime = (self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")) / 1000.0
