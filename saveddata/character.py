@@ -27,43 +27,43 @@ import eos
 class Character(object):
     __all5 = None
     __all0 = None
-    __skillList = None
-    __skillIDMap = None
-    __skillNameMap = None
+    __itemList = None
+    __itemIDMap = None
+    __itemNameMap = None
 
     @classmethod
     def getSkillList(cls):
-        if cls.__skillList is None:
+        if cls.__itemList is None:
             import eos.db
-            cls.__skillList = eos.db.getItemsByCategory("Skill")
+            cls.__itemList = eos.db.getItemsByCategory("Skill")
 
-        return cls.__skillList
+        return cls.__itemList
 
     @classmethod
     def setSkillList(cls, list):
-        cls.__skillList = list
+        cls.__itemList = list
 
     @classmethod
     def getSkillIDMap(cls):
-        if cls.__skillIDMap is None:
+        if cls.__itemIDMap is None:
             map = {}
             for skill in cls.getSkillList():
                 map[skill.ID] = skill
 
-            cls.__skillIDMap = map
+            cls.__itemIDMap = map
 
-        return cls.__skillIDMap
+        return cls.__itemIDMap
 
     @classmethod
     def getSkillNameMap(cls):
-        if cls.__skillNameMap is None:
+        if cls.__itemNameMap is None:
             map = {}
             for skill in cls.getSkillList():
                 map[skill.name] = skill
 
-            cls.__skillIDMap = map
+            cls.__itemNameMap = map
 
-        return cls.__skillIDMap
+        return cls.__itemNameMap
 
     @classmethod
     def getAll5(cls):
@@ -146,22 +146,20 @@ class Character(object):
     def getSkill(self, item):
         if isinstance(item, basestring):
             item = self.getSkillNameMap()[item]
+        elif isinstance(item, int):
+            item = self.getSkillIDMap()[item]
 
-        ID = getattr(item, "ID", item)
-        skill = self.__skillIdMap.get(ID)
-        if skill:
-            return skill
+        skill = self.__skillIdMap.get(item.ID)
 
-        map = self.getSkillIDMap()
-        item = map.get(ID)
-        if item is not None:
+        if skill is None:
             if self.defaultLevel is None:
-                s = Skill(item, 0, False, False)
+                skill = Skill(item, 0, False, False)
             else:
-                s = Skill(item, self.defaultLevel, False, True)
+                skill = Skill(item, self.defaultLevel, False, True)
 
-            self.addSkill(s)
-            return s
+            self.addSkill(skill)
+
+        return skill
 
     @property
     def implants(self):
