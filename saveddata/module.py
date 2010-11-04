@@ -153,7 +153,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def maxRange(self):
         attrs = ("maxRange", "shieldTransferRange", "powerTransferRange", 
                  "energyDestabilizationRange", "empFieldRange", 
-                 "ecmBurstRange", "warpScrambleRange")
+                 "ecmBurstRange", "warpScrambleRange", "cargoScanRange", 
+                 "shipScanRange", "surveyScanRange"
         for attr in attrs:
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
