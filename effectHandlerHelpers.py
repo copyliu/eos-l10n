@@ -44,6 +44,14 @@ class HandledList(list):
             except AttributeError:
                 pass
 
+    def filteredItemForce(self, filter, *args, **kwargs):
+        for element in self:
+            try:
+                if filter(element):
+                    element.forceItemAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+
     def filteredChargeIncrease(self, filter, *args, **kwargs):
         for element in self:
             try:
@@ -65,6 +73,14 @@ class HandledList(list):
             try:
                 if filter(element):
                     element.boostChargeAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+
+    def filteredChargeForce(self, filter, *args, **kwargs):
+        for element in self:
+            try:
+                if filter(element):
+                    element.forceChargeAttr(*args, **kwargs)
             except AttributeError:
                 pass
 
@@ -208,6 +224,9 @@ class HandledItem(object):
     def boostItemAttr(self, *args, **kwargs):
         self.itemModifiedAttributes.boost(*args, **kwargs)
 
+    def forceItemAttr(self, *args, **kwargs):
+        self.itemModifiedAttributes.force(*args, **kwargs)
+
 class HandledCharge(object):
     def increaseChargeAttr(self, *args, **kwargs):
         self.chargeModifiedAttributes.increase(*args, **kwargs)
@@ -217,3 +236,6 @@ class HandledCharge(object):
 
     def boostChargeAttr(self, *args, **kwargs):
         self.chargeModifiedAttributes.boost(*args, **kwargs)
+
+    def forceChargeAttr(self, *args, **kwargs):
+        self.chargeModifiedAttributes.force(*args, **kwargs)

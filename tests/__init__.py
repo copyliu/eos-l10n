@@ -21,7 +21,7 @@
 import unittest
 
 from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster, Gang, Wing, Squad
+from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster, Gang, Wing, Squad, State
 
 class TestBase(unittest.TestCase):
     def setUp(self):
@@ -29,6 +29,48 @@ class TestBase(unittest.TestCase):
 
     def tearDown(self):
         db.saveddata_meta.drop_all()
+
+    def __addFitItem(self, fit, item, state=None):
+        statemap = {"offline": State.OFFLINE,
+                    "online": State.ONLINE,
+                    "active": State.ACTIVE,
+                    "overheated": State.OVERHEATED}
+        # Gather some data about item being fitted
+        item_itm = db.getItem(item)
+        cat = item_itm.category.name.lower()
+        grp = item_itm.group.name.lower()
+        # Append it to proper category
+        if cat == "drone":
+            item_inst = Drone(item_itm)
+            fit.drones.append(item_inst)
+        elif cat in ("module", "subsystem"):
+            item_inst = Module(item_itm)
+            fit.modules.append(item_inst)
+            if state and state in statemap:
+                item_inst.state = statemap[state]
+        elif cat == "charge":
+            # Use dummy container for any charge
+            item_inst = Module(db.getItem("Bomb Launcher I"))
+            item_inst.charge = item_itm
+            fit.modules.append(item_inst)
+        elif cat == "implant" and grp == "booster":
+            item_inst = Booster(item_itm)
+            fit.boosters.append(item_inst)
+        return item_inst
+
+    def __detectTupleType(self, tuple):
+        states = ("offline", "online", "active", "overheated")
+        if len(tuple) == 1:
+            return "itm"
+        elif len(tuple) == 2:
+            if tuple[1] in states:
+                return "itmstt"
+            else:
+                return "itms"
+        elif len(tuple) > 2:
+            return "itms"
+        else:
+            return None
 
     def getItemAttr(self, attr, item, skill=None, ship="Rifter", getCharge=False, gang=False):
         # Create a fit which will be tested
@@ -45,27 +87,8 @@ class TestBase(unittest.TestCase):
         # in any case as some items affect ship attributes, they can't
         # be tested w/o ship
         fit.ship = Ship(db.getItem(ship))
-        # Create an item which will be tested
-        item_itm = db.getItem(item)
-        cat = item_itm.category.name.lower()
-        grp = item_itm.group.name.lower()
-        # Append it to proper category
-        if cat == "drone":
-            item_inst = Drone(item_itm)
-            fit.drones.append(item_inst)
-        elif cat in ("module", "subsystem"):
-            item_inst = Module(item_itm)
-            fit.modules.append(item_inst)
-        elif cat == "charge":
-            # Use dummy container for any charge
-            item_inst = Module(db.getItem("Bomb Launcher I"))
-            item_inst.charge = item_itm
-            fit.modules.append(item_inst)
-        elif cat == "implant" and grp == "booster":
-            item_inst = Booster(item_itm)
-            fit.boosters.append(item_inst)
-        else:
-            return None
+        # Create and fit an item which will be tested
+        item_inst = self.__addFitItem(fit, item)
         # Finish composing of tested fit by calculating its attributes
         fit.calculateModifiedAttributes()
         # Use special fit as gang booster when requested
@@ -94,13 +117,14 @@ class TestBase(unittest.TestCase):
             fleet.calculateModifiedAttributes()
         # Use charge as an item when it was requested to be tested,
         # and passed item itself in all other cases
+        cat = db.getItem(item).category.name.lower()
         if (cat == "drone" and getCharge) or cat == "charge":
             result = item_inst.getModifiedChargeAttr(attr)
         else:
             result = item_inst.getModifiedItemAttr(attr)
         return result
 
-    def getShipAttr(self, attr, ship="Rifter", skill=None, gang=False):
+    def getShipAttr(self, attr, ship="Rifter", skill=None, gang=False, miscitms=None):
         # Create a fit for testing
         fit = Fit()
         # Create character for fit
@@ -113,6 +137,25 @@ class TestBase(unittest.TestCase):
         fit.character = char
         # Create a ship and assign it to the fitting
         fit.ship = Ship(db.getItem(ship))
+        # Add other modules which can affect ship attributes
+        if isinstance(miscitms, (tuple, list, set)):
+            tt = self.__detectTupleType(miscitms)
+            if tt == "itm":
+                self.__addFitItem(fit, miscitms)
+            elif tt == "itmstt":
+                self.__addFitItem(fit, miscitms[0], state=miscitms[1])
+            elif tt == "itms":
+                for miscitm in miscitms:
+                    if isinstance(miscitm, (tuple, list, set)):
+                        tt = self.__detectTupleType(miscitm)
+                        if tt == "itm":
+                            self.__addFitItem(fit, miscitm)
+                        elif tt == "itmstt":
+                            self.__addFitItem(fit, miscitm[0], state=miscitm[1])
+                    else:
+                        self.__addFitItem(fit, miscitm)
+        elif miscitms:
+            self.__addFitItem(fit, miscitms)
         # We're done, calculate attributes
         fit.calculateModifiedAttributes()
         # Define a gang booster
