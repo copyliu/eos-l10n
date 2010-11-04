@@ -3,4 +3,4 @@
 type = "passive"
 runTime = "early"
 def handler(fit, module, context):
-    module.boostItemAttr("speedFactorBonus", module.getModifiedChargeAttr("speedFactorBonusBonus"))
+    module.boostItemAttr("speedBoostFactorBonus", module.getModifiedChargeAttr("speedBoostFactorBonusBonus"))
