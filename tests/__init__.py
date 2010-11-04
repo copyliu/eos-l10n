@@ -97,7 +97,7 @@ class TestBase(unittest.TestCase):
         elif itms:
             self.__addFitItem(fit, itms)
 
-    def getItemAttr(self, attr, item, skill=None, ship="Rifter", getCharge=False, gang=False):
+    def getItemAttr(self, attr, item, skill=None, ship="Rifter", getCharge=False, gang=False, miscitms=None):
         # Create a fit which will be tested
         fit = Fit()
         # Create character for fit and assign it
@@ -114,6 +114,9 @@ class TestBase(unittest.TestCase):
         fit.ship = Ship(db.getItem(ship))
         # Create and fit an item which will be tested
         item_inst = self.__addFitItem(fit, item)
+        # Add other modules which can affect ship attributes
+        if miscitms:
+            self.__fitItems(fit, miscitms)
         # Finish composing of tested fit by calculating its attributes
         fit.calculateModifiedAttributes()
         # Use special fit as gang booster when requested

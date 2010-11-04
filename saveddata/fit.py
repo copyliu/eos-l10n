@@ -38,7 +38,8 @@ class Fit(object):
                         "maxActiveDrones": 0,
                         "maxTargetsLockedFromSkills": 2,
                         "droneControlRange": 20000,
-                        "cloaked": False}
+                        "cloaked": False,
+                        "siege": False}
 
     PEAK_RECHARGE = 0.25
 
