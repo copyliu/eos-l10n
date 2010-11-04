@@ -163,6 +163,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             speed = self.getModifiedChargeAttr("maxVelocity")
             if delay is not None and speed is not None:
                 return delay / 1000.0 * speed
+
     @property
     def falloff(self):
         attrs = ("falloff", "shipScanFalloff")
