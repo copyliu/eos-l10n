@@ -31,6 +31,7 @@ class TestBase(unittest.TestCase):
         db.saveddata_meta.drop_all()
 
     def __addFitItem(self, fit, item, state=None):
+        # Map textual description to actual states
         statemap = {"offline": State.OFFLINE,
                     "online": State.ONLINE,
                     "active": State.ACTIVE,
@@ -56,12 +57,16 @@ class TestBase(unittest.TestCase):
         elif cat == "implant" and grp == "booster":
             item_inst = Booster(item_itm)
             fit.boosters.append(item_inst)
+        # We need item_inst outside of the method
         return item_inst
 
     def __detectTupleType(self, tuple):
+        # Define acceptable textual state descriptions
         states = ("offline", "online", "active", "overheated")
+        # Do not check anything, assume that it's proper item
         if len(tuple) == 1:
             return "itm"
+        # Detect if it's item with state or 2 single items
         elif len(tuple) == 2:
             if tuple[1] in states:
                 return "itmstt"
@@ -71,6 +76,26 @@ class TestBase(unittest.TestCase):
             return "itms"
         else:
             return None
+
+    def __fitItems(self, fit, itms):
+        if isinstance(itms, (tuple, list)):
+            tt = self.__detectTupleType(itms)
+            if tt == "itm":
+                self.__addFitItem(fit, itms)
+            elif tt == "itmstt":
+                self.__addFitItem(fit, itms[0], state=itms[1])
+            elif tt == "itms":
+                for itm in itms:
+                    if isinstance(itm, (tuple, list)):
+                        tt = self.__detectTupleType(itm)
+                        if tt == "itm":
+                            self.__addFitItem(fit, itm)
+                        elif tt == "itmstt":
+                            self.__addFitItem(fit, itm[0], state=itm[1])
+                    else:
+                        self.__addFitItem(fit, itm)
+        elif itms:
+            self.__addFitItem(fit, itms)
 
     def getItemAttr(self, attr, item, skill=None, ship="Rifter", getCharge=False, gang=False):
         # Create a fit which will be tested
@@ -138,24 +163,8 @@ class TestBase(unittest.TestCase):
         # Create a ship and assign it to the fitting
         fit.ship = Ship(db.getItem(ship))
         # Add other modules which can affect ship attributes
-        if isinstance(miscitms, (tuple, list, set)):
-            tt = self.__detectTupleType(miscitms)
-            if tt == "itm":
-                self.__addFitItem(fit, miscitms)
-            elif tt == "itmstt":
-                self.__addFitItem(fit, miscitms[0], state=miscitms[1])
-            elif tt == "itms":
-                for miscitm in miscitms:
-                    if isinstance(miscitm, (tuple, list, set)):
-                        tt = self.__detectTupleType(miscitm)
-                        if tt == "itm":
-                            self.__addFitItem(fit, miscitm)
-                        elif tt == "itmstt":
-                            self.__addFitItem(fit, miscitm[0], state=miscitm[1])
-                    else:
-                        self.__addFitItem(fit, miscitm)
-        elif miscitms:
-            self.__addFitItem(fit, miscitms)
+        if miscitms:
+            self.__fitItems(fit, miscitms)
         # We're done, calculate attributes
         fit.calculateModifiedAttributes()
         # Define a gang booster
