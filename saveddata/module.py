@@ -165,6 +165,13 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 return delay / 1000.0 * speed
 
     @property
+    def falloff(self):
+        attrs = ("falloff", "shipScanFalloff")
+        for attr in attrs:
+            falloff = self.getModifiedItemAttr(attr)
+            if falloff is not None: return falloff
+
+    @property
     def slot(self):
         if self.__item is None:
             self.__fetchItemInfo()
