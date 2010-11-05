@@ -95,7 +95,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
+    def test_static_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Stasis Webifier I"
@@ -108,7 +108,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_capacitorNeed_moduleStasisWebNoSkillrqPropulsionJamming(self):
+    def test_static_capacitorNeed_moduleStasisWebNoSkillrqPropulsionJamming(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Civilian Stasis Webifier"
@@ -121,7 +121,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_capacitorNeed_moduleWarpScramblerSkillrqPropulsionJamming(self):
+    def test_static_capacitorNeed_moduleWarpScramblerSkillrqPropulsionJamming(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Warp Scrambler I"
@@ -134,7 +134,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_capacitorNeed_moduleWarpScramblerNoSkillrqPropulsionJamming(self):
+    def test_static_capacitorNeed_moduleWarpScramblerNoSkillrqPropulsionJamming(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Civilian Warp Disruptor"
@@ -147,7 +147,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_capacitorNeed_moduleOther(self):
+    def test_static_capacitorNeed_moduleOther(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Salvager I"

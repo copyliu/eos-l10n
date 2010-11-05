@@ -153,7 +153,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def maxRange(self):
         attrs = ("maxRange", "shieldTransferRange", "powerTransferRange", 
                  "energyDestabilizationRange", "empFieldRange", 
-                 "ecmBurstRange")
+                 "ecmBurstRange", "warpScrambleRange", "cargoScanRange", 
+                 "shipScanRange", "surveyScanRange")
         for attr in attrs:
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
@@ -162,6 +163,13 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             speed = self.getModifiedChargeAttr("maxVelocity")
             if delay is not None and speed is not None:
                 return delay / 1000.0 * speed
+
+    @property
+    def falloff(self):
+        attrs = ("falloff", "shipScanFalloff")
+        for attr in attrs:
+            falloff = self.getModifiedItemAttr(attr)
+            if falloff is not None: return falloff
 
     @property
     def slot(self):
@@ -453,7 +461,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def capUse(self):
         capNeed = self.getModifiedItemAttr("capacitorNeed")
-        if capNeed != 0 and capNeed is not None:
+        if capNeed and self.state >= State.ACTIVE:
             factorReload = self.owner.factorReload
             numCharges = self.numCharges
             cycleTime = (self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")) / 1000.0

@@ -80,7 +80,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxRange_moduleProjectileWeaponSmall(self):
+    def test_static_maxRange_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "250mm Light Artillery Cannon I"
@@ -93,7 +93,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxRange_moduleProjectileWeaponOther(self):
+    def test_static_maxRange_moduleProjectileWeaponOther(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "650mm Artillery Cannon I"
@@ -106,7 +106,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_falloff_moduleProjectileWeaponSmall(self):
+    def test_static_falloff_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
         item = "200mm AutoCannon I"
@@ -119,7 +119,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_falloff_moduleProjectileWeaponOther(self):
+    def test_static_falloff_moduleProjectileWeaponOther(self):
         self.buildTested = 0
         attr = "falloff"
         item = "Dual 180mm AutoCannon I"
@@ -132,7 +132,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_capacitorNeed_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
+    def test_static_capacitorNeed_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "1MN MicroWarpdrive I"
@@ -145,7 +145,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_capacitorNeed_moduleAfterburnerSkillrqAfterburner(self):
+    def test_static_capacitorNeed_moduleAfterburnerSkillrqAfterburner(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "1MN Afterburner I"
@@ -158,7 +158,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_capacitorNeed_moduleAfterburnerNoSkillrq(self):
+    def test_static_capacitorNeed_moduleAfterburnerNoSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Civilian Afterburner"
@@ -171,7 +171,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_capacitorNeed_moduleOther(self):
+    def test_static_capacitorNeed_moduleOther(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "ECM Burst I"

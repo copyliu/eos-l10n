@@ -66,7 +66,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_cpu_moduleGangCoordinatorSkillrqLeadership(self):
+    def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
         item = "Mining Foreman Link - Laser Optimization"
@@ -79,7 +79,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_role_cpu_moduleGangCoordinatorNoSkillrqLeadership(self):
+    def test_static_cpu_moduleGangCoordinatorNoSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
         item = "Command Processor I"

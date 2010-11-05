@@ -135,6 +135,16 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             if delay is not None and speed is not None:
                 return delay / 1000.0 * speed
 
+    # Had to add this to match the falloff property in modules.py
+    # Fscking ship scanners. If you find any other falloff attributes,
+    # Put them in the attrs tuple.
+    @property
+    def falloff(self):
+        attrs = ("falloff")
+        for attr in attrs:
+            falloff = self.getModifiedItemAttr(attr)
+            if falloff is not None: return falloff
+
     @validates("ID", "itemID", "chargeID", "amount", "amountActive")
     def validator(self, key, val):
         map = {"ID": lambda val: isinstance(val, int),

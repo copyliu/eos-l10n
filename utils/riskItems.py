@@ -19,6 +19,8 @@ parser.add_option("-g", "--grp", help="find items from any of these groups",
 type="string", default="")
 parser.add_option("-z", "--nozero", action="store_true", help="ignore attributes with zero values",
 default=False)
+parser.add_option("-o", "--noone", action="store_true", help="ignore attributes with value equal to 1",
+default=False)
 (options, args) = parser.parse_args()
 
 if not options.attr:
@@ -134,6 +136,9 @@ for attr in options.attr.split(","):
     for row in cursor:
         if options.nozero:
             if row[0] in publishedtypes and row[1] not in (None, 0, 0.0):
+                tmp.add(row[0])
+        elif options.noone:
+            if row[0] in publishedtypes and row[1] != 1.0:
                 tmp.add(row[0])
         else:
             if row[0] in publishedtypes:
