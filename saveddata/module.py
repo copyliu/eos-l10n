@@ -159,10 +159,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
         if self.charge is not None:
-            delay = self.getModifiedChargeAttr("explosionDelay")
             speed = self.getModifiedChargeAttr("maxVelocity")
-            if delay is not None and speed is not None:
-                return delay / 1000.0 * speed
+            flight = self.getModifiedChargeAttr("explosionDelay")
+            mass = self.getModifiedChargeAttr("mass")
+            inertia = self.getModifiedChargeAttr("agility")
+            if speed and flight and mass and inertia:
+                accelTime = 1000000.0/(mass*inertia)
+                reductionFactor = 1 - exp(-flight/accelTime)
+                return speed * (flight - accelTime*reductionFactor)
 
     @property
     def falloff(self):
