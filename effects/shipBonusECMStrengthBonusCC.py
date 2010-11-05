@@ -2,7 +2,7 @@
 #Ship: Blackbird
 type = "passive"
 def handler(fit, ship, context):
-    level = fit.character.getSkill("Gallente Cruiser").level
+    level = fit.character.getSkill("Caldari Cruiser").level
     for type in ("Gravimetric", "Magnetometric", "Ladar", "Radar"):
-        fit.drones.filteredItemBoost(lambda mod: mod.item.group.name == "ECM",
-                                     "scan%sStrengthBonus" % type, ship.getModifiedItemAttr("shipBonusCC2") * level)
+        fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "ECM",
+                                      "scan{0}StrengthBonus".format(type), ship.getModifiedItemAttr("shipBonusCC") * level)
