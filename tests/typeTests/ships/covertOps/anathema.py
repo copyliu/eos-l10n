@@ -3,133 +3,43 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.ship = "Widow"
+        self.ship = "Anathema"
 
-    def test_caldariBattleship_speed_moduleLauncherMissileSiege(self):
+    def test_amarrFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
-        attr = "speed"
-        item = "Siege Missile Launcher I"
-        skill = "Caldari Battleship"
+        attr = "emDamage"
+        item = "Gremlin Rocket"
+        skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariBattleship_speed_moduleLauncherMissileCruise(self):
+    def test_amarrFrigate_emDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
-        attr = "speed"
-        item = "Cruise Missile Launcher I"
-        skill = "Caldari Battleship"
+        attr = "emDamage"
+        item = "Gremlin Javelin Rocket"
+        skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariBattleship_speed_moduleLauncherMissileOther(self):
+    def test_amarrFrigate_emDamage_chargeMissileOther(self):
         self.buildTested = 0
-        attr = "speed"
-        item = "Rocket Launcher I"
-        skill = "Caldari Battleship"
-        iLvl = 1
-        iIngame = 1.0
-        fLvl = 4
-        fIngame = 1.0
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_caldariBattleship_maxVelocity_chargeMissileTorpedo(self):
-        self.buildTested = 0
-        attr = "maxVelocity"
-        item = "Inferno Torpedo"
-        skill = "Caldari Battleship"
-        iLvl = 1
-        iIngame = 1.1
-        fLvl = 4
-        fIngame = 1.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_caldariBattleship_maxVelocity_chargeMissileTorpedoAdvanced(self):
-        self.buildTested = 0
-        attr = "maxVelocity"
-        item = "Juggernaut Javelin Torpedo"
-        skill = "Caldari Battleship"
-        iLvl = 1
-        iIngame = 1.1
-        fLvl = 4
-        fIngame = 1.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_caldariBattleship_maxVelocity_chargeMissileCruise(self):
-        self.buildTested = 0
-        attr = "maxVelocity"
-        item = "Wrath Cruise Missile"
-        skill = "Caldari Battleship"
-        iLvl = 1
-        iIngame = 1.1
-        fLvl = 4
-        fIngame = 1.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_caldariBattleship_maxVelocity_chargeMissileCruiseAdvanced(self):
-        self.buildTested = 0
-        attr = "maxVelocity"
-        item = "Wrath Fury Cruise Missile"
-        skill = "Caldari Battleship"
-        iLvl = 1
-        iIngame = 1.1
-        fLvl = 4
-        fIngame = 1.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_caldariBattleship_maxVelocity_chargeMissileCruiseFof(self):
-        self.buildTested = 0
-        attr = "maxVelocity"
-        item = "Dragon F.O.F. Cruise Missile I"
-        skill = "Caldari Battleship"
-        iLvl = 1
-        iIngame = 1.1
-        fLvl = 4
-        fIngame = 1.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_caldariBattleship_maxVelocity_chargeMissileOther(self):
-        self.buildTested = 0
-        attr = "maxVelocity"
+        attr = "emDamage"
         item = "Sabretooth Light Missile"
-        skill = "Caldari Battleship"
+        skill = "Amarr Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -140,26 +50,41 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanGravimetricStrengthBonus_moduleEcm(self):
+    def test_amarrFrigate_explosiveDamage_chargeMissileRocket(self):
         self.buildTested = 0
-        attr = "scanGravimetricStrengthBonus"
-        item = "ECM - Spatial Destabilizer I"
-        skill = "Black Ops"
+        attr = "explosiveDamage"
+        item = "Phalanx Rocket"
+        skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 1.3
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 2.2
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanGravimetricStrengthBonus_moduleOther(self):
+    def test_amarrFrigate_explosiveDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
-        attr = "scanGravimetricStrengthBonus"
-        item = "ECM Burst I"
-        skill = "Black Ops"
+        attr = "explosiveDamage"
+        item = "Phalanx Rage Rocket"
+        skill = "Amarr Frigate"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_amarrFrigate_explosiveDamage_chargeMissileOther(self):
+        self.buildTested = 0
+        attr = "explosiveDamage"
+        item = "Piranha Light Missile"
+        skill = "Amarr Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -170,26 +95,41 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanLadarStrengthBonus_moduleEcm(self):
+    def test_amarrFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
-        attr = "scanLadarStrengthBonus"
-        item = "ECM - Phase Inverter I"
-        skill = "Black Ops"
+        attr = "kineticDamage"
+        item = "Thorn Rocket"
+        skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 1.3
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 2.2
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanLadarStrengthBonus_moduleOther(self):
+    def test_amarrFrigate_kineticDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
-        attr = "scanLadarStrengthBonus"
-        item = "ECM Burst I"
-        skill = "Black Ops"
+        attr = "kineticDamage"
+        item = "Thorn Rage Rocket"
+        skill = "Amarr Frigate"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_amarrFrigate_kineticDamage_chargeMissileOther(self):
+        self.buildTested = 0
+        attr = "kineticDamage"
+        item = "Bloodclaw Light Missile"
+        skill = "Amarr Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -200,26 +140,41 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanMagnetometricStrengthBonus_moduleEcm(self):
+    def test_amarrFrigate_thermalDamage_chargeMissileRocket(self):
         self.buildTested = 0
-        attr = "scanMagnetometricStrengthBonus"
-        item = "ECM - Multispectral Jammer I"
-        skill = "Black Ops"
+        attr = "thermalDamage"
+        item = "Foxfire Rocket"
+        skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 1.3
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 2.2
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanMagnetometricStrengthBonus_moduleOther(self):
+    def test_amarrFrigate_thermalDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
-        attr = "scanMagnetometricStrengthBonus"
-        item = "ECM Burst I"
-        skill = "Black Ops"
+        attr = "thermalDamage"
+        item = "Foxfire Javelin Rocket"
+        skill = "Amarr Frigate"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_amarrFrigate_thermalDamage_chargeMissileOther(self):
+        self.buildTested = 0
+        attr = "thermalDamage"
+        item = "Firefly F.O.F. Light Missile I"
+        skill = "Amarr Frigate"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -230,26 +185,40 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanRadarStrengthBonus_moduleEcm(self):
+    def test_amarrFrigate_rechargeRate_ship(self):
         self.buildTested = 0
-        attr = "scanRadarStrengthBonus"
-        item = "ECM - Ion Field Projector I"
-        skill = "Black Ops"
+        attr = "rechargeRate"
+        skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 1.3
+        iIngame = 0.95
         fLvl = 4
-        fIngame = 2.2
+        fIngame = 0.8
+        iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_covertOps_cpu_moduleCloakingDevice(self):
+        self.buildTested = 0
+        attr = "cpu"
+        item = "Prototype Cloaking Device I"
+        skill = "Covert Ops"
+        iLvl = 1
+        iIngame = 0.02
+        fLvl = 4
+        fIngame = 0.005
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanRadarStrengthBonus_moduleOther(self):
+    def test_covertOps_cpu_moduleOther(self):
         self.buildTested = 0
-        attr = "scanRadarStrengthBonus"
-        item = "ECM Burst I"
-        skill = "Black Ops"
+        attr = "cpu"
+        item = "ECCM - Ladar I"
+        skill = "Covert Ops"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -260,32 +229,47 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_maxVelocity_shipCloakActive(self):
+    def test_covertOps_baseSensorStrength_chargeScannerProbe(self):
         self.buildTested = 0
-        attr = "maxVelocity"
-        skill = "Black Ops"
-        miscitm = ("Prototype Cloaking Device I", "active")
+        attr = "baseSensorStrength"
+        item = "Combat Scanner Probe I"
+        skill = "Covert Ops"
         iLvl = 1
-        iIngame = 1.25
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 5.0
-        iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship, miscitms=miscitm)
-        fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship, miscitms=miscitm)
+        fIngame = 1.4
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_maxVelocity_shipCloakOnline(self):
+    def test_covertOps_explosionDelay_chargeSurveyProbe(self):
         self.buildTested = 0
-        attr = "maxVelocity"
-        skill = "Black Ops"
-        miscitm = ("Prototype Cloaking Device I", "online")
+        attr = "explosionDelay"
+        item = "Gaze Survey Probe I"
+        skill = "Covert Ops"
+        iLvl = 1
+        iIngame = 0.9
+        fLvl = 4
+        fIngame = 0.6
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_covertOps_explosionDelay_chargeOther(self):
+        self.buildTested = 0
+        attr = "explosionDelay"
+        item = "Core Scanner Probe I"
+        skill = "Covert Ops"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
         fIngame = 1.0
-        iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship, miscitms=miscitm)
-        fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship, miscitms=miscitm)
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -303,18 +287,10 @@ class Test(TestBase):
         attr = "moduleReactivationDelay"
         iItem = "Prototype Cloaking Device I"
         iIngame = 5000.0
-        fItem = "Cynosural Field Generator I"
+        fItem = "Covert Cynosural Field Generator I"
         fIngame = 30000.0
         iEos = self.getItemAttr(attr, iItem, ship=self.ship)
         fEos = self.getItemAttr(attr, fItem, ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
-
-    def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
-        self.buildTested = 0
-        attr = "cloakingTargetingDelay"
-        item = "Prototype Cloaking Device I"
-        ingame = 0.0
-        eos = self.getItemAttr(attr, item, ship=self.ship)
-        self.assertAlmostEquals(eos, ingame)

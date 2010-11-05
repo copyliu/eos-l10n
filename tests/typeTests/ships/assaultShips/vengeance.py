@@ -314,18 +314,3 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
-
-    def test_assaultShips_rechargeRate_subsystem(self):
-        self.buildTested = 0
-        attr = "rechargeRate"
-        item = "Legion Engineering - Supplemental Coolant Injector"
-        skill = "Assault Ships"
-        iLvl = 1
-        iIngame = 1.0
-        fLvl = 4
-        fIngame = 1.0
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)

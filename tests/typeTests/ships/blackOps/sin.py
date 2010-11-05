@@ -217,7 +217,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_moduleReactivationDelay_moduleCloakingDevice(self):
+    def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
         item = "Prototype Cloaking Device I"
@@ -225,7 +225,7 @@ class Test(TestBase):
         eos = self.getItemAttr(attr, item, ship=self.ship)
         self.assertAlmostEquals(eos, ingame)
 
-    def test_special_moduleReactivationDelay_moduleOther(self):
+    def test_static_moduleReactivationDelay_moduleOther(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
         iItem = "Prototype Cloaking Device I"
@@ -238,7 +238,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_cloakingTargetingDelay_moduleCloakingDevice(self):
+    def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "cloakingTargetingDelay"
         item = "Prototype Cloaking Device I"
