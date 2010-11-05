@@ -50,6 +50,7 @@ if configVal is True:
                 return items
 
             def checkAndReturn(*args, **kwargs):
+                useCache = kwargs.pop("useCache", True)
                 cacheKey = []
                 cacheKey.extend(args)
                 for keyword in keywords:
@@ -57,7 +58,7 @@ if configVal is True:
 
                 cacheKey = tuple(cacheKey)
                 info = localQueryCache.get(cacheKey)
-                if info is None:
+                if info is None or not useCache:
                     items = setCache(cacheKey, args, kwargs)
                 else:
                     l, IDs = info
