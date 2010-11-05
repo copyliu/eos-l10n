@@ -20,7 +20,17 @@
 from sqlalchemy.orm import eagerload
 from sqlalchemy.sql import and_
 
-replace = {"attributes": "_Item__attributes"}
+replace = {"attributes": "_Item__attributes",
+           "modules": "_Fit__modules",
+           "projectedModules": "_Fit__projectedModules",
+           "boosters": "_Fit__boosters",
+           "drones": "_Fit__drones",
+           "projectedDrones": "_Fit__projectedDrones",
+           "implants": "_Fit__implants",
+           "character": "_Fit__character",
+           "damagePattern": "_Fit__damagePattern",
+           "projectedFits": "_Fit__projectedFits"}
+
 def processEager(eager):
     if eager == None:
         return tuple()
@@ -34,20 +44,15 @@ def processEager(eager):
 
         return l
 
-def _replacements(e):
-    for r in replace:
-        l = len(r)
-        if e[0:l] == r:
-            return _replacements(replace[r] + e[l:])
-        original = ".%s" % r
-        l = len(original)
-        if e[-l:] == original:
-            return _replacements(e[:-l] + ".%s" % replace[r])
-        original = ".%s." % r
-        if original in e:
-            return _replacements(str.replace(original, ".%s." % replace[r]))
+def _replacements(eagerString):
+    splitEager = eagerString.split(".")
+    for i in xrange(len(splitEager)):
+        part = splitEager[i]
+        replacement = replace.get(part)
+        if replacement:
+            splitEager[i] = replacement
 
-    return e
+    return ".".join(splitEager)
 
 def processWhere(clause, where):
     if where is not None:
