@@ -3,5 +3,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Dreadnought").level
-    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Citadel Cruise Missiles"),
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Citadel Cruise Missiles"),
                                     "kineticDamage", ship.getModifiedItemAttr("dreadnoughtShipBonusC3") * level)
