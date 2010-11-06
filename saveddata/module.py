@@ -151,9 +151,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def maxRange(self):
-        attrs = ("maxRange", "shieldTransferRange", "powerTransferRange", 
-                 "energyDestabilizationRange", "empFieldRange", 
-                 "ecmBurstRange", "warpScrambleRange", "cargoScanRange", 
+        attrs = ("maxRange", "shieldTransferRange", "powerTransferRange",
+                 "energyDestabilizationRange", "empFieldRange",
+                 "ecmBurstRange", "warpScrambleRange", "cargoScanRange",
                  "shipScanRange", "surveyScanRange")
         for attr in attrs:
             maxRange = self.getModifiedItemAttr(attr)
@@ -238,6 +238,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     self.__volley = 0
 
         return self.__dps, self.__volley
+
+    @property
+    def dps(self):
+        return self.damageStats[0]
+
+    @property
+    def volley(self):
+        return self.damageStats[1]
 
     def fits(self, fit):
         slot = self.slot
