@@ -160,16 +160,15 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
         if self.charge is not None:
-            speed = self.getModifiedChargeAttr("maxVelocity")
-            flight = self.getModifiedChargeAttr("explosionDelay") / 1000
+            #Source: http://www.eve-search.com/thread/1307419#15
+            #D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
+            maxVelocity = self.getModifiedChargeAttr("maxVelocity")
+            flightTime = self.getModifiedChargeAttr("explosionDelay") / 1000
             mass = self.getModifiedChargeAttr("mass")
-            agility = self.getModifiedChargeAttr("agility")
-            if speed and flight and mass and agility:
-                inertia = 1000000.0/(mass*agility)
-                reducedFlight = flight - inertia + inertia*exp(-flight/inertia)
-                lowerBound = reducedFlight * speed
-                upperBound = flight * speed
-                return (lowerBound + upperBound) / 2
+            inertia = self.getModifiedChargeAttr("agility")
+            if maxVelocity and flightTime and mass and inertia:
+                accelerationTime = 1000000.0 / (mass * inertia)
+                return maxVelocity * (flightTime + accelerationTime * (exp(- flightTime / accelerationTime ) - 1))
 
     @property
     def falloff(self):
