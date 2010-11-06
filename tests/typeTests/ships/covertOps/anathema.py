@@ -199,6 +199,32 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    def test_static_cpu_moduleCloakingDevice(self):
+        self.buildTested = 0
+        attr = "cpu"
+        item = "Prototype Cloaking Device I"
+        ship_other = "Drake"
+        iIngame = 1.0
+        fIngame = 0.025
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_static_cpu_moduleOther(self):
+        self.buildTested = 0
+        attr = "cpu"
+        item = "Heat Sink I"
+        ship_other = "Drake"
+        iIngame = 1.0
+        fIngame = 1.0
+        iEos = self.getItemAttr(attr, item, ship=ship_other)
+        fEos = self.getItemAttr(attr, item, ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
     def test_covertOps_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "cpu"
