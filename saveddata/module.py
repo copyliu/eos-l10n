@@ -163,11 +163,11 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             #Source: http://www.eve-search.com/thread/1307419#15
             #D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
             maxVelocity = self.getModifiedChargeAttr("maxVelocity")
-            flightTime = self.getModifiedChargeAttr("explosionDelay") / 1000
+            flightTime = self.getModifiedChargeAttr("explosionDelay") / 1000.0
             mass = self.getModifiedChargeAttr("mass")
             inertia = self.getModifiedChargeAttr("agility")
             if maxVelocity and flightTime and mass and inertia:
-                accelerationTime = 1000000.0 / (mass * inertia)
+                accelerationTime = 10000.0 / (mass * inertia)
                 return maxVelocity * (flightTime + accelerationTime * (exp(- flightTime / accelerationTime ) - 1))
 
     @property
