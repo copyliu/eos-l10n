@@ -23,7 +23,7 @@ class Test(TestBase):
     def test_amarrCruiser_maxRangeBonus_moduleOther(self):
         self.buildTested = 0
         attr = "maxRangeBonus"
-        item = "Tracking Computer II"
+        item = "Tracking Computer I"
         skill = "Amarr Cruiser"
         iLvl = 1
         iIngame = 1.0
