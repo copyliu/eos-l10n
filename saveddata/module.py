@@ -21,6 +21,7 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, C
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from eos.enum import Enum
 from sqlalchemy.orm import validates, reconstructor
+from math import exp
 
 class State(Enum):
     OFFLINE = -1
@@ -159,10 +160,16 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
         if self.charge is not None:
-            delay = self.getModifiedChargeAttr("explosionDelay")
             speed = self.getModifiedChargeAttr("maxVelocity")
-            if delay is not None and speed is not None:
-                return delay / 1000.0 * speed
+            flight = self.getModifiedChargeAttr("explosionDelay") / 1000
+            mass = self.getModifiedChargeAttr("mass")
+            agility = self.getModifiedChargeAttr("agility")
+            if speed and flight and mass and agility:
+                inertia = 1000000.0/(mass*agility)
+                reducedFlight = flight - inertia + inertia*exp(-flight/inertia)
+                lowerBound = reducedFlight * speed
+                upperBound = flight * speed
+                return (lowerBound + upperBound) / 2
 
     @property
     def falloff(self):
