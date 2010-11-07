@@ -167,8 +167,12 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             mass = self.getModifiedChargeAttr("mass")
             inertia = self.getModifiedChargeAttr("agility")
             if maxVelocity and flightTime and mass and inertia:
-                acceleration =  -log(0.25)*mass*inertia/1000000
-                return maxVelocity * (flightTime + acceleration * (exp(-flightTime / acceleration) -1))
+                accelerationTime =  min(flightTime, -log(0.25)*mass*inertia/1000000)
+                # Average distance done during acceleration
+                duringAcceleration = maxVelocity / 2 * accelerationTime
+                # Distance done after being at full speed
+                fullSpeed = maxVelocity * (flightTime - accelerationTime)
+                return fullSpeed + duringAcceleration
 
     @property
     def falloff(self):
