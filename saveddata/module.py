@@ -21,7 +21,7 @@ from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, C
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from eos.enum import Enum
 from sqlalchemy.orm import validates, reconstructor
-from math import exp
+from math import exp, log
 
 class State(Enum):
     OFFLINE = -1
@@ -167,8 +167,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             mass = self.getModifiedChargeAttr("mass")
             inertia = self.getModifiedChargeAttr("agility")
             if maxVelocity and flightTime and mass and inertia:
-                accelerationTime = 10000.0 / (mass * inertia)
-                return maxVelocity * (flightTime + accelerationTime * (exp(- flightTime / accelerationTime ) - 1))
+                acceleration =  -log(0.25)*mass*inertia/1000000
+                return maxVelocity * (flightTime + acceleration * (exp(-flightTime / acceleration) -1))
 
     @property
     def falloff(self):
