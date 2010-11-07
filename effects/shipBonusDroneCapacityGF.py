@@ -3,4 +3,4 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level
-    fit.ship.boostItemAttr("droneCapacity", ship.getModifiedItemAttr("shipBonusGF") * level)
+    fit.ship.increaseItemAttr("droneCapacity", ship.getModifiedItemAttr("shipBonusGF") * level)
