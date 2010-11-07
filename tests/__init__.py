@@ -152,7 +152,7 @@ class TestBase(unittest.TestCase):
             result = item_inst.getModifiedItemAttr(attr)
         return result
 
-    def getShipAttr(self, attr, ship="Rifter", skill=None, gang=False, miscitms=None):
+    def getShipAttr(self, attr, ship="Rifter", skill=None, gang=False, miscitms=None, unmod=False):
         # Create a fit for testing
         fit = Fit()
         # Create character for fit
@@ -194,5 +194,8 @@ class TestBase(unittest.TestCase):
         if attr in fit.extraAttributes:
             result = fit.extraAttributes[attr]
         else:
-            result = fit.ship.getModifiedItemAttr(attr)
+            if unmod:
+                result = fit.ship.item.attributes[attr].value
+            else:
+                result = fit.ship.getModifiedItemAttr(attr)
         return result
