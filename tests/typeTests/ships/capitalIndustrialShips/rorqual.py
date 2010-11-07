@@ -264,7 +264,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_cargoScanRange_moduleSurveyScanner(self):
+    def test_static_cargoScanRange_moduleCargoScanner(self):
         self.buildTested = 0
         attr = "cargoScanRange"
         item = "Cargo Scanner I"
@@ -277,7 +277,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_falloff_moduleSurveyScanner(self):
+    def test_static_falloff_moduleCargoScanner(self):
         self.buildTested = 0
         attr = "falloff"
         item = "Cargo Scanner I"
