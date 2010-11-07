@@ -1,6 +1,6 @@
 #Used by:
-#Ship: Navitas
+#Ship: Imicus
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level
-    fit.ship.boostItemAttr("capacity", ship.getModifiedItemAttr("shipBonusGF2") * level)
+    fit.extraAttributes.boost("droneControlRange", ship.getModifiedItemAttr("shipBonusGF") * level)
