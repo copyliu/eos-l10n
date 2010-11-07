@@ -50,7 +50,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_minmatarFrigate_signatureRadiusBonus_other(self):
+    def test_minmatarFrigate_signatureRadiusBonus_moduleOther(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
         item = "1MN MicroWarpdrive I"
