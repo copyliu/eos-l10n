@@ -162,17 +162,17 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         if self.charge is not None:
             #Source: http://www.eve-search.com/thread/1307419#15
             #D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
-            maxVelocity = self.getModifiedChargeAttr("maxVelocity")
+            maxVel = self.getModifiedChargeAttr("maxVelocity")
             flightTime = self.getModifiedChargeAttr("explosionDelay") / 1000.0
             mass = self.getModifiedChargeAttr("mass")
-            inertia = self.getModifiedChargeAttr("agility")
-            if maxVelocity and flightTime and mass and inertia:
-                accelerationTime =  min(flightTime, -log(0.25)*mass*inertia/1000000)
+            agility = self.getModifiedChargeAttr("agility")
+            if maxVel and flightTime and mass and inertia:
+                accelTime =  min(flightTime, mass*agility/1000000)
                 # Average distance done during acceleration
-                duringAcceleration = maxVelocity / 2 * accelerationTime
+                duringAccel = maxVelocity / 2 * accelTime
                 # Distance done after being at full speed
-                fullSpeed = maxVelocity * (flightTime - accelerationTime)
-                return fullSpeed + duringAcceleration
+                fullSpeed = maxVelocity * (flightTime - accelTime)
+                return duringAcceleration + fullSpeed
 
     @property
     def falloff(self):
