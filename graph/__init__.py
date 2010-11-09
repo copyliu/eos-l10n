@@ -29,6 +29,9 @@ class Graph(object):
 
         self.function = function
 
+    def clearData(self):
+        self.data.clear()
+
     def setData(self, data):
         self.data[data.name] = data
 
