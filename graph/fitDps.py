@@ -22,8 +22,7 @@ from eos.types import Hardpoint, State
 from math import log
 
 class FitDpsGraph(Graph):
-    defaults = {"speed": 0,
-                "transversal": 0,
+    defaults = {"transversal": 0,
                 "distance": 1,
                 "signatureRadius": None,
                 "velocity": 0}
