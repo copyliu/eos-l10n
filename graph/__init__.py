@@ -108,7 +108,7 @@ class Range(object):
         step = self.step or (end - start) / 50.0
         i = 1
         while current < end:
-            current = start * i * step
+            current = start + i * step
             i += 1
             yield current
 
