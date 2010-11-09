@@ -85,7 +85,7 @@ class Data(object):
 class Constant(object):
     def __init__(self, const):
         if isinstance(const, basestring):
-            self.value = float(const)
+            self.value = None if const == "" else float(const)
         else:
             self.value = const
 
