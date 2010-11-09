@@ -54,7 +54,7 @@ class Graph(object):
 
 
 class Data(object):
-    def __init__(self, name, dataString, step=1):
+    def __init__(self, name, dataString, step=None):
         self.name = name
         self.step = step
         self.data = self.parseString(dataString)
@@ -105,7 +105,7 @@ class Range(object):
     def __iter__(self):
         current = start = self.start
         end = self.end
-        step = self.step
+        step = self.step or (end - start) / 50.0
         i = 1
         while current < end:
             current = start * i * step
