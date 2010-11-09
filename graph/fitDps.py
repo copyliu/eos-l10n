@@ -46,7 +46,7 @@ class FitDpsGraph(Graph):
 
         if data["distance"] <= fit.extraAttributes["droneControlRange"]:
             for drone in fit.drones:
-                total += drone.dps * drone.amountActive
+                total += drone.dps
 
         return total
 
