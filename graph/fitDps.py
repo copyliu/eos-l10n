@@ -53,8 +53,8 @@ class FitDpsGraph(Graph):
     def calculateMissileMultiplier(self, mod, data):
         targetSigRad = data["signatureRadius"]
         targetVelocity = data["velocity"]
-        targetSigRad = turretSigRes if targetSigRad is None else targetSigRad
         explosionRadius = mod.getModifiedChargeAttr("aoeCloudSize")
+        targetSigRad = explosionRadius if targetSigRad is None else targetSigRad
         explosionVelocity = mod.getModifiedChargeAttr("aoeVelocity")
         damageReductionFactor = mod.getModifiedChargeAttr("aoeDamageReductionFactor")
         damageReductionSensitivity = mod.getModifiedChargeAttr("aoeDamageReductionSensitivity")
