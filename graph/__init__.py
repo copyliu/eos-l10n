@@ -42,7 +42,7 @@ class Graph(object):
                 pointNames.append(data.name)
                 pointIterators.append(data)
 
-        return pointNames, self._iterator(pointNames, pointIterators)
+        return self._iterator(pointNames, pointIterators)
 
     def _iterator(self, pointNames, pointIterators):
         for pointValues in itertools.product(*pointIterators):
