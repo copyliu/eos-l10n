@@ -22,8 +22,7 @@ from eos.types import Hardpoint, State
 from math import log
 
 class FitDpsGraph(Graph):
-    defaults = {"speed": 0,
-                "transversal": 0,
+    defaults = {"transversal": 0,
                 "distance": 1,
                 "signatureRadius": None,
                 "velocity": 0}
@@ -47,15 +46,15 @@ class FitDpsGraph(Graph):
 
         if data["distance"] <= fit.extraAttributes["droneControlRange"]:
             for drone in fit.drones:
-                total += drone.dps * drone.amountActive
+                total += drone.dps
 
         return total
 
     def calculateMissileMultiplier(self, mod, data):
         targetSigRad = data["signatureRadius"]
         targetVelocity = data["velocity"]
-        targetSigRad = turretSigRes if targetSigRad is None else targetSigRad
         explosionRadius = mod.getModifiedChargeAttr("aoeCloudSize")
+        targetSigRad = explosionRadius if targetSigRad is None else targetSigRad
         explosionVelocity = mod.getModifiedChargeAttr("aoeVelocity")
         damageReductionFactor = mod.getModifiedChargeAttr("aoeDamageReductionFactor")
         damageReductionSensitivity = mod.getModifiedChargeAttr("aoeDamageReductionSensitivity")

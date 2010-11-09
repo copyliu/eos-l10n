@@ -29,6 +29,9 @@ class Graph(object):
 
         self.function = function
 
+    def clearData(self):
+        self.data.clear()
+
     def setData(self, data):
         self.data[data.name] = data
 
@@ -39,7 +42,7 @@ class Graph(object):
                 pointNames.append(data.name)
                 pointIterators.append(data)
 
-        return pointNames, self._iterator(pointNames, pointIterators)
+        return self._iterator(pointNames, pointIterators)
 
     def _iterator(self, pointNames, pointIterators):
         for pointValues in itertools.product(*pointIterators):
@@ -51,7 +54,7 @@ class Graph(object):
 
 
 class Data(object):
-    def __init__(self, name, dataString, step=1):
+    def __init__(self, name, dataString, step=None):
         self.name = name
         self.step = step
         self.data = self.parseString(dataString)
@@ -82,7 +85,7 @@ class Data(object):
 class Constant(object):
     def __init__(self, const):
         if isinstance(const, basestring):
-            self.value = float(const)
+            self.value = None if const == "" else float(const)
         else:
             self.value = const
 
@@ -102,10 +105,10 @@ class Range(object):
     def __iter__(self):
         current = start = self.start
         end = self.end
-        step = self.step
+        step = self.step or (end - start) / 50.0
         i = 1
         while current < end:
-            current = start * i * step
+            current = start + i * step
             i += 1
             yield current
 
