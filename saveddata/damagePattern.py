@@ -61,6 +61,10 @@ class DamagePattern(object):
 
         return amount / (specificDivider or 1)
 
+    importLabels = {"EM": "em",
+                    "THERM": "thermal",
+                    "KIN": "kinetic",
+                    "EXP": "explosive"}
     @classmethod
     def importPatterns(cls, text):
         lines = re.split('[\n\r]+', text)
@@ -70,12 +74,13 @@ class DamagePattern(object):
             name, data = line.rsplit('=',1)
             name, data = name.strip(), ''.join(data.split()) # whitespace
 
-            fields = data.split(',')
+            fields = {}
 
-            for idx,field in enumerate(fields):
-                fields[idx] = int(field.split(':')[1])
+            for field in data.split(','):
+                name, value = field.split(':')
+                fields["%sAmount" % cls.importLabels[name]] = float(value)
 
-            pattern = DamagePattern(*fields)
+            pattern = DamagePattern(**fields)
             pattern.name = name
             patterns.append(pattern)
 
