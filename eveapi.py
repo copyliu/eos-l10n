@@ -79,7 +79,7 @@
 #
 #-----------------------------------------------------------------------------
 
-import httplib
+import urllib2
 import urllib
 import copy
 
@@ -144,7 +144,6 @@ def EVEAPIConnection(url="api.eve-online.com", cacheHandler=None, proxy=None):
     ctx = _RootContext(None, path, {}, {})
     ctx._handler = cacheHandler
     ctx._host = url
-    ctx._proxy = proxy or globals()["proxy"]
     return ctx
 
 
@@ -278,31 +277,26 @@ class _RootContext(_Context):
             response = None
 
         if response is None:
-            if self._proxy is None:
-                http = httplib.HTTPConnection(self._host)
-                if kw:
-                    http.request("POST", path, urllib.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded", "User-Agent": "eos"})
-                else:
-                    http.request("GET", path)
-            else:
-                http = httplib.HTTPConnection(*self._proxy)
-                if kw:
-                    http.request("POST", 'http://'+self._host+path, urllib.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded"})
-                else:
-                    http.request("GET", 'http://'+self._host+path)
+           if kw:
+               req = urllib2.Request("http://" + self._host + path, urllib.urlencode(kw))
+           else:
+               req = urllib2.Request(path)
 
-            response = http.getresponse()
-            if response.status != 200:
-                if response.status == httplib.NOT_FOUND:
-                    raise AttributeError("'%s' not available on API server (404 Not Found)" % path)
-                else:
-                    raise RuntimeError("'%s' request failed (%d %s)" % (path, response.status, response.reason))
+           try:
+               response = urllib2.urlopen(req)
+               response = response.read()
+           except HTTPError, e:
+               print 'The server couldn\'t fulfill the request.'
+               print 'Error code: ', e.code
+           except URLError, e:
+               print 'We failed to reach a server.'
+               print 'Reason: ', e.reason
 
-            if cache:
-                store = True
-                response = response.read()
-            else:
-                store = False
+           if cache:
+               store = True
+               response = response.read()
+           else:
+               store = False
         else:
             store = False
 
