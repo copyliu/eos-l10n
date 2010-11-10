@@ -366,6 +366,10 @@ class Fit(object):
         return min(self.extraAttributes["maxTargetsLockedFromSkills"], self.ship.getModifiedItemAttr("maxLockedTargets"))
 
     @property
+    def maxTargetRange(self):
+        return min(self.ship.getModifiedItemAttr("maxTargetRange"), 250000)
+
+    @property
     def scanStrength(self):
         return max([self.ship.getModifiedItemAttr("scan%sStrength" % scanType)
                     for scanType in ("Magnetometric", "Ladar", "Radar", "Gravimetric")])

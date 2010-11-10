@@ -86,7 +86,7 @@ class DamagePattern(object):
 
         return patterns
 
-    EXPORT_FORMAT = "%s = EM:%d, THERM:%d, KIN:%d, EXP:%d\n"
+    EXPORT_FORMAT = "%s = EM:%d, Therm:%d, Kin:%d, Exp:%d\n"
     @classmethod
     def exportPatterns(cls, *patterns):
         out = ""
