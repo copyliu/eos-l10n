@@ -23,7 +23,7 @@ from math import log, cos, radians
 
 class FitDpsGraph(Graph):
     defaults = {"angle": 0,
-                "distance": 1,
+                "distance": 0,
                 "signatureRadius": None,
                 "velocity": 0}
 
@@ -34,16 +34,17 @@ class FitDpsGraph(Graph):
     def calcDps(self, data):
         fit = self.fit
         total = 0
+        distance = data["distance"] * 1000
         for mod in fit.modules:
             if mod.hardpoint == Hardpoint.TURRET:
                 if mod.state >= State.ACTIVE:
                     total += mod.dps * self.calculateTurretMultiplier(mod, data)
 
             elif mod.hardpoint == Hardpoint.MISSILE:
-                if mod.state >= State.ACTIVE and mod.maxRange >= data["distance"]:
+                if mod.state >= State.ACTIVE and mod.maxRange >= distance:
                     total += mod.dps * self.calculateMissileMultiplier(mod, data)
 
-        if data["distance"] <= fit.extraAttributes["droneControlRange"]:
+        if distance <= fit.extraAttributes["droneControlRange"]:
             for drone in fit.drones:
                 total += drone.dps
 
@@ -76,7 +77,7 @@ class FitDpsGraph(Graph):
         if mod.hardpoint != Hardpoint.TURRET:
             return 0
 
-        distance = data["distance"]
+        distance = data["distance"] * 1000
         tracking = mod.getModifiedItemAttr("trackingSpeed")
         turretOptimal = mod.maxRange
         turretFalloff = mod.falloff
