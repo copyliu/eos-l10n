@@ -442,7 +442,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             context = ("module",)
             projected = False
 
-        if self.charge is not None:
+        if self.charge is not None and not projected:
             for effect in self.charge.effects.itervalues():
                 if effect.runTime == runTime:
                     effect.handler(fit, self, ("moduleCharge",))
