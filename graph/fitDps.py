@@ -19,7 +19,7 @@
 
 from eos.graph import Graph, Data
 from eos.types import Hardpoint, State
-from math import log, cos
+from math import log, cos, radians
 
 class FitDpsGraph(Graph):
     defaults = {"angle": 0,
@@ -83,7 +83,7 @@ class FitDpsGraph(Graph):
         turretSigRes = mod.getModifiedItemAttr("optimalSigRadius")
         targetSigRad = data["signatureRadius"]
         targetSigRad = turretSigRes if targetSigRad is None else targetSigRad
-        transversal = cos(data["angle"]) * data["velocity"]
+        transversal = cos(radians(data["angle"])) * data["velocity"]
         trackingEq = (((transversal / (distance * tracking)) *
                        (turretSigRes / targetSigRad)) ** 2)
         rangeEq = ((max(0, distance - turretOptimal)) / turretFalloff) ** 2
