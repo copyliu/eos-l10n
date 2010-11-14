@@ -1,6 +1,7 @@
 #Used by:
 #Module: Armored Warfare Link - Damage Control
 type = "gang", "active"
+gangBoost = "armorRepairCapacitorNeed"
 def handler(fit, module, context):
     if "gang" not in context: return
     groups = ("Armor Repair Unit", "Armor Repair Projector")

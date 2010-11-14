@@ -18,6 +18,7 @@
 #===============================================================================
 
 from itertools import chain
+from eos.types import Skill, Module, Ship
 
 class Gang(object):
     def calculateModifiedAttributes(self):
@@ -98,9 +99,7 @@ class Store(object):
         #Build our data containers
         self.bonusses = {}
         for dictType in ("fleet", "wing", "squad"):
-            self.bonusses[dictType] = {"ship": None}
-            for boostType in ("skills", "modules"):
-                self.bonusses[dictType][boostType] = {}
+            self.bonusses[dictType] = {}
 
     def set(self, fit, layer):
         if fit is None:
@@ -108,98 +107,56 @@ class Store(object):
 
         dict = self.bonusses[layer]
         #Clear existing bonusses
-        dict["ship"] = None
-        dict["modules"].clear()
-        dict["skills"].clear()
+        dict.clear()
 
+        for thing in chain(fit.modules, fit.character.iterSkills(), (fit.ship,)):
+            for effect in thing.item.effects.itervalues():
+                if effect.isType("gang"):
+                    gangBoost = effect.getattr("gangBoost")
+                    l = dict.get(gangBoost)
+                    if l is None:
+                        l = dict[gangBoost] = []
 
-        for mod in fit.modules:
-            if mod.item.isType("gang"):
-                dict["modules"][mod.item.name] = mod
+                    l.append((effect, thing))
 
-        for skill in fit.character.iterSkills():
-            if skill.item.isType("gang"):
-                dict["skills"][skill.item.name] = skill
+    contextMap = {Skill: "skill",
+                  Ship: "ship",
+                  Module: "module"}
 
-        if fit.ship.item.isType("gang"):
-            dict["ship"] = fit.ship
     def apply(self, fit, layer):
-        skills = set()
-        mods = set()
-        ships = set()
-        for dictType in ("fleet", "wing", "squad"):
-            for skill in self.bonusses[dictType]["skills"].keys():
-                skills.add(skill)
+        if fit is None:
+            return
 
-            for mod in self.bonusses[dictType]["modules"].keys():
-                mods.add(mod)
+        boosts = {}
+        char = fit.character
+        #Go through all different boosts, for each of them, figure what the fuck the highest one is
+        for currLayer in ("fleet", "wing", "squad"):
+            dict = self.bonusses[currLayer]
+            for gangBoost, stuff in dict.iteritems():
+                for info in stuff:
+                    effect, thing = info
+                    currBoost = boosts.get(gangBoost, (0,))[0]
 
-            if self.bonusses[dictType]["ship"] is not None:
-                ships.add(self.bonusses[dictType]["ship"].item.name)
+                    bonus = effect.getattr("gangBonus") or "commandBonus"
+                    skillName = effect.getattr("gangSkill")
+                    newBoost = thing.getModifiedItemAttr(bonus) or 0
+                    isSkill = type(thing) == Skill
+                    if isSkill or (skillName is not None and char is not None):
+                        skill = thing if isSkill else char.getSkill(skillName)
+                        newBoost *= skill.level
 
-        #Run through skills
-        for skillName in skills:
-            skill = self.getHighestBonus(layer, "skills", skillName)
-            if skill is None: continue
-            for effect in skill.item.effects.values():
-                for runTime in ("early", "normal", "late"):
-                    if effect.isType("gang") and effect.runTime == runTime:
-                        try:
-                            effect.handler(fit, skill, ("gang", "skill"))
-                        except AttributeError:
-                            pass
+                    if abs(newBoost) > abs(currBoost):
+                        boosts[gangBoost] = (newBoost, info)
 
-        #Do the ship
-        for shipName in ships:
-            ship = self.getHighestBonus(layer, "ship", shipName)
-            if ship is None: continue
-            for effect in ship.item.effects.values():
-                for runTime in ("early", "normal", "late"):
-                    if effect.isType("gang") and effect.runTime == runTime:
-                        try:
-                            effect.handler(fit, ship, ("gang", "ship"))
-                        except AttributeError:
-                            pass
+            #Don't look further down then current layer, wing commanders don't get squad bonusses and all that.
+            if layer == currLayer:
+                break
 
-        #And the modules
-        for modName in mods:
-            mod = self.getHighestBonus(layer, "modules", modName)
-            if mod is None: continue
-            for effect in mod.item.effects.values():
-                for runTime in ("early", "normal", "late"):
-                    if effect.isType("gang") and effect.runTime == runTime:
-                        try:
-                            effect.handler(fit, mod, ("gang", "module"))
-                        except AttributeError:
-                            pass
-
-    def getHighestBonus(self, layer, type, name = None):
-        highestStuff = None
-        highest = 0
-        for dictType in ("fleet", "wing", "squad"):
-            stuff = self.bonusses[dictType][type]
-            if stuff is None:
-                #Chain broken, only consider stuff under the current ones
-                highest = 0
-                highestStuff = None
-                continue
-
-            if type == "ship":
-                if abs(highest) < abs(stuff.commandBonus) and stuff.item.name == name:
-                    highest = stuff.commandBonus
-                    highestStuff = stuff
-            elif type == "skills":
-                if name not in stuff: continue
-                skill = stuff[name]
-                if abs(highest) < abs(skill.commandBonus):
-                    highest = skill.commandBonus
-                    highestStuff = skill
-            elif type == "modules":
-                if name not in stuff: continue
-                module = stuff[name]
-                commandBonus = module.getModifiedItemAttr("commandBonus")
-                if abs(highest) < abs(commandBonus):
-                    highest = commandBonus
-                    highestStuff = module
-            if dictType == layer:
-                return highestStuff
+        #Now we got it all figured out, actualy do the useful part of all this
+        for name, info in boosts.iteritems():
+            effect, thing = info[1]
+            context = ("gang", self.contextMap[type(thing)])
+            try:
+                effect.handler(fit, thing, context)
+            except:
+                pass

@@ -1,6 +1,7 @@
 #Used by:
 #Module: Siege Warfare Link - Shield Efficiency
 type = "gang", "active"
+gangBoost = "shieldRepairCapacitorNeed"
 def handler(fit, module, context):
     if "gang" not in context: return
     groups = ("Shield Booster","Shield Transporter")

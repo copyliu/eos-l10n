@@ -1,9 +1,9 @@
 #Used by:
 #Ship: Leviathan
-type = "gang", "passive"
+type = "gang"
+gangSkill = "Caldari Titan"
+gangBoost = "shieldCapacity"
+gangBonus = "shipBonusCT2"
 def handler(fit, ship, context):
-    if "ship" in context:
-        level = fit.character.getSkill("Caldari Titan").level
-        fit.ship.multiplyItemAttr("shipBonusCT2", level)
-    elif "gang" in context:
-        fit.ship.boostItemAttr("shieldCapacity", ship.getModifiedItemAttr("shipBonusCT2"))
+    level = fit.character.getSkill("Caldari Titan").level
+    fit.ship.boostItemAttr("shieldCapacity", ship.getModifiedItemAttr("shipBonusCT2") * level)

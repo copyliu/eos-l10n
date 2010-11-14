@@ -1,6 +1,7 @@
 #Used by:
 #Module: Siege Warfare Link - Shield Harmonizing
 type = "gang", "active"
+gangBoost = "shieldResistance"
 def handler(fit, module, context):
     if "gang" not in context: return
     for damageType in ("Em", "Explosive", "Thermal", "Kinetic"):

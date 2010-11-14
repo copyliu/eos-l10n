@@ -1,6 +1,7 @@
 #Used by:
 #Module: Skirmish Warfare Link - Interdiction Maneuvers
 type = "gang", "active"
+gangBoost = "interdictionMaxRange"
 def handler(fit, module, context):
     if "gang" not in context: return
     groups = ("Stasis Web","Warp Scrambler")

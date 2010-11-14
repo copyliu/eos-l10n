@@ -1,9 +1,9 @@
 #Used by:
 #Ship: Avatar
-type = "gang", "passive"
+type = "gang"
+gangSkill = "Amarr Titan"
+gangBonus = "titanAmarrBonus2"
+gangBoost = "rechargeRate"
 def handler(fit, ship, context):
-    if "ship" in context:
-        level = fit.character.getSkill("Amarr Titan").level
-        fit.ship.multiplyItemAttr("titanAmarrBonus2", level)
-    elif "gang" in context:
-        fit.ship.boostItemAttr("rechargeRate", ship.getModifiedItemAttr("titanAmarrBonus2"))
+    level = fit.character.getSkill("Amarr Titan").level
+    fit.ship.boostItemAttr("rechargeRate", ship.getModifiedItemAttr("titanAmarrBonus2") * level)

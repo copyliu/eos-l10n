@@ -1,9 +1,9 @@
 #Used by:
 #Ship: Erebus
-type = "gang", "passive"
+type = "gang"
+gangSkill = "Gallente Titan"
+gangBonus = "titanGallenteBonus2"
+gangBoost = "armorHP"
 def handler(fit, ship, context):
-    if "gang" in context:
-        fit.ship.boostItemAttr("armorHP", ship.commandBonus)
-    else:
-        level = fit.character.getSkill("Gallente Titan").level
-        ship.commandBonus = fit.ship.getModifiedItemAttr("titanGallenteBonus2") * level
+    level = fit.character.getSkill("Gallente Titan").level
+    fit.ship.boostItemAttr("armorHP", fit.ship.getModifiedItemAttr("titanGallenteBonus2") * level)

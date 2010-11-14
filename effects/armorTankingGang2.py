@@ -1,7 +1,8 @@
 #Used by:
 #Implant: Armored Warfare Mindlink
-type = "gang"
-runTime = "early"
+type = "gang", "active"
+gangBonus = "armorHpBonus2"
+gangBoost = "armorHP"
 def handler(fit, module, context):
-    fit.character.getSkill("Armored Warfare").suppress()
+    if "gang" not in context: return
     fit.ship.boostItemAttr("armorHP", module.getModifiedItemAttr("armorHpBonus2"))

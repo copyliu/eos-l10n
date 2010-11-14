@@ -1,8 +1,7 @@
 #Used by:
 #Skill: Armored Warfare
-type = "gang", "passive"
+type = "gang"
+gangBonus = "armorHpBonus"
+gangBoosts = "armorHP"
 def handler(fit, skill, context):
-    if "gang" in context:
-        fit.ship.boostItemAttr("armorHP", skill.getModifiedItemAttr("armorHpBonus") * skill.level)
-    else:
-        skill.commandBonus = skill.getModifiedItemAttr("armorHpBonus") * skill.level
+    fit.ship.boostItemAttr("armorHP", skill.getModifiedItemAttr("armorHpBonus") * skill.level)

@@ -110,7 +110,7 @@ class Effect(EqBase):
         if it doesn't, set dummy values and add a dummy handler
         '''
         try:
-            effectModule = __import__('eos.effects.' + self.handlerName, fromlist=True)
+            self.__effectModule = effectModule = __import__('eos.effects.' + self.handlerName, fromlist=True)
             self.__handler = getattr(effectModule, "handler")
             try:
                 self.__runTime = getattr(effectModule, "runTime") or "normal"
@@ -131,6 +131,11 @@ class Effect(EqBase):
 
         self.__generated = True
 
+    def getattr(self, key):
+        if not self.__generated:
+            self.__generateHandler()
+
+        return getattr(self.__effectModule, key, None)
 
 def effectDummy(*args, **kwargs):
     pass
