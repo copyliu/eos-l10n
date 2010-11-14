@@ -30,5 +30,5 @@ from eos.saveddata.booster import SideEffect
 from eos.saveddata.booster import Booster
 from eos.saveddata.ship import Ship
 from eos.saveddata.fit import Fit
-from eos.saveddata.gang import Gang, Wing, Squad
+from eos.saveddata.fleet import Fleet, Wing, Squad
 import eos.db

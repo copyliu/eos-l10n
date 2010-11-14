@@ -21,7 +21,7 @@
 import unittest
 
 from eos import db
-from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster, Gang, Wing, Squad, State
+from eos.types import Fit, Character, Skill, Ship, Module, Drone, Booster, Fleet, Wing, Squad, State
 
 class TestBase(unittest.TestCase):
     def setUp(self):
@@ -139,7 +139,7 @@ class TestBase(unittest.TestCase):
             squad.members.append(fit)
             wing = Wing()
             wing.squads.append(squad)
-            fleet = Gang()
+            fleet = Fleet()
             fleet.wings.append(wing)
             # Calculate fleet relationships
             fleet.calculateModifiedAttributes()
@@ -187,7 +187,7 @@ class TestBase(unittest.TestCase):
             squad.members.append(fit)
             wing = Wing()
             wing.squads.append(squad)
-            fleet = Gang()
+            fleet = Fleet()
             fleet.wings.append(wing)
             fleet.calculateModifiedAttributes()
         # Autodetect which attributes group to use

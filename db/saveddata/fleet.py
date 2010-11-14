@@ -21,7 +21,7 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import mapper, relation
 
 from eos.db import saveddata_meta
-from eos.types import Gang, Wing, Squad, Fit
+from eos.types import Fleet, Wing, Squad, Fit
 from eos.db.saveddata.fit import fits_table
 
 gangs_table = Table("gangs", saveddata_meta,
@@ -43,7 +43,7 @@ squadmembers_table = Table("squadmembers", saveddata_meta,
                            Column("squadID", ForeignKey("squads.ID"), primary_key = True),
                            Column("memberID", ForeignKey("fits.ID"), primary_key = True))
 
-mapper(Gang, gangs_table,
+mapper(Fleet, gangs_table,
        properties = {"wings" : relation(Wing, backref="gang"),
                      "leader" : relation(Fit)})
 

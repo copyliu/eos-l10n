@@ -65,5 +65,5 @@ class Test(TestBase):
     def test_exportPattern(self):
         d = DamagePattern(5, 42, 1302, 6)
         d.name = "Test"
-        self.assertEquals(DamagePattern.exportPatterns(d), "Test = EM:5, THERM:42, KIN:1302, EXP:6")
+        self.assertEquals(DamagePattern.exportPatterns(d), "Test = EM:5, Therm:42, Kin:1302, Exp:6")
 

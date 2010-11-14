@@ -20,7 +20,7 @@
 from itertools import chain
 from eos.types import Skill, Module, Ship
 
-class Gang(object):
+class Fleet(object):
     def calculateModifiedAttributes(self):
         #Make sure ALL fits in the gang have been calculated
         for c in chain(self.wings, (self.leader,)):
@@ -124,10 +124,11 @@ class Store(object):
                   Module: "module"}
 
     def apply(self, fit, layer):
+        self.boosts = {}
         if fit is None:
             return
 
-        boosts = {}
+        self.boosts[fit] = boosts = {}
         char = fit.character
         #Go through all different boosts, for each of them, figure what the fuck the highest one is
         for currLayer in ("fleet", "wing", "squad"):
@@ -152,6 +153,10 @@ class Store(object):
             if layer == currLayer:
                 break
 
+        self.modify(fit)
+
+    def modify(self, fit):
+        boosts = self.boosts[fit]
         #Now we got it all figured out, actualy do the useful part of all this
         for name, info in boosts.iteritems():
             effect, thing = info[1]
@@ -160,3 +165,4 @@ class Store(object):
                 effect.handler(fit, thing, context)
             except:
                 pass
+

@@ -1,11 +1,11 @@
 from eos.tests import TestBase
 from eos import db
-from eos.types import Gang, Wing, Squad, Ship, Fit, Module, Character
+from eos.types import Fleet, Wing, Squad, Ship, Fit, Module, Character
 
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        g = Gang()
+        g = Fleet()
         w = Wing()
         s = Squad()
         self.g = g
