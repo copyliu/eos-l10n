@@ -46,7 +46,8 @@ class FitDpsGraph(Graph):
 
         if distance <= fit.extraAttributes["droneControlRange"]:
             for drone in fit.drones:
-                total += drone.dps
+                multiplier = 1 if drone.getModifiedItemAttr("maxVelocity") > 0 else self.calculateTurretMultiplier(drone, data)
+                total += drone.dps * multiplier
 
         return total
 
@@ -74,9 +75,6 @@ class FitDpsGraph(Graph):
             return chanceToHit * 3
 
     def calculateTurretChanceToHit(self, mod, data):
-        if mod.hardpoint != Hardpoint.TURRET:
-            return 0
-
         distance = data["distance"] * 1000
         tracking = mod.getModifiedItemAttr("trackingSpeed")
         turretOptimal = mod.maxRange
