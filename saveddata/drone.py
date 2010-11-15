@@ -140,7 +140,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     # Put them in the attrs tuple.
     @property
     def falloff(self):
-        attrs = ("falloff")
+        attrs = ("falloff",)
         for attr in attrs:
             falloff = self.getModifiedItemAttr(attr)
             if falloff is not None: return falloff
