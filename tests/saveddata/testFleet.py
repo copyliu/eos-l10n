@@ -19,6 +19,7 @@ class Test(TestBase):
         self.s.leader = f
         f.ship = Ship(db.getItem("Rifter"))
         f.character = Character("testety")
+        f.character.getSkill("Leadership").level = 5
 
     def test_skillGang(self):
         self.s.leader.character.getSkill("Leadership").level = 5
@@ -47,7 +48,6 @@ class Test(TestBase):
         self.g.leader.ship = Ship(db.getItem("Rifter"))
         self.g.leader.character = Character("tootoot")
         self.g.leader.character.getSkill("Leadership").level = 5
-        self.s.leader.character.getSkill("Leadership").level = 5
         self.g.calculateModifiedAttributes()
         self.assertEquals(self.g.leader.ship.item.getAttribute("scanResolution"), self.g.leader.ship.getModifiedItemAttr("scanResolution"))
         self.assertEquals(self.s.leader.ship.item.getAttribute("scanResolution") * 1.1, self.s.leader.ship.getModifiedItemAttr("scanResolution"))
@@ -57,7 +57,7 @@ class Test(TestBase):
         self.w.leader.ship = Ship(db.getItem("Rifter"))
         self.w.leader.character = Character("tootoot")
         self.w.leader.character.getSkill("Leadership").level = 5
-        self.s.leader.character.getSkill("Leadership").level = 5
+        self.w.leader.character.getSkill("Wing Command").level = 5
         self.g.calculateModifiedAttributes()
         self.assertEquals(self.s.leader.ship.item.getAttribute("scanResolution") * 1.1, self.s.leader.ship.getModifiedItemAttr("scanResolution"))
         self.assertEquals(self.w.leader.ship.item.getAttribute("scanResolution") * 1.1, self.w.leader.ship.getModifiedItemAttr("scanResolution"))

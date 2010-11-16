@@ -26,6 +26,7 @@ class Fleet(object):
         for c in chain(self.wings, (self.leader,)):
             if c is not None: c.calculateModifiedAttributes()
 
+        leader = self.leader
         self.broken = False
         store = Store()
         store.set(self.leader, "fleet")
@@ -33,14 +34,14 @@ class Fleet(object):
         for wing in self.wings:
             wing.calculateGangBonusses(store)
 
-        #No wings = BAD FC, You won't be getting any bonusses!
-        if len(self.wings) == 0:
+        # Check skill requirements and wing amount to see if we break or not
+        if len(self.wings) == 0 or leader is None or leader.character is None or leader.character.getSkill("Fleet Command").level < len(self.wings):
             self.broken = True
 
         #Now calculate our own if we aren't broken
         if self.broken == False:
             #We only get our own bonusses *Sadface*
-            store.apply(self.leader, "fleet")
+            store.apply(leader, "fleet")
 
 class Wing(object):
     def calculateModifiedAttributes(self):
@@ -49,23 +50,20 @@ class Wing(object):
 
     def calculateGangBonusses(self, store):
         self.broken = False
-        if self.leader is None:
-            #Broken chain
-            self.broken = True
-        else:
-            store.set(self.leader, "wing")
+        leader = self.leader
+        store.set(leader, "wing")
 
         #ALWAYS move down
         for squad in self.squads:
             squad.calculateGangBonusses(store)
 
-        #No squads = BAD WC, No bonusses!
-        if len(self.squads) == 0:
+        # Check skill requirements and squad amount to see if we break or not
+        if len(self.squads) == 0 or leader is None or leader.character is None or leader.character.getSkill("Wing Command").level < len(self.squads):
             self.broken = True
 
         #Check if we aren't broken, if we aren't, boost
         if self.broken == False:
-            store.apply(self.leader, "wing")
+            store.apply(leader, "wing")
         else:
             #We broke, don't go up
             self.gang.broken = True
@@ -77,15 +75,12 @@ class Squad(object):
 
     def calculateGangBonusses(self, store):
         self.broken = False
-        if self.leader is None:
-            #Broken chain, don't boost up. And don't boost ourselves either.
-            self.broken = True
-        elif self.booster is not None:
-            store.set(self.booster, "squad")
-        else:
-            store.set(self.leader, "squad")
+        leader = self.leader
+        booster = self.booster if self.booster is not None else leader
+        store.set(booster, "squad")
 
-        if len(self.members) <= 1:
+        # Check skill requirements and squad size to see if we break or not
+        if len(self.members) <= 1 or leader is None or leader.character is None or leader.character.getSkill("Leadership").level * 2 < len(self.members):
             self.broken = True
 
         if self.broken == False:
