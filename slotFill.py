@@ -37,7 +37,7 @@ class SlotFill(object):
         m.state = self.state
         return m
 
-    def weigh(self, fit, chromosome):
+    def fitness(self, fit, chromosome):
         modList = fit.modules
         modAttr = fit.ship.getModifiedItemAttr
 
@@ -111,7 +111,7 @@ class SlotFill(object):
         chromosomes = []
 
         # Helpers
-        weigher = lambda chromosome: (self.weigh(fit, chromosome), chromosome)
+        weigher = lambda chromosome: (self.fitness(fit, chromosome), chromosome)
         keyer = lambda info: info[0]
 
         eliteCutout = int(math.floor(setSize * (1 - elite)))
