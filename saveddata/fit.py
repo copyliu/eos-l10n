@@ -507,6 +507,12 @@ class Fit(object):
                         if amount == 0:
                             break
 
+    def unfill(self):
+        for i in xrange(len(self.modules) - 1, -1, -1):
+            mod = self.modules[i]
+            if mod.isEmpty:
+                del self.modules[i]
+
     def getItemAttrSum(self, dict, attr):
         amount = 0
         for mod in dict:
@@ -550,7 +556,7 @@ class Fit(object):
 
         slotsUsed = self.getSlotsUsed(type, countDummies)
         totalSlots = self.ship.getModifiedItemAttr(slots[type]) or 0
-        return totalSlots - slotsUsed
+        return int(totalSlots - slotsUsed)
 
     @property
     def calibrationUsed(self):
@@ -776,6 +782,7 @@ class Fit(object):
             else:
                 ehp = self.damagePattern.calculateEhp(self)
             self.__ehp = ehp
+
         return self.__ehp
 
     @property
