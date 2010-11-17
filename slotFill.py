@@ -67,7 +67,7 @@ class SlotFill(object):
         return weight
 
 
-    def run(self, elite = 0.05, mutationChance = 0.01, crossoverChance = 0.8):
+    def run(self, elite = 0.05, mutationChance = 0.2, crossoverChance = 0.8):
         #Use a copy of the original for all our calcs. We don't want to damage it
         fit = copy.deepcopy(self.original)
         fit.unfill()
@@ -115,10 +115,6 @@ class SlotFill(object):
         keyer = lambda info: info[0]
 
         eliteCutout = int(math.floor(setSize * (1 - elite)))
-        if eliteCutout % 2 != 0:
-            eliteCutout -= 1
-
-        normCutout = int(eliteCutout / 2.0)
         lastEl = setSize - 1
 
         #Generate our initial set entirely randomly
@@ -159,17 +155,15 @@ class SlotFill(object):
                 ratios.append(curr / totalFitness)
 
             #Do our pairing
-            for _ in xrange(0, normCutout):
+            for _ in xrange(0, eliteCutout):
                 # Crossover chance
                 mother = currentGeneration[bbisect(ratios, rrandom())][1]
                 father = currentGeneration[bbisect(ratios, rrandom())][1]
                 if rrandom() <= crossoverChance:
                     crosspoint = rrandint(0, chromLength)
                     luke = mother[:crosspoint] + father[crosspoint:]
-                    leia = father[:crosspoint] + mother[crosspoint:]
                 else:
                     luke = father
-                    leia = mother
 
                 #Chance for mutation
                 if rrandom() <= mutationChance:
@@ -178,13 +172,7 @@ class SlotFill(object):
                     mod = luke[target]
                     luke[target] = rchoice(slotModules[mod.slot])
 
-                    # Leia's mutation
-                    target = rrandint(0, chromLength)
-                    mod = leia[target]
-                    leia[target] = rchoice(slotModules[mod.slot])
-
                 nextGeneration.append(weigher(luke))
-                nextGeneration.append(weigher(leia))
 
             nextGeneration.sort(key=keyer)
             currentGeneration = nextGeneration
