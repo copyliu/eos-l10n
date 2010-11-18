@@ -73,7 +73,7 @@ class SlotFill(object):
         for tv, uv in zip(totalVars, usedVars):
             if uv > tv:
                 del modList[-len(chromosome):]
-                return 0 
+                return 0
 
         del modList[-len(chromosome):]
 
@@ -81,7 +81,7 @@ class SlotFill(object):
         return weight
 
 
-    def run(self, elite = 0.05, crossoverChance = 0.8, slotMutationChance = 0.2, typeMutationChance = 0.5):
+    def run(self, elite = 0.05, crossoverChance = 0.8, slotMutationChance = 0.5, typeMutationChance = 0.5):
         #Use a copy of the original for all our calcs. We don't want to damage it
         fit = copy.deepcopy(self.original)
         fit.unfill()
