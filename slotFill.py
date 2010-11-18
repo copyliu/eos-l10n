@@ -120,8 +120,13 @@ class SlotFill(object):
             if slot in slotModules:
                 slotModules[slot].append(module)
 
+        for slotType, modules in slotModules.iteritems():
+            if len(modules) == 0:
+                chromLength -= slotAmounts[slotType]
+                del slotAmounts[slotType]
+
         #Now, we need an initial set, first thing to do is decide how big that set will be
-        setSize = 15
+        setSize = 100
 
         #Grab some variables locally for performance improvements
         rchoice = random.choice
