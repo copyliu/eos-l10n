@@ -136,7 +136,7 @@ class HandledDroneList(HandledList):
     def find(self, item):
         for d in self:
             if d.item == item:
-                return d
+                yield d
 
     def append(self, drone):
         list.append(self, drone)
