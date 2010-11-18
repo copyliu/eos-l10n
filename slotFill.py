@@ -22,6 +22,8 @@ import random
 import copy
 import math
 import bisect
+import itertools
+import time
 
 class SlotFill(object):
     def __init__(self, original, modules, attributeWeights=None, propertyWeights=None, specificWeights=None, defaultState = State.ACTIVE):
@@ -37,6 +39,10 @@ class SlotFill(object):
         m.state = self.state
         return m
 
+    def __getMetaParent(self, item):
+        metaGroup = item.metaGroup
+        return item if metaGroup is None else metaGroup.parent
+
     def fitness(self, fit, chromosome):
         modList = fit.modules
         modAttr = fit.ship.getModifiedItemAttr
@@ -45,12 +51,6 @@ class SlotFill(object):
         fit.clear()
         fit.calculateModifiedAttributes()
 
-        #If we don't meet the hard requirements (=this isn't actualy possible). Give weight ZERO
-        if fit.pgUsed > fit.ship.getModifiedItemAttr("powerOutput") or \
-           fit.cpuUsed > fit.ship.getModifiedItemAttr("cpuOutput") or \
-           fit.calibrationUsed > fit.ship.getModifiedItemAttr('upgradeCapacity'):
-            del modList[-len(chromosome):]
-            return 0
 
         weight = 0
         for attr, value in self.attributeWeights.iteritems():
@@ -62,12 +62,26 @@ class SlotFill(object):
         for specific in self.specificWeights:
             weight += specific(fit)
 
+        totalVars = (fit.ship.getModifiedItemAttr("powerOutput"),
+                     fit.ship.getModifiedItemAttr("cpuOutput"),
+                     fit.ship.getModifiedItemAttr('upgradeCapacity'))
+
+        usedVars = (fit.pgUsed, fit.cpuUsed, fit.calibrationUsed)
+
+        total = 0
+        used = 0
+        for tv, uv in zip(totalVars, usedVars):
+            if uv > tv:
+                del modList[-len(chromosome):]
+                return 0 
+
         del modList[-len(chromosome):]
+
 
         return weight
 
 
-    def run(self, elite = 0.05, mutationChance = 0.2, crossoverChance = 0.8):
+    def run(self, elite = 0.05, crossoverChance = 0.8, slotMutationChance = 0.2, typeMutationChance = 0.5):
         #Use a copy of the original for all our calcs. We don't want to damage it
         fit = copy.deepcopy(self.original)
         fit.unfill()
@@ -88,17 +102,26 @@ class SlotFill(object):
             return
 
         slotModules = {}
-        #Sort stuff by slotType for ease and speed
+        metaModules = {}
+
         for slotType in slotAmounts:
             slotModules[slotType] = modules = []
 
         for module in self.modules:
-            slotModules[module.slot].append(module)
+            #Store the variations of each base for ease and speed
+            metaParent = self.__getMetaParent(module.item)
+            metaList = metaModules.get(metaParent)
+            if metaList is None:
+                metaList = metaModules[metaParent] = []
+            metaList.append(module)
+
+            #Sort stuff by slotType for ease and speed
+            slot = module.slot
+            if slot in slotModules:
+                slotModules[slot].append(module)
 
         #Now, we need an initial set, first thing to do is decide how big that set will be
-        setSize = 0
-        for slotType, modules in slotModules.iteritems():
-            setSize += len(modules) * slotAmounts[slotType]
+        setSize = 15
 
         #Grab some variables locally for performance improvements
         rchoice = random.choice
@@ -138,11 +161,12 @@ class SlotFill(object):
 
         #Setup's done, now we can actualy apply our genetic algorithm to optimize all this
         while True:
+            moo = time.time()
             #First thing we do, we're gonna be elitair
             #Grab the top x%, we'll put em in the next generation
             nextGeneration = []
-            for _ in xrange(eliteCutout, setSize):
-                nextGeneration.append(currentGeneration.pop())
+            for i in xrange(lastEl, eliteCutout - 1, -1):
+                nextGeneration.append(currentGeneration[i])
 
             #Figure out our ratios to do our roulette wheel
             fitnessList = map(keyer, currentGeneration)
@@ -154,6 +178,7 @@ class SlotFill(object):
                 curr += fitness
                 ratios.append(curr / totalFitness)
 
+            t = 0
             #Do our pairing
             for _ in xrange(0, eliteCutout):
                 # Crossover chance
@@ -165,15 +190,26 @@ class SlotFill(object):
                 else:
                     luke = father
 
-                #Chance for mutation
-                if rrandom() <= mutationChance:
-                    # Luke's mutation
+                #Chance for slot mutation
+                if rrandom() <= slotMutationChance:
                     target = rrandint(0, chromLength)
                     mod = luke[target]
                     luke[target] = rchoice(slotModules[mod.slot])
 
+                if rrandom() <= typeMutationChance:
+                    #Mutation of an item to another one of the same type
+                    target = rrandint(0, chromLength)
+                    mod = luke[target]
+                    vars = metaModules[self.__getMetaParent(mod.item)]
+                    luke[target] = rchoice(vars)
+
+                tt = time.time()
                 nextGeneration.append(weigher(luke))
+                t += time.time() - tt
+
+            print "time spent weighing: ", t
 
             nextGeneration.sort(key=keyer)
             currentGeneration = nextGeneration
+            print "total time spent this iteration:", time.time() - moo
             yield currentGeneration[lastEl]
