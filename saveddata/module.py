@@ -259,7 +259,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     def fits(self, fit):
         slot = self.slot
-        if fit.getSlotsFree(slot) <= 0:
+        if fit.getSlotsFree(slot) <= (0 if self.owner != fit else -1):
             return False
 
         # Check ship type restrictions
@@ -301,7 +301,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         # Check max group fitted
         max = self.getModifiedItemAttr("maxGroupFitted")
         if max is not None:
-            current = 0
+            current = 0 if self.owner != fit else -1
             for mod in fit.modules:
                 if mod.item and mod.item.groupID == self.item.groupID:
                     current += 1

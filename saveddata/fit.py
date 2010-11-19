@@ -844,6 +844,14 @@ class Fit(object):
         self.__weaponVolley = weaponVolley
         self.__droneDPS = droneDPS
 
+    @property
+    def fits(self):
+        for mod in self.modules:
+            if not mod.fits(self):
+                return False
+
+        return True
+
     def __deepcopy__(self, memo):
         copy = Fit()
         #Character and owner are not copied

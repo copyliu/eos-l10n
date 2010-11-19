@@ -51,6 +51,9 @@ class SlotFill(object):
         fit.clear()
         fit.calculateModifiedAttributes()
 
+        if not fit.fits:
+            del modList[-len(chromosome):]
+            return 0
 
         weight = 0
         for attr, value in self.attributeWeights.iteritems():
@@ -181,7 +184,7 @@ class SlotFill(object):
             ratios = []
             for fitness in fitnessList:
                 curr += fitness
-                ratios.append(curr / totalFitness)
+                ratios.append(curr / (totalFitness or 1))
 
             t = 0
             #Do our pairing
