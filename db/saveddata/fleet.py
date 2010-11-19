@@ -17,7 +17,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import mapper, relation
 
 from eos.db import saveddata_meta
@@ -26,7 +26,8 @@ from eos.db.saveddata.fit import fits_table
 
 gangs_table = Table("gangs", saveddata_meta,
                     Column("ID", Integer, primary_key = True),
-                    Column("leaderID", ForeignKey("fits.ID")))
+                    Column("leaderID", ForeignKey("fits.ID")),
+                    Column("name", String))
 
 wings_table = Table("wings", saveddata_meta,
                     Column("ID", Integer, primary_key = True),
