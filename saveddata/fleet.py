@@ -43,6 +43,13 @@ class Fleet(object):
             #We only get our own bonusses *Sadface*
             store.apply(leader, "fleet")
 
+    def count(self):
+        total = 0
+        for wing in self.wings:
+            total += wing.count()
+
+        return total
+
 class Wing(object):
     def calculateModifiedAttributes(self):
         for c in chain(self.squads, (self.leader,)):
@@ -68,6 +75,13 @@ class Wing(object):
             #We broke, don't go up
             self.gang.broken = True
 
+    def count(self):
+        total = 0 if self.leader is None else 1
+        for squad in self.squads:
+            total += squad.count()
+
+        return total
+
 class Squad(object):
     def calculateModifiedAttributes(self):
         for member in self.members:
@@ -88,6 +102,9 @@ class Squad(object):
                 store.apply(member, "squad")
         else:
             self.wing.broken = True
+
+    def count(self):
+        return len(self.members)
 
 class Store(object):
     def __init__(self):
