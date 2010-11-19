@@ -19,7 +19,7 @@
 
 from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
-from eos.types import User, Character, Fit, Price, DamagePattern
+from eos.types import User, Character, Fit, Price, DamagePattern, Fleet
 from sqlalchemy.sql import and_
 import eos.config
 
@@ -146,6 +146,9 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
 
 def getFitList(eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).all()
+
+def getFleetList(eager=None):
+    return saveddata_session.query(Fleet).options(*processEager(eager)).all()
 
 @cachedQuery(Price, 1, "typeID")
 def getPrice(typeID):
