@@ -138,6 +138,10 @@ class HandledDroneList(HandledList):
             if d.item == item:
                 yield d
 
+    def findFirst(self, item):
+        for d in self.find(item):
+            return d
+
     def append(self, drone):
         list.append(self, drone)
 
@@ -146,7 +150,8 @@ class HandledDroneList(HandledList):
 
     def appendItem(self, item, amount = 1):
         if amount < 1: ValueError("Amount of drones to add should be >= 1")
-        d = self.find(item)
+        d = self.findFirst(item)
+
         if d is None:
             d = eos.types.Drone(item)
             self.append(d)
@@ -156,7 +161,7 @@ class HandledDroneList(HandledList):
 
     def removeItem(self, item, amount):
         if amount < 1: ValueError("Amount of drones to remove should be >= 1")
-        d = self.find(item)
+        d = self.findFirst(item)
         if d is None: return
         d.amount -= amount
         if d.amount <= 0:
