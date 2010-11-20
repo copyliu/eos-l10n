@@ -89,8 +89,9 @@ class DamagePattern(object):
     @classmethod
     def exportPatterns(cls, *patterns):
         out = ""
-        for dp in patterns:
-            out += cls.EXPORT_FORMAT % (dp.name, dp.emAmount, dp.thermalAmount, dp.kineticAmount, dp.explosiveAmount)
+        for dp in sorted(patterns, key=lambda p: p.name):
+            if dp.name not in ("Uniform", "Selected Ammo"):
+                out += cls.EXPORT_FORMAT % (dp.name, dp.emAmount, dp.thermalAmount, dp.kineticAmount, dp.explosiveAmount)
 
         return out.strip()
 
