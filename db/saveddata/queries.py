@@ -176,8 +176,11 @@ def searchFits(nameLike, where=None, eager=None):
     filter = processWhere(Fit.name.like(nameLike), where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
 
-def save(stuff):
+def add(stuff):
     saveddata_session.add(stuff)
+
+def save(stuff):
+    add(stuff)
     commit()
 
 def remove(stuff):
