@@ -28,7 +28,7 @@ class Fleet(object):
 
         leader = self.leader
         self.broken = False
-        store = Store()
+        self.store = store = Store()
         store.set(self.leader, "fleet")
         #Go all the way down for each subtree we have.
         for wing in self.wings:
@@ -167,8 +167,11 @@ class Store(object):
 
         self.modify(fit)
 
+    def getBoosts(self, fit):
+        return self.boosts[fit]
+
     def modify(self, fit):
-        boosts = self.boosts[fit]
+        boosts = self.getBoosts(fit)
         #Now we got it all figured out, actualy do the useful part of all this
         for name, info in boosts.iteritems():
             effect, thing = info[1]
