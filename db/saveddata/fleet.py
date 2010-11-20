@@ -27,11 +27,13 @@ from eos.db.saveddata.fit import fits_table
 gangs_table = Table("gangs", saveddata_meta,
                     Column("ID", Integer, primary_key = True),
                     Column("leaderID", ForeignKey("fits.ID")),
+                    Column("boosterID", ForeignKey("fits.ID")),
                     Column("name", String))
 
 wings_table = Table("wings", saveddata_meta,
                     Column("ID", Integer, primary_key = True),
                     Column("gangID", ForeignKey("gangs.ID")),
+                    Column("boosterID", ForeignKey("fits.ID")),
                     Column("leaderID", ForeignKey("fits.ID")))
 
 squads_table = Table("squads", saveddata_meta,
@@ -46,11 +48,13 @@ squadmembers_table = Table("squadmembers", saveddata_meta,
 
 mapper(Fleet, gangs_table,
        properties = {"wings" : relation(Wing, backref="gang"),
-                     "leader" : relation(Fit)})
+                     "leader" : relation(Fit, primaryjoin = gangs_table.c.leaderID == fits_table.c.ID),
+                     "booster": relation(Fit, primaryjoin = gangs_table.c.boosterID == fits_table.c.ID)})
 
 mapper(Wing, wings_table,
        properties = {"squads" : relation(Squad, backref="wing"),
-                     "leader" : relation(Fit)})
+                     "leader" : relation(Fit, primaryjoin = wings_table.c.leaderID == fits_table.c.ID),
+                     "booster": relation(Fit, primaryjoin = wings_table.c.boosterID == fits_table.c.ID)})
 
 mapper(Squad, squads_table,
        properties = {"leader" : relation(Fit, primaryjoin = squads_table.c.leaderID == fits_table.c.ID),
