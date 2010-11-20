@@ -110,6 +110,7 @@ class Store(object):
     def __init__(self):
         #Build our data containers
         self.bonusses = {}
+        self.boosts = {}
         for dictType in ("fleet", "wing", "squad"):
             self.bonusses[dictType] = {}
 
@@ -136,7 +137,6 @@ class Store(object):
                   Module: "module"}
 
     def apply(self, fit, layer):
-        self.boosts = {}
         if fit is None:
             return
 
@@ -168,7 +168,7 @@ class Store(object):
         self.modify(fit)
 
     def getBoosts(self, fit):
-        return self.boosts[fit]
+        return self.boosts.get(fit)
 
     def modify(self, fit):
         boosts = self.getBoosts(fit)
