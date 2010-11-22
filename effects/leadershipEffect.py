@@ -1,7 +1,7 @@
 #Used by:
 #Skill: Leadership
 type = "gang"
-gangBonus = "scanResolutionBonus"
 gangBoost = "scanResolution"
+gangBonus = "scanResolutionBonus"
 def handler(fit, skill, context):
-    fit.ship.boostItemAttr("scanResolution", skill.getModifiedItemAttr("scanResolutionBonus") * skill.level)
+    fit.ship.boostItemAttr(gangBoost, skill.getModifiedItemAttr(gangBonus) * skill.level)

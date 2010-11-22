@@ -125,6 +125,8 @@ class TestBase(unittest.TestCase):
             # squad booster
             squad_fit = Fit()
             squad_char = Character("squad_test")
+            # Add leadership skill which is required to boost squad members
+            squad_char.addSkill(Skill(db.getItem("Leadership"), 1))
             if skill:
                 squad_skill_itm = db.getItem(skill[0])
                 squad_skill_lvl = skill[1]
@@ -174,6 +176,8 @@ class TestBase(unittest.TestCase):
         if gang:
             squad_fit = Fit()
             squad_char = Character("squad_test")
+            # Add leadership skill which is required to boost squad members
+            squad_char.addSkill(Skill(db.getItem("Leadership"), 1))
             if skill:
                 squad_skill_itm = db.getItem(skill[0])
                 squad_skill_lvl = skill[1]
