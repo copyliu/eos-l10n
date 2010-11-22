@@ -19,6 +19,7 @@
 
 from itertools import chain
 from eos.types import Skill, Module, Ship
+from copy import deepcopy
 
 class Fleet(object):
     def calculateModifiedAttributes(self):
@@ -50,6 +51,16 @@ class Fleet(object):
             total += wing.count()
 
         return total
+
+    def __deepcopy__(self, memo):
+        copy = Fleet()
+        copy.name = self.name
+        copy.booster = deepcopy(self.booster)
+        copy.leader = deepcopy(self.leader)
+        for wing in self.wings:
+            copy.wings.append(deepcopy(wing))
+
+        return copy
 
 class Wing(object):
     def calculateModifiedAttributes(self):
@@ -85,6 +96,16 @@ class Wing(object):
 
         return total
 
+    def __deepcopy__(self, memo):
+        copy = Wing()
+        copy.booster = deepcopy(self.booster)
+        copy.leader = deepcopy(self.leader)
+        for squad in self.squads:
+            copy.squads.append(deepcopy(squad))
+
+        return copy
+
+
 class Squad(object):
     def calculateModifiedAttributes(self):
         for member in self.members:
@@ -108,6 +129,15 @@ class Squad(object):
 
     def count(self):
         return len(self.members)
+
+    def __deepcopy__(self, memo):
+        copy = Squad()
+        copy.booster = deepcopy(self.booster)
+        copy.leader = deepcopy(self.leader)
+        for member in self.members:
+            copy.members.append(deepcopy(member))
+
+        return copy
 
 class Store(object):
     def __init__(self):

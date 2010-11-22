@@ -1,6 +1,7 @@
 from eos.tests import TestBase
 from eos import db
 from eos.types import Fleet, Wing, Squad, Ship, Fit, Module, Character
+import copy
 
 class Test(TestBase):
     def setUp(self):
@@ -20,6 +21,18 @@ class Test(TestBase):
         f.ship = Ship(db.getItem("Rifter"))
         f.character = Character("testety")
         f.character.getSkill("Leadership").level = 5
+
+    def test_copy(self):
+        c = copy.deepcopy(self.g)
+        self.assertNotEquals(id(c), id(self.g))
+        self.assertEquals(len(c.wings), 1)
+        wing = c.wings[0]
+        self.assertNotEquals(id(wing), id(self.w))
+        self.assertEquals(len(wing.squads), 1)
+        squad = wing.squads[0]
+        self.assertNotEquals(id(squad), id(self.s))
+        self.assertEquals(len(squad.members), 2)
+
 
     def test_skillGang(self):
         self.s.leader.character.getSkill("Leadership").level = 5
