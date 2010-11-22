@@ -277,26 +277,26 @@ class _RootContext(_Context):
             response = None
 
         if response is None:
-           if kw:
-               req = urllib2.Request("http://" + self._host + path, urllib.urlencode(kw))
-           else:
-               req = urllib2.Request(path)
+            if kw:
+                req = urllib2.Request("http://" + self._host + path, urllib.urlencode(kw))
+            else:
+                req = urllib2.Request(path)
 
-           try:
-               response = urllib2.urlopen(req)
-               response = response.read()
-           except HTTPError, e:
-               print 'The server couldn\'t fulfill the request.'
-               print 'Error code: ', e.code
-           except URLError, e:
-               print 'We failed to reach a server.'
-               print 'Reason: ', e.reason
+            try:
+                response = urllib2.urlopen(req)
+                response = response.read()
+            except HTTPError, e:
+                print 'The server couldn\'t fulfill the request.'
+                print 'Error code: ', e.code
+            except URLError, e:
+                print 'We failed to reach a server.'
+                print 'Reason: ', e.reason
 
-           if cache:
-               store = True
-               response = response.read()
-           else:
-               store = False
+            if cache:
+                store = True
+                response = response.read()
+            else:
+                store = False
         else:
             store = False
 
