@@ -29,6 +29,7 @@ class TestBase(unittest.TestCase):
 
     def tearDown(self):
         db.saveddata_meta.drop_all()
+        db.saveddata_session.expunge_all()
 
     def __addFitItem(self, fit, item, state=None):
         # Map textual description to actual states
