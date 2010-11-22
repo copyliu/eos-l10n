@@ -132,6 +132,10 @@ def getCharacterList(eager=None):
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
 
+@cachedQuery(Fleet, 2, "fleetID", "where")
+def getFleet(fleetID, where=None, eager=None):
+    return saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).one()
+
 def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     Get all the fits using a certain ship.
