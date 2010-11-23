@@ -10,7 +10,7 @@ from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-d", "--database", help="path to eve cache data dump in \
 sqlite format, default eos database path is used if none specified",
-type="string", default=os.path.join("~", ".pyfa","eve.db"))
+type="string", default=os.path.join("..", "..","staticdata","eve.db"))
 parser.add_option("-a", "--attr", help="find items with all of these attributes",
 type="string", default="")
 parser.add_option("-s", "--srq", help="find items with any of these skill requirements",
