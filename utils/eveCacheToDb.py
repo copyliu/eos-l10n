@@ -262,7 +262,7 @@ if __name__ == "__main__":
     import eos.config
 
     # Parse command line options
-    usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
+    usage = "usage: %prog --eve=EVE --cache=CACHE --dump=DUMP [--release=RELEASE --sisi]"
     parser = OptionParser(usage=usage)
     parser.add_option("-e", "--eve", help="path to eve folder")
     parser.add_option("-c", "--cache", help="path to eve cache folder")
