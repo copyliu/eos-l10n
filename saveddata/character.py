@@ -74,7 +74,6 @@ class Character(object):
             except exc.NoResultFound:
                 all5 = Character("All 5")
                 all5.defaultLevel = 5
-                eos.db.saveddata_session.add(all5)
 
             cls.__all5 = all5
         return cls.__all5
@@ -87,7 +86,6 @@ class Character(object):
                 all0 = eos.db.getCharacter("All 0")
             except exc.NoResultFound:
                 all0 = Character("All 0")
-                eos.db.saveddata_session.add(all0)
 
             cls.__all0 = all0
         return cls.__all0
