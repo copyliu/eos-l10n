@@ -20,21 +20,6 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_oreIndustrial_duration_moduleTractorBeamSkillrqGravitonPhysics(self):
-        self.buildTested = 0
-        attr = "duration"
-        item = "Capital Tractor Beam I"
-        skill = "ORE Industrial"
-        iLvl = 1
-        iIngame = 0.95
-        fLvl = 4
-        fIngame = 0.8
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
     def test_oreIndustrial_duration_moduleOther(self):
         self.buildTested = 0
         attr = "duration"
@@ -95,21 +80,6 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_oreIndustrial_maxRange_moduleTractorBeamSkillrqGravitonPhysics(self):
-        self.buildTested = 0
-        attr = "maxRange"
-        item = "Capital Tractor Beam I"
-        skill = "ORE Industrial"
-        iLvl = 1
-        iIngame = 1.6
-        fLvl = 4
-        fIngame = 3.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
     def test_oreIndustrial_maxRange_moduleOther(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -129,21 +99,6 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "maxTractorVelocity"
         item = "Small Tractor Beam I"
-        skill = "ORE Industrial"
-        iLvl = 1
-        iIngame = 1.6
-        fLvl = 4
-        fIngame = 3.4
-        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
-        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_oreIndustrial_maxTractorVelocity_moduleTractorBeamSkillrqGravitonPhysics(self):
-        self.buildTested = 0
-        attr = "maxTractorVelocity"
-        item = "Capital Tractor Beam I"
         skill = "ORE Industrial"
         iLvl = 1
         iIngame = 1.6
