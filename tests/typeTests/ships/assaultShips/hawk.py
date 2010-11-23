@@ -11,9 +11,9 @@ class Test(TestBase):
         item = "Thorn Rocket"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -26,9 +26,9 @@ class Test(TestBase):
         item = "Thorn Rage Rocket"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -41,9 +41,9 @@ class Test(TestBase):
         item = "Bloodclaw Light Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -56,9 +56,9 @@ class Test(TestBase):
         item = "Bloodclaw Precision Light Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -71,9 +71,9 @@ class Test(TestBase):
         item = "Serpent F.O.F. Light Missile I"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -86,9 +86,9 @@ class Test(TestBase):
         item = "Terror Assault Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -101,9 +101,9 @@ class Test(TestBase):
         item = "Terror Rage Assault Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -116,9 +116,9 @@ class Test(TestBase):
         item = "Scourge Heavy Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -131,9 +131,9 @@ class Test(TestBase):
         item = "Scourge Fury Heavy Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -146,9 +146,9 @@ class Test(TestBase):
         item = "Hydra F.O.F. Heavy Missile I"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -161,9 +161,9 @@ class Test(TestBase):
         item = "Juggernaut Torpedo"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -176,9 +176,9 @@ class Test(TestBase):
         item = "Juggernaut Rage Torpedo"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -191,9 +191,9 @@ class Test(TestBase):
         item = "Wrath Cruise Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -206,9 +206,9 @@ class Test(TestBase):
         item = "Wrath Precision Cruise Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -221,9 +221,9 @@ class Test(TestBase):
         item = "Dragon F.O.F. Cruise Missile I"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -236,9 +236,9 @@ class Test(TestBase):
         item = "Rift Citadel Torpedo"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -251,9 +251,9 @@ class Test(TestBase):
         item = "Rajas Citadel Cruise Missile"
         skill = "Caldari Frigate"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
