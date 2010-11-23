@@ -61,7 +61,7 @@ usage = "usage: %prog --database=DB [--debug=DEBUG]"
 parser = OptionParser(usage=usage)
 parser.add_option("-d", "--database", help="path to eve cache data dump in \
 sqlite format, default pyfa database path is used if none specified",
-type="string", default=os.path.join("..", "..","staticdata","eve.db"))
+type="string", default=os.path.join("~", ".pyfa","eve.db"))
 parser.add_option("-e", "--effects", help="explicit comma-separated list of \
 effects to process", type="string", default="")
 parser.add_option("-u", "--debug", help="debug level, 0 by default",

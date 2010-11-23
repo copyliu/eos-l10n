@@ -31,7 +31,7 @@ import re
 
 usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
 parser = OptionParser(usage=usage)
-parser.add_option("-o", "--old", help="path to old cache data dump (if none specified default pyfa path to database is taken)", type="string", default=os.path.join("..", "..","staticdata","eve.db"))
+parser.add_option("-o", "--old", help="path to old cache data dump (if none specified default pyfa path to database is taken)", type="string", default=os.path.join("~", ".pyfa","eve.db"))
 parser.add_option("-n", "--new", help="path to new cache data dump", type="string")
 parser.add_option("-e", "--noeffects", action="store_false", dest="effects", help="don't show list of changed effects", default=True)
 parser.add_option("-a", "--noattributes", action="store_false", dest="attributes", help="don't show list of changed attributes", default=True)
