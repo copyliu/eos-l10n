@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gnome' KUA (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gnome' KUA (6 of 6)
 #Modules named like: Core Defence Charge Economizer (6 of 6)
 #Skill: Shield Upgrades
 type = "passive"

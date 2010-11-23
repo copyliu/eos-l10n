@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gnome' KVA (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gnome' KVA (6 of 6)
 #Modules named like: Core Defence Field Extender (6 of 6)
 #Implant: Sansha Modified 'Gnome' Implant
 #Skill: Shield Management

@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KOB (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gypsy' KOB (6 of 6)
 #Modules named like: Signal Disruption Amplifier (6 of 6)
 #Skill: Electronic Warfare
 type = "passive"

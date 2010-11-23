@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZMS (3 of 3)
+#Implants named like: Hardwiring Zainou 'Deadeye' ZMS (6 of 6)
 #Modules named like: Warhead Flare Catalyst (6 of 6)
 #Skill: Target Navigation Prediction
 type = "passive"
