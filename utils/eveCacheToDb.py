@@ -28,7 +28,7 @@ Reverence library by Entity is used, check http://wiki.github.com/ntt/reverence/
 As reverence uses the same Python version as EVE client (2.x series), script cannot be converted to python3
 Example commands to run the script under Linux with default eve paths for getting SQLite dump:
 Tranquility: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/EVE" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_eve_tranquility/cache" --dump="sqlite:////home/"$USER"/Desktop/eve.db"
-Singularity: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/Singularity" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_singularity_singularity/cache" --sisi --dump="sqlite:////home/"$USER"/Desktop/evetest.db"
+Singularity: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/Singularity" --cache="~/.wine/drive_c/users/"$USER"/Local Settings/Application Data/CCP/EVE/c_program_files_ccp_sisi_87.237.38.50/cache" --sisi --dump="sqlite:////home/"$USER"/Desktop/evetest.db"
 '''
 
 import os
