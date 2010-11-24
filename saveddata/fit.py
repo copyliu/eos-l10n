@@ -93,15 +93,20 @@ class Fit(object):
 
         return f
 
-    typeNameRe = re.compile("\\[(.*), (.*)\\]")
-
     @classmethod
     def importEft(cls, eftString):
         from eos import db
         fit = cls()
         eftString = eftString.strip()
         lines = re.split('[\n\r]+', eftString)
-        shipType, fitName = re.match(cls.typeNameRe, lines[0]).groups()
+        info = lines[0][1:-1].split(",", 1)
+        if len(info) == 2:
+            shipType = info[0].strip()
+            fitName = info[1].strip()
+        else:
+            shipType = info[0].strip()
+            fitName = "Imported %s" % shipType
+
         try:
             fit.ship = Ship(db.getItem(shipType))
             fit.name = fitName
