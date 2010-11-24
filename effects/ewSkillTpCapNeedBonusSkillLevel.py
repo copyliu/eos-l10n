@@ -1,6 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KSB (3 of 3)
-#Implants named like: Hardwiring Zainou 'Gypsy' KTB (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gypsy' KTB (6 of 6)
 #Skill: Target Painting
 type = "passive"
 def handler(fit, container, context):

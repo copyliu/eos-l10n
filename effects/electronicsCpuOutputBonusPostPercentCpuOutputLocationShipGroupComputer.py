@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KMB (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gypsy' KMB (6 of 6)
 #Skill: Electronics
 type = "passive"
 def handler(fit, container, context):

@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' AX (3 of 3)
+#Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' AX (6 of 6)
 #Implant: Ogdin's Eye Coordination Enhancer
 #Skill: Motion Prediction
 type = "passive"

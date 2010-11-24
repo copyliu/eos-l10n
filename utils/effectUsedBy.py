@@ -464,7 +464,7 @@ for effect_name in effect_list:
 
     stopdebugprints = False
     if DEBUG_LEVEL >= 1:
-        print("\nEffect:", file_name)
+        print("\nEffect:", effect_name)
         print("Total items affected: {0}".format(pereffect_totalaffected))
 
     # Stage 2.2
@@ -1032,7 +1032,7 @@ inner score: {5:.3})"
     # If effect isn't used, write it to file and to terminal
     else:
         commentlines = ["#Not used by any item"]
-        print("Warning: effect file " + file_name +
+        print("Warning: effect file " + effect_name +
               " is not used by any item")
     # Combine "used by" comment lines and actual effect lines
     outputlines = commentlines + effectLines

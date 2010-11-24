@@ -183,7 +183,7 @@ class Test(TestBase):
 
         m3 = Module(db.getItem("Standard Missile Launcher I"))
         m3.charge = db.getItem("Bloodclaw Light Missile")
-        self.assertEquals(m3.maxRange, m3.getModifiedChargeAttr("explosionDelay") / 1000.0 * m3.getModifiedChargeAttr("maxVelocity"))
+        self.assertEquals(m3.maxRange, 17437.5)
 
     def test_buildDummy(self):
         m = Module.buildEmpty(Slot.LOW)

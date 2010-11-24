@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Inherent Implants 'Squire' PG (3 of 3)
+#Implants named like: Hardwiring Inherent Implants 'Squire' PG (6 of 6)
 #Modules named like: Ancillary Current Router (6 of 6)
 #Skill: Engineering
 type = "passive"
