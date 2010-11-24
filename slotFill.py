@@ -129,7 +129,7 @@ class SlotFill(object):
                 del slotAmounts[slotType]
 
         #Now, we need an initial set, first thing to do is decide how big that set will be
-        setSize = 100
+        setSize = 10
 
         #Grab some variables locally for performance improvements
         rchoice = random.choice
