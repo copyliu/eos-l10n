@@ -52,6 +52,9 @@ class Fleet(object):
 
         return total
 
+    def extend(self):
+        self.wings.append(Wing())
+
     def __deepcopy__(self, memo):
         copy = Fleet()
         copy.name = self.name
@@ -95,6 +98,9 @@ class Wing(object):
             total += squad.count()
 
         return total
+
+    def extend(self):
+        self.squads.append(Squad())
 
     def __deepcopy__(self, memo):
         copy = Wing()
