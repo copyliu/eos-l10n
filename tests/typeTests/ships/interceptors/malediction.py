@@ -5,7 +5,7 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Malediction"
 
-    def test_amarrFrigate_emDamage_chargeRocket(self):
+    def test_amarrFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Gremlin Rocket"
@@ -20,7 +20,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_emDamage_chargeRocketAdvanced(self):
+    def test_amarrFrigate_emDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Gremlin Rage Rocket"
@@ -35,7 +35,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_emDamage_chargeOther(self):
+    def test_amarrFrigate_emDamage_chargeMissileOther(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Sabretooth Light Missile"
@@ -50,7 +50,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_explosiveDamage_chargeRocket(self):
+    def test_amarrFrigate_explosiveDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Phalanx Rocket"
@@ -65,7 +65,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_explosiveDamage_chargeRocketAdvanced(self):
+    def test_amarrFrigate_explosiveDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Phalanx Javelin Rocket"
@@ -80,10 +80,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_explosiveDamage_chargeOther(self):
+    def test_amarrFrigate_explosiveDamage_chargeMissileOther(self):
         self.buildTested = 0
         attr = "explosiveDamage"
-        item = "Fusion S"
+        item = "Havoc Heavy Missile"
         skill = "Amarr Frigate"
         iLvl = 1
         iIngame = 1.0
@@ -95,7 +95,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_kineticDamage_chargeRocket(self):
+    def test_amarrFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Thorn Rocket"
@@ -110,7 +110,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_kineticDamage_chargeRocketAdvanced(self):
+    def test_amarrFrigate_kineticDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Thorn Rage Rocket"
@@ -125,7 +125,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_kineticDamage_chargeOther(self):
+    def test_amarrFrigate_kineticDamage_chargeMissileOther(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Serpent F.O.F. Light Missile I"
@@ -140,7 +140,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_thermalDamage_chargeRocket(self):
+    def test_amarrFrigate_thermalDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Foxfire Rocket"
@@ -155,7 +155,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_thermalDamage_chargeRocketAdvanced(self):
+    def test_amarrFrigate_thermalDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Foxfire Javelin Rocket"
@@ -170,7 +170,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrFrigate_thermalDamage_chargeOther(self):
+    def test_amarrFrigate_thermalDamage_chargeMissileOther(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Flameburst Precision Light Missile"

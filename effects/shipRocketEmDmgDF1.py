@@ -3,5 +3,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Destroyers").level
-    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Rockets"),
-                                  "emDamage", ship.getModifiedItemAttr("shipBonusDF1") * level)
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Rockets"),
+                                    "emDamage", ship.getModifiedItemAttr("shipBonusDF1") * level)
