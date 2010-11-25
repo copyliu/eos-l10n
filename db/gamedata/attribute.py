@@ -34,6 +34,7 @@ attributes_table = Table("dgmattribs", gamedata_meta,
                          Column("published", Boolean),
                          Column("displayName", String),
                          Column("highIsGood", Boolean),
+                         Column("defaultValue", Float),
                          Column("iconID", Integer, ForeignKey("icons.iconID")),
                          Column("unitID", Integer, ForeignKey("eveunits.unitID")))
 
