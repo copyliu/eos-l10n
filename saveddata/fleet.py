@@ -111,6 +111,7 @@ class Wing(object):
 
         return copy
 
+
 class Squad(object):
     def calculateModifiedAttributes(self):
         for member in self.members:
