@@ -3,6 +3,7 @@
 #Ship: Oneiros
 type = "passive"
 def handler(fit, ship, context):
-    level = fit.character.getSkill("%s Cruiser" % ship.item.race.capitalize()).level
-    fit.drones.filteredItemBoost(lambda drone: "Armor Maintenance Bot" in drone.item.name,
-                                 "armorDamageAmount", ship.getModifiedItemAttr("droneArmorDamageAmountBonus") * level)
+    # This is actually level-less bonus, anyway you have to train cruisers 5
+    # and will get 100% (20%/lvl as stated by description)
+    fit.drones.filteredItemBoost(lambda drone: drone.item.group.name == "Logistic Drone",
+                                 "armorDamageAmount", ship.getModifiedItemAttr("droneArmorDamageAmountBonus"))
