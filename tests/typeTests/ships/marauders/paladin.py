@@ -169,7 +169,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_damageMultiplier_moduleEnergyWeaponLarge(self):
+    def test_static_damageMultiplier_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
         item = "Tachyon Beam Laser I"
@@ -182,7 +182,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_damageMultiplier_moduleEnergyWeaponOther(self):
+    def test_static_damageMultiplier_moduleEnergyWeaponOther(self):
         self.buildTested = 0
         attr = "damageMultiplier"
         item = "Gatling Pulse Laser I"
@@ -195,7 +195,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxRange_moduleTractorBeam(self):
+    def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "Small Tractor Beam I"
@@ -208,7 +208,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxRange_moduleOther(self):
+    def test_static_maxRange_moduleOther(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "720mm Howitzer Artillery I"
@@ -221,7 +221,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxTractorVelocity_moduleTractorBeam(self):
+    def test_static_maxTractorVelocity_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxTractorVelocity"
         item = "Small Tractor Beam I"

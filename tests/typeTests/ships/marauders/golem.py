@@ -260,7 +260,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_emDamage_chargeMissileTorpedo(self):
+    def test_static_emDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Mjolnir Torpedo"
@@ -273,7 +273,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_emDamage_chargeMissileTorpedoAdvanced(self):
+    def test_static_emDamage_chargeMissileTorpedoAdvanced(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Mjolnir Javelin Torpedo"
@@ -286,7 +286,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_emDamage_chargeMissileCruise(self):
+    def test_static_emDamage_chargeMissileCruise(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Paradise Cruise Missile"
@@ -299,7 +299,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_emDamage_chargeMissileCruiseAdvanced(self):
+    def test_static_emDamage_chargeMissileCruiseAdvanced(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Paradise Fury Cruise Missile"
@@ -312,7 +312,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_emDamage_chargeMissileCruiseFof(self):
+    def test_static_emDamage_chargeMissileCruiseFof(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Hunter F.O.F. Cruise Missile I"
@@ -325,7 +325,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_emDamage_chargeOther(self):
+    def test_static_emDamage_chargeOther(self):
         self.buildTested = 0
         attr = "emDamage"
         item = "Torrent Assault Missile"
@@ -338,7 +338,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_explosiveDamage_chargeMissileTorpedo(self):
+    def test_static_explosiveDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Bane Torpedo"
@@ -351,7 +351,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_explosiveDamage_chargeMissileTorpedoAdvanced(self):
+    def test_static_explosiveDamage_chargeMissileTorpedoAdvanced(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Bane Rage Torpedo"
@@ -364,7 +364,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_explosiveDamage_chargeMissileCruise(self):
+    def test_static_explosiveDamage_chargeMissileCruise(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Devastator Cruise Missile"
@@ -377,7 +377,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_explosiveDamage_chargeMissileCruiseAdvanced(self):
+    def test_static_explosiveDamage_chargeMissileCruiseAdvanced(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Devastator Fury Cruise Missile"
@@ -390,7 +390,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_explosiveDamage_chargeMissileCruiseFof(self):
+    def test_static_explosiveDamage_chargeMissileCruiseFof(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Obliterator F.O.F. Cruise Missile I"
@@ -403,7 +403,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_explosiveDamage_chargeOther(self):
+    def test_static_explosiveDamage_chargeOther(self):
         self.buildTested = 0
         attr = "explosiveDamage"
         item = "Havoc Heavy Missile"
@@ -416,7 +416,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_kineticDamage_chargeMissileTorpedo(self):
+    def test_static_kineticDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Juggernaut Torpedo"
@@ -429,7 +429,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_kineticDamage_chargeMissileTorpedoAdvanced(self):
+    def test_static_kineticDamage_chargeMissileTorpedoAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Juggernaut Rage Torpedo"
@@ -442,7 +442,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_kineticDamage_chargeMissileCruise(self):
+    def test_static_kineticDamage_chargeMissileCruise(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Wrath Cruise Missile"
@@ -455,7 +455,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_kineticDamage_chargeMissileCruiseAdvanced(self):
+    def test_static_kineticDamage_chargeMissileCruiseAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Wrath Precision Cruise Missile"
@@ -468,7 +468,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_kineticDamage_chargeMissileCruiseFof(self):
+    def test_static_kineticDamage_chargeMissileCruiseFof(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Dragon F.O.F. Cruise Missile I"
@@ -481,7 +481,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_kineticDamage_chargeOther(self):
+    def test_static_kineticDamage_chargeOther(self):
         self.buildTested = 0
         attr = "kineticDamage"
         item = "Hydra F.O.F. Heavy Missile I"
@@ -494,7 +494,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_thermalDamage_chargeMissileTorpedo(self):
+    def test_static_thermalDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Inferno Torpedo"
@@ -507,7 +507,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_thermalDamage_chargeMissileTorpedoAdvanced(self):
+    def test_static_thermalDamage_chargeMissileTorpedoAdvanced(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Inferno Javelin Torpedo"
@@ -520,7 +520,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_thermalDamage_chargeMissileCruise(self):
+    def test_static_thermalDamage_chargeMissileCruise(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Cataclysm Cruise Missile"
@@ -533,7 +533,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_thermalDamage_chargeMissileCruiseAdvanced(self):
+    def test_static_thermalDamage_chargeMissileCruiseAdvanced(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Cataclysm Fury Cruise Missile"
@@ -546,7 +546,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_thermalDamage_chargeMissileCruiseFof(self):
+    def test_static_thermalDamage_chargeMissileCruiseFof(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Phoenix F.O.F. Cruise Missile I"
@@ -559,7 +559,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_thermalDamage_chargeOther(self):
+    def test_static_thermalDamage_chargeOther(self):
         self.buildTested = 0
         attr = "thermalDamage"
         item = "Foxfire Rocket"
@@ -572,7 +572,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxRange_moduleTractorBeam(self):
+    def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "Small Tractor Beam I"
@@ -585,7 +585,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxRange_moduleOther(self):
+    def test_static_maxRange_moduleOther(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "ECCM Projector I"
@@ -598,7 +598,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_maxTractorVelocity_moduleTractorBeam(self):
+    def test_static_maxTractorVelocity_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxTractorVelocity"
         item = "Small Tractor Beam I"

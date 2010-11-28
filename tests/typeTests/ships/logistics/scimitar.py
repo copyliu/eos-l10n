@@ -256,7 +256,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_cpu_moduleShieldTransporter(self):
+    def test_static_cpu_moduleShieldTransporter(self):
         self.buildTested = 0
         attr = "cpu"
         item = "Large Shield Transporter I"
@@ -269,7 +269,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_cpu_moduleShieldTransporterCapital(self):
+    def test_static_cpu_moduleShieldTransporterCapital(self):
         self.buildTested = 0
         attr = "cpu"
         item = "Capital Shield Transporter I"
@@ -282,7 +282,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_cpu_moduleShieldTransporterCivilian(self):
+    def test_static_cpu_moduleShieldTransporterCivilian(self):
         self.buildTested = 0
         attr = "cpu"
         item = "Civilian Remote Shield Transporter"
@@ -295,7 +295,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_cpu_moduleOther(self):
+    def test_static_cpu_moduleOther(self):
         self.buildTested = 0
         attr = "cpu"
         item = "Damage Control I"

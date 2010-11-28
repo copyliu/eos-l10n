@@ -226,7 +226,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_power_moduleRemoteArmorRepairer(self):
+    def test_static_power_moduleRemoteArmorRepairer(self):
         self.buildTested = 0
         attr = "power"
         item = "Large Remote Armor Repair System I"
@@ -239,7 +239,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_power_moduleRemoteArmorRepairerCapital(self):
+    def test_static_power_moduleRemoteArmorRepairerCapital(self):
         self.buildTested = 0
         attr = "power"
         item = "Capital Remote Armor Repair System I"
@@ -252,7 +252,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_power_moduleRemoteArmorRepairerCivilian(self):
+    def test_static_power_moduleRemoteArmorRepairerCivilian(self):
         self.buildTested = 0
         attr = "power"
         item = "Civilian Remote Armor Repair System"
@@ -265,7 +265,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_power_moduleEnergyTransfer(self):
+    def test_static_power_moduleEnergyTransfer(self):
         self.buildTested = 0
         attr = "power"
         item = "Medium Energy Transfer Array I"
@@ -278,7 +278,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_power_moduleEnergyTransferCapital(self):
+    def test_static_power_moduleEnergyTransferCapital(self):
         self.buildTested = 0
         attr = "power"
         item = "Capital Energy Transfer Array I"
@@ -291,7 +291,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_special_power_moduleOther(self):
+    def test_static_power_moduleOther(self):
         self.buildTested = 0
         attr = "power"
         item = "Large Armor Repairer I"
