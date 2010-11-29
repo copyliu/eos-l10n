@@ -381,13 +381,15 @@ class Fit(object):
 
     @property
     def scanType(self):
+        maxStr = -1
         type = None
-        str = 0
         for scanType in ("Magnetometric", "Ladar", "Radar", "Gravimetric"):
             currStr = self.ship.getModifiedItemAttr("scan%sStrength" % scanType)
-            if currStr > str:
+            if currStr > maxStr:
+                maxStr = currStr
                 type = scanType
-                str = currStr
+            elif currStr == maxStr:
+                type = "Multispectral"
 
         return type
 
