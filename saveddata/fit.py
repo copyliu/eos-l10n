@@ -599,9 +599,23 @@ class Fit(object):
 
         return amount
 
+    # Expresses how difficult a target is to probe down with scan probes
+    # If this is <1.08, the ship is unproabeable
+    @property
+    def probeSize(self):
+        sigRad = self.ship.getModifiedItemAttr("SignatureRadius")
+        scanStr = float(ship.scanStrength)
+        return sigRad / scanStr
+
     @property
     def warpSpeed(self):
         return 3 * (self.ship.getModifiedItemAttr("warpSpeedMultiplier") or 1)
+
+    def maxWarpDistance(self):
+        capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
+        mass = self.ship.getModifiedItemAttr("mass")
+        warpCapNeed = self.ship.getModifiedItemAttr("warpCapacitorNeed")
+        return capacity / (mass * warpCapNeed)
 
     @property
     def capStable(self):
