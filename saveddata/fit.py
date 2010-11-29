@@ -603,14 +603,15 @@ class Fit(object):
     # If this is <1.08, the ship is unproabeable
     @property
     def probeSize(self):
-        sigRad = self.ship.getModifiedItemAttr("SignatureRadius")
-        scanStr = float(ship.scanStrength)
-        return sigRad / scanStr
+        sigRad = self.ship.getModifiedItemAttr("signatureRadius")
+        sensorStr = float(self.scanStrength)
+        return sigRad / sensorStr
 
     @property
     def warpSpeed(self):
         return 3 * (self.ship.getModifiedItemAttr("warpSpeedMultiplier") or 1)
 
+    @property
     def maxWarpDistance(self):
         capacity = self.ship.getModifiedItemAttr("capacitorCapacity")
         mass = self.ship.getModifiedItemAttr("mass")
