@@ -607,7 +607,7 @@ class Fit(object):
     def probeSize(self):
         sigRad = self.ship.getModifiedItemAttr("signatureRadius")
         sensorStr = float(self.scanStrength)
-        return sigRad / sensorStr
+        return sigRad / sensorStr if sensorStr != 0 else None
 
     @property
     def warpSpeed(self):
