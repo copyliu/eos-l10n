@@ -61,8 +61,11 @@ class FitDpsGraph(Graph):
         damageReductionSensitivity = mod.getModifiedChargeAttr("aoeDamageReductionSensitivity")
 
         sigRadiusFactor = targetSigRad / explosionRadius
-        velocityFactor = (explosionVelocity / explosionRadius * targetSigRad / targetVelocity) ** (log(damageReductionFactor) / log(damageReductionSensitivity))
-        return min(sigRadiusFactor , velocityFactor, 1)
+        try:
+            velocityFactor = (explosionVelocity / explosionRadius * targetSigRad / targetVelocity) ** (log(damageReductionFactor) / log(damageReductionSensitivity))
+        except ZeroDivisionError:
+            velocityFactor = 1
+        return min(sigRadiusFactor, velocityFactor, 1)
 
     def calculateTurretMultiplier(self, mod, data):
         #Source for most of turret calculation info: http://wiki.eveonline.com/en/wiki/Falloff
