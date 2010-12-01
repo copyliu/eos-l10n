@@ -1,5 +1,5 @@
 #Used by:
-#Modules from group: Armor Repair Projector (38 of 38)
+#Modules from group: Armor Repair Projector (37 of 37)
 #Drones named like: Armor Maintenance Bot (6 of 6)
 type = "projected", "active"
 def handler(fit, container, context):

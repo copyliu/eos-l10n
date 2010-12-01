@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KNB (6 of 6)
+#Implants named like: Hardwiring Zainou 'Gypsy' KNB (3 of 3)
 #Skill: Signature Analysis
 type = "passive"
 def handler(fit, container, context):

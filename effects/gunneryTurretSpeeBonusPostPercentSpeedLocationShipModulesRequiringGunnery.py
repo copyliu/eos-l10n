@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Inherent Implants 'Lancer' Delta (6 of 6)
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Delta (3 of 3)
 #Implant: Pashan's Turret Customization Mindlink
 #Skill: Gunnery
 type = "passive"

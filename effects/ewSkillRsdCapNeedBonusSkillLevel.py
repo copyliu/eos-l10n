@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KRB (6 of 6)
+#Implants named like: Hardwiring Zainou 'Gypsy' KRB (3 of 3)
 #Skill: Sensor Linking
 type = "passive"
 def handler(fit, container, context):

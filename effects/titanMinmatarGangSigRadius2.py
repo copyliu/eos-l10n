@@ -1,9 +1,9 @@
 #Used by:
 #Ship: Ragnarok
 type = "gang"
-gangSkill = "Minmatar Titan"
-gangBonus = "titanMinmatarBonus2"
 gangBoost = "signatureRadius"
+gangBonus = "titanMinmatarBonus2"
+gangSkill = "Minmatar Titan"
 def handler(fit, ship, context):
-    level = fit.character.getSkill("Minmatar Titan").level
-    fit.ship.boostItemAttr("signatureRadius", ship.getModifiedItemAttr("titanMinmatarBonus2") * level)
+    level = fit.character.getSkill(gangSkill).level
+    fit.ship.boostItemAttr(gangBoost, ship.getModifiedItemAttr(gangBonus) * level)
