@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Inherent Implants 'Lancer' Gamma (6 of 6)
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Gamma (3 of 3)
 #Skill: Medium Energy Turret
 type = "passive"
 def handler(fit, container, context):

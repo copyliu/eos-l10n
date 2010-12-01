@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZMA (6 of 6)
+#Implants named like: Hardwiring Zainou 'Deadeye' ZMA (3 of 3)
 #Modules named like: Warhead Rigor Catalyst (6 of 6)
 #Skill: Guided Missile Precision
 type = "passive"

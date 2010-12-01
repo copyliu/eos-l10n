@@ -1,9 +1,9 @@
 #Used by:
 #Ship: Avatar
 type = "gang"
-gangSkill = "Amarr Titan"
-gangBonus = "titanAmarrBonus2"
 gangBoost = "rechargeRate"
+gangBonus = "titanAmarrBonus2"
+gangSkill = "Amarr Titan"
 def handler(fit, ship, context):
-    level = fit.character.getSkill("Amarr Titan").level
-    fit.ship.boostItemAttr("rechargeRate", ship.getModifiedItemAttr("titanAmarrBonus2") * level)
+    level = fit.character.getSkill(gangSkill).level
+    fit.ship.boostItemAttr(gangBoost, ship.getModifiedItemAttr(gangBonus) * level)
