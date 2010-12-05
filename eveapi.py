@@ -285,10 +285,10 @@ class _RootContext(_Context):
             try:
                 response = urllib2.urlopen(req)
                 response = response.read()
-            except HTTPError, e:
+            except urllib2.HTTPError, e:
                 print 'The server couldn\'t fulfill the request.'
                 print 'Error code: ', e.code
-            except URLError, e:
+            except urllib2.URLError, e:
                 print 'We failed to reach a server.'
                 print 'Reason: ', e.reason
 
