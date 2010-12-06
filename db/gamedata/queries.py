@@ -19,10 +19,12 @@
 
 from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
-from sqlalchemy.sql import and_, or_
+from sqlalchemy.sql import and_, or_, select
+from sqlalchemy.orm import join
 from eos.types import Item, Category, Group, MarketGroup, AttributeInfo, MetaData
 from eos.db.util import processEager, processWhere
 import eos.config
+
 
 configVal = getattr(eos.config, "gamedataCache", None)
 if configVal is True:
@@ -154,3 +156,11 @@ def getAttributeInfo(attr, eager=None):
 @cachedQuery(1, "field")
 def getMetaData(field):
     return gamedata_session.query(MetaData).filter(MetaData.fieldName == field).one()
+
+@cachedQuery(2, "itemIDs", "attributeID")
+def directAttributeRequest(itemIDs, attrID):
+    q = select((eos.types.Item.ID, eos.types.Attribute.value),
+                                  and_(eos.types.Attribute.attributeID == attrID, eos.types.Item.ID.in_(itemIDs)),
+                                  from_obj=[join(eos.types.Attribute, eos.types.Item)])
+
+    return gamedata_session.execute(q).fetchall()
