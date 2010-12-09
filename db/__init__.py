@@ -56,7 +56,7 @@ from eos.db.gamedata.queries import getItem, searchItems, getVariations, getItem
                                     getMarketGroup, getGroup, getCategory, getAttributeInfo, getMetaData
 from eos.db.saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits, \
                                      getCharacterList, getPrice, getDamagePatternList, getDamagePattern, \
-                                     getFitList, getFleetList, getFleet, save, remove, commit, add
+                                     getFitList, getFleetList, getFleet, save, remove, commit, add, getCharactersForUser
 
 #If using in memory saveddata, you'll want to reflect it so the data structure is good.
 if config.saveddata_connectionstring == "sqlite:///:memory:":
