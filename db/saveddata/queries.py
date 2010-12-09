@@ -128,6 +128,9 @@ def getCharacter(lookfor, where=None, eager=None):
 def getCharacterList(eager=None):
     return saveddata_session.query(Character).options(*processEager(eager)).all()
 
+def getCharactersForUser(owner, eager=None):
+    return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ownerID == owner).all()
+    
 @cachedQuery(Fit, 2, "fitID", "where")
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
