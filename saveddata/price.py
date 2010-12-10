@@ -23,7 +23,7 @@ from xml.dom import minidom
 import time
 
 class Price(object):
-    REQUEST_URL = "http://eve-metrics.com/api/item.xml?key=0CA18A72373F05EA4CA53&region_ids=10000002regionlimit=10000002&type_ids=%s"
+    REQUEST_URL = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=%s"
     VALIDITY = 86400
 
     def __init__(self, typeID):
@@ -51,7 +51,7 @@ class Price(object):
         if len(priceObjByTypeID) == 0:
             return
 
-        request = urllib2.Request(cls.REQUEST_URL % ",".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
+        request = urllib2.Request(cls.REQUEST_URL % "&typeid=".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
                                   None, {"User-Agent" : "eos"})
 
         try:
@@ -61,7 +61,7 @@ class Price(object):
 
         t = time.time()
         xml = minidom.parse(f)
-        marketStat = xml.getElementsByTagName("evemetrics").item(0)
+        marketStat = xml.getElementsByTagName("marketstat").item(0)
         if marketStat is not None:
             types = marketStat.getElementsByTagName("type")
             for type in types:
