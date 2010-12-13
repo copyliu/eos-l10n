@@ -248,15 +248,11 @@ def query_existence(col, value):
     return info
 
 if __name__ == "__main__":
-    import copy
-    import re
-    import sys
     from ConfigParser import ConfigParser
     from optparse import OptionParser
 
-    import sqlalchemy
-    from sqlalchemy import Column, Table, String, Boolean
-    from sqlalchemy.orm import mapper
+    from sqlalchemy import Boolean
+    from sqlalchemy.orm import class_mapper, ColumnProperty
 
     from reverence import blue
     import eos.config
@@ -318,23 +314,22 @@ if __name__ == "__main__":
     TABLE_ORDER = get_order()
     CUSTOM_CALLS = get_customcalls()
 
-    # Warn about new tables in cache
+    # Warn about various stuff
     for table in cfg.tables:
         if not table in TABLE_MAP:
+            # Warn about new tables in cache which are still not described by table map
             print "Warning: unmapped table {0} found in cache".format(table)
-
     for table in TABLE_MAP:
-        if TABLE_MAP[table] is not None:
-            # Warn about missing tables
-            if not table in cfg.tables and table not in CUSTOM_CALLS:
-                print "Warning: mapped table {0} cannot be found in cache".format(table)
+        if not table in cfg.tables and not table in CUSTOM_CALLS:
+            # Warn about mapped tables which are missing in cache
+            print "Warning: mapped table {0} cannot be found in cache".format(table)
+        if not table in TABLE_ORDER and TABLE_MAP[table] is not None:
             # Warn about mapped tables not specified in processing order
-            if not table in TABLE_ORDER:
-                print "Warning: mapped table {0} is missing in processing order and will be skipped".format(table)
-
+            print "Warning: mapped table {0} is missing in processing order".format(table)
     for table in TABLE_ORDER:
-        if TABLE_MAP[table] is None:
-            print "Warning: unmapped table {0} is specified in processing order, it will be skipped".format(table)
+        if not table in TABLE_MAP:
+            # Warn about unmapped tables in processing order
+            print "Warning: unmapped table {0} is specified in processing order".format(table)
 
     # Get data from reverence and write it
     for tablename in TABLE_ORDER:
@@ -344,4 +339,13 @@ if __name__ == "__main__":
             print "Processing: {0}".format(tablename)
             # Get table object from the Reverence and process it
             source_table = getattr(cfg, tablename) if tablename not in CUSTOM_CALLS else CUSTOM_CALLS[tablename]
+            # Gather data regarding columns for current table in cache and eos
+            cols_eos = set(prop.key for prop in class_mapper(TABLE_MAP[tablename]).iterate_properties if isinstance(prop, ColumnProperty))
+            cols_rev = set(get_source_headers(source_table))
+            notineos = cols_rev.difference(cols_eos)
+            notinrev = cols_eos.difference(cols_rev)
+            if notineos:
+                print "Warning: {0} found in cache but missing in eos definitions: {1}".format("column" if len(notineos) == 1 else "columns", ", ".join(sorted(notineos)))
+            if notinrev:
+                print "Warning: {0} found in eos definitions but missing in cache: {1}".format("column" if len(notinrev) == 1 else "columns", ", ".join(sorted(notinrev)))
             process_table(source_table, tablename, tableclass)
