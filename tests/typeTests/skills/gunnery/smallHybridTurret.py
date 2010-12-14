@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Small Hybrid Turret"
 
+    # 5% Bonus to small hybrid turret damage per level.
+
     def test_damageMultiplier_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Jump Drive Calibration"
 
+    # Each skill level grants a 25% increase in maximum jump range.
+
     def test_jumpDriveRange_ship(self):
         self.buildTested = 0
         attr = "jumpDriveRange"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Fighter Bombers"
 
+    # 20% increase in fighter bomber damage per level.
+
     def test_damageMultiplier_droneFighterBomber(self):
         self.buildTested = 0
         attr = "damageMultiplier"

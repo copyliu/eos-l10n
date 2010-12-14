@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Astronautics Rigging"
 
+    # 10% reduction in Astronautics Rig drawbacks per level.
+
     def test_drawback_moduleRigAstronautics(self):
         self.buildTested = 0
         attr = "drawback"

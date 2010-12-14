@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Sensor Linking"
 
+    # 5% less capacitor need for sensor link per skill level.
+
     def test_capacitorNeed_moduleRemoteSensorBooster(self):
         self.buildTested = 0
         attr = "capacitorNeed"

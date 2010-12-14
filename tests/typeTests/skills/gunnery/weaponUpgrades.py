@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Weapon Upgrades"
 
+    # 5% reduction per skill level in the CPU needs of weapon turrets.
+
     def test_cpu_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "cpu"
@@ -46,6 +48,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 5% reduction per skill level in the CPU needs of launchers.
 
     def test_cpu_moduleMissileLauncherStandard(self):
         self.buildTested = 0
@@ -186,6 +190,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 5% reduction per skill level in the CPU needs of smartbombs.
 
     def test_cpu_moduleSmartBomb(self):
         self.buildTested = 0

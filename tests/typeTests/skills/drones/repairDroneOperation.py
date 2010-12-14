@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Repair Drone Operation"
 
+    # 5% increased repair amount per level.
+
     def test_armorDamageAmount_droneLogistic(self):
         self.buildTested = 0
         attr = "armorDamageAmount"

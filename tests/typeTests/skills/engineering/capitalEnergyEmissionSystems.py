@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Energy Emission Systems"
 
+    # 5% reduced capacitor need of capital energy emission systems per skill level.
+
     def test_capacitorNeed_moduleEnergyTransferSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"

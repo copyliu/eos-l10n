@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Cloaking"
 
+    # 10% reduction in targeting delay after uncloaking per skill level.
+
     def test_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "cloakingTargetingDelay"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Cloning Facility Operation"
 
+    # Increases a Clone Vat Bay's maximum clone capacity by 15% per skill level.
+
     def test_maxJumpClones_shipTitan(self):
         self.buildTested = 0
         attr = "maxJumpClones"

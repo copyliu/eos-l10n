@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Fuel Conservation"
 
+    # 10% reduction in afterburner capacitor needs per skill level.
+
     def test_capacitorNeed_moduleAfterburnerSkillrqAfterburner(self):
         self.buildTested = 0
         attr = "capacitorNeed"

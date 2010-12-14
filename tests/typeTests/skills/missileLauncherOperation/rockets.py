@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Rockets"
 
+    # 5% bonus to rocket damage per skill level.
+
     def test_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"

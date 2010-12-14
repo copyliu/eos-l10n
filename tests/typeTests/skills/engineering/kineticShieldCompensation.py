@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Kinetic Shield Compensation"
 
+    # To passive shield hardeners: 5% bonus per skill level to Shield Kinetic resistance
+
     def test_kineticDamageResistanceBonus_moduleShieldAmplifierSkillrqShieldUpgrades(self):
         self.buildTested = 0
         attr = "kineticDamageResistanceBonus"
@@ -46,6 +48,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # To active shield hardeners: 3% bonus per skill level to Shield Kinetic resistance when the modules are not active
 
     def test_passiveKineticDamageResistanceBonus_moduleShieldHardenerSkillrqTacticalShieldManipulation(self):
         self.buildTested = 0

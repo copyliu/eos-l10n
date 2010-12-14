@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Shield Compensation"
 
+    # 2% less capacitor need for shield boosters per skill level.
+
     def test_capacitorNeed_moduleShieldBoosterSkillrqShieldOperation(self):
         self.buildTested = 0
         attr = "capacitorNeed"

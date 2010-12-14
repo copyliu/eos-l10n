@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Surgical Strike"
 
+    # 3% bonus per skill level to the damage of all weapon turrets.
+
     def test_damageMultiplier_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "damageMultiplier"

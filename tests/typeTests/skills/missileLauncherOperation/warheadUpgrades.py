@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Warhead Upgrades"
 
+    # 2% bonus to all missile damage per skill level.
+
     def test_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"

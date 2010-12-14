@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Astrogeology"
 
+    # 5% bonus to mining turret yield per skill level.
+
     def test_miningAmount_moduleMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"

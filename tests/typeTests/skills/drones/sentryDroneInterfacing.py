@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Sentry Drone Interfacing"
 
+    # 5% bonus to Sentry Drone damage per level.
+
     def test_damageMultiplier_droneSentry(self):
         self.buildTested = 0
         attr = "damageMultiplier"

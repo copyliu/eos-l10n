@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Shield Upgrades"
 
+    # 5% reduction in shield upgrade powergrid needs.
+
     def test_power_moduleShieldAmplifier(self):
         self.buildTested = 0
         attr = "power"

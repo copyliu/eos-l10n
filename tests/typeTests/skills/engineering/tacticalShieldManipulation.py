@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Tactical Shield Manipulation"
 
+    # Reduces the chance of damage penetrating the shield when it falls below 25% by 5% per skill level, with 0% chance at level 5.
+
     def test_shieldUniformity(self):
         self.buildTested = 0
         attr = "shieldUniformity"

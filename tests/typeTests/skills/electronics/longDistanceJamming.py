@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Long Distance Jamming"
 
+    # 10% bonus to optimal range of ECM per skill level.
+
     def test_maxRange_moduleEcmSkillrqEwar(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -61,6 +63,8 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 10% bonus to optimal range of Remote Sensor Dampers per skill level.
+
     def test_maxRange_moduleRemoteSensorDamperSkillrqSenslink(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -89,6 +93,8 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 10% bonus to optimal range of Tracking Disruptors per skill level.
+
     def test_maxRange_moduleTrackingDisruptor(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -102,6 +108,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 10% bonus to optimal range of Target Painters per skill level.
 
     def test_maxRange_moduleTargetPainter(self):
         self.buildTested = 0

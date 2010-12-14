@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Repair Systems"
 
+    # 5% reduction in capital repair systems duration per skill level.
+
     def test_duration_moduleArmorRepairerSkillrq(self):
         self.buildTested = 0
         attr = "duration"

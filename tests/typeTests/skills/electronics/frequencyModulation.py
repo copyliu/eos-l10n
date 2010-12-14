@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Frequency Modulation"
 
+    # 10% bonus to falloff for ECM per skill level.
+
     def test_falloff_moduleEcm(self):
         self.buildTested = 0
         attr = "falloff"
@@ -32,6 +34,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 10% bonus to falloff for Remote Sensor Dampeners per skill level.
 
     def test_falloff_moduleRemoteSensorDamper(self):
         self.buildTested = 0
@@ -61,6 +65,8 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 10% bonus to falloff for Tracking Disruptors per skill level.
+
     def test_falloff_moduleTrackingDisruptor(self):
         self.buildTested = 0
         attr = "falloff"
@@ -74,6 +80,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 10% bonus to falloff for Target Painters per skill level.
 
     def test_falloff_moduleTargetPainter(self):
         self.buildTested = 0

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Torpedoes"
 
+    # 5% bonus to torpedo damage per skill level.
+
     def test_emDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "emDamage"

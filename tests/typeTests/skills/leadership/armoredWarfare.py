@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Armored Warfare"
 
+    # Grants a 2% bonus to fleet members' armor hit points per skill level.
+
     def test_armorHP_fleetShip(self):
         self.buildTested = 0
         attr = "armorHP"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Survey"
 
+    # 5% improvement per level in the scan speed of cargo scanner.
+
     def test_duration_moduleCargoScanner(self):
         self.buildTested = 0
         attr = "duration"
@@ -19,6 +21,8 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 5% improvement per level in the scan speed of ship scanner.
+
     def test_duration_moduleShipScanner(self):
         self.buildTested = 0
         attr = "duration"
@@ -32,6 +36,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 5% improvement per level in the scan speed of survey scanner.
 
     def test_duration_moduleSurveyScanner(self):
         self.buildTested = 0

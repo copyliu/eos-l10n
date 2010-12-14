@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Thermic Armor Compensation"
 
+    # To passive armor hardeners: 5% bonus per skill level to Armor Thermal resistance
+
     def test_thermalDamageResistanceBonus_moduleArmorCoatingSkillrqHullUpgrades(self):
         self.buildTested = 0
         attr = "thermalDamageResistanceBonus"
@@ -60,6 +62,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # To active armor hardeners: 3% bonus per skill level to Armor Thermal resistance when the modules are not active
 
     def test_passiveThermicDamageResistanceBonus_moduleArmorHardener(self):
         self.buildTested = 0

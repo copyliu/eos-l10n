@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Skirmish Warfare"
 
+    # Grants a 2% bonus to fleet members' agility per skill level.
+
     def test_agility_fleetShip(self):
         self.buildTested = 0
         attr = "agility"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Gallente Drone Specialization"
 
+    # 2% bonus to advanced Gallente drone damage per level.
+
     def test_damageMultiplier_droneWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Nanite Control"
 
+    # No ingame description.
+    # Reduces severity of booster side-effects by 5% per level.
+
     def test_boosterAOEVelocityPenalty_booster(self):
         self.buildTested = 0
         attr = "boosterAOEVelocityPenalty"

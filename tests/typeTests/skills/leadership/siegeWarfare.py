@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Siege Warfare"
 
+    # Grants a 2% bonus to fleet members' shield capacity per skill level.
+
     def test_shieldCapacity_fleetShip(self):
         self.buildTested = 0
         attr = "shieldCapacity"

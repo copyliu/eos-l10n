@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "FoF Missiles"
 
+    # 5% bonus to F.O.F (light, heavy and cruise) damage per skill level.
+
     def test_emDamage_chargeMissileLightFof(self):
         self.buildTested = 0
         attr = "emDamage"

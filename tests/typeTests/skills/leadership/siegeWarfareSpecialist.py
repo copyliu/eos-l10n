@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Siege Warfare Specialist"
 
+    # Multiplies the effectiveness of siege warfare link modules by 100% per skill level after level 2 is trained.
+
     def test_commandBonus_moduleGangCoordinatorSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"

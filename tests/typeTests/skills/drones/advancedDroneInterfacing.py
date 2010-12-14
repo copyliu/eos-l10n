@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Advanced Drone Interfacing"
 
+    # Allows the use of the Drone Control Unit module. One extra module can be fitted per skill level.
+
     def test_maxGroupActive_moduleDroneControlUnit(self):
         self.buildTested = 0
         attr = "maxGroupActive"

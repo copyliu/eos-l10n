@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Industrial Reconfiguration"
 
+    # 50-unit reduction in heavy water consumption amount for industrial core module activation per skill level.
+
     def test_consumptionQuantity_moduleSiegeModuleSkillrq(self):
         self.buildTested = 0
         attr = "consumptionQuantity"

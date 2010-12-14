@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "EM Shield Compensation"
 
+    # To passive shield hardeners: 5% bonus per skill level to Shield EM resistance
+
     def test_emDamageResistanceBonus_moduleShieldAmplifierSkillrqShieldUpgrades(self):
         self.buildTested = 0
         attr = "emDamageResistanceBonus"
@@ -46,6 +48,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # To active shield hardeners: 3% bonus per skill level to Shield EM resistance when the modules are not active
 
     def test_passiveEmDamageResistanceBonus_moduleShieldHardenerSkillrqTacticalShieldManipulation(self):
         self.buildTested = 0

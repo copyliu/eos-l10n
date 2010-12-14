@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Cynosural Field Theory"
 
+    # 10% reduction in liquid ozone consumption for module activation per skill level.
+
     def test_consumptionQuantity_moduleCynosuralField(self):
         self.buildTested = 0
         attr = "consumptionQuantity"

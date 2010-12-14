@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Standard Missiles"
 
+    # 5% Bonus to light missile damage per skill level.
+
     def test_emDamage_chargeMissileLight(self):
         self.buildTested = 0
         attr = "emDamage"

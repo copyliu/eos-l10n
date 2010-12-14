@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Missile Projection"
 
+    # 10% bonus to all missiles' maximum velocity per level.
+
     def test_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "maxVelocity"

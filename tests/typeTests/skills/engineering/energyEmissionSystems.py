@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Energy Emission Systems"
 
+    # 5% reduced capacitor need of energy emission weapons per skill level.
+
     def test_capacitorNeed_moduleEnergyTransfer(self):
         self.buildTested = 0
         attr = "capacitorNeed"

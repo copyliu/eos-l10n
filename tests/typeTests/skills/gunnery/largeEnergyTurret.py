@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Large Energy Turret"
 
+    # 5% Bonus to large energy turret damage per level.
+
     def test_damageMultiplier_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

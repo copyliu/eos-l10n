@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Advanced Weapon Upgrades"
 
+    # Reduces the powergrid needs of weapon turrets by 2% per skill level.
+
     def test_power_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "power"
@@ -46,6 +48,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Reduces the powergrid needs of launchers by 2% per skill level.
 
     def test_power_moduleMissileLauncherStandard(self):
         self.buildTested = 0

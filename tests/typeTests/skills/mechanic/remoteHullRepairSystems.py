@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Remote Hull Repair Systems"
 
+    # 5% reduced capacitor need for remote hull repair system modules per skill level.
+
     def test_capacitorNeed_moduleRemoteHullRepairer(self):
         self.buildTested = 0
         attr = "capacitorNeed"

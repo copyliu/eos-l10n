@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Weapon Disruption"
 
+    # 5% less capacitor need for weapon disruptors per skill level.
+
     def test_capacitorNeed_moduleTrackingDisruptor(self):
         self.buildTested = 0
         attr = "capacitorNeed"

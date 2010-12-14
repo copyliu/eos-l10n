@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Explosive Armor Compensation"
 
+    # To passive armor hardeners: 5% bonus per skill level to Armor Explosive resistance
+
     def test_explosiveDamageResistanceBonus_moduleArmorCoatingSkillrqHullUpgrades(self):
         self.buildTested = 0
         attr = "explosiveDamageResistanceBonus"
@@ -60,6 +62,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # To active armor hardeners: 3% bonus per skill level to Armor Explosive resistance when the modules are not active
 
     def test_passiveExplosiveDamageResistanceBonus_moduleArmorHardener(self):
         self.buildTested = 0

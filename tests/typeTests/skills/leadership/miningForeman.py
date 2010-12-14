@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Mining Foreman"
 
+    # Grants a 2% bonus to fleet members' mining yield per level.
+
     def test_miningAmount_fleetModuleMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"

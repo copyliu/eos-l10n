@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Motion Prediction"
 
+    # 5% bonus per skill level to weapon turret tracking speeds.
+
     def test_trackingSpeed_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "trackingSpeed"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Combat Drone Operation"
 
+    # 5% Bonus to drone damage of light and medium drones per level.
+
     def test_damageMultiplier_droneWithScoutSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

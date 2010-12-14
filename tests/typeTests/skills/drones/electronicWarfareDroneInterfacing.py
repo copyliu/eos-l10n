@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Electronic Warfare Drone Interfacing"
 
+    # 3000m drone control range bonus per level.
+
     def test_droneControlRange(self):
         self.buildTested = 0
         attr = "droneControlRange"

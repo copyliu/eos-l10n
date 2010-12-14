@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Electronic Warfare"
 
+    # 5% less capacitor need for ECM and ECM Burst systems per skill level.
+
     def test_capacitorNeed_moduleEcmSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Target Painting"
 
+    # 5% less capacitor need for target painters per skill level.
+
     def test_capacitorNeed_moduleTargetPainter(self):
         self.buildTested = 0
         attr = "capacitorNeed"

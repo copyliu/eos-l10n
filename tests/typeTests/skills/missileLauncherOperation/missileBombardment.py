@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Missile Bombardment"
 
+    # 10% bonus to all missiles' maximum flight time per level.
+
     def test_explosionDelay_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "explosionDelay"

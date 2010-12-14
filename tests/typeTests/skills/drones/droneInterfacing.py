@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Drone Interfacing"
 
+    # 20% bonus to drone damage per level
+
     def test_damageMultiplier_droneCombatWithDroneSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -32,6 +34,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 20% bonus to drone mining yield per level
 
     def test_miningAmount_droneMining(self):
         self.buildTested = 0

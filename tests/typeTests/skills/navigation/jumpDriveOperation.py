@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Jump Drive Operation"
 
+    # Each skill level reduces the capacitor need of initiating a jump by 5%.
+
     def test_jumpDriveCapacitorNeed_ship(self):
         self.buildTested = 0
         attr = "jumpDriveCapacitorNeed"

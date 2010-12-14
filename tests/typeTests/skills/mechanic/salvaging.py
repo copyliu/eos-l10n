@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Salvaging"
 
+    # 5% increase in chance of salvage retrieval per level.
+
     def test_accessDifficultyBonus_moduleDataMinerSkillrq(self):
         self.buildTested = 0
         attr = "accessDifficultyBonus"

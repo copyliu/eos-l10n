@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Guided Missile Precision"
 
+    # 5% decreased factor of signature radius for light, heavy and cruise missile explosions per level of skill.
+
     def test_aoeCloudSize_chargeMissileLight(self):
         self.buildTested = 0
         attr = "aoeCloudSize"

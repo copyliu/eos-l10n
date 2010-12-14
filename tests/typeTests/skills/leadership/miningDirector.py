@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Mining Director"
 
+    # 100% bonus to effectiveness of Mining Foreman link modules per level after level 2 is trained.
+
     def test_commandBonus_moduleGangCoordinatorSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"

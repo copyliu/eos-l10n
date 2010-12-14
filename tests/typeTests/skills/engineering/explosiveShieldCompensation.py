@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Explosive Shield Compensation"
 
+    # To passive shield hardeners: 5% bonus per skill level to Shield Explosive resistance
+
     def test_explosiveDamageResistanceBonus_moduleShieldAmplifierSkillrqShieldUpgrades(self):
         self.buildTested = 0
         attr = "explosiveDamageResistanceBonus"
@@ -46,6 +48,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # To active shield hardeners: 3% bonus per skill level to Shield Explosive resistance when the modules are not active
 
     def test_passiveExplosiveDamageResistanceBonus_moduleShieldHardenerSkillrqTacticalShieldManipulation(self):
         self.buildTested = 0

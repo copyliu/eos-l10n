@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "High Speed Maneuvering"
 
+    # 5% reduction in MicroWarpdrive capacitor usage per skill level.
+
     def test_capacitorNeed_moduleAfterburnerSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"

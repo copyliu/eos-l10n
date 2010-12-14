@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Electronics Upgrades"
 
+    # 5% reduction of CPU needs for all modules requiring Electronics Upgrades per skill level.
+
     def test_cpu_moduleSensorBackupArraySkillrq(self):
         self.buildTested = 0
         attr = "cpu"

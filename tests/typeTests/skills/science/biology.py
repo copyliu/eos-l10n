@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Biology"
 
+    # 20% Bonus to attribute booster duration per skill level.
+
     def test_boosterDuration_booster(self):
         self.buildTested = 0
         attr = "boosterDuration"

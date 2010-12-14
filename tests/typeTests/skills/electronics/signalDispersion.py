@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Signal Dispersion"
 
+    # 5% bonus to strength of all ECM jammers per skill level.
+
     def test_scanSensorStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         sensorTypes = ("Gravimetric", "Ladar", "Magnetometric", "Radar")

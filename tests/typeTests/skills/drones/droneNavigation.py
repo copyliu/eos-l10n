@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Drone Navigation"
 
+    # 5% increase in drone MicroWarpdrive speed per level.
+
     def test_maxVelocity_droneCombat(self):
         self.buildTested = 0
         attr = "maxVelocity"

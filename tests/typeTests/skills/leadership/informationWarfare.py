@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Information Warfare"
 
+    # Grants a 2% bonus to fleet members' targeting range per skill level.
+
     def test_maxTargetRange_fleetShip(self):
         self.buildTested = 0
         attr = "maxTargetRange"

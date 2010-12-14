@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Projectile Weapon Rigging"
 
+    # 10% reduction in Projectile Weapon Rig drawbacks per level.
+
     def test_drawback_moduleRigProjectileWeapon(self):
         self.buildTested = 0
         attr = "drawback"

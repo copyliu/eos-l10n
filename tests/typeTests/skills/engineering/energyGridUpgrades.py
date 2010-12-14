@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Energy Grid Upgrades"
 
+    # 5% reduction in CPU needs of modules requiring Energy Grid Upgrades per skill level.
+
     def test_cpu_moduleCapacitorBattery(self):
         self.buildTested = 0
         attr = "cpu"

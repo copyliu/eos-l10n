@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Small Blaster Specialization"
 
+    # 2% bonus per skill level to the damage of small turrets requiring Small Blaster Specialization.
+
     def test_damageMultiplier_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

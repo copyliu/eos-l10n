@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Warfare Link Specialist"
 
+    # Boosts effectiveness of all warfare link and mining foreman modules by 10% per level.
+
     def test_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
         self.buildTested = 0
         attr = "commandBonus"

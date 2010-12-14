@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Projected Electronic Counter Measures"
 
+    # Each skill level gives a 5% reduction in module activation time.
+
     def test_duration_remoteEcmBurst(self):
         self.buildTested = 0
         attr = "duration"

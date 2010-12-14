@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Defender Missiles"
 
+    # 5% bonus to defender missile max velocity per skill level.
+
     def test_maxVelocity_chargeMissileDefender(self):
         self.buildTested = 0
         attr = "maxVelocity"

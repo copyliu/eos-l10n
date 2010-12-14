@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Signature Focusing"
 
+    # 5% bonus to target painter modules' signature radius multiplier per skill level.
+
     def test_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"

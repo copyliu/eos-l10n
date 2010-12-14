@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Heavy Assault Missile Specialization"
 
+    # 2% bonus per level to the rate of fire of modules requiring Heavy Assault Missile Specialization.
+
     def test_speed_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "speed"

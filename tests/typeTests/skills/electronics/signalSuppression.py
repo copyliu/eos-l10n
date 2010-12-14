@@ -6,6 +6,8 @@ class Test(TestBase):
         self.skill = "Signal Suppression"
         self.attrs = ("maxTargetRangeBonus", "scanResolutionBonus")
 
+    # 5% bonus to remote sensor dampers' scan resolution and targeting range suppression per skill level.
+
     def test_sensorDamp_moduleRemoteSensorDamper(self):
         self.buildTested = 0
         item = "Remote Sensor Dampener I"

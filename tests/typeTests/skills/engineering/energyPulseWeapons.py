@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Energy Pulse Weapons"
 
+    # 5% decrease in smartbomb duration per skill level.
+
     def test_duration_moduleSmartBomb(self):
         self.buildTested = 0
         attr = "duration"

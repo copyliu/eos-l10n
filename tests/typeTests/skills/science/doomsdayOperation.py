@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Doomsday Operation"
 
+    # 10% increased damage per level.
+
     def test_emDamage_moduleSuperWeapon(self):
         self.buildTested = 0
         attr = "emDamage"

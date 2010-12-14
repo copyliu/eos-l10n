@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Scout Drone Operation"
 
+    # Bonus: drone control range increased by 5000 meters per skill level.
+
     def test_droneControlRange(self):
         self.buildTested = 0
         attr = "droneControlRange"

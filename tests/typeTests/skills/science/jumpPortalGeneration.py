@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Jump Portal Generation"
 
+    # 10% reduced material cost for jump portal activation per level.
+
     def test_consumptionQuantity_moduleJumpPortalGenerator(self):
         self.buildTested = 0
         attr = "consumptionQuantity"

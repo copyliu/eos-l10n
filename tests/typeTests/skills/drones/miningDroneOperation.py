@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Mining Drone Operation"
 
+    # 5% Bonus to mining drone yield per skill level.
+
     def test_miningAmount_droneMining(self):
         self.buildTested = 0
         attr = "miningAmount"

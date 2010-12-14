@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Jump Fuel Conservation"
 
+    # 10% reduction in ice consumption amount for jump drive operation per light year per skill level.
+
     def test_jumpDriveConsumptionAmount_ship(self):
         self.buildTested = 0
         attr = "jumpDriveConsumptionAmount"

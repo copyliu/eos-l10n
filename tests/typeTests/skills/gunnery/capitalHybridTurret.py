@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Hybrid Turret"
 
+    # 5% Bonus to capital hybrid turret damage per level.
+
     def test_damageMultiplier_moduleHybridWeaponCapital(self):
         self.buildTested = 0
         attr = "damageMultiplier"

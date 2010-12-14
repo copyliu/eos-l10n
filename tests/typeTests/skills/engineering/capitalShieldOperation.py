@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Shield Operation"
 
+    # 2% reduction in capacitor need for capital shield boosters per skill level.
+
     def test_capacitorNeed_moduleShieldBoosterSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"

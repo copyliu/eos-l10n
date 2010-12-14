@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Shield Emission Systems"
 
+    # 5% reduced capacitor need for capital shield emission system modules per skill level.
+
     def test_capacitorNeed_moduleShieldTransporterSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"

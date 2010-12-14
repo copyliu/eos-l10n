@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Targeting"
 
+    # +1 extra target per skill level, up to the ship's maximum allowed number of targets locked.
+
     def test_maxTargetsLockedFromSkills(self):
         self.buildTested = 0
         attr = "maxTargetsLockedFromSkills"

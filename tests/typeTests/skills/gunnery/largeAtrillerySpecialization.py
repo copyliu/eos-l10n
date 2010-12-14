@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Large Artillery Specialization"
 
+    # 2% bonus per skill level to the damage of large turrets requiring Large Artillery Specialization.
+
     def test_damageMultiplier_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

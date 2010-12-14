@@ -6,6 +6,8 @@ class Test(TestBase):
         self.skill = "Drone Durability"
         self.layers = ("shieldCapacity", "armorHP", "hp")
 
+    # 5% bonus to drone shield, armor and hull hit points per level.
+
     def test_hp_droneCombat(self):
         self.buildTested = 0
         item = "Berserker I"

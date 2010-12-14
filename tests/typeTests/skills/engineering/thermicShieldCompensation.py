@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Thermic Shield Compensation"
 
+    # To passive shield hardeners: 5% bonus per skill level to Shield Thermal resistance
+
     def test_thermalDamageResistanceBonus_moduleShieldAmplifierSkillrqShieldUpgrades(self):
         self.buildTested = 0
         attr = "thermalDamageResistanceBonus"
@@ -46,6 +48,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # To active shield hardeners: 3% bonus per skill level to Shield Thermal resistance when the modules are not active
 
     def test_passiveThermicDamageResistanceBonus_moduleShieldHardenerSkillrqTacticalShieldManipulation(self):
         self.buildTested = 0

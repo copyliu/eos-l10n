@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Launcher Rigging"
 
+    # 10% reduction in Launcher Rig drawbacks per level.
+
     def test_drawback_moduleRigLauncher(self):
         self.buildTested = 0
         attr = "drawback"

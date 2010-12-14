@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Shield Rigging"
 
+    # 10% reduction in Shield Rig drawbacks per level.
+
     def test_drawback_moduleRigShield(self):
         self.buildTested = 0
         attr = "drawback"

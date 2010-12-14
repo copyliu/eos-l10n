@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Astrometric Pinpointing"
 
+    # Reduces maximum scan deviation by 10% per level.
+
     def test_baseMaxScanDeviation_chargeScanProbe(self):
         self.buildTested = 0
         attr = "baseMaxScanDeviation"

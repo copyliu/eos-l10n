@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Acceleration Control"
 
+    # 5% Bonus to Afterburner and MicroWarpdrive speed boost per skill level.
+
     def test_speedFactor_moduleAfterburnerSkillrqAfterburner(self):
         self.buildTested = 0
         attr = "speedFactor"

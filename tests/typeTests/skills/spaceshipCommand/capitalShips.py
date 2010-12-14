@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Ships"
 
+    # Grants a 5% bonus per skill level to the agility of ships requiring the Capital Ships skill.
+
     def test_agility_shipCarrierSkillrq(self):
         self.buildTested = 0
         attr = "agility"

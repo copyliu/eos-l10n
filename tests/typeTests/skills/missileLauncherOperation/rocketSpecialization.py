@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Rocket Specialization"
 
+    # 2% bonus per level to the rate of fire of modules requiring Rocket Specialization.
+
     def test_speed_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "speed"

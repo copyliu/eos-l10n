@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Tactical Logistics Reconfiguration"
 
+    # 25-unit reduction in strontium clathrate consumption amount for triage module activation per skill level.
+
     def test_consumptionQuantity_moduleSiegeModuleSkillrq(self):
         self.buildTested = 0
         attr = "consumptionQuantity"

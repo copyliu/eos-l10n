@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Leadership"
 
+    # Grants a 2% bonus to fleet members' targeting speed per skill level.
+
     def test_scanResolution_fleetShip(self):
         self.buildTested = 0
         attr = "scanResolution"

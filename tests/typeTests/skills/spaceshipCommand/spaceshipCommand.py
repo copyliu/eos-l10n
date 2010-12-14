@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Spaceship Command"
 
+    # 2% improved ship agility for all ships per skill level.
+
     def test_agility_ship(self):
         self.buildTested = 0
         attr = "agility"

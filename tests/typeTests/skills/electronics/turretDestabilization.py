@@ -6,6 +6,8 @@ class Test(TestBase):
         self.skill = "Turret Destabilization"
         self.attrs = ("maxRangeBonus", "falloffBonus", "trackingSpeedBonus")
 
+    # 5% bonus to Tracking Disruptor modules' tracking speed, optimal range and falloff disruption per skill level.
+
     def test_turretDisruption_moduleTrackingDisruptor(self):
         self.buildTested = 0
         item = "Tracking Disruptor I"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Shield Emission Systems"
 
+    # 5% reduced capacitor need for shield emission system modules per skill level.
+
     def test_capacitorNeed_moduleShieldTransporter(self):
         self.buildTested = 0
         attr = "capacitorNeed"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Remote Armor Repair Systems"
 
+    # 5% reduced capacitor need for remote armor repair system modules per skill level.
+
     def test_capacitorNeed_moduleArmorRepairerSkillrq(self):
         self.buildTested = 0
         attr = "capacitorNeed"

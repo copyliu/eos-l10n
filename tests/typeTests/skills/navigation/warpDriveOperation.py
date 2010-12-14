@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Warp Drive Operation"
 
+    # Each skill level reduces the capacitor need of initiating warp by 10%.
+
     def test_warpCapacitorNeed_ship(self):
         self.buildTested = 0
         attr = "warpCapacitorNeed"

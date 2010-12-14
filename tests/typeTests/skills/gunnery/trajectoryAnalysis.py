@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Trajectory Analysis"
 
+    # 5% bonus per skill level to weapon turret accuracy falloff.
+
     def test_falloff_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "falloff"

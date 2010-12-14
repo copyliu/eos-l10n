@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Drones"
 
+    # Can operate 1 drone per skill level.
+
     def test_maxActiveDrones(self):
         self.buildTested = 0
         attr = "maxActiveDrones"

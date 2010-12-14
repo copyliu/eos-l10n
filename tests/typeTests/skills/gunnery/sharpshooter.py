@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Sharpshooter"
 
+    # 5% bonus to weapon turret optimal range per skill level.
+
     def test_maxRange_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "maxRange"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Heavy Assault Missiles"
 
+    # 5% bonus to heavy assault missile damage per skill level.
+
     def test_emDamage_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "emDamage"

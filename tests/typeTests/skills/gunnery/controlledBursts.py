@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Controlled Bursts"
 
+    # 5% reduction in capacitor need of weapon turrets per skill level.
+
     def test_capacitorNeed_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "capacitorNeed"

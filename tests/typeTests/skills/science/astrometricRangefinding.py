@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Astrometric Rangefinding"
 
+    # 10% increase to scan probe strength per level.
+
     def test_baseSensorStrength_chargeScanProbe(self):
         self.buildTested = 0
         attr = "baseSensorStrength"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Energy Weapon Rigging"
 
+    # 10% reduction in Energy Weapon Rig drawbacks per level.
+
     def test_drawback_moduleRigEnergyWeapon(self):
         self.buildTested = 0
         attr = "drawback"

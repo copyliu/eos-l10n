@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Rapid Launch"
 
+    # 3% bonus to missile launcher rate of fire per level.
+
     def test_speed_moduleLauncherMissileRocket(self):
         self.buildTested = 0
         attr = "speed"

@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Medium Railgun Specialization"
 
+    # 2% bonus per skill level to the damage of medium turrets requiring Medium Railgun Specialization.
+
     def test_damageMultiplier_moduleWithSkillrq(self):
         self.buildTested = 0
         attr = "damageMultiplier"

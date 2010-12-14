@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Gunnery"
 
+    # 2% Bonus to weapon turrets' rate of fire per skill level.
+
     def test_speed_moduleEnergyWeapon(self):
         self.buildTested = 0
         attr = "speed"

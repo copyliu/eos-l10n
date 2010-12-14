@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Mining Upgrades"
 
+    # 5% reduction per skill level in CPU penalty of mining upgrade modules.
+
     def test_cpuPenaltyPercent_moduleMiningUpgrade(self):
         self.buildTested = 0
         attr = "cpuPenaltyPercent"

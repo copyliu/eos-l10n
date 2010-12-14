@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Afterburner"
 
+    # 10% bonus to Afterburner duration per skill level.
+
     def test_duration_moduleAfterburnerSkillrq(self):
         self.buildTested = 0
         attr = "duration"

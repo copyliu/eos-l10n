@@ -12,6 +12,10 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Advanced Spaceship Command"
 
+    # Grants a 5% Bonus per skill level to the agility of ships requiring Advanced Spaceship Command.
+    # Actually skill influences more ships (not all capitals directly require it). Affected ships are controlled
+    # not using effect assigned to skill but by effect assigned to particular ships.
+
     def test_agility_shipCarrier(self):
         self.buildTested = 0
         attr = "agility"

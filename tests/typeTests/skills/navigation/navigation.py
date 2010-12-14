@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Navigation"
 
+    # 5% bonus to sub-warp ship velocity per skill level.
+
     def test_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"

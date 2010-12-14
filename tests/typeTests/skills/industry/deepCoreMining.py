@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Deep Core Mining"
 
+    # 20% reduction per skill level in the chance of a damage cloud forming while mining Mercoxit.
+
     def test_damageCloudChance_moduleDeepCoreMiner(self):
         self.buildTested = 0
         attr = "damageCloudChance"

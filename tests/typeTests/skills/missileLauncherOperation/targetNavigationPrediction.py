@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Target Navigation Prediction"
 
+    # 10% decrease per level in factor of target's velocity for all missiles.
+
     def test_aoeVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "aoeVelocity"

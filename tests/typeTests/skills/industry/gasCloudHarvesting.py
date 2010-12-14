@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Gas Cloud Harvesting"
 
+    # Allows use of one gas cloud harvester per level.
+
     def test_maxGroupActive_moduleGasCloudHarvester(self):
         self.buildTested = 0
         attr = "maxGroupActive"

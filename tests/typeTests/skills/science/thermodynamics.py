@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Thermodynamics"
 
+    # Reduces heat damage by 5% per level.
+
     def test_heatDamage_moduleAfterburner(self):
         self.buildTested = 0
         attr = "heatDamage"

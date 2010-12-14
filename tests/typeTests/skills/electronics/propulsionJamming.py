@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Propulsion Jamming"
 
+    # 5% Reduction to warp scrambler capacitor need per skill level.
+
     def test_capacitorNeed_moduleWarpDisruptor(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -32,6 +34,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 5% Reduction to stasis web capacitor need per skill level.
 
     def test_capacitorNeed_moduleStasisWebifier(self):
         self.buildTested = 0

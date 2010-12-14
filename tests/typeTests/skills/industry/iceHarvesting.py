@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Ice Harvesting"
 
+    # 5% reduction per skill level to the cycle time of ice harvesters.
+
     def test_duration_moduleStripMinerSkillrq(self):
         self.buildTested = 0
         attr = "duration"

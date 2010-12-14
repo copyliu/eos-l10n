@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Bomb Deployment"
 
+    # 5% reduction of Bomb Launcher reactivation delay per skill level.
+
     def test_moduleReactivationDelay_moduleLauncherBomb(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"

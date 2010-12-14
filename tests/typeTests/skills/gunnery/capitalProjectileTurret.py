@@ -5,6 +5,8 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Capital Projectile Turret"
 
+    # 5% Bonus to capital projectile turret damage per level.
+
     def test_damageMultiplier_moduleProjectileWeaponCapital(self):
         self.buildTested = 0
         attr = "damageMultiplier"

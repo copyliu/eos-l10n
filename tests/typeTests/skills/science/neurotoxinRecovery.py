@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Neurotoxin Recovery"
 
+    # No ingame description.
+    # Reduces chance of getting booster side-effects by 5% per level.
+
     def test_boosterEffectChance1_booster(self):
         self.buildTested = 0
         attr = "boosterEffectChance1"
