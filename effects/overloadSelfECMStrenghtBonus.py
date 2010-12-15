@@ -3,6 +3,6 @@
 type = "overheat"
 def handler(fit, module, context):
     for scanType in ("Gravimetric", "Magnetometric", "Radar", "Ladar"):
-        module.boostItemAttr("scan%StrengthBonus" % scanType,
+        module.boostItemAttr("scan{0}StrengthBonus".format(scanType),
                              module.getModifiedItemAttr("overloadECMStrengthBonus"),
                              stackingPenalties = True)
