@@ -143,6 +143,10 @@ class Character(object):
         self.__skills.append(skill)
         self.__skillIdMap[skill.itemID] = skill
 
+    def removeSkill(self, skill):
+        self.__skills.remove(skill)
+        del self.__skillIdMap[skill.itemID]
+
     def getSkill(self, item):
         if isinstance(item, basestring):
             item = self.getSkillNameMap()[item]
@@ -257,7 +261,10 @@ class Skill(HandledItem):
     @property
     def item(self):
         if self.__item is None:
-            self.__item = Character.getSkillIDMap()[self.itemID]
+            self.__item = item = Character.getSkillIDMap().get(self.itemID)
+            if item is None:
+                #This skill is no longer in the database and thus invalid it, get rid of it.
+                self.character.removeSkill(self)
 
         return self.__item
 
@@ -266,7 +273,11 @@ class Skill(HandledItem):
 
     def calculateModifiedAttributes(self, fit, runTime):
         if self.__suppressed or not self.learned: return
-        for effect in self.item.effects.itervalues():
+        item = self.item
+        if item is None:
+            return
+
+        for effect in item.effects.itervalues():
                 if effect.runTime == runTime and effect.isType("passive"):
                     try:
                         effect.handler(fit, self, ("skill",))

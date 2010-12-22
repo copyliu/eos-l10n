@@ -35,7 +35,7 @@ characters_table = Table("characters", saveddata_meta,
 
 mapper(Character, characters_table,
        properties = {"_Character__owner" : relation(User, backref = "characters"),
-                     "_Character__skills" : relation(Skill, cascade = "all,delete-orphan"),
+                     "_Character__skills" : relation(Skill, backref="character", cascade = "all,delete-orphan"),
                      "_Character__implants" : relation(Implant, collection_class = HandledImplantBoosterList, cascade='all,delete-orphan', single_parent=True,
                                                        primaryjoin = charImplants_table.c.charID == characters_table.c.ID,
                                                        secondaryjoin = charImplants_table.c.implantID == Implant.ID,
