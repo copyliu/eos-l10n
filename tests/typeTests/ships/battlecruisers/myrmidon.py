@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Myrmidon"
 
+    # Battlecruiser Skill Bonus:
+    # 10% increase to drone hitpoints per level
+
     def test_battlecruisers_hp_droneCombat(self):
         self.buildTested = 0
         item = "Hammerhead I"
@@ -113,6 +116,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Battlecruiser Skill Bonus:
+    # 10% increase to damage dealt by drones per level
+
     def test_battlecruisers_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -142,6 +148,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 7.5% increase to armor repair amount per level
 
     def test_battlecruisers_armorDamageAmount_moduleArmorRepairer(self):
         self.buildTested = 0
@@ -202,6 +211,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 99% reduction in the CPU need of Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

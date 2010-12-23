@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Cyclone"
 
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_battlecruisers_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 7.5% bonus to shield boosting per level
 
     def test_battlecruisers_shieldBonus_moduleShieldBooster(self):
         self.buildTested = 0
@@ -94,6 +100,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 99% reduction in the CPU need of Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

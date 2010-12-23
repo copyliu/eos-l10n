@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Harbinger"
 
+    # Battlecruiser Skill Bonus:
+    # 10% reduction in laser capacitor need per level
+
     def test_battlecruisers_capacitorNeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -65,6 +68,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to laser damage per level
+
     def test_battlecruisers_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -124,6 +130,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 99% reduction in the CPU need of Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

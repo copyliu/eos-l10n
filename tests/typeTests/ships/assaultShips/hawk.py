@@ -5,6 +5,10 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Hawk"
 
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to Missile Kinetic Damage per level
+    # Actually it's 10%, CCP forgot to change description after boost
+
     def test_caldariFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -290,6 +294,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Assault Ships Skill Bonus:
+    # 10% bonus to Missile Velocity per level
+
     def test_assaultShips_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -574,6 +581,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Assault Ships Skill Bonus:
+    # 7.5% bonus to Shield Boost Amount per level
 
     def test_assaultShips_shieldBonus_moduleShieldBoosterSkillrqShieldop(self):
         self.buildTested = 0

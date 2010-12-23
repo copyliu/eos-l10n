@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Abaddon"
 
+    # Amarr Battleship Skill Bonus:
+    # 5% bonus to Large Energy Turret damage per level
+
     def test_amarrBattleship_damageMultiplier_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Battleship Skill Bonus:
+    # 5% armor resistance per level
 
     def test_amarrBattleship_armorEmDamageResonance_ship(self):
         self.buildTested = 0

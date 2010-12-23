@@ -19,17 +19,3 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
-
-    def test_agility_subsystem(self):
-        self.buildTested = 0
-        attr = "agility"
-        item = "Proteus Propulsion - Interdiction Nullifier"
-        iLvl = 1
-        iIngame = 1.0
-        fLvl = 4
-        fIngame = 1.0
-        iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
-        fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)

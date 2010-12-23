@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Prophecy"
 
+    # Battlecruiser Skill Bonus:
+    # 10% reduction in Medium Energy Weapon capacitor use per level
+
     def test_battlecruisers_capacitorNeed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to all armor resistances per level
 
     def test_battlecruisers_armorEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -150,6 +156,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 99% reduction in the CPU need of Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

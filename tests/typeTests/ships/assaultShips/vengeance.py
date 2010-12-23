@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vengeance"
 
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to Rocket Damage per level
+
     def test_amarrFrigate_emDamage_chargeRocket(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -185,6 +188,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Assault Ships Skill Bonus:
+    # 5% bonus to Armor Resistances per level
+
     def test_assaultShips_armorEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "armorEmDamageResonance"
@@ -300,6 +306,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Assault Ships Skill Bonus:
+    # 5% bonus to Capacitor Recharge Rate per level
 
     def test_assaultShips_rechargeRate_ship(self):
         self.buildTested = 0

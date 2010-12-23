@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Freki"
 
+    # Minmatar Frigate Skill Bonus:
+    # 12.5% Small Projectile Turret damage per level
+
     def test_minmatarFrigate_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Frigate Skill Bonus:
+    # 30% bonus to Stasis Webifier Range per level
 
     def test_minmatarFrigate_maxRange_moduleStasisWebSkillrqPropjamm(self):
         self.buildTested = 0
@@ -80,6 +86,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 50% Small Projectile Turret optimal range bonus
+
     def test_static_maxRange_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -106,6 +115,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 50% Small Projectile Turret falloff bonus
+
     def test_static_falloff_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
@@ -131,6 +143,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 75% afterburner and microwarpdrive capacitor consumption bonus
 
     def test_static_capacitorNeed_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
         self.buildTested = 0

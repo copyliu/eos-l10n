@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Wolf"
 
+    # Minmatar Frigate Skill Bonus:
+    # 5% bonus to Small Projectile Turret Damage per level
+
     def test_minmatarFrigate_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Assault Ships Skill Bonus:
+    # 5% bonus to Small Projectile Turret Damage per level
+
     def test_assaultShips_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Assault Ships Skill Bonus:
+    # 10% bonus to Small Projectile Falloff Range per level
 
     def test_assaultShips_falloff_moduleProjectileWeaponSmall(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Enyo"
 
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to Small Hybrid Turret Damage per level
+
     def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Assault Ships Skill Bonus:
+    # 10% bonus to Small Hybrid Turret Optimal Range per level
+
     def test_assaultShips_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Assault Ships Skill Bonus:
+    # 7.5% bonus to Small Hybrid Turret Tracking Speed per level
 
     def test_assaultShips_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0

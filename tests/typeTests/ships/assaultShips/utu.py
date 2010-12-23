@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Utu"
 
+    # Gallente Frigate Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_gallenteFrigate_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 10% bonus to Warp Scrambler and Warp Disruptor Range per level.
 
     def test_gallenteFrigate_maxRange_moduleWarpScramblerSkillrqPropJamming(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 50% bonus to Small Hybrid Turret Optimal Range
+
     def test_static_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -91,6 +100,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 50% bonus to Small Hybrid Turret Tracking
+
     def test_static_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -116,6 +128,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% reduction in the amount of heat damage absorbed by modules
 
     def test_static_heatDamage_moduleAfterburner(self):
         self.buildTested = 0
