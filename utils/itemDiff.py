@@ -206,7 +206,21 @@ if options.renames:
     query = 'SELECT typeID, typeName FROM invtypes'
     findRenames(renamedTypes, query)
 
+#Print db versions
+oldMeta = {}
+newMeta = {}
+query = 'SELECT fieldName, fieldValue FROM metadata'
+c = oldDB.cursor()
+c.execute(query)
+for row in c:
+    oldMeta[row[0]] = row[1]
+c = newDB.cursor()
+c.execute(query)
+for row in c:
+    newMeta[row[0]] = row[1]
+
 #Print jobs
+print("Comparing databases:\n{0}-{1}\n{2}-{3}\n".format(oldMeta["version"], oldMeta["release"], newMeta["version"], newMeta["release"]))
 if options.effects or options.attributes:
     #print legend only when there're any interesting changes
     if changed:
