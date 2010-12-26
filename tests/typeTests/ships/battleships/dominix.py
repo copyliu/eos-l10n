@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Dominix"
 
+    # Gallente Battleship Skill Bonus:
+    # 5% bonus to Large Hybrid Turret damage per skill level
+
     def test_gallenteBattleship_damageMultiplier_moduleHybridWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Battleship Skill Bonus:
+    # 10% bonus to drone hitpoints per skill level
 
     def test_gallenteBattleship_hp_droneCombat(self):
         self.buildTested = 0
@@ -142,6 +148,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Battleship Skill Bonus:
+    # 10% bonus to drone damage per skill level
 
     def test_gallenteBattleship_damageMultiplier_droneCombat(self):
         self.buildTested = 0

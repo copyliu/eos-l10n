@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Raven State Issue"
 
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to Siege Missile Launcher Rate Of Fire per level of skill
+
     def test_caldariBattleship_speed_moduleLauncherMissileSiege(self):
         self.buildTested = 0
         attr = "speed"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to Cruise Missile Launcher Rate Of Fire per level of skill
 
     def test_caldariBattleship_speed_moduleLauncherMissileCruise(self):
         self.buildTested = 0
@@ -50,6 +56,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Battleship Skill Bonus:
+    # 10% bonus to Torpedo Velocity per level of skill
+
     def test_caldariBattleship_maxVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -79,6 +88,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 10% bonus to Cruise Missile Velocity per level of skill
 
     def test_caldariBattleship_maxVelocity_chargeMissileCruise(self):
         self.buildTested = 0

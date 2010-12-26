@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Tempest Tribal Issue"
 
+    # Minmatar Battleship Skill Bonus:
+    # 5% bonus to Large Projectile Turret rate of fire per level
+
     def test_minmatarBattleship_speed_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Battleship Skill Bonus:
+    # 5% bonus to Large Projectile Turret damage per level
 
     def test_minmatarBattleship_damageMultiplier_moduleProjectileWeaponLarge(self):
         self.buildTested = 0

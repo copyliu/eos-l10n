@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Widow"
 
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to siege missile launcher rate of fire per level
+
     def test_caldariBattleship_speed_moduleLauncherMissileSiege(self):
         self.buildTested = 0
         attr = "speed"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to cruise missile launcher rate of fire per level
 
     def test_caldariBattleship_speed_moduleLauncherMissileCruise(self):
         self.buildTested = 0
@@ -50,6 +56,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Battleship Skill Bonus:
+    # 10% bonus to torpedo velocity per level
+
     def test_caldariBattleship_maxVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -79,6 +88,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 10% bonus to cruise missile velocity per level
 
     def test_caldariBattleship_maxVelocity_chargeMissileCruise(self):
         self.buildTested = 0
@@ -139,6 +151,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Black Ops Skill Bonus:
+    # 30% bonus to ECM target jammer strength per level
 
     def test_blackOps_scanGravimetricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
@@ -260,6 +275,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Black Ops Skill Bonus:
+    # Multiplies the cloaked velocity by 125% per level
+
     def test_blackOps_maxVelocity_shipCloakActive(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -290,6 +308,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
+
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
@@ -310,6 +331,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Note:
+    # No targeting delay after decloaking
 
     def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0

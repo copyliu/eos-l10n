@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Redeemer"
 
+    # Amarr Battleship Skill Bonus:
+    # 10% reduction in large energy turret capacitor use per level
+
     def test_amarrBattleship_capacitorNeed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Battleship Skill Bonus:
+    # 5% bonus to large energy turret rate of fire per level
 
     def test_amarrBattleship_speed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Black Ops Skill Bonus:
+    # 7.5% bonus to large energy turret tracking per level
+
     def test_blackOps_trackingSpeed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Black Ops Skill Bonus:
+    # Multiplies the cloaked velocity by 125% per level
 
     def test_blackOps_maxVelocity_shipCloakActive(self):
         self.buildTested = 0
@@ -125,6 +137,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
+
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
@@ -145,6 +160,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Note:
+    # No targeting delay after decloaking
 
     def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0

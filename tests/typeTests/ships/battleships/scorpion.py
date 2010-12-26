@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Scorpion"
 
+    # Caldari Battleship Skill Bonus:
+    # 15% bonus to ECM Target Jammer strength per level
+
     def test_caldariBattleship_scanGravimetricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanGravimetricStrengthBonus"
@@ -125,6 +128,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Battleship Skill Bonus:
+    # 20% bonus to ECM Target Jammer optimal range per level
+
     def test_caldariBattleship_maxRange_moduleEcm(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -155,6 +161,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Battleship Skill Bonus:
+    # 20% bonus to ECM Target Jammer falloff range per level
+
     def test_caldariBattleship_falloff_moduleEcm(self):
         self.buildTested = 0
         attr = "falloff"
@@ -184,6 +193,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 20% Bonus to ECM Burst Range per level
 
     def test_caldariBattleship_ecmBurstRange_moduleEcmBurst(self):
         self.buildTested = 0

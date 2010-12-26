@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rorqual"
 
+    # Capital Industrial Ships skill bonuses:
+    # -5% reduction in fuel consumption for industrial cores per level
+
     def test_capitalIndustrialShips_consumptionQuantity_moduleSiegeModuleSkillrqIndustrialReconfiguration(self):
         self.buildTested = 0
         attr = "consumptionQuantity"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Capital Industrial Ships skill bonuses:
+    # 10% bonus to effectiveness of mining foreman gang links per level when in deployed mode
 
     def test_capitalIndustrialShips_commandBonus_moduleGangCoordinatorSkillrqMiningDirectorSiegeActive(self):
         self.buildTested = 0
@@ -83,6 +89,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Capital Industrial Ships skill bonuses:
+    # 50% bonus to the range of Capital Shield Transporters per level
+
     def test_capitalIndustrialShips_shieldTransferRange_moduleShieldTransporterCapital(self):
         self.buildTested = 0
         attr = "shieldTransferRange"
@@ -112,6 +121,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Capital Industrial Ships skill bonuses:
+    # 20% bonus to drone hitpoints per level
 
     def test_capitalIndustrialShips_hp_droneCombat(self):
         self.buildTested = 0
@@ -221,6 +233,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Capital Industrial Ships skill bonuses:
+    # 20% bonus to drone damage per level
+
     def test_capitalIndustrialShips_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -251,6 +266,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonuses:
+    # 900% bonus to the range of survey scanners
+
     def test_static_surveyScanRange_moduleSurveyScanner(self):
         self.buildTested = 0
         attr = "surveyScanRange"
@@ -263,6 +281,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonuses:
+    # 200% bonus to the range of cargo scanners
 
     def test_static_cargoScanRange_moduleCargoScanner(self):
         self.buildTested = 0
@@ -290,6 +311,8 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 99% reduction in CPU need for Gang Link modules
+
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
@@ -315,6 +338,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Can use 3 Gang Link modules simultaneously.
 
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0

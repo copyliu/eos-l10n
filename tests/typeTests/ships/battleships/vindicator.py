@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vindicator"
 
+    # Gallente Battleship Skill Bonus:
+    # 7.5% bonus to Large Hybrid Turret tracking speed per level
+
     def test_gallenteBattleship_trackingSpeed_moduleHybridWeaponLarge(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Battleship Skill Bonus:
+    # 10% bonus to the velocity factor of stasis webifiers per level
 
     def test_minmatarBattleship_speedFactor_moduleStasisWeb(self):
         self.buildTested = 0
@@ -79,6 +85,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 37.5% bonus to Large Hybrid Turret damage
 
     def test_static_damageMultiplier_moduleHybridWeaponLarge(self):
         self.buildTested = 0

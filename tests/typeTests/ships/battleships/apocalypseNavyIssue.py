@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Apocalypse Navy Issue"
 
+    # Amarr Battleship Skill Bonus:
+    # 10% bonus to Large Energy Turret capacitor use per level
+
     def test_amarrBattleship_capacitorNeed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Battleship Skill Bonus:
+    # 7.5% bonus to Large Energy Turret optimal range per level
 
     def test_amarrBattleship_maxRange_moduleEnergyWeaponLarge(self):
         self.buildTested = 0

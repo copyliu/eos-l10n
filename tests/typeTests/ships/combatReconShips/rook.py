@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rook"
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% Bonus to Heavy Assault Missile Launcher Rate of Fire per level
+
     def test_caldariCruiser_speed_moduleLauncherMissileHeavyAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 5% Bonus to Heavy Missile Launcher Rate of Fire per level
 
     def test_caldariCruiser_speed_moduleLauncherMissileHeavy(self):
         self.buildTested = 0
@@ -50,6 +56,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 10% Bonus to ECM Target Jammer capacitor use per level
+
     def test_caldariCruiser_capacitorNeed_moduleECM(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -79,6 +88,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 30% Bonus to ECM Target Jammer strength per level
 
     def test_reconShips_scanGravimetricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
@@ -200,6 +212,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 10% Bonus to Heavy Assault Missile velocity per level
+
     def test_reconShips_maxVelocity_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -229,6 +244,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 10% Bonus to Heavy Missile velocity per level
 
     def test_reconShips_maxVelocity_chargeMissileHeavy(self):
         self.buildTested = 0

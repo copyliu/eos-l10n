@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Lachesis"
 
+    # Gallente Cruiser Skill Bonus:
+    # 5% bonus to Medium Hybrid Turret damage per level
+
     def test_gallenteCruiser_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # 5% bonus to Remote Sensor Dampener effectiveness per level
 
     def test_gallenteCruiser_maxTargetRangeBonus_moduleRemoteSensorDamper(self):
         self.buildTested = 0
@@ -95,6 +101,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 20% bonus to warp disruptor range per level
+
     def test_reconShips_maxRange_moduleWarpScrambler(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -140,6 +149,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 5% bonus to Assault Missile Launcher rate of fire per level
+
     def test_reconShips_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -154,6 +166,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 5% bonus to Heavy Missile Launcher rate of fire per level
 
     def test_reconShips_speed_moduleLauncherMissileHeavy(self):
         self.buildTested = 0

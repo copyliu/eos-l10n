@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Nightmare"
 
+    # Amarr Battleship Skill Bonus:
+    # 7.5% bonus to Large Energy Turret tracking per level
+
     def test_amarrBattleship_trackingSpeed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to Large Energy Turret damage per level
+
     def test_caldariBattleship_damageMultiplier_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Large Energy Turret damage
 
     def test_static_damageMultiplier_moduleEnergyWeaponLarge(self):
         self.buildTested = 0

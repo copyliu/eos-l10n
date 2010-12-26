@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Armageddon"
 
+    # Amarr Battleship Skill Bonus:
+    # 10% bonus to Large Energy Turret capacitor use per level
+
     def test_amarrBattleship_capacitorNeed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Battleship Skill Bonus:
+    # 5% Large Energy Turret rate of fire per level
 
     def test_amarrBattleship_speed_moduleEnergyWeaponLarge(self):
         self.buildTested = 0

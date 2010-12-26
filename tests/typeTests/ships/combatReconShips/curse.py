@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Curse"
 
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to Tracking Disruptor effectiveness per level
+
     def test_amarrCruiser_maxRangeBonus_moduleTrackingDisruptor(self):
         self.buildTested = 0
         attr = "maxRangeBonus"
@@ -94,6 +97,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to drone hit points per level
 
     def test_amarrCruiser_hp_droneCombat(self):
         self.buildTested = 0
@@ -203,6 +209,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to drone damage per level
+
     def test_amarrCruiser_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -232,6 +241,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 40% bonus to Energy Vampire range per level
 
     def test_reconShips_powerTransferRange_moduleEnergyVampire(self):
         self.buildTested = 0
@@ -263,6 +275,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 40% bonus to Energy Neutralizer range per level
+
     def test_reconShips_energyDestabilizationRange_moduleEnergyDestabilizer(self):
         self.buildTested = 0
         attr = "energyDestabilizationRange"
@@ -293,6 +308,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 20% bonus to Energy Vampire transfer amount per level
+
     def test_reconShips_powerTransferAmount_moduleEnergyVampire(self):
         self.buildTested = 0
         attr = "powerTransferAmount"
@@ -322,6 +340,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 20% bonus to Energy Neutralizer transfer amount per level
 
     def test_reconShips_energyDestabilizationAmount_moduleEnergyDestabilizer(self):
         self.buildTested = 0

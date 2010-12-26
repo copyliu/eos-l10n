@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Scorpion Navy Issue"
 
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to Siege Launcher Rate Of Fire per level
+
     def test_caldariBattleship_speed_moduleLauncherMissileSiege(self):
         self.buildTested = 0
         attr = "speed"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to Cruise Launcher Rate Of Fire per level
 
     def test_caldariBattleship_speed_moduleLauncherMissileCruise(self):
         self.buildTested = 0
@@ -49,6 +55,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% shield resistance per level
 
     def test_caldariBattleship_shieldEmDamageResonance_ship(self):
         self.buildTested = 0

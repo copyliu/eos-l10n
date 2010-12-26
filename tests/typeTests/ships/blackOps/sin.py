@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Sin"
 
+    # Gallente Battleship Skill Bonus:
+    # 5% bonus to large hybrid turret damage per skill level
+
     def test_gallenteBattleship_damageMultiplier_moduleHybridWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Battleship Skill Bonus:
+    # 10% bonus to drone hit points per skill level
 
     def test_gallenteBattleship_hp_droneCombat(self):
         self.buildTested = 0
@@ -143,6 +149,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Battleship Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_gallenteBattleship_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -173,6 +182,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Black Ops Skill Bonus:
+    # 5% bonus to agility per level
+
     def test_blackOps_agility_ship(self):
         self.buildTested = 0
         attr = "agility"
@@ -186,6 +198,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Black Ops Skill Bonus:
+    # Multiplies the cloaked velocity by 125% per level
 
     def test_blackOps_maxVelocity_shipCloakActive(self):
         self.buildTested = 0
@@ -217,6 +232,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
+
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
@@ -237,6 +255,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Note:
+    # No targeting delay after decloaking
 
     def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Typhoon"
 
+    # Battleship Skill Bonus:
+    # 5% bonus to Large Projectile Turret Rate of Fire per level
+
     def test_minmatarBattleship_speed_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
         attr = "speed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Battleship Skill Bonus:
+    # 5% bonus to Siege missile launcher Rate of Fire per level
+
     def test_minmatarBattleship_speed_moduleLauncherMissileSiege(self):
         self.buildTested = 0
         attr = "speed"
@@ -49,6 +55,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battleship Skill Bonus:
+    # 5% bonus to Cruise missile launcher Rate of Fire per level
 
     def test_minmatarBattleship_speed_moduleLauncherMissileCruise(self):
         self.buildTested = 0

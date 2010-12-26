@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Bhaalgorn"
 
+    # Amarr Battleship Skill Bonus:
+    # 15% bonus to Energy Vampire drain amount per level
+
     def test_amarrBattleship_powerTransferAmount_moduleEnergyVampire(self):
         self.buildTested = 0
         attr = "powerTransferAmount"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Battleship Skill Bonus:
+    # 15% bonus to Energy Neutralizer drain amount per level
+
     def test_amarrBattleship_energyDestabilizationAmount_moduleEnergyDestabilizer(self):
         self.buildTested = 0
         attr = "energyDestabilizationAmount"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Battleship Skill Bonus:
+    # 20% bonus to Stasis Webifier activation range per level
 
     def test_minmatarBattleship_maxRange_moduleStasisWeb(self):
         self.buildTested = 0
@@ -109,6 +118,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Large Energy Turret damage
 
     def test_static_damageMultiplier_moduleEnergyWeaponLarge(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Huginn"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_minmatarCruiser_speed_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Cruiser Skill Bonus:
+    # 7.5% bonus to target painter effectiveness per level
+
     def test_minmatarCruiser_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 60% bonus to stasis webifier range per level
 
     def test_reconShips_maxRange_moduleStasisWeb(self):
         self.buildTested = 0
@@ -110,6 +119,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 5% bonus to Assault Missile Launcher rate of fire per level
+
     def test_reconShips_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -125,6 +137,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # 5% bonus to heavy assault missile launcher rate of fire per level
+
     def test_reconShips_speed_moduleLauncherMissileHeavyAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -139,6 +154,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 5% bonus to Heavy Missile Launcher rate of fire per level
 
     def test_reconShips_speed_moduleLauncherMissileHeavy(self):
         self.buildTested = 0

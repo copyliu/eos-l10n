@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rattlesnake"
 
+    # Caldari Battleship Skill Bonus:
+    # 5% shield resistance per level
+
     def test_caldariBattleship_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "shieldEmDamageResonance"
@@ -121,6 +124,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Battleship Skill Bonus:
+    # 10% bonus to drone hitpoints per skill level
+
     def test_gallenteBattleship_hp_droneCombat(self):
         self.buildTested = 0
         item = "Berserker I"
@@ -229,6 +235,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Battleship Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_gallenteBattleship_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -259,6 +268,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 50% bonus to Torpedo velocity
+
     def test_static_maxVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -284,6 +296,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Cruise Missile velocity
 
     def test_static_maxVelocity_chargeMissileCruise(self):
         self.buildTested = 0

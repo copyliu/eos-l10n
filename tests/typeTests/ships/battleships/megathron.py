@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Megathron"
 
+    # Gallente Battleship Skill Bonus:
+    # 5% bonus to Large Hybrid Turret damage per level
+
     def test_gallenteBattleship_damageMultiplier_moduleHybridWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Battleship Skill Bonus:
+    # 7.5% bonus to Large Hybrid Turret tracking speed per level
 
     def test_gallenteBattleship_trackingSpeed_moduleHybridWeaponLarge(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Panther"
 
+    # Minmatar Battleship Skill Bonus:
+    # 5% bonus to large projectile turret rate of fire per level
+
     def test_minmatarBattleship_speed_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Battleship Skill Bonus:
+    # 5% bonus to large projectile turret damage per level
 
     def test_minmatarBattleship_damageMultiplier_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Black Ops Skill Bonus:
+    # 5% bonus to velocity per level
+
     def test_blackOps_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -78,6 +87,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Black Ops Skill Bonus:
+    # Multiplies the cloaked velocity by 125% per level
 
     def test_blackOps_maxVelocity_shipCloakActive(self):
         self.buildTested = 0
@@ -115,6 +127,9 @@ class Test(TestBase):
         dEos = (iEosNoCloak / fEosNoCloak) * (fEosCloak / iEosCloak)
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
+
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
@@ -135,6 +150,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Note:
+    # No targeting delay after decloaking
 
     def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rokh"
 
+    # Caldari Battleship Skill Bonus:
+    # 10% large hybrid optimal range per level
+
     def test_caldariBattleship_maxRange_moduleHybridWeaponLarge(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% shield resistance per level
 
     def test_caldariBattleship_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
