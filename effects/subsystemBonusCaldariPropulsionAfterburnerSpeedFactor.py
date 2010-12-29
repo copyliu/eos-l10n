@@ -3,5 +3,5 @@
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Propulsion Systems").level
-    fit.modules.filteredChargeBoost(lambda mod: mod.item.requiresSkill("Afterburner"),
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Afterburner"),
                                     "speedFactor", module.getModifiedItemAttr("subsystemBonusCaldariPropulsion") * level)
