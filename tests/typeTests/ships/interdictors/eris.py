@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Eris"
 
+    # Destroyer Skill Bonus:
+    # 10% bonus to Small Hybrid Turret falloff per level
+
     def test_destroyers_falloff_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Destroyer Skill Bonus:
+    # 10% bonus to Small Hybrid Turret tracking speed per level
 
     def test_destroyers_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interdictors Skill Bonus:
+    # 5% bonus to Rocket thermal damage per level
+
     def test_interdictors_thermalDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "thermalDamage"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 5% bonus to Light Missile thermal damage per level
 
     def test_interdictors_thermalDamage_chargeMissileLight(self):
         self.buildTested = 0
@@ -154,6 +166,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 10% bonus to Interdiction Sphere Launcher rate of fire per level
 
     def test_interdictors_speed_moduleLauncherInterdictionSphere(self):
         self.buildTested = 0

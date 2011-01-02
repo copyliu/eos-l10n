@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Sigil"
 
+    # Amarr Industrial Skill Bonus:
+    # 5% Bonus Cargo Capacity per skill level
+
     def test_amarrIndustrial_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Industrial Skill Bonus:
+    # 5% Bonus Max Velocity per skill level
 
     def test_amarrIndustrial_maxVelocity_ship(self):
         self.buildTested = 0

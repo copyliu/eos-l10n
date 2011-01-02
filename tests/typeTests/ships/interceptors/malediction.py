@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Malediction"
 
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to rocket damage per level
+
     def test_amarrFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -185,6 +188,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to armor resistances per level
+
     def test_amarrFrigate_armorEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "armorEmDamageResonance"
@@ -301,6 +307,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interceptor Skill Bonus:
+    # 15% reduction in MicroWarpdrive signature radius penalty per level
+
     def test_interceptors_signatureRadiusBonus_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -330,6 +339,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interceptor Skill Bonus:
+    # 5% bonus to Warp Scrambler and Warp Disruptor range per level
 
     def test_interceptors_maxRange_moduleWarpScramblerSkillrqPropJamming(self):
         self.buildTested = 0
@@ -375,6 +387,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role bonus:
+    # 80% reduction in Propulsion Jamming systems activation cost
 
     def test_static_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
         self.buildTested = 0

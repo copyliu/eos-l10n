@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Claw"
 
+    # Minmatar Frigate Skill Bonus:
+    # 10% bonus to Small Projectile Turret Damage per level
+
     def test_minmatarFrigate_damageMultiplier_moduleProjectiledWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interceptor Skill Bonus:
+    # 15% reduction in MicroWarpdrive signature radius penalty per level
 
     def test_interceptors_signatureRadiusBonus_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interceptor Skill Bonus:
+    # 7.5% bonus to Small Projectile Turret Tracking Speed per level
+
     def test_interceptors_trackingSpeed_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role bonus:
+    # 80% reduction in Propulsion Jamming systems activation cost
 
     def test_static_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
         self.buildTested = 0

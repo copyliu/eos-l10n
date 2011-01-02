@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Flycatcher"
 
+    # Destroyer Skill Bonus:
+    # 10% bonus to Rocket velocity per level
+
     def test_destroyers_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Destroyer Skill Bonus:
+    # 10% bonus to Light Missile velocity per level
 
     def test_destroyers_maxVelocity_chargeMissileLight(self):
         self.buildTested = 0
@@ -110,6 +116,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Destroyer Skill Bonus:
+    # 3% reduction of Light Missile damage reduction factor per level
+
     def test_destroyers_aoeDamageReductionFactor_chargeMissileLight(self):
         self.buildTested = 0
         attr = "aoeDamageReductionFactor"
@@ -185,6 +194,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interdictors Skill Bonus:
+    # 5% bonus to Rocket kinetic damage per level
+
     def test_interdictors_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -214,6 +226,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 5% bonus to Light Missile kinetic damage per level
 
     def test_interdictors_kineticDamage_chargeMissileLight(self):
         self.buildTested = 0
@@ -289,6 +304,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 10% bonus to Interdiction Sphere Launcher rate of fire per level
 
     def test_interdictors_speed_moduleLauncherInterdictionSphere(self):
         self.buildTested = 0

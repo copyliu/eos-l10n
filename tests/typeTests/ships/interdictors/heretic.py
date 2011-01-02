@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Heretic"
 
+    # Destroyer Skill Bonus:
+    # 5% bonus to rocket damage per level
+
     def test_destroyers_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -185,6 +188,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Destroyer Skill Bonus:
+    # 5% bonus to rocket explosion velocity per level
+
     def test_destroyers_aoeVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "aoeVelocity"
@@ -214,6 +220,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Destroyer Skill Bonus:
+    # 5% bonus to missile explosion velocity per level
 
     def test_destroyers_aoeVelocity_chargeMissileLight(self):
         self.buildTested = 0
@@ -454,6 +463,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 5% bonus to missile velocity per level
 
     def test_interdictors_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
@@ -739,6 +751,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 10% bonus to Interdiction Sphere Launcher rate of fire per level
 
     def test_interdictors_speed_moduleLauncherInterdictionSphere(self):
         self.buildTested = 0

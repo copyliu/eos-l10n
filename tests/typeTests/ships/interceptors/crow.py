@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Crow"
 
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to Kinetic Missile damage per level
+
     def test_caldariFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -290,6 +293,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interceptor Skill Bonus:
+    # 15% reduction in MicroWarpdrive signature radius penalty per level
+
     def test_interceptors_signatureRadiusBonus_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -319,6 +325,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interceptor Skill Bonus:
+    # 10% bonus to Missile Velocity per level
 
     def test_interceptors_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
@@ -604,6 +613,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role bonus:
+    # 80% reduction in Propulsion Jamming systems activation cost
 
     def test_static_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
         self.buildTested = 0

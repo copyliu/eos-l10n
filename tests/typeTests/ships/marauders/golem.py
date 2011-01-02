@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Golem"
 
+    # Caldari Battleship Skill Bonus:
+    # 10% bonus to torpedo velocity per level
+
     def test_caldariBattleship_maxVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 10% bonus to cruise missile velocity per level
 
     def test_caldariBattleship_maxVelocity_chargeMissileCruise(self):
         self.buildTested = 0
@@ -80,6 +86,24 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    def test_caldariBattleship_maxVelocity_chargeMissileOther(self):
+        self.buildTested = 0
+        attr = "maxVelocity"
+        item = "Torrent Assault Missile"
+        skill = "Caldari Battleship"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to torpedo explosion velocity per level
+
     def test_caldariBattleship_aoeVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "aoeVelocity"
@@ -109,6 +133,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Battleship Skill Bonus:
+    # 5% bonus to cruise missile explosion velocity per level
 
     def test_caldariBattleship_aoeVelocity_chargeMissileCruise(self):
         self.buildTested = 0
@@ -154,6 +181,24 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    def test_caldariBattleship_aoeVelocity_chargeMissileOther(self):
+        self.buildTested = 0
+        attr = "aoeVelocity"
+        item = "Thunderbolt Heavy Missile"
+        skill = "Caldari Battleship"
+        iLvl = 1
+        iIngame = 1.0
+        fLvl = 4
+        fIngame = 1.0
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    # Marauders Skill Bonus:
+    # 7.5% bonus to shield boost amount per level
 
     def test_marauders_shieldBonus_moduleShieldBooster(self):
         self.buildTested = 0
@@ -215,6 +260,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Marauders Skill Bonus:
+    # 7.5% bonus to effectiveness of target painters per level
+
     def test_marauders_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -259,6 +307,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 100% bonus to cruise missile and torpedo damage
 
     def test_static_emDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
@@ -572,6 +623,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 100% bonus to range of tractor beams
+    # 100% bonus to velocity of tractor beams
+
     def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -597,6 +652,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 100% bonus to velocity of tractor beams
 
     def test_static_maxTractorVelocity_moduleTractorBeam(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Orca"
 
+    # Industrial Command Ship Skill Bonus:
+    # 5% bonus to cargo capacity per level
+
     def test_industrialCommandShips_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Industrial Command Ship Skill Bonus:
+    # 3% bonus to effectiveness of mining foreman gang links per level
 
     def test_industrialCommandShips_commandBonus_moduleGangCoordinatorSkillrqMining(self):
         self.buildTested = 0
@@ -48,6 +54,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 250% bonus to tractor beam range
 
     def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
@@ -88,6 +97,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 100% bonus to tractor beam velocity
+
     def test_static_maxTractorVelocity_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxTractorVelocity"
@@ -114,6 +126,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 500% bonus to survey scanner range
+
     def test_static_surveyScanRange_moduleSurveyScanner(self):
         self.buildTested = 0
         attr = "surveyScanRange"
@@ -126,6 +141,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 99% reduction in CPU need for Gang Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
@@ -152,6 +170,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # Can use 3 gang link modules simultaneously
 
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0

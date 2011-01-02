@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Crusader"
 
+    # Amarr Frigate Skill Bonus:
+    # 10% reduction in Small Energy Turret capacitor use per level
+
     def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -49,6 +52,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to Small Energy Turret damage per level
 
     def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
@@ -95,6 +101,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interceptor Skill Bonus:
+    # 15% reduction in MicroWarpdrive signature radius penalty per level
+
     def test_interceptors_signatureRadiusBonus_moduleAfterburnerSkillrqHighSpeedManeuvering(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -124,6 +133,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interceptor Skill Bonus:
+    # 7.5% bonus to Small Energy Turret Tracking Speed per level
 
     def test_interceptors_trackingSpeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
@@ -169,6 +181,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role bonus:
+    # 80% reduction in Propulsion Jamming systems activation cost
 
     def test_static_capacitorNeed_moduleStasisWebSkillrqPropulsionJamming(self):
         self.buildTested = 0

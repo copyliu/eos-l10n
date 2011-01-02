@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Oneiros"
 
+    # Gallente Cruiser Skill Bonus:
+    # 150% bonus to Remote Armor Repair System range per level
+
     def test_gallenteCruiser_maxRange_moduleRemoteArmorRepairer(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -50,6 +53,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Cruiser Skill Bonus:
+    # 150% bonus to Tracking Link range per level
+
     def test_gallenteCruiser_maxRange_moduleTrackingLink(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -80,7 +86,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_gallenteCruiser_armorDamageAmount_droneLogistics(self):
+    # Gallente Cruiser Skill Bonus:
+    # 20% bonus to Armor Maintenance Bot transfer amount per level
+    # Actually static 100% bonus, anyway cruiser skill must be at V level
+
+    def test_static_armorDamageAmount_droneLogistics(self):
         self.buildTested = 0
         attr = "armorDamageAmount"
         item = "Light Armor Maintenance Bot I"
@@ -93,7 +103,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_gallenteCruiser_armorDamageAmount_other(self):
+    def test_static_armorDamageAmount_other(self):
         self.buildTested = 0
         attr = "armorDamageAmount"
         item = "Small Armor Repairer I"
@@ -105,6 +115,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Logistics Skill Bonus:
+    # 15% reduction in Remote Armor Repair System capacitor use per level
 
     def test_logistics_capacitorNeed_moduleRemoteArmorRepairer(self):
         self.buildTested = 0
@@ -165,6 +178,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Logistics Skill Bonus:
+    # 10% bonus to Tracking Link efficiency per level
 
     def test_logistics_maxRangeBonus_moduleTrackingLink(self):
         self.buildTested = 0
@@ -255,6 +271,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -65% power need for Remote Armor Repair Systems
 
     def test_static_power_moduleRemoteArmorRepairer(self):
         self.buildTested = 0

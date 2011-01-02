@@ -5,6 +5,10 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Reaper"
 
+    # Special Ability:
+    # 5% bonus to velocity per skill level
+    # Description is wrong, it uses Minmatar Frigate as boost skill
+
     def test_minmatarFrigate_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"

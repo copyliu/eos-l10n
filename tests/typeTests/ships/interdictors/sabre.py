@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Sabre"
 
+    # Destroyer Skill Bonus:
+    # 5% bonus to Small Projectile Turret damage per level
+
     def test_destroyers_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Destroyer Skill Bonus:
+    # 10% bonus to Small Projectile Turret tracking speed per level
 
     def test_destroyers_trackingSpeed_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Interdictors Skill Bonus:
+    # 10% bonus to Small Projectile Turret falloff per level
+
     def test_interdictors_falloff_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Interdictors Skill Bonus:
+    # 10% bonus to Interdiction Sphere Launcher rate of fire per level
 
     def test_interdictors_speed_moduleLauncherInterdictionSphere(self):
         self.buildTested = 0

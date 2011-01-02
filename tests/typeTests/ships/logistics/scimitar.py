@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Scimitar"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 150% bonus to Tracking Link range per level
+
     def test_minmatarCruiser_maxRange_moduleTrackingLink(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 150% bonus to Shield Transport range per level
 
     def test_minmatarCruiser_shieldTransferRange_moduleShieldTransporter(self):
         self.buildTested = 0
@@ -80,6 +86,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Cruiser Skill Bonus:
+    # 20% bonus to Shield Maintenance Bot transport amount per level
+    # Actually static 100% bonus, anyway cruiser skill must be at V level
+
     def test_minmatarCruiser_shieldBonus_droneLogistics(self):
         self.buildTested = 0
         attr = "shieldBonus"
@@ -105,6 +115,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Logistics Skill Bonus:
+    # 10% bonus to Tracking Link efficiency per level
 
     def test_logistics_maxRangeBonus_moduleTrackingLink(self):
         self.buildTested = 0
@@ -196,6 +209,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Logistics Skill Bonus:
+    # 15% reduction in Shield Transport capacitor use per level
+
     def test_logistics_capacitorNeed_moduleShieldTransporter(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -255,6 +271,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -50% CPU need for Shield Transporters
 
     def test_static_cpu_moduleShieldTransporter(self):
         self.buildTested = 0

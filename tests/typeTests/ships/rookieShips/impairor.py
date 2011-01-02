@@ -5,6 +5,10 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Impairor"
 
+    # Special Ability:
+    # 10% bonus to energy turret capacitor use per skill level
+    # Description is wrong, it uses Amarr Frigate as boost skill
+
     def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "capacitorNeed"

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Retriever"
 
+    # Mining Barge Skill Bonus:
+    # 3% better yield for Strip Miners per level
+
     def test_miningBarge_miningAmount_moduleFrequencyMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"

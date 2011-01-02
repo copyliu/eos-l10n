@@ -5,6 +5,10 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Ibis"
 
+    # Special Ability:
+    # 10% bonus hybrid turret optimal range per skill level
+    # Description is wrong, it uses Caldari Frigate as boost skill
+
     def test_caldariFrigate_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"

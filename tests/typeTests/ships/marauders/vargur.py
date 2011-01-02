@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vargur"
 
+    # Minmatar Battleship Skill Bonus:
+    # 5% bonus to large projectile turret rate of fire per level
+
     def test_minmatarBattleship_speed_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
         attr = "speed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Battleship Skill Bonus:
+    # 10% bonus to large projectile turret falloff per level
+
     def test_minmatarBattleship_falloff_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
         attr = "falloff"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Marauder Skill Bonus:
+    # 7.5% bonus to shield boost amount per level
 
     def test_marauders_shieldBonus_moduleShieldBooster(self):
         self.buildTested = 0
@@ -125,6 +134,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Marauder Skill Bonus:
+    # 7.5% bonus to large projectile turret tracking per level
+
     def test_marauders_trackingSpeed_moduleHybridWeaponLarge(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -155,6 +167,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 100% bonus to large projectile weapon damage
+
     def test_static_damageMultiplier_moduleEnergyWeaponLarge(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -181,6 +196,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 100% bonus to range of tractor beams
+
     def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -206,6 +224,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 100% bonus to velocity of tractor beams
 
     def test_static_maxTractorVelocity_moduleTractorBeam(self):
         self.buildTested = 0

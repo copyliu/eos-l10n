@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Noctis"
 
+    # ORE Industrial Skill Bonus:
+    # 5% bonus to Tractor Beam cycle time per level
+
     def test_oreIndustrial_duration_moduleTractorBeamSkillrqScience(self):
         self.buildTested = 0
         attr = "duration"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # ORE Industrial Skill Bonus:
+    # 5% bonus to Salvager cycle time per level
 
     def test_oreIndustrial_duration_moduleDataMinerSkillrqSalvaging(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # ORE Industrial Skill Bonus:
+    # 60% bonus to Tractor Beam range per level
+
     def test_oreIndustrial_maxRange_moduleTractorBeamSkillrqScience(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # ORE Industrial Skill Bonus:
+    # 60% bonus to Tractor Beam velocity per level
 
     def test_oreIndustrial_maxTractorVelocity_moduleTractorBeamSkillrqScience(self):
         self.buildTested = 0

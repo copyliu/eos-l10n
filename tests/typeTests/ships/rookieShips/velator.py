@@ -5,6 +5,10 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Velator"
 
+    # Special Ability:
+    # 5% bonus to hybrid turret damage per skill level
+    # Description is wrong, it uses Gallente Frigate as boost skill
+
     def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"

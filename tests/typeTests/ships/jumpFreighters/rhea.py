@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rhea"
 
+    # Caldari Freighter Skill Bonus:
+    # 5% bonus to cargo hold capacity per level
+
     def test_caldariFreighter_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Freighter Skill Bonus:
+    # 5% bonus to agility per level
 
     def test_caldariFreighter_agility_ship(self):
         self.buildTested = 0
@@ -33,6 +39,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Jump Freighters Skill Bonus:
+    # 10% bonus to shield hitpoints per level
+
     def test_jumpFreighters_shieldCapacity_ship(self):
         self.buildTested = 0
         attr = "shieldCapacity"
@@ -46,6 +55,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Jump Freighters Skill Bonus:
+    # 10% bonus to armor hitpoints per level
 
     def test_jumpFreighters_armorHp_ship(self):
         self.buildTested = 0
@@ -61,6 +73,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Jump Freighters Skill Bonus:
+    # 10% bonus to hull hitpoints per level
+
     def test_jumpFreighters_hp_ship(self):
         self.buildTested = 0
         attr = "hp"
@@ -74,6 +89,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Jump Freighters Skill Bonus:
+    # 10% reduction in jump fuel need per level
 
     def test_jumpFreighters_jumpDriveConsumptionAmount_ship(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Iteron"
 
+    # Gallente Industrial Skill Bonus:
+    # 5% Bonus Cargo Capacity per skill level
+
     def test_gallenteIndustrial_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Industrial Skill Bonus:
+    # 5% Bonus Max Velocity per skill level
 
     def test_gallenteIndustrial_maxVelocity_ship(self):
         self.buildTested = 0

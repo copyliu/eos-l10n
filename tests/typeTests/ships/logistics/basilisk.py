@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Basilisk"
 
+    # Caldari Cruiser Skill Bonus:
+    # 150% bonus to Shield Transport range per level
+
     def test_caldariCruiser_shieldTransferRange_moduleShieldTransporter(self):
         self.buildTested = 0
         attr = "shieldTransferRange"
@@ -49,6 +52,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 150% bonus to Energy Transfer Array range per level
 
     def test_caldariCruiser_powerTransferRange_moduleEnergyTransfer(self):
         self.buildTested = 0
@@ -95,7 +101,11 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariCruiser_shieldBonus_droneLogistics(self):
+    # Caldari Cruiser Skill Bonus:
+    # 20% bonus to Shield Maintenance Bot transfer amount per level
+    # Actually static 100% bonus, anyway cruiser skill must be at V level
+
+    def test_static_shieldBonus_droneLogistics(self):
         self.buildTested = 0
         attr = "shieldBonus"
         item = "Medium Shield Maintenance Bot I"
@@ -108,7 +118,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_caldariCruiser_shieldBonus_other(self):
+    def test_static_shieldBonus_other(self):
         self.buildTested = 0
         attr = "shieldBonus"
         item = "Small Shield Booster I"
@@ -120,6 +130,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Logistics Skill Bonus:
+    # 15% reduction in Shield Transport capacitor use per level
 
     def test_logistics_capacitorNeed_moduleShieldTransporter(self):
         self.buildTested = 0
@@ -166,6 +179,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Logistics Skill Bonus:
+    # 15% reduction in Energy Transfer Array capacitor use per level
+
     def test_logistics_capacitorNeed_moduleEnergyTransfer(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -210,6 +226,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -50% CPU need for Shield Transporters
 
     def test_static_cpu_moduleShieldTransporter(self):
         self.buildTested = 0
@@ -262,6 +281,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -50% power need for Energy Transfer Arrays
 
     def test_static_power_moduleEnergyTransfer(self):
         self.buildTested = 0
