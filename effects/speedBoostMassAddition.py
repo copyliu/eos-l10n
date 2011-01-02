@@ -4,6 +4,7 @@
 #Variations of module: 1MN Afterburner I (15 of 15)
 #Module: Civilian Afterburner
 type = "active"
+runTime = "late"
 def handler(fit, module, context):
     fit.ship.increaseItemAttr("mass", module.getModifiedItemAttr("massAddition"))
     speedBoost = module.getModifiedItemAttr("speedFactor")

@@ -3,6 +3,7 @@
 #Variations of module: 10MN MicroWarpdrive I (14 of 14)
 #Variations of module: 1MN MicroWarpdrive I (15 of 15)
 type = "active"
+runTime = "late"
 def handler(fit, module, context):
     fit.ship.increaseItemAttr("mass", module.getModifiedItemAttr("massAddition"))
     speedBoost = module.getModifiedItemAttr("speedFactor")
