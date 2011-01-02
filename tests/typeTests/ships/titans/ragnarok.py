@@ -39,7 +39,7 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Minmatar Titan Skill Bonuses:
-    # 7.5% reduction in gang members’ signature radius per level
+    # 7.5% reduction in gang members' signature radius per level
 
     def test_minmatarTitan_signatureRadius_fleetShip(self):
         self.buildTested = 0
