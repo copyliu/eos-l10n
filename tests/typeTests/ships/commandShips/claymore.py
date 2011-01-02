@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Claymore"
 
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_battlecruisers_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 7.5% bonus to Shield Booster effectiveness per level
 
     def test_battlecruisers_shieldBonus_moduleShieldBooster(self):
         self.buildTested = 0
@@ -95,6 +101,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 7.5% bonus to Medium Projectile Turret tracking speed per level
+
     def test_commandShips_trackingSpeed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -125,7 +134,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
+    # Command Ships Skill Bonus:
+    # 3% bonus to effectiveness of Skirmish Warfare Links per level
+
+    def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
         self.buildTested = 0
         attr = "commandBonus"
         item = "Skirmish Warfare Link - Interdiction Maneuvers"
@@ -140,7 +152,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqOther(self):
+    def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
         item = "Information Warfare Link - Recon Operation"
@@ -154,6 +166,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 99% reduction in Warfare Link module CPU need
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
@@ -180,6 +195,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # Can use 3 Warfare Link modules simultaneously
 
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0

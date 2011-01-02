@@ -72,7 +72,7 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Gallente Carrier Skill Bonuses:
-    # 5% bonus to deployed Fighters’ damage per level
+    # 5% bonus to deployed Fighters' damage per level
 
     def test_gallenteCarrier_damageMultiplier_droneFighter(self):
         self.buildTested = 0

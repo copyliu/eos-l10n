@@ -181,7 +181,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
+    def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
         self.buildTested = 0
         attr = "commandBonus"
         item = "Siege Warfare Link - Shield Efficiency"
@@ -196,7 +196,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqOther(self):
+    def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
         item = "Mining Foreman Link - Harvester Capacitor Efficiency"

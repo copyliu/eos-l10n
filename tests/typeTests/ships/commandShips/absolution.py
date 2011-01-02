@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Absolution"
 
+    # Battlecruiser Skill Bonus:
+    # 10% reduction in Medium Energy Turret capacitor use per level
+
     def test_battlecruisers_capacitorNeed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to all armor resistances per level
 
     def test_battlecruisers_armorEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -151,6 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 5% bonus to Medium Energy Turret damage per level
+
     def test_commandShips_damageMultiplier_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -181,6 +190,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 5% bonus to Medium Energy Turret rate of fire per level
+
     def test_commandShips_speed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -210,6 +222,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 99% reduction in Warfare Link module CPU need
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

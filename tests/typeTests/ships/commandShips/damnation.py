@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Damnation"
 
+    # Battlecruiser Skill Bonus:
+    # 10% bonus to Heavy Assault Missile velocity per level
+
     def test_battlecruisers_maxVelocity_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 10% bonus to Heavy Missile velocity per level
 
     def test_battlecruisers_maxVelocity_chargeMissileHeavy(self):
         self.buildTested = 0
@@ -94,6 +100,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to all armor resistances per level
 
     def test_battlecruisers_armorEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -211,6 +220,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 10% bonus to armor hitpoints per level
+
     def test_commandShips_armorHP_ship(self):
         self.buildTested = 0
         attr = "armorHP"
@@ -225,7 +237,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
+    # Command Ships Skill Bonus:
+    # 3% bonus to effectiveness of Armored Warfare Links per level
+
+    def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
         self.buildTested = 0
         attr = "commandBonus"
         item = "Armored Warfare Link - Damage Control"
@@ -240,7 +255,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqOther(self):
+    def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
         item = "Siege Warfare Link - Active Shielding"
@@ -254,6 +269,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 99% reduction in Warfare Link module CPU need
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
@@ -280,6 +298,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # Can use 3 Warfare Link modules simultaneously
 
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
