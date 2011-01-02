@@ -107,9 +107,6 @@ class ModifiedAttributeDict(collections.MutableMapping):
         return (self.__original is not None and key in self.__original) or key in self.__modified or key in self.__intermediary
 
     def __placehold(self, key):
-        if key in self.__modified and self.__modified[key] != self.CalculationPlaceholder:
-            self.__intermediary[key] = self.__modified[key]
-
         self.__modified[key] = self.CalculationPlaceholder
 
     def __len__(self):
