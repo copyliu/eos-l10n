@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Loki"
 
+    # Minmatar Strategic Cruiser Skill Bonus:
+    # 5% Reduction in the amount of heat damage absorbed by modules per level
+
     def test_minmatarStrategicCruiser_heatDamage_moduleAfterburner(self):
         self.buildTested = 0
         attr = "heatDamage"

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Prowler"
 
+    # Minmatar Industrial Skill Bonus:
+    # +5% cargo capacity per level
+
     def test_minmatarIndustrial_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Industrial Skill Bonus:
+    # +5% velocity per level
+
     def test_minmatarIndustrial_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -32,6 +38,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Transport Ships Skill Bonus:
+    # +5% shield booster boost amount per level
 
     def test_transportShips_shieldBonus_moduleShieldBooster(self):
         self.buildTested = 0
@@ -93,6 +102,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Transport Ships Skill Bonus:
+    # -98.5% to -99.25% bonus to cpu need of covert ops cloaks
+    # Static part
+
     def test_static_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "cpu"
@@ -118,6 +131,10 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Transport Ships Skill Bonus:
+    # -98.5% to -99.25% bonus to cpu need of covert ops cloaks
+    # Dynamic part
 
     def test_transportShips_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
@@ -148,6 +165,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
 
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0

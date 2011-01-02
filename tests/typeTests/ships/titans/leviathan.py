@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Leviathan"
 
+    # Caldari Titan Skill Bonuses:
+    # 125% bonus to Citadel Missile kinetic damage per level
+
     def test_caldariTitan_kineticDamage_chargeMissileCitadelTorpedo(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -50,6 +53,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Titan Skill Bonuses:
+    # 7.5% bonus to gang members' maximum shield HP per level
+
     def test_caldariTitan_shieldCapacity_fleetShip(self):
         self.buildTested = 0
         attr = "shieldCapacity"
@@ -63,6 +69,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Titan Skill Bonuses:
+    # Can fit 1 additional Warfare Link module per level
 
     def test_caldariTitan_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
@@ -93,6 +102,9 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Titan Skill Bonuses:
+    # 99% reduction in CPU need for Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

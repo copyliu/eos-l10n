@@ -90,7 +90,7 @@ class Test(TestBase):
     # 20% bonus to Shield Maintenance Bot transport amount per level
     # Actually static 100% bonus, anyway cruiser skill must be at V level
 
-    def test_minmatarCruiser_shieldBonus_droneLogistics(self):
+    def test_static_shieldBonus_droneLogistics(self):
         self.buildTested = 0
         attr = "shieldBonus"
         item = "Medium Shield Maintenance Bot I"
@@ -103,7 +103,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_minmatarCruiser_shieldBonus_other(self):
+    def test_static_shieldBonus_other(self):
         self.buildTested = 0
         attr = "shieldBonus"
         item = "Large Shield Booster I"

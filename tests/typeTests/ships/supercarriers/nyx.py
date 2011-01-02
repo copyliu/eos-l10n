@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Nyx"
 
+    # Gallente Carrier Skill Bonuses:
+    # 50% bonus to Capital Shield transfer range per level
+
     def test_gallenteCarrier_shieldTransferRange_moduleShieldTransporterCapital(self):
         self.buildTested = 0
         attr = "shieldTransferRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Carrier Skill Bonuses:
+    # 50% bonus to Capital Armor transfer range per level
 
     def test_gallenteCarrier_maxRange_moduleRemoteRepairerCapital(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Carrier Skill Bonuses:
+    # 5% bonus to deployed Fighters damage per level
+
     def test_gallenteCarrier_damageMultiplier_droneFighter(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -79,6 +88,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Carrier Skill Bonuses:
+    # 5% bonus to deployed Fighter Bomber damage per level
 
     def test_gallenteCarrier_damageMultiplier_droneFighterBomber(self):
         self.buildTested = 0
@@ -110,6 +122,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Carrier Skill Bonuses:
+    # Can deploy 3 additional Fighters or Fighter Bombers per level
+
     def test_gallenteCarrier_maxActiveDrones_ship(self):
         self.buildTested = 0
         attr = "maxActiveDrones"
@@ -123,6 +138,9 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Carrier Skill Bonuses:
+    # Can fit 1 additional Warfare Link module per level
 
     def test_gallenteCarrier_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
@@ -154,6 +172,8 @@ class Test(TestBase):
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 99% reduction in CPU need for Warfare Link modules
+
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
@@ -180,6 +200,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 99% reduction in CPU need for Drone Control Units
+
     def test_static_cpu_moduleDroneControlUnit(self):
         self.buildTested = 0
         attr = "cpu"
@@ -192,6 +215,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Carrier Skill Bonuses:
+    # 200% bonus to Fighter and Fighter Bomber control range
 
     def test_static_droneControlRange_ship(self):
         self.buildTested = 0

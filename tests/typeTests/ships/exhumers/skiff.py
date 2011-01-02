@@ -148,3 +148,13 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # +2 warp strength
+
+    def test_static_warpScrambleStatus_ship(self):
+        self.buildTested = 0
+        attr = "warpScrambleStatus"
+        ingame = -2.0
+        eos = self.getShipAttr(attr, ship=self.ship)
+        self.assertAlmostEquals(eos, ingame)

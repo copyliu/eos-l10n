@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Erebus"
 
+    # Gallente Titan Skill Bonuses:
+    # 100% bonus to Capital Hybrid Turret damage per level
+
     def test_gallenteTitan_damageMultiplier_moduleHybridWeaponCapital(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Titan Skill Bonuses:
+    # 7.5% bonus to gang members' maximum armor HP per level
+
     def test_gallenteTitan_armorHP_fleetShip(self):
         self.buildTested = 0
         attr = "armorHP"
@@ -48,6 +54,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Titan Skill Bonuses:
+    # Can fit 1 additional Warfare Link module per level
 
     def test_gallenteTitan_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
@@ -78,6 +87,9 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Titan Skill Bonuses:
+    # 99% reduction in CPU need for Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

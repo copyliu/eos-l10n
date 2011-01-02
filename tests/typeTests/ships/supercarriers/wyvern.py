@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Wyvern"
 
+    # Caldari Carrier Skill Bonuses:
+    # 50% bonus to Capital Energy transfer range per level
+
     def test_caldariCarrier_powerTransferRange_moduleEnergyTransferCapital(self):
         self.buildTested = 0
         attr = "powerTransferRange"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Carrier Skill Bonuses:
+    # 50% bonus to Capital Shield transfer range per level
+
     def test_caldariCarrier_shieldTransferRange_moduleShieldTransporterCapital(self):
         self.buildTested = 0
         attr = "shieldTransferRange"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Carrier Skill Bonuses:
+    # 5% bonus to all Shield resistances per level
 
     def test_caldariCarrier_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -181,6 +190,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Carrier Skill Bonuses:
+    # Can deploy 3 additional Fighters or Fighter Bombers per level
+
     def test_caldariCarrier_maxActiveDrones_ship(self):
         self.buildTested = 0
         attr = "maxActiveDrones"
@@ -194,6 +206,9 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Carrier Skill Bonuses:
+    # Can fit 1 additional Warfare Link module per level
 
     def test_caldariCarrier_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
@@ -225,6 +240,8 @@ class Test(TestBase):
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # 99% reduction in CPU need for Warfare Link modules
+
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
@@ -251,6 +268,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 99% reduction in CPU need for Drone Control Units
+
     def test_static_cpu_moduleDroneControlUnit(self):
         self.buildTested = 0
         attr = "cpu"
@@ -263,6 +283,8 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 200% bonus to Fighter or Fighter Bomber control range
 
     def test_static_droneControlRange_ship(self):
         self.buildTested = 0

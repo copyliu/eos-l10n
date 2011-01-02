@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Ragnarok"
 
+    # Minmatar Titan Skill Bonuses:
+    # 125% bonus to Capital Projectile Turret damage per level
+
     def test_minmatarTitan_damageMultiplier_moduleProjectileWeaponCapital(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Titan Skill Bonuses:
+    # 7.5% reduction in gang members’ signature radius per level
+
     def test_minmatarTitan_signatureRadius_fleetShip(self):
         self.buildTested = 0
         attr = "signatureRadius"
@@ -48,6 +54,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Titan Skill Bonuses:
+    # Can fit 1 additional Warfare Link module per level
 
     def test_minmatarTitan_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
@@ -78,6 +87,8 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # 99% reduction in CPU need for Warfare Link modules
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

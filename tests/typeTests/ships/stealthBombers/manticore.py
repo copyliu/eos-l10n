@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Manticore"
 
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to torpedo explosion velocity per level
+
     def test_caldariFrigate_aoeVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "aoeVelocity"
@@ -49,6 +52,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to torpedo flight time per level
 
     def test_caldariFrigate_explosionDelay_chargeMissileTorpedo(self):
         self.buildTested = 0
@@ -95,6 +101,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 20% bonus to torpedo missile velocity per level
+
     def test_caldariFrigate_maxVelocity_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -139,6 +148,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Covert Ops Skill Bonus:
+    # 5% bonus to bomb kinetic damage per level
 
     def test_covertOps_kineticDamage_chargeBomb(self):
         self.buildTested = 0
@@ -185,6 +197,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Covert Ops Skill Bonus:
+    # 15% bonus to torpedo kinetic damage per level
+
     def test_covertOps_kineticDamage_chargeMissileTorpedo(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -230,6 +245,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # -99.65% reduction in Siege Missile Launcher powergrid needs
+
     def test_static_power_moduleLauncherMissileSiege(self):
         self.buildTested = 0
         attr = "power"
@@ -255,6 +273,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -99.5% reduction in Cloak CPU Use
 
     def test_static_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
@@ -282,6 +303,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # -100% targeting delay after decloaking
+
     def test_static_cloakingTargetingDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "cloakingTargetingDelay"
@@ -289,6 +313,9 @@ class Test(TestBase):
         ingame = 0.0
         eos = self.getItemAttr(attr, item, ship=self.ship)
         self.assertAlmostEquals(eos, ingame)
+
+    # Hidden bonus:
+    # 15 seconds cloak reactivation delay
 
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0

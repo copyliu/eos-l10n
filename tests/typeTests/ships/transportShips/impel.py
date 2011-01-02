@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Impel"
 
+    # Amarr Industrial Skill Bonus:
+    # +5% cargo capacity per level
+
     def test_amarrIndustrial_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -19,6 +22,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Industrial Skill Bonus:
+    # +5% velocity per level
+
     def test_amarrIndustrial_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -32,6 +38,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Transport Ships Skill Bonus:
+    # +5% armor repairer repair amount per level
 
     def test_transportShips_armorDamageAmount_moduleArmorRepairer(self):
         self.buildTested = 0
@@ -93,6 +102,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Transport Ships Skill Bonus:
+    # +5% bonus to armor HP per level
+
     def test_transportShips_armorHP_ship(self):
         self.buildTested = 0
         attr = "armorHP"
@@ -106,6 +118,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # +2 warp strength
 
     def test_static_warpScrambleStatus_ship(self):
         self.buildTested = 0
