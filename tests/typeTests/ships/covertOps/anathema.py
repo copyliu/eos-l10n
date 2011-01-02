@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Anathema"
 
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to rocket damage per level
+
     def test_amarrFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -185,6 +188,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Frigate Skill Bonus:
+    # 5% reduction of capacitor recharge time per level
+
     def test_amarrFrigate_rechargeRate_ship(self):
         self.buildTested = 0
         attr = "rechargeRate"
@@ -198,6 +204,10 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Covert Ops Skill Bonus:
+    # -97.5% to -100% reduced CPU need for cloaking device
+    # Static part
 
     def test_static_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
@@ -224,6 +234,10 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Covert Ops Skill Bonus:
+    # -97.5% to -100% reduced CPU need for cloaking device
+    # Dynamic part
 
     def test_covertOps_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
@@ -255,6 +269,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Covert Ops Skill Bonus:
+    # 10% increase to scan strength of probes per level
+
     def test_covertOps_baseSensorStrength_chargeScannerProbe(self):
         self.buildTested = 0
         attr = "baseSensorStrength"
@@ -269,6 +286,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Covert Ops Skill Bonus:
+    # -10% bonus to survey probe flight time per level
 
     def test_covertOps_explosionDelay_chargeSurveyProbe(self):
         self.buildTested = 0
@@ -299,6 +319,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
 
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0

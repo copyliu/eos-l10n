@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Ashimmu"
 
+    # Amarr Cruiser Skill Bonus:
+    # 15% bonus to Energy Vampire drain amount per level
+
     def test_amarrCruiser_powerTransferAmount_moduleEnergyVampire(self):
         self.buildTested = 0
         attr = "powerTransferAmount"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Cruiser Skill Bonus:
+    # 15% bonus to Energy Neutralizer drain amount per level
+
     def test_amarrCruiser_energyDestabilizationAmount_moduleEnergyDestabilizer(self):
         self.buildTested = 0
         attr = "energyDestabilizationAmount"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 10% bonus to the velocity factor of stasis webifiers per level
 
     def test_minmatarCruiser_speedFactor_moduleStasisWeb(self):
         self.buildTested = 0
@@ -124,6 +133,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Medium Energy Turret damage
 
     def test_static_damageMultiplier_moduleEnergyWeaponMedium(self):
         self.buildTested = 0

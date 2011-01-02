@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Gila"
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% shield resistance per level
+
     def test_caldariCruiser_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "shieldEmDamageResonance"
@@ -121,6 +124,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone hitpoints per skill level
+
     def test_gallenteCruiser_hp_droneCombat(self):
         self.buildTested = 0
         item = "Curator I"
@@ -229,6 +235,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_gallenteCruiser_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -258,6 +267,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to light Missile velocity
 
     def test_static_maxVelocity_chargeMissileLight(self):
         self.buildTested = 0
@@ -311,6 +323,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 50% bonus to Heavy Assault Missile velocity
+
     def test_static_maxVelocity_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -336,6 +351,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Heavy Missile velocity
 
     def test_static_maxVelocity_chargeMissileHeavy(self):
         self.buildTested = 0

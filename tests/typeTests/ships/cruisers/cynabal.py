@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Cynabal"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 10% bonus to Medium Projectile Turret damage per level
+
     def test_minmatarCruiser_damageMultiplier_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to Medium Projectile Turret falloff per level
+
     def test_gallenteCruiser_falloff_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "falloff"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 25% bonus to Medium Projectile Turret rate of fire
 
     def test_static_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0

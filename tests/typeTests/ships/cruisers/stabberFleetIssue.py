@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Stabber Fleet Issue"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret firing speed per level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 10% bonus to Medium Projectile Turret tracking speed per level
 
     def test_minmatarCruiser_trackingSpeed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Nighthawk"
 
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to assault missile launcher rate of fire per level
+
     def test_battlecruisers_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -20,6 +23,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to heavy assault missile launcher rate of fire per level
+
     def test_battlecruisers_speed_moduleLauncherMissileHeavyAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +40,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to heavy missile launcher rate of fire per level
 
     def test_battlecruisers_speed_moduleLauncherMissileHeavy(self):
         self.buildTested = 0
@@ -64,6 +73,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to all shield resistances per level
 
     def test_battlecruisers_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -181,6 +193,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 5% bonus to heavy missile Kinetic damage per level
+
     def test_commandShips_kineticDamage_chargeMissileHeavy(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -241,6 +256,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 5% bonus to heavy missile explosion velocity per level
+
     def test_commandShips_aoeVelocity_chargeMissileHeavy(self):
         self.buildTested = 0
         attr = "aoeVelocity"
@@ -300,6 +318,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 99% reduction in Warfare Link module CPU need
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

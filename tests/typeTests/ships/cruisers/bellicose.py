@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Bellicose"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret Rate of Fire per skill level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 7.5% bonus to target painter effectiveness per skill level
 
     def test_minmatarCruiser_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vulture"
 
+    # Battlecruiser Skill Bonus:
+    # 10% bonus to Medium Hybrid Turret optimal range per level
+
     def test_battlecruisers_maxRange_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to all shield resistances per level
 
     def test_battlecruisers_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -151,6 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 10% bonus to Medium Hybrid Turret optimal range per level
+
     def test_commandShips_maxRange_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -180,6 +189,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Command Ships Skill Bonus:
+    # 3% bonus to effectiveness of Siege Warfare Links per level
 
     def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
         self.buildTested = 0
@@ -211,6 +223,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 99% reduction in Warfare Link module CPU need
+
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
@@ -236,6 +251,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # Can use 3 Warfare Link modules simultaneously
 
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0

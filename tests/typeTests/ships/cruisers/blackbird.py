@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Blackbird"
 
+    # Caldari Cruiser Skill Bonus:
+    # 15% bonus to ECM Target Jammer strength per level
+
     def test_caldariCruiser_scanGravimetricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanGravimetricStrengthBonus"
@@ -125,6 +128,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to ECM Target Jammer optimal range per level
+
     def test_caldariCruiser_maxRange_moduleEcm(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -154,6 +160,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to ECM Target Jammer falloff per level
 
     def test_caldariCruiser_falloff_moduleEcm(self):
         self.buildTested = 0

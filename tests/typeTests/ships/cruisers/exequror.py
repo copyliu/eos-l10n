@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Exequror"
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to Cargo Capacity per level
+
     def test_gallenteCruiser_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to capacitor need of remote armor repair system per level
 
     def test_gallenteCruiser_capacitorNeed_moduleRemoteArmorRepairer(self):
         self.buildTested = 0
@@ -78,6 +84,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 500% bonus to range of remote armor repair systems
 
     def test_static_maxRange_moduleRemoteArmorRepairer(self):
         self.buildTested = 0

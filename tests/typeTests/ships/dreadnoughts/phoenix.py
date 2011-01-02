@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Phoenix"
 
+    # Caldari Dreadnought Skill Bonus:
+    # 5% bonus to kinetic missile damage per skill level
+
     def test_caldariDreadnought_kineticDamage_chargeMissileCitadelTorpedo(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -49,6 +52,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Dreadnought Skill Bonus:
+    # 5% bonus to Capital Launcher rate of fire per skill level
 
     def test_caldariDreadnought_speed_moduleLauncherMissileCitadelTorpedo(self):
         self.buildTested = 0

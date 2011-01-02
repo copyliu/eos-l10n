@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Osprey Navy Issue"
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to Assault Missile Launcher rate of fire per level
+
     def test_caldariCruiser_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -20,6 +23,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to Heavy Assault Missile Launcher rate of fire per level
+
     def test_caldariCruiser_speed_moduleLauncherMissileHeavyAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +40,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to Heavy Missile Launcher rate of fire per level
 
     def test_caldariCruiser_speed_moduleLauncherMissileHeavy(self):
         self.buildTested = 0
@@ -65,6 +74,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to Heavy Assault Missile velocity per level
+
     def test_caldariCruiser_maxVelocity_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -94,6 +106,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to Heavy Missile velocity per level
 
     def test_caldariCruiser_maxVelocity_chargeMissileHeavy(self):
         self.buildTested = 0

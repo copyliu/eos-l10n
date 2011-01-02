@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vexor"
 
+    # Gallente Cruiser Skill Bonus:
+    # 5% bonus to Medium Hybrid Turret damage per skill level
+
     def test_gallenteCruiser_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone hitpoints per skill level
 
     def test_gallenteCruiser_hp_droneCombat(self):
         self.buildTested = 0
@@ -143,6 +149,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_gallenteCruiser_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -172,6 +181,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone mining yield per skill level
 
     def test_gallenteCruiser_miningAmount_droneMining(self):
         self.buildTested = 0

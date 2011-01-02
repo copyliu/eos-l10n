@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Scythe Fleet Issue"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Assault Missile Launcher rate of fire per level
+
     def test_minmatarCruiser_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -50,6 +56,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Heavy Assault Missile Launcher rate of fire per level
+
     def test_minmatarCruiser_speed_moduleLauncherMissileHeavyAssault(self):
         self.buildTested = 0
         attr = "speed"
@@ -64,6 +73,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Heavy Missile Launcher rate of fire per level
 
     def test_minmatarCruiser_speed_moduleLauncherMissileHeavy(self):
         self.buildTested = 0

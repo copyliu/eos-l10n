@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Coercer"
 
+    # Destroyer Skill Bonus:
+    # 10% bonus to Small Energy Turret tracking speed per level
+
     def test_destroyers_trackingSpeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Destroyer Skill Bonus:
+    # 10% bonus to Small Energy Turret Capacitor usage per level
+
     def test_destroyers_capacitorNeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonuses:
+    # -25% rate of fire for all turrets
 
     def test_static_speed_moduleEnergyWeapon(self):
         self.buildTested = 0
@@ -116,6 +125,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonuses:
+    # 50% bonus to optimal range for small energy turrets
 
     def test_static_maxRange_moduleEnergyWeaponSmall(self):
         self.buildTested = 0

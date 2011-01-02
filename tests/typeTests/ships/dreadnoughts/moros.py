@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Moros"
 
+    # Gallente Dreadnought Skill Bonus:
+    # 5% bonus to Capital Hybrid Turret damage
+
     def test_gallenteDreadnought_damageMultiplier_moduleHybridWeaponCapital(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Dreadnought Skill Bonus:
+    # 20% bonus to drone hitpoints per skill level
 
     def test_gallenteDreadnought_hp_droneCombat(self):
         self.buildTested = 0
@@ -142,6 +148,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Dreadnought Skill Bonus:
+    # 20% bonus to drone damage per skill level
 
     def test_gallenteDreadnought_damageMultiplier_droneCombat(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Thrasher"
 
+    # Destroyer Skill Bonus:
+    # 10% bonus to Small Projectile Turret tracking speed per level
+
     def test_destroyers_trackingSpeed_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Destroyer Skill Bonus:
+    # 5% bonus to Small Projectile Turret damage per level
+
     def test_destroyers_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonuses:
+    # Penalty: -25% Rate Of Fire for all turrets
 
     def test_static_speed_moduleEnergyWeapon(self):
         self.buildTested = 0
@@ -116,6 +125,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonuses:
+    # Bonus: 50% bonus to optimal range for small projectile turrets
 
     def test_static_maxRange_moduleProjectileWeaponSmall(self):
         self.buildTested = 0

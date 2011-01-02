@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Augoror"
 
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to armor hitpoints per level
+
     def test_amarrCruiser_armorHP_ship(self):
         self.buildTested = 0
         attr = "armorHP"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to capacitor need of energy transfer arrays per level
 
     def test_amarrCruiser_capacitorNeed_moduleEnergyTransfer(self):
         self.buildTested = 0
@@ -63,6 +69,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role bonus:
+    # 500% bonus to range of energy transfer arrays
 
     def test_static_powerTransferRange_moduleEnergyTransfer(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Maller"
 
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to Medium Energy Turret capacitor use per level
+
     def test_amarrCruiser_capacitorNeed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to all Armor Resistances per level
 
     def test_amarrCruiser_armorEmDamageResonance_ship(self):
         self.buildTested = 0

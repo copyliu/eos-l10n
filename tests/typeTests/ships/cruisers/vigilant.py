@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vigilant"
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to Medium Hybrid Turret falloff per level
+
     def test_gallenteCruiser_falloff_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "falloff"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 10% bonus to the velocity factor of stasis webifiers per level
 
     def test_minmatarCruiser_speedFactor_moduleStasisWeb(self):
         self.buildTested = 0
@@ -94,6 +100,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 75% bonus to Medium Hybrid Turret damage
 
     def test_static_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0

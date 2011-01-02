@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Caracal Navy Issue"
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus Kinetic Missile Damage per level
+
     def test_caldariCruiser_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -289,6 +292,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to Missile Velocity per level
 
     def test_caldariCruiser_maxVelocity_chargeMissileLight(self):
         self.buildTested = 0

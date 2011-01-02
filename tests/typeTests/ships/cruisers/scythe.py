@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Scythe"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 20% bonus to mining laser yield per level
+
     def test_minmatarCruiser_miningAmount_moduleMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -64,6 +67,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 3.5% bonus to tracking links per level
 
     def test_minmatarCruiser_maxRangeBonus_moduleTrackingLink(self):
         self.buildTested = 0
@@ -154,6 +160,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 500% bonus to range of tracking links
 
     def test_static_maxRange_moduleTrackingLink(self):
         self.buildTested = 0

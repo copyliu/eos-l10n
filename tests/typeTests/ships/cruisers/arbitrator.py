@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Arbitrator"
 
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to Tracking Disruptor effectiveness per skill level
+
     def test_amarrCruiser_maxRangeBonus_moduleTrackingDisruptor(self):
         self.buildTested = 0
         attr = "maxRangeBonus"
@@ -94,6 +97,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to drone hitpoints per skill level
 
     def test_amarrCruiser_hp_droneCombat(self):
         self.buildTested = 0
@@ -203,6 +209,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_amarrCruiser_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -232,6 +241,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to drone mining yield per skill level
 
     def test_amarrCruiser_miningAmount_droneMining(self):
         self.buildTested = 0

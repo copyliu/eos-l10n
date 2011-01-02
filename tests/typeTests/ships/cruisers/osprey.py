@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Osprey"
 
+    # Caldari Cruiser Skill Bonus:
+    # 20% bonus to mining laser yield per level
+
     def test_caldariCruiser_miningAmount_moduleMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -65,6 +68,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 10% reduction in Shield Transport capacitor use per level
+
     def test_caldariCruiser_capacitorNeed_moduleShieldTransporter(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -124,6 +130,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 500% bonus to range of shield transporters
 
     def test_static_shieldTransferRange_moduleShieldTransporter(self):
         self.buildTested = 0

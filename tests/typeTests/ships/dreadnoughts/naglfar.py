@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Naglfar"
 
+    # Minmatar Dreadnought Skill Bonus:
+    # 5% bonus to Capital Projectile damage per level
+
     def test_minmatarDreadnought_damageMultiplier_moduleProjectileWeaponCapital(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Dreadnought Skill Bonus:
+    # 5% bonus to Capital Projectile rate of fire per level
 
     def test_minmatarDreadnought_speed_moduleProjectileWeaponCapital(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Revelation"
 
+    # Amarr Dreadnought Skill Bonus:
+    # 10% reduction in Capital Energy Turret capacitor use per skill level
+
     def test_amarrDreadnought_capacitorNeed_moduleEnergyWeaponCapital(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Dreadnought Skill Bonus:
+    # 5% bonus to Capital Energy Turret rate of fire per skill level
 
     def test_amarrDreadnought_speed_moduleEnergyWeaponCapital(self):
         self.buildTested = 0

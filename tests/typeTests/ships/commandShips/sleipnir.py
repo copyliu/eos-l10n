@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Sleipnir"
 
+    # Battlecruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_battlecruisers_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Battlecruiser Skill Bonus:
+    # 7.5% bonus to Shield Booster effectiveness per level
 
     def test_battlecruisers_shieldBonus_moduleShieldBooster(self):
         self.buildTested = 0
@@ -95,6 +101,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 5% bonus to Medium Projectile Turret damage per level
+
     def test_commandShips_damageMultiplier_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -125,6 +134,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Command Ships Skill Bonus:
+    # 10% bonus to Medium Projectile Turret falloff per level
+
     def test_commandShips_falloff_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "falloff"
@@ -154,6 +166,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 99% reduction in Warfare Link module CPU need
 
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0

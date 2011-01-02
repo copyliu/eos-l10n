@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Guardian-Vexor"
 
+    # Gallente Cruiser Skill Bonus:
+    # 5% bonus to Medium Hybrid Turret damage per level
+
     def test_gallenteCruiser_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # +1 extra Drone controlled per level
 
     def test_gallenteCruiser_maxActiveDrones_ship(self):
         self.buildTested = 0

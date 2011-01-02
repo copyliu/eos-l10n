@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Phantasm"
 
+    # Amarr Cruiser Skill Bonus:
+    # 7.5% bonus to Medium Energy Turret tracking per level
+
     def test_amarrCruiser_trackingSpeed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to Medium Energy Turret damage per level
+
     def test_caldariCruiser_damageMultiplier_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Medium Energy Turret damage
 
     def test_static_damageMultiplier_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
