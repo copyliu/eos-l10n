@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Kitsune"
 
+    # Caldari Frigate Skill Bonus:
+    # 20% bonus to ECM target jammer strength per level
+
     def test_caldariFrigate_scanGravimetricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanGravimetricStrengthBonus"
@@ -125,6 +128,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 10% reduction in ECM target jammers' capacitor need per level
+
     def test_caldariFrigate_capacitorNeed_moduleEcm(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -154,6 +160,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 10% bonus to ECM target jammer optimal range per level
 
     def test_electronicAttackShips_maxRange_moduleEcm(self):
         self.buildTested = 0
@@ -199,6 +208,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 5% bonus to capacitor capacity per level
 
     def test_electronicAttackShips_capacitorCapacity_ship(self):
         self.buildTested = 0

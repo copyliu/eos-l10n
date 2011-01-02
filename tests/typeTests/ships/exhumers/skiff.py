@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Skiff"
 
+    # Mining Barge Skill Bonus:
+    # 3% better yield for Strip Miners per level
+
     def test_miningBarge_miningAmount_moduleFrequencyMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -95,6 +98,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Exhumers Skill Bonus:
+    # 60% bonus to Mercoxit Mining Crystal yield multiplier per level
+
     def test_exhumers_specialisationAsteroidYieldMultiplier_chargeMiningCrystalMercoxit(self):
         self.buildTested = 0
         attr = "specialisationAsteroidYieldMultiplier"
@@ -124,6 +130,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Exhumers Skill Bonus:
+    # 20% reduced chance of Mercoxit gas cloud forming per level
 
     def test_exhumers_damageCloudChance_moduleDeepCoreMiner(self):
         self.buildTested = 0

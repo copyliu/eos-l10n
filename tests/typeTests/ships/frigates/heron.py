@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Heron"
 
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus kinetic missile damage per level
+
     def test_caldariFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -290,6 +293,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to scan strength of probes per level
+
     def test_caldariFrigate_baseSensorStrength_chargeScannerProbe(self):
         self.buildTested = 0
         attr = "baseSensorStrength"
@@ -304,6 +310,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to survey probe flight time per level
 
     def test_caldariFrigate_explosionDelay_chargeSurveyProbe(self):
         self.buildTested = 0

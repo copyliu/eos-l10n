@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rapier"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level per level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Cruiser Skill Bonus:
+    # 7.5% bonus to target painter effectiveness per level
+
     def test_minmatarCruiser_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # 60% bonus to stasis webifier range per level
 
     def test_reconShips_maxRange_moduleStasisWeb(self):
         self.buildTested = 0
@@ -110,6 +119,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Recon Ships Skill Bonus:
+    # -96% to -100% reduced CPU need for cloaking device per level
+    # Static part
+
     def test_static_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "cpu"
@@ -135,6 +148,10 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Recon Ships Skill Bonus:
+    # -96% to -100% reduced CPU need for cloaking device per level
+    # Dynamic part
 
     def test_reconShips_cpu_moduleCloakingDevice(self):
         self.buildTested = 0
@@ -166,6 +183,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # 5 seconds cloak reactivation delay
+
     def test_static_moduleReactivationDelay_moduleCloakingDevice(self):
         self.buildTested = 0
         attr = "moduleReactivationDelay"
@@ -187,6 +207,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 80% reduction in liquid ozone consumption for cynosural field generation
+
     def test_static_consumptionQuantity_moduleCynosuralField(self):
         self.buildTested = 0
         attr = "consumptionQuantity"
@@ -199,6 +222,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 50% reduction in cynosural field duration
 
     def test_static_duration_moduleCynosuralField(self):
         self.buildTested = 0

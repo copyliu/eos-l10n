@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Hyena"
 
+    # Minmatar Frigate Skill Bonus:
+    # 5% increase to MicroWarpdrive capacitor bonus per level
+
     def test_minmatarFrigate_capacitorCapacityMultiplier_moduleAfterburnerSkillrqHSM(self):
         self.buildTested = 0
         attr = "capacitorCapacityMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Frigate Skill Bonus:
+    # 7.5% bonus to effectiveness of target painters per level
+
     def test_minmatarFrigate_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0
         attr = "signatureRadiusBonus"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 20% bonus to stasis webifier range per level
 
     def test_electronicAttackShips_maxRange_moduleStasisWeb(self):
         self.buildTested = 0
@@ -109,6 +118,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 3% reduction in signature radius per level
 
     def test_electronicAttackShips_signatureRadius_ship(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Probe"
 
+    # Minmatar Frigate Skill Bonus:
+    # 5% bonus cargo capacity per skill level
+
     def test_minmatarFrigate_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Minmatar Frigate Skill Bonus:
+    # 5% bonus to scan strength of probes per skill level
+
     def test_minmatarFrigate_baseSensorStrength_chargeScannerProbe(self):
         self.buildTested = 0
         attr = "baseSensorStrength"
@@ -48,6 +54,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Frigate Skill Bonus:
+    # 5% bonus to survey probe flight time per level
 
     def test_minmatarFrigate_explosionDelay_chargeSurveyProbe(self):
         self.buildTested = 0

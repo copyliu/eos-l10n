@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Devoter"
 
+    # Amarr Cruiser Skill Bonus:
+    # 10% reduction in medium energy turret capacitor use per level
+
     def test_amarrCruiser_capacitorNeed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to armor resistances per level
 
     def test_amarrCruiser_armorEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -151,6 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Interdictors Skill Bonus:
+    # 5% bonus to medium energy turret rate of fire per level
+
     def test_heavyInterdictors_speed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -180,6 +189,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Interdictors Skill Bonus:
+    # 5% bonus to range of warp disruption fields per level
 
     def test_heavyInterdictors_warpScrambleRange_moduleWarpDisruptionFieldGenerator(self):
         self.buildTested = 0

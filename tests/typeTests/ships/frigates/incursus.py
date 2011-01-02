@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Incursus"
 
+    # Gallente Frigate Skill Bonus:
+    # 10% bonus to Small Hybrid Turret falloff per skill level
+
     def test_gallenteFrigate_falloff_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to Small Hybrid Turret damage per skill level
 
     def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0

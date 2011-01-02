@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Broadsword"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to medium projectile turret rate of fire per level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to shield resistances per level
 
     def test_minmatarCruiser_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -151,6 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Interdictors Skill Bonus:
+    # 10% bonus to medium projectile turret falloff per level
+
     def test_heavyInterdictors_falloff_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "falloff"
@@ -180,6 +189,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Interdictors Skill Bonus:
+    # 5% bonus to range of warp disruption fields per level
 
     def test_heavyInterdictors_warpScrambleRange_moduleWarpDisruptionFieldGenerator(self):
         self.buildTested = 0

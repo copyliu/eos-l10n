@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Eagle"
 
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to Medium Hybrid Turret optimal range per level
+
     def test_caldariCruiser_maxRange_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to shield resistances per level
 
     def test_caldariCruiser_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -151,6 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Medium Hybrid Turret optimal range per level
+
     def test_heavyAssaultShips_maxRange_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -180,6 +189,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 5% bonus to Medium Hybrid Turret damage per level
 
     def test_heavyAssaultShips_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0

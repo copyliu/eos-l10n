@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Condor"
 
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to light missile and rocket kinetic damage per skill level
+
     def test_caldariFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -290,6 +293,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to rocket velocity per skill level
+
     def test_caldariFrigate_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -319,6 +325,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to light missile velocity per skill level
 
     def test_caldariFrigate_maxVelocity_chargeMissileLight(self):
         self.buildTested = 0

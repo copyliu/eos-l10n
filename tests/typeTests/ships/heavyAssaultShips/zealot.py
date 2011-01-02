@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Zealot"
 
+    # Amarr Cruiser Skill Bonus:
+    # 10% bonus to Medium Energy Turret capacitor use per level
+
     def test_amarrCruiser_capacitorNeed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to Medium Energy Turret rate of fire per level
 
     def test_amarrCruiser_speed_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Medium Energy Turret optimal range per level
+
     def test_heavyAssaultShips_maxRange_moduleEnergyWeaponMedium(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 5% bonus to Medium Energy Turret damage per level
 
     def test_heavyAssaultShips_damageMultiplier_moduleEnergyWeaponMedium(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Navitas"
 
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to cargo capacity per skill level
+
     def test_gallenteFrigate_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -33,6 +36,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 20% bonus to mining laser yield per skill level
 
     def test_gallenteFrigate_miningAmount_moduleMiningLaser(self):
         self.buildTested = 0
@@ -78,6 +84,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -60% mining laser capacitor use
 
     def test_static_capacitorNeed_moduleMiningLaser(self):
         self.buildTested = 0

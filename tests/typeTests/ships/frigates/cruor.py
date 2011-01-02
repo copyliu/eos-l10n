@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Cruor"
 
+    # Amarr Frigate Skill Bonus:
+    # 15% bonus to Energy Vampire drain amount per level
+
     def test_amarrFrigate_powerTransferAmount_moduleEnergyVampire(self):
         self.buildTested = 0
         attr = "powerTransferAmount"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Frigate Skill Bonus:
+    # 15% bonus to Energy Neutralizer drain amount per level
+
     def test_amarrFrigate_energyDestabilizationAmount_moduleEnergyDestabilizer(self):
         self.buildTested = 0
         attr = "energyDestabilizationAmount"
@@ -49,6 +55,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Frigate Skill Bonus:
+    # 10% bonus to the velocity factor of stasis webifiers per level
 
     def test_minmatarFrigate_speedFactor_moduleStasisWeb(self):
         self.buildTested = 0
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Small Energy Turret damage
 
     def test_static_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0

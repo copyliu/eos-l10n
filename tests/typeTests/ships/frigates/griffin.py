@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Griffin"
 
+    # Caldari Frigate Skill Bonus:
+    # 15% bonus to ECM Target Jammer strength
+
     def test_caldariFrigate_scanGravimetricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanGravimetricStrengthBonus"
@@ -124,6 +127,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to ECM Target Jammers' capacitor need per level
 
     def test_caldariFrigate_capacitorNeed_moduleEcm(self):
         self.buildTested = 0

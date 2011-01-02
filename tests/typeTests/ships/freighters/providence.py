@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Providence"
 
+    # Amarr Freighter Skill Bonus:
+    # 5% bonus to cargo hold capacity per level
+
     def test_amarrFreighter_capacity_ship(self):
         self.buildTested = 0
         attr = "capacity"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Freighter Skill Bonus:
+    # 5% bonus to maximum velocity per level
 
     def test_amarrFreighter_maxVelocity_ship(self):
         self.buildTested = 0

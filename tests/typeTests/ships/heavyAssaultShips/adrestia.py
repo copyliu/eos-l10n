@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Adrestia"
 
+    # Gallente Cruiser Skill Bonus:
+    # 20% Bonus to medium hybrid turret damage per level
+
     def test_gallenteCruiser_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # 20% Bonus to warp disruptor and warp scrambler range per level
 
     def test_gallenteCruiser_maxRange_moduleWarpScrambler(self):
         self.buildTested = 0
@@ -80,6 +86,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 25% bonus to max velocity
+
     def test_static_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -103,6 +112,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Medium Hybrid Turret falloff
 
     def test_static_falloff_moduleHybridWeaponMedium(self):
         self.buildTested = 0
@@ -129,6 +141,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Medium Hybrid Turret tracking speed
 
     def test_static_trackingSpeed_moduleHybridWeaponMedium(self):
         self.buildTested = 0

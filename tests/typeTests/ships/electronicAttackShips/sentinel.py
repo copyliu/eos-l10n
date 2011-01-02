@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Sentinel"
 
+    # Amarr Frigate Skill Bonus:
+    # 20% bonus to energy vampire transfer amount per level
+
     def test_amarrFrigate_powerTransferAmount_moduleEnergyVampire(self):
         self.buildTested = 0
         attr = "powerTransferAmount"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Frigate Skill Bonus:
+    # 20% bonus to energy neutralizer transfer amount per level
+
     def test_amarrFrigate_energyDestabilizationAmount_moduleEnergyDestabilizer(self):
         self.buildTested = 0
         attr = "energyDestabilizationAmount"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to effectiveness of tracking disruptors per level
 
     def test_amarrFrigate_maxRangeBonus_moduleTrackingDisruptor(self):
         self.buildTested = 0
@@ -155,6 +164,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Electronic Attack Ships Skill Bonus:
+    # 40% bonus to energy vampire range per level
+
     def test_electronicAttackShips_powerTransferRange_moduleEnergyVampire(self):
         self.buildTested = 0
         attr = "powerTransferRange"
@@ -185,6 +197,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Electronic Attack Ships Skill Bonus:
+    # 40% bonus to energy neutralizer range per level
+
     def test_electronicAttackShips_energyDestabilizationRange_moduleEnergyDestabilizer(self):
         self.buildTested = 0
         attr = "energyDestabilizationRange"
@@ -214,6 +229,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 5% reduction in capacitor recharge time per level
 
     def test_electronicAttackShips_rechargeRate_ship(self):
         self.buildTested = 0

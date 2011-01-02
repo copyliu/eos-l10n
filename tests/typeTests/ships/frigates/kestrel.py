@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Kestrel"
 
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to EM missile damage per level
+
     def test_caldariFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -259,6 +262,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to Explosive missile damage per level
 
     def test_caldariFrigate_explosiveDamage_chargeMissileRocket(self):
         self.buildTested = 0
@@ -530,6 +536,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to Kinetic missile damage per level
+
     def test_caldariFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -799,6 +808,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to Thermal missile damage per level
 
     def test_caldariFrigate_thermalDamage_chargeMissileRocket(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Keres"
 
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to remote sensor dampener effectiveness per level
+
     def test_gallenteFrigate_maxTargetRangeBonus_moduleRemoteSensorDamper(self):
         self.buildTested = 0
         attr = "maxTargetRangeBonus"
@@ -65,6 +68,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Frigate Skill Bonus:
+    # 10% reduction in remote sensor dampener capacitor need per level
+
     def test_gallenteFrigate_capacitorNeed_moduleRemoteSensorDamper(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -94,6 +100,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 10% bonus to warp disruptor range
 
     def test_electronicAttackShips_maxRange_moduleWarpScrambler(self):
         self.buildTested = 0
@@ -139,6 +148,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Electronic Attack Ships Skill Bonus:
+    # 10% reduction in warp disruptor capacitor need per level
 
     def test_electronicAttackShips_capacitorNeed_moduleWarpScrambler(self):
         self.buildTested = 0

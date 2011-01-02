@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Executioner"
 
+    # Amarr Frigate Skill Bonus:
+    # 10% bonus to Small Energy Turret capacitor use per skill level
+
     def test_amarrFrigate_capacitorNeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "capacitorNeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Frigate Skill Bonus:
+    # 5% Small Energy Turret damage per skill level
 
     def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0

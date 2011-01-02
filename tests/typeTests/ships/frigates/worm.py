@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Worm"
 
+    # Caldari Frigate Skill Bonus:
+    # 5% shield resistance per level
+
     def test_caldariFrigate_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "shieldEmDamageResonance"
@@ -121,6 +124,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Frigate Skill Bonus:
+    # 5m3 Drone Bay Capacity per level
+
     def test_gallenteFrigate_droneCapacity_ship(self):
         self.buildTested = 0
         attr = "droneCapacity"
@@ -134,6 +140,9 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Rocket velocity
 
     def test_static_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
@@ -160,6 +169,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Light Missile velocity
 
     def test_static_maxVelocity_chargeMissileLight(self):
         self.buildTested = 0

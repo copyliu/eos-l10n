@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Dramiel"
 
+    # Minmatar Frigate Skill Bonus:
+    # 10% bonus to Small Projectile Turret falloff per level
+
     def test_minmatarFrigate_falloff_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Frigate Skill Bonus:
+    # 7.5% bonus to Small Projectile Turret tracking speed per level
+
     def test_gallenteFrigate_trackingSpeed_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Small Projectile Turret damage
 
     def test_static_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0

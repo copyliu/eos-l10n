@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Inquisitor"
 
+    # Amarr Frigate Skill Bonus:
+    # 10% bonus to EM missile damage per skill level
+
     def test_amarrFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -274,6 +277,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to Explosive missile damage per skill level
 
     def test_amarrFrigate_explosiveDamage_chargeMissileRocket(self):
         self.buildTested = 0
@@ -560,6 +566,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to Kinetic missile damage per skill level
+
     def test_amarrFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -844,6 +853,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Frigate Skill Bonus:
+    # 5% bonus to Thermal missile damage per skill level
 
     def test_amarrFrigate_thermalDamage_chargeMissileRocket(self):
         self.buildTested = 0

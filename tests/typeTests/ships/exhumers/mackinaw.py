@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Mackinaw"
 
+    # Mining Barge Skill Bonus:
+    # 3% better yield for Strip Miners per level
+
     def test_miningBarge_miningAmount_moduleFrequencyMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -95,6 +98,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Exhumers Skill Bonus:
+    # 5% reduction in Ice Harvester duration per level
+
     def test_exhumers_duration_moduleIceHarvester(self):
         self.buildTested = 0
         attr = "duration"
@@ -125,6 +131,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Role Bonus:
+    # 100% bonus Ice Harvester yield
+
     def test_static_miningAmount_moduleIceHarvester(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -150,6 +159,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # 25% penalty to ice harvester duration
 
     def test_static_duration_moduleIceHarvester(self):
         self.buildTested = 0

@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Caldari Navy Hookbill"
 
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to missile velocity per level
+
     def test_caldariFrigate_maxVelocity_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -109,6 +112,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to EM missile damage per level
 
     def test_caldariFrigate_emDamage_chargeMissileRocket(self):
         self.buildTested = 0
@@ -364,6 +370,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to Explosive missile damage per level
 
     def test_caldariFrigate_explosiveDamage_chargeMissileRocket(self):
         self.buildTested = 0
@@ -635,6 +644,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 20% bonus to Kinetic missile damage per level
+
     def test_caldariFrigate_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -904,6 +916,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to Thermal missile damage per level
 
     def test_caldariFrigate_thermalDamage_chargeMissileRocket(self):
         self.buildTested = 0

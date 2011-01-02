@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Onyx"
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to kinetic missile damage per level
+
     def test_caldariCruiser_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -290,6 +293,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to shield resistances per level
+
     def test_caldariCruiser_shieldEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "shieldEmDamageResonance"
@@ -406,6 +412,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Interdictors Skill Bonus:
+    # 10% bonus to heavy assault missile velocity per level
+
     def test_heavyInterdictors_maxVelocity_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -435,6 +444,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Interdictors Skill Bonus:
+    # 10% bonus to heavy missile velocity per level
 
     def test_heavyInterdictors_maxVelocity_chargeMissileHeavy(self):
         self.buildTested = 0
@@ -495,6 +507,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Interdictors Skill Bonus:
+    # 5% bonus to range of warp disruption fields per level
 
     def test_heavyInterdictors_warpScrambleRange_moduleWarpDisruptionFieldGenerator(self):
         self.buildTested = 0

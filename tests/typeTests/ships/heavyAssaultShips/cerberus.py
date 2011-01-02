@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Cerberus"
 
+    # Caldari Cruiser Skill Bonus:
+    # 5% bonus to Kinetic Missile damage per level
+
     def test_caldariCruiser_kineticDamage_chargeMissileRocket(self):
         self.buildTested = 0
         attr = "kineticDamage"
@@ -290,6 +293,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Cruiser Skill Bonus:
+    # 10% bonus to Missile velocity per level
+
     def test_caldariCruiser_maxVelocity_chargeMissileLight(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -440,6 +446,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Hidden bonus:
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Light Missile flight time per level
+
     def test_heavyAssaultShips_explosionDelay_chargeMissileLight(self):
         self.buildTested = 0
         attr = "explosionDelay"
@@ -485,6 +495,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Heavy Assault Missile flight time per level
+
     def test_heavyAssaultShips_explosionDelay_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "explosionDelay"
@@ -514,6 +527,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Heavy Missile flight time per level
 
     def test_heavyAssaultShips_explosionDelay_chargeMissileHeavy(self):
         self.buildTested = 0
@@ -589,6 +605,10 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 5% bonus to Missile Launcher rate of fire per level
+    # Actually affects only Assault, Heavy Assault and Heavy launchers
 
     def test_heavyAssaultShips_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0

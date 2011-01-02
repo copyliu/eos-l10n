@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Hulk"
 
+    # Mining Barge Skill Bonus:
+    # 3% better yield for Strip Miners per level
+
     def test_miningBarge_miningAmount_moduleFrequencyMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -95,6 +98,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Exhumers Skill Bonus:
+    # 3% better yield for Strip Miners per level
+
     def test_exhumers_miningAmount_moduleFrequencyMiningLaser(self):
         self.buildTested = 0
         attr = "miningAmount"
@@ -184,6 +190,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Exhumers Skill Bonus:
+    # 3% reduction in Ice Harvester duration per level
 
     def test_exhumers_duration_moduleIceHarvester(self):
         self.buildTested = 0

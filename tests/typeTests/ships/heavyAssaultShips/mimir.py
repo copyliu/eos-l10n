@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Mimir"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 20% bonus to Medium Projectile Turret damage per level
+
     def test_minmatarCruiser_damageMultiplier_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to all armor resistances per level
 
     def test_minmatarCruiser_armorEmDamageResonance_ship(self):
         self.buildTested = 0
@@ -151,6 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Special Ability:
+    # 25% bonus to max velocity
+
     def test_static_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -174,6 +183,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Medium Projectile Turret falloff
 
     def test_static_falloff_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
@@ -200,6 +212,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 50% bonus to Medium Projectile Turret optimal range
 
     def test_static_maxRange_moduleProjectileWeaponMedium(self):
         self.buildTested = 0

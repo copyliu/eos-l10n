@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Ishtar"
 
+    # Gallente Cruiser Skill Bonus:
+    # 5% bonus to Medium Hybrid Turret damage per skill level
+
     def test_gallenteCruiser_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone hitpoints per skill level
 
     def test_gallenteCruiser_hp_droneCombat(self):
         self.buildTested = 0
@@ -143,6 +149,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Cruiser Skill Bonus:
+    # 10% bonus to drone damage per skill level
+
     def test_gallenteCruiser_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -173,6 +182,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # +5 km bonus to Scout and Heavy Drone operation range per level
+
     def test_heavyAssaultShips_droneControlRange_ship(self):
         self.buildTested = 0
         attr = "droneControlRange"
@@ -186,6 +198,9 @@ class Test(TestBase):
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # +50 m3 extra Drone Bay space per level
 
     def test_heavyAssaultShips_droneCapacity_ship(self):
         self.buildTested = 0

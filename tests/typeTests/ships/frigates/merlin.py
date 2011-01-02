@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Merlin"
 
+    # Caldari Frigate Skill Bonus:
+    # 10% bonus to Small Hybrid Turret optimal range per skill level
+
     def test_caldariFrigate_maxRange_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to shield resistances per skill level
 
     def test_caldariFrigate_shieldEmDamageResonance_ship(self):
         self.buildTested = 0

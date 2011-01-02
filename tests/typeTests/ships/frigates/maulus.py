@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Maulus"
 
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to Small Hybrid Turret damage per skill level
+
     def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to Remote Sensor Dampener effectiveness per skill level
 
     def test_gallenteFrigate_maxTargetRangeBonus_moduleRemoteSensorDamper(self):
         self.buildTested = 0

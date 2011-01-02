@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vagabond"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to max velocity per level
 
     def test_minmatarruiser_maxVelocity_ship(self):
         self.buildTested = 0
@@ -79,6 +85,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Medium Projectile Turret falloff range per level
+
     def test_heavyAssaultShips_falloff_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "falloff"
@@ -108,6 +117,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 5% bonus to Medium Projectile Turret damage per level
 
     def test_heavyAssaultShips_damageMultiplier_moduleProjectileWeaponMedium(self):
         self.buildTested = 0

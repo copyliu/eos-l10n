@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Vigil"
 
+    # Minmatar Frigate Skill Bonus:
+    # 5% ship velocity per skill level
+
     def test_minmatarFrigate_maxVelocity_ship(self):
         self.buildTested = 0
         attr = "maxVelocity"
@@ -33,6 +36,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Frigate Skill Bonus:
+    # 5% Target Painter effectiveness per skill level
 
     def test_minmatarFrigate_signatureRadiusBonus_moduleTargetPainter(self):
         self.buildTested = 0

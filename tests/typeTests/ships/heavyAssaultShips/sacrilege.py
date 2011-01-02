@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Sacrilege"
 
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to Heavy Assault Missile damage per level
+
     def test_amarrCruiser_emDamage_chargeMissileAssault(self):
         self.buildTested = 0
         attr = "emDamage"
@@ -185,6 +188,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Amarr Cruiser Skill Bonus:
+    # 5% bonus to all armor resistances per level
+
     def test_amarrCruiser_armorEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "armorEmDamageResonance"
@@ -301,6 +307,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # 5% reduction of capacitor recharge time per level
+
     def test_heavyAssaultShips_rechargeRate_ship(self):
         self.buildTested = 0
         attr = "rechargeRate"
@@ -314,6 +323,10 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 5% bonus to Missile Launcher rate of fire per level
+    # Actually affects only Assault, Heavy Assault and Heavy launchers
 
     def test_heavyAssaultShips_speed_moduleLauncherMissileAssault(self):
         self.buildTested = 0

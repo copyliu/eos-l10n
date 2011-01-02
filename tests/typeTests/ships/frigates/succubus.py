@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Succubus"
 
+    # Amarr Frigate Skill Bonus:
+    # 7.5% bonus to Small Energy Turret tracking per level
+
     def test_amarrFrigate_trackingSpeed_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Caldari Frigate Skill Bonus:
+    # 5% bonus to Small Energy Turret damage per level
+
     def test_caldariFrigate_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -64,6 +70,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 100% bonus to Small Energy Turret damage
 
     def test_static_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0

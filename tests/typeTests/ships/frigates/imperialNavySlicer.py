@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Imperial Navy Slicer"
 
+    # Amarr Frigate Skill Bonus:
+    # 10% bonus to Small Energy Turret optimal range per level
+
     def test_amarrFrigate_maxRange_moduleEnergyWeaponSmall(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Amarr Frigate Skill Bonus:
+    # 25% bonus to Small Energy Turret damage per level
 
     def test_amarrFrigate_damageMultiplier_moduleEnergyWeaponSmall(self):
         self.buildTested = 0

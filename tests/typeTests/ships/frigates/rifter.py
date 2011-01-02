@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Rifter"
 
+    # Minmatar Frigate Skill Bonus:
+    # 5% bonus to Small Projectile Turret damage per level
+
     def test_minmatarFrigate_damageMultiplier_moduleProjectileWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Frigate Skill Bonus:
+    # 7.5% bonus to Small Projectile Turret tracking per level
 
     def test_minmatarFrigate_trackingSpeed_moduleProjectileWeaponSmall(self):
         self.buildTested = 0

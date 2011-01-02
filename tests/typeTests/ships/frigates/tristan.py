@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Tristan"
 
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to Small Hybrid Turret damage per skill level
+
     def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "damageMultiplier"
@@ -35,6 +38,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Gallente Frigate Skill Bonus:
+    # 7.5% bonus to Small Hybrid Turret tracking speed per skill level
+    # Wrong value in description, actually it's 7%
 
     def test_gallenteFrigate_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0

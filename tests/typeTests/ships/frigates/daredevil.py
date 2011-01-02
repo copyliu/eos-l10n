@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Daredevil"
 
+    # Gallente Frigate Skill Bonus:
+    # 10% bonus to Small Hybrid Turret falloff per level
+
     def test_gallenteFrigate_falloff_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "falloff"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Frigate Skill Bonus:
+    # 10% bonus to the velocity factor of stasis webifiers per level
 
     def test_minmatarFrigate_speedFactor_moduleStasisWeb(self):
         self.buildTested = 0
@@ -79,6 +85,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Special Ability:
+    # 200% bonus to Small Hybrid Turret damage
 
     def test_static_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0

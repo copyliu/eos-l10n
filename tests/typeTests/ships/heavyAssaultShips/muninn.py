@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Muninn"
 
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret rate of fire per level
+
     def test_minmatarCruiser_speed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "speed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Minmatar Cruiser Skill Bonus:
+    # 5% bonus to Medium Projectile Turret damage per level
 
     def test_minmatarCruiser_damageMultiplier_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
@@ -65,6 +71,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
+    # Heavy Assault Ship Skill Bonus:
+    # 10% bonus to Medium Projectile Turret optimal range per level
+
     def test_heavyAssaultShips_maxRange_moduleProjectileWeaponMedium(self):
         self.buildTested = 0
         attr = "maxRange"
@@ -94,6 +103,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Heavy Assault Ship Skill Bonus:
+    # 7.5% bonus to Medium Projectile Turret tracking speed per level
 
     def test_heavyAssaultShips_trackingSpeed_moduleProjectileWeaponMedium(self):
         self.buildTested = 0

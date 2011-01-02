@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Federation Navy Comet"
 
+    # Gallente Frigate Skill Bonus:
+    # 7.5% bonus to Small Hybrid Weapon tracking speed per level
+
     def test_gallenteFrigate_trackingSpeed_moduleHybridWeaponSmall(self):
         self.buildTested = 0
         attr = "trackingSpeed"
@@ -34,6 +37,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 20% bonus to Small Hybrid Turret damage per level
 
     def test_gallenteFrigate_damageMultiplier_moduleHybridWeaponSmall(self):
         self.buildTested = 0

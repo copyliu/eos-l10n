@@ -5,6 +5,9 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.ship = "Imicus"
 
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to drone range per level
+
     def test_gallenteFrigate_droneControlRange_ship(self):
         self.buildTested = 0
         attr = "droneControlRange"
@@ -18,6 +21,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 5% increase to scan strength of probes per level
 
     def test_gallenteFrigate_baseSensorStrength_chargeScannerProbe(self):
         self.buildTested = 0
@@ -33,6 +39,9 @@ class Test(TestBase):
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
+
+    # Gallente Frigate Skill Bonus:
+    # 5% bonus to survey probe flight time per level
 
     def test_gallenteFrigate_explosionDelay_chargeSurveyProbe(self):
         self.buildTested = 0
