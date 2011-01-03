@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Inherent Implants 'Lancer' Epsilon (3 of 3)
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Epsilon (6 of 6)
 #Implant: Pashan's Turret Handling Mindlink
 #Skill: Large Energy Turret
 type = "passive"

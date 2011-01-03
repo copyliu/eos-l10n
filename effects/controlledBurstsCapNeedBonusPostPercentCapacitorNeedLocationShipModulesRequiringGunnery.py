@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Inherent Implants 'Lancer' Beta (3 of 3)
+#Implants named like: Hardwiring Inherent Implants 'Lancer' Beta (6 of 6)
 #Skill: Controlled Bursts
 type = "passive"
 def handler(fit, container, context):
