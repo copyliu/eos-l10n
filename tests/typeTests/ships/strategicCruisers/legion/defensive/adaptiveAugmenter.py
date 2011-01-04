@@ -130,7 +130,18 @@ class Test(TestBase):
         iIngame = 0.0
         fIngame = 1.0
         iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
-        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
+        dIngame = fIngame - iIngame
+        dEos = fEos - iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_static_medSlots_ship(self):
+        self.buildTested = 0
+        attr = "medSlots"
+        iIngame = 0.0
+        fIngame = 0.0
+        iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
@@ -141,7 +152,7 @@ class Test(TestBase):
         iIngame = 0.0
         fIngame = 1.0
         iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
-        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
         dIngame = fIngame - iIngame
         dEos = fEos - iEos
         self.assertAlmostEquals(dEos, dIngame)
