@@ -9,4 +9,4 @@ def handler(fit, module, context):
                                   "speedBoostFactor", module.getModifiedItemAttr("speedBoostFactorBonus"))
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Afterburner",
                                   "speedFactor", module.getModifiedItemAttr("speedFactorBonus"))
-    fit.ship.itemModifiedAttributes["disallowAssistance"] =  1
+    fit.ship.forceItemAttr("disallowAssistance", 1)
