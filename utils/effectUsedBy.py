@@ -116,9 +116,10 @@ db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
 # As we don't rely on eos's overrides, we need to set them manually
-forcepub_types = ("Freki", "Mimir", "Utu", "Adrestia", "Ibis", "Impairor", "Velator", "Reaper")
+FORCEPUB_TYPES = ("Freki", "Mimir", "Utu", "Adrestia", "Ibis", "Impairor",
+                  "Velator", "Reaper")
 OVERRIDES_TYPEPUB = 'UPDATE invtypes SET published = 1 WHERE typeName = ?'
-for typename in forcepub_types:
+for typename in FORCEPUB_TYPES:
     cursor.execute(OVERRIDES_TYPEPUB, (typename,))
 
 # Queries to get raw data
@@ -160,7 +161,11 @@ for row in cursor:
     effectid = row[0]
     effectnamedb = row[1]
     effectnameeos = re.sub(STRIPSPEC, "", effectnamedb)
-    globalmap_effectnameeos_effectid[effectnameeos] = effectid
+    # There may be different effects with the same name, so form
+    # sets of IDs
+    if not effectnameeos in globalmap_effectnameeos_effectid:
+        globalmap_effectnameeos_effectid[effectnameeos] = set()
+    globalmap_effectnameeos_effectid[effectnameeos].add(effectid)
 
 # Stage 1
 
@@ -393,15 +398,16 @@ for effect_name in effect_list:
     # Set of items which are affected by current effect
     pereffectlist_usedbytypes = set()
     if effect_name in globalmap_effectnameeos_effectid:
-        effectid = globalmap_effectnameeos_effectid[effect_name]
+        effectids = globalmap_effectnameeos_effectid[effect_name]
     else:
         print("Effect {0} not found and will be skipped".format(effect_name))
         continue
-    cursor.execute(QUERY_EFFECTID_TYPEID, (effectid,))
-    for row in cursor:
-        typeid = row[0]
-        if typeid in publishedtypes:
-            pereffectlist_usedbytypes.add(typeid)
+    for effectid in effectids:
+        cursor.execute(QUERY_EFFECTID_TYPEID, (effectid,))
+        for row in cursor:
+            typeid = row[0]
+            if typeid in publishedtypes:
+                pereffectlist_usedbytypes.add(typeid)
     # Number of items affected by current effect
     pereffect_totalaffected = len(pereffectlist_usedbytypes)
 
