@@ -4,30 +4,47 @@ class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
         self.hull = "Legion"
-        self.sub = "Legion Defensive - Warfare Processor"
-        self.skill = "Amarr Defensive Systems"
+        self.sub = "Legion Electronics - Emergent Locus Analyzer"
+        self.skill = "Amarr Electronic Systems"
 
     # Subsystem Skill Bonus:
-    # 5% bonus to effectiveness of Armored Warfare Links per subsystem skill level
+    # 10% increase to scan strength of probes per level
 
-    def test_amarrDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqArmoredWarfare(self):
+    def test_amarrElectronicSystems_baseSensorStrength_chargeScannerProbe(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Armored Warfare Link - Damage Control"
+        attr = "baseSensorStrength"
+        item = "Core Scanner Probe I"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.1
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.4
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl), ship=self.hull, miscitms=self.sub)
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl), ship=self.hull, miscitms=self.sub)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqOther(self):
+    # Subsystem Skill Bonus:
+    # 20% bonus to range of tractor beams per level
+
+    def test_amarrElectronicSystems_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Siege Warfare Link - Shield Efficiency"
+        attr = "maxRange"
+        item = "Small Tractor Beam I"
+        iLvl = 1
+        iIngame = 1.2
+        fLvl = 4
+        fIngame = 1.8
+        iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl), ship=self.hull, miscitms=self.sub)
+        fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl), ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_amarrElectronicSystems_maxRange_moduleOther(self):
+        self.buildTested = 0
+        attr = "maxRange"
+        item = "Salvager I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -38,13 +55,30 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    # Role Bonus:
-    # 99% reduction in Warfare Link module CPU need
+    # Subsystem Skill Bonus:
+    # 20% bonus to velocity of tractor beams per level
 
-    def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
+    def test_amarrElectronicSystems_maxTractorVelocity_moduleTractorBeam(self):
+        self.buildTested = 0
+        attr = "maxTractorVelocity"
+        item = "Small Tractor Beam I"
+        iLvl = 1
+        iIngame = 1.2
+        fLvl = 4
+        fIngame = 1.8
+        iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl), ship=self.hull, miscitms=self.sub)
+        fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl), ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    # Role Bonus:
+    # -99% reduced CPU need for Scan Probe Launchers
+
+    def test_static_cpu_moduleScanProbeLauncher(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Mining Foreman Link - Laser Optimization"
+        item = "Expanded Probe Launcher I"
         iIngame = 1.0
         fIngame = 0.01
         iEos = self.getItemAttr(attr, item, ship=self.hull)
@@ -53,10 +87,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_cpu_moduleGangCoordinatorNoSkillrqLeadership(self):
+    def test_static_cpu_moduleOther(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Command Processor I"
+        item = "Power Diagnostic System I"
         iIngame = 1.0
         fIngame = 1.0
         iEos = self.getItemAttr(attr, item, ship=self.hull)
@@ -83,7 +117,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "medSlots"
         iIngame = 0.0
-        fIngame = 0.0
+        fIngame = 3.0
         iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
         dIngame = fIngame - iIngame
@@ -94,7 +128,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "lowSlots"
         iIngame = 0.0
-        fIngame = 1.0
+        fIngame = 0.0
         iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
         dIngame = fIngame - iIngame
@@ -102,13 +136,13 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # +1400000 kg mass
+    # +1200000 kg mass
 
     def test_static_mass_ship(self):
         self.buildTested = 0
         attr = "mass"
         iIngame = 6815000.0
-        fIngame = 8215000.0
+        fIngame = 8015000.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
@@ -116,95 +150,13 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # 140 m signature radius
+    # +380 tf cpu
 
-    def test_static_signatureRadius_ship(self):
+    def test_static_cpuOutput_ship(self):
         self.buildTested = 0
-        attr = "signatureRadius"
-        ingame = 140.0
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    # Hidden bonus:
-    # 300 m3 cargohold capacity
-
-    def test_static_capacity_ship(self):
-        self.buildTested = 0
-        attr = "capacity"
-        ingame = 300.0
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    # Hidden bonus:
-    # Assign ship armor resistances
-
-    def test_static_armorEmDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "armorEmDamageResonance"
-        ingame = 0.5
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    def test_static_armorExplosiveDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "armorExplosiveDamageResonance"
-        ingame = 0.2
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    def test_static_armorKineticDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "armorKineticDamageResonance"
-        ingame = 0.375
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    def test_static_armorThermalDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "armorThermalDamageResonance"
-        ingame = 0.65
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    # Hidden bonus:
-    # Assign ship shield resistances
-
-    def test_static_shieldEmDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "shieldEmDamageResonance"
-        ingame = 1.0
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    def test_static_shieldExplosiveDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "shieldExplosiveDamageResonance"
-        ingame = 0.125
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    def test_static_shieldKineticDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "shieldKineticDamageResonance"
-        ingame = 0.3
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    def test_static_shieldThermalDamageResonance_ship(self):
-        self.buildTested = 0
-        attr = "shieldThermalDamageResonance"
-        ingame = 0.8
-        eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        self.assertAlmostEquals(eos, ingame)
-
-    # Hidden bonus:
-    # +3300 armor hp
-
-    def test_static_armorHP_ship(self):
-        self.buildTested = 0
-        attr = "armorHP"
-        iIngame = 100.0
-        fIngame = 3400.0
+        attr = "cpuOutput"
+        iIngame = 0.0
+        fIngame = 380.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
@@ -212,13 +164,13 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # +2200 shield capacity
+    # +55 km lock range
 
-    def test_static_shieldCapacity_ship(self):
+    def test_static_maxTargetRange_ship(self):
         self.buildTested = 0
-        attr = "shieldCapacity"
-        iIngame = 100.0
-        fIngame = 2300.0
+        attr = "maxTargetRange"
+        iIngame = 0.0
+        fIngame = 55000.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
@@ -226,13 +178,60 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # +1620 seconds shield recharge rate
+    # +280 mm scan resolution
 
-    def test_static_shieldRechargeRate_ship(self):
+    def test_static_scanResolution_ship(self):
         self.buildTested = 0
-        attr = "shieldRechargeRate"
-        iIngame = 7500.0
-        fIngame = 1627500.0
+        attr = "scanResolution"
+        iIngame = 0.0
+        fIngame = 280.0
+        iEos = self.getShipAttr(attr, ship=self.hull)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame - iIngame
+        dEos = fEos - iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    # Hidden bonus:
+    # Add 13 radar sensor strength
+
+    def test_static_scanGravimetricStrength_ship(self):
+        self.buildTested = 0
+        attr = "scanGravimetricStrength"
+        iIngame = 0.0
+        fIngame = 0.0
+        iEos = self.getShipAttr(attr, ship=self.hull)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame - iIngame
+        dEos = fEos - iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_static_scanLadarStrength_ship(self):
+        self.buildTested = 0
+        attr = "scanLadarStrength"
+        iIngame = 0.0
+        fIngame = 0.0
+        iEos = self.getShipAttr(attr, ship=self.hull)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame - iIngame
+        dEos = fEos - iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_static_scanMagnetometricStrength_ship(self):
+        self.buildTested = 0
+        attr = "scanMagnetometricStrength"
+        iIngame = 0.0
+        fIngame = 0.0
+        iEos = self.getShipAttr(attr, ship=self.hull)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame - iIngame
+        dEos = fEos - iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_static_scanRadarStrength_ship(self):
+        self.buildTested = 0
+        attr = "scanRadarStrength"
+        iIngame = 0.0
+        fIngame = 17.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
