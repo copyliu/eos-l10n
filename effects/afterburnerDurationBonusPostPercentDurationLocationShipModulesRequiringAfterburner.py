@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Eifyr and Co. 'Rogue' EY (6 of 6)
+#Implants named like: Hardwiring Eifyr and Co. 'Rogue' EY (3 of 3)
 #Implant: Zor's Custom Navigation Link
 #Skill: Afterburner
 type = "passive"

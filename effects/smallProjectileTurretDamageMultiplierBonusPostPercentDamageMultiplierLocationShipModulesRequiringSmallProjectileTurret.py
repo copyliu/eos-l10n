@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' SX (6 of 6)
+#Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' SX (3 of 3)
 #Skill: Small Projectile Turret
 type = "passive"
 def handler(fit, container, context):

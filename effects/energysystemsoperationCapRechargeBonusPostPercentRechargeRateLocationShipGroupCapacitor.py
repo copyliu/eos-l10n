@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Inherent Implants 'Squire' CR (6 of 6)
+#Implants named like: Hardwiring Inherent Implants 'Squire' CR (3 of 3)
 #Modules named like: Capacitor Control Circuit (6 of 6)
 #Skill: Energy Systems Operation
 type = "passive"

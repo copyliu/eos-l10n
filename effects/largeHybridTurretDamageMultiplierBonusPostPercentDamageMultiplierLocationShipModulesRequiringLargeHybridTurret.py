@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZGL (6 of 6)
+#Implants named like: Hardwiring Zainou 'Deadeye' ZGL (3 of 3)
 #Skill: Large Hybrid Turret
 type = "passive"
 def handler(fit, container, context):

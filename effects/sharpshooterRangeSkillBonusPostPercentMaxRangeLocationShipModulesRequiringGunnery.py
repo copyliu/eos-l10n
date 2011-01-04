@@ -1,6 +1,6 @@
 #Used by:
 #Implants named like: Frentix Booster (4 of 4)
-#Implants named like: Hardwiring Zainou 'Deadeye' ZGA (6 of 6)
+#Implants named like: Hardwiring Zainou 'Deadeye' ZGA (3 of 3)
 #Skill: Sharpshooter
 type = "passive"
 def handler(fit, container, context):

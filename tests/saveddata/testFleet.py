@@ -33,6 +33,7 @@ class Test(TestBase):
         self.assertNotEquals(id(squad), id(self.s))
         self.assertEquals(len(squad.members), 2)
 
+
     def test_skillGang(self):
         self.s.leader.character.getSkill("Leadership").level = 5
         self.g.calculateModifiedAttributes()
