@@ -51,5 +51,5 @@ def handler(fit, module, context):
     fit.ship.increaseItemAttr("maxLockedTargets", module.getModifiedItemAttr("maxLockedTargetsBonus"))
 
     #Block EWAR & projected effects
-    fit.ship.itemModifiedAttributes["disallowOffensiveModifiers"] = module.getModifiedItemAttr("disallowOffensiveModifiers")
-    fit.ship.itemModifiedAttributes["disallowAssistance"] = module.getModifiedItemAttr("disallowAssistance")
+    fit.ship.forceItemAttr("disallowOffensiveModifiers", module.getModifiedItemAttr("disallowOffensiveModifiers"))
+    fit.ship.forceItemAttr("disallowAssistance", module.getModifiedItemAttr("disallowAssistance"))
