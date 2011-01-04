@@ -21,6 +21,8 @@ parser.add_option("-z", "--nozero", action="store_true", help="ignore attributes
 default=False)
 parser.add_option("-o", "--noone", action="store_true", help="ignore attributes with value equal to 1",
 default=False)
+parser.add_option("-t", "--tech1", action="store_true", help="show only t1 items (with exception for items with no t1 variations)",
+default=False)
 (options, args) = parser.parse_args()
 
 if not options.attr:
@@ -223,6 +225,36 @@ for typeid in typeswithattr:
         map_typeid_skillrq[typeid].add(skillid)
     if no_rqs:
         set_typeid_noskillrq.add(typeid)
+
+# Base type maps
+# { basetypeid : set(typeid) }
+globalmap_basetypeid_typeid =  {}
+# { typeid : basetypeid }
+globalmap_typeid_basetypeid =  {}
+for typeid in publishedtypes:
+    # Not all typeIDs in the database have baseTypeID, so assign some
+    # default value to it
+    basetypeid = 0
+    cursor.execute(QUERY_TYPEID_PARENTTYPEID, (typeid,))
+    for row in cursor:
+        basetypeid = row[0]
+    # If base type is not published or is not set in database, consider
+    # item as variation of self
+    if basetypeid not in publishedtypes:
+        basetypeid = typeid
+    if not basetypeid in globalmap_basetypeid_typeid:
+        globalmap_basetypeid_typeid[basetypeid] = set()
+    globalmap_basetypeid_typeid[basetypeid].add(typeid)
+    globalmap_typeid_basetypeid[typeid] = basetypeid
+
+# Filter out non-t1 items if we're asked to do so
+if options.tech1:
+    toremove = set()
+    for typeid in typeswithattr:
+        if globalmap_typeid_basetypeid[typeid] != typeid:
+            toremove.add(typeid)
+    for id in toremove:
+        typeswithattr.remove(id)
 
 def gettypename(typeid):
     typename = ""
