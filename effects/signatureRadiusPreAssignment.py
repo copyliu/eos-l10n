@@ -3,4 +3,4 @@
 type = "passive"
 runTime = "early"
 def handler(fit, module, context):
-    fit.ship.forceItemAttr("signatureRadius", module.getModifiedItemAttr("signatureRadius"))
+    fit.ship.itemModifiedAttributes["signatureRadius"] = module.getModifiedItemAttr("signatureRadius")
