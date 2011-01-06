@@ -194,8 +194,11 @@ class ModifiedAttributeDict(collections.MutableMapping):
         if not attributeName in self.__preAssigns:
             self.__preAssigns[attributeName] = value
             self.__placehold(attributeName)
+            # Add to afflictions only if preassigned value differs from original
             if value != self.getOriginal(attributeName):
                 self.__afflict(attributeName, "=", value)
+        else:
+            print "Failed to preassign {0} to {1} as it was already preassigned to {2}".format(attributeName, value, self.__preAssigns[attributeName])
 
     def increase(self, attributeName, increase, position="pre"):
         """Increase value of given attribute by given number"""
@@ -211,6 +214,7 @@ class ModifiedAttributeDict(collections.MutableMapping):
             tbl[attributeName] = 0
         tbl[attributeName] += increase
         self.__placehold(attributeName)
+        # Add to list of afflictions only if we actually modify value
         if increase != 0:
             self.__afflict(attributeName, "+", increase)
 
@@ -231,6 +235,7 @@ class ModifiedAttributeDict(collections.MutableMapping):
                 self.__multipliers[attributeName] = 1
             self.__multipliers[attributeName] *= multiplier
         self.__placehold(attributeName)
+        # Add to list of afflictions only if we actually modify value
         if multiplier != 1:
             self.__afflict(attributeName, "%s*" % ("s" if stackingPenalties else ""), multiplier)
 
@@ -246,6 +251,8 @@ class ModifiedAttributeDict(collections.MutableMapping):
             self.__forced[attributeName] = value
             self.__placehold(attributeName)
             self.__afflict(attributeName, u"\u2263", value)
+        else:
+            print "Failed to force {0} to {1} as it's already forced to {2}".format(attributeName, value, self.__forced[attributeName])
 
 class Affliction():
     def __init__(self, type, amount):
