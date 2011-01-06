@@ -90,8 +90,6 @@ class ModifiedAttributeDict(collections.MutableMapping):
             return self.getOriginal(key)
 
     def __delitem__(self, key):
-        if key in self.__forced:
-            del self.__forced[key]
         if key in self.__modified:
             del self.__modified[key]
         if key in self.__intermediary:
@@ -115,7 +113,7 @@ class ModifiedAttributeDict(collections.MutableMapping):
         return (self.__original is not None and key in self.__original) or key in self.__modified or key in self.__intermediary
 
     def __placehold(self, key):
-        """Create attribute in item's modified attribute dict even if it's not yet there"""
+        """Create calculation placeholder in item's modified attribute dict"""
         self.__modified[key] = self.CalculationPlaceholder
 
     def __len__(self):
