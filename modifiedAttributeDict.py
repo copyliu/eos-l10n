@@ -188,12 +188,12 @@ class ModifiedAttributeDict(collections.MutableMapping):
 
         stuff.add((modifier, operation, bonus))
 
-    def preAssign(self, attributeName, assign):
+    def preAssign(self, attributeName, value):
         """Overwrites original value of the entity with given one, allowing further modification"""
-        self.__preAssigns[attributeName] = assign
+        self.__preAssigns[attributeName] = value
         self.__placehold(attributeName)
-        if assign != self.getOriginal(attributeName):
-            self.__afflict(attributeName, "=", assign)
+        if value != self.getOriginal(attributeName):
+            self.__afflict(attributeName, "=", value)
 
     def increase(self, attributeName, increase, position="pre"):
         """Increase value of given attribute by given number"""
@@ -241,6 +241,7 @@ class ModifiedAttributeDict(collections.MutableMapping):
         """Force value to attribute and prohibit any changes to it"""
         self.__forced[attributeName] = value
         self.__placehold(attributeName)
+        self.__afflict(attributeName, u"\u2263", value)
 
 class Affliction():
     def __init__(self, type, amount):
