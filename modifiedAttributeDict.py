@@ -192,6 +192,8 @@ class ModifiedAttributeDict(collections.MutableMapping):
         """Overwrites original value of the entity with given one, allowing further modification"""
         self.__preAssigns[attributeName] = assign
         self.__placehold(attributeName)
+        if assign != self.getOriginal(attributeName):
+            self.__afflict(attributeName, "=", assign)
 
     def increase(self, attributeName, increase, position="pre"):
         """Increase value of given attribute by given number"""
