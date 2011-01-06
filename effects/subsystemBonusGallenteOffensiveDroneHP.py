@@ -3,6 +3,6 @@
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Offensive Systems").level
-    for bonus in ("hp", "armorHP", "shieldCapacity"):
-        fit.drones.filteredItemBoost(lambda drone: True, bonus,
+    for layer in ("shieldCapacity", "armorHP", "hp"):
+        fit.drones.filteredItemBoost(lambda drone: drone.item.requiresSkill("Drones"), layer,
                                      module.getModifiedItemAttr("subsystemBonusGallenteOffensive") * level)

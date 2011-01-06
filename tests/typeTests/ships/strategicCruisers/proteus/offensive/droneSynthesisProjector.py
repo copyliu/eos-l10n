@@ -3,31 +3,31 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.hull = "Legion"
-        self.sub = "Legion Offensive - Drone Synthesis Projector"
-        self.skill = "Amarr Offensive Systems"
+        self.hull = "Proteus"
+        self.sub = "Proteus Offensive - Drone Synthesis Projector"
+        self.skill = "Gallente Offensive Systems"
 
     # Subsystem Skill Bonus:
-    # 10% bonus to medium energy turret capacitor use per level
+    # 5% bonus to medium hybrid turret damage per level
 
-    def test_amarrOffensiveSystems_capacitorNeed_moduleEnergyWeaponMedium(self):
+    def test_gallenteOffensiveSystems_damageMultiplier_moduleHybridWeaponMedium(self):
         self.buildTested = 0
-        attr = "capacitorNeed"
-        item = "Heavy Beam Laser I"
+        attr = "damageMultiplier"
+        item = "Dual 150mm Railgun I"
         iLvl = 1
-        iIngame = 0.9
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.6
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl), ship=self.hull, miscitms=self.sub)
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl), ship=self.hull, miscitms=self.sub)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_capacitorNeed_moduleEnergyWeaponOther(self):
+    def test_gallenteOffensiveSystems_damageMultiplier_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "capacitorNeed"
-        item = "Dual Light Beam Laser I"
+        attr = "damageMultiplier"
+        item = "Dual 250mm Railgun I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -41,10 +41,10 @@ class Test(TestBase):
     # Subsystem Skill Bonus:
     # 10% bonus to drone damage per level
 
-    def test_amarrOffensiveSystems_damageMultiplier_droneCombat(self):
+    def test_gallenteOffensiveSystems_damageMultiplier_droneCombat(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Hobgoblin I"
+        item = "Valkyrie I"
         iLvl = 1
         iIngame = 1.1
         fLvl = 4
@@ -55,10 +55,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_damageMultiplier_other(self):
+    def test_gallenteOffensiveSystems_damageMultiplier_other(self):
         self.buildTested = 0
         attr = "damageMultiplier"
-        item = "Dual Light Pulse Laser I"
+        item = "Gyrostabilizer I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -72,9 +72,9 @@ class Test(TestBase):
     # Subsystem Skill Bonus:
     # 7.5% bonus to drone hitpoints per level
 
-    def test_amarrOffensiveSystems_hp_droneCombat(self):
+    def test_gallenteOffensiveSystems_hp_droneCombat(self):
         self.buildTested = 0
-        item = "Hammerhead I"
+        item = "Acolyte I"
         layers = ("shieldCapacity", "armorHP", "hp")
         iLvl = 1
         iIngame = 1.075
@@ -89,9 +89,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_hp_droneLogistic(self):
+    def test_gallenteOffensiveSystems_hp_droneLogistic(self):
         self.buildTested = 0
-        item = "Heavy Shield Maintenance Bot I"
+        item = "Light Armor Maintenance Bot I"
         layers = ("shieldCapacity", "armorHP", "hp")
         iLvl = 1
         iIngame = 1.075
@@ -106,9 +106,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_hp_droneEwar(self):
+    def test_gallenteOffensiveSystems_hp_droneEwar(self):
         self.buildTested = 0
-        item = "Hammerhead SD-600"
+        item = "Praetor TD-900"
         layers = ("shieldCapacity", "armorHP", "hp")
         iLvl = 1
         iIngame = 1.075
@@ -123,9 +123,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_hp_droneCapDrain(self):
+    def test_gallenteOffensiveSystems_hp_droneCapDrain(self):
         self.buildTested = 0
-        item = "Acolyte EV-300"
+        item = "Infiltrator EV-600"
         layers = ("shieldCapacity", "armorHP", "hp")
         iLvl = 1
         iIngame = 1.075
@@ -140,7 +140,7 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_hp_droneWeb(self):
+    def test_gallenteOffensiveSystems_hp_droneWeb(self):
         self.buildTested = 0
         item = "Berserker SW-900"
         layers = ("shieldCapacity", "armorHP", "hp")
@@ -157,9 +157,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_amarrOffensiveSystems_hp_droneNoSkillrqDrones(self):
+    def test_gallenteOffensiveSystems_hp_droneNoSkillrqDrones(self):
         self.buildTested = 0
-        item = "Harvester Mining Drone"
+        item = "Civilian Mining Drone"
         layers = ("shieldCapacity", "armorHP", "hp")
         iLvl = 1
         iIngame = 1.0
@@ -192,7 +192,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "medSlots"
         iIngame = 0.0
-        fIngame = 1.0
+        fIngame = 0.0
         iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
         dIngame = fIngame - iIngame
@@ -203,7 +203,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "lowSlots"
         iIngame = 0.0
-        fIngame = 0.0
+        fIngame = 1.0
         iEos = self.getShipAttr(attr, ship=self.hull) or 0.0
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub) or 0.0
         dIngame = fIngame - iIngame
@@ -236,13 +236,13 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # +200 m3 dronebay
+    # +125 m3 dronebay
 
     def test_static_droneCapacity_ship(self):
         self.buildTested = 0
         attr = "droneCapacity"
         iIngame = 0.0
-        fIngame = 200.0
+        fIngame = 125.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
@@ -250,13 +250,13 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # +50 MBit/s drone bandwidth
+    # +75 MBit/s drone bandwidth
 
     def test_static_droneBandwidth_ship(self):
         self.buildTested = 0
         attr = "droneBandwidth"
         iIngame = 0.0
-        fIngame = 50.0
+        fIngame = 75.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
@@ -269,8 +269,8 @@ class Test(TestBase):
     def test_static_mass_ship(self):
         self.buildTested = 0
         attr = "mass"
-        iIngame = 6815000.0
-        fIngame = 7615000.0
+        iIngame = 5341000.0
+        fIngame = 6141000.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
