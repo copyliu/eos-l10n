@@ -20,6 +20,14 @@
 import eos.types
 
 class HandledList(list):
+    def filteredItemPreAssign(self, filter, *args, **kwargs):
+        for element in self:
+            try:
+                if filter(element):
+                    element.preAssignItemAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+
     def filteredItemIncrease(self, filter, *args, **kwargs):
         for element in self:
             try:
@@ -49,6 +57,14 @@ class HandledList(list):
             try:
                 if filter(element):
                     element.forceItemAttr(*args, **kwargs)
+            except AttributeError:
+                pass
+
+    def filteredChargePreAssign(self, filter, *args, **kwargs):
+        for element in self:
+            try:
+                if filter(element):
+                    element.preAssignChargeAttr(*args, **kwargs)
             except AttributeError:
                 pass
 
@@ -220,6 +236,9 @@ class HandledProjectedFitList(list):
         list.append(self, proj)
 
 class HandledItem(object):
+    def preAssignItemAttr(self, *args, **kwargs):
+        self.itemModifiedAttributes.preAssign(*args, **kwargs)
+
     def increaseItemAttr(self, *args, **kwargs):
         self.itemModifiedAttributes.increase(*args, **kwargs)
 
@@ -233,6 +252,9 @@ class HandledItem(object):
         self.itemModifiedAttributes.force(*args, **kwargs)
 
 class HandledCharge(object):
+    def preAssignChargeAttr(self, *args, **kwargs):
+        self.chargeModifiedAttributes.preAssign(*args, **kwargs)
+
     def increaseChargeAttr(self, *args, **kwargs):
         self.chargeModifiedAttributes.increase(*args, **kwargs)
 
