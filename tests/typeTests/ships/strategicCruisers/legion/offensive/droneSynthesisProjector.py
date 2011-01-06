@@ -236,20 +236,6 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # +800000 kg mass
-
-    def test_static_mass_ship(self):
-        self.buildTested = 0
-        attr = "mass"
-        iIngame = 6815000.0
-        fIngame = 7615000.0
-        iEos = self.getShipAttr(attr, ship=self.hull)
-        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
-        dIngame = fIngame - iIngame
-        dEos = fEos - iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    # Hidden bonus:
     # +200 m3 dronebay
 
     def test_static_droneCapacity_ship(self):
@@ -271,6 +257,20 @@ class Test(TestBase):
         attr = "droneBandwidth"
         iIngame = 0.0
         fIngame = 50.0
+        iEos = self.getShipAttr(attr, ship=self.hull)
+        fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame - iIngame
+        dEos = fEos - iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    # Hidden bonus:
+    # +800000 kg mass
+
+    def test_static_mass_ship(self):
+        self.buildTested = 0
+        attr = "mass"
+        iIngame = 6815000.0
+        fIngame = 7615000.0
         iEos = self.getShipAttr(attr, ship=self.hull)
         fEos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         dIngame = fIngame - iIngame
