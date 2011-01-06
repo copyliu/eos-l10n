@@ -27,7 +27,6 @@ class ItemAttrShortcut(object):
         else:
             return None
 
-
 class ChargeAttrShortcut(object):
     def getModifiedChargeAttr(self, key):
         if key in self.chargeModifiedAttributes:
@@ -35,32 +34,38 @@ class ChargeAttrShortcut(object):
         else:
             return None
 
-
 class ModifiedAttributeDict(collections.MutableMapping):
     class CalculationPlaceholder():
         pass
 
     def __init__(self, fit = None):
-        self.__modified = {}
+        self.fit = fit
+        # Stores original values of the entity
         self.__original = None
+        # Modified values during calculations
         self.__intermediary = {}
+        # Final modified values
+        self.__modified = {}
+        # Affected by entities
+        self.__affectedBy = {}
+        # Dictionaries for various value modification types
+        self.__forced = {}
+        self.__preAssigns = {}
         self.__preIncreases = {}
-        self.__postIncreases = {}
         self.__multipliers = {}
         self.__penalizedMultipliers = {}
-        self.__affectedBy = {}
-        self.__forced = {}
-        self.fit = fit
+        self.__postIncreases = {}
 
     def clear(self):
         self.__intermediary.clear()
         self.__modified.clear()
-        self.__preIncreases.clear()
-        self.__postIncreases.clear()
-        self.__multipliers.clear()
-        self.__penalizedMultipliers.clear()
         self.__affectedBy.clear()
         self.__forced.clear()
+        self.__preAssigns.clear()
+        self.__preIncreases.clear()
+        self.__multipliers.clear()
+        self.__penalizedMultipliers.clear()
+        self.__postIncreases.clear()
 
     @property
     def original(self):
@@ -72,14 +77,15 @@ class ModifiedAttributeDict(collections.MutableMapping):
         self.__modified.clear()
 
     def __getitem__(self, key):
-        if key in self.__forced:
-            return self.__forced[key]
-        elif key in self.__modified:
+        # Check if we have final calculated value
+        if key in self.__modified:
             if self.__modified[key] == self.CalculationPlaceholder:
                 self.__modified[key] = self.__calculateValue(key)
             return self.__modified[key]
+        # Then in values which are not yet calculated
         elif key in self.__intermediary:
             return self.__intermediary[key]
+        # Original value is the least priority
         else:
             return self.getOriginal(key)
 
@@ -107,6 +113,7 @@ class ModifiedAttributeDict(collections.MutableMapping):
         return (self.__original is not None and key in self.__original) or key in self.__modified or key in self.__intermediary
 
     def __placehold(self, key):
+        """Create calculation placeholder in item's modified attribute dict"""
         self.__modified[key] = self.CalculationPlaceholder
 
     def __len__(self):
@@ -117,40 +124,46 @@ class ModifiedAttributeDict(collections.MutableMapping):
         return len(keys)
 
     def __calculateValue(self, key):
-        #Grab our values if they're there, otherwise we'll take default values.
+        # If value is forced, we don't have to calculate anything,
+        # just return forced value instead
+        force = self.__forced[key] if key in self.__forced else None
+        if force is not None:
+            return force
+        # Grab our values if they're there, otherwise we'll take default values
         preIncrease = self.__preIncreases[key] if key in self.__preIncreases else 0
-        postIncrease = self.__postIncreases[key] if key in self.__postIncreases else 0
         multiplier = self.__multipliers[key] if key in self.__multipliers else 1
         penalizedMultiplierGroups = self.__penalizedMultipliers[key] if key in self.__penalizedMultipliers else {}
-        val = self.__intermediary[key] if key in self.__intermediary else self.getOriginal(key) if key in self.__original else 0
-        #We'll do stuff in the following order:
-        #Preincreass, then multipliers
-        #then stacking penalized multipliers, then postIncreases
+        postIncrease = self.__postIncreases[key] if key in self.__postIncreases else 0
+
+        # Grab initial value, priorities are:
+        # Results of ongoing calculation > preAssign > original > 0
+        val = self.__intermediary[key] if key in self.__intermediary else self.__preAssigns[key] if key in self.__preAssigns else self.getOriginal(key) if key in self.__original else 0
+
+        # We'll do stuff in the following order:
+        # preIncrease > multiplier > stacking penalized multipliers > postIncrease
         val += preIncrease
         val *= multiplier
-
-        if len(penalizedMultiplierGroups) > 0:
-            #Each group is penalized independantly
-            #Things in different groups will not be stack penaltied between eachother
-            for penalizedMultipliers in penalizedMultiplierGroups.itervalues():
-                #A quick explanation of how this works:
-                #1: Bonusses and penalties are penalized seperatly, so we'll have to filter each of them
-                l1 = filter(lambda val: val > 1, penalizedMultipliers)
-                l2 = filter(lambda val: val < 1, penalizedMultipliers)
-                #2: The most significant bonusses take the smallest penalty,
-                #This means we'll have to sort
-                abssort = lambda val: -abs(val - 1)
-                l1.sort(key=abssort)
-                l2.sort(key=abssort)
-                #3: The first module doesn't get penaltied at all
-                #Any modul after the first takes penalties according to:
-                #1 + (multplier - 1) * math.exp(- math.pow(i, 2) / 7.1289)
-                for l in (l1, l2):
-                    for i in xrange(len(l)):
-                        bonus = l[i]
-                        val *= 1 + (bonus - 1) * exp(- i ** 2 / 7.1289)
-
+        # Each group is penalized independently
+        # Things in different groups will not be stack penalized between each other
+        for penalizedMultipliers in penalizedMultiplierGroups.itervalues():
+            # A quick explanation of how this works:
+            # 1: Bonuses and penalties are calculated seperately, so we'll have to filter each of them
+            l1 = filter(lambda val: val > 1, penalizedMultipliers)
+            l2 = filter(lambda val: val < 1, penalizedMultipliers)
+            # 2: The most significant bonuses take the smallest penalty,
+            # This means we'll have to sort
+            abssort = lambda val: -abs(val - 1)
+            l1.sort(key=abssort)
+            l2.sort(key=abssort)
+            # 3: The first module doesn't get penalized at all
+            # Any module after the first takes penalties according to:
+            # 1 + (multiplier - 1) * math.exp(- math.pow(i, 2) / 7.1289)
+            for l in (l1, l2):
+                for i in xrange(len(l)):
+                    bonus = l[i]
+                    val *= 1 + (bonus - 1) * exp(- i ** 2 / 7.1289)
         val += postIncrease
+
         return val
 
     def getAfflictions(self, key):
@@ -159,64 +172,90 @@ class ModifiedAttributeDict(collections.MutableMapping):
     def iterAfflictions(self):
         return self.__affectedBy.__iter__()
 
-    def __afflict(self, key, operation, bonus):
+    def __afflict(self, attributeName, operation, bonus):
+        """Add modifier to list of things affecting current item"""
+        # Do nothing if no fit is assigned
         if self.fit is None:
             return
-
-        if key not in self.__affectedBy:
-            self.__affectedBy[key] = {}
-
-        stuff = self.__affectedBy[key]
-        if self.fit not in stuff:
-            stuff[self.fit] = set()
-
-        stuff = stuff[self.fit]
+        # Create dictionary for given attribute and give it alias
+        if attributeName not in self.__affectedBy:
+            self.__affectedBy[attributeName] = {}
+        affs = self.__affectedBy[attributeName]
+        # If there's no set for current fit in dictionary, create it
+        if self.fit not in affs:
+            affs[self.fit] = set()
+        # Reassign alias to set
+        affs = affs[self.fit]
+        # Get modifier which helps to compose 'Affected by' map
         modifier = self.fit.getModifier()
+        # Add current affliction to set
+        affs.add((modifier, operation, bonus))
 
-        stuff.add((modifier, operation, bonus))
+    def preAssign(self, attributeName, value):
+        """Overwrites original value of the entity with given one, allowing further modification"""
+        # Allow to preassign value only 1 time
+        if not attributeName in self.__preAssigns:
+            self.__preAssigns[attributeName] = value
+            self.__placehold(attributeName)
+            # Add to afflictions only if preassigned value differs from original
+            if value != self.getOriginal(attributeName):
+                self.__afflict(attributeName, "=", value)
+        else:
+            print "Failed to preassign {0} to {1} as it was already preassigned to {2}".format(attributeName, value, self.__preAssigns[attributeName])
 
     def increase(self, attributeName, increase, position="pre"):
+        """Increase value of given attribute by given number"""
+        # Increases applied before multiplications and after them are
+        # written in separate maps
         if position == "pre":
             tbl = self.__preIncreases
-
         elif position == "post":
             tbl = self.__postIncreases
-
         else:
             raise ValueError("position should be either pre or post")
-
         if not attributeName in tbl:
             tbl[attributeName] = 0
-
         tbl[attributeName] += increase
         self.__placehold(attributeName)
+        # Add to list of afflictions only if we actually modify value
         if increase != 0:
             self.__afflict(attributeName, "+", increase)
 
     def multiply(self, attributeName, multiplier, stackingPenalties=False, penaltyGroup="default"):
+        """Multiply value of given attribute by given factor"""
+        # If we're asked to do stacking penalized multiplication, append values
+        # to per penalty group lists
         if stackingPenalties:
             if not attributeName in self.__penalizedMultipliers:
                 self.__penalizedMultipliers[attributeName] = {}
             if not penaltyGroup in self.__penalizedMultipliers[attributeName]:
                 self.__penalizedMultipliers[attributeName][penaltyGroup] = []
-
             tbl = self.__penalizedMultipliers[attributeName][penaltyGroup]
             tbl.append(multiplier)
+        # Non-penalized multiplication factors go to the single list
         else:
             if not attributeName in self.__multipliers:
                 self.__multipliers[attributeName] = 1
             self.__multipliers[attributeName] *= multiplier
-
         self.__placehold(attributeName)
-
+        # Add to list of afflictions only if we actually modify value
         if multiplier != 1:
             self.__afflict(attributeName, "%s*" % ("s" if stackingPenalties else ""), multiplier)
 
     def boost(self, attributeName, boostFactor, *args, **kwargs):
+        """Boost value by some percentage"""
+        # We just transform percentage boost into multiplication factor
         self.multiply(attributeName, 1 + boostFactor / 100.0, *args, **kwargs)
 
     def force(self, attributeName, value):
-        self.__forced[attributeName] = value
+        """Force value to attribute and prohibit any changes to it"""
+        # Force value only if it's not already forced
+        if not attributeName in self.__forced:
+            self.__forced[attributeName] = value
+            self.__placehold(attributeName)
+            self.__afflict(attributeName, u"\u2263", value)
+        else:
+            print "Failed to force {0} to {1} as it's already forced to {2}".format(attributeName, value, self.__forced[attributeName])
 
 class Affliction():
     def __init__(self, type, amount):

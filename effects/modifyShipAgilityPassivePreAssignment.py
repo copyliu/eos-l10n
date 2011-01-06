@@ -3,4 +3,4 @@
 runTime = "early"
 type = "passive"
 def handler(fit, module, context):
-    fit.ship.itemModifiedAttributes["agility"] = module.getModifiedItemAttr("agility")
+    fit.ship.preAssignItemAttr("agility", module.getModifiedItemAttr("agility"))
