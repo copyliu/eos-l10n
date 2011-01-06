@@ -172,21 +172,24 @@ class ModifiedAttributeDict(collections.MutableMapping):
     def iterAfflictions(self):
         return self.__affectedBy.__iter__()
 
-    def __afflict(self, key, operation, bonus):
+    def __afflict(self, attributeName, operation, bonus):
+        """Add modifier to list of things affecting current item"""
+        # Do nothing if no fit is assigned
         if self.fit is None:
             return
-
-        if key not in self.__affectedBy:
-            self.__affectedBy[key] = {}
-
-        stuff = self.__affectedBy[key]
-        if self.fit not in stuff:
-            stuff[self.fit] = set()
-
-        stuff = stuff[self.fit]
+        # Create dictionary for given attribute and give it alias
+        if attributeName not in self.__affectedBy:
+            self.__affectedBy[attributeName] = {}
+        affs = self.__affectedBy[attributeName]
+        # If there's no set for current fit in dictionary, create it
+        if self.fit not in affs:
+            affs[self.fit] = set()
+        # Reassign alias to set
+        affs = affs[self.fit]
+        # Get modifier which helps to compose 'Affected by' map
         modifier = self.fit.getModifier()
-
-        stuff.add((modifier, operation, bonus))
+        # Add current affliction to set
+        affs.add((modifier, operation, bonus))
 
     def preAssign(self, attributeName, value):
         """Overwrites original value of the entity with given one, allowing further modification"""
