@@ -160,8 +160,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
         if self.charge is not None:
-            #Source: http://www.eve-search.com/thread/1307419#15
-            #D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
+            # Source: http://www.eveonline.com/ingameboard.asp?a=topic&threadID=1307419&page=1#15
+            # D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
             maxVelocity = self.getModifiedChargeAttr("maxVelocity")
             flightTime = self.getModifiedChargeAttr("explosionDelay") / 1000.0
             mass = self.getModifiedChargeAttr("mass")
@@ -236,16 +236,22 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 self.__dps = 0
                 self.__volley = 0
             else:
-                if self.state >= State.ACTIVE and \
-                (self.hardpoint == Hardpoint.TURRET or self.hardpoint == Hardpoint.MISSILE):
-                    cycleTime = self.cycleTime
-                    volley = sum(map(lambda attr: self.getModifiedChargeAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
+                if self.state >= State.ACTIVE:
+                    if self.charge:
+                        volley = sum(map(lambda attr: self.getModifiedChargeAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
+                    else:
+                        volley = sum(map(lambda attr: self.getModifiedItemAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
                     volley *= self.getModifiedItemAttr("damageMultiplier") or 1
-                    self.__volley = volley
-                    self.__dps = volley / cycleTime
+                    if volley:
+                        cycleTime = self.cycleTime
+                        self.__volley = volley
+                        self.__dps = volley / cycleTime
+                    else:
+                        self.__volley = 0
+                        self.__dps = 0
                 else:
-                    self.__dps = 0
                     self.__volley = 0
+                    self.__dps = 0
 
         return self.__dps, self.__volley
 
@@ -464,10 +470,18 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def cycleTime(self):
-        speed = self.rawCycleTime
-        if self.owner.factorReload:
+        reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0) / 1000.0
+        # Reactivation time starts counting after end of module cycle
+        speed = self.rawCycleTime + reactivation
+        # If reactivation is longer than 10 seconds then module can be reloaded
+        # during reactivation time, thus we may ignore reload
+        if self.owner.factorReload and reactivation < 10:
             numCharges = self.numCharges
-            speed = (speed * numCharges + 10) / numCharges if numCharges > 0 else speed
+            # Time it takes to reload module after end of reactivation time,
+            # given that we started when module cycle has just over
+            additionalReloadTime = (10 - reactivation)
+            # Speed here already takes into consideration reactivation time
+            speed = (speed * numCharges + additionalReloadTime) / numCharges if numCharges > 0 else speed
 
         return speed
 
