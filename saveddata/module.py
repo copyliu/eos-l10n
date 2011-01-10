@@ -236,16 +236,22 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 self.__dps = 0
                 self.__volley = 0
             else:
-                if self.state >= State.ACTIVE and \
-                (self.hardpoint == Hardpoint.TURRET or self.hardpoint == Hardpoint.MISSILE):
-                    cycleTime = self.cycleTime
-                    volley = sum(map(lambda attr: self.getModifiedChargeAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
+                if self.state >= State.ACTIVE:
+                    if self.charge:
+                        volley = sum(map(lambda attr: self.getModifiedChargeAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
+                    else:
+                        volley = sum(map(lambda attr: self.getModifiedItemAttr(attr) or 0, self.DAMAGE_ATTRIBUTES))
                     volley *= self.getModifiedItemAttr("damageMultiplier") or 1
-                    self.__volley = volley
-                    self.__dps = volley / cycleTime
+                    if volley:
+                        cycleTime = self.cycleTime
+                        self.__volley = volley
+                        self.__dps = volley / cycleTime
+                    else:
+                        self.__volley = 0
+                        self.__dps = 0
                 else:
-                    self.__dps = 0
                     self.__volley = 0
+                    self.__dps = 0
 
         return self.__dps, self.__volley
 
