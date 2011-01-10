@@ -281,7 +281,7 @@ for marketgroupid in globalmap_marketgroupid_typeidwithvariations:
             for variationid in globalmap_basetypeid_typeid[typeid]:
                 # Do not include items which have market group, even if
                 # they're variation
-                if variationid in globalmap_typeid_marketgroupid:
+                if not variationid in globalmap_typeid_marketgroupid:
                     typestoadd.add(variationid)
     globalmap_marketgroupid_typeidwithvariations[marketgroupid].update\
     (typestoadd)
