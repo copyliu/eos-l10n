@@ -160,8 +160,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
         if self.charge is not None:
-            #Source: http://www.eve-search.com/thread/1307419#15
-            #D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
+            # Source: http://www.eveonline.com/ingameboard.asp?a=topic&threadID=1307419&page=1#15
+            # D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
             maxVelocity = self.getModifiedChargeAttr("maxVelocity")
             flightTime = self.getModifiedChargeAttr("explosionDelay") / 1000.0
             mass = self.getModifiedChargeAttr("mass")
