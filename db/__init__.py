@@ -61,3 +61,6 @@ from eos.db.saveddata.queries import getUser, getCharacter, getFit, getFitsWithS
 #If using in memory saveddata, you'll want to reflect it so the data structure is good.
 if config.saveddata_connectionstring == "sqlite:///:memory:":
     saveddata_meta.create_all()
+
+def rollback():
+    saveddata_session.rollback()
