@@ -488,15 +488,19 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0) / 1000.0
         # Reactivation time starts counting after end of module cycle
         speed = self.rawCycleTime + reactivation
+        if self.charge:
+            reload = self.reloadTime / 1000.0
+        else:
+            reload = 0.0
         # If reactivation is longer than 10 seconds then module can be reloaded
         # during reactivation time, thus we may ignore reload
-        if self.owner.factorReload and reactivation < 10:
-            numCharges = self.numCharges
+        if self.owner.factorReload and reactivation < reload:
+            numShots = self.numShots
             # Time it takes to reload module after end of reactivation time,
             # given that we started when module cycle has just over
-            additionalReloadTime = (10 - reactivation)
+            additionalReloadTime = (reload - reactivation)
             # Speed here already takes into consideration reactivation time
-            speed = (speed * numCharges + additionalReloadTime) / numCharges if numCharges > 0 else speed
+            speed = (speed * numShots + additionalReloadTime) / numShots if numShots > 0 else speed
 
         return speed
 
