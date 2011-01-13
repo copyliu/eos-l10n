@@ -6,6 +6,6 @@
 #Implant: Imperial Navy Modified 'Noble' Implant
 type = "passive"
 def handler(fit, implant, context):
-    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Armor Repair Unit",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Repair Systems"),
                                   "armorDamageAmount", implant.getModifiedItemAttr("repairBonus"),
                                   stackingPenalties = "implant" not in context)
