@@ -513,15 +513,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def capUse(self):
         capNeed = self.getModifiedItemAttr("capacitorNeed")
         if capNeed and self.state >= State.ACTIVE:
-            factorReload = self.owner.factorReload
-            numCharges = self.numCharges
-            cycleTime = (self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")) / 1000.0
-            reloadedCycleTime = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
-            if capNeed > 0:
-                capUsed = capNeed / (reloadedCycleTime if factorReload else cycleTime)
-            else:
-                capUsed = capNeed / reloadedCycleTime
-
+            cycleTime = self.cycleTime
+            capUsed = capNeed / cycleTime
             return capUsed
         else:
             return 0
