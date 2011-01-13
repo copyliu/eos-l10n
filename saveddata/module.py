@@ -145,7 +145,10 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def numShots(self):
-        return self.__chargeCycles
+        if self.charge is None:
+            return 0
+        else:
+            return self.__chargeCycles
 
     @numShots.setter
     def numShots(self, number):
