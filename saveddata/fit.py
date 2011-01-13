@@ -694,9 +694,9 @@ class Fit(object):
                         for mod, _, amount in dict[self]:
                             if mod.projected is False:
                                 capUsed -= mod.capUse
-                                cycleTime = mod.getModifiedItemAttr("duration") / 1000.0
+                                cycleTime = mod.getModifiedItemAttr("duration")
                                 amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
-                                sustainable[attr] -= amount / cycleTime
+                                sustainable[attr] -= amount / (cycleTime / 1000.0)
                                 repairers.append(mod)
 
 
@@ -717,7 +717,7 @@ class Fit(object):
 
                         #Add the sustainable amount
                         amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
-                        sustainable[groupStoreMap[mod.item.group.name]] += sustainability * (amount / cycleTime)
+                        sustainable[groupStoreMap[mod.item.group.name]] += sustainability * (amount / (cycleTime / 1000.0))
                         capUsed += capPerSec
 
             sustainable["passiveShield"] = self.calculateShieldRecharge()
@@ -758,14 +758,14 @@ class Fit(object):
                         else:
                             capAdded -= capNeed
 
-                        drains.append((int(cycleTime * 1000), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numShots or 0))
+                        drains.append((int(cycleTime), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numShots or 0))
 
         for cycleTime, capNeed, clipSize in self.iterDrains():
-            drains.append((int(cycleTime * 1000), capNeed, clipSize))
+            drains.append((int(cycleTime), capNeed, clipSize))
             if capNeed > 0:
-                capUsed += capNeed / cycleTime
+                capUsed += capNeed / (cycleTime / 1000.0)
             else:
-                capAdded += -capNeed / cycleTime
+                capAdded += -capNeed / (cycleTime / 1000.0)
 
         return drains, capUsed, capAdded
 

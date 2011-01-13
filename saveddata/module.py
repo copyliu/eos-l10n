@@ -250,7 +250,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     if volley:
                         cycleTime = self.cycleTime
                         self.__volley = volley
-                        self.__dps = volley / cycleTime
+                        self.__dps = volley / (cycleTime / 1000.0)
                     else:
                         self.__volley = 0
                         self.__dps = 0
@@ -485,11 +485,11 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def cycleTime(self):
-        reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0) / 1000.0
+        reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0)
         # Reactivation time starts counting after end of module cycle
         speed = self.rawCycleTime + reactivation
         if self.charge:
-            reload = self.reloadTime / 1000.0
+            reload = self.reloadTime
         else:
             reload = 0.0
         # If reactivation is longer than 10 seconds then module can be reloaded
@@ -507,14 +507,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def rawCycleTime(self):
         speed =  self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
-        return speed / 1000.0 if speed is not None else speed
+        return speed
 
     @property
     def capUse(self):
         capNeed = self.getModifiedItemAttr("capacitorNeed")
         if capNeed and self.state >= State.ACTIVE:
             cycleTime = self.cycleTime
-            capUsed = capNeed / cycleTime
+            capUsed = capNeed / (cycleTime / 1000.0)
             return capUsed
         else:
             return 0
