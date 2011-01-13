@@ -53,6 +53,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.state = State.ONLINE
         self.__dps = None
         self.__volley = None
+        self.__reloadTime = None
+        self.__chargeCycles = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__slot = None
 
@@ -70,12 +72,16 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__charge = None
             self.__volley = None
             self.__dps = None
+            self.__reloadTime = None
+            self.__chargeCycles = None
         else:
             self.__slot = self.dummySlot
             self.__item = 0
             self.__charge = 0
             self.__dps = 0
             self.__volley = 0
+            self.__reloadTime = 0
+            self.__chargeCycles = 0
             self.__hardpoint = Hardpoint.NONE
             self.__itemModifiedAttributes = ModifiedAttributeDict()
             self.__chargeModifiedAttributes = ModifiedAttributeDict()
@@ -139,16 +145,12 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
     @property
     def numShots(self):
-        numCharges = self.numCharges
-        if self.numCharges is None:
-            return None
+        return self.__chargeCycles
 
-        chargeRate = self.getModifiedItemAttr("chargeRate")
-        if chargeRate is None:
-            return 0 #Zero means infinite
-
-        return numCharges / float(chargeRate)
-
+    @numShots.setter
+    def numShots(self, number):
+        # Make sure to round down to integers, we can't shoot 1.5 times
+        self.__chargeCycles = int(number)
 
     @property
     def maxRange(self):
@@ -262,6 +264,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def volley(self):
         return self.damageStats[1]
+
+    @property
+    def reloadTime(self):
+        return self.__reloadTime
+
+    @reloadTime.setter
+    def reloadTime(self, milliseconds):
+        self.__reloadTime = milliseconds
 
     def fits(self, fit):
         slot = self.slot
@@ -430,6 +440,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def clear(self):
         self.__dps = None
         self.__volley = None
+        self.__reloadTime = None
+        self.__chargeCycles = None
         self.itemModifiedAttributes.clear()
         self.chargeModifiedAttributes.clear()
 
