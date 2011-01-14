@@ -14,7 +14,7 @@ def handler(fit, module, context):
             damage = module.getModifiedChargeAttr("crystalVolatilityDamage")
             module.numShots = float(hp) / (damage * chance)
         else:
-            # Set 0 (infinite) for permanent crystals like t1
+            # Set 0 (infinite) for permanent crystals
             module.numShots = 0
     else:
         module.numShots = 0
