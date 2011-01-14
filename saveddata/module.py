@@ -17,11 +17,12 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+from sqlalchemy.orm import validates, reconstructor
+
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from eos.enum import Enum
-from sqlalchemy.orm import validates, reconstructor
-from math import exp, log
+from eos.mathUtils import floorFloat
 
 class State(Enum):
     OFFLINE = -1
@@ -135,16 +136,15 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def numCharges(self):
         if self.charge is None:
-            return 0
+            charges = 0
         else:
-            # Convert terminating floats to avoid rounding errors
-            # Magic constant should be over 9000.
-            chargeSize = int(self.charge.volume*10000)
-            containerSize = int(self.item.capacity*10000)
-            if chargeSize is None or containerSize is None:
-                return 0
-
-            return containerSize / chargeSize
+            chargeVolume = self.charge.volume
+            containerCapacity = self.item.capacity
+            if chargeVolume is None or containerCapacity is None:
+                charges = 0
+            else:
+                charges = floorFloat(float(containerCapacity) / chargeVolume)
+        return charges
 
     @property
     def numShots(self):
@@ -170,7 +170,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             # Set number of cycles before reload is needed
             chargeRate = self.getModifiedItemAttr("chargeRate")
             numCharges = self.numCharges
-            numShots = int(numCharges / chargeRate)
+            numShots = floorFloat(float(numCharges) / chargeRate)
         else:
             numShots = None
         return numShots
@@ -183,7 +183,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 chance = self.getModifiedChargeAttr("crystalVolatilityChance")
                 damage = self.getModifiedChargeAttr("crystalVolatilityDamage")
                 crystals = self.numCharges
-                numShots = crystals * int(hp * 10000000) / (int(damage * 100000) * int(chance * 100))
+                numShots = floorFloat(float(crystals * hp) / (damage * chance))
             else:
                 # Set 0 (infinite) for permanent crystals like t1 laser crystals
                 numShots = 0
