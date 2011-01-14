@@ -54,6 +54,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__dps = None
         self.__volley = None
         self.__reloadTime = None
+        self.__reloadForce = None
         self.__chargeCycles = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__slot = None
@@ -73,6 +74,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__volley = None
             self.__dps = None
             self.__reloadTime = None
+            self.__reloadForce = None
             self.__chargeCycles = None
         else:
             self.__slot = self.dummySlot
@@ -81,6 +83,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__dps = 0
             self.__volley = 0
             self.__reloadTime = 0
+            self.__reloadForce = None
             self.__chargeCycles = 0
             self.__hardpoint = Hardpoint.NONE
             self.__itemModifiedAttributes = ModifiedAttributeDict()
@@ -309,6 +312,14 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def reloadTime(self, milliseconds):
         self.__reloadTime = milliseconds
 
+    @property
+    def forceReload(self):
+        return self.__reloadForce
+
+    @forceReload.setter
+    def forceReload(self, type):
+        self.__reloadForce = type
+
     def fits(self, fit):
         slot = self.slot
         if fit.getSlotsFree(slot) <= (0 if self.owner != fit else -1):
@@ -477,6 +488,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.__dps = None
         self.__volley = None
         self.__reloadTime = None
+        self.__reloadForce = None
         self.__chargeCycles = None
         self.itemModifiedAttributes.clear()
         self.chargeModifiedAttributes.clear()
@@ -515,7 +527,6 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 ((projected and effect.isType("projected")) or not projected):
                         effect.handler(fit, self, context)
 
-
     @property
     def cycleTime(self):
         reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0)
@@ -525,9 +536,11 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             reload = self.reloadTime
         else:
             reload = 0.0
+        # Determine if we'll take into account reload time or not
+        factorReload = self.owner.factorReload if self.forceReload is None else self.forceReload
         # If reactivation is longer than 10 seconds then module can be reloaded
         # during reactivation time, thus we may ignore reload
-        if self.owner.factorReload and reactivation < reload:
+        if factorReload and reactivation < reload:
             numShots = self.numShots
             # Time it takes to reload module after end of reactivation time,
             # given that we started when module cycle has just over
