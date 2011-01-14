@@ -146,14 +146,47 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def numShots(self):
         if self.charge is None:
-            return 0
+            return None
+        if self.__chargeCycles is None and self.charge:
+            numCharges = self.numCharges
+            # Usual ammo like projectiles and missiles
+            if numCharges > 0 and "chargeRate" in self.itemModifiedAttributes:
+                self.__chargeCycles = self.__calculateAmmoShots()
+            # Frequency crystals (combat and mining lasers)
+            elif numCharges > 0 and "crystalsGetDamaged" in self.chargeModifiedAttributes:
+                self.__chargeCycles = self.__calculateCrystalShots()
+            # Scripts and stuff
+            else:
+                self.__chargeCycles = 0
+            return self.__chargeCycles
         else:
             return self.__chargeCycles
 
-    @numShots.setter
-    def numShots(self, number):
-        # Make sure to round down to integers, we can't shoot 1.5 times
-        self.__chargeCycles = int(number)
+    def __calculateAmmoShots(self):
+        if self.charge is not None:
+            # Set number of cycles before reload is needed
+            chargeRate = self.getModifiedItemAttr("chargeRate")
+            numCharges = self.numCharges
+            numShots = int(numCharges / chargeRate)
+        else:
+            numShots = None
+        return numShots
+
+    def __calculateCrystalShots(self):
+        if self.charge is not None:
+            if self.getModifiedChargeAttr("crystalsGetDamaged") == 1:
+                # For depletable crystals, calculate average amount of shots before it's destroyed
+                hp = self.getModifiedChargeAttr("hp")
+                chance = self.getModifiedChargeAttr("crystalVolatilityChance")
+                damage = self.getModifiedChargeAttr("crystalVolatilityDamage")
+                crystals = self.numCharges
+                numShots = crystals * int(hp * 100000) / (int(damage * 1000) * int(chance * 100))
+            else:
+                # Set 0 (infinite) for permanent crystals like t1 laser crystals
+                numShots = 0
+        else:
+            numShots = None
+        return numShots
 
     @property
     def maxRange(self):
