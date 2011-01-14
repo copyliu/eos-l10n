@@ -183,7 +183,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 chance = self.getModifiedChargeAttr("crystalVolatilityChance")
                 damage = self.getModifiedChargeAttr("crystalVolatilityDamage")
                 crystals = self.numCharges
-                numShots = crystals * int(hp * 100000) / (int(damage * 1000) * int(chance * 100))
+                numShots = crystals * int(hp * 10000000) / (int(damage * 100000) * int(chance * 100))
             else:
                 # Set 0 (infinite) for permanent crystals like t1 laser crystals
                 numShots = 0
