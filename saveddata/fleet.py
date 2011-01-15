@@ -225,11 +225,14 @@ class Store(object):
         return self.boosts.get(fit)
 
     def modify(self, fitBoosted):
+        # Get all boosts which should be applied onto current fit
         boosts = self.getBoosts(fitBoosted)
         # Now we got it all figured out, actually do the useful part of all this
         for name, info in boosts.iteritems():
+            # Unpack all data required to run effect properly
             effect, thing, fitBooster = info[1]
             context = ("gang", self.contextMap[type(thing)])
+            # Run effect, and get proper bonuses applied
             try:
                 effect.handler(fitBoosted, thing, context)
             except:
