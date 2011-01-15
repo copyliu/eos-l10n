@@ -177,7 +177,7 @@ class Store(object):
                     if l is None:
                         l = dict[boostedAttr] = []
                     # And append effect which is used to boost stuff and carrier of this effect
-                    l.append((effect, thing, fitBooster))
+                    l.append((effect, thing))
 
     contextMap = {Skill: "skill",
                   Ship: "ship",
@@ -195,21 +195,17 @@ class Store(object):
             dict = self.bonuses[currLayer]
             for boostedAttr, boostInfoList in dict.iteritems():
                 for boostInfo in boostInfoList:
-                    effect, thing, fitBooster = boostInfo
+                    effect, thing = boostInfo
                     # Get current boost value for given attribute, use 0 as fallback if
                     # no boosts applied yet
                     currBoostAmount = boosts.get(boostedAttr, (0,))[0]
                     # Attribute name which is used to get boost value
                     newBoostAttr = effect.getattr("gangBonus") or "commandBonus"
-                    # Skill name which may take part in gang boosting stuff, may be None
-                    skillName = effect.getattr("gangSkill")
                     # Get boost amount for current boost
                     newBoostAmount = thing.getModifiedItemAttr(newBoostAttr) or 0
                     # If skill takes part in gang boosting, multiply by skill level
-                    isSkill = type(thing) == Skill
-                    if isSkill or (skillName is not None and fitBooster.character is not None):
-                        skill = thing if isSkill else fitBooster.character.getSkill(skillName)
-                        newBoostAmount *= skill.level
+                    if type(thing) == Skill:
+                        newBoostAmount *= thing.level
                     # If new boost is more powerful, replace older one with it
                     if abs(newBoostAmount) > abs(currBoostAmount):
                         boosts[boostedAttr] = (newBoostAmount, boostInfo)
@@ -230,7 +226,7 @@ class Store(object):
         # Now we got it all figured out, actually do the useful part of all this
         for name, info in boosts.iteritems():
             # Unpack all data required to run effect properly
-            effect, thing, fitBooster = info[1]
+            effect, thing = info[1]
             context = ("gang", self.contextMap[type(thing)])
             # Run effect, and get proper bonuses applied
             try:
