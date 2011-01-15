@@ -112,10 +112,10 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     attr =  "speed"
                     getter = self.getModifiedItemAttr
 
-                cycleTime = self.getModifiedItemAttr(attr) / 1000.0
+                cycleTime = self.getModifiedItemAttr(attr)
                 volley = sum(map(lambda d: getter(d), self.DAMAGE_ATTRIBUTES)) * self.amountActive
                 volley *= self.getModifiedItemAttr("damageMultiplier") or 1
-                self.__dps = volley / cycleTime
+                self.__dps = volley / (cycleTime / 1000.0)
             else:
                 self.__dps = 0
 

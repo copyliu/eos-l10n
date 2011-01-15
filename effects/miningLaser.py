@@ -4,4 +4,5 @@
 #Modules from group: Strip Miner (5 of 5)
 type = 'active'
 def handler(fit, module, context):
-    pass
+    # Set reload time to 1 second
+    module.reloadTime = 1000

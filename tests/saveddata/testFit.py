@@ -35,7 +35,7 @@ class Test(TestBase):
         f = Fit()
         f.ship = Ship(db.getItem("Rifter"))
         f.addDrain(5, 500, 0)
-        self.assertEquals(f.capUsed, 100)
+        self.assertEquals(f.capUsed, 100000)
 
     def test_setCharacter(self):
         f = Fit()

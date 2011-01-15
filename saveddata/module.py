@@ -17,11 +17,12 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+from sqlalchemy.orm import validates, reconstructor
+
 from eos.modifiedAttributeDict import ModifiedAttributeDict, ItemAttrShortcut, ChargeAttrShortcut
 from eos.effectHandlerHelpers import HandledItem, HandledCharge
 from eos.enum import Enum
-from sqlalchemy.orm import validates, reconstructor
-from math import exp, log
+from eos.mathUtils import floorFloat
 
 class State(Enum):
     OFFLINE = -1
@@ -53,6 +54,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.state = State.ONLINE
         self.__dps = None
         self.__volley = None
+        self.__reloadTime = None
+        self.__reloadForce = None
+        self.__chargeCycles = None
         self.__itemModifiedAttributes = ModifiedAttributeDict()
         self.__slot = None
 
@@ -70,12 +74,18 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             self.__charge = None
             self.__volley = None
             self.__dps = None
+            self.__reloadTime = None
+            self.__reloadForce = None
+            self.__chargeCycles = None
         else:
             self.__slot = self.dummySlot
             self.__item = 0
             self.__charge = 0
             self.__dps = 0
             self.__volley = 0
+            self.__reloadTime = 0
+            self.__reloadForce = None
+            self.__chargeCycles = 0
             self.__hardpoint = Hardpoint.NONE
             self.__itemModifiedAttributes = ModifiedAttributeDict()
             self.__chargeModifiedAttributes = ModifiedAttributeDict()
@@ -126,29 +136,60 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def numCharges(self):
         if self.charge is None:
-            return 0
+            charges = 0
         else:
-            # Convert terminating floats to avoid rounding errors
-            # Magic constant should be over 9000.
-            chargeSize = int(self.charge.volume*10000)
-            containerSize = int(self.item.capacity*10000)
-            if chargeSize is None or containerSize is None:
-                return 0
-
-            return containerSize / chargeSize
+            chargeVolume = self.charge.volume
+            containerCapacity = self.item.capacity
+            if chargeVolume is None or containerCapacity is None:
+                charges = 0
+            else:
+                charges = floorFloat(float(containerCapacity) / chargeVolume)
+        return charges
 
     @property
     def numShots(self):
-        numCharges = self.numCharges
-        if self.numCharges is None:
+        if self.charge is None:
             return None
+        if self.__chargeCycles is None and self.charge:
+            numCharges = self.numCharges
+            # Usual ammo like projectiles and missiles
+            if numCharges > 0 and "chargeRate" in self.itemModifiedAttributes:
+                self.__chargeCycles = self.__calculateAmmoShots()
+            # Frequency crystals (combat and mining lasers)
+            elif numCharges > 0 and "crystalsGetDamaged" in self.chargeModifiedAttributes:
+                self.__chargeCycles = self.__calculateCrystalShots()
+            # Scripts and stuff
+            else:
+                self.__chargeCycles = 0
+            return self.__chargeCycles
+        else:
+            return self.__chargeCycles
 
-        chargeRate = self.getModifiedItemAttr("chargeRate")
-        if chargeRate is None:
-            return 0 #Zero means infinite
+    def __calculateAmmoShots(self):
+        if self.charge is not None:
+            # Set number of cycles before reload is needed
+            chargeRate = self.getModifiedItemAttr("chargeRate")
+            numCharges = self.numCharges
+            numShots = floorFloat(float(numCharges) / chargeRate)
+        else:
+            numShots = None
+        return numShots
 
-        return numCharges / float(chargeRate)
-
+    def __calculateCrystalShots(self):
+        if self.charge is not None:
+            if self.getModifiedChargeAttr("crystalsGetDamaged") == 1:
+                # For depletable crystals, calculate average amount of shots before it's destroyed
+                hp = self.getModifiedChargeAttr("hp")
+                chance = self.getModifiedChargeAttr("crystalVolatilityChance")
+                damage = self.getModifiedChargeAttr("crystalVolatilityDamage")
+                crystals = self.numCharges
+                numShots = floorFloat(float(crystals * hp) / (damage * chance))
+            else:
+                # Set 0 (infinite) for permanent crystals like t1 laser crystals
+                numShots = 0
+        else:
+            numShots = None
+        return numShots
 
     @property
     def maxRange(self):
@@ -245,7 +286,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                     if volley:
                         cycleTime = self.cycleTime
                         self.__volley = volley
-                        self.__dps = volley / cycleTime
+                        self.__dps = volley / (cycleTime / 1000.0)
                     else:
                         self.__volley = 0
                         self.__dps = 0
@@ -262,6 +303,22 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def volley(self):
         return self.damageStats[1]
+
+    @property
+    def reloadTime(self):
+        return self.__reloadTime
+
+    @reloadTime.setter
+    def reloadTime(self, milliseconds):
+        self.__reloadTime = milliseconds
+
+    @property
+    def forceReload(self):
+        return self.__reloadForce
+
+    @forceReload.setter
+    def forceReload(self, type):
+        self.__reloadForce = type
 
     def fits(self, fit):
         slot = self.slot
@@ -430,6 +487,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def clear(self):
         self.__dps = None
         self.__volley = None
+        self.__reloadTime = None
+        self.__reloadForce = None
+        self.__chargeCycles = None
         self.itemModifiedAttributes.clear()
         self.chargeModifiedAttributes.clear()
 
@@ -467,42 +527,40 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
                 ((projected and effect.isType("projected")) or not projected):
                         effect.handler(fit, self, context)
 
-
     @property
     def cycleTime(self):
-        reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0) / 1000.0
+        reactivation = (self.getModifiedItemAttr("moduleReactivationDelay") or 0)
         # Reactivation time starts counting after end of module cycle
         speed = self.rawCycleTime + reactivation
+        if self.charge:
+            reload = self.reloadTime
+        else:
+            reload = 0.0
+        # Determine if we'll take into account reload time or not
+        factorReload = self.owner.factorReload if self.forceReload is None else self.forceReload
         # If reactivation is longer than 10 seconds then module can be reloaded
         # during reactivation time, thus we may ignore reload
-        if self.owner.factorReload and reactivation < 10:
-            numCharges = self.numCharges
+        if factorReload and reactivation < reload:
+            numShots = self.numShots
             # Time it takes to reload module after end of reactivation time,
             # given that we started when module cycle has just over
-            additionalReloadTime = (10 - reactivation)
+            additionalReloadTime = (reload - reactivation)
             # Speed here already takes into consideration reactivation time
-            speed = (speed * numCharges + additionalReloadTime) / numCharges if numCharges > 0 else speed
+            speed = (speed * numShots + additionalReloadTime) / numShots if numShots > 0 else speed
 
         return speed
 
     @property
     def rawCycleTime(self):
         speed =  self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")
-        return speed / 1000.0 if speed is not None else speed
+        return speed
 
     @property
     def capUse(self):
         capNeed = self.getModifiedItemAttr("capacitorNeed")
         if capNeed and self.state >= State.ACTIVE:
-            factorReload = self.owner.factorReload
-            numCharges = self.numCharges
-            cycleTime = (self.getModifiedItemAttr("speed") or self.getModifiedItemAttr("duration")) / 1000.0
-            reloadedCycleTime = (cycleTime * numCharges + 10) / numCharges if numCharges > 0 else cycleTime
-            if capNeed > 0:
-                capUsed = capNeed / (reloadedCycleTime if factorReload else cycleTime)
-            else:
-                capUsed = capNeed / reloadedCycleTime
-
+            cycleTime = self.cycleTime
+            capUsed = capNeed / (cycleTime / 1000.0)
             return capUsed
         else:
             return 0

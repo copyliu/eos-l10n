@@ -8,4 +8,5 @@
 #Modules named like: Missile Launcher (78 of 78)
 type = 'active'
 def handler(fit, module, context):
-    pass
+    # Set reload time to 10 seconds
+    module.reloadTime = 10000

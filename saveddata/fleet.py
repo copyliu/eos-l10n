@@ -42,7 +42,7 @@ class Fleet(object):
 
         #Now calculate our own if we aren't broken
         if self.broken == False:
-            #We only get our own bonusses *Sadface*
+            #We only get our own bonuses *Sadface*
             store.apply(leader, "fleet")
 
     def count(self):
@@ -147,75 +147,89 @@ class Squad(object):
 
 class Store(object):
     def __init__(self):
-        #Build our data containers
-        self.bonusses = {}
-        self.boosts = {}
+        # Container for gang boosters and their respective bonuses, three-layered
+        self.bonuses = {}
         for dictType in ("fleet", "wing", "squad"):
-            self.bonusses[dictType] = {}
+            self.bonuses[dictType] = {}
+        # Container for boosted fits and corresponding boosts applied onto them
+        self.boosts = {}
 
-    def set(self, fit, layer):
-        if fit is None:
+    def set(self, fitBooster, layer):
+        """Add all gang boosts of given fit for given layer to boost store"""
+        if fitBooster is None:
             return
 
-        dict = self.bonusses[layer]
-        #Clear existing bonusses
+        # This dict contains all bonuses for specified layer
+        dict = self.bonuses[layer]
+        # Clear existing bonuses
         dict.clear()
 
-        for thing in chain(fit.modules, fit.character.iterSkills(), (fit.ship,)):
+        # Go through everything which can be used as gang booster
+        for thing in chain(fitBooster.modules, fitBooster.character.iterSkills(), (fitBooster.ship,)):
             for effect in thing.item.effects.itervalues():
+                # And check if it actually has gang boosting effects
                 if effect.isType("gang"):
-                    gangBoost = effect.getattr("gangBoost")
-                    l = dict.get(gangBoost)
+                    # Attribute which is boosted
+                    boostedAttr = effect.getattr("gangBoost")
+                    # List which contains all bonuses for given attribute for given layer
+                    l = dict.get(boostedAttr)
+                    # If there was no list, create it
                     if l is None:
-                        l = dict[gangBoost] = []
-
+                        l = dict[boostedAttr] = []
+                    # And append effect which is used to boost stuff and carrier of this effect
                     l.append((effect, thing))
 
     contextMap = {Skill: "skill",
                   Ship: "ship",
                   Module: "module"}
 
-    def apply(self, fit, layer):
-        if fit is None:
+    def apply(self, fitBoosted, layer):
+        """Applies all boosts onto given fit for given layer"""
+        if fitBoosted is None:
             return
-
-        self.boosts[fit] = boosts = {}
-        char = fit.character
-        #Go through all different boosts, for each of them, figure what the fuck the highest one is
+        # Boosts dict contains all bonuses applied onto given fit
+        self.boosts[fitBoosted] = boosts = {}
+        # Go through all bonuses for given layer, and find highest one per boosted attribute
         for currLayer in ("fleet", "wing", "squad"):
-            dict = self.bonusses[currLayer]
-            for gangBoost, stuff in dict.iteritems():
-                for info in stuff:
-                    effect, thing = info
-                    currBoost = boosts.get(gangBoost, (0,))[0]
+            # Dictionary with boosts for given layer
+            dict = self.bonuses[currLayer]
+            for boostedAttr, boostInfoList in dict.iteritems():
+                for boostInfo in boostInfoList:
+                    effect, thing = boostInfo
+                    # Get current boost value for given attribute, use 0 as fallback if
+                    # no boosts applied yet
+                    currBoostAmount = boosts.get(boostedAttr, (0,))[0]
+                    # Attribute name which is used to get boost value
+                    newBoostAttr = effect.getattr("gangBonus") or "commandBonus"
+                    # Get boost amount for current boost
+                    newBoostAmount = thing.getModifiedItemAttr(newBoostAttr) or 0
+                    # If skill takes part in gang boosting, multiply by skill level
+                    if type(thing) == Skill:
+                        newBoostAmount *= thing.level
+                    # If new boost is more powerful, replace older one with it
+                    if abs(newBoostAmount) > abs(currBoostAmount):
+                        boosts[boostedAttr] = (newBoostAmount, boostInfo)
 
-                    bonus = effect.getattr("gangBonus") or "commandBonus"
-                    skillName = effect.getattr("gangSkill")
-                    newBoost = thing.getModifiedItemAttr(bonus) or 0
-                    isSkill = type(thing) == Skill
-                    if isSkill or (skillName is not None and char is not None):
-                        skill = thing if isSkill else char.getSkill(skillName)
-                        newBoost *= skill.level
-
-                    if abs(newBoost) > abs(currBoost):
-                        boosts[gangBoost] = (newBoost, info)
-
-            #Don't look further down then current layer, wing commanders don't get squad bonusses and all that.
+            # Don't look further down then current layer, wing commanders don't get squad bonuses and all that
             if layer == currLayer:
                 break
 
-        self.modify(fit)
+        self.modify(fitBoosted)
 
     def getBoosts(self, fit):
+        """Return all boosts applied onto given fit"""
         return self.boosts.get(fit)
 
-    def modify(self, fit):
-        boosts = self.getBoosts(fit)
-        #Now we got it all figured out, actualy do the useful part of all this
+    def modify(self, fitBoosted):
+        # Get all boosts which should be applied onto current fit
+        boosts = self.getBoosts(fitBoosted)
+        # Now we got it all figured out, actually do the useful part of all this
         for name, info in boosts.iteritems():
+            # Unpack all data required to run effect properly
             effect, thing = info[1]
             context = ("gang", self.contextMap[type(thing)])
+            # Run effect, and get proper bonuses applied
             try:
-                effect.handler(fit, thing, context)
+                effect.handler(fitBoosted, thing, context)
             except:
                 pass
