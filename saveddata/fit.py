@@ -60,15 +60,7 @@ class Fit(object):
         self.build()
 
     @classmethod
-    def importAuto(cls, string, sourceFileName=None, ansiCP="cp1251"):
-        # Convert string to unicode using supplied ANSI codepage
-        if isinstance(string, str):
-            try:
-                string = unicode(string, ansiCP)
-            # In cases of unicode errors (eg when UTF8 is supplied as
-            # ansiCP), use fallback eencoding - cp1252
-            except UnicodeDecodeError:
-                string = unicode(string, "cp1252")
+    def importAuto(cls, string, sourceFileName=None):
         # Get first line and strip space symbols of it
         # to avoid possible detection errors
         firstLine = re.split("[\n\r]+", string, maxsplit=1)[0]
@@ -188,6 +180,10 @@ class Fit(object):
             db.getItem(shipname)
         except:
             return
+        # If client didn't take care of encoding file contents into Unicode,
+        # do it using fallback encoding ourselves
+        if isinstance(contents, str):
+            contents = unicode(contents, "cp1252")
         # List for fits
         fits = []
         # List for starting line numbers for each fit
