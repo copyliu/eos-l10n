@@ -60,16 +60,32 @@ class Fit(object):
         self.build()
 
     @classmethod
-    def importAuto(cls, string, sourceFileName=None):
-        string = string.strip()
+    def importAuto(cls, string, sourceFileName=None, ansiCP="cp1251"):
+        # Convert string to unicode using supplied ANSI codepage
+        if isinstance(string, str):
+            try:
+                string = unicode(string, ansiCP)
+            # In cases of unicode errors (eg when UTF8 is supplied as
+            # ansiCP), use fallback eencoding - cp1252
+            except UnicodeDecodeError:
+                string = unicode(string, "cp1252")
+        # Get first line and strip space symbols of it
+        # to avoid possible detection errors
         firstLine = re.split("[\n\r]+", string, maxsplit=1)[0]
+        firstLine = firstLine.strip()
+        # If XML-style start of tag encountered, detect as XML
         if re.match("<", firstLine):
             return "XML", cls.importXml(string)
+        # If we've got source file name which is used to describe ship name
+        # and first line contains something like [setup name], detect as eft config file
         elif re.match("\[.*\]", firstLine) and sourceFileName is not None:
             shipName = sourceFileName.rsplit('.')[0]
             return "EFT Config", cls.importEftCfg(shipName, string)
+        # If no file is specified and there's comma between brackets,
+        # consider that we have [ship, setup name] and detect like eft export format
         elif re.match("\[.*,.*\]", firstLine):
             return "EFT", (cls.importEft(string),)
+        # Use DNA format for all other cases
         else:
             return "DNA", (cls.importDna(string),)
 
