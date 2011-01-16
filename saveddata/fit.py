@@ -67,7 +67,7 @@ class Fit(object):
             return "XML", cls.importXml(string)
         elif re.match("\[.*\]", firstLine) and sourceFileName is not None:
             shipName = sourceFileName.rsplit('.')[0]
-            return "EFT Config", (cls.importEftCfg(shipName, string),)
+            return "EFT Config", cls.importEftCfg(shipName, string)
         elif re.match("\[.*,.*\]", firstLine):
             return "EFT", (cls.importEft(string),)
         else:
