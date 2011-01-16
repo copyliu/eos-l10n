@@ -113,6 +113,7 @@ class Fit(object):
         except:
             return
 
+        droneMap = {}
         for i in range(1, len(lines)):
             line = lines[i]
             modAmmo = line.split(",")
@@ -132,9 +133,9 @@ class Fit(object):
 
             if item.category.name == "Drone":
                 droneAmount = int(droneAmount) if droneAmount is not None else 1
-                d = Drone(item)
-                d.amount = droneAmount
-                fit.drones.append(d)
+                if not modName in droneMap:
+                    droneMap[modName] = 0
+                droneMap[modName] += droneAmount
             else:
                 m = Module(item)
                 if ammoName:
@@ -144,6 +145,11 @@ class Fit(object):
                     m.state = State.ACTIVE
 
                 fit.modules.append(m)
+
+        for droneName in droneMap:
+            d = Drone(db.getItem(droneName))
+            d.amount = droneMap[droneName]
+            fit.drones.append(d)
 
         return fit
 
