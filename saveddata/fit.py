@@ -182,7 +182,7 @@ class Fit(object):
         for i, startPos in enumerate(fitIndices):
             # End position is last file line if we're trying to get it for last fit,
             # or start position of next fit minus 1
-            endPos = len(lines) - 1 if i == len(fitIndices) - 1 else fitIndices[i + 1] - 1
+            endPos = len(lines) if i == len(fitIndices) - 1 else fitIndices[i + 1]
             # Finally, get lines for current fitting
             fitLines = lines[startPos:endPos]
             try:
@@ -201,7 +201,7 @@ class Fit(object):
                         entityState = misc.group(2)
                         entityData = misc.group(3)
                         if entityType == "Drones":
-                            droneData = re.match("(.+),([0-9]+)")
+                            droneData = re.match("(.+),([0-9]+)", entityData)
                             # Get drone name and attempt to detect drone number
                             droneName = droneData.group(1) if droneData else entityData
                             droneAmount = int(droneData.group(2)) if droneData else 1
