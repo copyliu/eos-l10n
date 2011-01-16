@@ -60,11 +60,15 @@ class Fit(object):
         self.build()
 
     @classmethod
-    def importAuto(cls, string):
+    def importAuto(cls, string, sourceFileName=None):
         string = string.strip()
-        if string[0] == "<":
+        firstLine = re.split("[\n\r]+", string, maxsplit=1)[0]
+        if re.match("<", firstLine):
             return "XML", cls.importXml(string)
-        elif string[0] == "[":
+        elif re.match("\[.*\]", firstLine) and sourceFileName is not None:
+            shipName = sourceFileName.rsplit('.')[0]
+            return "EFT Config", (cls.importEftCfg(shipName, string),)
+        elif re.match("\[.*,.*\]", firstLine):
             return "EFT", (cls.importEft(string),)
         else:
             return "DNA", (cls.importDna(string),)
@@ -154,8 +158,8 @@ class Fit(object):
         return fit
 
     @classmethod
-    def importEftCfg(shipname, contents):
-        """Handle import from eft config store file"""
+    def importEftCfg(cls, shipname, contents):
+        """Handle import from EFT config store file"""
         # Check if we have such ship in database, bail if we don't
         from eos import db
         try:
