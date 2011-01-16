@@ -25,7 +25,7 @@ from itertools import chain
 from eos import capSim
 from copy import deepcopy
 from math import sqrt, log, asinh
-from eos.types import Drone, Ship, Character, State, Slot, Module
+from eos.types import Drone, Ship, Character, State, Slot, Module, Implant, Booster
 import re
 import xml.dom
 import time
@@ -60,11 +60,15 @@ class Fit(object):
         self.build()
 
     @classmethod
-    def importAuto(cls, string):
+    def importAuto(cls, string, sourceFileName=None):
         string = string.strip()
-        if string[0] == "<":
+        firstLine = re.split("[\n\r]+", string, maxsplit=1)[0]
+        if re.match("<", firstLine):
             return "XML", cls.importXml(string)
-        elif string[0] == "[":
+        elif re.match("\[.*\]", firstLine) and sourceFileName is not None:
+            shipName = sourceFileName.rsplit('.')[0]
+            return "EFT Config", cls.importEftCfg(shipName, string)
+        elif re.match("\[.*,.*\]", firstLine):
             return "EFT", (cls.importEft(string),)
         else:
             return "DNA", (cls.importDna(string),)
@@ -158,6 +162,132 @@ class Fit(object):
             fit.drones.append(d)
 
         return fit
+
+    @classmethod
+    def importEftCfg(cls, shipname, contents):
+        """Handle import from EFT config store file"""
+        # Check if we have such ship in database, bail if we don't
+        from eos import db
+        try:
+            db.getItem(shipname)
+        except:
+            return
+        # List for fits
+        fits = []
+        # List for starting line numbers for each fit
+        fitIndices = []
+        # Separate string into lines
+        lines = re.split('[\n\r]+', contents)
+        for line in lines:
+            # Detect fit header
+            if line[:1] == "[" and line[-1:] == "]":
+                # Line index where current fit starts
+                startPos = lines.index(line)
+                fitIndices.append(startPos)
+
+        for i, startPos in enumerate(fitIndices):
+            # End position is last file line if we're trying to get it for last fit,
+            # or start position of next fit minus 1
+            endPos = len(lines) if i == len(fitIndices) - 1 else fitIndices[i + 1]
+            # Finally, get lines for current fitting
+            fitLines = lines[startPos:endPos]
+            try:
+                # Create fit object
+                f = Fit()
+                # Strip square brackets and pull out a fit name
+                f.name = fitLines[0][1:-1]
+                # Assign ship to fitting
+                f.ship = Ship(db.getItem(shipname))
+                for i in range(1, len(fitLines)):
+                    line = fitLines[i]
+                    # Parse line into some data we will need
+                    misc = re.match("(Drones|Implant|Booster)_(Active|Inactive)=(.+)",line)
+                    if misc:
+                        entityType = misc.group(1)
+                        entityState = misc.group(2)
+                        entityData = misc.group(3)
+                        if entityType == "Drones":
+                            droneData = re.match("(.+),([0-9]+)", entityData)
+                            # Get drone name and attempt to detect drone number
+                            droneName = droneData.group(1) if droneData else entityData
+                            droneAmount = int(droneData.group(2)) if droneData else 1
+                            # Bail if we can't get item or it's not from drone category
+                            try:
+                                droneItem = db.getItem(droneName, eager="group.category")
+                            except:
+                                continue
+                            if droneItem.category.name != "Drone":
+                                continue
+                            # Add drone to the fitting
+                            d = Drone(droneItem)
+                            d.amount = droneAmount
+                            if entityState == "Active":
+                                d.amountActive = droneAmount
+                            elif entityState == "Inactive":
+                                d.amountActive = 0
+                            f.drones.append(d)
+                        elif entityType == "Implant":
+                            # Bail if we can't get item or it's not from implant category
+                            try:
+                                implantItem = db.getItem(entityData, eager="group.category")
+                            except:
+                                continue
+                            if implantItem.category.name != "Implant":
+                                continue
+                            # Add implant to the fitting
+                            imp = Implant(implantItem)
+                            if entityState == "Active":
+                                imp.active = True
+                            elif entityState == "Inactive":
+                                imp.active = False
+                            f.implants.append(imp)
+                        elif entityType == "Booster":
+                            # Bail if we can't get item or it's not from implant category
+                            try:
+                                boosterItem = db.getItem(entityData, eager="group.category")
+                            except:
+                                continue
+                            # All boosters have implant category
+                            if implantItem.category.name != "Implant":
+                                continue
+                            # Add booster to the fitting
+                            b = Booster(boosterItem)
+                            if entityState == "Active":
+                                b.active = True
+                            elif entityState == "Inactive":
+                                b.active = False
+                            f.boosters.append(b)
+                    # If we don't have any prefixes, then it's a module
+                    else:
+                        withCharge = re.match("(.+),(.+)", line)
+                        modName = withCharge.group(1) if withCharge else line
+                        chargeName = withCharge.group(2) if withCharge else None
+                        # If we can't get module item, skip it
+                        try:
+                            modItem = db.getItem(modName)
+                        except:
+                            continue
+                        # Create module and activate it if it's activable
+                        m = Module(modItem)
+                        if m.isValidState(State.ACTIVE):
+                            m.state = State.ACTIVE
+                        # Add charge to mod if applicable, on any errors just don't add anything
+                        if chargeName:
+                            try:
+                                chargeItem = db.getItem(chargeName, eager="group.category")
+                                if chargeItem.category.name == "Charge":
+                                    m.charge = chargeItem
+                            except:
+                                pass
+                        # Append module to fit
+                        f.modules.append(m)
+                # Append fit to list of fits
+                fits.append(f)
+            # Skip fit silently if we get an exception
+            except Exception:
+                pass
+
+        return fits
 
     @classmethod
     def importXml(cls, text):

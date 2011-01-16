@@ -67,7 +67,7 @@ if options.effects or options.renames:
     implemented = []
 
     for filename in os.listdir(effectsPath):
-        basename, extension = filename.split('.')
+        basename, extension = filename.rsplit('.', maxsplit=1)
         #Ignore non-py files and exclude implementation-specific 'effect'
         if extension == "py" and extension not in ("__init__"):
             implemented.append(basename)
