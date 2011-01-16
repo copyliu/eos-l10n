@@ -96,6 +96,7 @@ class Fit(object):
     @classmethod
     def importEft(cls, eftString):
         from eos import db
+        offineSuffix = " /OFFLINE"
         fit = cls()
         eftString = eftString.strip()
         lines = re.split('[\n\r]+', eftString)
@@ -115,6 +116,9 @@ class Fit(object):
 
         for i in range(1, len(lines)):
             line = lines[i]
+            setOffline = line.endswith(offineSuffix)
+            if setOffline == True:
+                line = line[:len(line) - len(offineSuffix)]
             modAmmo = line.split(",")
             modDrone = modAmmo[0].split(" x")
             if len(modAmmo) == 2: ammoName = modAmmo[1].strip()
@@ -140,7 +144,9 @@ class Fit(object):
                 if ammoName:
                     m.charge = db.getItem(ammoName)
 
-                if m.isValidState(State.ACTIVE):
+                if setOffline == True and m.isValidState(State.OFFLINE):
+                    m.state = State.OFFLINE
+                elif m.isValidState(State.ACTIVE):
                     m.state = State.ACTIVE
 
                 fit.modules.append(m)
@@ -184,6 +190,7 @@ class Fit(object):
 
     EXPORT_ORDER_EFT = [Slot.SUBSYSTEM, Slot.HIGH, Slot.MED, Slot.LOW, Slot.RIG]
     def exportEft(self):
+        offineSuffix = " /OFFLINE"
         export = "[%s, %s]\n" % (self.ship.item.name, self.name)
         stuff = {}
         for module in self.modules:
@@ -192,6 +199,8 @@ class Fit(object):
             curr = module.item.name if module.item else ("[Empty %s slot]" % Slot.getName(slot).capitalize() if slot is not None else "")
             if module.charge:
                 curr += ", %s" % module.charge.name
+            if module.state == State.OFFLINE:
+                curr += offineSuffix
             curr += "\n"
             stuff[slot].append(curr)
 
