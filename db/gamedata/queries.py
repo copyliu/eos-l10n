@@ -19,7 +19,7 @@
 
 from eos.db import gamedata_session
 from eos.db.gamedata.metagroup import metatypes_table
-from sqlalchemy.sql import and_, or_, select
+from sqlalchemy.sql import and_, or_, select, func
 from sqlalchemy.orm import join
 from eos.types import Item, Category, Group, MarketGroup, AttributeInfo, MetaData
 from eos.db.util import processEager, processWhere
@@ -89,7 +89,7 @@ def searchItems(nameLike, where=None, join=None, eager=None):
     if not hasattr(join, "__iter__"):
         join = (join,)
 
-    filter = processWhere(Item.name.like(nameLike), where)
+    filter = processWhere(func.lower(Item.name).like(nameLike.lower()), where)
     return gamedata_session.query(Item).options(*processEager(eager)).join(*join).filter(filter).all()
 
 @cachedQuery(3, "where", "item", "metaGroups")

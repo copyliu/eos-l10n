@@ -384,7 +384,7 @@ if options.effects:
 else:
     effect_list = []
     for effect_file in os.listdir(effects_path):
-        file_name, file_extension = effect_file.rsplit('.', maxsplit=1)
+        file_name, file_extension = effect_file.rsplit('.', 1)
         # Ignore non-py files and exclude implementation-specific 'effects'
         if file_extension == "py" and not file_name in ("__init__"):
             effect_list.append(file_name)

@@ -303,7 +303,7 @@ class Fit(object):
 
     @classmethod
     def importXml(cls, text):
-        doc = xml.dom.minidom.parseString(text)
+        doc = xml.dom.minidom.parseString(text.encode("utf-8"))
         fittings = doc.getElementsByTagName("fittings").item(0)
         fittings = fittings.getElementsByTagName("fitting")
         fits = []
