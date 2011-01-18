@@ -170,10 +170,25 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanGravimetricStrengthBonus_moduleOther(self):
+    def test_blackOps_scanGravimetricStrengthBonus_moduleEcmBurst(self):
         self.buildTested = 0
         attr = "scanGravimetricStrengthBonus"
         item = "ECM Burst I"
+        skill = "Black Ops"
+        iLvl = 1
+        iIngame = 1.3
+        fLvl = 4
+        fIngame = 2.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_blackOps_scanGravimetricStrengthBonus_other(self):
+        self.buildTested = 0
+        attr = "scanGravimetricStrengthBonus"
+        item = "Vespa EC-600"
         skill = "Black Ops"
         iLvl = 1
         iIngame = 1.0
@@ -200,10 +215,25 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanLadarStrengthBonus_moduleOther(self):
+    def test_blackOps_scanLadarStrengthBonus_moduleEcmBurst(self):
         self.buildTested = 0
         attr = "scanLadarStrengthBonus"
         item = "ECM Burst I"
+        skill = "Black Ops"
+        iLvl = 1
+        iIngame = 1.3
+        fLvl = 4
+        fIngame = 2.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_blackOps_scanLadarStrengthBonus_other(self):
+        self.buildTested = 0
+        attr = "scanLadarStrengthBonus"
+        item = "Vespa EC-600"
         skill = "Black Ops"
         iLvl = 1
         iIngame = 1.0
@@ -230,10 +260,25 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanMagnetometricStrengthBonus_moduleOther(self):
+    def test_blackOps_scanMagnetometricStrengthBonus_moduleEcmBurst(self):
         self.buildTested = 0
         attr = "scanMagnetometricStrengthBonus"
         item = "ECM Burst I"
+        skill = "Black Ops"
+        iLvl = 1
+        iIngame = 1.3
+        fLvl = 4
+        fIngame = 2.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_blackOps_scanMagnetometricStrengthBonus_other(self):
+        self.buildTested = 0
+        attr = "scanMagnetometricStrengthBonus"
+        item = "Vespa EC-600"
         skill = "Black Ops"
         iLvl = 1
         iIngame = 1.0
@@ -260,10 +305,25 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_blackOps_scanRadarStrengthBonus_moduleOther(self):
+    def test_blackOps_scanRadarStrengthBonus_moduleEcmBurst(self):
         self.buildTested = 0
         attr = "scanRadarStrengthBonus"
         item = "ECM Burst I"
+        skill = "Black Ops"
+        iLvl = 1
+        iIngame = 1.3
+        fLvl = 4
+        fIngame = 2.2
+        iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
+        fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_blackOps_scanRadarStrengthBonus_other(self):
+        self.buildTested = 0
+        attr = "scanRadarStrengthBonus"
+        item = "Vespa EC-600"
         skill = "Black Ops"
         iLvl = 1
         iIngame = 1.0
