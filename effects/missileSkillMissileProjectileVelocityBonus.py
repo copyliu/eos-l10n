@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZML (3 of 3)
+#Implants named like: Hardwiring Zainou 'Deadeye' ZML (6 of 6)
 #Modules named like: Hydraulic Bay Thrusters (6 of 6)
 #Skill: Missile Projection
 type = "passive"

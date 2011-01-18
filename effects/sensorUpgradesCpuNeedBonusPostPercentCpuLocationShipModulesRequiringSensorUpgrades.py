@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KLB (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gypsy' KLB (6 of 6)
 #Modules named like: Liquid Cooled Electronics (6 of 6)
 #Skill: Electronics Upgrades
 type = "passive"

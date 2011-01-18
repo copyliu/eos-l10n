@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gnome' KXA (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gnome' KXA (6 of 6)
 #Skill: Shield Emission Systems
 type = "passive"
 def handler(fit, container, context):

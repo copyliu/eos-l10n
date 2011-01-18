@@ -1,7 +1,5 @@
 #Used by:
-#Implant: Hardwiring - Inherent Implants 'Noble' ZET30
-#Implant: Hardwiring - Inherent Implants 'Noble' ZET300
-#Implant: Hardwiring - Inherent Implants 'Noble' ZET3000
+#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 8 > Armor Implants (6 of 6)
 #Skill: Mechanic
 type = "passive"
 def handler(fit, container, context):

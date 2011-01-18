@@ -1,5 +1,5 @@
 #Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KQB (3 of 3)
+#Implants named like: Hardwiring Zainou 'Gypsy' KQB (6 of 6)
 #Skill: Propulsion Jamming
 type = "passive"
 def handler(fit, container, context):
