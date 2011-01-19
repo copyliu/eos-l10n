@@ -164,3 +164,12 @@ def directAttributeRequest(itemIDs, attrID):
                                   from_obj=[join(eos.types.Attribute, eos.types.Item)])
 
     return gamedata_session.execute(q).fetchall()
+
+@cachedQuery(1, "group")
+def getMetaGroup(group, eager=None):
+        if isinstance(group, basestring):
+            filter = MetaGroup.name == group
+        elif isinstance(group, (int, float)):
+            filter = MetaGroup.ID == int(group)
+
+        return gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(filter).one()
