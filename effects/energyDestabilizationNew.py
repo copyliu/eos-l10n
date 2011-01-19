@@ -8,5 +8,5 @@ def handler(fit, container, context):
     and container.state >= State.ACTIVE) or hasattr(container, "amountActive")):
         multiplier = container.amountActive if hasattr(container, "amountActive") else 1
         amount = container.getModifiedItemAttr("energyDestabilizationAmount")
-        time = container.getModifiedItemAttr("duration") / 1000.0
+        time = container.getModifiedItemAttr("duration")
         fit.addDrain(time, amount * multiplier, 0)

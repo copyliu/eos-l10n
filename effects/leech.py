@@ -4,7 +4,7 @@ type = "active", "projected"
 runTime = "late"
 def handler(fit, module, context):
     amount = module.getModifiedItemAttr("powerTransferAmount")
-    time = module.getModifiedItemAttr("duration") / 1000.0
+    time = module.getModifiedItemAttr("duration")
     if "projected" in context and fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") != 1:
         fit.addDrain(time, amount, 0)
     elif "module" in context:
