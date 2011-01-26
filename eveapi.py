@@ -25,6 +25,9 @@
 # OTHER DEALINGS IN THE SOFTWARE
 #
 #-----------------------------------------------------------------------------
+# Version: 1.1.3 - 26 January 2011
+# - Changed the api url to api.eveonline.com and switched protocol from http to https [XreiX]
+#
 # Version: 1.1.2 - 2 July 2010
 # - Fixed __str__ on row objects to work properly with unicode strings.
 #
@@ -97,7 +100,7 @@ class Error(StandardError):
         self.args = (message.rstrip("."),)
 
 
-def EVEAPIConnection(url="api.eve-online.com", cacheHandler=None, proxy=None):
+def EVEAPIConnection(url="api.eveonline.com", cacheHandler=None, proxy=None):
     # Creates an API object through which you can call remote functions.
     #
     # The following optional arguments may be provided:
@@ -278,7 +281,7 @@ class _RootContext(_Context):
 
         if response is None:
             if kw:
-                req = urllib2.Request("http://" + self._host + path, urllib.urlencode(kw))
+                req = urllib2.Request("https://" + self._host + path, urllib.urlencode(kw))
             else:
                 req = urllib2.Request(path)
 
