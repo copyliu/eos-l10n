@@ -1,6 +1,5 @@
 #Used by:
 #Ship: Anathema
-#Ship: Malediction
 #Ship: Vengeance
 type = "passive"
 def handler(fit, ship, context):

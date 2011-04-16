@@ -1,5 +1,6 @@
 #Used by:
 #Implants named like: Hardwiring Zainou 'Gypsy' KNB (6 of 6)
+#Implant: Quafe Zero
 #Skill: Signature Analysis
 type = "passive"
 def handler(fit, container, context):

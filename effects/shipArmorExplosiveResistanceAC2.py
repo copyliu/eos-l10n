@@ -1,5 +1,6 @@
 #Used by:
-#Variations of ship: Maller (3 of 3)
+#Ship: Devoter
+#Ship: Maller
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

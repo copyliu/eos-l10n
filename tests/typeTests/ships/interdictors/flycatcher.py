@@ -117,56 +117,56 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Destroyer Skill Bonus:
-    # 3% reduction of Light Missile damage reduction factor per level
+    # 3% bonus to Light Missile effectiveness against faster moving targets per level
 
-    def test_destroyers_aoeDamageReductionFactor_chargeMissileLight(self):
+    def test_destroyers_aoeVelocity_chargeMissileLight(self):
         self.buildTested = 0
-        attr = "aoeDamageReductionFactor"
+        attr = "aoeVelocity"
         item = "Bloodclaw Light Missile"
         skill = "Destroyers"
         iLvl = 1
-        iIngame = 0.97
+        iIngame = 1.03
         fLvl = 4
-        fIngame = 0.88
+        fIngame = 1.12
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_destroyers_aoeDamageReductionFactor_chargeMissileLightAdvanced(self):
+    def test_destroyers_aoeVelocity_chargeMissileLightAdvanced(self):
         self.buildTested = 0
-        attr = "aoeDamageReductionFactor"
+        attr = "aoeVelocity"
         item = "Flameburst Fury Light Missile"
         skill = "Destroyers"
         iLvl = 1
-        iIngame = 0.97
+        iIngame = 1.03
         fLvl = 4
-        fIngame = 0.88
+        fIngame = 1.12
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_destroyers_aoeDamageReductionFactor_chargeMissileLightFof(self):
+    def test_destroyers_aoeVelocity_chargeMissileLightFof(self):
         self.buildTested = 0
-        attr = "aoeDamageReductionFactor"
+        attr = "aoeVelocity"
         item = "Exterminator F.O.F. Light Missile I"
         skill = "Destroyers"
         iLvl = 1
-        iIngame = 0.97
+        iIngame = 1.03
         fLvl = 4
-        fIngame = 0.88
+        fIngame = 1.12
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_destroyers_aoeDamageReductionFactor_chargeMissileLightNoSkillrqMissileOp(self):
+    def test_destroyers_aoeVelocity_chargeMissileLightNoSkillrqMissileOp(self):
         self.buildTested = 0
-        attr = "aoeDamageReductionFactor"
+        attr = "aoeVelocity"
         item = "Civilian Bloodclaw Light Missile"
         skill = "Destroyers"
         iLvl = 1
@@ -179,9 +179,9 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_destroyers_aoeDamageReductionFactor_chargeMissileOther(self):
+    def test_destroyers_aoeVelocity_chargeMissileOther(self):
         self.buildTested = 0
-        attr = "aoeDamageReductionFactor"
+        attr = "aoeVelocity"
         item = "Phalanx Rocket"
         skill = "Destroyers"
         iLvl = 1

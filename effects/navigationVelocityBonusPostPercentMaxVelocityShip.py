@@ -1,6 +1,7 @@
 #Used by:
 #Implants named like: Snake (11 of 12)
 #Modules named like: Auxiliary Thrusters (6 of 6)
+#Implant: Quafe Zero
 #Skill: Navigation
 type = "passive"
 def handler(fit, container, context):
