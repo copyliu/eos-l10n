@@ -65,10 +65,24 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_capacitorNeed_moduleOtherSkillrq(self):
+    def test_capacitorNeed_moduleWarpDisruptFieldGenerator(self):
         self.buildTested = 0
         attr = "capacitorNeed"
         item = "Warp Disruption Field Generator I"
+        iLvl = 1
+        iIngame = 0.95
+        fLvl = 4
+        fIngame = 0.8
+        iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
+        fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_capacitorNeed_moduleOther(self):
+        self.buildTested = 0
+        attr = "capacitorNeed"
+        item = "Ice Harvester I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
