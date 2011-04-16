@@ -30,6 +30,11 @@ import re
 import xml.dom
 import time
 
+try:
+    from collections import OrderedDict
+except ImportError:
+    from gui.utils.compat import OrderedDict
+
 class Fit(object):
     """Represents a fitting, with modules, ship, implants, etc."""
     EXTRA_ATTRIBUTES = {"armorRepair": 0,
@@ -87,7 +92,7 @@ class Fit(object):
         info = string.split(":")
         f = Fit()
         f.ship = Ship(db.getItem(int(info[0])))
-        f.name = "%s - DNA Imported" % f.ship.item.name
+        f.name = "{0} - DNA Imported".format(f.ship.item.name)
         for itemInfo in info[1:]:
             if itemInfo:
                 itemID, amount = itemInfo.split(";")
@@ -98,10 +103,11 @@ class Fit(object):
                     d.amount = int(amount)
                     f.drones.append(d)
                 else:
-                    m = Module(item)
-                    f.modules.append(m)
-                    if m.isValidState(State.ACTIVE):
-                        m.state = State.ACTIVE
+                    for i in xrange(int(amount)):
+                        m = Module(item)
+                        f.modules.append(m)
+                        if m.isValidState(State.ACTIVE):
+                            m.state = State.ACTIVE
 
         return f
 
@@ -367,12 +373,18 @@ class Fit(object):
 
     def exportDna(self):
         dna = str(self.shipID)
+        mods = OrderedDict()
         for mod in self.modules:
             if not mod.isEmpty:
-                dna += ":%d;1" % mod.itemID
+                if not mod.itemID in mods:
+                    mods[mod.itemID] = 0
+                mods[mod.itemID] += 1
+
+        for mod in mods:
+            dna += ":{0};{1}".format(mod, mods[mod])
 
         for drone in self.drones:
-            dna += ":%d;%d" % (drone.itemID, drone.amount)
+            dna += ":{0};{1}".format(drone.itemID, drone.amount)
 
         return dna + "::"
 
