@@ -2,7 +2,7 @@
 #Modules from group: Drone Tracking Modules (2 of 2)
 type = "passive"
 def handler(fit, module, context):
-    fit.drones.filteredItemMultiply(lambda drone: "trackingSpeed" in drone.itemModifiedAttributes,
+    fit.drones.filteredItemMultiply(lambda drone: drone.item.requiresSkill("Drones"),
                                     "trackingSpeed", module.getModifiedItemAttr("trackingSpeedMultiplier"))
-    fit.drones.filteredItemMultiply(lambda drone: "maxRange" in drone.itemModifiedAttributes,
+    fit.drones.filteredItemMultiply(lambda drone: drone.item.requiresSkill("Drones"),
                                     "maxRange", module.getModifiedItemAttr("maxRangeMultiplier"))
