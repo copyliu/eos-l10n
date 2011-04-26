@@ -54,7 +54,7 @@ from eos.db.saveddata import *
 #Import queries
 from eos.db.gamedata.queries import getItem, searchItems, getVariations, getItemsByCategory, directAttributeRequest, \
                                     getMarketGroup, getGroup, getCategory, getAttributeInfo, getMetaData, getMetaGroup
-from eos.db.saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, searchFits, \
+from eos.db.saveddata.queries import getUser, getCharacter, getFit, getFitsWithShip, countFitsWithShip, searchFits, \
                                      getCharacterList, getPrice, getDamagePatternList, getDamagePattern, \
                                      getFitList, getFleetList, getFleet, save, remove, commit, add, getCharactersForUser
 

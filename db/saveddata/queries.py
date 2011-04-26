@@ -130,7 +130,7 @@ def getCharacterList(eager=None):
 
 def getCharactersForUser(owner, eager=None):
     return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ownerID == owner).all()
-    
+
 @cachedQuery(Fit, 2, "fitID", "where")
 def getFit(fitID, where=None, eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
@@ -150,6 +150,19 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
 
     filter = processWhere(filter, where)
     return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+
+def countFitsWithShip(shipID, ownerID=None, where=None, eager=None):
+    """
+    Get all the fits using a certain ship.
+    If no user is passed, do this for all users.
+    """
+    filter = Fit.shipID == shipID
+    if ownerID is not None:
+        filter = and_(filter, Fit.ownerID == ownerID)
+
+    filter = processWhere(filter, where)
+    return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).count()
+
 
 def getFitList(eager=None):
     return saveddata_session.query(Fit).options(*processEager(eager)).all()
