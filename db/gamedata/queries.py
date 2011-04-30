@@ -25,7 +25,6 @@ from eos.types import Item, Category, Group, MarketGroup, AttributeInfo, MetaDat
 from eos.db.util import processEager, processWhere
 import eos.config
 
-
 configVal = getattr(eos.config, "gamedataCache", None)
 if configVal is True:
     def cachedQuery(amount, *keywords):
@@ -64,7 +63,7 @@ def getItem(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
         id = int(lookfor)
         if eager is None:
-            item = gamedata_session.query(Item).options(*processEager(eager)).get(id)
+            item = gamedata_session.query(Item).get(id)
         else:
             item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == id).first()
     elif isinstance(lookfor, basestring):
@@ -77,7 +76,7 @@ def getGroup(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
         id = int(lookfor)
         if eager is None:
-            group = gamedata_session.query(Group).options(*processEager(eager)).get(id)
+            group = gamedata_session.query(Group).get(id)
         else:
             group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.ID == id).first()
     elif isinstance(lookfor, basestring):
@@ -90,7 +89,7 @@ def getCategory(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
         id = int(lookfor)
         if eager is None:
-            category = gamedata_session.query(Category).options(*processEager(eager)).get(id)
+            category = gamedata_session.query(Category).get(id)
         else:
             category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.ID == id).first()
     elif isinstance(lookfor, basestring):
@@ -103,7 +102,7 @@ def getMetaGroup(lookfor, eager=None):
         if isinstance(lookfor, (int, float)):
             id = int(lookfor)
             if eager is None:
-                metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).get(id)
+                metaGroup = gamedata_session.query(MetaGroup).get(id)
             else:
                 metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.ID == id).first()
         elif isinstance(lookfor, basestring):
@@ -115,7 +114,7 @@ def getMetaGroup(lookfor, eager=None):
 def getMarketGroup(lookfor, eager=None):
     id = int(lookfor)
     if eager is None:
-        marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).get(id)
+        marketGroup = gamedata_session.query(MarketGroup).get(id)
     else:
         marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(MarketGroup.ID == id).first()
     return marketGroup
