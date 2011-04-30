@@ -41,7 +41,7 @@ items_table = Table("invtypes", gamedata_meta,
 from .metagroup import metatypes_table
 
 mapper(Item, items_table,
-       properties = {"group" : relation(Group, backref = "items", lazy=False),
+       properties = {"group" : relation(Group, backref = "items"),
                      "icon" : relation(Icon),
                      "_Item__attributes" : relation(Attribute, collection_class = attribute_mapped_collection('name')),
                      "effects" : relation(Effect, collection_class = attribute_mapped_collection('name')),
