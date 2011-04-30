@@ -63,7 +63,10 @@ else:
 def getItem(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
         id = int(lookfor)
-        item = gamedata_session.query(Item).options(*processEager(eager)).get(id)
+        if eager is None:
+            item = gamedata_session.query(Item).options(*processEager(eager)).get(id)
+        else:
+            item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == id).first()
     elif isinstance(lookfor, basestring):
         # Item names are unique, so we can use first() instead of one()
         item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).first()
@@ -73,7 +76,10 @@ def getItem(lookfor, eager=None):
 def getGroup(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
         id = int(lookfor)
-        group = gamedata_session.query(Group).options(*processEager(eager)).get(id)
+        if eager is None:
+            group = gamedata_session.query(Group).options(*processEager(eager)).get(id)
+        else:
+            group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.ID == id).first()
     elif isinstance(lookfor, basestring):
         # Group names are unique, so we can use first() instead of one()
         group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.name == lookfor).first()
@@ -83,8 +89,10 @@ def getGroup(lookfor, eager=None):
 def getCategory(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
         id = int(lookfor)
-        category = gamedata_session.query(Category).options(*processEager(eager)).get(id)
-        filter = Category.ID == int(lookfor)
+        if eager is None:
+            category = gamedata_session.query(Category).options(*processEager(eager)).get(id)
+        else:
+            category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.ID == id).first()
     elif isinstance(lookfor, basestring):
         # Category names are unique, so we can use first() instead of one()
         category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.name == lookfor).first()
@@ -94,7 +102,10 @@ def getCategory(lookfor, eager=None):
 def getMetaGroup(lookfor, eager=None):
         if isinstance(lookfor, (int, float)):
             id = int(lookfor)
-            metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).get(id)
+            if eager is None:
+                metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).get(id)
+            else:
+                metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.ID == id).first()
         elif isinstance(lookfor, basestring):
             # MetaGroup names are unique, so we can use first() instead of one()
             metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.name == lookfor).first()
@@ -103,15 +114,18 @@ def getMetaGroup(lookfor, eager=None):
 @cachedQuery(1, "lookfor")
 def getMarketGroup(lookfor, eager=None):
     id = int(lookfor)
-    marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).get(id)
+    if eager is None:
+        marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).get(id)
+    else:
+        marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(MarketGroup.ID == id).first()
     return marketGroup
 
 @cachedQuery(2, "where", "filter")
 def getItemsByCategory(filter, where=None, eager=None):
-    if isinstance(filter, basestring):
-        filter = Category.name == filter
-    elif isinstance(filter, (int, float)):
+    if isinstance(filter, (int, float)):
         filter = Category.ID == int(filter)
+    elif isinstance(filter, basestring):
+        filter = Category.name == filter
 
     filter = processWhere(filter, where)
     return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
