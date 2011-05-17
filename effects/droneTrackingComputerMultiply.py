@@ -3,6 +3,10 @@
 type = "passive"
 def handler(fit, module, context):
     fit.drones.filteredItemMultiply(lambda drone: drone.item.requiresSkill("Drones"),
-                                    "trackingSpeed", module.getModifiedItemAttr("trackingSpeedMultiplier"))
+                                    "trackingSpeed", module.getModifiedItemAttr("trackingSpeedMultiplier"),
+                                    stackingPenalties = True
+                                    )
     fit.drones.filteredItemMultiply(lambda drone: drone.item.requiresSkill("Drones"),
-                                    "maxRange", module.getModifiedItemAttr("maxRangeMultiplier"))
+                                    "maxRange", module.getModifiedItemAttr("maxRangeMultiplier"),
+                                    stackingPenalties = True
+                                    )
