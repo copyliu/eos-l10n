@@ -10,4 +10,4 @@ def handler(fit, module, context):
     mass = fit.ship.getModifiedItemAttr("mass")
     thrust = module.getModifiedItemAttr("speedBoostFactor")
     fit.ship.boostItemAttr("maxVelocity", speedBoost * thrust / mass)
-    fit.ship.boostItemAttr("signatureRadius", module.getModifiedItemAttr("signatureRadiusBonus"))
+    fit.ship.boostItemAttr("signatureRadius", module.getModifiedItemAttr("signatureRadiusBonus"), stackingPenalties = True)
