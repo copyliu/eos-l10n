@@ -58,6 +58,7 @@ else:
             return checkAndReturn
         return deco
 
+itemNameMap = {}
 @cachedQuery(1, "lookfor")
 def getItem(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
@@ -67,10 +68,19 @@ def getItem(lookfor, eager=None):
         else:
             item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == id).first()
     elif isinstance(lookfor, basestring):
-        # Item names are unique, so we can use first() instead of one()
-        item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).first()
+        if lookfor in itemNameMap:
+            id = itemNameMap[lookfor]
+            if eager is None:
+                item = gamedata_session.query(Item).get(id)
+            else:
+                item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == id).first()
+        else:
+            # Item names are unique, so we can use first() instead of one()
+            item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).first()
+            itemNameMap[lookfor] = item.ID
     return item
 
+groupNameMap = {}
 @cachedQuery(1, "lookfor")
 def getGroup(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
@@ -80,10 +90,19 @@ def getGroup(lookfor, eager=None):
         else:
             group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.ID == id).first()
     elif isinstance(lookfor, basestring):
-        # Group names are unique, so we can use first() instead of one()
-        group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.name == lookfor).first()
+        if lookfor in groupNameMap:
+            id = groupNameMap[lookfor]
+            if eager is None:
+                group = gamedata_session.query(Group).get(id)
+            else:
+                group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.ID == id).first()
+        else:
+            # Group names are unique, so we can use first() instead of one()
+            group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.name == lookfor).first()
+            groupNameMap[lookfor] = group.ID
     return group
 
+categoryNameMap = {}
 @cachedQuery(1, "lookfor")
 def getCategory(lookfor, eager=None):
     if isinstance(lookfor, (int, float)):
@@ -93,22 +112,39 @@ def getCategory(lookfor, eager=None):
         else:
             category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.ID == id).first()
     elif isinstance(lookfor, basestring):
-        # Category names are unique, so we can use first() instead of one()
-        category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.name == lookfor).first()
+        if lookfor in categoryNameMap:
+            id = categoryNameMap[lookfor]
+            if eager is None:
+                category = gamedata_session.query(Category).get(id)
+            else:
+                category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.ID == id).first()
+        else:
+            # Category names are unique, so we can use first() instead of one()
+            category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.name == lookfor).first()
+            categoryNameMap[lookfor] = category.ID
     return category
 
+metaGroupNameMap = {}
 @cachedQuery(1, "lookfor")
 def getMetaGroup(lookfor, eager=None):
-        if isinstance(lookfor, (int, float)):
-            id = int(lookfor)
+    if isinstance(lookfor, (int, float)):
+        id = int(lookfor)
+        if eager is None:
+            metaGroup = gamedata_session.query(MetaGroup).get(id)
+        else:
+            metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.ID == id).first()
+    elif isinstance(lookfor, basestring):
+        if lookfor in metaGroupNameMap:
+            id = metaGroupNameMap[lookfor]
             if eager is None:
                 metaGroup = gamedata_session.query(MetaGroup).get(id)
             else:
                 metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.ID == id).first()
-        elif isinstance(lookfor, basestring):
+        else:
             # MetaGroup names are unique, so we can use first() instead of one()
             metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.name == lookfor).first()
-        return metaGroup
+            metaGroupNameMap[lookfor] = metaGroup.ID
+    return metaGroup
 
 @cachedQuery(1, "lookfor")
 def getMarketGroup(lookfor, eager=None):
