@@ -104,7 +104,7 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     @property
     def dps(self):
         if self.__dps == None:
-            if self.dealsDamage:
+            if self.dealsDamage is True and self.amountActive > 0:
                 if self.hasAmmo:
                     attr = "missileLaunchDuration"
                     getter = self.getModifiedChargeAttr
