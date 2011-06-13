@@ -77,6 +77,8 @@ def getItem(lookfor, eager=None):
             # Item names are unique, so we can use first() instead of one()
             item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.name == lookfor).first()
             itemNameMap[lookfor] = item.ID
+    else:
+        raise TypeError("Need integer or string as argument")
     return item
 
 groupNameMap = {}
@@ -98,6 +100,8 @@ def getGroup(lookfor, eager=None):
             # Group names are unique, so we can use first() instead of one()
             group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.name == lookfor).first()
             groupNameMap[lookfor] = group.ID
+    else:
+        raise TypeError("Need integer or string as argument")
     return group
 
 categoryNameMap = {}
@@ -119,6 +123,8 @@ def getCategory(lookfor, eager=None):
             # Category names are unique, so we can use first() instead of one()
             category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.name == lookfor).first()
             categoryNameMap[lookfor] = category.ID
+    else:
+        raise TypeError("Need integer or string as argument")
     return category
 
 metaGroupNameMap = {}
@@ -140,14 +146,19 @@ def getMetaGroup(lookfor, eager=None):
             # MetaGroup names are unique, so we can use first() instead of one()
             metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.name == lookfor).first()
             metaGroupNameMap[lookfor] = metaGroup.ID
+    else:
+        raise TypeError("Need integer or string as argument")
     return metaGroup
 
 @cachedQuery(1, "lookfor")
 def getMarketGroup(lookfor, eager=None):
-    if eager is None:
-        marketGroup = gamedata_session.query(MarketGroup).get(lookfor)
+    if isinstance(lookfor, int):
+        if eager is None:
+            marketGroup = gamedata_session.query(MarketGroup).get(lookfor)
+        else:
+            marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(MarketGroup.ID == lookfor).first()
     else:
-        marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(MarketGroup.ID == lookfor).first()
+        raise TypeError("Need integer as argument")
     return marketGroup
 
 @cachedQuery(2, "where", "filter")
@@ -156,6 +167,8 @@ def getItemsByCategory(filter, where=None, eager=None):
         filter = Category.ID == filter
     elif isinstance(filter, basestring):
         filter = Category.name == filter
+    else:
+        raise TypeError("Need integer or string as argument")
 
     filter = processWhere(filter, where)
     return gamedata_session.query(Item).options(*processEager(eager)).join(Item.group, Group.category).filter(filter).all()
@@ -178,6 +191,8 @@ def searchItems(nameLike, where=None, join=None, eager=None):
 
 @cachedQuery(3, "where", "item", "metaGroups")
 def getVariations(item, where=None, metaGroups=None, eager=None):
+    if not isinstance(item, (int, Item)):
+        raise TypeError("Need integer or Item instance as argument")
     if not isinstance(item, int):
         item = item.ID
 
@@ -186,6 +201,9 @@ def getVariations(item, where=None, metaGroups=None, eager=None):
     if metaGroups != None:
         if not hasattr(metaGroups, "__iter__"):
             metaGroups = (metaGroups,)
+        for metaGroup in metaGroups:
+            if not isinstance(metaGroup, int):
+                raise TypeError("All metaGroups must be integer")
 
         metaClause = metatypes_table.c.metaGroupID == metaGroups[0]
         i = 1
@@ -205,6 +223,8 @@ def getAttributeInfo(attr, eager=None):
         filter = AttributeInfo.name == attr
     elif isinstance(attr, int):
         filter = AttributeInfo.ID == attr
+    else:
+        raise TypeError("Need integer or string as argument")
 
     return gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
 
@@ -214,6 +234,12 @@ def getMetaData(field):
 
 @cachedQuery(2, "itemIDs", "attributeID")
 def directAttributeRequest(itemIDs, attrID):
+    if not isinstance(attrID, int):
+        raise TypeError("AttrID must be integer")
+    for itemID in itemIDs:
+        if not isinstance(itemID, int):
+            raise TypeError("All itemIDs must be integer")
+
     q = select((eos.types.Item.ID, eos.types.Attribute.value),
                                   and_(eos.types.Attribute.attributeID == attrID, eos.types.Item.ID.in_(itemIDs)),
                                   from_obj=[join(eos.types.Attribute, eos.types.Item)])
