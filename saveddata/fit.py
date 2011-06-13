@@ -1026,12 +1026,14 @@ class Fit(object):
         weaponVolley = 0
 
         for mod in self.modules:
-            dps, volley = mod.damageStats
-            weaponDPS += dps
-            weaponVolley += volley
+            if not mod.isEmpty:
+                dps, volley = mod.damageStats
+                weaponDPS += dps
+                weaponVolley += volley
 
         for drone in self.drones:
-            droneDPS += drone.dps
+            if drone.dealsDamage and drone.amountActive > 0:
+                droneDPS += drone.dps
 
         self.__weaponDPS = weaponDPS
         self.__weaponVolley = weaponVolley
