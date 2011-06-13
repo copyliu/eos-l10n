@@ -18,10 +18,10 @@
 #===============================================================================
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, CheckConstraint, Boolean
-from sqlalchemy.orm import mapper
+from sqlalchemy.orm import relation, mapper
 
 from eos.db import saveddata_meta
-from eos.types import Module
+from eos.types import Module, Fit
 
 modules_table = Table("modules", saveddata_meta,
                       Column("ID", Integer, primary_key = True),
@@ -34,4 +34,6 @@ modules_table = Table("modules", saveddata_meta,
                       Column("position", Integer),
                       CheckConstraint('("dummySlot" = NULL OR "itemID" = NULL) AND "dummySlot" != "itemID"'))
 
-mapper(Module, modules_table)
+mapper(Module, modules_table,
+       properties = {"owner" : relation(Fit)})
+

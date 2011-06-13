@@ -43,7 +43,7 @@ projectedFits_table = Table("projectedFits", saveddata_meta,
                             Column("victimID", ForeignKey("fits.ID"), primary_key = True),
                             Column("amount", Integer))
 mapper(Fit, fits_table,
-       properties = {"_Fit__modules" : relation(Module, collection_class = HandledModuleList, backref="owner",
+       properties = {"_Fit__modules" : relation(Module, collection_class = HandledModuleList,
                                                 primaryjoin = and_(modules_table.c.fitID == fits_table.c.ID, modules_table.c.projected == False),
                                                 order_by = modules_table.c.position, cascade='all, delete, delete-orphan'),
                      "_Fit__projectedModules" : relation(Module, collection_class = HandledProjectedModList, cascade='all, delete, delete-orphan', single_parent=True,
