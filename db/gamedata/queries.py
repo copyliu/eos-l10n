@@ -61,12 +61,11 @@ else:
 itemNameMap = {}
 @cachedQuery(1, "lookfor")
 def getItem(lookfor, eager=None):
-    if isinstance(lookfor, (int, float)):
-        id = int(lookfor)
+    if isinstance(lookfor, int):
         if eager is None:
-            item = gamedata_session.query(Item).get(id)
+            item = gamedata_session.query(Item).get(lookfor)
         else:
-            item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == id).first()
+            item = gamedata_session.query(Item).options(*processEager(eager)).filter(Item.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
         if lookfor in itemNameMap:
             id = itemNameMap[lookfor]
@@ -83,12 +82,11 @@ def getItem(lookfor, eager=None):
 groupNameMap = {}
 @cachedQuery(1, "lookfor")
 def getGroup(lookfor, eager=None):
-    if isinstance(lookfor, (int, float)):
-        id = int(lookfor)
+    if isinstance(lookfor, int):
         if eager is None:
-            group = gamedata_session.query(Group).get(id)
+            group = gamedata_session.query(Group).get(lookfor)
         else:
-            group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.ID == id).first()
+            group = gamedata_session.query(Group).options(*processEager(eager)).filter(Group.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
         if lookfor in groupNameMap:
             id = groupNameMap[lookfor]
@@ -105,12 +103,11 @@ def getGroup(lookfor, eager=None):
 categoryNameMap = {}
 @cachedQuery(1, "lookfor")
 def getCategory(lookfor, eager=None):
-    if isinstance(lookfor, (int, float)):
-        id = int(lookfor)
+    if isinstance(lookfor, int):
         if eager is None:
-            category = gamedata_session.query(Category).get(id)
+            category = gamedata_session.query(Category).get(lookfor)
         else:
-            category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.ID == id).first()
+            category = gamedata_session.query(Category).options(*processEager(eager)).filter(Category.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
         if lookfor in categoryNameMap:
             id = categoryNameMap[lookfor]
@@ -127,12 +124,11 @@ def getCategory(lookfor, eager=None):
 metaGroupNameMap = {}
 @cachedQuery(1, "lookfor")
 def getMetaGroup(lookfor, eager=None):
-    if isinstance(lookfor, (int, float)):
-        id = int(lookfor)
+    if isinstance(lookfor, int):
         if eager is None:
-            metaGroup = gamedata_session.query(MetaGroup).get(id)
+            metaGroup = gamedata_session.query(MetaGroup).get(lookfor)
         else:
-            metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.ID == id).first()
+            metaGroup = gamedata_session.query(MetaGroup).options(*processEager(eager)).filter(MetaGroup.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
         if lookfor in metaGroupNameMap:
             id = metaGroupNameMap[lookfor]
@@ -148,17 +144,16 @@ def getMetaGroup(lookfor, eager=None):
 
 @cachedQuery(1, "lookfor")
 def getMarketGroup(lookfor, eager=None):
-    id = int(lookfor)
     if eager is None:
-        marketGroup = gamedata_session.query(MarketGroup).get(id)
+        marketGroup = gamedata_session.query(MarketGroup).get(lookfor)
     else:
-        marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(MarketGroup.ID == id).first()
+        marketGroup = gamedata_session.query(MarketGroup).options(*processEager(eager)).filter(MarketGroup.ID == lookfor).first()
     return marketGroup
 
 @cachedQuery(2, "where", "filter")
 def getItemsByCategory(filter, where=None, eager=None):
-    if isinstance(filter, (int, float)):
-        filter = Category.ID == int(filter)
+    if isinstance(filter, int):
+        filter = Category.ID == filter
     elif isinstance(filter, basestring):
         filter = Category.name == filter
 
@@ -183,10 +178,8 @@ def searchItems(nameLike, where=None, join=None, eager=None):
 
 @cachedQuery(3, "where", "item", "metaGroups")
 def getVariations(item, where=None, metaGroups=None, eager=None):
-    if not isinstance(item, (int, float)):
+    if not isinstance(item, int):
         item = item.ID
-    else:
-        item = int(item)
 
     clause = and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)
 
@@ -210,8 +203,8 @@ def getVariations(item, where=None, metaGroups=None, eager=None):
 def getAttributeInfo(attr, eager=None):
     if isinstance(attr, basestring):
         filter = AttributeInfo.name == attr
-    elif isinstance(attr, (int, float)):
-        filter = AttributeInfo.ID == int(attr)
+    elif isinstance(attr, int):
+        filter = AttributeInfo.ID == attr
 
     return gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
 
