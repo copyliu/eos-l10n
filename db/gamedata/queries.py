@@ -175,6 +175,8 @@ def getItemsByCategory(filter, where=None, eager=None):
 
 @cachedQuery(3, "where", "nameLike", "join")
 def searchItems(nameLike, where=None, join=None, eager=None):
+    if not isinstance(nameLike, basestring):
+        raise TypeError("Need string as argument")
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
@@ -230,7 +232,11 @@ def getAttributeInfo(attr, eager=None):
 
 @cachedQuery(1, "field")
 def getMetaData(field):
-    return gamedata_session.query(MetaData).filter(MetaData.fieldName == field).one()
+    if isinstance(field, basestring):
+        data = gamedata_session.query(MetaData).filter(MetaData.fieldName == field).one()
+    else:
+        raise TypeError("Need string as argument")
+    return data
 
 @cachedQuery(2, "itemIDs", "attributeID")
 def directAttributeRequest(itemIDs, attrID):

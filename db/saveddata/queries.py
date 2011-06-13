@@ -111,82 +111,137 @@ else:
     def removeCachedEntry(*args, **kwargs):
         return
 
-@cachedQuery(User, 2, "lookfor", "where")
-def getUser(lookfor, where=None, eager=None):
+@cachedQuery(User, 1, "lookfor")
+def getUser(lookfor, eager=None):
     if isinstance(lookfor, int):
-        return saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).one()
+        if eager is None:
+            user = saveddata_session.query(User).get(lookfor)
+        else:
+            user = saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        return saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).one()
+        user = saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).first()
+    else:
+        raise TypeError("Need integer or string as argument")
+    return user
 
-@cachedQuery(Character, 2, "lookfor", "where")
-def getCharacter(lookfor, where=None, eager=None):
+@cachedQuery(Character, 1, "lookfor")
+def getCharacter(lookfor, eager=None):
     if isinstance(lookfor, int):
-        return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).one()
+        if eager is None:
+            character = saveddata_session.query(Character).get(lookfor)
+        else:
+            character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
+        character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).first()
+    else:
+        raise TypeError("Need integer or string as argument")
+    return character
 
 def getCharacterList(eager=None):
-    return saveddata_session.query(Character).options(*processEager(eager)).all()
+    characters = saveddata_session.query(Character).options(*processEager(eager)).all()
+    return characters
 
-def getCharactersForUser(owner, eager=None):
-    return saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ownerID == owner).all()
+def getCharactersForUser(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        characters = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ownerID == lookfor).all()
+    else:
+        raise TypeError("Need integer as argument")
+    return characters
 
-@cachedQuery(Fit, 2, "fitID", "where")
-def getFit(fitID, where=None, eager=None):
-    return saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).one()
+@cachedQuery(Fit, 1, "lookfor")
+def getFit(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        if eager is None:
+            fit = saveddata_session.query(Fit).get(lookfor)
+        else:
+            fit = saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).first()
+    else:
+        raise TypeError("Need integer as argument")
+    return fit
 
-@cachedQuery(Fleet, 2, "fleetID", "where")
-def getFleet(fleetID, where=None, eager=None):
-    return saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).one()
+@cachedQuery(Fleet, 1, "lookfor")
+def getFleet(lookfor, eager=None):
+    if isinstance(lookfor, int):
+        if eager is None:
+            fleet = saveddata_session.query(Fleet).get(lookfor)
+        else:
+            fleet = saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).one()
+    else:
+        raise TypeError("Need integer as argument")
+    return fleet
 
 def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     Get all the fits using a certain ship.
     If no user is passed, do this for all users.
     """
-    filter = Fit.shipID == shipID
-    if ownerID is not None:
-        filter = and_(filter, Fit.ownerID == ownerID)
+    if isinstance(shipID, int):
+        if ownerID is not None and not isinstance(ownerID, int):
+            raise TypeError("OwnerID must be integer")
+        filter = Fit.shipID == shipID
+        if ownerID is not None:
+            filter = and_(filter, Fit.ownerID == ownerID)
 
-    filter = processWhere(filter, where)
-    return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+        filter = processWhere(filter, where)
+        fits = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+    else:
+        raise TypeError("ShipID must be integer")
+    return fits
 
 def countFitsWithShip(shipID, ownerID=None, where=None, eager=None):
     """
     Get all the fits using a certain ship.
     If no user is passed, do this for all users.
     """
-    filter = Fit.shipID == shipID
-    if ownerID is not None:
-        filter = and_(filter, Fit.ownerID == ownerID)
+    if isinstance(shipID, int):
+        if ownerID is not None and not isinstance(ownerID, int):
+            raise TypeError("OwnerID must be integer")
+        filter = Fit.shipID == shipID
+        if ownerID is not None:
+            filter = and_(filter, Fit.ownerID == ownerID)
 
-    filter = processWhere(filter, where)
-    return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).count()
-
+        filter = processWhere(filter, where)
+        count = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).count()
+    else:
+        raise TypeError("ShipID must be integer")
+    return count
 
 def getFitList(eager=None):
-    return saveddata_session.query(Fit).options(*processEager(eager)).all()
+    fits = saveddata_session.query(Fit).options(*processEager(eager)).all()
+    return fits
 
 def getFleetList(eager=None):
-    return saveddata_session.query(Fleet).options(*processEager(eager)).all()
+    fleets = saveddata_session.query(Fleet).options(*processEager(eager)).all()
+    return fleets
 
 @cachedQuery(Price, 1, "typeID")
 def getPrice(typeID):
-    return saveddata_session.query(Price).filter(Price.typeID == typeID).one()
+    if isinstance(typeID, int):
+        price = saveddata_session.query(Price).get(typeID)
+    else:
+        raise TypeError("Need integer as argument")
+    return price
 
 def getDamagePatternList(eager=None):
-    return saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
+    patterns = saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
+    return patterns
 
 @cachedQuery(DamagePattern, 1, "lookfor")
 def getDamagePattern(lookfor, eager=None):
     if isinstance(lookfor, int):
-        filter = DamagePattern.ID == lookfor
+        if eager is None:
+            pattern = saveddata_session.query(DamagePattern).get(lookfor)
+        else:
+            pattern = saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(DamagePattern.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        filter = DamagePattern.name == lookfor
-
-    return saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(filter).one()
+        pattern = saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(DamagePattern.name == lookfor).first()
+    else:
+        raise TypeError("Need integer or string as argument")
+    return pattern
 
 def searchFits(nameLike, where=None, eager=None):
+    if not isinstance(nameLike, basestring):
+        raise TypeError("Need string as argument")
     #Check if the string contains * signs we need to convert to %
     if "*" in nameLike: nameLike = nameLike.replace("*", "%")
     #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
@@ -194,7 +249,8 @@ def searchFits(nameLike, where=None, eager=None):
 
     #Add any extra components to the search to our where clause
     filter = processWhere(Fit.name.like(nameLike), where)
-    return saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+    fits = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+    return fits
 
 def add(stuff):
     saveddata_session.add(stuff)
