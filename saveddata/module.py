@@ -441,7 +441,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         for i in range(5):
             itemChargeGroup = self.getModifiedItemAttr('chargeGroup' + str(i))
             if itemChargeGroup is not None:
-                g = eos.db.getGroup(itemChargeGroup, eager=("items.icon", "items.attributes"))
+                g = eos.db.getGroup(int(itemChargeGroup), eager=("items.icon", "items.attributes"))
                 for i in g.items:
                     if i.published and self.isValidCharge(i):
                         validCharges.add(i)
