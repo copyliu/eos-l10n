@@ -537,7 +537,10 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         else:
             reload = 0.0
         # Determine if we'll take into account reload time or not
-        factorReload = self.owner.factorReload if self.forceReload is None else self.forceReload
+        ## This line was causing issues with propulsion modules ##
+        #factorReload = self.owner.factorReload if self.forceReload is None else self.forceReload
+        ## Temporary Hack
+        factorReload = True
         # If reactivation is longer than 10 seconds then module can be reloaded
         # during reactivation time, thus we may ignore reload
         if factorReload and reactivation < reload:
