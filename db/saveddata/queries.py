@@ -132,7 +132,7 @@ def getCharacter(lookfor, eager=None):
         else:
             character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).first()
+        character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
     else:
         raise TypeError("Need integer or string as argument")
     return character
