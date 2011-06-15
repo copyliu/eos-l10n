@@ -30,7 +30,7 @@ def handler(fit, module, context):
                                   "duration", module.getModifiedItemAttr("armorDamageDurationBonus"))
 
     #Speed penalty
-    fit.ship.multiplyItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor"))
+    fit.ship.boostItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor"))
 
     #Mass
     fit.ship.multiplyItemAttr("mass", module.getModifiedItemAttr("massMultiplier"))
