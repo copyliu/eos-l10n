@@ -68,10 +68,9 @@ class Character(object):
     @classmethod
     def getAll5(cls):
         if cls.__all5 is None:
-            try:
-                import eos.db
-                all5 = eos.db.getCharacter("All 5")
-            except exc.NoResultFound:
+            import eos.db
+            all5 = eos.db.getCharacter("All 5")
+            if all5 is None:
                 all5 = Character("All 5")
                 all5.defaultLevel = 5
                 eos.db.saveddata_session.add(all5)
@@ -82,10 +81,9 @@ class Character(object):
     @classmethod
     def getAll0(cls):
         if cls.__all0 is None:
-            try:
-                import eos.db
-                all0 = eos.db.getCharacter("All 0")
-            except exc.NoResultFound:
+            import eos.db
+            all0 = eos.db.getCharacter("All 0")
+            if all0 is None:
                 all0 = Character("All 0")
                 eos.db.saveddata_session.add(all0)
 

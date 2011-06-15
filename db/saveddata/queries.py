@@ -132,7 +132,7 @@ def getCharacter(lookfor, eager=None):
         else:
             character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).one()
+        character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).first()
     else:
         raise TypeError("Need integer or string as argument")
     return character
@@ -165,7 +165,7 @@ def getFleet(lookfor, eager=None):
         if eager is None:
             fleet = saveddata_session.query(Fleet).get(lookfor)
         else:
-            fleet = saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).one()
+            fleet = saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).first()
     else:
         raise TypeError("Need integer as argument")
     return fleet
