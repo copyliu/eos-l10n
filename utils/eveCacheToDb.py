@@ -77,7 +77,6 @@ def get_map():
             "ramaltypesdetailpercategory": None,
             "ramaltypesdetailpergroup": None,
             "ramcompletedstatuses": None,
-            "ramtypematerials": None,
             "ramtyperequirements": None,
             "schematics": None,
             "schematicsByPin": None,
