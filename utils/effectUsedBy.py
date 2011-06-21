@@ -115,9 +115,8 @@ def calc_outerscore(innerscore_dict, pereffect_totalaffected, weight):
 db = sqlite3.connect(os.path.expanduser(options.database))
 cursor = db.cursor()
 
-# As we don't rely on eos's overrides, we need to set them manually
-FORCEPUB_TYPES = ("Freki", "Mimir", "Utu", "Adrestia", "Ibis", "Impairor",
-                  "Velator", "Reaper")
+# Force some of the items to make them published
+FORCEPUB_TYPES = ("Ibis", "Impairor", "Velator", "Reaper")
 OVERRIDES_TYPEPUB = 'UPDATE invtypes SET published = 1 WHERE typeName = ?'
 for typename in FORCEPUB_TYPES:
     cursor.execute(OVERRIDES_TYPEPUB, (typename,))

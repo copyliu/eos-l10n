@@ -12,9 +12,9 @@ class Test(TestBase):
         attr = "accessDifficultyBonus"
         item = "Codebreaker I"
         iLvl = 1
-        iIngame = 10.0
+        iIngame = 5.0
         fLvl = 4
-        fIngame = 25.0
+        fIngame = 20.0
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame - iIngame

@@ -1,4 +1,5 @@
 #Used by:
+#Ship: Malice
 #Ship: Punisher
 type = "passive"
 def handler(fit, ship, context):

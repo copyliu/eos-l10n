@@ -1,5 +1,6 @@
 #Used by:
 #Ship: Ashimmu
+#Ship: Vangel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level
