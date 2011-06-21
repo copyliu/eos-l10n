@@ -155,7 +155,8 @@ class CapSimulator(object):
                     t_wrap += period
 
             cap -= capNeed
-            cap = min(cap,capCapacity)
+            if cap > capCapacity:
+                cap = capCapacity
 
             iterations += 1
 
