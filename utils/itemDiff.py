@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #===============================================================================
-# Copyright (C) 2010 Anton Vorobyov
+# Copyright (C) 2010-2011 Anton Vorobyov
 #
 # This file is part of eos.
 #
@@ -24,313 +24,455 @@ This script is used to compare two different database versions.
 It shows removed/changed/new items with list of changed effects,
 changed attributes and effects which were renamed
 '''
-from optparse import OptionParser
-import sqlite3
+
+import argparse
 import os.path
 import re
+import sqlite3
 
-usage = "usage: %prog [--old=OLD] --new=NEW [-ear]"
-parser = OptionParser(usage=usage)
-parser.add_option("-o", "--old", help="path to old cache data dump (if none specified default pyfa path to database is taken)", type="string", default=os.path.join("~", ".pyfa","eve.db"))
-parser.add_option("-n", "--new", help="path to new cache data dump", type="string")
-parser.add_option("-e", "--noeffects", action="store_false", dest="effects", help="don't show list of changed effects", default=True)
-parser.add_option("-a", "--noattributes", action="store_false", dest="attributes", help="don't show list of changed attributes", default=True)
-parser.add_option("-r", "--norenames", action="store_false", dest="renames", help="don't show list of renamed data", default=True)
-(options, args) = parser.parse_args()
+parser = argparse.ArgumentParser(description="Compare two databases generated from eve dump to find eos-related differences")
+parser.add_argument("-o", "--old", type=str, required=True, help="path to old cache data dump")
+parser.add_argument("-n", "--new", type=str, required=True, help="path to new cache data dump")
+parser.add_argument("-g", "--nogroups", action="store_false", default=True, dest="groups", help="don't show changed groups")
+parser.add_argument("-e", "--noeffects", action="store_false", default=True, dest="effects", help="don't show list of changed effects")
+parser.add_argument("-a", "--noattributes", action="store_false", default=True, dest="attributes", help="don't show list of changed attributes")
+parser.add_argument("-r", "--norenames", action="store_false", default=True, dest="renames", help="don't show list of renamed data")
+args = parser.parse_args()
 
-#fetch database names from command line arguments
-if options.old is not None and options.new is not None:
-    oldDB = sqlite3.connect(os.path.expanduser(options.old))
-    newDB = sqlite3.connect(os.path.expanduser(options.new))
-else:
-    import sys
-
-    sys.stderr.write("You need to specify at least 1 database file. Run script with --help option for further info.\n")
-    sys.exit()
+# Open both databases and get their cursors
+old_db = sqlite3.connect(os.path.expanduser(args.old))
+old_cursor = old_db.cursor()
+new_db = sqlite3.connect(os.path.expanduser(args.new))
+new_cursor = new_db.cursor()
 
 # Force some of the items to make them published
 FORCEPUB_TYPES = ("Ibis", "Impairor", "Velator", "Reaper")
 OVERRIDES_TYPEPUB = 'UPDATE invtypes SET published = 1 WHERE typeName = ?'
 for typename in FORCEPUB_TYPES:
-    oldCursor = oldDB.cursor()
-    oldCursor.execute(OVERRIDES_TYPEPUB, (typename,))
-    newCursor = newDB.cursor()
-    newCursor.execute(OVERRIDES_TYPEPUB, (typename,))
+    old_cursor.execute(OVERRIDES_TYPEPUB, (typename,))
+    new_cursor.execute(OVERRIDES_TYPEPUB, (typename,))
 
-#initialization of few things used by both changed/renamed effects list
-if options.effects or options.renames:
-    effectsPath = os.path.join("..", "effects")
-    implemented = []
+# Initialization of few things used by both changed/renamed effects list
+effectspath = os.path.join("..", "effects")
+implemented = set()
 
-    for filename in os.listdir(effectsPath):
-        basename, extension = filename.rsplit('.', 1)
-        #Ignore non-py files and exclude implementation-specific 'effect'
-        if extension == "py" and extension not in ("__init__"):
-            implemented.append(basename)
+for filename in os.listdir(effectspath):
+    basename, extension = filename.rsplit('.', 1)
+    # Ignore non-py files and exclude implementation-specific 'effect'
+    if extension == "py" and basename not in ("__init__",):
+        implemented.add(basename)
 
-    #effects' names are used w/o any special symbols by eos
-    stripSpec = "[^A-Za-z0-9]"
+# Effects' names are used w/o any special symbols by eos
+stripspec = "[^A-Za-z0-9]"
 
-    #Method to get data if effect iss implemented in eos or not
-    def getEffectStatus(effectName):
-        pyfaName = re.sub(stripSpec, "", effectName)
-        if pyfaName in implemented: return 'y'
-        else: return 'n'
+# Method to get data if effect is implemented in eos or not
+def geteffst(effectname):
+    eosname = re.sub(stripspec, "", effectname)
+    if eosname in implemented:
+        impstate = True
+    else:
+        impstate = False
+    return impstate
 
-if options.effects or options.attributes:
-    #format:
-    #key: item id
-    #value: [set(effect id 1, effect id 2, ...), {[key: attribute id] | value}]
-    oldDict = {}
-    newDict = {}
+def findrenames(ren_dict, query, strip=False):
 
-    for database, dictionary in ((oldDB, oldDict), (newDB, newDict)):
-        if options.effects:
-            #Compose list of item IDs (row[0]) and attach list of effect IDs (row[1]) to each
-            query = 'SELECT invtypes.typeID, dgmeffects.effectID FROM invtypes INNER JOIN dgmtypeeffects ON dgmtypeeffects.typeID = invtypes.typeID INNER JOIN dgmeffects ON dgmeffects.effectID = dgmtypeeffects.effectID WHERE invtypes.published = 1'
-            c = database.cursor()
-            c.execute(query)
-            for row in c:
-                #if there's no such item in dictionary, initialize empty parent list
-                if not row[0] in dictionary: dictionary[row[0]] = [set(), {}]
-                #add effect to the set
-                effectSet = dictionary[row[0]][0]
-                effectSet.add(row[1])
-        if options.attributes:
-            #If there's no list of items, create it and add base and additional attributes to it
-            query = 'SELECT dgmtypeattribs.typeID, dgmtypeattribs.attributeID, dgmtypeattribs.value, invtypes.mass, invtypes.capacity, invtypes.volume FROM dgmtypeattribs INNER JOIN invtypes ON dgmtypeattribs.typeID = invtypes.typeID INNER JOIN invgroups ON invtypes.groupID = invgroups.groupID INNER JOIN invcategories ON invgroups.categoryID = invcategories.categoryID WHERE invtypes.published = 1 AND (invcategories.categoryName = "Ship" OR invcategories.categoryName = "Module" OR invcategories.categoryName = "Charge" OR invcategories.categoryName = "Skill" OR invcategories.categoryName = "Drone" OR invcategories.categoryName = "Implant" OR invcategories.categoryName = "Subsystem" OR invcategories.categoryName = "Celestial")'
-            c = database.cursor()
-            c.execute(query)
-            for row in c:
-                #if there's no such item in dictionary, initialize empty parent list
-                if not row[0] in dictionary: dictionary[row[0]] = [set(), {}]
-                attrDict = dictionary[row[0]][1]
-                #add base attributes: mass (4), capacity (38) and volume (161)
-                attrDict[4] = row[3]
-                attrDict[38] = row[4]
-                attrDict[161] = row[5]
-                #add non-base attributes to the dictionary
-                if not row[1] in (4, 38, 161): attrDict[row[1]] = row[2]
-                else: print("Warning: base attribute is described in non-base attribute table")
+    old_namedata = {}
+    new_namedata = {}
 
-    #Lists contain IDs of items which have the same/changed set of effects' IDs
-    same = []
-    changed = []
+    for cursor, dictionary in ((old_cursor, old_namedata), (new_cursor, new_namedata)):
+        cursor.execute(query)
+        for row in cursor:
+            id = row[0]
+            name = row[1]
+            if strip is True:
+                name = re.sub(stripspec, "", name)
+            dictionary[id] = name
 
-    #iterates through item IDs from old database
-    for itemId in oldDict:
-        #check if there's such ID in new database
-        if itemId in newDict:
-            #assume that items are the same, try to prove that it's wrong later
-            isSame = True
-            oldEffectSet = oldDict[itemId][0]
-            newEffectSet = newDict[itemId][0]
-            #if item with the same ID and the same set of effects - move to following tests
-            if oldEffectSet == newEffectSet:
-                oldAttrDict = oldDict[itemId][1]
-                newAttrDict = newDict[itemId][1]
-                #if set of attributes does not coincide - perform further checks
-                if oldAttrDict != newAttrDict:
-                    #cycle through attribute list of old items
-                    for attributeId in oldAttrDict:
-                        #it should be present in new item
-                        if attributeId in newAttrDict:
-                            oldVal = oldAttrDict[attributeId]
-                            newVal = newAttrDict[attributeId]
-                            #eve considers none and zero values as zero
-                            for val in (oldVal, newVal):
-                                if val is None: val = 0
-                                if int(val) == val: val = int(val)
-                            if (oldVal or newVal) and oldVal != newVal:
-                                isSame = False
-                                break
-                        #if there's no such attribute in new item - it's not the same
-                        else: isSame = False
-                    #if some attribute is present in new item but absent in old, it's not the same
-                    for attributeId in newAttrDict:
-                        if not attributeId in oldAttrDict:
-                            isSame = False
-                            break
-            #if effects set is not the same - items are not the same
-            else: isSame = False
-            if isSame: same.append(itemId)
-            else: changed.append(itemId)
+    for id in set(old_namedata.keys()).intersection(new_namedata.keys()):
+        oldname = old_namedata[id]
+        newname = new_namedata[id]
+        if oldname != newname:
+            ren_dict[id] = (oldname, newname)
+    return
 
-    #Delete same items from both dictionaries
-    for itemId in same:
-        del oldDict[itemId], newDict[itemId]
+def printrenames(ren_dict, title, implementedtag=False):
+    if len(ren_dict) > 0:
+        print('\nRenamed ' + title + ':')
+        for id in sorted(ren_dict):
+            couple = ren_dict[id]
+            if implementedtag:
+                print("\n[{0}] \"{1}\"\n[{2}] \"{3}\"".format(geteffst(couple[0]), couple[0], geteffst(couple[1]), couple[1]))
+            else:
+                print("\n\"{0}\"\n\"{1}\"".format(couple[0], couple[1]))
 
-#As pyfa uses names as unique ID, we have to keep track of changed
-if options.renames:
-    def findRenames(renamedList, query, strip = False):
-        oldRenDict = {}
-        newRenDict = {}
+groupcats = {}
+def getgroupcat(grp):
+    """Get group category from the new db"""
+    if grp in groupcats:
+        cat = groupcats[grp]
+    else:
+        query = 'SELECT categoryID FROM invgroups WHERE groupID = ?'
+        new_cursor.execute(query, (grp,))
+        cat = 0
+        for row in new_cursor:
+            cat = row[0]
+        groupcats[grp] = cat
+    return cat
 
-        for database, dictionary in ((oldDB, oldRenDict), (newDB, newRenDict)):
-            c = database.cursor()
-            c.execute(query)
-            for row in c:
-                if strip: dictionary[row[0]] = re.sub(stripSpec, "", row[1])
-                else: dictionary[row[0]] = row[1]
+itemnames = {}
+def getitemname(item):
+    """Get item name from the new db"""
+    if item in itemnames:
+        name = itemnames[item]
+    else:
+        query = 'SELECT typeName FROM invtypes WHERE typeID = ?'
+        new_cursor.execute(query, (item,))
+        name = ""
+        for row in new_cursor:
+            name = row[0]
+        itemnames[item] = name
+    return name
 
-        for someID in oldRenDict:
-            if someID in newRenDict:
-                if oldRenDict[someID] != newRenDict[someID]:
-                    renamedList.append((oldRenDict[someID],newRenDict[someID]))
+groupnames = {}
+def getgroupname(grp):
+    """Get group name from the new db"""
+    if grp in groupnames:
+        name = groupnames[grp]
+    else:
+        query = 'SELECT groupName FROM invgroups WHERE groupID = ?'
+        new_cursor.execute(query, (grp,))
+        name = ""
+        for row in new_cursor:
+            name = row[0]
+        groupnames[grp] = name
+    return name
 
-    renamedEffects = []
+effectnames = {}
+def geteffectname(effect):
+    """Get effect name from the new db"""
+    if effect in effectnames:
+        name = effectnames[effect]
+    else:
+        query = 'SELECT effectName FROM dgmeffects WHERE effectID = ?'
+        new_cursor.execute(query, (effect,))
+        name = ""
+        for row in new_cursor:
+            name = row[0]
+        effectnames[effect] = name
+    return name
+
+attrnames = {}
+def getattrname(attr):
+    """Get attribute name from the new db"""
+    if attr in attrnames:
+        name = attrnames[attr]
+    else:
+        query = 'SELECT attributeName FROM dgmattribs WHERE attributeID = ?'
+        new_cursor.execute(query, (attr,))
+        name = ""
+        for row in new_cursor:
+            name = row[0]
+        attrnames[attr] = name
+    return name
+
+# State table
+S = {"unchanged": 0,
+     "removed": 1,
+     "changed": 2,
+     "added": 3 }
+
+if args.effects or args.attributes or args.groups:
+    # Format:
+    # Key: item id
+    # Value: [groupID, set(effects), {attribute id : value}]
+    old_itmdata = {}
+    new_itmdata = {}
+
+    for cursor, dictionary in ((old_cursor, old_itmdata), (new_cursor, new_itmdata)):
+        # Compose list of items we're interested in, filtered by category
+        query = 'SELECT it.typeID, it.groupID FROM invtypes AS it INNER JOIN invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON ig.categoryID = ic.categoryID WHERE it.published = 1 AND ic.categoryName IN ("Ship", "Module", "Charge", "Skill", "Drone", "Implant", "Subsystem")'
+        cursor.execute(query)
+        for row in cursor:
+            itemid = row[0]
+            groupID = row[1]
+            # Initialize container for the data for each item with empty stuff besides groupID
+            dictionary[itemid] = [groupID, set(), {}]
+        # Add items filtered by group
+        query = 'SELECT it.typeID, it.groupID FROM invtypes AS it INNER JOIN invgroups AS ig ON it.groupID = ig.groupID WHERE it.published = 1 AND ig.groupName IN ("Effect Beacon")'
+        cursor.execute(query)
+        for row in cursor:
+            itemid = row[0]
+            groupID = row[1]
+            dictionary[itemid] = [groupID, set(), {}]
+
+        if args.effects:
+            # Pull all eff
+            query = 'SELECT it.typeID, de.effectID FROM invtypes AS it INNER JOIN dgmtypeeffects AS dte ON dte.typeID = it.typeID INNER JOIN dgmeffects AS de ON de.effectID = dte.effectID WHERE it.published = 1'
+            cursor.execute(query)
+            for row in cursor:
+                itemid = row[0]
+                effectID = row[1]
+                # Process only items we need
+                if itemid in dictionary:
+                    # Add effect to the set
+                    effectSet = dictionary[itemid][1]
+                    effectSet.add(effectID)
+
+        if args.attributes:
+            # Add base attributes to our data
+            query = 'SELECT it.typeID, it.mass, it.capacity, it.volume FROM invtypes AS it'
+            cursor.execute(query)
+            for row in cursor:
+                itemid = row[0]
+                if itemid in dictionary:
+                    attrdict = dictionary[itemid][2]
+                    # Add base attributes: mass (4), capacity (38) and volume (161)
+                    attrdict[4] = row[1]
+                    attrdict[38] = row[2]
+                    attrdict[161] = row[3]
+
+            # Add attribute data for other attributes
+            query = 'SELECT dta.typeID, dta.attributeID, dta.value FROM dgmtypeattribs AS dta'
+            cursor.execute(query)
+            for row in cursor:
+                itemid = row[0]
+                if itemid in dictionary:
+                    attrid = row[1]
+                    attrval = row[2]
+                    attrdict = dictionary[itemid][2]
+                    if attrid in attrdict:
+                        print("Warning: base attribute is described in non-base attribute table")
+                    else:
+                        attrdict[attrid] = attrval
+
+    # Get set of IDs from both dictionaries
+    items_old = set(old_itmdata.keys())
+    items_new = set(new_itmdata.keys())
+
+    # Format:
+    # Key: item state
+    # Value: {item id: ((group state, old group, new group), {effect state: set(effects)}, {attribute state: {attributeID: (old value, new value)}})}
+    global_itmdata = {}
+
+    # Initialize it
+    for state in S:
+        global_itmdata[S[state]] = {}
+
+
+    # Fill all the data for removed items
+    for item in items_old.difference(items_new):
+        # Set item state to removed
+        state = S["removed"]
+        # Set only old group for item
+        oldgroup = old_itmdata[item][0]
+        groupdata = (S["unchanged"], oldgroup, None)
+        # Set old set of effects and mark all as unchanged
+        effectsdata = {}
+        effectsdata[S["unchanged"]] = set()
+        if args.effects:
+            oldeffects = old_itmdata[item][1]
+            effectsdata[S["unchanged"]].update(oldeffects)
+        # Set old set of attributes and mark all as unchanged
+        attrdata = {}
+        attrdata[S["unchanged"]] = {}
+        if args.attributes:
+            oldattrs = old_itmdata[item][2]
+            for attr in oldattrs:
+                # NULL will mean there's no such attribute in db
+                attrdata[S["unchanged"]][attr] = (oldattrs[attr], "NULL")
+        # Fill global dictionary with data we've got
+        global_itmdata[state][item] = (groupdata, effectsdata, attrdata)
+
+
+    # Now, for added items
+    for item in items_new.difference(items_old):
+        # Set item state to added
+        state = S["added"]
+        # Set only new group for item
+        newgroup = new_itmdata[item][0]
+        groupdata = (S["unchanged"], None, newgroup)
+        # Set new set of effects and mark all as unchanged
+        effectsdata = {}
+        effectsdata[S["unchanged"]] = set()
+        if args.effects:
+            neweffects = new_itmdata[item][1]
+            effectsdata[S["unchanged"]].update(neweffects)
+        # Set new set of attributes and mark all as unchanged
+        attrdata = {}
+        attrdata[S["unchanged"]] = {}
+        if args.attributes:
+            newattrs = new_itmdata[item][2]
+            for attr in newattrs:
+                # NULL will mean there's no such attribute in db
+                attrdata[S["unchanged"]][attr] = ("NULL", newattrs[attr])
+        # Fill global dictionary with data we've got
+        global_itmdata[state][item] = (groupdata, effectsdata, attrdata)
+
+    # Now, check all the items which exist in both databases
+    for item in items_old.intersection(items_new):
+        # Set group data for an item
+        oldgroup = old_itmdata[item][0]
+        newgroup = new_itmdata[item][0]
+        # If we're not asked to compare groups, mark them as unchanged anyway
+        groupdata = (S["changed"] if oldgroup != newgroup and args.groups else S["unchanged"], oldgroup, newgroup)
+        # Fill effects data into appropriate groups
+        effectsdata = {}
+        for state in S:
+            # We do not have changed effects whatsoever
+            if state != "changed":
+                effectsdata[S[state]] = set()
+        if args.effects:
+            oldeffects = old_itmdata[item][1]
+            neweffects = new_itmdata[item][1]
+            effectsdata[S["unchanged"]].update(oldeffects.intersection(neweffects))
+            effectsdata[S["removed"]].update(oldeffects.difference(neweffects))
+            effectsdata[S["added"]].update(neweffects.difference(oldeffects))
+        # Go through all attributes, filling global data dictionary
+        attrdata = {}
+        for state in S:
+            attrdata[S[state]] = {}
+        if args.attributes:
+            oldattrs = old_itmdata[item][2]
+            newattrs = new_itmdata[item][2]
+            for attr in set(oldattrs.keys()).union(newattrs.keys()):
+                # NULL will mean there's no such attribute in db
+                oldattr = oldattrs.get(attr, "NULL")
+                newattr = newattrs.get(attr, "NULL")
+                attrstate = S["unchanged"]
+                if oldattr == "NULL" and newattr != "NULL":
+                    attrstate = S["added"]
+                elif oldattr != "NULL" and newattr == "NULL":
+                    attrstate = S["removed"]
+                elif oldattr != newattr:
+                    attrstate = S["changed"]
+                attrdata[attrstate][attr] = (oldattr, newattr)
+        # Consider item as unchanged by default and set it to change when we see any changes in sub-items
+        state = S["unchanged"]
+        if state == S["unchanged"] and groupdata[0] != S["unchanged"]:
+            state = S["changed"]
+        if state == S["unchanged"] and (len(effectsdata[S["removed"]]) > 0 or len(effectsdata[S["added"]]) > 0):
+            state = S["changed"]
+        if state == S["unchanged"] and (len(attrdata[S["removed"]]) > 0 or len(attrdata[S["changed"]]) > 0 or len(attrdata[S["added"]]) > 0):
+            state = S["changed"]
+        # Fill global dictionary with data we've got
+        global_itmdata[state][item] = (groupdata, effectsdata, attrdata)
+
+# As eos uses names as unique IDs in lot of places, we have to keep track of name changes
+if args.renames:
+    ren_effects = {}
     query = 'SELECT effectID, effectName FROM dgmeffects'
-    findRenames(renamedEffects, query, strip = True)
+    findrenames(ren_effects, query, strip = True)
 
-    renamedAttributes = []
+    ren_attributes = {}
     query = 'SELECT attributeID, attributeName FROM dgmattribs'
-    findRenames(renamedAttributes, query)
+    findrenames(ren_attributes, query)
 
-    renamedCategories = []
+    ren_categories = {}
     query = 'SELECT categoryID, categoryName FROM invcategories'
-    findRenames(renamedCategories, query)
+    findrenames(ren_categories, query)
 
-    renamedGroups = []
+    ren_groups = {}
     query = 'SELECT groupID, groupName FROM invgroups'
-    findRenames(renamedGroups, query)
+    findrenames(ren_groups, query)
 
-    renamedMarketGroups = []
+    ren_marketgroups = {}
     query = 'SELECT marketGroupID, marketGroupName FROM invmarketgroups'
-    findRenames(renamedMarketGroups, query)
+    findrenames(ren_marketgroups, query)
 
-    renamedTypes = []
+    ren_items = {}
     query = 'SELECT typeID, typeName FROM invtypes'
-    findRenames(renamedTypes, query)
+    findrenames(ren_items, query)
 
-#Print db versions
-oldMeta = {}
-newMeta = {}
+# Get db metadata
+old_meta = {}
+new_meta = {}
 query = 'SELECT fieldName, fieldValue FROM metadata'
-c = oldDB.cursor()
-c.execute(query)
-for row in c:
-    oldMeta[row[0]] = row[1]
-c = newDB.cursor()
-c.execute(query)
-for row in c:
-    newMeta[row[0]] = row[1]
+old_cursor.execute(query)
+for row in old_cursor:
+    old_meta[row[0]] = row[1]
+new_cursor.execute(query)
+for row in new_cursor:
+    new_meta[row[0]] = row[1]
 
-#Print jobs
-print("Comparing databases:\n{0}-{1}\n{2}-{3}\n".format(oldMeta["version"], oldMeta["release"], newMeta["version"], newMeta["release"]))
-if options.effects or options.attributes:
-    #print legend only when there're any interesting changes
-    if changed:
-        print('[+] - new item\n[-] - removed item\n[*] - changed item\n  [+] - effect or attribute has been added to item\n  [-] - effect or attribute has been removed from item\n  [y] - effect is implemented\n  [n] - effect is not implemented\n\nItems:')
+# Print jobs
+print("Comparing databases:\n{0}-{1}\n{2}-{3}\n".format(old_meta.get("version"), old_meta.get("release"),
+                                                        new_meta.get("version"), new_meta.get("release")))
+if args.effects or args.attributes or args.groups:
+    # Print legend only when there're any interesting changes
+    if len(global_itmdata[S["removed"]]) > 0 or len(global_itmdata[S["changed"]]) > 0 or len(global_itmdata[S["added"]]) > 0:
+        genleg = "[+] - new item\n[-] - removed item\n[*] - changed item\n"
+        grpleg = "(x => y) - group changes\n" if args.groups else ""
+        attreffleg = "  [+] - effect or attribute has been added to item\n  [-] - effect or attribute has been removed from item\n" if args.attributes or args.effects else ""
+        effleg = "  [y] - effect is implemented\n  [n] - effect is not implemented\n" if args.effects else ""
+        print("{0}{1}{2}{3}\nItems:".format(genleg, grpleg, attreffleg, effleg))
 
-        #queries to get item and effect names
-        queryTypeName = 'SELECT invtypes.typeName FROM invtypes WHERE invtypes.typeID = ?'
-        if options.effects: queryEffectName = 'SELECT dgmeffects.effectName FROM dgmeffects WHERE dgmeffects.effectID = ?'
-        if options.attributes: queryAttributeName = 'SELECT dgmattribs.attributeName FROM dgmattribs WHERE dgmattribs.attributeID = ?'
+        # Make sure our states are sorted
+        stateorder = sorted(global_itmdata)
 
-        #process added/removed items; only effect list is printed for ease of maintenance,
-        #attributes are not shown as there're usually too many of them
-        def printAbsentItems(dict, db, sign):
-            for itemId in dict:
-                #items which are not changed but remain in old/new list were removed/added
-                if not itemId in changed:
-                    c = db.cursor()
-                    c.execute(queryTypeName, (itemId,))
-                    #print item name with added/deleted tag
-                    for row in c:
-                        print("\n[{0}] {1}".format(sign, row[0]))
-                    if options.effects:
-                        #print effects list
-                        for effect in dict[itemId][0]:
-                            c = db.cursor()
-                            c.execute(queryEffectName, (effect,))
-                            for row in c:
-                                print("  [{0}|{1}] {2}".format(sign, getEffectStatus(row[0]), re.sub(stripSpec, "",row[0])))
+        TG = {S["changed"]: "*",
+              S["removed"]: "-",
+              S["added"]: "+"}
 
-        if options.effects:
-            #print old items
-            printAbsentItems(oldDict, oldDB, "-")
+        # Cycle through states
+        for itmstate in stateorder:
+            # Skip unchanged items
+            if itmstate == S["unchanged"]:
+                continue
+            items = global_itmdata[itmstate]
+            # Sort by name first
+            itemorder = sorted(items, key=lambda item: getitemname(item))
+            # Then by group id
+            itemorder = sorted(itemorder, key=lambda item: items[item][0][2] or items[item][0][1])
+            # Then by category id
+            itemorder = sorted(itemorder, key=lambda item: getgroupcat(items[item][0][2] or items[item][0][1]))
 
-        #process changed items
-        for itemId in changed:
-            c = newDB.cursor()
-            c.execute(queryTypeName, (itemId,))
-            #print item name with changed tag
-            for row in c:
-                print("\n[*] {0}".format(row[0]))
+            for item in itemorder:
+                groupdata = items[item][0]
+                groupstr = " ({0} => {1})".format(getgroupname(groupdata[1]), getgroupname(groupdata[2])) if groupdata[0] == S["changed"] else ""
+                print("\n[{0}] {1}{2}".format(TG[itmstate], getitemname(item), groupstr))
 
-            if options.effects:
-                #print effects list
-                for dict, compDict, db, sign in ((oldDict, newDict, oldDB, "-"), (newDict, oldDict, newDB, "+")):
-                    for effect in dict[itemId][0]:
-                        #we don't want to show effects which were unchanged
-                        if not effect in compDict[itemId][0]:
-                            c = db.cursor()
-                            c.execute(queryEffectName, (effect,))
-                            for row in c:
-                                print("  [{0}|{1}] {2}".format(sign, getEffectStatus(row[0]), re.sub(stripSpec, "",row[0])))
+                effdata = items[item][1]
+                for effstate in stateorder:
+                    # Skip unchanged and empty effect sets
+                    if effstate == S["unchanged"] or effstate not in effdata:
+                        continue
+                    effects = effdata[effstate]
+                    efforder = sorted(effects, key=lambda eff: geteffectname(eff))
+                    for eff in efforder:
+                        print("  [{0}|{1}] {2}".format(TG[effstate], "y" if geteffst(geteffectname(eff)) else "n", geteffectname(eff)))
 
-            if options.attributes:
-                #prints attributes which are present in baseDict but absent in compDict
-                def printAbsentAttrs(baseDict, compDict, db, tag):
-                    for attributeId in baseDict:
-                        if not attributeId in compDict:
-                            value = baseDict[attributeId]
-                            if not value: value = 0
-                            c = db.cursor()
-                            c.execute(queryAttributeName, (attributeId,))
-                            for row in c:
-                                #print zeros instead of none as eve considers none values this way
-                                print("  [{0}] {1}: {2}".format(tag, row[0], value or 0))
+                attrdata = items[item][2]
+                for attrstate in stateorder:
+                    # Skip unchanged and empty attribute sets, also skip attributes display for added and removed items
+                    if attrstate == S["unchanged"] or itmstate in (S["removed"], S["added"]) or attrstate not in attrdata:
+                        continue
+                    attrs = attrdata[attrstate]
+                    attrorder = sorted(attrs, key=lambda attr: getattrname(attr))
+                    for attr in attrorder:
+                        valline = ""
+                        if attrs[attr][0] == "NULL":
+                            valline = "{0}".format(attrs[attr][1] or 0)
+                        elif attrs[attr][1] == "NULL":
+                            valline = "{0}".format(attrs[attr][0] or 0)
+                        else:
+                            valline = "{0} => {1}".format(attrs[attr][0] or 0, attrs[attr][1] or 0)
+                        print("  [{0}] {1}: {2}".format(TG[attrstate], getattrname(attr), valline))
 
-                oldAttrDict = oldDict[itemId][1]
-                newAttrDict = newDict[itemId][1]
-
-                #seek for removed attributes
-                printAbsentAttrs(oldAttrDict, newAttrDict, oldDB, "-")
-
-                #print changed attributes
-                for attributeId in oldAttrDict:
-                    if attributeId in newAttrDict:
-                        if oldAttrDict[attributeId] != newAttrDict[attributeId]:
-                            oldVal = oldAttrDict[attributeId]
-                            newVal = newAttrDict[attributeId]
-                            if (oldVal or newVal) and oldVal != newVal:
-                                #if attributes exist in both DBs use new one
-                                c = newDB.cursor()
-                                c.execute(queryAttributeName, (attributeId,))
-                                for row in c:
-                                    #print zeros instead of none as eve considers none values this way
-                                    print("  [*] {0}: {1} => {2}".format(row[0], oldVal or 0, newVal or 0))
-
-                #seek for added attributes
-                printAbsentAttrs(newAttrDict, oldAttrDict, newDB, "+")
-
-        if options.effects:
-            #print new items
-            printAbsentItems(newDict, newDB, "+")
-
-if options.renames:
-    def printRenames(renamedList, title, implementedEffectTag = False):
-        if renamedList:
-            print('\nRenamed ' + title + ':')
-            for couple in renamedList:
-                if implementedEffectTag: print("\n[{0}] \"{1}\"\n[{2}] \"{3}\"".format(getEffectStatus(couple[0]), couple[0], getEffectStatus(couple[1]), couple[1]))
-                else: print("\n\"{0}\"\n\"{1}\"".format(couple[0], couple[1]))
-
+if args.renames:
     title = 'effects'
-    printRenames(renamedEffects, title, implementedEffectTag = True)
+    printrenames(ren_effects, title, implementedtag=True)
 
     title = 'attributes'
-    printRenames(renamedAttributes, title)
+    printrenames(ren_attributes, title)
 
     title = 'categories'
-    printRenames(renamedCategories, title)
+    printrenames(ren_categories, title)
 
     title = 'groups'
-    printRenames(renamedGroups, title)
+    printrenames(ren_groups, title)
 
     title = 'market groups'
-    printRenames(renamedMarketGroups, title)
+    printrenames(ren_marketgroups, title)
 
     title = 'items'
-    printRenames(renamedTypes, title)
+    printrenames(ren_items, title)
