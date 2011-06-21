@@ -48,18 +48,14 @@ else:
     sys.stderr.write("You need to specify at least 1 database file. Run script with --help option for further info.\n")
     sys.exit()
 
-#We don't rely on pyfa backend for overrides, setting them manually
-overrides = '''
-UPDATE invtypes SET published = '1' WHERE typeName = 'Freki';
-UPDATE invtypes SET published = '1' WHERE typeName = 'Mimir';
-UPDATE invtypes SET published = '1' WHERE typeName = 'Utu';
-UPDATE invtypes SET published = '1' WHERE typeName = 'Adrestia';
-'''
-for statement in overrides.split(";\n"):
+# Force some of the items to make them published
+FORCEPUB_TYPES = ("Ibis", "Impairor", "Velator", "Reaper")
+OVERRIDES_TYPEPUB = 'UPDATE invtypes SET published = 1 WHERE typeName = ?'
+for typename in FORCEPUB_TYPES:
     oldCursor = oldDB.cursor()
-    oldCursor.execute(statement)
+    oldCursor.execute(OVERRIDES_TYPEPUB, (typename,))
     newCursor = newDB.cursor()
-    newCursor.execute(statement)
+    newCursor.execute(OVERRIDES_TYPEPUB, (typename,))
 
 #initialization of few things used by both changed/renamed effects list
 if options.effects or options.renames:
