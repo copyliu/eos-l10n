@@ -433,13 +433,16 @@ if args.effects or args.attributes or args.groups:
 
                 effdata = items[item][1]
                 for effstate in stateorder:
-                    # Skip unchanged and empty effect sets
-                    if effstate == S["unchanged"] or effstate not in effdata:
+                    # Skip unchanged effect sets, but always include them for added or removed ships
+                    # Also, always skip empty data
+                    if (effstate == S["unchanged"] and itmstate not in (S["removed"], S["added"])) or effstate not in effdata:
                         continue
                     effects = effdata[effstate]
                     efforder = sorted(effects, key=lambda eff: geteffectname(eff))
                     for eff in efforder:
-                        print("  [{0}|{1}] {2}".format(TG[effstate], "y" if geteffst(geteffectname(eff)) else "n", geteffectname(eff)))
+                        # Take tag from item if item was added or removed
+                        tag = TG[effstate] if itmstate not in (S["removed"], S["added"]) else TG[itmstate]
+                        print("  [{0}|{1}] {2}".format(tag, "y" if geteffst(geteffectname(eff)) else "n", geteffectname(eff)))
 
                 attrdata = items[item][2]
                 for attrstate in stateorder:
