@@ -66,12 +66,12 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Hidden bonus:
-    # Set jump harmonics to 2 to allow use of covert jump bridge
+    # Can use covert jump portal
 
     def test_static_jumpHarmonics_ship(self):
         self.buildTested = 0
         attr = "jumpHarmonics"
-        ingame = 2.0
+        ingame = 5.0
         eos = self.getShipAttr(attr, ship=self.hull, miscitms=self.sub)
         self.assertAlmostEquals(eos, ingame)
 
