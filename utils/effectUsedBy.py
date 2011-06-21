@@ -123,13 +123,13 @@ for typename in FORCEPUB_TYPES:
 
 # Queries to get raw data
 QUERY_ALLEFFECTS = 'SELECT effectID, effectName FROM dgmeffects'
-# Limit categories to Celestials (2, only for wormhole effects),
-# Ships (6), Modules (7), Charges (8), Skills (16), Drones (18),
-# Implants (20), Subsystems (32)
+# Limit categories to Ships (6), Modules (7), Charges (8), Skills (16),
+# Drones (18), Implants (20), Subsystems (32), and groups to
+# Effect Beacons (920)
 QUERY_PUBLISHEDTYPEIDS = 'SELECT it.typeID FROM invtypes AS it INNER JOIN \
 invgroups AS ig ON it.groupID = ig.groupID INNER JOIN invcategories AS ic ON \
-ig.categoryID = ic.categoryID WHERE it.published = 1 AND ic.categoryID IN \
-(2, 6, 7, 8, 16, 18, 20, 32)'
+ig.categoryID = ic.categoryID WHERE it.published = 1 AND (ic.categoryID IN \
+(6, 7, 8, 16, 18, 20, 32) OR ig.groupID = 920)'
 QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
 QUERY_GROUPID_CATEGORYID = 'SELECT categoryID FROM invgroups WHERE \
 groupID = ? LIMIT 1'
