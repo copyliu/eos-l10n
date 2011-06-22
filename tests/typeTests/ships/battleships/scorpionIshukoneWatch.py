@@ -41,7 +41,7 @@ class Test(TestBase):
     def test_caldariBattleship_scanLadarStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanLadarStrengthBonus"
-        item = "ECM - Spatial Destabilizer I"
+        item = "ECM - Phase Inverter I"
         skill = "Caldari Battleship"
         iLvl = 1
         iIngame = 1.15
@@ -71,7 +71,7 @@ class Test(TestBase):
     def test_caldariBattleship_scanMagnetometricStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanMagnetometricStrengthBonus"
-        item = "ECM - Multispectral Jammer I"
+        item = "ECM - Ion Field Projector I"
         skill = "Caldari Battleship"
         iLvl = 1
         iIngame = 1.15
@@ -101,7 +101,7 @@ class Test(TestBase):
     def test_caldariBattleship_scanRadarStrengthBonus_moduleEcm(self):
         self.buildTested = 0
         attr = "scanRadarStrengthBonus"
-        item = "ECM - Phase Inverter I"
+        item = "ECM - Multispectral Jammer I"
         skill = "Caldari Battleship"
         iLvl = 1
         iIngame = 1.15
@@ -134,7 +134,7 @@ class Test(TestBase):
     def test_caldariBattleship_maxRange_moduleEcm(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "ECM - Multispectral Jammer I"
+        item = "ECM - Phase Inverter I"
         skill = "Caldari Battleship"
         iLvl = 1
         iIngame = 1.2
@@ -167,7 +167,7 @@ class Test(TestBase):
     def test_caldariBattleship_falloff_moduleEcm(self):
         self.buildTested = 0
         attr = "falloff"
-        item = "ECM - Ion Field Projector I"
+        item = "ECM - Multispectral Jammer I"
         skill = "Caldari Battleship"
         iLvl = 1
         iIngame = 1.2
