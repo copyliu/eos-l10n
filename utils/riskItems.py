@@ -21,7 +21,7 @@ parser.add_option("-z", "--nozero", action="store_true", help="ignore attributes
 default=False)
 parser.add_option("-o", "--noone", action="store_true", help="ignore attributes with value equal to 1",
 default=False)
-parser.add_option("-t", "--tech1", action="store_true", help="show only t1 items (with exception for items with no t1 variations)",
+parser.add_option("-t", "--tech12", action="store_true", help="show only t12 items (with exception for items with no t1 variations)",
 default=False)
 (options, args) = parser.parse_args()
 
@@ -60,6 +60,8 @@ QUERY_TYPEID_GROUPID = 'SELECT groupID FROM invtypes WHERE typeID = ? LIMIT 1'
 QUERY_GROUPID_CATEGORYID = 'SELECT categoryID FROM invgroups WHERE \
 groupID = ? LIMIT 1'
 QUERY_TYPEID_PARENTTYPEID = 'SELECT parentTypeID FROM invmetatypes WHERE \
+typeID = ? LIMIT 1'
+QUERY_TYPEID_METAGROUPID = 'SELECT metaGroupID FROM invmetatypes WHERE \
 typeID = ? LIMIT 1'
 QUERY_TYPEID_SKILLRQ = 'SELECT dta.value FROM dgmtypeattribs AS dta INNER JOIN \
 dgmattribs AS da ON da.attributeID = dta.attributeID WHERE (da.attributeName = \
@@ -157,9 +159,9 @@ if len(typeswithattr) == 0:
 
 # Base type maps
 # { basetypeid : set(typeid) }
-globalmap_basetypeid_typeid =  {}
+map_basetypeid_typeid =  {}
 # { typeid : basetypeid }
-globalmap_typeid_basetypeid =  {}
+map_typeid_basetypeid =  {}
 for typeid in typeswithattr:
     # Not all typeIDs in the database have baseTypeID, so assign some
     # default value to it
@@ -171,16 +173,32 @@ for typeid in typeswithattr:
     # item as variation of self
     if basetypeid not in typeswithattr:
         basetypeid = typeid
-    if not basetypeid in globalmap_basetypeid_typeid:
-        globalmap_basetypeid_typeid[basetypeid] = set()
-    globalmap_basetypeid_typeid[basetypeid].add(typeid)
-    globalmap_typeid_basetypeid[typeid] = basetypeid
+    if not basetypeid in map_basetypeid_typeid:
+        map_basetypeid_typeid[basetypeid] = set()
+    map_basetypeid_typeid[basetypeid].add(typeid)
+    map_typeid_basetypeid[typeid] = basetypeid
 
-# Filter out non-t1 items if we're asked to do so
-if options.tech1:
+# Meta group maps
+# { metagroupid : set(typeid) }
+map_metagroupid_typeid =  {}
+# { typeid : metagroupid }
+map_typeid_metagroupid =  {}
+for typeid in typeswithattr:
+    # Assume items are tech 1 by default
+    metagroupid = 1
+    cursor.execute(QUERY_TYPEID_METAGROUPID, (typeid,))
+    for row in cursor:
+        metagroupid = row[0]
+    if not metagroupid in map_metagroupid_typeid:
+        map_metagroupid_typeid[metagroupid] = set()
+    map_metagroupid_typeid[metagroupid].add(typeid)
+    map_typeid_metagroupid[typeid] = metagroupid
+
+# Filter out non-t1/t2 items if we're asked to do so
+if options.tech12:
     toremove = set()
     for typeid in typeswithattr:
-        if globalmap_typeid_basetypeid[typeid] != typeid:
+        if map_typeid_basetypeid[typeid] != typeid and map_typeid_metagroupid[typeid] not in (1, 2):
             toremove.add(typeid)
     for id in toremove:
         typeswithattr.remove(id)
