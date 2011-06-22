@@ -23,6 +23,10 @@ from sqlalchemy.orm import reconstructor
 
 from eqBase import EqBase
 
+try:
+    from collections import OrderedDict
+except ImportError:
+    from gui.utils.compat import OrderedDict
 
 class Effect(EqBase):
     '''
@@ -199,7 +203,7 @@ class Item(EqBase):
     def requiredSkills(self):
         if self.__requiredSkills is None:
             from eos import db
-            requiredSkills = collections.OrderedDict()
+            requiredSkills = OrderedDict()
             self.__requiredSkills = requiredSkills
             for i in xrange(5):
                 skillID, skillLevel = None, None
