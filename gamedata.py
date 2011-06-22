@@ -238,10 +238,11 @@ class Item(EqBase):
                    (2,): "minmatar",
                    (4,): "amarr",
                    (8,): "gallente",
-                   (16,): "jove"}
+                   (16,): "jove",
+                   (32,): "sansha"}
 
             #Need to make sure the matchers are run in this order, the longest ones first.
-            order = ((1, 8), (1, 4), (2, 4), (2, 8), (1,), (2,), (4,), (8,), (16,))
+            order = ((1, 8), (1, 4), (2, 4), (2, 8), (1,), (2,), (4,), (8,), (16,), (32,))
 
             for matcher in order:
                 match = True
