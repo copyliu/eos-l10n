@@ -198,7 +198,7 @@ for typeid in typeswithattr:
 if options.tech12:
     toremove = set()
     for typeid in typeswithattr:
-        if map_typeid_basetypeid[typeid] != typeid and map_typeid_metagroupid[typeid] not in (1, 2):
+        if map_typeid_basetypeid[typeid] != typeid and map_typeid_metagroupid[typeid] != 2:
             toremove.add(typeid)
     for id in toremove:
         typeswithattr.remove(id)
