@@ -222,53 +222,45 @@ class Item(EqBase):
     @property
     def race(self):
         if self.__race is None:
-            #There's a few hacks in how we look for this regarding to ships
-            #I'll discuss each of them as we do it
-            #1: If a ship belongs to the ORE market group, it'll be tagged as ORE
-            if self.marketGroup and self.marketGroup.name == "ORE":
-                return "ore"
+            # Race is None by default
+            race = None
+            # Get races for primary and secondary item skill requirements
+            skills = self.requiredSkills.keys()
+            skillPrimaryRace = skills[0].raceID if len(skills) >= 1 else 0
+            skillSecondaryRace = skills[1].raceID if len(skills) >= 2 else 0
+            skillRaces = (skillPrimaryRace, skillSecondaryRace)
 
-            #2: Items can only have a single raceID
-            #   For pirate ships, we'll have to check the races of the skills
-            skillRaces = set()
+            map = {1: "caldari",
+                   2: "minmatar",
+                   4: "amarr",
+                   5: "sansha", # Caldari + Amarr
+                   6: "blood", # Minmatar + Amarr
+                   8: "gallente",
+                   9: "guristas", # Caldari + Gallente
+                   10: "angelserp", # Minmatar + Gallente, final race depends on the order of skills
+                   16: "jove",
+                   32: "sansha"} # Incrusion Sansha
 
-            skillRaces.add(self.raceID)
-            for skill in self.requiredSkills.iterkeys():
-                if skill.raceID is not None:
-                    skillRaces.add(skill.raceID)
+            if sum(skillRaces) in map:
+                race = map[sum(skillRaces)]
+                if race == "angelserp":
+                    if skillRaces == (2, 8):
+                        race = "angel"
+                    else:
+                        race = "serpentis"
 
-            #Now that we know what races the skills have, figure it out
-            #Our map on how stuff works.
-            map = {(1, 8): "guristas",
-                   (1, 4): "sansha",
-                   (2, 4): "blood",
-                   (2, 8): "angelserp",
-                   (1,): "caldari",
-                   (2,): "minmatar",
-                   (4,): "amarr",
-                   (8,): "gallente",
-                   (16,): "jove",
-                   (32,): "sansha"}
+            # If race is still None, try to find out if it's ORE ship, relying
+            # on market group data
+            if race is None:
+                if getattr(self.marketGroup, "name", None) == "ORE":
+                    race = "ore"
 
-            #Need to make sure the matchers are run in this order, the longest ones first.
-            order = ((1, 8), (1, 4), (2, 4), (2, 8), (1,), (2,), (4,), (8,), (16,), (32,))
+            # Rely on item's own raceID as last resort
+            if race is None:
+                race = map.get(self.raceID, None)
 
-            for matcher in order:
-                match = True
-                for raceID in matcher:
-                    if not raceID in skillRaces:
-                        match = False
-                        break
-                if match:
-                    self.__race = map[matcher]
-                    break
-
-            #3: Special handling for angel/serpentis
-            if self.__race == "angelserp":
-                if self.raceID == 2:
-                    self.__race = "angel"
-                else:
-                    self.__race = "serpentis"
+            # Store our final value
+            self.__race = race
         return self.__race
 
     def requiresSkill(self, skill, level=None):
