@@ -1,5 +1,5 @@
-version = "0.2.1.0"
-tag = "git"
+version = "0.2.2.0"
+tag = "release"
 
 def test():
     import tests.runTests
