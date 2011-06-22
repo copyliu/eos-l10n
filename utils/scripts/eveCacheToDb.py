@@ -34,10 +34,6 @@ Singularity: python eveCacheToDb.py --eve="~/.wine/drive_c/Program Files/CCP/Sin
 import os
 import sys
 
-# Add eos root path to sys.path
-path = os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))
-sys.path.append(os.path.realpath(os.path.join(path, "..", "..")))
-
 def get_map():
     """
     Return table name - table class map

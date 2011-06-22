@@ -377,7 +377,7 @@ for typeid in publishedtypes:
             globalmap_typeid_typenamecombtuple[typeid][0].add(typenamecomb)
 
 # Form list of effects for processing
-effects_path = os.path.join("..", "effects")
+effects_path = os.path.join("..", "..", "effects")
 if options.effects:
     effect_list = options.effects.split(",")
 else:

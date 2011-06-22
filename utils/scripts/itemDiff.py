@@ -53,7 +53,7 @@ for typename in FORCEPUB_TYPES:
     new_cursor.execute(OVERRIDES_TYPEPUB, (typename,))
 
 # Initialization of few things used by both changed/renamed effects list
-effectspath = os.path.join("..", "effects")
+effectspath = os.path.join("..", "..", "effects")
 implemented = set()
 
 for filename in os.listdir(effectspath):

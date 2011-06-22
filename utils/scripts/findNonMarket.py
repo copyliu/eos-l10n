@@ -6,7 +6,7 @@ import re
 import sqlite3
 
 # Connect to database and set up cursor
-db = sqlite3.connect(os.path.join("..", "..", "staticdata", "eve.db"))
+db = sqlite3.connect(os.path.join("..", "..", "..", "staticdata", "eve.db"))
 cursor = db.cursor()
 
 # Queries to get raw data
