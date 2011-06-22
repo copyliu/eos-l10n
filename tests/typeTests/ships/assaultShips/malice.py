@@ -7,15 +7,16 @@ class Test(TestBase):
 
     # Amarr Frigate Skill Bonus:
     # 5% bonus to Armor Resistances per level
+    # Bonus is bugged, it makes resistances worse
 
     def test_amarrFrigate_armorEmDamageResonance_ship(self):
         self.buildTested = 0
         attr = "armorEmDamageResonance"
         skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.2
         iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -42,9 +43,9 @@ class Test(TestBase):
         attr = "armorExplosiveDamageResonance"
         skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.2
         iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -71,9 +72,9 @@ class Test(TestBase):
         attr = "armorKineticDamageResonance"
         skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.2
         iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -100,9 +101,9 @@ class Test(TestBase):
         attr = "armorThermalDamageResonance"
         skill = "Amarr Frigate"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 1.2
         iEos = self.getShipAttr(attr, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getShipAttr(attr, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
