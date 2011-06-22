@@ -207,8 +207,8 @@ class Item(EqBase):
             self.__requiredSkills = requiredSkills
             for i in xrange(5):
                 skillID, skillLevel = None, None
-                skillID = self.getAttribute("requiredSkill{0}".format(i))
-                skillLevel = self.getAttribute("requiredSkill{0}Level".format(i))
+                skillID = self.getAttribute("requiredSkill{0}".format(i + 1))
+                skillLevel = self.getAttribute("requiredSkill{0}Level".format(i + 1))
                 # Assume that there's no gaps between skill requirements
                 if skillID is None or skillLevel is None:
                     # If it bugs, replace with continue to skip to next i
