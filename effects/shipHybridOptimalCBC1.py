@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Ferox
-#Ship: Vulture
+# Used by:
+# Ship: Ferox
+# Ship: Vulture
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Nyx
-#Ship: Thanatos
+# Used by:
+# Ship: Nyx
+# Ship: Thanatos
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Carrier").level

@@ -1,5 +1,5 @@
-#Used by:
-#Implants named like: Grail (6 of 12)
+# Used by:
+# Implants named like: Grail (6 of 12)
 type = "passive"
 runTime = "early"
 def handler(fit, implant, context):

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Harbinger
+# Used by:
+# Ship: Harbinger
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

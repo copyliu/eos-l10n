@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Caldari Navy Hookbill
-#Ship: Condor
+# Used by:
+# Ship: Caldari Navy Hookbill
+# Ship: Condor
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

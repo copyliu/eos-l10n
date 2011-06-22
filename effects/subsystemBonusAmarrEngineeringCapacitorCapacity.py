@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Legion Engineering - Augmented Capacitor Reservoir
+# Used by:
+# Subsystem: Legion Engineering - Augmented Capacitor Reservoir
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Engineering Systems").level

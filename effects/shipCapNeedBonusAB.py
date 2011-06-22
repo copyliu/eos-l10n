@@ -1,6 +1,6 @@
-#Used by:
-#Variations of ship: Apocalypse (3 of 4)
-#Variations of ship: Armageddon (4 of 5)
+# Used by:
+# Variations of ship: Apocalypse (3 of 4)
+# Variations of ship: Armageddon (4 of 5)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level

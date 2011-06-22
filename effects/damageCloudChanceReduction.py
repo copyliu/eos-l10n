@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Deep Core Mining
+# Used by:
+# Skill: Deep Core Mining
 type = "passive"
 def handler(fit, skill, context):
     bonus = -skill.getModifiedItemAttr("damageCloudChanceReduction")

@@ -1,5 +1,5 @@
-#Used by:
-#Module: Skirmish Warfare Link - Interdiction Maneuvers
+# Used by:
+# Module: Skirmish Warfare Link - Interdiction Maneuvers
 type = "gang", "active"
 gangBoost = "interdictionMaxRange"
 def handler(fit, module, context):

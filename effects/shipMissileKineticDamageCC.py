@@ -1,6 +1,6 @@
-#Used by:
-#Variations of ship: Caracal (3 of 3)
-#Ship: Onyx
+# Used by:
+# Variations of ship: Caracal (3 of 3)
+# Ship: Onyx
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Cruiser").level

@@ -1,5 +1,5 @@
-#Used by:
-#Skill: EM Shield Compensation
+# Used by:
+# Skill: EM Shield Compensation
 type = "passive"
 def handler(fit, skill, context):
     level = fit.character.getSkill("EM Shield Compensation").level

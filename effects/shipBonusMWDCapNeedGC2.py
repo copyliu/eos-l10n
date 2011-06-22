@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Deimos
-#Ship: Thorax
+# Used by:
+# Ship: Deimos
+# Ship: Thorax
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

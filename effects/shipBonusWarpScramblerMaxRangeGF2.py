@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Utu
+# Used by:
+# Ship: Utu
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Claw
+# Used by:
+# Ship: Claw
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Interceptors").level

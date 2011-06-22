@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Large Beam Laser Specialization
+# Used by:
+# Skill: Large Beam Laser Specialization
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Beam Laser Specialization"),

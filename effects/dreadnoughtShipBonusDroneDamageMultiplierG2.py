@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Moros
+# Used by:
+# Ship: Moros
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Dreadnought").level

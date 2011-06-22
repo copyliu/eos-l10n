@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Sin
+# Used by:
+# Ship: Sin
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Black Ops").level

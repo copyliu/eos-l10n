@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Scythe Fleet Issue
+# Used by:
+# Ship: Scythe Fleet Issue
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Cruiser").level

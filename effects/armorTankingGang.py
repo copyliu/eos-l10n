@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Armored Warfare
+# Used by:
+# Skill: Armored Warfare
 type = "gang"
 gangBoost = "armorHP"
 gangBonus = "armorHpBonus"

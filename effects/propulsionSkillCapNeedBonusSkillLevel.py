@@ -1,6 +1,6 @@
-#Used by:
-#Implants named like: Hardwiring Zainou 'Gypsy' KQB (6 of 6)
-#Skill: Propulsion Jamming
+# Used by:
+# Implants named like: Hardwiring Zainou 'Gypsy' KQB (6 of 6)
+# Skill: Propulsion Jamming
 type = "passive"
 def handler(fit, container, context):
     groups = ("Stasis Web", "Warp Scrambler", "Warp Disrupt Field Generator")

@@ -1,6 +1,6 @@
-#Used by:
-#Implant: Mining Foreman Mindlink
-#Skill: Mining Foreman
+# Used by:
+# Implant: Mining Foreman Mindlink
+# Skill: Mining Foreman
 type = "gang"
 gangBoost = "miningAmount"
 gangBonus = "miningAmountBonus"

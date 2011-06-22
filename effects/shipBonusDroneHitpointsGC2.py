@@ -1,6 +1,6 @@
-#Used by:
-#Variations of ship: Vexor (3 of 4)
-#Ship: Gila
+# Used by:
+# Variations of ship: Vexor (3 of 4)
+# Ship: Gila
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Legion Defensive - Nanobot Injector
+# Used by:
+# Subsystem: Legion Defensive - Nanobot Injector
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Defensive Systems").level

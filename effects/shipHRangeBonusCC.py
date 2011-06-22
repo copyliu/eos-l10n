@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Eagle
-#Ship: Moa
+# Used by:
+# Ship: Eagle
+# Ship: Moa
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Cruiser").level

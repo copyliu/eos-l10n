@@ -1,5 +1,5 @@
-#Used by:
-#Module: Industrial Core I
+# Used by:
+# Module: Industrial Core I
 type = "active"
 runTime = "early"
 def handler(fit, module, context):

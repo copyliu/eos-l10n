@@ -1,5 +1,5 @@
-#Used by:
-#Module: Mining Foreman Link - Harvester Capacitor Efficiency
+# Used by:
+# Module: Mining Foreman Link - Harvester Capacitor Efficiency
 type = "gang", "active"
 gangBoost = "miningCapacitorNeed"
 def handler(fit, module, context):

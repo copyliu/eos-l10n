@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Tengu Defensive - Adaptive Shielding
+# Used by:
+# Subsystem: Tengu Defensive - Adaptive Shielding
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Defensive Systems").level

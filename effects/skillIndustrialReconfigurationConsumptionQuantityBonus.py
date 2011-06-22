@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Industrial Reconfiguration
+# Used by:
+# Skill: Industrial Reconfiguration
 type = "passive"
 def handler(fit, skill, context):
     amount = -skill.getModifiedItemAttr("consumptionQuantityBonus")

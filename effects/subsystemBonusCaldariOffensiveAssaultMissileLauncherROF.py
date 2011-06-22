@@ -1,5 +1,5 @@
-#Used by:
-#Variations of subsystem: Tengu Offensive - Accelerated Ejection Bay (3 of 4)
+# Used by:
+# Variations of subsystem: Tengu Offensive - Accelerated Ejection Bay (3 of 4)
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Offensive Systems").level

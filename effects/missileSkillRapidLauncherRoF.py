@@ -1,9 +1,9 @@
-#Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZMM (6 of 6)
-#Implant: Cerebral Accelerator
-#Implant: Whelan Machorin's Ballistic Smartlink
-#Skill: Missile Launcher Operation
-#Skill: Rapid Launch
+# Used by:
+# Implants named like: Hardwiring Zainou 'Deadeye' ZMM (6 of 6)
+# Implant: Cerebral Accelerator
+# Implant: Whelan Machorin's Ballistic Smartlink
+# Skill: Missile Launcher Operation
+# Skill: Rapid Launch
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

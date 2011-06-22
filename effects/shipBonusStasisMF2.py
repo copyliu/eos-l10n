@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Freki
+# Used by:
+# Ship: Freki
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Frigate").level

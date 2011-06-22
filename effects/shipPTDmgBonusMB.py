@@ -1,7 +1,7 @@
-#Used by:
-#Variations of ship: Tempest (3 of 4)
-#Ship: Machariel
-#Ship: Panther
+# Used by:
+# Variations of ship: Tempest (3 of 4)
+# Ship: Machariel
+# Ship: Panther
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Battleship").level

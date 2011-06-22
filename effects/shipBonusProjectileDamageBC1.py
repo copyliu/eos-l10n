@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Hurricane
+# Used by:
+# Ship: Hurricane
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

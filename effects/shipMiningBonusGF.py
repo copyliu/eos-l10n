@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Navitas
+# Used by:
+# Ship: Navitas
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

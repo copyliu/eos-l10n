@@ -1,6 +1,6 @@
-#Used by:
-#Implant: Siege Warfare Mindlink
-#Skill: Siege Warfare
+# Used by:
+# Implant: Siege Warfare Mindlink
+# Skill: Siege Warfare
 type = "gang"
 gangBoost = "shieldCapacity"
 gangBonus = "shieldCapacityBonus"

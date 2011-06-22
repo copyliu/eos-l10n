@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Ragnarok
+# Used by:
+# Ship: Ragnarok
 type = "gang"
 gangBoost = "signatureRadius"
 gangBonus = "titanMinmatarBonus2"

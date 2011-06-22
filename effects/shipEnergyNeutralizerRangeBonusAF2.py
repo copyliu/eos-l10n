@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Malice
+# Used by:
+# Ship: Malice
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

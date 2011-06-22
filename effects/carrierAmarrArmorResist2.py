@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Aeon
-#Ship: Archon
+# Used by:
+# Ship: Aeon
+# Ship: Archon
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Carrier").level

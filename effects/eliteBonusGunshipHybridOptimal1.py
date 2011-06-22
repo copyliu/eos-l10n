@@ -1,7 +1,7 @@
-#Used by:
-#Ship: Enyo
-#Ship: Harpy
-#Ship: Ishkur
+# Used by:
+# Ship: Enyo
+# Ship: Harpy
+# Ship: Ishkur
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Sabre
+# Used by:
+# Ship: Sabre
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Interdictors").level

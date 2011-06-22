@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Machariel
+# Used by:
+# Ship: Machariel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Battleship").level

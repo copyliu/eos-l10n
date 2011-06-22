@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Loki
+# Used by:
+# Ship: Loki
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Strategic Cruiser").level

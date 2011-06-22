@@ -1,5 +1,5 @@
-#Used by:
-#Modules from group: Cloaking Device (12 of 14)
+# Used by:
+# Modules from group: Cloaking Device (12 of 14)
 type = "active"
 runTime = "early"
 #TODO: Rewrite this effect

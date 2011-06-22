@@ -1,5 +1,5 @@
-#Used by:
-#Variations of subsystem: Proteus Offensive - Dissonic Encoding Platform (3 of 4)
+# Used by:
+# Variations of subsystem: Proteus Offensive - Dissonic Encoding Platform (3 of 4)
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Offensive Systems").level

@@ -1,6 +1,6 @@
-#Used by:
-#Variations of ship: Catalyst (2 of 2)
-#Ship: Cormorant
+# Used by:
+# Variations of ship: Catalyst (2 of 2)
+# Ship: Cormorant
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Destroyers").level

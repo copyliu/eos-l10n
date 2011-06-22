@@ -1,5 +1,5 @@
-#Used by:
-#Module: Skirmish Warfare Link - Rapid Deployment
+# Used by:
+# Module: Skirmish Warfare Link - Rapid Deployment
 type = "gang", "active"
 gangBoost = "speedFactor"
 def handler(fit, module, context):

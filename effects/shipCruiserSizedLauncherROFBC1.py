@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Nighthawk
+# Used by:
+# Ship: Nighthawk
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Battlecruisers").level

@@ -1,5 +1,5 @@
-#Used by:
-#Module: Information Warfare Link - Recon Operation
+# Used by:
+# Module: Information Warfare Link - Recon Operation
 type = "gang", "active"
 gangBoost = "electronicMaxRange"
 def handler(fit, module, context):

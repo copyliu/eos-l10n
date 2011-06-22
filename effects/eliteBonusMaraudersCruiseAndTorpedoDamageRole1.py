@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Golem
+# Used by:
+# Ship: Golem
 type = "passive"
 def handler(fit, ship, context):
     damageTypes = ("em", "explosive", "kinetic", "thermal")

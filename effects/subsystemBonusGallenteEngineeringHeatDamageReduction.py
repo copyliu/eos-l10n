@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Engineering - Supplemental Coolant Injector
+# Used by:
+# Subsystem: Proteus Engineering - Supplemental Coolant Injector
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Engineering Systems").level

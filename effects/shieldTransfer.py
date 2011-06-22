@@ -1,6 +1,6 @@
-#Used by:
-#Modules from group: Shield Transporter (39 of 39)
-#Drones named like: Shield Maintenance Bot (6 of 6)
+# Used by:
+# Modules from group: Shield Transporter (39 of 39)
+# Drones named like: Shield Maintenance Bot (6 of 6)
 type = "projected", "active"
 def handler(fit, container, context):
     if "projected" in context and not fit.ship.getModifiedItemAttr("disallowAssistance") == 1:

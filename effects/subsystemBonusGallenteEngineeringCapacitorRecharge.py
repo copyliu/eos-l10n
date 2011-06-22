@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Engineering - Capacitor Regeneration Matrix
+# Used by:
+# Subsystem: Proteus Engineering - Capacitor Regeneration Matrix
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Engineering Systems").level

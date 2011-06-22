@@ -1,5 +1,5 @@
-#Used by:
-#Implants named like: Talon (6 of 12)
+# Used by:
+# Implants named like: Talon (6 of 12)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

@@ -1,5 +1,5 @@
-#Used by:
-#Ships from group: Black Ops (4 of 4)
+# Used by:
+# Ships from group: Black Ops (4 of 4)
 type = "passive"
 def handler(fit, ship, context):
     if fit.extraAttributes["cloaked"]:

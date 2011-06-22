@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Defensive - Nanobot Injector
+# Used by:
+# Subsystem: Proteus Defensive - Nanobot Injector
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Defensive Systems").level

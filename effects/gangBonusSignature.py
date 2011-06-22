@@ -1,5 +1,5 @@
-#Used by:
-#Module: Skirmish Warfare Link - Evasive Maneuvers
+# Used by:
+# Module: Skirmish Warfare Link - Evasive Maneuvers
 type = "gang", "active"
 gangBoost = "signatureRadius"
 def handler(fit, module, context):

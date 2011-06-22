@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Large Blaster Specialization
+# Used by:
+# Skill: Large Blaster Specialization
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Blaster Specialization"),

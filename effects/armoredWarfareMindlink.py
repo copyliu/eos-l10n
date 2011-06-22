@@ -1,5 +1,5 @@
-#Used by:
-#Implant: Armored Warfare Mindlink
+# Used by:
+# Implant: Armored Warfare Mindlink
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Armored Warfare Specialist"),

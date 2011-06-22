@@ -1,5 +1,5 @@
-#Used by:
-#Module: Mining Foreman Link - Laser Optimization
+# Used by:
+# Module: Mining Foreman Link - Laser Optimization
 type = "gang", "active"
 gangBoost = "miningDuration"
 def handler(fit, module, context):

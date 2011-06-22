@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Legion Defensive - Warfare Processor
+# Used by:
+# Subsystem: Legion Defensive - Warfare Processor
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Defensive Systems").level

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Succubus
+# Used by:
+# Ship: Succubus
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

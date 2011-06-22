@@ -1,5 +1,5 @@
-#Used by:
-#Variations of ship: Moa (4 of 4)
+# Used by:
+# Variations of ship: Moa (4 of 4)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Cruiser").level

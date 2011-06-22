@@ -1,5 +1,5 @@
-#Used by:
-#Module: Command Processor I
+# Used by:
+# Module: Command Processor I
 type = "passive"
 def handler(fit, module, context):
     #Note: we increase maxGroupActive by two.

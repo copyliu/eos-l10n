@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Golem
-#Ship: Vargur
+# Used by:
+# Ship: Golem
+# Ship: Vargur
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Marauders").level

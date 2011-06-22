@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Doomsday Operation
+# Used by:
+# Skill: Doomsday Operation
 type = "passive"
 def handler(fit, skill, context):
     damageTypes = ("em", "explosive", "kinetic", "thermal")

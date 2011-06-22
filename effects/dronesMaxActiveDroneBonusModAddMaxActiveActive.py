@@ -1,5 +1,5 @@
-#Used by:
-#Module: Drone Control Unit I
+# Used by:
+# Module: Drone Control Unit I
 type = "active"
 def handler(fit, module, context):
     amount = module.getModifiedItemAttr("maxActiveDroneBonus")

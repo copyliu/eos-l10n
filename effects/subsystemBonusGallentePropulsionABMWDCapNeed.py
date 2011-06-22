@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Propulsion - Localized Injectors
+# Used by:
+# Subsystem: Proteus Propulsion - Localized Injectors
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Propulsion Systems").level

@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Loki Electronics - Tactical Targeting Network
+# Used by:
+# Subsystem: Loki Electronics - Tactical Targeting Network
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Electronic Systems").level

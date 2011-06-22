@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Information Warfare Specialist
+# Used by:
+# Skill: Information Warfare Specialist
 runTime = "early"
 type = "passive"
 def handler(fit, skill, context):

@@ -1,6 +1,6 @@
-#Used by:
-#Subsystem: Proteus Offensive - Dissonic Encoding Platform
-#Subsystem: Proteus Offensive - Hybrid Propulsion Armature
+# Used by:
+# Subsystem: Proteus Offensive - Dissonic Encoding Platform
+# Subsystem: Proteus Offensive - Hybrid Propulsion Armature
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Offensive Systems").level

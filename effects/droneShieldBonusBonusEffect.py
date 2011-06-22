@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Basilisk
-#Ship: Scimitar
+# Used by:
+# Ship: Basilisk
+# Ship: Scimitar
 type = "passive"
 def handler(fit, ship, context):
     # This is actually level-less bonus, anyway you have to train cruisers 5

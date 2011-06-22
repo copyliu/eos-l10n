@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Small Autocannon Specialization
+# Used by:
+# Skill: Small Autocannon Specialization
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Small Autocannon Specialization"),

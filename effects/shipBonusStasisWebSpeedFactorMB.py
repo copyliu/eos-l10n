@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Vindicator
+# Used by:
+# Ship: Vindicator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Battleship").level

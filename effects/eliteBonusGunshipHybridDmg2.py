@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Harpy
+# Used by:
+# Ship: Harpy
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Assault Ships").level

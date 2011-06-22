@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Noctis
+# Used by:
+# Ship: Noctis
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("ORE Industrial").level

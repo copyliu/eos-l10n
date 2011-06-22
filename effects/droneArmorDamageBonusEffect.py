@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Guardian
-#Ship: Oneiros
+# Used by:
+# Ship: Guardian
+# Ship: Oneiros
 type = "passive"
 def handler(fit, ship, context):
     # This is actually level-less bonus, anyway you have to train cruisers 5

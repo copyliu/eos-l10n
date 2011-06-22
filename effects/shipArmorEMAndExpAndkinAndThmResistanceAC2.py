@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Sacrilege
-#Ship: Vangel
+# Used by:
+# Ship: Sacrilege
+# Ship: Vangel
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

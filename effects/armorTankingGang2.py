@@ -1,5 +1,5 @@
-#Used by:
-#Implant: Armored Warfare Mindlink
+# Used by:
+# Implant: Armored Warfare Mindlink
 type = "gang", "active"
 gangBonus = "armorHpBonus2"
 gangBoost = "armorHP"

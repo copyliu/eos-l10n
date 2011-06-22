@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Taranis
+# Used by:
+# Ship: Taranis
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Interceptors").level

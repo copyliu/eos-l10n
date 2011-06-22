@@ -1,5 +1,5 @@
-#Used by:
-#Subsystems from group: Electronic Systems (16 of 16)
+# Used by:
+# Subsystems from group: Electronic Systems (16 of 16)
 type = "passive"
 def handler(fit, module, context):
     sensorTypes = ("Gravimetric", "Ladar", "Magnetometric", "Radar")

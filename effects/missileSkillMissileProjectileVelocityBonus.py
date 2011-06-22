@@ -1,7 +1,7 @@
-#Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZML (6 of 6)
-#Modules named like: Hydraulic Bay Thrusters (6 of 6)
-#Skill: Missile Projection
+# Used by:
+# Implants named like: Hardwiring Zainou 'Deadeye' ZML (6 of 6)
+# Modules named like: Hydraulic Bay Thrusters (6 of 6)
+# Skill: Missile Projection
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

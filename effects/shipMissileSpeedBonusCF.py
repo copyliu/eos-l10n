@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Buzzard
+# Used by:
+# Ship: Buzzard
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

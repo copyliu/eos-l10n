@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Tengu Engineering - Supplemental Coolant Injector
+# Used by:
+# Subsystem: Tengu Engineering - Supplemental Coolant Injector
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Engineering Systems").level

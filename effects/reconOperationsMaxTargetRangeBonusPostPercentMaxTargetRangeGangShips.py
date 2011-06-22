@@ -1,6 +1,6 @@
-#Used by:
-#Implant: Information Warfare Mindlink
-#Skill: Information Warfare
+# Used by:
+# Implant: Information Warfare Mindlink
+# Skill: Information Warfare
 type = "gang"
 gangBoost = "maxTargetRange"
 gangBonus = "maxTargetRangeBonus"

@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Falcon
-#Ship: Rook
+# Used by:
+# Ship: Falcon
+# Ship: Rook
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Recon Ships").level

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Rokh
+# Used by:
+# Ship: Rokh
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Battleship").level

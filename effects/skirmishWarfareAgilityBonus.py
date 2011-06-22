@@ -1,6 +1,6 @@
-#Used by:
-#Implant: Skirmish Warfare Mindlink
-#Skill: Skirmish Warfare
+# Used by:
+# Implant: Skirmish Warfare Mindlink
+# Skill: Skirmish Warfare
 type = "gang"
 gangBoost = "agility"
 gangBonus = "agilityBonus"

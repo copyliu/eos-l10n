@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Paladin
+# Used by:
+# Ship: Paladin
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level

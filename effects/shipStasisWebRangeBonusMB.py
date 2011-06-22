@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Bhaalgorn
+# Used by:
+# Ship: Bhaalgorn
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Battleship").level

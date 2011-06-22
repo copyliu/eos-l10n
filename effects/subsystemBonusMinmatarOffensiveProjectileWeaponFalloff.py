@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Loki Offensive - Projectile Scoping Array
+# Used by:
+# Subsystem: Loki Offensive - Projectile Scoping Array
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Offensive Systems").level

@@ -1,5 +1,5 @@
-#Used by:
-#Module: Armored Warfare Link - Damage Control
+# Used by:
+# Module: Armored Warfare Link - Damage Control
 type = "gang", "active"
 gangBoost = "armorRepairCapacitorNeed"
 def handler(fit, module, context):

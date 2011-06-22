@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Astarte
+# Used by:
+# Ship: Astarte
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Command Ships").level

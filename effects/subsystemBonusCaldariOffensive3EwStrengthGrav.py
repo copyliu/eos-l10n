@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Tengu Offensive - Rifling Launcher Pattern
+# Used by:
+# Subsystem: Tengu Offensive - Rifling Launcher Pattern
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Offensive Systems").level

@@ -1,7 +1,7 @@
-#Used by:
-#Implants named like: Frentix Booster (4 of 4)
-#Implants named like: Hardwiring Zainou 'Deadeye' ZGA (6 of 6)
-#Skill: Sharpshooter
+# Used by:
+# Implants named like: Frentix Booster (4 of 4)
+# Implants named like: Hardwiring Zainou 'Deadeye' ZGA (6 of 6)
+# Skill: Sharpshooter
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

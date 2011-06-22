@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Zealot
+# Used by:
+# Ship: Zealot
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Assault Ships").level

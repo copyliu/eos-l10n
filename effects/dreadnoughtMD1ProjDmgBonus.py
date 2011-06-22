@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Naglfar
+# Used by:
+# Ship: Naglfar
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Dreadnought").level

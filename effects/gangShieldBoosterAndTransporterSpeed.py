@@ -1,5 +1,5 @@
-#Used by:
-#Module: Siege Warfare Link - Active Shielding
+# Used by:
+# Module: Siege Warfare Link - Active Shielding
 type = "gang", "active"
 gangBoost = "shieldRepairDuration"
 def handler(fit, module, context):

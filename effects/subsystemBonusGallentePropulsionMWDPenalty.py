@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Propulsion - Wake Limiter
+# Used by:
+# Subsystem: Proteus Propulsion - Wake Limiter
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Propulsion Systems").level

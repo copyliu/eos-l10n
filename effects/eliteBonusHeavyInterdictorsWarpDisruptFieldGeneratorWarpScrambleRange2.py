@@ -1,5 +1,5 @@
-#Used by:
-#Ships from group: Heavy Interdictor (4 of 4)
+# Used by:
+# Ships from group: Heavy Interdictor (4 of 4)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Interdictors").level

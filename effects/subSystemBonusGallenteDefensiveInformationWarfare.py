@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Defensive - Warfare Processor
+# Used by:
+# Subsystem: Proteus Defensive - Warfare Processor
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Defensive Systems").level

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Onyx
+# Used by:
+# Ship: Onyx
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Interdictors").level

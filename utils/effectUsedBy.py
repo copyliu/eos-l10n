@@ -959,7 +959,7 @@ inner score: {5:.3})"
         # Append line for printing to list
         catname = type[2]
         typename = type[1]
-        printstr = "#{0}: {1}"
+        printstr = "# {0}: {1}"
         printing_typelines.append(printstr.format(catname, typename))
     # Do the same for groups
     printing_grouplines = []
@@ -970,7 +970,7 @@ inner score: {5:.3})"
         groupname = group[1]
         described = len(effectmap_groupid_typeid[group[0]][0])
         total = len(globalmap_groupid_typeid[group[0]])
-        printstr = "#{0}s from group: {1} ({2} of {3})"
+        printstr = "# {0}s from group: {1} ({2} of {3})"
         printing_grouplines.append(printstr.format(catname, groupname,
         described, total))
     # Process categories
@@ -981,7 +981,7 @@ inner score: {5:.3})"
         catname = category[1]
         described = len(effectmap_categoryid_typeid[category[0]][0])
         total = len(globalmap_categoryid_typeid[category[0]])
-        printstr = "#Items from category: {0} ({1} of {2})"
+        printstr = "# Items from category: {0} ({1} of {2})"
         printing_categorylines.append(printstr.format(catname, described,
         total))
     # Process variations
@@ -995,7 +995,7 @@ inner score: {5:.3})"
         basename = basetype[1]
         described = len(effectmap_basetypeid_typeid[basetype[0]][0])
         total = len(globalmap_basetypeid_typeid[basetype[0]])
-        printstr = "#Variations of {0}: {1} ({2} of {3})"
+        printstr = "# Variations of {0}: {1} ({2} of {3})"
         printing_basetypelines.append(printstr.format(catname, basename,
         described, total))
     # Process market groups with variations
@@ -1008,7 +1008,7 @@ inner score: {5:.3})"
                         [marketgroup[0]][0])
         total = len(globalmap_marketgroupid_typeidwithvariations
                     [marketgroup[0]])
-        printstr = "#Items from market group: {0} ({1} of {2})"
+        printstr = "# Items from market group: {0} ({1} of {2})"
         printing_marketgroupwithvarslines.append(printstr.
         format(marketgroupname, described, total))
     # Process type name combinations
@@ -1023,7 +1023,7 @@ inner score: {5:.3})"
         described = len(effectmap_typenamecombtuple_typeid
                         [typenamecomb[0]][0])
         total = len(globalmap_typenamecombtuple_typeid[typenamecomb[0]])
-        printstr = "#{0}s named like: {1} ({2} of {3})"
+        printstr = "# {0}s named like: {1} ({2} of {3})"
         printing_typenamecombtuplelines.append(printstr.format(catname,
         namedlike, described, total))
 
@@ -1033,10 +1033,10 @@ inner score: {5:.3})"
     printing_basetypelines + printing_typelines
     # Prepend list with "used by"
     if commentlines:
-        commentlines = ["#Used by:"] + commentlines
+        commentlines = ["# Used by:"] + commentlines
     # If effect isn't used, write it to file and to terminal
     else:
-        commentlines = ["#Not used by any item"]
+        commentlines = ["# Not used by any item"]
         print("Warning: effect file " + effect_name +
               " is not used by any item")
     # Combine "used by" comment lines and actual effect lines

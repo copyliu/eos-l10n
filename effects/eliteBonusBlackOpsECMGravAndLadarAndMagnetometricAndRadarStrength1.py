@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Widow
+# Used by:
+# Ship: Widow
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Black Ops").level

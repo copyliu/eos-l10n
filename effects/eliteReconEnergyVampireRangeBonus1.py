@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Curse
+# Used by:
+# Ship: Curse
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Recon Ships").level

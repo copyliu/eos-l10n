@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Rapid Firing
+# Used by:
+# Skill: Rapid Firing
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),

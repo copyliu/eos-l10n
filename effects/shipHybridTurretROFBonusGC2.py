@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Exequror Navy Issue
+# Used by:
+# Ship: Exequror Navy Issue
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

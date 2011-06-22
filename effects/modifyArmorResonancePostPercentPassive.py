@@ -1,5 +1,5 @@
-#Used by:
-#Modules named like: Anti Pump (24 of 24)
+# Used by:
+# Modules named like: Anti Pump (24 of 24)
 type = "passive"
 def handler(fit, module, context):
     for type in ("kinetic", "thermal", "explosive", "em"):

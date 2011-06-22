@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Arbitrator
+# Used by:
+# Ship: Arbitrator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Cruiser").level

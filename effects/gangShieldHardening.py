@@ -1,5 +1,5 @@
-#Used by:
-#Module: Siege Warfare Link - Shield Harmonizing
+# Used by:
+# Module: Siege Warfare Link - Shield Harmonizing
 type = "gang", "active"
 gangBoost = "shieldResistance"
 def handler(fit, module, context):

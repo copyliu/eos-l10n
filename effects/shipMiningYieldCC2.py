@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Osprey
+# Used by:
+# Ship: Osprey
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Cruiser").level

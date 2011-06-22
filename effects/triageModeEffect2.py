@@ -1,5 +1,5 @@
-#Used by:
-#Module: Triage Module I
+# Used by:
+# Module: Triage Module I
 type = "active"
 def handler(fit, module, context):
     #Remote armor reps

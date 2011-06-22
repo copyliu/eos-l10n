@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Offensive - Covert Reconfiguration
+# Used by:
+# Subsystem: Proteus Offensive - Covert Reconfiguration
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Offensive Systems").level

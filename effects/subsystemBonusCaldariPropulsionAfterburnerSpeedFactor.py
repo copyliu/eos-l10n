@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Tengu Propulsion - Fuel Catalyst
+# Used by:
+# Subsystem: Tengu Propulsion - Fuel Catalyst
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Propulsion Systems").level

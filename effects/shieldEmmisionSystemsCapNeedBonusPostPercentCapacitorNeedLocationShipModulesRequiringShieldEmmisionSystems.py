@@ -1,6 +1,6 @@
-#Used by:
-#Implants named like: Hardwiring Zainou 'Gnome' KXA (6 of 6)
-#Skill: Shield Emission Systems
+# Used by:
+# Implants named like: Hardwiring Zainou 'Gnome' KXA (6 of 6)
+# Skill: Shield Emission Systems
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

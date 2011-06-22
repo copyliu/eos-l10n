@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Muninn
+# Used by:
+# Ship: Muninn
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Heavy Assault Ships").level

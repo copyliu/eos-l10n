@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Leviathan
+# Used by:
+# Ship: Leviathan
 type = "gang"
 gangBoost = "shieldCapacity"
 gangBonus = "shipBonusCT2"

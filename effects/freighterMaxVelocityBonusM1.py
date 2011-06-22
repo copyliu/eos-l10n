@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Fenrir
+# Used by:
+# Ship: Fenrir
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Minmatar Freighter").level

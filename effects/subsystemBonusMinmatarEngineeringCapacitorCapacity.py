@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Loki Engineering - Augmented Capacitor Reservoir
+# Used by:
+# Subsystem: Loki Engineering - Augmented Capacitor Reservoir
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Engineering Systems").level

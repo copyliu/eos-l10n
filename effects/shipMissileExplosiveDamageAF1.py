@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Inquisitor
+# Used by:
+# Ship: Inquisitor
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level

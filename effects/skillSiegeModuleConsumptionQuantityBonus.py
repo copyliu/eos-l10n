@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Tactical Weapon Reconfiguration
+# Used by:
+# Skill: Tactical Weapon Reconfiguration
 type = "passive"
 def handler(fit, skill, context):
     amount = -skill.getModifiedItemAttr("consumptionQuantityBonus")

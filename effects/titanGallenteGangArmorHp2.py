@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Erebus
+# Used by:
+# Ship: Erebus
 type = "gang"
 gangBoost = "armorHP"
 gangBonus = "titanGallenteBonus2"

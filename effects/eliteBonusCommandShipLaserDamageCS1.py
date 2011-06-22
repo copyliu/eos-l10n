@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Absolution
+# Used by:
+# Ship: Absolution
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Command Ships").level

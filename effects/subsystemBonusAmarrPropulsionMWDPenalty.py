@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Legion Propulsion - Wake Limiter
+# Used by:
+# Subsystem: Legion Propulsion - Wake Limiter
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Amarr Propulsion Systems").level

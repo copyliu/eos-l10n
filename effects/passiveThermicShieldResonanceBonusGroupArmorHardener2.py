@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Thermic Shield Compensation
+# Used by:
+# Skill: Thermic Shield Compensation
 type = "passive"
 def handler(fit, skill, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Shield Hardener",

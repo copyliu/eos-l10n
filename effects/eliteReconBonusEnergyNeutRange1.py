@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Curse
-#Ship: Pilgrim
+# Used by:
+# Ship: Curse
+# Ship: Pilgrim
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Recon Ships").level

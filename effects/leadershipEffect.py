@@ -1,5 +1,5 @@
-#Used by:
-#Skill: Leadership
+# Used by:
+# Skill: Leadership
 type = "gang"
 gangBoost = "scanResolution"
 gangBonus = "scanResolutionBonus"

@@ -1,5 +1,5 @@
-#Used by:
-#Module: Armored Warfare Link - Passive Defense
+# Used by:
+# Module: Armored Warfare Link - Passive Defense
 type = "gang", "active"
 gangBoost = "armorResistance"
 def handler(fit, module, context):

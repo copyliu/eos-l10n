@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Helios
+# Used by:
+# Ship: Helios
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

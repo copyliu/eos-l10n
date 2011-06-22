@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Rhea
+# Used by:
+# Ship: Rhea
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Freighter").level

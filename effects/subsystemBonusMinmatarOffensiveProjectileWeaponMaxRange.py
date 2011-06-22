@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Loki Offensive - Turret Concurrence Registry
+# Used by:
+# Subsystem: Loki Offensive - Turret Concurrence Registry
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Minmatar Offensive Systems").level

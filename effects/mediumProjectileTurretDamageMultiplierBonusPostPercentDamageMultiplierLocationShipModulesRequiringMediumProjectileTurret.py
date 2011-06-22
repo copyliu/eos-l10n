@@ -1,6 +1,6 @@
-#Used by:
-#Implants named like: Hardwiring Eifyr and 'Gunslinger' MX (6 of 6)
-#Skill: Medium Projectile Turret
+# Used by:
+# Implants named like: Hardwiring Eifyr and 'Gunslinger' MX (6 of 6)
+# Skill: Medium Projectile Turret
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

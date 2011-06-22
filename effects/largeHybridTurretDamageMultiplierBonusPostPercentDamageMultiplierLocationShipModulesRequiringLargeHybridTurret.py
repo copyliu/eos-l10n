@@ -1,6 +1,6 @@
-#Used by:
-#Implants named like: Hardwiring Zainou 'Deadeye' ZGL (6 of 6)
-#Skill: Large Hybrid Turret
+# Used by:
+# Implants named like: Hardwiring Zainou 'Deadeye' ZGL (6 of 6)
+# Skill: Large Hybrid Turret
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

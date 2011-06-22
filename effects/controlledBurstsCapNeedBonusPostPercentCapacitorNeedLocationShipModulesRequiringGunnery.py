@@ -1,6 +1,6 @@
-#Used by:
-#Implants named like: Hardwiring Inherent Implants 'Lancer' Beta (6 of 6)
-#Skill: Controlled Bursts
+# Used by:
+# Implants named like: Hardwiring Inherent Implants 'Lancer' Beta (6 of 6)
+# Skill: Controlled Bursts
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Vargur
+# Used by:
+# Ship: Vargur
 type = "passive"
 def handler(fit, ship, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Large Projectile Turret"),

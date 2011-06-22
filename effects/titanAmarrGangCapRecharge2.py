@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Avatar
+# Used by:
+# Ship: Avatar
 type = "gang"
 gangBoost = "rechargeRate"
 gangBonus = "titanAmarrBonus2"

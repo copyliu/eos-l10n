@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Rorqual
+# Used by:
+# Ship: Rorqual
 type = "passive"
 def handler(fit, ship, context):
     if fit.extraAttributes["siege"]:

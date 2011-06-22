@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Proteus Engineering - Augmented Capacitor Reservoir
+# Used by:
+# Subsystem: Proteus Engineering - Augmented Capacitor Reservoir
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Gallente Engineering Systems").level

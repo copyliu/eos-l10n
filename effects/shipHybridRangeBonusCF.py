@@ -1,6 +1,6 @@
-#Used by:
-#Ship: Harpy
-#Ship: Ibis
+# Used by:
+# Ship: Harpy
+# Ship: Ibis
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Caldari Frigate").level

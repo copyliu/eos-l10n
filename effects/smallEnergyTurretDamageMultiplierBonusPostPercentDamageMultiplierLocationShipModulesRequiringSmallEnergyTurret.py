@@ -1,6 +1,6 @@
-#Used by:
-#Implants named like: Hardwiring Inherent Implants 'Lancer' Alpha (6 of 6)
-#Skill: Small Energy Turret
+# Used by:
+# Implants named like: Hardwiring Inherent Implants 'Lancer' Alpha (6 of 6)
+# Skill: Small Energy Turret
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

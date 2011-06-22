@@ -1,5 +1,5 @@
-#Used by:
-#Modules from group: Remote Sensor Damper (9 of 9)
+# Used by:
+# Modules from group: Remote Sensor Damper (9 of 9)
 type= "projected", "active"
 def handler(fit, module, context):
     if "projected" not in context or fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1:

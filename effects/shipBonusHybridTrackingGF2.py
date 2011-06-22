@@ -1,7 +1,7 @@
-#Used by:
-#Ship: Ares
-#Ship: Federation Navy Comet
-#Ship: Tristan
+# Used by:
+# Ship: Ares
+# Ship: Federation Navy Comet
+# Ship: Tristan
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

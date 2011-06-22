@@ -1,5 +1,5 @@
-#Used by:
-#Variations of ship: Celestis (3 of 3)
+# Used by:
+# Variations of ship: Celestis (3 of 3)
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Cruiser").level

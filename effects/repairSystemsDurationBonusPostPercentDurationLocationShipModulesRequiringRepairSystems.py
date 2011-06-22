@@ -1,8 +1,8 @@
-#Used by:
-#Modules named like: Nanobot Accelerator (6 of 6)
-#Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Armor Implants (6 of 6)
-#Implant: Numon Family Heirloom
-#Skill: Repair Systems
+# Used by:
+# Modules named like: Nanobot Accelerator (6 of 6)
+# Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Armor Implants (6 of 6)
+# Implant: Numon Family Heirloom
+# Skill: Repair Systems
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

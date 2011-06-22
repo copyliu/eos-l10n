@@ -1,5 +1,5 @@
-#Used by:
-#Modules from group: Shield Amplifier (88 of 88)
+# Used by:
+# Modules from group: Shield Amplifier (88 of 88)
 type = "passive"
 def handler(fit, module, context):
     for type in ("kinetic", "thermal", "explosive", "em"):

@@ -1,5 +1,5 @@
-#Used by:
-#Ship: Abaddon
+# Used by:
+# Ship: Abaddon
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Battleship").level

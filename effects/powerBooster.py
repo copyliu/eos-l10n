@@ -1,5 +1,5 @@
-#Used by:
-#Modules from group: Capacitor Booster (54 of 54)
+# Used by:
+# Modules from group: Capacitor Booster (54 of 54)
 type = "active"
 def handler(fit, module, context):
     # Set reload time to 10 seconds

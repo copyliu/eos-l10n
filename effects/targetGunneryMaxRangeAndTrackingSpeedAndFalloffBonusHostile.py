@@ -1,5 +1,5 @@
-#Used by:
-#Modules from group: Tracking Disruptor (10 of 10)
+# Used by:
+# Modules from group: Tracking Disruptor (10 of 10)
 type= "projected", "active"
 def handler(fit, module, context):
     if "projected" in context or fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1:

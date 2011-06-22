@@ -1,5 +1,5 @@
-#Used by:
-#Module: Siege Warfare Link - Shield Efficiency
+# Used by:
+# Module: Siege Warfare Link - Shield Efficiency
 type = "gang", "active"
 gangBoost = "shieldRepairCapacitorNeed"
 def handler(fit, module, context):

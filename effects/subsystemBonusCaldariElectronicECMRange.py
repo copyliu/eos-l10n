@@ -1,5 +1,5 @@
-#Used by:
-#Subsystem: Tengu Electronics - Obfuscation Manifold
+# Used by:
+# Subsystem: Tengu Electronics - Obfuscation Manifold
 type = "passive"
 def handler(fit, module, context):
     level = fit.character.getSkill("Caldari Electronic Systems").level

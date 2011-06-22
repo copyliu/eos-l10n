@@ -1,5 +1,5 @@
-#Used by:
-#Implant: Mining Foreman Mindlink
+# Used by:
+# Implant: Mining Foreman Mindlink
 type = "passive"
 def handler(fit, implant, context):
     fit.character.getSkill("Mining Foreman").suppress()

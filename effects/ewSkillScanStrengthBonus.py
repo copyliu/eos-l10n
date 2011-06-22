@@ -1,6 +1,6 @@
-#Used by:
-#Modules named like: Particle Dispersion Augmentor (6 of 6)
-#Skill: Signal Dispersion
+# Used by:
+# Modules named like: Particle Dispersion Augmentor (6 of 6)
+# Skill: Signal Dispersion
 type = "passive"
 def handler(fit, container, context):
     groups = ("ECM", "ECM Burst")
