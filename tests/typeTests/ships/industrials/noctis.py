@@ -8,7 +8,7 @@ class Test(TestBase):
     # ORE Industrial Skill Bonus:
     # 5% bonus to Tractor Beam cycle time per level
 
-    def test_oreIndustrial_duration_moduleTractorBeamSkillrqScience(self):
+    def test_oreIndustrial_duration_moduleTractorBeamSkillrqGraviton(self):
         self.buildTested = 0
         attr = "duration"
         item = "Small Tractor Beam I"
@@ -74,7 +74,7 @@ class Test(TestBase):
     # ORE Industrial Skill Bonus:
     # 60% bonus to Tractor Beam range per level
 
-    def test_oreIndustrial_maxRange_moduleTractorBeamSkillrqScience(self):
+    def test_oreIndustrial_maxRange_moduleTractorBeamSkillrqGraviton(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "Small Tractor Beam I"
@@ -107,7 +107,7 @@ class Test(TestBase):
     # ORE Industrial Skill Bonus:
     # 60% bonus to Tractor Beam velocity per level
 
-    def test_oreIndustrial_maxTractorVelocity_moduleTractorBeamSkillrqScience(self):
+    def test_oreIndustrial_maxTractorVelocity_moduleTractorBeamSkillrqGraviton(self):
         self.buildTested = 0
         attr = "maxTractorVelocity"
         item = "Small Tractor Beam I"
