@@ -625,7 +625,6 @@ class Test(TestBase):
 
     # Role Bonus:
     # 100% bonus to range of tractor beams
-    # 100% bonus to velocity of tractor beams
 
     def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
