@@ -237,10 +237,11 @@ class Item(EqBase):
                    (1,): "caldari",
                    (2,): "minmatar",
                    (4,): "amarr",
-                   (8,): "gallente"}
+                   (8,): "gallente",
+                   (16,): "jove"}
 
             #Need to make sure the matchers are run in this order, the longest ones first.
-            order = ((1, 8), (1, 4), (2, 4), (2, 8), (1,), (2,), (4,), (8,))
+            order = ((1, 8), (1, 4), (2, 4), (2, 8), (1,), (2,), (4,), (8,), (16,))
 
             for matcher in order:
                 match = True
@@ -258,7 +259,6 @@ class Item(EqBase):
                     self.__race = "angel"
                 else:
                     self.__race = "serpentis"
-
         return self.__race
 
     def requiresSkill(self, skill, level=None):
