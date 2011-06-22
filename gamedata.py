@@ -222,14 +222,7 @@ class Item(EqBase):
     @property
     def race(self):
         if self.__race is None:
-            # Race is None by default
-            race = None
-            # Get races for primary and secondary item skill requirements
-            skills = self.requiredSkills.keys()
-            skillPrimaryRace = skills[0].raceID if len(skills) >= 1 else 0
-            skillSecondaryRace = skills[1].raceID if len(skills) >= 2 else 0
-            skillRaces = (skillPrimaryRace, skillSecondaryRace)
-
+            # Define race map
             map = {1: "caldari",
                    2: "minmatar",
                    4: "amarr",
@@ -240,20 +233,25 @@ class Item(EqBase):
                    10: "angelserp", # Minmatar + Gallente, final race depends on the order of skills
                    16: "jove",
                    32: "sansha"} # Incrusion Sansha
-
-            if sum(skillRaces) in map:
-                race = map[sum(skillRaces)]
-                if race == "angelserp":
-                    if skillRaces == (2, 8):
-                        race = "angel"
-                    else:
-                        race = "serpentis"
-
-            # If race is still None, try to find out if it's ORE ship, relying
-            # on market group data
+            # Race is None by default
+            race = None
+            # Check if we're dealing with ORE ship first, using market group data
+            if self.marketGroup and self.marketGroup.name == "ORE":
+                race = "ore"
+            # Check primary and secondary required skills' races
             if race is None:
-                if getattr(self.marketGroup, "name", None) == "ORE":
-                    race = "ore"
+                skills = self.requiredSkills.keys()
+                skillPrimaryRace = skills[0].raceID if len(skills) >= 1 else 0
+                skillSecondaryRace = skills[1].raceID if len(skills) >= 2 else 0
+                skillRaces = (skillPrimaryRace, skillSecondaryRace)
+
+                if sum(skillRaces) in map:
+                    race = map[sum(skillRaces)]
+                    if race == "angelserp":
+                        if skillRaces == (2, 8):
+                            race = "angel"
+                        else:
+                            race = "serpentis"
 
             # Rely on item's own raceID as last resort
             if race is None:
