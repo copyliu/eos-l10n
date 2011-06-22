@@ -26,11 +26,26 @@ class Test(TestBase):
 
     # Subsystem Skill Bonus:
     # 20% bonus to range of tractor beams per level
+    # Also affects salvagers
 
-    def test_minmatarElectronicSystems_maxRange_moduleTractorBeam(self):
+    def test_minmatarElectronicSystems_maxRange_moduleTractorBeamSkillrqGraviton(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "Small Tractor Beam I"
+        iLvl = 1
+        iIngame = 1.2
+        fLvl = 4
+        fIngame = 1.8
+        iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl), ship=self.hull, miscitms=self.sub)
+        fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl), ship=self.hull, miscitms=self.sub)
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_minmatarElectronicSystems_maxRange_moduleTractorBeamSkillrqSalvaging(self):
+        self.buildTested = 0
+        attr = "maxRange"
+        item = "Salvager I"
         iLvl = 1
         iIngame = 1.2
         fLvl = 4

@@ -7,6 +7,7 @@ class Test(TestBase):
 
     # ORE Industrial Skill Bonus:
     # 5% bonus to Tractor Beam cycle time per level
+    # Also affects salvagers
 
     def test_oreIndustrial_duration_moduleTractorBeamSkillrqGraviton(self):
         self.buildTested = 0
@@ -40,6 +41,7 @@ class Test(TestBase):
 
     # ORE Industrial Skill Bonus:
     # 5% bonus to Salvager cycle time per level
+    # As tractor cycle time bonus affects this, bonus is increased
 
     def test_oreIndustrial_duration_moduleDataMinerSkillrqSalvaging(self):
         self.buildTested = 0
@@ -47,9 +49,9 @@ class Test(TestBase):
         item = "Salvager I"
         skill = "ORE Industrial"
         iLvl = 1
-        iIngame = 0.95
+        iIngame = 0.95**2
         fLvl = 4
-        fIngame = 0.8
+        fIngame = 0.8**2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
