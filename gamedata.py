@@ -17,9 +17,12 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from sqlalchemy.orm import reconstructor
-from eqBase import EqBase
 import re
+
+from sqlalchemy.orm import reconstructor
+
+from eqBase import EqBase
+
 
 class Effect(EqBase):
     '''
@@ -196,7 +199,7 @@ class Item(EqBase):
     def requiredSkills(self):
         if self.__requiredSkills is None:
             from eos import db
-            requiredSkills = {}
+            requiredSkills = collections.OrderedDict()
             self.__requiredSkills = requiredSkills
             for i in xrange(5):
                 skillID, skillLevel = None, None
