@@ -19,7 +19,7 @@
 
 from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session
-from eos.types import User, Character, Fit, Price, DamagePattern, Fleet
+from eos.types import User, Character, Fit, Price, DamagePattern, Fleet, MiscData
 from sqlalchemy.sql import and_
 import eos.config
 
@@ -221,6 +221,13 @@ def getPrice(typeID):
     else:
         raise TypeError("Need integer as argument")
     return price
+
+def getMiscData(field):
+    if isinstance(field, basestring):
+        data = saveddata_session.query(MiscData).get(field)
+    else:
+        raise TypeError("Need string as argument")
+    return data
 
 def getDamagePatternList(eager=None):
     patterns = saveddata_session.query(DamagePattern).options(*processEager(eager)).all()

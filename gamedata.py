@@ -280,7 +280,7 @@ class Item(EqBase):
         return False
 
 class MetaData(EqBase):
-    def __init__(self, name, val):
+    def __init__(self, name, val=None):
         self.fieldName = name
         self.fieldValue = val
 

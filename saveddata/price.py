@@ -1,5 +1,6 @@
 #===============================================================================
 # Copyright (C) 2010 Diego Duclos
+# Copyright (C) 2011 Anton Vorobyov
 #
 # This file is part of eos.
 #
@@ -98,8 +99,27 @@ class Price(object):
 
     @classmethod
     def fetchC0rporation(cls, priceMap):
-        print "c0rp"
         """Use c0rporation.com price service provider"""
+        # Check when we updated prices last time
+        fieldName = "priceC0rpTime"
+        lastUpdatedField = eos.db.getMiscData(fieldName)
+        # If this field isn't available, create and add it to session
+        if lastUpdatedField is None:
+            from eos.types import MiscData
+            lastUpdatedField = MiscData(fieldName)
+            eos.db.add(lastUpdatedField)
+        # Convert field value to float, assigning it zero on any errors
+        try:
+            lastUpdated = float(lastUpdatedField.fieldValue)
+        except (TypeError, ValueError):
+            lastUpdated = 0
+        present = time.time()
+        age = present - lastUpdated
+        # Using timestamps we've got, check if fetch results are still valid
+        # and make sure system clock wasn't changed to past
+        if age < cls.VALIDITY and present > lastUpdated:
+            # Do nothing if results are valid
+            return
         # Our request url
         requrl = "http://prices.c0rporation.com/faction.xml"
         # Generate request
@@ -112,7 +132,6 @@ class Price(object):
         # Will store IDs of items which we fetched
         fetchedTypeIDs = set()
         # Parse the data we've got
-        present = time.time()
         xml = minidom.parse(f)
         result = xml.getElementsByTagName("result").item(0)
         if result is not None:
@@ -123,10 +142,10 @@ class Price(object):
                 # we need to process it in one single run
                 for row in rows:
                     typeID = int(row.getAttribute("typeID"))
-                    # Average price field may be empty, assign 0 in this case
+                    # Average price field may be absent or empty, assign 0 in this case
                     try:
                         avgprice = float(row.getAttribute("avg"))
-                    except ValueError:
+                    except (TypeError, ValueError):
                         avgprice = 0
                     # Gather data on which typeIDs were fetched
                     fetchedTypeIDs.add(typeID)
@@ -147,12 +166,6 @@ class Price(object):
                     # Finally, fill object with data
                     priceobj.price = avgprice
                     priceobj.time = present if avgprice is not None else 0
-        # Find which requested items were left w/o any data
-        noData = set(priceMap.keys()).difference(fetchedTypeIDs)
-        # By setting price to zero make sure we do not re-request whole xml because
-        # of one item which wasn't there
-        for typeID in noData:
-            priceobj = priceMap[typeID]
-            priceobj.price = 0
-            priceobj.time = present
-        print noData
+        # Save current time for the future use
+        present = str(time.time())
+        lastUpdatedField.fieldValue = present

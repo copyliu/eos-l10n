@@ -233,7 +233,7 @@ def getAttributeInfo(attr, eager=None):
 @cachedQuery(1, "field")
 def getMetaData(field):
     if isinstance(field, basestring):
-        data = gamedata_session.query(MetaData).filter(MetaData.fieldName == field).one()
+        data = gamedata_session.query(MetaData).get(field)
     else:
         raise TypeError("Need string as argument")
     return data

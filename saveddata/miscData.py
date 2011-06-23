@@ -1,5 +1,5 @@
 #===============================================================================
-# Copyright (C) 2010 Diego Duclos
+# Copyright (C) 2011 Anton Vorobyov
 #
 # This file is part of eos.
 #
@@ -17,19 +17,9 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.gamedata import Attribute, Category, Effect, Group, Icon, Item, MarketGroup, \
-MetaGroup, AttributeInfo, Unit, EffectInfo, MetaType, MetaData
-from eos.saveddata.price import Price
-from eos.saveddata.user import User
-from eos.saveddata.damagePattern import DamagePattern
-from eos.saveddata.character import Character, Skill
-from eos.saveddata.module import Module, State, Slot, Hardpoint
-from eos.saveddata.drone import Drone
-from eos.saveddata.implant import Implant
-from eos.saveddata.booster import SideEffect
-from eos.saveddata.booster import Booster
-from eos.saveddata.ship import Ship
-from eos.saveddata.fit import Fit
-from eos.saveddata.fleet import Fleet, Wing, Squad
-from eos.saveddata.miscData import MiscData
-import eos.db
+from eos.eqBase import EqBase
+
+class MiscData(EqBase):
+    def __init__(self, name, val=None):
+        self.fieldName = name
+        self.fieldValue = val
