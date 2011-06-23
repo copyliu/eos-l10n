@@ -98,6 +98,7 @@ class Price(object):
 
     @classmethod
     def fetchC0rporation(cls, priceMap):
+        print "c0rp"
         """Use c0rporation.com price service provider"""
         # Our request url
         requrl = "http://prices.c0rporation.com/faction.xml"
@@ -108,6 +109,8 @@ class Price(object):
             f = urllib2.urlopen(request)
         except:
             return
+        # Will store IDs of items which we fetched
+        fetchedTypeIDs = set()
         # Parse the data we've got
         present = time.time()
         xml = minidom.parse(f)
@@ -120,7 +123,13 @@ class Price(object):
                 # we need to process it in one single run
                 for row in rows:
                     typeID = int(row.getAttribute("typeID"))
-                    avgprice = float(row.getAttribute("avg"))
+                    # Average price field may be empty, assign 0 in this case
+                    try:
+                        avgprice = float(row.getAttribute("avg"))
+                    except ValueError:
+                        avgprice = 0
+                    # Gather data on which typeIDs were fetched
+                    fetchedTypeIDs.add(typeID)
                     # Now let's get price object
                     priceobj = None
                     # If we have given typeID in the map we've got, pull price object out of it
@@ -129,10 +138,21 @@ class Price(object):
                     # If we don't, request it from database
                     else:
                         priceobj = eos.db.getPrice(typeID)
-                    # If everything failed, create price object ourselves and let session know about it
+                    # If everything failed
                     if priceobj is None:
+                        # Create price object ourselves
                         priceobj = Price(typeID)
+                        # And let database know that we'd like to keep it
                         eos.db.add(priceobj)
                     # Finally, fill object with data
                     priceobj.price = avgprice
                     priceobj.time = present if avgprice is not None else 0
+        # Find which requested items were left w/o any data
+        noData = set(priceMap.keys()).difference(fetchedTypeIDs)
+        # By setting price to zero make sure we do not re-request whole xml because
+        # of one item which wasn't there
+        for typeID in noData:
+            priceobj = priceMap[typeID]
+            priceobj.price = 0
+            priceobj.time = present
+        print noData
