@@ -107,7 +107,7 @@ class Price(object):
                 sell = type.getElementsByTagName("sell").item(0)
                 # Add item id to list of fetched items
                 fetchedTypeIDs.add(typeID)
-                # If price data was none, fetch it to zero to avoid re-requesting it
+                # If price data was none, set it to zero to avoid re-requesting it
                 try:
                     medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
                 except (TypeError, ValueError):
