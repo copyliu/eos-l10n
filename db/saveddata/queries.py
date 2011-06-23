@@ -83,6 +83,8 @@ if configVal is True:
         return deco
 
     def removeCachedEntry(type, ID):
+        if not type in queryCache:
+            return
         functionCache = queryCache[type]
         for _, localCache in functionCache.iteritems():
             toDelete = set()

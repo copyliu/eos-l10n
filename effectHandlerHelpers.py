@@ -17,6 +17,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+import eos.db
 import eos.types
 
 class HandledList(list):
@@ -200,6 +201,12 @@ class HandledImplantBoosterList(HandledList):
     def remove(self, implant):
         HandledList.remove(self, implant)
         del self.__slotCache[implant.slot]
+        # While we deleted this implant, in edge case seems like not all references
+        # to it are removed and object still lives in session; forcibly remove it,
+        # or otherwise when adding the same booster twice booster's table (typeID, fitID)
+        # constraint will report database integrity error
+        # TODO: make a proper fix, probably by adjusting fit-boosters sqlalchemy relationships
+        eos.db.remove(implant)
 
     def freeSlot(self, slot):
         if hasattr(slot, "slot"):
@@ -213,7 +220,6 @@ class HandledImplantBoosterList(HandledList):
             self.remove(implant)
         except ValueError:
             return False
-
         return True
 
 class HandledProjectedModList(HandledList):
