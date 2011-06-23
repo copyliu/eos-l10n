@@ -65,20 +65,24 @@ class Price(object):
 
         if len(priceMapEvec) > 0:
             cls.fetchEveCentral(priceMapEvec)
+        if len(priceMapC0rp) > 0:
+            cls.fetchC0rporation(priceMapC0rp)
 
     @classmethod
     def fetchEveCentral(cls, priceMap):
-        """Use Eve-Central price service provide"""
-        REQUEST_URL = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=%s"
-
-        request = urllib2.Request(REQUEST_URL % "&typeid=".join(map(lambda id: str(id), priceMap.iterkeys())),
-                                  None, {"User-Agent" : "eos"})
-
+        """Use Eve-Central price service provider"""
+        # Base URL, limit Region to The Forge
+        baseurl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid={0}"
+        # Generate request URL
+        requrl = baseurl.format("&typeid=".join(map(lambda id: str(id), priceMap.iterkeys())))
+        # Make the request object
+        request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
+        # Attempt to send request and shut up if everything goes wrong
         try:
             f = urllib2.urlopen(request)
         except:
             return
-
+        # Parse the data we've got
         t = time.time()
         xml = minidom.parse(f)
         marketStat = xml.getElementsByTagName("marketstat").item(0)
@@ -91,3 +95,44 @@ class Price(object):
                 p = priceMap[typeID]
                 p.price = price
                 p.time = t if price is not None else 0
+
+    @classmethod
+    def fetchC0rporation(cls, priceMap):
+        """Use c0rporation.com price service provider"""
+        # Our request url
+        requrl = "http://prices.c0rporation.com/faction.xml"
+        # Generate request
+        request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
+        # Attempt to send request and shut up if everything goes
+        try:
+            f = urllib2.urlopen(request)
+        except:
+            return
+        # Parse the data we've got
+        present = time.time()
+        xml = minidom.parse(f)
+        result = xml.getElementsByTagName("result").item(0)
+        if result is not None:
+            rowsets = xml.getElementsByTagName("rowset")
+            for rowset in rowsets:
+                rows = rowset.getElementsByTagName("row")
+                # Go through all given data rows; as we don't want to request all data,
+                # we need to process it in one single run
+                for row in rows:
+                    typeID = int(row.getAttribute("typeID"))
+                    avgprice = float(row.getAttribute("avg"))
+                    # Now let's get price object
+                    priceobj = None
+                    # If we have given typeID in the map we've got, pull price object out of it
+                    if typeID in priceMap:
+                        priceobj = priceMap[typeID]
+                    # If we don't, request it from database
+                    else:
+                        priceobj = eos.db.getPrice(typeID)
+                    # If everything failed, create price object ourselves and let session know about it
+                    if priceobj is None:
+                        priceobj = Price(typeID)
+                        eos.db.add(priceobj)
+                    # Finally, fill object with data
+                    priceobj.price = avgprice
+                    priceobj.time = present if avgprice is not None else 0
