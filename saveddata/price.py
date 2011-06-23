@@ -72,30 +72,54 @@ class Price(object):
     @classmethod
     def fetchEveCentral(cls, priceMap):
         """Use Eve-Central price service provider"""
-        # Base URL, limit Region to The Forge
-        baseurl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid={0}"
-        # Generate request URL
-        requrl = baseurl.format("&typeid=".join(map(lambda id: str(id), priceMap.iterkeys())))
+        # Set of items which are postponed
+        postponed = set(priceMap.iterkeys())
+        # Base URL; limits prices to The Forge region
+        requrl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
+        # Generate final URL, making sure it isn't longer than 255 characters
+        # Items which didn't make it into request will are postponed
+        for typeID in priceMap:
+            newurl = "{0}&typeid={1}".format(requrl, typeID)
+            if len(newurl) <= 255:
+                requrl = newurl
+                postponed.remove(typeID)
+            else:
+                break
         # Make the request object
         request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
         # Attempt to send request and shut up if everything goes wrong
         try:
-            f = urllib2.urlopen(request)
+            data = urllib2.urlopen(request)
         except:
             return
+        # This set will contain typeIDs for items which were in reply
+        fetchedTypeIDs = set()
         # Parse the data we've got
-        t = time.time()
-        xml = minidom.parse(f)
+        present = time.time()
+        xml = minidom.parse(data)
         marketStat = xml.getElementsByTagName("marketstat").item(0)
         if marketStat is not None:
             types = marketStat.getElementsByTagName("type")
+            # Cycle through all types we've got from request
             for type in types:
+                # Get data out of each typeID details tree
                 typeID = int(type.getAttribute("id"))
                 sell = type.getElementsByTagName("sell").item(0)
-                price = float(sell.getElementsByTagName("median").item(0).firstChild.data)
-                p = priceMap[typeID]
-                p.price = price
-                p.time = t if price is not None else 0
+                # Add item id to list of fetched items
+                fetchedTypeIDs.add(typeID)
+                # If price data was none, fetch it to zero to avoid re-requesting it
+                medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data) or 0
+                priceobj = priceMap[typeID]
+                priceobj.price = medprice
+                priceobj.time = present
+        # Find which items were requested but no data has been returned
+        requested = set(priceMap.iterkeys()).difference(postponed)
+        noData = requested.difference(fetchedTypeIDs)
+        # By setting price to zero make sure we do not re-request them during validity period
+        for typeID in noData:
+            priceobj = priceMap[typeID]
+            priceobj.price = 0
+            priceobj.time = present
 
     @classmethod
     def fetchC0rporation(cls, priceMap):
@@ -126,13 +150,11 @@ class Price(object):
         request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
         # Attempt to send request and shut up if everything goes
         try:
-            f = urllib2.urlopen(request)
+            data = urllib2.urlopen(request)
         except:
             return
-        # Will store IDs of items which we fetched
-        fetchedTypeIDs = set()
         # Parse the data we've got
-        xml = minidom.parse(f)
+        xml = minidom.parse(data)
         result = xml.getElementsByTagName("result").item(0)
         if result is not None:
             rowsets = xml.getElementsByTagName("rowset")
@@ -147,8 +169,6 @@ class Price(object):
                         avgprice = float(row.getAttribute("avg"))
                     except (TypeError, ValueError):
                         avgprice = 0
-                    # Gather data on which typeIDs were fetched
-                    fetchedTypeIDs.add(typeID)
                     # Now let's get price object
                     priceobj = None
                     # If we have given typeID in the map we've got, pull price object out of it
