@@ -108,7 +108,10 @@ class Price(object):
                 # Add item id to list of fetched items
                 fetchedTypeIDs.add(typeID)
                 # If price data was none, fetch it to zero to avoid re-requesting it
-                medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data) or 0
+                try:
+                    medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
+                except (TypeError, ValueError):
+                    medprice = 0
                 priceobj = priceMap[typeID]
                 priceobj.price = medprice
                 priceobj.time = present
