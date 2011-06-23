@@ -227,10 +227,7 @@ class HandledProjectedDroneList(HandledDroneList):
         proj.projected = True
         list.append(self, proj)
 
-class HandledProjectedFitList(list):
-    """
-    Use list here, handledList kills sqlalchemy for some unknown reason.
-    """
+class HandledProjectedFitList(HandledList):
     def append(self, proj):
         proj.projected = True
         list.append(self, proj)
