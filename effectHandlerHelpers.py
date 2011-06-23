@@ -191,27 +191,26 @@ class HandledImplantBoosterList(HandledList):
     def __init__(self):
         self.__slotCache = {}
 
-    def append(self, booster, replace = False):
-        if self.__slotCache.has_key(booster.slot):
-            raise ValueError("Booster/Implant slot already in use, remove the old one first or set replace = True")
+    def append(self, implant):
+        if self.__slotCache.has_key(implant.slot):
+            raise ValueError("Implant/Booster slot already in use, remove the old one first or set replace = True")
+        self.__slotCache[implant.slot] = implant
+        HandledList.append(self, implant)
 
-        self.__slotCache[booster.slot] = booster
-        list.append(self, booster)
-
-    def remove(self, booster):
-        list.remove(self, booster)
-        del self.__slotCache[booster.slot]
+    def remove(self, implant):
+        HandledList.remove(self, implant)
+        del self.__slotCache[implant.slot]
 
     def freeSlot(self, slot):
         if hasattr(slot, "slot"):
             slot = slot.slot
 
         try:
-            booster = self.__slotCache[slot]
+            implant = self.__slotCache[slot]
         except KeyError:
             return False
         try:
-            self.remove(booster)
+            self.remove(implant)
         except ValueError:
             return False
 
