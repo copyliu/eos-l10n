@@ -23,8 +23,7 @@ from xml.dom import minidom
 import time
 
 class Price(object):
-    REQUEST_URL = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=%s"
-    VALIDITY = 86400
+    VALIDITY = 24*60*60
 
     def __init__(self, typeID):
         self.time = 0
@@ -37,12 +36,16 @@ class Price(object):
 
     @property
     def isValid(self):
-        return time.time() - self.time < self.VALIDITY
+        present = time.time()
+        age = present - self.time
+        # Mark price as invalid if time expired or entry was created in future
+        validity = age < self.VALIDITY and present > self.time
+        return validity
 
     @classmethod
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
-
+        REQUEST_URL = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=%s"
         priceObjByTypeID = {}
         for price in prices:
             if not price.isValid:
@@ -51,7 +54,7 @@ class Price(object):
         if len(priceObjByTypeID) == 0:
             return
 
-        request = urllib2.Request(cls.REQUEST_URL % "&typeid=".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
+        request = urllib2.Request(REQUEST_URL % "&typeid=".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
                                   None, {"User-Agent" : "eos"})
 
         try:
