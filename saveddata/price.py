@@ -17,10 +17,14 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from sqlalchemy.orm import reconstructor
+
+import time
 import urllib2
 from xml.dom import minidom
-import time
+
+from sqlalchemy.orm import reconstructor
+
+import eos.db
 
 class Price(object):
     VALIDITY = 24*60*60
@@ -45,16 +49,29 @@ class Price(object):
     @classmethod
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
-        REQUEST_URL = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=%s"
-        priceObjByTypeID = {}
+        # Dictionaries to store our price objects
+        # Format: { typeID : price }
+        priceMapEvec = {}
+        priceMapC0rp = {}
+        # Check all provided price objects, and add invalid ones to dictionary
         for price in prices:
             if not price.isValid:
-                priceObjByTypeID[price.typeID] = price
+                # Those with market group go to eve-central, everything else to c0rporation
+                item = eos.db.getItem(price.typeID)
+                if item.marketGroupID:
+                    priceMapEvec[price.typeID] = price
+                else:
+                    priceMapC0rp[price.typeID] = price
 
-        if len(priceObjByTypeID) == 0:
-            return
+        if len(priceMapEvec) > 0:
+            cls.fetchEveCentral(priceMapEvec)
 
-        request = urllib2.Request(REQUEST_URL % "&typeid=".join(map(lambda id: str(id), priceObjByTypeID.iterkeys())),
+    @classmethod
+    def fetchEveCentral(cls, priceMap):
+        """Use Eve-Central price service provide"""
+        REQUEST_URL = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=%s"
+
+        request = urllib2.Request(REQUEST_URL % "&typeid=".join(map(lambda id: str(id), priceMap.iterkeys())),
                                   None, {"User-Agent" : "eos"})
 
         try:
@@ -71,6 +88,6 @@ class Price(object):
                 typeID = int(type.getAttribute("id"))
                 sell = type.getElementsByTagName("sell").item(0)
                 price = float(sell.getElementsByTagName("median").item(0).firstChild.data)
-                p = priceObjByTypeID[typeID]
+                p = priceMap[typeID]
                 p.price = price
                 p.time = t if price is not None else 0
