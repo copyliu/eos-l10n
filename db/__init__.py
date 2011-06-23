@@ -49,7 +49,7 @@ if saveddata_connectionstring is not None:
     saveddata_session = sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False)()
 
 # Lock controlling any changes introduced to session
-sdchange_lock = threading.Lock()
+sd_lock = threading.Lock()
 
 #Import all the definitions for all our database stuff
 from eos.db.gamedata import *
@@ -68,6 +68,5 @@ if config.saveddata_connectionstring == "sqlite:///:memory:":
     saveddata_meta.create_all()
 
 def rollback():
-    sdchange_lock.acquire()
-    saveddata_session.rollback()
-    sdchange_lock.release()
+    with sd_lock:
+        saveddata_session.rollback()

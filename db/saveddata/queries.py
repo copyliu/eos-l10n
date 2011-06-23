@@ -18,7 +18,7 @@
 #===============================================================================
 
 from eos.db.util import processEager, processWhere
-from eos.db import saveddata_session, sdchange_lock
+from eos.db import saveddata_session, sd_lock
 from eos.types import User, Character, Fit, Price, DamagePattern, Fleet, MiscData
 from sqlalchemy.sql import and_
 import eos.config
@@ -115,11 +115,14 @@ else:
 def getUser(lookfor, eager=None):
     if isinstance(lookfor, int):
         if eager is None:
-            user = saveddata_session.query(User).get(lookfor)
+            with sd_lock:
+                user = saveddata_session.query(User).get(lookfor)
         else:
-            user = saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).first()
+            with sd_lock:
+                user = saveddata_session.query(User).options(*processEager(eager)).filter(User.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        user = saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).first()
+        with sd_lock:
+            user = saveddata_session.query(User).options(*processEager(eager)).filter(User.username == lookfor).first()
     else:
         raise TypeError("Need integer or string as argument")
     return user
@@ -128,22 +131,27 @@ def getUser(lookfor, eager=None):
 def getCharacter(lookfor, eager=None):
     if isinstance(lookfor, int):
         if eager is None:
-            character = saveddata_session.query(Character).get(lookfor)
+            with sd_lock:
+                character = saveddata_session.query(Character).get(lookfor)
         else:
-            character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).first()
+            with sd_lock:
+                character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).first()
+        with sd_lock:
+            character = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.name == lookfor).first()
     else:
         raise TypeError("Need integer or string as argument")
     return character
 
 def getCharacterList(eager=None):
-    characters = saveddata_session.query(Character).options(*processEager(eager)).all()
+    with sd_lock:
+        characters = saveddata_session.query(Character).options(*processEager(eager)).all()
     return characters
 
 def getCharactersForUser(lookfor, eager=None):
     if isinstance(lookfor, int):
-        characters = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ownerID == lookfor).all()
+        with sd_lock:
+            characters = saveddata_session.query(Character).options(*processEager(eager)).filter(Character.ownerID == lookfor).all()
     else:
         raise TypeError("Need integer as argument")
     return characters
@@ -152,9 +160,11 @@ def getCharactersForUser(lookfor, eager=None):
 def getFit(lookfor, eager=None):
     if isinstance(lookfor, int):
         if eager is None:
-            fit = saveddata_session.query(Fit).get(lookfor)
+            with sd_lock:
+                fit = saveddata_session.query(Fit).get(lookfor)
         else:
-            fit = saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).first()
+            with sd_lock:
+                fit = saveddata_session.query(Fit).options(*processEager(eager)).filter(Fit.ID == fitID).first()
     else:
         raise TypeError("Need integer as argument")
     return fit
@@ -163,9 +173,11 @@ def getFit(lookfor, eager=None):
 def getFleet(lookfor, eager=None):
     if isinstance(lookfor, int):
         if eager is None:
-            fleet = saveddata_session.query(Fleet).get(lookfor)
+            with sd_lock:
+                fleet = saveddata_session.query(Fleet).get(lookfor)
         else:
-            fleet = saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).first()
+            with sd_lock:
+                fleet = saveddata_session.query(Fleet).options(*processEager(eager)).filter(Fleet.ID == fleetID).first()
     else:
         raise TypeError("Need integer as argument")
     return fleet
@@ -183,7 +195,8 @@ def getFitsWithShip(shipID, ownerID=None, where=None, eager=None):
             filter = and_(filter, Fit.ownerID == ownerID)
 
         filter = processWhere(filter, where)
-        fits = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+        with sd_lock:
+            fits = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
     else:
         raise TypeError("ShipID must be integer")
     return fits
@@ -201,47 +214,56 @@ def countFitsWithShip(shipID, ownerID=None, where=None, eager=None):
             filter = and_(filter, Fit.ownerID == ownerID)
 
         filter = processWhere(filter, where)
-        count = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).count()
+        with sd_lock:
+            count = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).count()
     else:
         raise TypeError("ShipID must be integer")
     return count
 
 def getFitList(eager=None):
-    fits = saveddata_session.query(Fit).options(*processEager(eager)).all()
+    with sd_lock:
+        fits = saveddata_session.query(Fit).options(*processEager(eager)).all()
     return fits
 
 def getFleetList(eager=None):
-    fleets = saveddata_session.query(Fleet).options(*processEager(eager)).all()
+    with sd_lock:
+        fleets = saveddata_session.query(Fleet).options(*processEager(eager)).all()
     return fleets
 
 @cachedQuery(Price, 1, "typeID")
 def getPrice(typeID):
     if isinstance(typeID, int):
-        price = saveddata_session.query(Price).get(typeID)
+        with sd_lock:
+            price = saveddata_session.query(Price).get(typeID)
     else:
         raise TypeError("Need integer as argument")
     return price
 
 def getMiscData(field):
     if isinstance(field, basestring):
-        data = saveddata_session.query(MiscData).get(field)
+        with sd_lock:
+            data = saveddata_session.query(MiscData).get(field)
     else:
         raise TypeError("Need string as argument")
     return data
 
 def getDamagePatternList(eager=None):
-    patterns = saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
+    with sd_lock:
+        patterns = saveddata_session.query(DamagePattern).options(*processEager(eager)).all()
     return patterns
 
 @cachedQuery(DamagePattern, 1, "lookfor")
 def getDamagePattern(lookfor, eager=None):
     if isinstance(lookfor, int):
         if eager is None:
-            pattern = saveddata_session.query(DamagePattern).get(lookfor)
+            with sd_lock:
+                pattern = saveddata_session.query(DamagePattern).get(lookfor)
         else:
-            pattern = saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(DamagePattern.ID == lookfor).first()
+            with sd_lock:
+                pattern = saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(DamagePattern.ID == lookfor).first()
     elif isinstance(lookfor, basestring):
-        pattern = saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(DamagePattern.name == lookfor).first()
+        with sd_lock:
+            pattern = saveddata_session.query(DamagePattern).options(*processEager(eager)).filter(DamagePattern.name == lookfor).first()
     else:
         raise TypeError("Need integer or string as argument")
     return pattern
@@ -256,13 +278,13 @@ def searchFits(nameLike, where=None, eager=None):
 
     #Add any extra components to the search to our where clause
     filter = processWhere(Fit.name.like(nameLike), where)
-    fits = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
+    with sd_lock:
+        fits = saveddata_session.query(Fit).options(*processEager(eager)).filter(filter).all()
     return fits
 
 def add(stuff):
-    sdchange_lock.acquire()
-    saveddata_session.add(stuff)
-    sdchange_lock.release()
+    with sd_lock:
+        saveddata_session.add(stuff)
 
 def save(stuff):
     add(stuff)
@@ -270,14 +292,12 @@ def save(stuff):
 
 def remove(stuff):
     removeCachedEntry(type(stuff), stuff.ID)
-    sdchange_lock.acquire()
-    saveddata_session.delete(stuff)
-    sdchange_lock.release()
+    with sd_lock:
+        saveddata_session.delete(stuff)
     commit()
 
 
 def commit():
-    sdchange_lock.acquire()
-    saveddata_session.commit()
-    saveddata_session.flush()
-    sdchange_lock.release()
+    with sd_lock:
+        saveddata_session.commit()
+        saveddata_session.flush()
