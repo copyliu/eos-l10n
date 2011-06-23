@@ -73,7 +73,7 @@ class Character(object):
             if all5 is None:
                 all5 = Character("All 5")
                 all5.defaultLevel = 5
-                eos.db.saveddata_session.add(all5)
+                eos.db.add(all5)
 
             cls.__all5 = all5
         return cls.__all5
@@ -85,7 +85,7 @@ class Character(object):
             all0 = eos.db.getCharacter("All 0")
             if all0 is None:
                 all0 = Character("All 0")
-                eos.db.saveddata_session.add(all0)
+                eos.db.add(all0)
 
             cls.__all0 = all0
         return cls.__all0

@@ -17,6 +17,8 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
+import threading
+
 from sqlalchemy import MetaData,  create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -46,6 +48,8 @@ if saveddata_connectionstring is not None:
     saveddata_meta.bind = saveddata_engine
     saveddata_session = sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False)()
 
+# Lock controlling any changes introduced to session
+sdchange_lock = threading.Lock()
 
 #Import all the definitions for all our database stuff
 from eos.db.gamedata import *

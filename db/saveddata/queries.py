@@ -18,7 +18,7 @@
 #===============================================================================
 
 from eos.db.util import processEager, processWhere
-from eos.db import saveddata_session
+from eos.db import saveddata_session, sdchange_lock
 from eos.types import User, Character, Fit, Price, DamagePattern, Fleet, MiscData
 from sqlalchemy.sql import and_
 import eos.config
@@ -260,7 +260,9 @@ def searchFits(nameLike, where=None, eager=None):
     return fits
 
 def add(stuff):
+    sdchange_lock.acquire()
     saveddata_session.add(stuff)
+    sdchange_lock.release()
 
 def save(stuff):
     add(stuff)
@@ -268,9 +270,14 @@ def save(stuff):
 
 def remove(stuff):
     removeCachedEntry(type(stuff), stuff.ID)
+    sdchange_lock.acquire()
     saveddata_session.delete(stuff)
+    sdchange_lock.release()
     commit()
 
+
 def commit():
+    sdchange_lock.acquire()
     saveddata_session.commit()
     saveddata_session.flush()
+    sdchange_lock.release()
