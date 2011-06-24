@@ -239,15 +239,16 @@ def getMetaData(field):
     return data
 
 @cachedQuery(2, "itemIDs", "attributeID")
-def directAttributeRequest(itemIDs, attrID):
-    if not isinstance(attrID, int):
-        raise TypeError("AttrID must be integer")
+def directAttributeRequest(itemIDs, attrIDs):
+    for itemID in itemIDs:
+        if not isinstance(itemID, int):
+            raise TypeError("All attrIDs must be integer")
     for itemID in itemIDs:
         if not isinstance(itemID, int):
             raise TypeError("All itemIDs must be integer")
 
-    q = select((eos.types.Item.ID, eos.types.Attribute.value),
-                                  and_(eos.types.Attribute.attributeID == attrID, eos.types.Item.ID.in_(itemIDs)),
+    q = select((eos.types.Item.typeID, eos.types.Attribute.attributeID, eos.types.Attribute.value),
+                                  and_(eos.types.Attribute.attributeID.in_(attrIDs), eos.types.Item.typeID.in_(itemIDs)),
                                   from_obj=[join(eos.types.Attribute, eos.types.Item)])
 
     return gamedata_session.execute(q).fetchall()
