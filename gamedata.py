@@ -209,10 +209,9 @@ class Item(EqBase):
                 skillID, skillLevel = None, None
                 skillID = self.getAttribute("requiredSkill{0}".format(i + 1))
                 skillLevel = self.getAttribute("requiredSkill{0}Level".format(i + 1))
-                # Assume that there's no gaps between skill requirements
+                # As sometimes there're gaps between skill requirements, continue collecting data
                 if skillID is None or skillLevel is None:
-                    # If it bugs, replace with continue to skip to next i
-                    break
+                    continue
 
                 item = db.getItem(int(skillID))
                 requiredSkills[item] = skillLevel
