@@ -72,52 +72,54 @@ class Price(object):
     @classmethod
     def fetchEveCentral(cls, priceMap):
         """Use Eve-Central price service provider"""
-        # Set of items which are postponed
-        postponed = set(priceMap.iterkeys())
+        # Set time of the request
+        present = time.time()
+        # Set of items which are still to be requested
+        typesToRequest = set(priceMap.iterkeys())
+        # This set will contain typeIDs for items which were in replies
+        fetchedTypeIDs = set()
         # Base URL; limits prices to The Forge region
         requrl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
-        # Generate final URL, making sure it isn't longer than 255 characters
-        # Items which didn't make it into request will are postponed
-        for typeID in priceMap:
-            newurl = "{0}&typeid={1}".format(requrl, typeID)
-            if len(newurl) <= 255:
-                requrl = newurl
-                postponed.remove(typeID)
-            else:
-                break
-        # Make the request object
-        request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
-        # Attempt to send request and shut up if everything goes wrong
-        try:
-            data = urllib2.urlopen(request)
-        except:
-            return
-        # This set will contain typeIDs for items which were in reply
-        fetchedTypeIDs = set()
-        # Parse the data we've got
-        present = time.time()
-        xml = minidom.parse(data)
-        marketStat = xml.getElementsByTagName("marketstat").item(0)
-        if marketStat is not None:
-            types = marketStat.getElementsByTagName("type")
-            # Cycle through all types we've got from request
-            for type in types:
-                # Get data out of each typeID details tree
-                typeID = int(type.getAttribute("id"))
-                sell = type.getElementsByTagName("sell").item(0)
-                # Add item id to list of fetched items
-                fetchedTypeIDs.add(typeID)
-                # If price data was none, set it to zero to avoid re-requesting it
-                try:
-                    medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
-                except (TypeError, ValueError):
-                    medprice = 0
-                priceobj = priceMap[typeID]
-                priceobj.price = medprice
-                priceobj.time = present
+        # As length of URL is limited, make a loop to make sure we request all data
+        while(len(typesToRequest) > 0):
+            # Generate final URL, making sure it isn't longer than 255 characters
+            # Items which didn't make it into request will are postponed
+            for typeID in priceMap:
+                newurl = "{0}&typeid={1}".format(requrl, typeID)
+                if len(newurl) <= 255:
+                    requrl = newurl
+                    typesToRequest.remove(typeID)
+                else:
+                    break
+            # Make the request object
+            request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
+            # Attempt to send request and go to next request if everything goes wrong
+            try:
+                data = urllib2.urlopen(request)
+            except:
+                continue
+            # Parse the data we've got
+            xml = minidom.parse(data)
+            marketStat = xml.getElementsByTagName("marketstat").item(0)
+            if marketStat is not None:
+                types = marketStat.getElementsByTagName("type")
+                # Cycle through all types we've got from request
+                for type in types:
+                    # Get data out of each typeID details tree
+                    typeID = int(type.getAttribute("id"))
+                    sell = type.getElementsByTagName("sell").item(0)
+                    # Add item id to list of fetched items
+                    fetchedTypeIDs.add(typeID)
+                    # If price data was none, set it to zero to avoid re-requesting it
+                    try:
+                        medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
+                    except (TypeError, ValueError):
+                        medprice = 0
+                    priceobj = priceMap[typeID]
+                    priceobj.price = medprice
+                    priceobj.time = present
         # Find which items were requested but no data has been returned
-        requested = set(priceMap.iterkeys()).difference(postponed)
-        noData = requested.difference(fetchedTypeIDs)
+        noData = set(priceMap.iterkeys()).difference(fetchedTypeIDs)
         # By setting price to zero make sure we do not re-request them during validity period
         for typeID in noData:
             priceobj = priceMap[typeID]
@@ -127,6 +129,8 @@ class Price(object):
     @classmethod
     def fetchC0rporation(cls, priceMap):
         """Use c0rporation.com price service provider"""
+        # Set time of the request
+        present = time.time()
         # Check when we updated prices last time
         fieldName = "priceC0rpTime"
         lastUpdatedField = eos.db.getMiscData(fieldName)
@@ -140,7 +144,6 @@ class Price(object):
             lastUpdated = float(lastUpdatedField.fieldValue)
         except (TypeError, ValueError):
             lastUpdated = 0
-        present = time.time()
         age = present - lastUpdated
         # Using timestamps we've got, check if fetch results are still valid
         # and make sure system clock wasn't changed to past
@@ -188,7 +191,6 @@ class Price(object):
                         eos.db.add(priceobj)
                     # Finally, fill object with data
                     priceobj.price = avgprice
-                    priceobj.time = present if avgprice is not None else 0
+                    priceobj.time = present
         # Save current time for the future use
-        present = str(time.time())
         lastUpdatedField.fieldValue = present
