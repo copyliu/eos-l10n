@@ -159,7 +159,7 @@ cursor.execute(QUERY_ALLEFFECTS)
 for row in cursor:
     effectid = row[0]
     effectnamedb = row[1]
-    effectnameeos = re.sub(STRIPSPEC, "", effectnamedb)
+    effectnameeos = re.sub(STRIPSPEC, "", effectnamedb).lower()
     # There may be different effects with the same name, so form
     # sets of IDs
     if not effectnameeos in globalmap_effectnameeos_effectid:

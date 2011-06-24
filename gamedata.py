@@ -49,7 +49,7 @@ class Effect(EqBase):
         Reconstructor, composes the object as we grab it from the database
         '''
         self.__generated = False
-        self.handlerName = re.sub(self.nameFilter, "", self.name)
+        self.handlerName = re.sub(self.nameFilter, "", self.name).lower()
 
     @property
     def handler(self):
