@@ -212,18 +212,20 @@ class Item(EqBase):
             # Map containing result of the request
             # { attributeID : attributeValue }
             skillAttrs = {}
-            # Get relevant attribute values from db (required skill IDs and levels)
-            for tuple in eos.db.directAttributeRequest((self.ID,), combinedAttrIDs):
-                attrID = tuple[1]
-                attrVal = tuple[2]
+            # Get relevant attribute values from db (required skill IDs and levels) for our item
+            for attrInfo in eos.db.directAttributeRequest((self.ID,), tuple(combinedAttrIDs)):
+                attrID = attrInfo[1]
+                attrVal = attrInfo[2]
                 skillAttrs[attrID] = attrVal
             # Go through all attributeID pairs
             for srqIDAtrr, srqLvlAttr in srqIDMap.iteritems():
                 # Check if we have both in returned result
                 if srqIDAtrr in skillAttrs and srqLvlAttr in skillAttrs:
+                    skillID = int(skillAttrs[srqIDAtrr])
+                    skillLvl = skillAttrs[srqLvlAttr]
                     # Fetch item from database and fill map
-                    item = eos.db.getItem(int(srqIDAtrr))
-                    requiredSkills[item] = skillAttrs[srqLvlAttr]
+                    item = eos.db.getItem(skillID)
+                    requiredSkills[item] = skillLvl
             # Update cached property of our item
             self.__requiredSkills = requiredSkills
         return self.__requiredSkills
