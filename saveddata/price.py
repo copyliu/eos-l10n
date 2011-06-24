@@ -83,7 +83,7 @@ class Price(object):
         # As length of URL is limited, make a loop to make sure we request all data
         while(len(typesToRequest) > 0):
             # Generate final URL, making sure it isn't longer than 255 characters
-            # Items which didn't make it into request will are postponed
+            # Items which didn't make it into request are postponed until the next cycle
             for typeID in priceMap:
                 newurl = "{0}&typeid={1}".format(requrl, typeID)
                 if len(newurl) <= 255:
@@ -93,7 +93,8 @@ class Price(object):
                     break
             # Make the request object
             request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
-            # Attempt to send request and go to next request if everything goes wrong
+            # Attempt to send request and go to next request cycle
+            # if everything goes wrong
             try:
                 data = urllib2.urlopen(request)
             except:
