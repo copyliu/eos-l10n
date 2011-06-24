@@ -226,8 +226,6 @@ class Item(EqBase):
                     # Fetch item from database and fill map
                     item = eos.db.getItem(skillID)
                     requiredSkills[item] = skillLvl
-            # Update cached property of our item
-            self.__requiredSkills = requiredSkills
         return self.__requiredSkills
 
     @property
