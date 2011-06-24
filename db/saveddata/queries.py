@@ -113,6 +113,13 @@ else:
     def removeCachedEntry(*args, **kwargs):
         return
 
+def sqlizeString(line):
+    # Escape backslashes first, as they will be as escape symbol in queries
+    # Then escape percent and underscore signs
+    # Finally, replace generic wildcards with sql-style wildcards
+    line = line.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_").replace("*", "%")
+    return line
+
 @cachedQuery(User, 1, "lookfor")
 def getUser(lookfor, eager=None):
     if isinstance(lookfor, int):
@@ -288,13 +295,11 @@ def getDamagePattern(lookfor, eager=None):
 def searchFits(nameLike, where=None, eager=None):
     if not isinstance(nameLike, basestring):
         raise TypeError("Need string as argument")
-    #Check if the string contains * signs we need to convert to %
-    if "*" in nameLike: nameLike = nameLike.replace("*", "%")
-    #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
-    elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
+    # Prepare our string for request
+    nameLike = "%{0}%".format(sqlizeString(nameLike))
 
     #Add any extra components to the search to our where clause
-    filter = processWhere(Fit.name.like(nameLike), where)
+    filter = processWhere(Fit.name.like(nameLike, escape="\\"), where)
     eager = processEager(eager)
     with sd_lock:
         fits = saveddata_session.query(Fit).options(*eager).filter(filter).all()

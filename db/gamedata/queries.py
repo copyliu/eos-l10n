@@ -58,6 +58,13 @@ else:
             return checkAndReturn
         return deco
 
+def sqlizeString(line):
+    # Escape backslashes first, as they will be as escape symbol in queries
+    # Then escape percent and underscore signs
+    # Finally, replace generic wildcards with sql-style wildcards
+    line = line.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_").replace("*", "%")
+    return line
+
 itemNameMap = {}
 @cachedQuery(1, "lookfor")
 def getItem(lookfor, eager=None):
@@ -177,10 +184,8 @@ def getItemsByCategory(filter, where=None, eager=None):
 def searchItems(nameLike, where=None, join=None, eager=None):
     if not isinstance(nameLike, basestring):
         raise TypeError("Need string as argument")
-    #Check if the string contains * signs we need to convert to %
-    if "*" in nameLike: nameLike = nameLike.replace("*", "%")
-    #Check for % or _ signs, if there aren't any we'll add a % at start and another one at end
-    elif not "%" in nameLike and not "_" in nameLike: nameLike = "%%%s%%" % nameLike
+    # Prepare our string for request
+    nameLike = "%{0}%".format(sqlizeString(nameLike))
 
     if join is None:
         join = tuple()
@@ -188,7 +193,7 @@ def searchItems(nameLike, where=None, join=None, eager=None):
     if not hasattr(join, "__iter__"):
         join = (join,)
 
-    filter = processWhere(func.lower(Item.name).like(nameLike.lower()), where)
+    filter = processWhere(Item.name.like(nameLike, escape="\\"), where)
     items = gamedata_session.query(Item).options(*processEager(eager)).join(*join).filter(filter).all()
     return items
 
