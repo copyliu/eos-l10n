@@ -189,7 +189,8 @@ def searchItems(nameLike, where=None, join=None, eager=None):
         join = (join,)
 
     filter = processWhere(func.lower(Item.name).like(nameLike.lower()), where)
-    return gamedata_session.query(Item).options(*processEager(eager)).join(*join).filter(filter).all()
+    items = gamedata_session.query(Item).options(*processEager(eager)).join(*join).filter(filter).all()
+    return items
 
 @cachedQuery(3, "where", "item", "metaGroups")
 def getVariations(item, where=None, metaGroups=None, eager=None):
@@ -217,7 +218,8 @@ def getVariations(item, where=None, metaGroups=None, eager=None):
 
 
     filter = processWhere(clause, where)
-    return gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
+    vars = gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
+    return vars
 
 @cachedQuery(1, "attr")
 def getAttributeInfo(attr, eager=None):
@@ -228,7 +230,8 @@ def getAttributeInfo(attr, eager=None):
     else:
         raise TypeError("Need integer or string as argument")
 
-    return gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
+    result = gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
+    return result
 
 @cachedQuery(1, "field")
 def getMetaData(field):
@@ -251,4 +254,5 @@ def directAttributeRequest(itemIDs, attrIDs):
                                   and_(eos.types.Attribute.attributeID.in_(attrIDs), eos.types.Item.typeID.in_(itemIDs)),
                                   from_obj=[join(eos.types.Attribute, eos.types.Item)])
 
-    return gamedata_session.execute(q).fetchall()
+    result = gamedata_session.execute(q).fetchall()
+    return result

@@ -21,6 +21,7 @@ import re
 
 from sqlalchemy.orm import reconstructor
 
+import eos.db
 from eqBase import EqBase
 
 try:
@@ -148,9 +149,9 @@ def effectDummy(*args, **kwargs):
     pass
 
 class Item(EqBase):
-    MOVE_ATTRS = (4,  #mass
-                  38, #capacity
-                  161)#volume
+    MOVE_ATTRS = (4,   # Mass
+                  38,  # Capacity
+                  161) # Volume
 
     MOVE_ATTR_INFO = None
 
@@ -202,20 +203,29 @@ class Item(EqBase):
     @property
     def requiredSkills(self):
         if self.__requiredSkills is None:
-            from eos import db
             requiredSkills = OrderedDict()
             self.__requiredSkills = requiredSkills
-            for i in xrange(5):
-                skillID, skillLevel = None, None
-                skillID = self.getAttribute("requiredSkill{0}".format(i + 1))
-                skillLevel = self.getAttribute("requiredSkill{0}Level".format(i + 1))
-                # As sometimes there're gaps between skill requirements, continue collecting data
-                if skillID is None or skillLevel is None:
-                    continue
-
-                item = db.getItem(int(skillID))
-                requiredSkills[item] = skillLevel
-
+            # Map containing attribute IDs we may need for required skills
+            # { requiredSkillX : requiredSkillXLevel }
+            srqIDMap = {182: 277, 183: 278, 184: 279, 1285: 1286, 1289: 1287, 1290: 1288}
+            combinedAttrIDs = set(srqIDMap.iterkeys()).union(set(srqIDMap.itervalues()))
+            # Map containing result of the request
+            # { attributeID : attributeValue }
+            skillAttrs = {}
+            # Get relevant attribute values from db (required skill IDs and levels)
+            for tuple in eos.db.directAttributeRequest((self.ID,), combinedAttrIDs):
+                attrID = tuple[1]
+                attrVal = tuple[2]
+                skillAttrs[attrID] = attrVal
+            # Go through all attributeID pairs
+            for srqIDAtrr, srqLvlAttr in srqIDMap.iteritems():
+                # Check if we have both in returned result
+                if srqIDAtrr in skillAttrs and srqLvlAttr in skillAttrs:
+                    # Fetch item from database and fill map
+                    item = eos.db.getItem(int(srqIDAtrr))
+                    requiredSkills[item] = skillAttrs[srqLvlAttr]
+            # Update cached property of our item
+            self.__requiredSkills = requiredSkills
         return self.__requiredSkills
 
     @property
