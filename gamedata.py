@@ -180,6 +180,8 @@ class Item(EqBase):
         self.__race = None
         self.__requiredSkills = None
         self.__moved = False
+        self.__offensive = None
+        self.__assistive = None
 
     @property
     def attributes(self):
@@ -270,6 +272,36 @@ class Item(EqBase):
             # Store our final value
             self.__race = race
         return self.__race
+
+    @property
+    def assistive(self):
+        """Detects if item can be used as assistance"""
+        # Make sure we cache results
+        if self.__assistive is None:
+            assistive = False
+            # Go through all effects and find first assistive
+            for effect in self.effects.itervalues():
+                if effect.info.isAssistance is True:
+                    # If we find one, stop and mark item as assistive
+                    assistive = True
+                    break
+            self.__assistive = assistive
+        return self.__assistive
+
+    @property
+    def offensive(self):
+        """Detects if item can be used as something offensive"""
+        # Make sure we cache results
+        if self.__offensive is None:
+            offensive = False
+            # Go through all effects and find first offensive
+            for effect in self.effects.itervalues():
+                if effect.info.isOffensive is True:
+                    # If we find one, stop and mark item as offensive
+                    offensive = True
+                    break
+            self.__offensive = offensive
+        return self.__offensive
 
     def requiresSkill(self, skill, level=None):
         for s, l in self.requiredSkills.iteritems():
