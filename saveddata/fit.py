@@ -17,8 +17,8 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDroneList, \
-HandledImplantBoosterList, HandledProjectedDroneList
+from eos.effectHandlerHelpers import HandledList, HandledModuleList, HandledDroneList, HandledImplantBoosterList, \
+HandledProjectedFitList, HandledProjectedModList, HandledProjectedDroneList
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from sqlalchemy.orm import validates, reconstructor
 from itertools import chain
@@ -53,8 +53,8 @@ class Fit(object):
         self.__drones = HandledDroneList()
         self.__implants = HandledImplantBoosterList()
         self.__boosters = HandledImplantBoosterList()
-        self.__projectedModules = HandledList()
-        self.__projectedFits = HandledList()
+        self.__projectedFits = HandledProjectedFitList()
+        self.__projectedModules = HandledProjectedModList()
         self.__projectedDrones = HandledProjectedDroneList()
         self.__character = None
         self.__owner = None
