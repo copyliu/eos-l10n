@@ -38,7 +38,7 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("iconID", Integer, ForeignKey("icons.iconID")),
                     Column("groupID", Integer, ForeignKey("invgroups.groupID"), index=True))
 
-from .metagroup import metatypes_table
+from .metaGroup import metatypes_table
 
 mapper(Item, items_table,
        properties = {"group" : relation(Group, backref = "items"),
