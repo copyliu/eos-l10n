@@ -2,7 +2,7 @@
 # Modules from group: Remote Sensor Booster (8 of 8)
 type= "projected", "active"
 def handler(fit, module, context):
-    if "projected" not in context or fit.ship.getModifiedItemAttr("disallowAssistance") == 1:
+    if "projected" not in context:
         return
 
     fit.ship.boostItemAttr("maxTargetRange", module.getModifiedItemAttr("maxTargetRangeBonus"),
