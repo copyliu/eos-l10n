@@ -161,6 +161,15 @@ class Drone(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         self.itemModifiedAttributes.clear()
         self.chargeModifiedAttributes.clear()
 
+    def canBeApplied(self, projectedOnto):
+        """Check if drone can engage specific fitting"""
+        item = self.item
+        if (item.offensive and projectedOnto.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1) or \
+        (item.assistive and projectedOnto.ship.getModifiedItemAttr("disallowAssistance") == 1):
+            return False
+        else:
+            return True
+
     def calculateModifiedAttributes(self, fit, runTime, forceProjected = False):
         if self.projected or forceProjected:
             context = "projected", "drone"
