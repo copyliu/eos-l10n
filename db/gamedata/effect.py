@@ -29,7 +29,6 @@ typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
 
 effects_table = Table("dgmeffects", gamedata_meta,
                       Column("effectID", Integer, primary_key = True),
-                      Column("effectCategory", Integer),
                       Column("effectName", String),
                       Column("description", String),
                       Column("published", Boolean),
