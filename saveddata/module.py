@@ -388,30 +388,39 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         else:
             return True
 
-    def canHaveState(self, state=None):
+    def canHaveState(self, state=None, projectedOnto=None):
         """
         Check with other modules if there are restrictions that might not allow this module to be activated
         """
+        # If we're going to set module to offline or online for local modules or offline for projected,
+        # it should be fine for all cases
         item = self.item
-        if state < State.ACTIVE:
+        if (state <= State.ONLINE and projectedOnto is None) or (state <= State.OFFLINE):
             return True
 
-        ##Check if the module is over it's max limit
+        # Check if the local module is over it's max limit; if it's not, we're fine
         maxGroupActive = self.getModifiedItemAttr("maxGroupActive")
-        if maxGroupActive is None:
+        if maxGroupActive is None and projectedOnto is None:
             return True
 
-        currActive = 0
-        group = item.group.name
-        for mod in self.owner.modules:
-            currItem = getattr(mod, "item", None)
-            if mod.state >= State.ACTIVE and currItem is not None and currItem.group.name == group:
-                currActive += 1
-
-            if currActive > maxGroupActive:
-                break
-
-        return currActive <= maxGroupActive
+        # Following is applicable only to local modules, we do not want to limit projected
+        if projectedOnto is None:
+            currActive = 0
+            group = item.group.name
+            for mod in self.owner.modules:
+                currItem = getattr(mod, "item", None)
+                if mod.state >= State.ACTIVE and currItem is not None and currItem.group.name == group:
+                    currActive += 1
+                if currActive > maxGroupActive:
+                    break
+            return currActive <= maxGroupActive
+        # For projected, we're checking if ship is vulnerable to given item
+        else:
+            if (item.offensive and projectedOnto.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1) or \
+            (item.assistive and projectedOnto.ship.getModifiedItemAttr("disallowAssistance") == 1):
+                return False
+            else:
+                return True
 
     def isValidCharge(self, charge):
         #Check sizes, if 'charge size > module volume' it won't fit

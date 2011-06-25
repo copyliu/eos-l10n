@@ -2,7 +2,7 @@
 # Modules from group: Tracking Disruptor (10 of 10)
 type= "projected", "active"
 def handler(fit, module, context):
-    if "projected" in context or fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1:
+    if "projected" in context:
         fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
                                       "trackingSpeed", module.getModifiedItemAttr("trackingSpeedBonus"),
                                       stackingPenalties = True)

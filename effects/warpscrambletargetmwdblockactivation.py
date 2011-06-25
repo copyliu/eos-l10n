@@ -3,7 +3,7 @@
 runTime = "early"
 type = "projected", "active"
 def handler(fit, module, context):
-    if "projected" not in context or fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1:
+    if "projected" not in context:
         return
 
     fit.ship.increaseItemAttr("warpScrambleStatus", module.getModifiedItemAttr("warpScrambleStrength"))

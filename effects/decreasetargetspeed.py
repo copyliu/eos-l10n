@@ -3,7 +3,7 @@
 # Drone: Berserker SW-900
 type = "active", "projected"
 def handler(fit, module, context):
-    if "projected" not in context: return
-    if fit.ship.getModifiedItemAttr("disallowOffensiveModifiers") == 1: return
+    if "projected" not in context:
+        return
     fit.ship.boostItemAttr("maxVelocity", module.getModifiedItemAttr("speedFactor"),
                            stackingPenalties = True)
