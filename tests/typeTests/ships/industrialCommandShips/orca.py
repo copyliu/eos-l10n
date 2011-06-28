@@ -57,9 +57,8 @@ class Test(TestBase):
 
     # Role Bonus:
     # 250% bonus to tractor beam range
-    # Also affects salvagers
 
-    def test_static_maxRange_moduleTractorBeamSkillrqGraviton(self):
+    def test_static_maxRange_moduleTractorBeam(self):
         self.buildTested = 0
         attr = "maxRange"
         item = "Small Tractor Beam I"
@@ -72,23 +71,10 @@ class Test(TestBase):
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_static_maxRange_moduleTractorBeamSkillrqSalvaging(self):
-        self.buildTested = 0
-        attr = "maxRange"
-        item = "Salvager I"
-        ship_other = "Abaddon"
-        iIngame = 1.0
-        fIngame = 3.5
-        iEos = self.getItemAttr(attr, item, ship=ship_other)
-        fEos = self.getItemAttr(attr, item, ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
     def test_static_maxRange_moduleOther(self):
         self.buildTested = 0
         attr = "maxRange"
-        item = "Analyzer I"
+        item = "Salvager I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 1.0
