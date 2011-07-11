@@ -173,9 +173,9 @@ class Price(object):
                     typeID = int(row.getAttribute("typeID"))
                     # Average price field may be absent or empty, assign 0 in this case
                     try:
-                        avgprice = float(row.getAttribute("avg"))
+                        medprice = float(row.getAttribute("median"))
                     except (TypeError, ValueError):
-                        avgprice = 0
+                        medprice = 0
                     # Now let's get price object
                     priceobj = None
                     # If we have given typeID in the map we've got, pull price object out of it
@@ -191,7 +191,7 @@ class Price(object):
                         # And let database know that we'd like to keep it
                         eos.db.add(priceobj)
                     # Finally, fill object with data
-                    priceobj.price = avgprice
+                    priceobj.price = medprice
                     priceobj.time = present
         # Save current time for the future use
         lastUpdatedField.fieldValue = present
