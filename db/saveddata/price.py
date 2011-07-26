@@ -24,7 +24,8 @@ from eos.types import Price
 
 prices_table = Table("prices", saveddata_meta,
                      Column("typeID", Integer, primary_key=True),
-                     Column("price", Float, nullable = True),
-                     Column("time", Integer, nullable = False))
+                     Column("price", Float),
+                     Column("time", Integer, nullable = False),
+                     Column("failed", Integer))
 
 mapper(Price, prices_table)

@@ -28,11 +28,15 @@ from sqlalchemy.orm import reconstructor
 import eos.db
 
 class Price(object):
+    # Price validity period, 24 hours
     VALIDITY = 24*60*60
+    # Re-request delay for failed fetches, 4 hours
+    REREQUEST = 4*60*60
 
     def __init__(self, typeID):
-        self.time = 0
         self.typeID = typeID
+        self.time = 0
+        self.failed = None
         self.__item = None
 
     @reconstructor
@@ -42,9 +46,24 @@ class Price(object):
     @property
     def isValid(self):
         present = time.time()
-        age = present - self.time
-        # Mark price as invalid if time expired or entry was created in future
-        validity = age < self.VALIDITY and present > self.time
+        updateAge = present - self.time
+        # Mark price as invalid if it is expired
+        validity = updateAge <= self.VALIDITY
+        # Price is considered as valid, if it's expired but we had failed
+        # fetch attempt recently
+        if validity is False and self.failed is not None:
+            failedAge = present - self.failed
+            validity = failedAge <= self.REREQUEST
+            # If it's already invalid, it can't get any better
+            if validity is False:
+                return validity
+            # If failed timestamp refers to future relatively to current
+            # system clock, mark price as invalid
+            if self.failed > present:
+                return False
+        # Do the same for last updated timestamp
+        if self.time > present:
+            return False
         return validity
 
     @classmethod
@@ -63,16 +82,20 @@ class Price(object):
                     priceMapEvec[price.typeID] = price
                 else:
                     priceMapC0rp[price.typeID] = price
-
         if len(priceMapEvec) > 0:
-            noData = cls.fetchEveCentral(priceMapEvec)
+            noData, abortedItems = cls.fetchEveCentral(priceMapEvec)
             # If data hasn't been returned for any requested item, let's try to request it
             # from the next service
             if len(noData) > 0:
                 for typeID in noData:
                     priceMapC0rp[typeID] = priceMapEvec[typeID]
+            # Mark failed fetches
+            if len(abortedItems) > 0:
+                present = time.time()
+                for itemID in abortedItems:
+                    priceMapEvec[itemID].failed = present
         if len(priceMapC0rp) > 0:
-            noData = cls.fetchC0rporation(priceMapC0rp)
+            noData, abortedItems = cls.fetchC0rporation(priceMapC0rp)
             # If we didn't get data for some of the items from all our price service
             # providers, assign it zero price to avoid re-fetches during validity period
             if len(noData) > 0:
@@ -81,6 +104,11 @@ class Price(object):
                     priceobj = priceMapC0rp[typeID]
                     priceobj.price = 0
                     priceobj.time = present
+            # Mark failed fetches
+            if len(abortedItems) > 0:
+                present = time.time()
+                for itemID in abortedItems:
+                    priceMapC0rp[itemID].failed = present
 
     @classmethod
     def fetchEveCentral(cls, priceMap):
@@ -93,17 +121,23 @@ class Price(object):
         fetchedTypeIDs = set()
         # This set will contain typeIDs which were requested but no data has been fetched for them
         noData = set()
+        # This set will contain items for which data fetch was aborted due to technical reasons
+        abortedData = set()
         # Base URL; limits prices to The Forge region
         requrl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
         # As length of URL is limited, make a loop to make sure we request all data
         while(len(typesToRequest) > 0):
+            # Set of items we're requesting during this cycle
+            requestThisCycle = set()
             # Generate final URL, making sure it isn't longer than 255 characters
-            # Items which didn't make it into request are postponed until the next cycle
             for typeID in priceMap:
                 newurl = "{0}&typeid={1}".format(requrl, typeID)
                 if len(newurl) <= 255:
                     requrl = newurl
+                    # Items which didn't make it into request are postponed until the next cycle
                     typesToRequest.remove(typeID)
+                    # Fill the set for the utility needs
+                    requestThisCycle.add(typeID)
                 else:
                     break
             # Make the request object
@@ -113,6 +147,8 @@ class Price(object):
             try:
                 data = urllib2.urlopen(request)
             except:
+                # Also fill items which we've failed to fetch
+                abortedData.update(requestThisCycle)
                 continue
             # Parse the data we've got
             xml = minidom.parse(data)
@@ -134,24 +170,28 @@ class Price(object):
                     priceobj = priceMap[typeID]
                     priceobj.price = medprice
                     priceobj.time = present
+                    priceobj.failed = None
         # Get actual list of items for which we didn't get data
-        noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
+        noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs).difference(abortedData))
         # And return it for future use
-        return noData
+        return (noData, abortedData)
 
     @classmethod
     def fetchC0rporation(cls, priceMap):
         """Use c0rporation.com price service provider"""
+        # it must be here, otherwise eos doesn't load miscData in time
+        from eos.types import MiscData
         # Set time of the request
         present = time.time()
         # Set-container for requested items w/o any data returned
         noData = set()
+        # Container for items which had errors during fetching
+        abortedData = set()
         # Check when we updated prices last time
         fieldName = "priceC0rpTime"
         lastUpdatedField = eos.db.getMiscData(fieldName)
         # If this field isn't available, create and add it to session
         if lastUpdatedField is None:
-            from eos.types import MiscData
             lastUpdatedField = MiscData(fieldName)
             eos.db.add(lastUpdatedField)
         # Convert field value to float, assigning it zero on any errors
@@ -159,16 +199,42 @@ class Price(object):
             lastUpdated = float(lastUpdatedField.fieldValue)
         except (TypeError, ValueError):
             lastUpdated = 0
-        age = present - lastUpdated
+        # Check when price fetching failed last time
+        fieldName = "priceC0rpFailed"
+        # If it doesn't exist, add this one to the session too
+        lastFailedField = eos.db.getMiscData(fieldName)
+        if lastFailedField is None:
+            lastFailedField = MiscData(fieldName)
+            eos.db.add(lastFailedField)
+        # Convert field value to float, assigning it none on any errors
+        try:
+            lastFailed = float(lastFailedField.fieldValue)
+        except (TypeError, ValueError):
+            lastFailed = None
+        # Get age of price and age of last failed fetch attempt
+        updateAge = present - lastUpdated
         # Using timestamps we've got, check if fetch results are still valid
-        # and make sure system clock wasn't changed to past
-        if age < cls.VALIDITY and present > lastUpdated:
-            # Return all requested typeIDs as items with no price data
-            # As we pre-check for validity before passing prices to price service,
-            # valid prices should never get into here and it's safe to assume that
-            # prices which are not on the xml were requested
+        c0rpValidity = updateAge <= cls.VALIDITY
+        # If they are not, check if fetching failed recently
+        if c0rpValidity is False and lastFailed is not None:
+            failedAge = present - lastFailed
+            c0rpValidity = failedAge <= cls.REREQUEST
+            # Check if system clock was adjusted into past after setting
+            # failed timestamp
+            if lastFailed > present:
+                c0rpValidity = False
+        # Do the same for last updated timestamp
+        if lastUpdated > present:
+            c0rpValidity = False
+        # If prices should be valid according to miscData timestamps, but
+        # method was requested to provide prices for some items, we can safely
+        # assume that these items are not on the XML (to be more accurate,
+        # on its previously fetched version), because all items which are valid
+        # (and they are valid only when xml is valid) should be filtered before
+        # passing them to this method
+        if c0rpValidity is True:
             noData.update(set(priceMap.iterkeys()))
-            return noData
+            return (noData, abortedData)
         # Our request url
         requrl = "http://prices.c0rporation.com/faction.xml"
         # Generate request
@@ -178,8 +244,8 @@ class Price(object):
         try:
             data = urllib2.urlopen(request)
         except:
-            noData.update(set(priceMap.iterkeys()))
-            return noData
+            abortedData.update(set(priceMap.iterkeys()))
+            return (noData, abortedData)
         # Set with types for which we've got data
         fetchedTypeIDs = set()
         # Parse the data we've got
@@ -195,7 +261,7 @@ class Price(object):
                     typeID = int(row.getAttribute("typeID"))
                     # Add current typeID to the set of fetched types
                     fetchedTypeIDs.add(typeID)
-                    # Average price field may be absent or empty, assign 0 in this case
+                    # Median price field may be absent or empty, assign 0 in this case
                     try:
                         medprice = float(row.getAttribute("median"))
                     except (TypeError, ValueError):
@@ -217,8 +283,9 @@ class Price(object):
                     # Finally, fill object with data
                     priceobj.price = medprice
                     priceobj.time = present
+                    priceobj.failed = None
         # Save current time for the future use
         lastUpdatedField.fieldValue = present
         # Find which items were requested but no data has been returned
         noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
-        return noData
+        return (noData, abortedData)
