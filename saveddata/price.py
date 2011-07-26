@@ -28,7 +28,7 @@ from sqlalchemy.orm import reconstructor
 import eos.db
 
 class Price(object):
-    VALIDITY = 24*60*60
+    VALIDITY = 60
 
     def __init__(self, typeID):
         self.time = 0
@@ -65,9 +65,22 @@ class Price(object):
                     priceMapC0rp[price.typeID] = price
 
         if len(priceMapEvec) > 0:
-            cls.fetchEveCentral(priceMapEvec)
+            noData = cls.fetchEveCentral(priceMapEvec)
+            # If data hasn't been returned for any requested item, let's try to request it
+            # from the next service
+            if len(noData) > 0:
+                for typeID in noData:
+                    priceMapC0rp[typeID] = priceMapEvec[typeID]
         if len(priceMapC0rp) > 0:
-            cls.fetchC0rporation(priceMapC0rp)
+            noData = cls.fetchC0rporation(priceMapC0rp)
+            # If we didn't get data for some of the items from all our price service
+            # providers, assign it zero price to avoid re-fetches during validity period
+            if len(noData) > 0:
+                present = time.time()
+                for typeID in noData:
+                    priceobj = priceMapC0rp[typeID]
+                    priceobj.price = 0
+                    priceobj.time = present
 
     @classmethod
     def fetchEveCentral(cls, priceMap):
@@ -78,6 +91,8 @@ class Price(object):
         typesToRequest = set(priceMap.iterkeys())
         # This set will contain typeIDs for items which were in replies
         fetchedTypeIDs = set()
+        # This set will contain typeIDs which were requested but no data has been fetched for them
+        noData = set()
         # Base URL; limits prices to The Forge region
         requrl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
         # As length of URL is limited, make a loop to make sure we request all data
@@ -94,7 +109,7 @@ class Price(object):
             # Make the request object
             request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
             # Attempt to send request and go to next request cycle
-            # if everything goes wrong
+            # if anything goes wrong
             try:
                 data = urllib2.urlopen(request)
             except:
@@ -119,19 +134,18 @@ class Price(object):
                     priceobj = priceMap[typeID]
                     priceobj.price = medprice
                     priceobj.time = present
-        # Find which items were requested but no data has been returned
-        noData = set(priceMap.iterkeys()).difference(fetchedTypeIDs)
-        # By setting price to zero make sure we do not re-request them during validity period
-        for typeID in noData:
-            priceobj = priceMap[typeID]
-            priceobj.price = 0
-            priceobj.time = present
+        # Get actual list of items for which we didn't get data
+        noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
+        # And return it for future use
+        return noData
 
     @classmethod
     def fetchC0rporation(cls, priceMap):
         """Use c0rporation.com price service provider"""
         # Set time of the request
         present = time.time()
+        # Set-container for requested items w/o any data returned
+        noData = set()
         # Check when we updated prices last time
         fieldName = "priceC0rpTime"
         lastUpdatedField = eos.db.getMiscData(fieldName)
@@ -149,17 +163,25 @@ class Price(object):
         # Using timestamps we've got, check if fetch results are still valid
         # and make sure system clock wasn't changed to past
         if age < cls.VALIDITY and present > lastUpdated:
-            # Do nothing if results are valid
-            return
+            # Return all requested typeIDs as items with no price data
+            # As we pre-check for validity before passing prices to price service,
+            # valid prices should never get into here and it's safe to assume that
+            # prices which are not on the xml were requested
+            noData.update(set(priceMap.iterkeys()))
+            return noData
         # Our request url
         requrl = "http://prices.c0rporation.com/faction.xml"
         # Generate request
         request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
-        # Attempt to send request and shut up if everything goes
+        # Attempt to send request and return list of items we've failed to get
+        # data for if anything goes wrong
         try:
             data = urllib2.urlopen(request)
         except:
-            return
+            noData.update(set(priceMap.iterkeys()))
+            return noData
+        # Set with types for which we've got data
+        fetchedTypeIDs = set()
         # Parse the data we've got
         xml = minidom.parse(data)
         result = xml.getElementsByTagName("result").item(0)
@@ -167,10 +189,12 @@ class Price(object):
             rowsets = xml.getElementsByTagName("rowset")
             for rowset in rowsets:
                 rows = rowset.getElementsByTagName("row")
-                # Go through all given data rows; as we don't want to request all data,
-                # we need to process it in one single run
+                # Go through all given data rows; as we don't want to request and process whole xml
+                # for each price request, we need to process it in one single run
                 for row in rows:
                     typeID = int(row.getAttribute("typeID"))
+                    # Add current typeID to the set of fetched types
+                    fetchedTypeIDs.add(typeID)
                     # Average price field may be absent or empty, assign 0 in this case
                     try:
                         medprice = float(row.getAttribute("median"))
@@ -195,3 +219,6 @@ class Price(object):
                     priceobj.time = present
         # Save current time for the future use
         lastUpdatedField.fieldValue = present
+        # Find which items were requested but no data has been returned
+        noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
+        return noData
