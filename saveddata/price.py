@@ -28,7 +28,7 @@ from sqlalchemy.orm import reconstructor
 import eos.db
 
 class Price(object):
-    VALIDITY = 60
+    VALIDITY = 24*60*60
 
     def __init__(self, typeID):
         self.time = 0
