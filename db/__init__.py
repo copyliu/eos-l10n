@@ -19,11 +19,13 @@
 
 import threading
 
-from sqlalchemy import MetaData,  create_engine
+from sqlalchemy import MetaData, create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import pool
+
 from eos import config
+import migration
 
 class ReadOnlyException(Exception):
     pass
@@ -44,8 +46,10 @@ if saveddata_connectionstring is not None:
         saveddata_engine = create_engine(creator=saveddata_connectionstring, echo=config.debug)
     else:
         saveddata_engine = create_engine(saveddata_connectionstring, echo=config.debug)
+
     saveddata_meta = MetaData()
     saveddata_meta.bind = saveddata_engine
+    migration.update(saveddata_engine)
     saveddata_session = sessionmaker(bind=saveddata_engine, autoflush=False, expire_on_commit=False)()
 
 # Lock controlling any changes introduced to session
