@@ -200,6 +200,20 @@ class Price(object):
             lastUpdated = float(lastUpdatedField.fieldValue)
         except (TypeError, ValueError):
             lastUpdated = 0
+        # Get age of price
+        updateAge = present - lastUpdated
+        # Using timestamp we've got, check if fetch results are still valid and make
+        # sure system clock hasn't been changed to past
+        c0rpValidityUpd = updateAge <= cls.VALIDITY and lastUpdated <= present
+        # If prices should be valid according to miscdata last update timestamp,
+        # but method was requested to provide prices for some items, we can
+        # safely assume that these items are not on the XML (to be more accurate,
+        # on its previously fetched version), because all items which are valid
+        # (and they are valid only when xml is valid) should be filtered out before
+        # passing them to this method
+        if c0rpValidityUpd is True:
+            noData.update(set(priceMap.iterkeys()))
+            return (noData, abortedData)
         # Check when price fetching failed last time
         fieldName = "priceC0rpFailed"
         # If it doesn't exist, add this one to the session too
@@ -212,30 +226,19 @@ class Price(object):
             lastFailed = float(lastFailedField.fieldValue)
         except (TypeError, ValueError):
             lastFailed = None
-        # Get age of price and age of last failed fetch attempt
-        updateAge = present - lastUpdated
-        # Using timestamps we've got, check if fetch results are still valid
-        c0rpValidity = updateAge <= cls.VALIDITY
-        # If they are not, check if fetching failed recently
-        if c0rpValidity is False and lastFailed is not None:
+        # If we had failed fetch attempt at some point
+        if lastFailed is not None:
             failedAge = present - lastFailed
-            c0rpValidity = failedAge <= cls.REREQUEST
-            # Check if system clock was adjusted into past after setting
-            # failed timestamp
-            if lastFailed > present:
-                c0rpValidity = False
-        # Do the same for last updated timestamp
-        if lastUpdated > present:
-            c0rpValidity = False
-        # If prices should be valid according to miscData timestamps, but
-        # method was requested to provide prices for some items, we can safely
-        # assume that these items are not on the XML (to be more accurate,
-        # on its previously fetched version), because all items which are valid
-        # (and they are valid only when xml is valid) should be filtered before
-        # passing them to this method
-        if c0rpValidity is True:
-            noData.update(set(priceMap.iterkeys()))
-            return (noData, abortedData)
+            # Check if we should refetch data now or not (we do not want to do anything until
+            # refetch timeout is reached or we have failed timestamp referencing some future time)
+            c0rpValidityFail = failedAge <= cls.REREQUEST and lastFailed <= present
+            # If it seems we're not willing to fetch any data
+            if c0rpValidityFail is True:
+                # Consider all requested items as aborted. As we don't store list of items
+                # provided by this service, this will include anything passed to this service,
+                # even items which are usually not included in xml
+                abortedData.update(set(priceMap.iterkeys()))
+                return (noData, abortedData)
         # Our request url
         requrl = "http://prices.c0rporation.com/faction.xml"
         # Generate request
