@@ -142,35 +142,34 @@ class Price(object):
                     break
             # Make the request object
             request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
-            # Attempt to send request and go to next request cycle
-            # if anything goes wrong
+            # Attempt to send request and process it
             try:
                 data = urllib2.urlopen(request)
+                xml = minidom.parse(data)
+                marketStat = xml.getElementsByTagName("marketstat").item(0)
+                if marketStat is not None:
+                    types = marketStat.getElementsByTagName("type")
+                    # Cycle through all types we've got from request
+                    for type in types:
+                        # Get data out of each typeID details tree
+                        typeID = int(type.getAttribute("id"))
+                        sell = type.getElementsByTagName("sell").item(0)
+                        # Add item id to list of fetched items
+                        fetchedTypeIDs.add(typeID)
+                        # If price data was none, set it to zero to avoid re-requesting it
+                        try:
+                            medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
+                        except (TypeError, ValueError):
+                            medprice = 0
+                        priceobj = priceMap[typeID]
+                        priceobj.price = medprice
+                        priceobj.time = present
+                        priceobj.failed = None
+            # If getting or processing data returned any errors, consider fetch
+            # as aborted and move to the next one
             except:
-                # Also fill items which we've failed to fetch
                 abortedData.update(requestThisCycle)
                 continue
-            # Parse the data we've got
-            xml = minidom.parse(data)
-            marketStat = xml.getElementsByTagName("marketstat").item(0)
-            if marketStat is not None:
-                types = marketStat.getElementsByTagName("type")
-                # Cycle through all types we've got from request
-                for type in types:
-                    # Get data out of each typeID details tree
-                    typeID = int(type.getAttribute("id"))
-                    sell = type.getElementsByTagName("sell").item(0)
-                    # Add item id to list of fetched items
-                    fetchedTypeIDs.add(typeID)
-                    # If price data was none, set it to zero to avoid re-requesting it
-                    try:
-                        medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
-                    except (TypeError, ValueError):
-                        medprice = 0
-                    priceobj = priceMap[typeID]
-                    priceobj.price = medprice
-                    priceobj.time = present
-                    priceobj.failed = None
         # Get actual list of items for which we didn't get data
         noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs).difference(abortedData))
         # And return it for future use
@@ -187,6 +186,8 @@ class Price(object):
         noData = set()
         # Container for items which had errors during fetching
         abortedData = set()
+        # Set with types for which we've got data
+        fetchedTypeIDs = set()
         # Check when we updated prices last time
         fieldName = "priceC0rpTime"
         lastUpdatedField = eos.db.getMiscData(fieldName)
@@ -239,19 +240,11 @@ class Price(object):
         requrl = "http://prices.c0rporation.com/faction.xml"
         # Generate request
         request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
-        # Attempt to send request and return list of items we've failed to get
-        # data for if anything goes wrong
+        # Attempt to send request and process returned data
         try:
             data = urllib2.urlopen(request)
-        except:
-            abortedData.update(set(priceMap.iterkeys()))
-            return (noData, abortedData)
-        # Set with types for which we've got data
-        fetchedTypeIDs = set()
-        # Parse the data we've got
-        xml = minidom.parse(data)
-        result = xml.getElementsByTagName("result").item(0)
-        if result is not None:
+            # Parse the data we've got
+            xml = minidom.parse(data)
             rowsets = xml.getElementsByTagName("rowset")
             for rowset in rowsets:
                 rows = rowset.getElementsByTagName("row")
@@ -284,8 +277,17 @@ class Price(object):
                     priceobj.price = medprice
                     priceobj.time = present
                     priceobj.failed = None
-        # Save current time for the future use
-        lastUpdatedField.fieldValue = present
-        # Find which items were requested but no data has been returned
-        noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
-        return (noData, abortedData)
+            # Save current time for the future use
+            lastUpdatedField.fieldValue = present
+            # Clean the last failed field
+            lastFailedField.fieldValue = None
+            # Find which items were requested but no data has been returned
+            noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
+            return (noData, abortedData)
+        # If we failed somewhere during fetching or processing
+        except:
+            # Consider all items as aborted
+            abortedData.update(set(priceMap.iterkeys()))
+            # And whole fetch too
+            lastFailedField.fieldValue = present
+            return (noData, abortedData)
