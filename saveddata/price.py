@@ -84,7 +84,7 @@ class Price(object):
         if len(priceMap) == 0:
             return
         # Set will contain items for which we've got no data after checking
-        # all service. Added here just for sanity, will be overridden multiple times
+        # all services. Added here just for sanity, will be overridden multiple times
         # inside services cycle
         noData = set()
         # List our price service methods
