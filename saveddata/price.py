@@ -83,12 +83,12 @@ class Price(object):
         # Don't waste CPU if all prices are valid
         if len(priceMap) == 0:
             return
-        # List of our services
-        services = (cls.fetchEveCentral, cls.fetchC0rporation)
         # Set will contain items for which we've got no data after checking
-        # all service. Added here just for sanity, will be overriden multiple times
-        # inside cycle
+        # all service. Added here just for sanity, will be overridden multiple times
+        # inside services cycle
         noData = set()
+        # List our price service methods
+        services = (cls.fetchEveCentral, cls.fetchC0rporation)
         # Cycle through services
         for svc in services:
             # Request prices and get some feedback
