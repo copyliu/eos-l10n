@@ -43,9 +43,7 @@ class Price(object):
     def init(self):
         self.__item = None
 
-    @property
-    def isValid(self):
-        present = time.time()
+    def isValid(self, present=time.time()):
         updateAge = present - self.time
         # Mark price as invalid if it is expired
         validity = updateAge <= self.VALIDITY
@@ -69,60 +67,74 @@ class Price(object):
     @classmethod
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
-        # Dictionaries to store our price objects
-        # Format: { typeID : price }
-        priceMapEvec = {}
-        priceMapC0rp = {}
+        # Set time of the request
+        # We have to pass this time to all of our used methods, as multiple validity checks
+        # Using time of check instead can make extremely rare edge-case bugs to appear
+        # (e.g. when item price is already considered as outdated, but c0rp fetch is still
+        # valid, just because their update time has been set using slightly older timestamp)
+        present = time.time()
+        # Dictionary for our price objects
+        priceMap = {}
         # Check all provided price objects, and add invalid ones to dictionary
         for price in prices:
-            if not price.isValid:
+            if not price.isValid(present):
                 # Those with market group go to eve-central, everything else to c0rporation
-                item = eos.db.getItem(price.typeID)
-                if item.marketGroupID:
-                    priceMapEvec[price.typeID] = price
-                else:
-                    priceMapC0rp[price.typeID] = price
-        if len(priceMapEvec) > 0:
-            noData, abortedItems = cls.fetchEveCentral(priceMapEvec)
-            # If data hasn't been returned for any requested item, let's try to request it
-            # from the next service
-            if len(noData) > 0:
-                for typeID in noData:
-                    priceMapC0rp[typeID] = priceMapEvec[typeID]
-            # Mark failed fetches
-            if len(abortedItems) > 0:
-                present = time.time()
-                for itemID in abortedItems:
-                    priceMapEvec[itemID].failed = present
-        if len(priceMapC0rp) > 0:
-            noData, abortedItems = cls.fetchC0rporation(priceMapC0rp)
-            # If we didn't get data for some of the items from all our price service
-            # providers, assign it zero price to avoid re-fetches during validity period
-            if len(noData) > 0:
-                present = time.time()
-                for typeID in noData:
-                    priceobj = priceMapC0rp[typeID]
-                    priceobj.price = 0
-                    priceobj.time = present
-            # Mark failed fetches
-            if len(abortedItems) > 0:
-                present = time.time()
-                for itemID in abortedItems:
-                    priceMapC0rp[itemID].failed = present
+                priceMap[price.typeID] = price
+        # Don't waste CPU if all prices are valid
+        if len(priceMap) == 0:
+            return
+        # List of our services
+        services = (cls.fetchEveCentral, cls.fetchC0rporation)
+        # Set will contain items for which we've got no data after checking
+        # all service. Added here just for sanity, will be overriden multiple times
+        # inside cycle
+        noData = set()
+        # Cycle through services
+        for svc in services:
+            # Request prices and get some feedback
+            noData, abortedData = svc(priceMap, present)
+            # Mark items with some failure occurred during fetching
+            for typeID in abortedData:
+                priceMap[typeID].failed = present
+            # Clear map from the fetched and failed items, leaving only items
+            # for which we've got no data
+            toRemove = set()
+            for typeID in priceMap:
+                if typeID not in noData:
+                    toRemove.add(typeID)
+            for typeID in toRemove:
+                del priceMap[typeID]
+        # After we've checked all possible services, assign zero price for items
+        # which were not found on any service to avoid re-fetches during validity
+        # period
+        for typeID in noData:
+            priceMap[typeID].price = 0
+            priceMap[typeID].time = present
+            priceMap[typeID].failed = None
 
     @classmethod
-    def fetchEveCentral(cls, priceMap):
+    def fetchEveCentral(cls, priceMap, present=time.time()):
         """Use Eve-Central price service provider"""
-        # Set time of the request
-        present = time.time()
-        # Set of items which are still to be requested
-        typesToRequest = set(priceMap.iterkeys())
-        # This set will contain typeIDs for items which were in replies
-        fetchedTypeIDs = set()
         # This set will contain typeIDs which were requested but no data has been fetched for them
         noData = set()
         # This set will contain items for which data fetch was aborted due to technical reasons
         abortedData = set()
+        # Set of items which are still to be requested
+        typesToRequest = set()
+        # Compose list of items we're going to request
+        for typeID in priceMap:
+            # Get item object
+            item = eos.db.getItem(typeID)
+            # We're not going to request items only with market group, as eve-central
+            # doesn't provide any data for items not on the market
+            # Items w/o market group will be added to noData in the very end
+            if item.marketGroupID:
+                typesToRequest.add(typeID)
+        # Do not waste our time if all items are not on the market
+        if len(typesToRequest) == 0:
+            return (noData, abortedData)
+        # This set will contain typeIDs for items which were in replies
+        fetchedTypeIDs = set()
         # Base URL; limits prices to Jita solar system
         requrl = "http://api.eve-central.com/api/marketstat?usesystem=30000142"
         # As length of URL is limited, make a loop to make sure we request all data
@@ -176,12 +188,10 @@ class Price(object):
         return (noData, abortedData)
 
     @classmethod
-    def fetchC0rporation(cls, priceMap):
+    def fetchC0rporation(cls, priceMap, present=time.time()):
         """Use c0rporation.com price service provider"""
         # it must be here, otherwise eos doesn't load miscData in time
         from eos.types import MiscData
-        # Set time of the request
-        present = time.time()
         # Set-container for requested items w/o any data returned
         noData = set()
         # Container for items which had errors during fetching
