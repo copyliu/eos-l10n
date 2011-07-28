@@ -128,6 +128,7 @@ class Price(object):
                 typesToRequest.add(typeID)
         # Do not waste our time if all items are not on the market
         if len(typesToRequest) == 0:
+            noData.update(priceMap.iterkeys())
             return (noData, abortedData)
         # This set will contain typeIDs for items which were in replies
         fetchedTypeIDs = set()
