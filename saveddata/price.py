@@ -123,8 +123,8 @@ class Price(object):
         noData = set()
         # This set will contain items for which data fetch was aborted due to technical reasons
         abortedData = set()
-        # Base URL; limits prices to The Forge region
-        requrl = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
+        # Base URL; limits prices to Jita solar system
+        requrl = "http://api.eve-central.com/api/marketstat?usesystem=30000142"
         # As length of URL is limited, make a loop to make sure we request all data
         while(len(typesToRequest) > 0):
             # Set of items we're requesting during this cycle
@@ -158,11 +158,11 @@ class Price(object):
                         fetchedTypeIDs.add(typeID)
                         # If price data was none, set it to zero to avoid re-requesting it
                         try:
-                            medprice = float(sell.getElementsByTagName("median").item(0).firstChild.data)
+                            minprice = float(sell.getElementsByTagName("min").item(0).firstChild.data)
                         except (TypeError, ValueError):
-                            medprice = 0
+                            minprice = 0
                         priceobj = priceMap[typeID]
-                        priceobj.price = medprice
+                        priceobj.price = minprice
                         priceobj.time = present
                         priceobj.failed = None
             # If getting or processing data returned any errors, consider fetch
@@ -282,7 +282,7 @@ class Price(object):
                     priceobj.failed = None
             # Save current time for the future use
             lastUpdatedField.fieldValue = present
-            # Clean the last failed field
+            # Clear the last failed field
             lastFailedField.fieldValue = None
             # Find which items were requested but no data has been returned
             noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
