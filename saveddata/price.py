@@ -158,11 +158,11 @@ class Price(object):
                         fetchedTypeIDs.add(typeID)
                         # If price data was none, set it to zero to avoid re-requesting it
                         try:
-                            minprice = float(sell.getElementsByTagName("min").item(0).firstChild.data)
+                            percprice = float(sell.getElementsByTagName("percentile").item(0).firstChild.data)
                         except (TypeError, ValueError):
-                            minprice = 0
+                            percprice = 0
                         priceobj = priceMap[typeID]
-                        priceobj.price = minprice
+                        priceobj.price = percprice
                         priceobj.time = present
                         priceobj.failed = None
             # If getting or processing data returned any errors, consider fetch
