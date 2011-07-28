@@ -83,10 +83,6 @@ class Price(object):
         # Don't waste CPU if all prices are valid
         if len(priceMap) == 0:
             return
-        # Set will contain items for which we've got no data after checking
-        # all services. Added here just for sanity, will be overridden multiple times
-        # inside services cycle
-        noData = set()
         # List our price service methods
         services = (cls.fetchEveCentral, cls.fetchC0rporation)
         # Cycle through services
@@ -107,7 +103,7 @@ class Price(object):
         # After we've checked all possible services, assign zero price for items
         # which were not found on any service to avoid re-fetches during validity
         # period
-        for typeID in noData:
+        for typeID in priceMap:
             priceMap[typeID].price = 0
             priceMap[typeID].time = present
             priceMap[typeID].failed = None
