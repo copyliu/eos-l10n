@@ -43,24 +43,24 @@ class Price(object):
     def init(self):
         self.__item = None
 
-    def isValid(self, present=time.time()):
-        updateAge = present - self.time
+    def isValid(self, rqtime=time.time()):
+        updateAge = rqtime - self.time
         # Mark price as invalid if it is expired
         validity = updateAge <= self.VALIDITY
         # Price is considered as valid, if it's expired but we had failed
         # fetch attempt recently
         if validity is False and self.failed is not None:
-            failedAge = present - self.failed
+            failedAge = rqtime - self.failed
             validity = failedAge <= self.REREQUEST
             # If it's already invalid, it can't get any better
             if validity is False:
                 return validity
             # If failed timestamp refers to future relatively to current
             # system clock, mark price as invalid
-            if self.failed > present:
+            if self.failed > rqtime:
                 return False
         # Do the same for last updated timestamp
-        if self.time > present:
+        if self.time > rqtime:
             return False
         return validity
 
@@ -68,16 +68,16 @@ class Price(object):
     def fetchPrices(cls, *prices):
         """Fetch all prices passed to this method"""
         # Set time of the request
-        # We have to pass this time to all of our used methods, as multiple validity checks
+        # We have to pass this time to all of our used methods and validity checks
         # Using time of check instead can make extremely rare edge-case bugs to appear
         # (e.g. when item price is already considered as outdated, but c0rp fetch is still
         # valid, just because their update time has been set using slightly older timestamp)
-        present = time.time()
+        rqtime = time.time()
         # Dictionary for our price objects
         priceMap = {}
         # Check all provided price objects, and add invalid ones to dictionary
         for price in prices:
-            if not price.isValid(present):
+            if not price.isValid(rqtime=rqtime):
                 # Those with market group go to eve-central, everything else to c0rporation
                 priceMap[price.typeID] = price
         # Don't waste CPU if all prices are valid
@@ -88,10 +88,10 @@ class Price(object):
         # Cycle through services
         for svc in services:
             # Request prices and get some feedback
-            noData, abortedData = svc(priceMap, present)
+            noData, abortedData = svc(priceMap, rqtime)
             # Mark items with some failure occurred during fetching
             for typeID in abortedData:
-                priceMap[typeID].failed = present
+                priceMap[typeID].failed = rqtime
             # Clear map from the fetched and failed items, leaving only items
             # for which we've got no data
             toRemove = set()
@@ -104,12 +104,13 @@ class Price(object):
         # which were not found on any service to avoid re-fetches during validity
         # period
         for typeID in priceMap:
-            priceMap[typeID].price = 0
-            priceMap[typeID].time = present
-            priceMap[typeID].failed = None
+            priceobj = priceMap[typeID]
+            priceobj.price = 0
+            priceobj.time = rqtime
+            priceobj.failed = None
 
     @classmethod
-    def fetchEveCentral(cls, priceMap, present=time.time()):
+    def fetchEveCentral(cls, priceMap, rqtime=time.time()):
         """Use Eve-Central price service provider"""
         # This set will contain typeIDs which were requested but no data has been fetched for them
         noData = set()
@@ -163,17 +164,21 @@ class Price(object):
                         # Get data out of each typeID details tree
                         typeID = int(type.getAttribute("id"))
                         sell = type.getElementsByTagName("sell").item(0)
-                        # Add item id to list of fetched items
-                        fetchedTypeIDs.add(typeID)
-                        # If price data was none, set it to zero to avoid re-requesting it
+                        # If price data wasn't there, set price to zero
                         try:
                             percprice = float(sell.getElementsByTagName("percentile").item(0).firstChild.data)
                         except (TypeError, ValueError):
                             percprice = 0
-                        priceobj = priceMap[typeID]
-                        priceobj.price = percprice
-                        priceobj.time = present
-                        priceobj.failed = None
+                        # Eve-central returns zero price if there was no data, thus modify price
+                        # object only if we've got non-zero price
+                        if percprice:
+                            # Add item id to list of fetched items
+                            fetchedTypeIDs.add(typeID)
+                            # Fill price data
+                            priceobj = priceMap[typeID]
+                            priceobj.price = percprice
+                            priceobj.time = rqtime
+                            priceobj.failed = None
             # If getting or processing data returned any errors, consider fetch
             # as aborted and move to the next one
             except:
@@ -185,7 +190,7 @@ class Price(object):
         return (noData, abortedData)
 
     @classmethod
-    def fetchC0rporation(cls, priceMap, present=time.time()):
+    def fetchC0rporation(cls, priceMap, rqtime=time.time()):
         """Use c0rporation.com price service provider"""
         # it must be here, otherwise eos doesn't load miscData in time
         from eos.types import MiscData
@@ -208,10 +213,10 @@ class Price(object):
         except (TypeError, ValueError):
             lastUpdated = 0
         # Get age of price
-        updateAge = present - lastUpdated
+        updateAge = rqtime - lastUpdated
         # Using timestamp we've got, check if fetch results are still valid and make
         # sure system clock hasn't been changed to past
-        c0rpValidityUpd = updateAge <= cls.VALIDITY and lastUpdated <= present
+        c0rpValidityUpd = updateAge <= cls.VALIDITY and lastUpdated <= rqtime
         # If prices should be valid according to miscdata last update timestamp,
         # but method was requested to provide prices for some items, we can
         # safely assume that these items are not on the XML (to be more accurate,
@@ -235,10 +240,10 @@ class Price(object):
             lastFailed = None
         # If we had failed fetch attempt at some point
         if lastFailed is not None:
-            failedAge = present - lastFailed
+            failedAge = rqtime - lastFailed
             # Check if we should refetch data now or not (we do not want to do anything until
             # refetch timeout is reached or we have failed timestamp referencing some future time)
-            c0rpValidityFail = failedAge <= cls.REREQUEST and lastFailed <= present
+            c0rpValidityFail = failedAge <= cls.REREQUEST and lastFailed <= rqtime
             # If it seems we're not willing to fetch any data
             if c0rpValidityFail is True:
                 # Consider all requested items as aborted. As we don't store list of items
@@ -262,33 +267,33 @@ class Price(object):
                 # for each price request, we need to process it in one single run
                 for row in rows:
                     typeID = int(row.getAttribute("typeID"))
-                    # Add current typeID to the set of fetched types
-                    fetchedTypeIDs.add(typeID)
                     # Median price field may be absent or empty, assign 0 in this case
                     try:
                         medprice = float(row.getAttribute("median"))
                     except (TypeError, ValueError):
                         medprice = 0
-                    # Now let's get price object
-                    priceobj = None
-                    # If we have given typeID in the map we've got, pull price object out of it
-                    if typeID in priceMap:
-                        priceobj = priceMap[typeID]
-                    # If we don't, request it from database
-                    else:
-                        priceobj = eos.db.getPrice(typeID)
-                    # If everything failed
-                    if priceobj is None:
-                        # Create price object ourselves
-                        priceobj = Price(typeID)
-                        # And let database know that we'd like to keep it
-                        eos.db.add(priceobj)
-                    # Finally, fill object with data
-                    priceobj.price = medprice
-                    priceobj.time = present
-                    priceobj.failed = None
+                    # Process price only if it's non-zero
+                    if medprice:
+                        # Add current typeID to the set of fetched types
+                        fetchedTypeIDs.add(typeID)
+                        # If we have given typeID in the map we've got, pull price object out of it
+                        if typeID in priceMap:
+                            priceobj = priceMap[typeID]
+                        # If we don't, request it from database
+                        else:
+                            priceobj = eos.db.getPrice(typeID)
+                        # If everything failed
+                        if priceobj is None:
+                            # Create price object ourselves
+                            priceobj = Price(typeID)
+                            # And let database know that we'd like to keep it
+                            eos.db.add(priceobj)
+                        # Finally, fill object with data
+                        priceobj.price = medprice
+                        priceobj.time = rqtime
+                        priceobj.failed = None
             # Save current time for the future use
-            lastUpdatedField.fieldValue = present
+            lastUpdatedField.fieldValue = rqtime
             # Clear the last failed field
             lastFailedField.fieldValue = None
             # Find which items were requested but no data has been returned
@@ -299,5 +304,5 @@ class Price(object):
             # Consider all items as aborted
             abortedData.update(set(priceMap.iterkeys()))
             # And whole fetch too
-            lastFailedField.fieldValue = present
+            lastFailedField.fieldValue = rqtime
             return (noData, abortedData)
