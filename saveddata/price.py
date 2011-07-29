@@ -162,6 +162,8 @@ class Price(object):
                     # Use previously generated URL if new is out of bounds
                     else:
                         break
+                # Do not request same items from the same area
+                toRequestArea.difference_update(requestedThisUrl)
                 # Replace first ampersand with question mark to separate arguments
                 # from URL itself
                 requrl = requrl.replace("&", "?", 1)
@@ -189,23 +191,15 @@ class Price(object):
                             if percprice:
                                 # Add item id to list of fetched items
                                 fetchedTypeIDs.add(typeID)
-                                # And remove ID from still scheduled items
-                                toRequestArea.remove(typeID)
                                 # Fill price data
                                 priceobj = priceMap[typeID]
                                 priceobj.price = percprice
                                 priceobj.time = rqtime
                                 priceobj.failed = None
-                            # If we were unable to get any useful data
-                            else:
-                                # Make sure to not request this item from this area
-                                toRequestArea.remove(typeID)
                 # If getting or processing data returned any errors
                 except:
                     # Consider fetch as aborted
                     abortedData.update(requestedThisUrl)
-                    # Make sure we do not request failed items again
-                    toRequestArea.difference_update(requestedThisUrl)
         # Get actual list of items for which we didn't get data; it includes all requested items
         # (even those which didn't pass filter), excluding items which had problems during fetching
         # and items for which we've successfully fetched price
