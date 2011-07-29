@@ -316,11 +316,10 @@ class Price(object):
             lastFailedField.fieldValue = None
             # Find which items were requested but no data has been returned
             noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs))
-            return (noData, abortedData)
         # If we failed somewhere during fetching or processing
         except:
             # Consider all items as aborted
             abortedData.update(set(priceMap.iterkeys()))
             # And whole fetch too
             lastFailedField.fieldValue = rqtime
-            return (noData, abortedData)
+        return (noData, abortedData)
