@@ -80,15 +80,15 @@ class Price(object):
             if not price.isValid(rqtime=rqtime):
                 # Those with market group go to eve-central, everything else to c0rporation
                 priceMap[price.typeID] = price
-        # Don't waste CPU if all prices are valid
-        if len(priceMap) == 0:
-            return
         # List our price service methods
         services = (cls.fetchEveCentral, cls.fetchC0rporation)
         # Cycle through services
         for svc in services:
+            # Stop cycling if we don't need price data anymore
+            if len(priceMap) == 0:
+                break
             # Request prices and get some feedback
-            noData, abortedData = svc(priceMap, rqtime)
+            noData, abortedData = svc(priceMap, rqtime=rqtime)
             # Mark items with some failure occurred during fetching
             for typeID in abortedData:
                 priceMap[typeID].failed = rqtime
