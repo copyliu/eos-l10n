@@ -18,7 +18,6 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-import copy
 import time
 import urllib2
 from xml.dom import minidom
