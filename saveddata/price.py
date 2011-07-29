@@ -18,7 +18,7 @@
 # along with eos.  If not, see <http://www.gnu.org/licenses/>.
 #===============================================================================
 
-
+import copy
 import time
 import urllib2
 from xml.dom import minidom
@@ -116,8 +116,8 @@ class Price(object):
         noData = set()
         # This set will contain items for which data fetch was aborted due to technical reasons
         abortedData = set()
-        # Set of items which are still to be requested
-        typesToRequest = set()
+        # Set of items which are still to be requested from this service
+        toRequestSvc = set()
         # Compose list of items we're going to request
         for typeID in priceMap:
             # Get item object
@@ -126,65 +126,90 @@ class Price(object):
             # doesn't provide any data for items not on the market
             # Items w/o market group will be added to noData in the very end
             if item.marketGroupID:
-                typesToRequest.add(typeID)
+                toRequestSvc.add(typeID)
         # Do not waste our time if all items are not on the market
-        if len(typesToRequest) == 0:
+        if len(toRequestSvc) == 0:
             noData.update(priceMap.iterkeys())
             return (noData, abortedData)
-        # This set will contain typeIDs for items which were in replies
+        # This set will contain typeIDs for which we've got useful data
         fetchedTypeIDs = set()
-        # Base URL; limits prices to Jita solar system
-        requrl = "http://api.eve-central.com/api/marketstat?usesystem=30000142"
-        # As length of URL is limited, make a loop to make sure we request all data
-        while(len(typesToRequest) > 0):
-            # Set of items we're requesting during this cycle
-            requestThisCycle = set()
-            # Generate final URL, making sure it isn't longer than 255 characters
-            for typeID in priceMap:
-                newurl = "{0}&typeid={1}".format(requrl, typeID)
-                if len(newurl) <= 255:
-                    requrl = newurl
-                    # Items which didn't make it into request are postponed until the next cycle
-                    typesToRequest.remove(typeID)
-                    # Fill the set for the utility needs
-                    requestThisCycle.add(typeID)
-                else:
-                    break
-            # Make the request object
-            request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
-            # Attempt to send request and process it
-            try:
-                data = urllib2.urlopen(request)
-                xml = minidom.parse(data)
-                marketStat = xml.getElementsByTagName("marketstat").item(0)
-                if marketStat is not None:
-                    types = marketStat.getElementsByTagName("type")
-                    # Cycle through all types we've got from request
-                    for type in types:
-                        # Get data out of each typeID details tree
-                        typeID = int(type.getAttribute("id"))
-                        sell = type.getElementsByTagName("sell").item(0)
-                        # If price data wasn't there, set price to zero
-                        try:
-                            percprice = float(sell.getElementsByTagName("percentile").item(0).firstChild.data)
-                        except (TypeError, ValueError):
-                            percprice = 0
-                        # Eve-central returns zero price if there was no data, thus modify price
-                        # object only if we've got non-zero price
-                        if percprice:
-                            # Add item id to list of fetched items
-                            fetchedTypeIDs.add(typeID)
-                            # Fill price data
-                            priceobj = priceMap[typeID]
-                            priceobj.price = percprice
-                            priceobj.time = rqtime
-                            priceobj.failed = None
-            # If getting or processing data returned any errors, consider fetch
-            # as aborted and move to the next one
-            except:
-                abortedData.update(requestThisCycle)
-                continue
-        # Get actual list of items for which we didn't get data
+        # Base request URL
+        baseurl = "http://api.eve-central.com/api/marketstat"
+        # Area limitation list
+        areas = ("usesystem=30000142", # Jita
+                 None) # Global
+        # Fetch prices from Jita market, if no data was available - check global data
+        for area in areas:
+            # Append area limitations to base URL
+            areaurl = "{0}&{1}".format(baseurl, area) if area else baseurl
+            # Set which contains IDs of items which we will fetch for given area
+            toRequestArea = toRequestSvc.difference(fetchedTypeIDs).difference(abortedData)
+            # As length of URL is limited, make a loop to make sure we request all data
+            while(len(toRequestArea) > 0):
+                # Set of items we're requesting during this cycle
+                requestedThisUrl = set()
+                # Always start composing our URL from area-limited URL
+                requrl = areaurl
+                # Generate final URL, making sure it isn't longer than 255 characters
+                for typeID in toRequestArea:
+                    # Try to add new typeID argument
+                    newrequrl = "{0}&typeid={1}".format(requrl, typeID)
+                    # If we didn't exceed our limits
+                    if len(newrequrl) <= 255:
+                        # Accept new URL
+                        requrl = newrequrl
+                        # Fill the set for the utility needs
+                        requestedThisUrl.add(typeID)
+                    # Use previously generated URL if new is out of bounds
+                    else:
+                        break
+                # Replace first ampersand with question mark to separate arguments
+                # from URL itself
+                requrl = requrl.replace("&", "?", 1)
+                # Make the request object
+                request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
+                # Attempt to send request and process it
+                try:
+                    data = urllib2.urlopen(request)
+                    xml = minidom.parse(data)
+                    marketStat = xml.getElementsByTagName("marketstat").item(0)
+                    if marketStat is not None:
+                        types = marketStat.getElementsByTagName("type")
+                        # Cycle through all types we've got from request
+                        for type in types:
+                            # Get data out of each typeID details tree
+                            typeID = int(type.getAttribute("id"))
+                            sell = type.getElementsByTagName("sell").item(0)
+                            # If price data wasn't there, set price to zero
+                            try:
+                                percprice = float(sell.getElementsByTagName("percentile").item(0).firstChild.data)
+                            except (TypeError, ValueError):
+                                percprice = 0
+                            # Eve-central returns zero price if there was no data, thus modify price
+                            # object only if we've got non-zero price
+                            if percprice:
+                                # Add item id to list of fetched items
+                                fetchedTypeIDs.add(typeID)
+                                # And remove ID from still scheduled items
+                                toRequestArea.remove(typeID)
+                                # Fill price data
+                                priceobj = priceMap[typeID]
+                                priceobj.price = percprice
+                                priceobj.time = rqtime
+                                priceobj.failed = None
+                            # If we were unable to get any useful data
+                            else:
+                                # Make sure to not request this item from this area
+                                toRequestArea.remove(typeID)
+                # If getting or processing data returned any errors
+                except:
+                    # Consider fetch as aborted
+                    abortedData.update(requestedThisUrl)
+                    # Make sure we do not request failed items again
+                    toRequestArea.difference_update(requestedThisUrl)
+        # Get actual list of items for which we didn't get data; it includes all requested items
+        # (even those which didn't pass filter), excluding items which had problems during fetching
+        # and items for which we've successfully fetched price
         noData.update(set(priceMap.iterkeys()).difference(fetchedTypeIDs).difference(abortedData))
         # And return it for future use
         return (noData, abortedData)
@@ -251,7 +276,7 @@ class Price(object):
                 # even items which are usually not included in xml
                 abortedData.update(set(priceMap.iterkeys()))
                 return (noData, abortedData)
-        # Our request url
+        # Our request URL
         requrl = "http://prices.c0rporation.com/faction.xml"
         # Generate request
         request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
