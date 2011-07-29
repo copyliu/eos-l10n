@@ -78,7 +78,6 @@ class Price(object):
         # Check all provided price objects, and add invalid ones to dictionary
         for price in prices:
             if not price.isValid(rqtime=rqtime):
-                # Those with market group go to eve-central, everything else to c0rporation
                 priceMap[price.typeID] = price
         # List our price service methods
         services = (cls.fetchEveCentral, cls.fetchC0rporation)
