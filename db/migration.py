@@ -11,5 +11,10 @@ def checkPriceFailures(saveddata_engine):
         # As we don't have any important data there, let's just drop
         # and recreate whole table
         from eos.db.saveddata.price import prices_table
-        prices_table.drop(saveddata_engine)
-        prices_table.create(saveddata_engine)
+        # Attempt to drop/create table only if it's already there
+        try:
+            prices_table.drop(saveddata_engine)
+            prices_table.create(saveddata_engine)
+        except sqlalchemy.exc.OperationalError:
+            pass
+
