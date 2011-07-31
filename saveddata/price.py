@@ -173,29 +173,27 @@ class Price(object):
                 try:
                     data = urllib2.urlopen(request)
                     xml = minidom.parse(data)
-                    marketStat = xml.getElementsByTagName("marketstat").item(0)
-                    if marketStat is not None:
-                        types = marketStat.getElementsByTagName("type")
-                        # Cycle through all types we've got from request
-                        for type in types:
-                            # Get data out of each typeID details tree
-                            typeID = int(type.getAttribute("id"))
-                            sell = type.getElementsByTagName("sell").item(0)
-                            # If price data wasn't there, set price to zero
-                            try:
-                                percprice = float(sell.getElementsByTagName("percentile").item(0).firstChild.data)
-                            except (TypeError, ValueError):
-                                percprice = 0
-                            # Eve-central returns zero price if there was no data, thus modify price
-                            # object only if we've got non-zero price
-                            if percprice:
-                                # Add item id to list of fetched items
-                                fetchedTypeIDs.add(typeID)
-                                # Fill price data
-                                priceobj = priceMap[typeID]
-                                priceobj.price = percprice
-                                priceobj.time = rqtime
-                                priceobj.failed = None
+                    types = xml.getElementsByTagName("marketstat").item(0).getElementsByTagName("type")
+                    # Cycle through all types we've got from request
+                    for type in types:
+                        # Get data out of each typeID details tree
+                        typeID = int(type.getAttribute("id"))
+                        sell = type.getElementsByTagName("sell").item(0)
+                        # If price data wasn't there, set price to zero
+                        try:
+                            percprice = float(sell.getElementsByTagName("percentile").item(0).firstChild.data)
+                        except (TypeError, ValueError):
+                            percprice = 0
+                        # Eve-central returns zero price if there was no data, thus modify price
+                        # object only if we've got non-zero price
+                        if percprice:
+                            # Add item id to list of fetched items
+                            fetchedTypeIDs.add(typeID)
+                            # Fill price data
+                            priceobj = priceMap[typeID]
+                            priceobj.price = percprice
+                            priceobj.time = rqtime
+                            priceobj.failed = None
                 # If getting or processing data returned any errors
                 except:
                     # Consider fetch as aborted
