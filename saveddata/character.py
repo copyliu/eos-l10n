@@ -109,7 +109,7 @@ class Character(object):
         api = eveapi.EVEAPIConnection()
         auth = api.auth(userID=self.apiID, apiKey=self.apiKey)
         apiResult = auth.account.Characters()
-        return map(lambda c: c.name, apiResult.characters)
+        return map(lambda c: unicode(c.name), apiResult.characters)
 
     def apiFetch(self, charName):
         api = eveapi.EVEAPIConnection()
