@@ -107,13 +107,13 @@ class Character(object):
 
     def apiCharList(self):
         api = eveapi.EVEAPIConnection()
-        auth = api.auth(userID=self.apiID, apiKey=self.apiKey)
+        auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
         apiResult = auth.account.Characters()
         return map(lambda c: unicode(c.name), apiResult.characters)
 
     def apiFetch(self, charName):
         api = eveapi.EVEAPIConnection()
-        auth = api.auth(userID=self.apiID, apiKey=self.apiKey)
+        auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
         apiResult = auth.account.Characters()
         charID = None
         for char in apiResult.characters:
