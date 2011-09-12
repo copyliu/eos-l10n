@@ -215,7 +215,7 @@ class Test(TestBase):
     def test_commandShips_kineticDamage_chargeMissileRocketAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Thorn Javelin Rocket"
+        item = "Thorn Rage Rocket"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.05
@@ -245,7 +245,7 @@ class Test(TestBase):
     def test_commandShips_kineticDamage_chargeMissileLightAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Bloodclaw Fury Light Missile"
+        item = "Bloodclaw Precision Light Missile"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.05
@@ -290,7 +290,7 @@ class Test(TestBase):
     def test_commandShips_kineticDamage_chargeMissileAssaultAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Terror Rage Assault Missile"
+        item = "Terror Javelin Assault Missile"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.05
@@ -365,7 +365,7 @@ class Test(TestBase):
     def test_commandShips_kineticDamage_chargeMissileTorpedoAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Juggernaut Javelin Torpedo"
+        item = "Juggernaut Rage Torpedo"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.05
@@ -395,7 +395,7 @@ class Test(TestBase):
     def test_commandShips_kineticDamage_chargeMissileCruiseAdvanced(self):
         self.buildTested = 0
         attr = "kineticDamage"
-        item = "Wrath Fury Cruise Missile"
+        item = "Wrath Precision Cruise Missile"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.05
