@@ -320,7 +320,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def forceReload(self, type):
         self.__reloadForce = type
 
-    def fits(self, fit):
+    def fits(self, fit, hardpointLimit=False):
         slot = self.slot
         if fit.getSlotsFree(slot) <= (0 if self.owner != fit else -1):
             return False
@@ -371,6 +371,17 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
 
             if current >= max:
                 return False
+
+        # Check this only if we're told to do so
+        if hardpointLimit:
+            if self.hardpoint == Hardpoint.TURRET:
+                print "turret"
+                if fit.ship.getModifiedItemAttr('turretSlotsLeft') - fit.getHardpointsUsed(Hardpoint.TURRET) < 1:
+                    return False
+            elif self.hardpoint == Hardpoint.MISSILE:
+                print "missile", fit.ship.getModifiedItemAttr('launcherSlotsLeft')
+                if fit.ship.getModifiedItemAttr('launcherSlotsLeft') - fit.getHardpointsUsed(Hardpoint.MISSILE) < 1:
+                    return False
 
         return True
 
