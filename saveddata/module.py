@@ -375,11 +375,9 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         # Check this only if we're told to do so
         if hardpointLimit:
             if self.hardpoint == Hardpoint.TURRET:
-                print "turret"
                 if fit.ship.getModifiedItemAttr('turretSlotsLeft') - fit.getHardpointsUsed(Hardpoint.TURRET) < 1:
                     return False
             elif self.hardpoint == Hardpoint.MISSILE:
-                print "missile", fit.ship.getModifiedItemAttr('launcherSlotsLeft')
                 if fit.ship.getModifiedItemAttr('launcherSlotsLeft') - fit.getHardpointsUsed(Hardpoint.MISSILE) < 1:
                     return False
 
