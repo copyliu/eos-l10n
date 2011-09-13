@@ -106,8 +106,13 @@ class Character(object):
             self.__skillIdMap[skill.itemID] = skill
 
     @classmethod
-    def apiUrlPredefined(cls):
-        url = "https://support.eveonline.com/api/Key/CreatePredefined/8/"
+    def apiUrlKeyList(cls):
+        url = "https://support.eveonline.com/api/Key/Index"
+        return url
+
+    @classmethod
+    def apiUrlCreatePredefined(cls):
+        url = "https://support.eveonline.com/api/Key/CreatePredefined/8"
         return url
 
     def apiCharList(self):
