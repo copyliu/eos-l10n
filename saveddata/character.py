@@ -105,6 +105,11 @@ class Character(object):
         for skill in self.__skills:
             self.__skillIdMap[skill.itemID] = skill
 
+    @classmethod
+    def apiUrlPredefined(cls):
+        url = "https://support.eveonline.com/api/Key/CreatePredefined/8/"
+        return url
+
     def apiCharList(self):
         api = eveapi.EVEAPIConnection()
         auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
