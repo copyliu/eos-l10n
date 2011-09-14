@@ -320,7 +320,7 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
     def forceReload(self, type):
         self.__reloadForce = type
 
-    def fits(self, fit, hardpointLimit=False):
+    def fits(self, fit, hardpointLimit=True):
         slot = self.slot
         if fit.getSlotsFree(slot) <= (0 if self.owner != fit else -1):
             return False
