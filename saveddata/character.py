@@ -18,6 +18,8 @@
 #===============================================================================
 
 
+import urllib2
+
 from eos.effectHandlerHelpers import HandledItem
 from sqlalchemy.orm import validates, reconstructor
 import sqlalchemy.orm.exc as exc
@@ -106,13 +108,37 @@ class Character(object):
             self.__skillIdMap[skill.itemID] = skill
 
     def apiCharList(self):
-        api = eveapi.EVEAPIConnection()
+        proxy = None
+        proxydict = urllib2.ProxyHandler().proxies
+        if "https" in proxydict:
+            proxyline = proxydict["https"]
+            if proxyline[:8] == "https://":
+                proxyline = proxyline[8:]
+            proxy = tuple(proxyline.split(":"))
+        elif "http" in proxydict:
+            proxyline = proxydict["http"]
+            if proxyline[:7] == "http://":
+                proxyline = proxyline[7:]
+            proxy = tuple(proxyline.split(":"))
+        api = eveapi.EVEAPIConnection(proxy=proxy)
         auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
         apiResult = auth.account.Characters()
         return map(lambda c: unicode(c.name), apiResult.characters)
 
     def apiFetch(self, charName):
-        api = eveapi.EVEAPIConnection()
+        proxy = None
+        proxydict = urllib2.ProxyHandler().proxies
+        if "https" in proxydict:
+            proxyline = proxydict["https"]
+            if proxyline[:8] == "https://":
+                proxyline = proxyline[8:]
+            proxy = tuple(proxyline.split(":"))
+        elif "http" in proxydict:
+            proxyline = proxydict["http"]
+            if proxyline[:7] == "http://":
+                proxyline = proxyline[7:]
+            proxy = tuple(proxyline.split(":"))
+        api = eveapi.EVEAPIConnection(proxy=proxy)
         auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
         apiResult = auth.account.Characters()
         charID = None
