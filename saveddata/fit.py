@@ -652,8 +652,13 @@ class Fit(object):
         # 4: Errors should be handled gracefully and preferably without crashing unless serious
         for runTime in ("early", "normal", "late"):
             # Build a little chain of stuff
-            c = chain((self.character, self.ship), self.drones, self.boosters, self.appliedImplants, self.modules,
-                      self.projectedDrones, self.projectedModules)
+            # Avoid adding projected drones and modules when fit is projected onto self
+            # TODO: remove this workaround when proper self-projection using virtual duplicate fits is implemented
+            if targetFit == self and forceProjected is True:
+                c = chain((self.character, self.ship), self.drones, self.boosters, self.appliedImplants, self.modules)
+            else:
+                c = chain((self.character, self.ship), self.drones, self.boosters, self.appliedImplants, self.modules,
+                          self.projectedDrones, self.projectedModules)
 
             for item in c:
                 # Registering the item about to affect the fit allows us to track "Affected By" relations correctly
