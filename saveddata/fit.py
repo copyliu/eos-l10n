@@ -623,10 +623,10 @@ class Fit(object):
     def getModifier(self):
         return self.__modifier
 
-    def calculateModifiedAttributes(self, targetFit = None):
+    def calculateModifiedAttributes(self, targetFit=None):
         # If we're not explicitly asked to project fit onto something,
         # set self as target fit
-        if targetFit is None or targetFit == self:
+        if targetFit is None:
             targetFit = self
             forceProjected = False
         # Else, we're checking all target projectee fits
