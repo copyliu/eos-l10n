@@ -862,11 +862,17 @@ class Fit(object):
                     if self in dict:
                         for mod, _, amount in dict[self]:
                             if mod.projected is False:
-                                capUsed -= mod.capUse
-                                cycleTime = mod.getModifiedItemAttr("duration")
-                                amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
-                                sustainable[attr] -= amount / (cycleTime / 1000.0)
-                                repairers.append(mod)
+                                usesCap = True
+                                try:
+                                    capUsed -= mod.capUse
+                                except AttributeError:
+                                    usesCap = False
+                                # Modules which do not use cap are not penalized based on cap use
+                                if usesCap:
+                                    cycleTime = mod.getModifiedItemAttr("duration")
+                                    amount = mod.getModifiedItemAttr(groupAttrMap[mod.item.group.name])
+                                    sustainable[attr] -= amount / (cycleTime / 1000.0)
+                                    repairers.append(mod)
 
 
                 #Sort repairers by efficiency. We want to use the most efficient repairers first
