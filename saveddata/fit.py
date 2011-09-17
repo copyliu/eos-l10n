@@ -864,7 +864,10 @@ class Fit(object):
                             if mod.projected is False:
                                 usesCap = True
                                 try:
-                                    capUsed -= mod.capUse
+                                    if mod.capUse:
+                                        capUsed -= mod.capUse
+                                    else:
+                                        usesCap = False
                                 except AttributeError:
                                     usesCap = False
                                 # Modules which do not use cap are not penalized based on cap use
