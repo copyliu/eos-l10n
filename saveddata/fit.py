@@ -624,34 +624,39 @@ class Fit(object):
         return self.__modifier
 
     def calculateModifiedAttributes(self, targetFit = None):
-        if targetFit is None:
+        # If we're not explicitly asked to project fit onto something,
+        # set self as target fit
+        if targetFit is None or targetFit == self:
             targetFit = self
             forceProjected = False
+        # Else, we're checking all target projectee fits
         elif targetFit not in self.__calculatedTargets:
             self.__calculatedTargets.append(targetFit)
             targetFit.calculateModifiedAttributes()
             forceProjected = True
+        # Or do nothing if target fit is calculated
         else:
             return
 
+        # If fit is calculated and we have nothing to do here, get out
         if self.__calculated == True and forceProjected == False:
             return
-        else:
-            self.__calculated = True
 
+        # Mark fit as calculated
+        self.__calculated = True
 
-        #There's a few things to keep in mind here
-        #1: Early effects first, then regular ones, then late ones, regardless of anything else
-        #2: Some effects aren't implemented
-        #3: Some effects are implemented poorly and will just explode on us
-        #4: Errors should be handled gracefully and preferably without crashing unless serious
+        # There's a few things to keep in mind here
+        # 1: Early effects first, then regular ones, then late ones, regardless of anything else
+        # 2: Some effects aren't implemented
+        # 3: Some effects are implemented poorly and will just explode on us
+        # 4: Errors should be handled gracefully and preferably without crashing unless serious
         for runTime in ("early", "normal", "late"):
-            #Build a little chain of stuff
+            # Build a little chain of stuff
             c = chain((self.character, self.ship), self.drones, self.boosters, self.appliedImplants, self.modules,
                       self.projectedDrones, self.projectedModules)
 
             for item in c:
-                #Registering the item about to affect the fit allows us to track "Affected By" relations correctly
+                # Registering the item about to affect the fit allows us to track "Affected By" relations correctly
                 if item is not None:
                     targetFit.register(item)
                     item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
