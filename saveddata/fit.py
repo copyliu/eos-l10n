@@ -663,9 +663,11 @@ class Fit(object):
             for item in c:
                 # Registering the item about to affect the fit allows us to track "Affected By" relations correctly
                 if item is not None:
-                    targetFit.register(item)
-                    item.calculateModifiedAttributes(targetFit, runTime, forceProjected)
-
+                    self.register(item)
+                    item.calculateModifiedAttributes(self, runTime, False)
+                    if forceProjected is True:
+                        targetFit.register(item)
+                        item.calculateModifiedAttributes(targetFit, runTime, True)
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
