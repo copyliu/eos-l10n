@@ -4,6 +4,6 @@ type = "projected", "active"
 runTime = "late"
 def handler(fit, module, context):
     if "projected" not in context: return
-    amount = module.getModifiedItemAttr("structureDamageAmount")
+    bonus = module.getModifiedItemAttr("structureDamageAmount")
     duration = module.getModifiedItemAttr("duration") / 1000.0
-    fit.extraAttributes["hullRepair"].increase(amount / duration)
+    fit.extraAttributes.increase("hullRepair", bonus / duration)
