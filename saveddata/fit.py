@@ -940,22 +940,24 @@ class Fit(object):
         capAdded = 0
         for mod in self.modules:
             if mod.state >= State.ACTIVE:
-                    cycleTime = mod.rawCycleTime
-                    if cycleTime is not None:
+                    cycleTime = mod.rawCycleTime or 0
+                    reactivationTime = mod.getModifiedItemAttr("moduleReactivationDelay") or 0
+                    fullCycleTime = cycleTime + reactivationTime
+                    if fullCycleTime > 0:
                         capNeed = mod.capUse
                         if capNeed > 0:
                             capUsed += capNeed
                         else:
                             capAdded -= capNeed
 
-                        drains.append((int(cycleTime), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numShots or 0))
+                        drains.append((int(fullCycleTime), mod.getModifiedItemAttr("capacitorNeed") or 0, mod.numShots or 0))
 
-        for cycleTime, capNeed, clipSize in self.iterDrains():
-            drains.append((int(cycleTime), capNeed, clipSize))
+        for fullCycleTime, capNeed, clipSize in self.iterDrains():
+            drains.append((int(fullCycleTime), capNeed, clipSize))
             if capNeed > 0:
-                capUsed += capNeed / (cycleTime / 1000.0)
+                capUsed += capNeed / (fullCycleTime / 1000.0)
             else:
-                capAdded += -capNeed / (cycleTime / 1000.0)
+                capAdded += -capNeed / (fullCycleTime / 1000.0)
 
         return drains, capUsed, capAdded
 
