@@ -25,6 +25,8 @@
 # OTHER DEALINGS IN THE SOFTWARE
 #
 #-----------------------------------------------------------------------------
+# Version: 1.1.9-2 - 30 September 2011
+# - merge workaround provided by Entity to make it work with http proxies
 # Version: 1.1.9 - 2 September 2011
 # - added workaround for row tags with attributes that were not defined
 #   in their rowset (this should fix AssetList)
@@ -308,17 +310,23 @@ class _RootContext(_Context):
                 connectionclass = httplib.HTTPConnection
 
             if self._proxy is None:
+                if self._scheme == "https":
+                    connectionclass = httplib.HTTPSConnection
+                else:
+                    connectionclass = httplib.HTTPConnection
+
                 http = connectionclass(self._host)
                 if kw:
                     http.request("POST", path, urllib.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded"})
                 else:
                     http.request("GET", path)
             else:
+                connectionclass = httplib.HTTPConnection
                 http = connectionclass(*self._proxy)
                 if kw:
-                    http.request("POST", 'https://'+self._host+path, urllib.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded"})
+                    http.request("POST", self._scheme+'://'+self._host+path, urllib.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded"})
                 else:
-                    http.request("GET", 'https://'+self._host+path)
+                    http.request("GET", self._scheme+'://'+self._host+path)
 
             response = http.getresponse()
             if response.status != 200:
