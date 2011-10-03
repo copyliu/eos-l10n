@@ -131,7 +131,6 @@ class Fit(object):
             fit.name = fitName
         except:
             return
-
         droneMap = {}
         for i in range(1, len(lines)):
             line = lines[i]
@@ -161,7 +160,10 @@ class Fit(object):
             else:
                 m = Module(item)
                 if ammoName:
-                    m.charge = db.getItem(ammoName)
+                    try:
+                        m.charge = db.getItem(ammoName)
+                    except:
+                        pass
 
                 if setOffline == True and m.isValidState(State.OFFLINE):
                     m.state = State.OFFLINE
