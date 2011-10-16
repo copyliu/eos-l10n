@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
-from sqlalchemy.orm import relation, mapper, synonym
+from sqlalchemy.orm import relation, mapper, synonym, deferred
 
 from eos.db import gamedata_meta
 from eos.types import Item, MarketGroup, Icon
@@ -36,4 +36,5 @@ mapper(MarketGroup, marketgroups_table,
                      "parent" : relation(MarketGroup, backref = "children", remote_side = [marketgroups_table.c.marketGroupID]),
                      "icon" : relation(Icon),
                      "ID" : synonym("marketGroupID"),
-                     "name" : synonym("marketGroupName")})
+                     "name" : synonym("marketGroupName"),
+                     "description" : deferred(marketgroups_table.c.description)})

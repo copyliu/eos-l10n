@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table
-from sqlalchemy.orm import relation, mapper, synonym
+from sqlalchemy.orm import relation, mapper, synonym, deferred
 
 from eos.db import gamedata_meta
 from eos.types import Group, Icon, Category
@@ -35,4 +35,5 @@ mapper(Group, groups_table,
        properties = {"category" : relation(Category, backref = "groups"),
                      "icon" : relation(Icon),
                      "ID" : synonym("groupID"),
-                     "name" : synonym("groupName")})
+                     "name" : synonym("groupName"),
+                     "description" : deferred(groups_table.c.description)})

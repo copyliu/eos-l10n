@@ -19,7 +19,7 @@
 
 from sqlalchemy import Column, String, Integer, Boolean, Table, ForeignKey
 from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import mapper, synonym, relation
+from sqlalchemy.orm import mapper, synonym, relation, deferred
 from eos.types import Effect, EffectInfo
 from eos.db import gamedata_meta
 
@@ -38,7 +38,8 @@ effects_table = Table("dgmeffects", gamedata_meta,
 
 mapper(EffectInfo, effects_table,
        properties = {"ID" : synonym("effectID"),
-                     "name" : synonym("effectName")})
+                     "name" : synonym("effectName"),
+                     "description" : deferred(effects_table.c.description)})
 
 mapper(Effect, typeeffects_table,
        properties = {"ID": synonym("effectID"),

@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Table, Float
-from sqlalchemy.orm import relation, mapper, synonym
+from sqlalchemy.orm import relation, mapper, synonym, deferred
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
@@ -38,6 +38,8 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("iconID", Integer, ForeignKey("icons.iconID")),
                     Column("groupID", Integer, ForeignKey("invgroups.groupID"), index=True))
 
+
+
 from .metaGroup import metatypes_table
 
 mapper(Item, items_table,
@@ -49,6 +51,7 @@ mapper(Item, items_table,
                                             primaryjoin = metatypes_table.c.typeID == items_table.c.typeID,
                                             uselist = False),
                      "ID" : synonym("typeID"),
-                     "name" : synonym("typeName")})
+                     "name" : synonym("typeName"),
+                     "description" : deferred(items_table.c.description)})
 
 Item.category = association_proxy("group", "category")

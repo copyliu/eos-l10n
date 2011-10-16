@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, Table
-from sqlalchemy.orm import relation, mapper, synonym
+from sqlalchemy.orm import relation, mapper, synonym, deferred
 
 from eos.db import gamedata_meta
 from eos.types import Category, Icon
@@ -33,4 +33,5 @@ categories_table = Table("invcategories", gamedata_meta,
 mapper(Category, categories_table,
        properties = {"icon" : relation(Icon),
                      "ID" : synonym("categoryID"),
-                     "name" : synonym("categoryName")})
+                     "name" : synonym("categoryName"),
+                     "description" : deferred(categories_table.c.description)})

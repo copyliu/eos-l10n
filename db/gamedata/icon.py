@@ -18,7 +18,7 @@
 #===============================================================================
 
 from sqlalchemy import Column, String, Integer, Table
-from sqlalchemy.orm import mapper, synonym
+from sqlalchemy.orm import mapper, synonym, deferred
 
 from eos.db import gamedata_meta
 from eos.types import Icon
@@ -29,4 +29,5 @@ icons_table = Table("icons", gamedata_meta,
                     Column("iconFile", String))
 
 mapper(Icon, icons_table,
-       properties = {"ID" : synonym("iconID")})
+       properties = {"ID" : synonym("iconID"),
+                     "description" : deferred(icons_table.c.description)})
