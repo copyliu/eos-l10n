@@ -200,8 +200,11 @@ def searchItems(nameLike, where=None, join=None, eager=None):
 @cachedQuery(2, "where", "itemids")
 def getVariations(itemids, where=None, eager=None):
     for itemid in itemids:
-            if not isinstance(itemid, int):
-                raise TypeError("All passed item IDs must be integers")
+        if not isinstance(itemid, int):
+            raise TypeError("All passed item IDs must be integers")
+    # Get out if list of provided IDs is empty
+    if len(itemids) == 0:
+        return []
 
     itemfilter = or_(*(metatypes_table.c.parentTypeID == itemid for itemid in itemids))
     filter = processWhere(itemfilter, where)
