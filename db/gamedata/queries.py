@@ -18,7 +18,7 @@
 #===============================================================================
 
 from eos.db import gamedata_session
-from eos.db.gamedata.metaGroup import metatypes_table
+from eos.db.gamedata.metaGroup import metatypes_table, items_table
 from sqlalchemy.sql import and_, or_, select, func
 from sqlalchemy.orm import join
 from eos.types import Item, Category, Group, MarketGroup, AttributeInfo, MetaData, MetaGroup
@@ -197,33 +197,16 @@ def searchItems(nameLike, where=None, join=None, eager=None):
     items = gamedata_session.query(Item).options(*processEager(eager)).join(*join).filter(filter).all()
     return items
 
-@cachedQuery(3, "where", "item", "metaGroups")
-def getVariations(item, where=None, metaGroups=None, eager=None):
-    if not isinstance(item, (int, Item)):
-        raise TypeError("Need integer or Item instance as argument")
-    if not isinstance(item, int):
-        item = item.ID
+@cachedQuery(2, "where", "itemids")
+def getVariations(itemids, where=None, eager=None):
+    for itemid in itemids:
+            if not isinstance(itemid, int):
+                raise TypeError("All passed item IDs must be integers")
 
-    clause = and_(Item.typeID == metatypes_table.c.typeID, metatypes_table.c.parentTypeID == item)
-
-    if metaGroups != None:
-        if not hasattr(metaGroups, "__iter__"):
-            metaGroups = (metaGroups,)
-        for metaGroup in metaGroups:
-            if not isinstance(metaGroup, int):
-                raise TypeError("All metaGroups must be integer")
-
-        metaClause = metatypes_table.c.metaGroupID == metaGroups[0]
-        i = 1
-        while i < len(metaGroups):
-            metaClause = or_(metaClause, metatypes_table.c.metaGroupID == metaGroups[i])
-            i += 1
-
-        clause = and_(clause, metaClause)
-
-
-    filter = processWhere(clause, where)
-    vars = gamedata_session.query(Item).options(*processEager(eager)).filter(filter).all()
+    itemfilter = or_(*(metatypes_table.c.parentTypeID == itemid for itemid in itemids))
+    filter = processWhere(itemfilter, where)
+    joinon = items_table.c.typeID == metatypes_table.c.typeID
+    vars = gamedata_session.query(Item).options(*processEager(eager)).join((metatypes_table, joinon)).filter(filter).all()
     return vars
 
 @cachedQuery(1, "attr")
