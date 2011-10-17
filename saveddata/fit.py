@@ -268,7 +268,7 @@ class Fit(object):
                             except:
                                 continue
                             # All boosters have implant category
-                            if implantItem.category.name != "Implant":
+                            if boosterItem.category.name != "Implant":
                                 continue
                             # Add booster to the fitting
                             b = Booster(boosterItem)
