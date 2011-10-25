@@ -67,7 +67,7 @@ stripspec = "[^A-Za-z0-9]"
 
 # Method to get data if effect is implemented in eos or not
 def geteffst(effectname):
-    eosname = re.sub(stripspec, "", effectname)
+    eosname = re.sub(stripspec, "", effectname).lower()
     if eosname in implemented:
         impstate = True
     else:
