@@ -1,5 +1,5 @@
 # Used by:
-# Module: Armored Warfare Link - Rapid Repair
+# Variations of module: Armored Warfare Link - Rapid Repair (2 of 2)
 type = "gang", "active"
 gangBoost = "armorRepairDuration"
 def handler(fit, module, context):

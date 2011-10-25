@@ -1,5 +1,5 @@
 # Used by:
-# Ships from group: Battlecruiser (8 of 8)
+# Ships from group: Battlecruiser (9 of 12)
 # Ships from group: Carrier (4 of 4)
 # Ships from group: Command Ship (8 of 8)
 # Ships from group: Supercarrier (5 of 5)

@@ -1,8 +1,8 @@
 # Used by:
+# Modules from group: Scan Probe Launcher (4 of 7)
 # Implants named like: Hardwiring Poteque Pharmaceuticals 'Prospector' PPH (3 of 3)
 # Implants named like: Low grade Virtue (5 of 6)
 # Modules named like: Gravity Capacitor Upgrade (6 of 6)
-# Modules named like: Sisters Probe Launcher (2 of 2)
 # Skill: Astrometric Rangefinding
 type = "passive"
 def handler(fit, container, context):

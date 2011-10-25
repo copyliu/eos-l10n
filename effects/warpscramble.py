@@ -1,5 +1,5 @@
 # Used by:
-# Variations of module: Warp Disruptor I (18 of 18)
+# Variations of module: Warp Disruptor I (19 of 19)
 # Module: Civilian Warp Disruptor
 type = "projected", "active"
 def handler(fit, module, context):

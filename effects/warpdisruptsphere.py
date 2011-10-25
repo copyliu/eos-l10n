@@ -1,5 +1,5 @@
 # Used by:
-# Module: Warp Disruption Field Generator I
+# Modules from group: Warp Disrupt Field Generator (2 of 2)
 type = "active"
 runTime = "early"
 def handler(fit, module, context):

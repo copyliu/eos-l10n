@@ -3,6 +3,7 @@
 # Variations of ship: Thorax (3 of 4)
 # Variations of ship: Vexor (4 of 4)
 # Ship: Adrestia
+# Ship: Deimos Old
 # Ship: Exequror Navy Issue
 type = "passive"
 def handler(fit, ship, context):

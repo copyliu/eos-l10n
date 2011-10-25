@@ -1,5 +1,5 @@
 # Used by:
-# Module: Siege Module I
+# Variations of module: Siege Module I (2 of 2)
 type = "active"
 runTime = "early"
 def handler(fit, module, context):

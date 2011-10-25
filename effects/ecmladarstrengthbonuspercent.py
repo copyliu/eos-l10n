@@ -3,5 +3,5 @@
 type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "ECM",
-                                  "scanRadarStrengthBonus", module.getModifiedItemAttr("scanStrengthBonus"),
+                                  "scanLadarStrengthBonus", module.getModifiedItemAttr("ecmStrengthBonusPercent"),
                                   stackingPenalties = True)

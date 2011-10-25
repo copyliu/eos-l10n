@@ -1,5 +1,5 @@
 # Used by:
-# Module: Mining Foreman Link - Mining Laser Field Enhancement
+# Variations of module: Mining Foreman Link - Mining Laser Field Enhancement (2 of 2)
 type = "gang", "active"
 gangBoost = "miningMaxRange"
 def handler(fit, module, context):
