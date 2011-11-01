@@ -130,6 +130,10 @@ def getitemname(item):
         name = ""
         for row in new_cursor:
             name = row[0]
+        if not name:
+            old_cursor.execute(query, (item,))
+            for row in old_cursor:
+                name = row[0]
         itemnames[item] = name
     return name
 
@@ -144,6 +148,10 @@ def getgroupname(grp):
         name = ""
         for row in new_cursor:
             name = row[0]
+        if not name:
+            old_cursor.execute(query, (grp,))
+            for row in old_cursor:
+                name = row[0]
         groupnames[grp] = name
     return name
 
@@ -158,6 +166,10 @@ def geteffectname(effect):
         name = ""
         for row in new_cursor:
             name = row[0]
+        if not name:
+            old_cursor.execute(query, (effect,))
+            for row in old_cursor:
+                name = row[0]
         effectnames[effect] = name
     return name
 
@@ -172,6 +184,10 @@ def getattrname(attr):
         name = ""
         for row in new_cursor:
             name = row[0]
+        if not name:
+            old_cursor.execute(query, (attr,))
+            for row in old_cursor:
+                name = row[0]
         attrnames[attr] = name
     return name
 
