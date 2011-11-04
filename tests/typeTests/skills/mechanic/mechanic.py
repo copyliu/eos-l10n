@@ -3,7 +3,7 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.skill = "Mechanic"
+        self.skill = "Mechanics"
 
     # 5% bonus to structure hit points per skill level.
 

@@ -5,16 +5,16 @@ class Test(TestBase):
         TestBase.setUp(self)
         self.skill = "Tactical Weapon Reconfiguration"
 
-    # 50-unit reduction in strontium clathrate consumption amount for siege module activation per skill level.
+    # 25-unit reduction in strontium clathrate consumption amount for siege module activation per skill level.
 
     def test_consumptionQuantity_moduleSiegeModuleSkillrq(self):
         self.buildTested = 0
         attr = "consumptionQuantity"
         item = "Siege Module I"
         iLvl = 1
-        iIngame = 450
+        iIngame = 225
         fLvl = 4
-        fIngame = 300
+        fIngame = 150
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame - iIngame
