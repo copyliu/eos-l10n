@@ -72,61 +72,6 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Role Bonuses:
-    # Penalty: -25% rate of fire for all turrets
-
-    def test_static_speed_moduleEnergyWeapon(self):
-        self.buildTested = 0
-        attr = "speed"
-        item = "Dual Light Beam Laser I"
-        ship_other = "Punisher"
-        iIngame = 1.0
-        fIngame = 1.25
-        iEos = self.getItemAttr(attr, item, ship=ship_other)
-        fEos = self.getItemAttr(attr, item, ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_static_speed_moduleHybridWeapon(self):
-        self.buildTested = 0
-        attr = "speed"
-        item = "Dual 150mm Railgun I"
-        ship_other = "Punisher"
-        iIngame = 1.0
-        fIngame = 1.25
-        iEos = self.getItemAttr(attr, item, ship=ship_other)
-        fEos = self.getItemAttr(attr, item, ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_static_speed_moduleProjectileWeapon(self):
-        self.buildTested = 0
-        attr = "speed"
-        item = "720mm Howitzer Artillery I"
-        ship_other = "Punisher"
-        iIngame = 1.0
-        fIngame = 1.25
-        iEos = self.getItemAttr(attr, item, ship=ship_other)
-        fEos = self.getItemAttr(attr, item, ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_static_speed_moduleOther(self):
-        self.buildTested = 0
-        attr = "speed"
-        item = "Core Probe Launcher I"
-        ship_other = "Punisher"
-        iIngame = 1.0
-        fIngame = 1.0
-        iEos = self.getItemAttr(attr, item, ship=ship_other)
-        fEos = self.getItemAttr(attr, item, ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    # Role Bonuses:
     # Bonus: 50% bonus to optimal range for small hybrid turrets
 
     def test_static_maxRange_moduleHybridWeaponSmall(self):

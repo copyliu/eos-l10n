@@ -6,7 +6,7 @@ class Test(TestBase):
         self.ship = "Moros"
 
     # Gallente Dreadnought Skill Bonus:
-    # 5% bonus to Capital Hybrid Turret damage
+    # 5% bonus to Capital Hybrid Turret damage per level
 
     def test_gallenteDreadnought_damageMultiplier_moduleHybridWeaponCapital(self):
         self.buildTested = 0
@@ -39,138 +39,27 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Gallente Dreadnought Skill Bonus:
-    # 20% bonus to drone hitpoints per skill level
+    # 5% bonus to Capital Hybrid Turret damage per level
 
-    def test_gallenteDreadnought_hp_droneCombat(self):
+    def test_gallenteDreadnought_speed_moduleHybridWeaponCapital(self):
         self.buildTested = 0
-        item = "Valkyrie I"
-        skill = "Gallente Dreadnought"
-        layers = ("shieldCapacity", "armorHP", "hp")
-        iLvl = 1
-        iIngame = 1.2
-        fLvl = 4
-        fIngame = 1.8
-        iEos = 0
-        fEos = 0
-        for layer in layers:
-            iEos += self.getItemAttr(layer, item, skill=(skill, iLvl), ship=self.ship)
-            fEos += self.getItemAttr(layer, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_gallenteDreadnought_hp_droneLogistic(self):
-        self.buildTested = 0
-        item = "Heavy Shield Maintenance Bot I"
-        skill = "Gallente Dreadnought"
-        layers = ("shieldCapacity", "armorHP", "hp")
-        iLvl = 1
-        iIngame = 1.2
-        fLvl = 4
-        fIngame = 1.8
-        iEos = 0
-        fEos = 0
-        for layer in layers:
-            iEos += self.getItemAttr(layer, item, skill=(skill, iLvl), ship=self.ship)
-            fEos += self.getItemAttr(layer, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_gallenteDreadnought_hp_droneEwar(self):
-        self.buildTested = 0
-        item = "Ogre SD-900"
-        skill = "Gallente Dreadnought"
-        layers = ("shieldCapacity", "armorHP", "hp")
-        iLvl = 1
-        iIngame = 1.2
-        fLvl = 4
-        fIngame = 1.8
-        iEos = 0
-        fEos = 0
-        for layer in layers:
-            iEos += self.getItemAttr(layer, item, skill=(skill, iLvl), ship=self.ship)
-            fEos += self.getItemAttr(layer, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_gallenteDreadnought_hp_droneCapDrain(self):
-        self.buildTested = 0
-        item = "Acolyte EV-300"
-        skill = "Gallente Dreadnought"
-        layers = ("shieldCapacity", "armorHP", "hp")
-        iLvl = 1
-        iIngame = 1.2
-        fLvl = 4
-        fIngame = 1.8
-        iEos = 0
-        fEos = 0
-        for layer in layers:
-            iEos += self.getItemAttr(layer, item, skill=(skill, iLvl), ship=self.ship)
-            fEos += self.getItemAttr(layer, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_gallenteDreadnought_hp_droneWeb(self):
-        self.buildTested = 0
-        item = "Berserker SW-900"
-        skill = "Gallente Dreadnought"
-        layers = ("shieldCapacity", "armorHP", "hp")
-        iLvl = 1
-        iIngame = 1.2
-        fLvl = 4
-        fIngame = 1.8
-        iEos = 0
-        fEos = 0
-        for layer in layers:
-            iEos += self.getItemAttr(layer, item, skill=(skill, iLvl), ship=self.ship)
-            fEos += self.getItemAttr(layer, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    def test_gallenteDreadnought_hp_droneMining(self):
-        self.buildTested = 0
-        item = "Harvester Mining Drone"
-        skill = "Gallente Dreadnought"
-        layers = ("shieldCapacity", "armorHP", "hp")
-        iLvl = 1
-        iIngame = 1.0
-        fLvl = 4
-        fIngame = 1.0
-        iEos = 0
-        fEos = 0
-        for layer in layers:
-            iEos += self.getItemAttr(layer, item, skill=(skill, iLvl), ship=self.ship)
-            fEos += self.getItemAttr(layer, item, skill=(skill, fLvl), ship=self.ship)
-        dIngame = fIngame / iIngame
-        dEos = fEos / iEos
-        self.assertAlmostEquals(dEos, dIngame)
-
-    # Gallente Dreadnought Skill Bonus:
-    # 20% bonus to drone damage per skill level
-
-    def test_gallenteDreadnought_damageMultiplier_droneCombat(self):
-        self.buildTested = 0
-        attr = "damageMultiplier"
-        item = "Curator I"
+        attr = "speed"
+        item = "Ion Siege Blaster Cannon I"
         skill = "Gallente Dreadnought"
         iLvl = 1
-        iIngame = 1.2
+        iIngame = 0.95
         fLvl = 4
-        fIngame = 1.8
+        fIngame = 0.8
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_gallenteDreadnought_damageMultiplier_other(self):
+    def test_gallenteDreadnought_speed_moduleHybridWeaponOther(self):
         self.buildTested = 0
-        attr = "damageMultiplier"
-        item = "Gatling Pulse Laser I"
+        attr = "speed"
+        item = "Heavy Electron Blaster I"
         skill = "Gallente Dreadnought"
         iLvl = 1
         iIngame = 1.0
