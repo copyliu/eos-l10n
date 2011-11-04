@@ -1,5 +1,5 @@
 # Used by:
-# Ships named like: Deimos (2 of 2)
+# Ship: Deimos
 # Ship: Thorax
 type = "passive"
 def handler(fit, ship, context):
