@@ -1,4 +1,5 @@
 # Used by:
+# Ship: Naga
 # Ship: Talos
 type = "passive"
 def handler(fit, ship, context):

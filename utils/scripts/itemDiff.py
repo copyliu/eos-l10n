@@ -425,7 +425,7 @@ if args.effects or args.attributes or args.groups:
         # Make sure our states are sorted
         stateorder = sorted(global_itmdata)
 
-        TG = {S["changed"]: "*",
+        TG = {S["unchanged"]: "+", S["changed"]: "*",
               S["removed"]: "-",
               S["added"]: "+"}
 
@@ -463,13 +463,13 @@ if args.effects or args.attributes or args.groups:
                 attrdata = items[item][2]
                 for attrstate in stateorder:
                     # Skip unchanged and empty attribute sets, also skip attributes display for added and removed items
-                    if attrstate == S["unchanged"] or itmstate in (S["removed"], S["added"]) or attrstate not in attrdata:
+                    if (attrstate == S["unchanged"] and itmstate != S["added"]) or itmstate in (S["removed"], ) or attrstate not in attrdata:
                         continue
                     attrs = attrdata[attrstate]
                     attrorder = sorted(attrs, key=lambda attr: getattrname(attr))
                     for attr in attrorder:
                         valline = ""
-                        if attrs[attr][0] == "NULL":
+                        if attrs[attr][0] == "NULL" or itmstate == S["added"]:
                             valline = "{0}".format(attrs[attr][1] or 0)
                         elif attrs[attr][1] == "NULL":
                             valline = "{0}".format(attrs[attr][0] or 0)

@@ -1,5 +1,5 @@
 # Used by:
-# Variations of module: Information Warfare Link - Sensor Integrity (2 of 2)
+# Variations of module: Information Warfare Link - Sensor Integrity I (2 of 2)
 type = "gang", "active"
 gangBoost = "scanTypeStrength"
 def handler(fit, module, context):
