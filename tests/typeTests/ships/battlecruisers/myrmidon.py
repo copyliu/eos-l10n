@@ -217,7 +217,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Information Warfare Link - Sensor Integrity"
+        item = "Information Warfare Link - Sensor Integrity I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

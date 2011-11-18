@@ -10,7 +10,7 @@ class Test(TestBase):
     def test_commandBonus_moduleGangCoordinatorSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Mining Foreman Link - Mining Laser Field Enhancement"
+        item = "Mining Foreman Link - Mining Laser Field Enhancement I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -24,7 +24,7 @@ class Test(TestBase):
     def test_commandBonus_moduleGangCoordinatorNoSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4

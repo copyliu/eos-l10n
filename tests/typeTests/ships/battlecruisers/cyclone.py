@@ -106,7 +106,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Siege Warfare Link - Shield Efficiency"
+        item = "Siege Warfare Link - Shield Efficiency I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

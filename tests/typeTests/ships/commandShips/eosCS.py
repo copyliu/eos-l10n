@@ -124,7 +124,7 @@ class Test(TestBase):
     def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqInformation(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.03
@@ -139,7 +139,7 @@ class Test(TestBase):
     def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Armored Warfare Link - Passive Defense"
+        item = "Armored Warfare Link - Passive Defense I"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.0
@@ -154,7 +154,7 @@ class Test(TestBase):
     def test_commandShips_commandBonusHidden_moduleGangCoordinatorSkillrqInformation(self):
         self.buildTested = 0
         attr = "commandBonusHidden"
-        item = "Information Warfare Link - Electronic Superiority"
+        item = "Information Warfare Link - Electronic Superiority I"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.03
@@ -172,7 +172,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Siege Warfare Link - Shield Harmonizing"
+        item = "Siege Warfare Link - Shield Harmonizing I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01
@@ -201,7 +201,7 @@ class Test(TestBase):
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
         attr = "maxGroupActive"
-        item = "Information Warfare Link - Electronic Superiority"
+        item = "Information Warfare Link - Electronic Superiority I"
         ship_other = "Brutix"
         iIngame = 1.0
         fIngame = 3.0

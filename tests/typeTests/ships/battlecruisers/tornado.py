@@ -39,7 +39,7 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Battlecruiser Skill Bonus Per Level:
-    # 10% bonus to Large Projectile Turret falloff
+    # 5% bonus to Large Projectile Turret falloff
 
     def test_battlecruisers_falloff_moduleProjectileWeaponLarge(self):
         self.buildTested = 0
@@ -47,9 +47,9 @@ class Test(TestBase):
         item = "800mm Repeating Artillery I"
         skill = "Battlecruisers"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame

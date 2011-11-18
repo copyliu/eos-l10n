@@ -72,7 +72,7 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Minmatar Carrier Skill Bonuses:
-    # 5% bonus to Shield transfer amount per level
+    # 7.5% bonus to Shield transfer amount per level
 
     def test_minmatarCarrier_shieldBonus_moduleShieldTransporterCapital(self):
         self.buildTested = 0
@@ -80,9 +80,9 @@ class Test(TestBase):
         item = "Capital Shield Transporter I"
         skill = "Minmatar Carrier"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -95,9 +95,9 @@ class Test(TestBase):
         item = "Large Shield Transporter I"
         skill = "Minmatar Carrier"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -110,9 +110,9 @@ class Test(TestBase):
         item = "Civilian Remote Shield Transporter"
         skill = "Minmatar Carrier"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -135,7 +135,7 @@ class Test(TestBase):
         self.assertAlmostEquals(dEos, dIngame)
 
     # Minmatar Carrier Skill Bonuses:
-    # 5% bonus to Armor transfer amount per level
+    # 7.5% bonus to Armor transfer amount per level
 
     def test_minmatarCarrier_armorDamageAmount_moduleRemoteArmorRepairerCapital(self):
         self.buildTested = 0
@@ -143,9 +143,9 @@ class Test(TestBase):
         item = "Capital Remote Armor Repair System I"
         skill = "Minmatar Carrier"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -158,9 +158,9 @@ class Test(TestBase):
         item = "Large Remote Armor Repair System I"
         skill = "Minmatar Carrier"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -173,9 +173,9 @@ class Test(TestBase):
         item = "Civilian Remote Armor Repair System"
         skill = "Minmatar Carrier"
         iLvl = 1
-        iIngame = 1.05
+        iIngame = 1.075
         fLvl = 4
-        fIngame = 1.2
+        fIngame = 1.3
         iEos = self.getItemAttr(attr, item, skill=(skill, iLvl), ship=self.ship)
         fEos = self.getItemAttr(attr, item, skill=(skill, fLvl), ship=self.ship)
         dIngame = fIngame / iIngame
@@ -219,7 +219,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Information Warfare Link - Sensor Integrity"
+        item = "Information Warfare Link - Sensor Integrity I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

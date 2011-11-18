@@ -13,7 +13,7 @@ class Test(TestBase):
     def test_caldariDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqSiegeWarfare(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Siege Warfare Link - Shield Harmonizing"
+        item = "Siege Warfare Link - Shield Harmonizing I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -27,7 +27,7 @@ class Test(TestBase):
     def test_caldariDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Information Warfare Link - Sensor Integrity"
+        item = "Information Warfare Link - Sensor Integrity I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -44,7 +44,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Information Warfare Link - Electronic Superiority"
+        item = "Information Warfare Link - Electronic Superiority I"
         iIngame = 1.0
         fIngame = 0.01
         iEos = self.getItemAttr(attr, item, ship=self.hull)

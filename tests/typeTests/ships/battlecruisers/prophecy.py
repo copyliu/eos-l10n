@@ -162,7 +162,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

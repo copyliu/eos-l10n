@@ -28,7 +28,7 @@ class Test(TestBase):
     def test_industrialCommandShips_commandBonus_moduleGangCoordinatorSkillrqMining(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Mining Foreman Link - Harvester Capacitor Efficiency"
+        item = "Mining Foreman Link - Harvester Capacitor Efficiency I"
         skill = "Industrial Command Ships"
         iLvl = 1
         iIngame = 1.03
@@ -43,7 +43,7 @@ class Test(TestBase):
     def test_industrialCommandShips_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Armored Warfare Link - Damage Control"
+        item = "Armored Warfare Link - Damage Control I"
         skill = "Industrial Command Ships"
         iLvl = 1
         iIngame = 1.0
@@ -135,7 +135,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01
@@ -164,7 +164,7 @@ class Test(TestBase):
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
         attr = "maxGroupActive"
-        item = "Siege Warfare Link - Shield Efficiency"
+        item = "Siege Warfare Link - Shield Efficiency I"
         ship_other = "Nighthawk"
         iIngame = 1.0
         fIngame = 3.0

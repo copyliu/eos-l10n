@@ -13,7 +13,7 @@ class Test(TestBase):
     def test_gallenteDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqInformationWarfare(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -27,7 +27,7 @@ class Test(TestBase):
     def test_gallenteDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Mining Foreman Link - Laser Optimization"
+        item = "Mining Foreman Link - Laser Optimization I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -41,7 +41,7 @@ class Test(TestBase):
     def test_gallenteDefensiveSystems_commandBonusHidden_moduleGangCoordinatorSkillrqInformationWarfare(self):
         self.buildTested = 0
         attr = "commandBonusHidden"
-        item = "Information Warfare Link - Electronic Superiority"
+        item = "Information Warfare Link - Electronic Superiority I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -58,7 +58,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Skirmish Warfare Link - Evasive Maneuvers"
+        item = "Skirmish Warfare Link - Evasive Maneuvers I"
         iIngame = 1.0
         fIngame = 0.01
         iEos = self.getItemAttr(attr, item, ship=self.hull)

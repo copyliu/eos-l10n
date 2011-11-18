@@ -63,7 +63,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "maxGroupActive"
         skill = "Amarr Carrier"
-        item = "Siege Warfare Link - Shield Efficiency"
+        item = "Siege Warfare Link - Shield Efficiency I"
         iLvl = 1
         iIngame = 2
         fLvl = 4
@@ -277,7 +277,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

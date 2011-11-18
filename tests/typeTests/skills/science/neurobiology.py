@@ -3,88 +3,102 @@ from eos.tests import TestBase
 class Test(TestBase):
     def setUp(self):
         TestBase.setUp(self)
-        self.skill = "Warfare Link Specialist"
+        self.skill = "Neurobiology"
 
-    # Boosts effectiveness of all warfare link and mining foreman modules by 10% per level.
+    # 5% gain to booster effects per level
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
+    def test_aoeCloudSizeBonus_booster(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Armored Warfare Link - Passive Defense I"
+        attr = "aoeCloudSizeBonus"
+        item = "Standard Crash Booster"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqInformation(self):
+    def test_armorDamageAmountBonus_booster(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Information Warfare Link - Recon Operation I"
+        attr = "armorDamageAmountBonus"
+        item = "Strong Exile Booster"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqMining(self):
+    def test_capacitorCapacityBonus_booster(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Mining Foreman Link - Laser Optimization I"
+        attr = "capacitorCapacityBonus"
+        item = "Improved Mindflood Booster"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqSiege(self):
+    def test_rangeSkillBonus_booster(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Siege Warfare Link - Shield Efficiency I"
+        attr = "rangeSkillBonus"
+        item = "Strong Frentix Booster"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonus_moduleGangCoordinatorSkillrqSkirmish(self):
+    def signatureRadiusBonustest_capacitorCapacityBonus_booster(self):
         self.buildTested = 0
-        attr = "commandBonus"
-        item = "Skirmish Warfare Link - Evasive Maneuvers I"
+        attr = "signatureRadiusBonus"
+        item = "Improved X-Instinct Booster"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame / iIngame
         dEos = fEos / iEos
         self.assertAlmostEquals(dEos, dIngame)
 
-    def test_commandBonusHidden_moduleGangCoordinatorSkillrqInformation(self):
+    def test_trackingSpeedBonus_booster(self):
         self.buildTested = 0
-        attr = "commandBonusHidden"
-        item = "Information Warfare Link - Electronic Superiority I"
+        attr = "trackingSpeedBonus"
+        item = "Standard Drop Booster"
         iLvl = 1
-        iIngame = 1.1
+        iIngame = 1.05
         fLvl = 4
-        fIngame = 1.4
+        fIngame = 1.2
+        iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
+        fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
+        dIngame = fIngame / iIngame
+        dEos = fEos / iEos
+        self.assertAlmostEquals(dEos, dIngame)
+
+    def test_shieldBoostMultiplier_booster(self):
+        self.buildTested = 0
+        attr = "shieldBoostMultiplier"
+        item = "Synth Blue Pill Booster"
+        iLvl = 1
+        iIngame = 1.05
+        fLvl = 4
+        fIngame = 1.2
         iEos = self.getItemAttr(attr, item, skill=(self.skill, iLvl))
         fEos = self.getItemAttr(attr, item, skill=(self.skill, fLvl))
         dIngame = fIngame / iIngame

@@ -76,7 +76,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Mining Foreman Link - Laser Optimization"
+        item = "Mining Foreman Link - Laser Optimization I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

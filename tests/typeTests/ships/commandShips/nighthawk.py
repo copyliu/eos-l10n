@@ -551,7 +551,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Skirmish Warfare Link - Interdiction Maneuvers"
+        item = "Skirmish Warfare Link - Interdiction Maneuvers I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

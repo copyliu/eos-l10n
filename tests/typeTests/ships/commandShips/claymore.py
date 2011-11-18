@@ -140,7 +140,7 @@ class Test(TestBase):
     def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqArmored(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Skirmish Warfare Link - Interdiction Maneuvers"
+        item = "Skirmish Warfare Link - Interdiction Maneuvers I"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.03
@@ -155,7 +155,7 @@ class Test(TestBase):
     def test_commandShips_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         skill = "Command Ships"
         iLvl = 1
         iIngame = 1.0
@@ -173,7 +173,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Siege Warfare Link - Shield Efficiency"
+        item = "Siege Warfare Link - Shield Efficiency I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01
@@ -202,7 +202,7 @@ class Test(TestBase):
     def test_static_maxGroupActive_moduleGangCoordinator(self):
         self.buildTested = 0
         attr = "maxGroupActive"
-        item = "Skirmish Warfare Link - Evasive Maneuvers"
+        item = "Skirmish Warfare Link - Evasive Maneuvers I"
         ship_other = "Prophecy"
         iIngame = 1.0
         fIngame = 3.0

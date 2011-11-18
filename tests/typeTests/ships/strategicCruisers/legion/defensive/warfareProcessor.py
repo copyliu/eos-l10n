@@ -13,7 +13,7 @@ class Test(TestBase):
     def test_amarrDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqArmoredWarfare(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Armored Warfare Link - Damage Control"
+        item = "Armored Warfare Link - Damage Control I"
         iLvl = 1
         iIngame = 1.05
         fLvl = 4
@@ -27,7 +27,7 @@ class Test(TestBase):
     def test_amarrDefensiveSystems_commandBonus_moduleGangCoordinatorSkillrqOther(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Siege Warfare Link - Shield Efficiency"
+        item = "Siege Warfare Link - Shield Efficiency I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -44,7 +44,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Mining Foreman Link - Laser Optimization"
+        item = "Mining Foreman Link - Laser Optimization I"
         iIngame = 1.0
         fIngame = 0.01
         iEos = self.getItemAttr(attr, item, ship=self.hull)

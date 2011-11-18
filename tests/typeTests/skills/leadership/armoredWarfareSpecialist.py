@@ -10,7 +10,7 @@ class Test(TestBase):
     def test_commandBonus_moduleGangCoordinatorSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Armored Warfare Link - Passive Defense"
+        item = "Armored Warfare Link - Passive Defense I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -24,7 +24,7 @@ class Test(TestBase):
     def test_commandBonus_moduleGangCoordinatorNoSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Mining Foreman Link - Harvester Capacitor Efficiency"
+        item = "Mining Foreman Link - Harvester Capacitor Efficiency I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4

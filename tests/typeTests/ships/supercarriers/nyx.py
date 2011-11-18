@@ -146,7 +146,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "maxGroupActive"
         skill = "Gallente Carrier"
-        item = "Mining Foreman Link - Laser Optimization"
+        item = "Mining Foreman Link - Laser Optimization I"
         iLvl = 1
         iIngame = 2
         fLvl = 4
@@ -177,7 +177,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Skirmish Warfare Link - Rapid Deployment"
+        item = "Skirmish Warfare Link - Rapid Deployment I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01

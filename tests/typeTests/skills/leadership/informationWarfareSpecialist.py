@@ -10,7 +10,7 @@ class Test(TestBase):
     def test_commandBonus_moduleGangCoordinatorSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Information Warfare Link - Sensor Integrity"
+        item = "Information Warfare Link - Sensor Integrity I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -24,7 +24,7 @@ class Test(TestBase):
     def test_commandBonus_moduleGangCoordinatorNoSkillrq(self):
         self.buildTested = 0
         attr = "commandBonus"
-        item = "Siege Warfare Link - Shield Efficiency"
+        item = "Siege Warfare Link - Shield Efficiency I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4
@@ -38,7 +38,7 @@ class Test(TestBase):
     def test_commandBonusHidden_moduleGangCoordinatorSkillrq(self):
         self.buildTested = 0
         attr = "commandBonusHidden"
-        item = "Information Warfare Link - Electronic Superiority"
+        item = "Information Warfare Link - Electronic Superiority I"
         iLvl = 1
         iIngame = 1.0
         fLvl = 4

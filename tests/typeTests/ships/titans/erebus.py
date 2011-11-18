@@ -62,7 +62,7 @@ class Test(TestBase):
         self.buildTested = 0
         attr = "maxGroupActive"
         skill = "Gallente Titan"
-        item = "Information Warfare Link - Recon Operation"
+        item = "Information Warfare Link - Recon Operation I"
         iLvl = 1
         iIngame = 2
         fLvl = 4
@@ -94,7 +94,7 @@ class Test(TestBase):
     def test_static_cpu_moduleGangCoordinatorSkillrqLeadership(self):
         self.buildTested = 0
         attr = "cpu"
-        item = "Skirmish Warfare Link - Interdiction Maneuvers"
+        item = "Skirmish Warfare Link - Interdiction Maneuvers I"
         ship_other = "Abaddon"
         iIngame = 1.0
         fIngame = 0.01
