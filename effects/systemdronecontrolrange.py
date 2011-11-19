@@ -1,6 +1,7 @@
 # Used by:
 # Celestials named like: Black Hole Effect Beacon Class (6 of 6)
-type = "projected"
+runTime = "early"
+type = ("projected", "offline")
 def handler(fit, beacon, context):
     amount = beacon.getModifiedItemAttr("droneRangeMultiplier")
-    fit.extraAttributes["droneControlRange"].multiply(amount)
+    fit.extraAttributes.multiply("droneControlRange", amount)

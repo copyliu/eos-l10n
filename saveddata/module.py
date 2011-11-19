@@ -490,6 +490,8 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
         for effectName, slot in effectSlotMap.iteritems():
             if effectName in item.effects:
                 return slot
+        if item.group.name == "Effect Beacon":
+            return Slot.RIG
 
         raise ValueError("Passed item does not fit in any known slot")
 
