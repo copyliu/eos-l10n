@@ -4,4 +4,4 @@ runTime = "early"
 type = ("projected", "offline")
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Armor Repair Projector",
-                                  "armorDamageAmount", module.getModifiedItemAttr("armorDamageAmountMultiplierRemote"))
+                                     "armorDamageAmount", module.getModifiedItemAttr("armorDamageAmountMultiplierRemote"))

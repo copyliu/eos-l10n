@@ -4,4 +4,4 @@ runTime = "early"
 type = ("projected", "offline")
 def handler(fit, beacon, context):
     fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Rockets"),
-                                  "kineticDamage", beacon.getModifiedItemAttr("smallWeaponDamageMultiplier"))
+                                    "kineticDamage", beacon.getModifiedItemAttr("smallWeaponDamageMultiplier"))

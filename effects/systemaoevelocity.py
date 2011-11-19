@@ -3,5 +3,5 @@
 runTime = "early"
 type = ("projected", "offline")
 def handler(fit, beacon, context):
-    fit.modules.filteredItemMultiply(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
-                                  "aoeVelocity", beacon.getModifiedItemAttr("aoeVelocityMultiplier"))
+    fit.modules.filteredChargeMultiply(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                       "aoeVelocity", beacon.getModifiedItemAttr("aoeVelocityMultiplier"))
