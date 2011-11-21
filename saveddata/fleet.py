@@ -166,6 +166,8 @@ class Store(object):
 
         # Go through everything which can be used as gang booster
         for thing in chain(fitBooster.modules, fitBooster.character.iterSkills(), (fitBooster.ship,)):
+            if thing.item is None:
+                continue
             for effect in thing.item.effects.itervalues():
                 # And check if it actually has gang boosting effects
                 if effect.isType("gang"):
