@@ -61,6 +61,7 @@ class Fit(object):
         self.shipID = None
         self.projected = False
         self.name = ""
+        self.fleet = None
         self.timestamp = time.time()
         self.build()
 
@@ -453,6 +454,7 @@ class Fit(object):
         self.__capRecharge = None
         self.__calculatedTargets = []
         self.factorReload = False
+        self.fleet = None
         self.extraAttributes = ModifiedAttributeDict(self)
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
         self.ship = Ship(db.getItem(self.shipID)) if self.shipID is not None else None

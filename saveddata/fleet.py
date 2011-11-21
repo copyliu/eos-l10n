@@ -177,7 +177,6 @@ class Squad(object):
                 # If new boost is more powerful, replace older one with it
                 if abs(newBoostAmount) > abs(currBoostAmount):
                         boosts[boostedAttr] = (newBoostAmount, boostInfo)
-        self.members[0].clear()
         self.members[0].calculateModifiedAttributes(gangBoosts=boosts)
 
     def count(self):
