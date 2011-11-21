@@ -124,7 +124,7 @@ class Squad(object):
         store.set(booster, "squad")
 
         # Check skill requirements and squad size to see if we break or not
-        if len(self.members) <= 1 or leader is None or leader.character is None or leader.character.getSkill("Leadership").level * 2 < len(self.members):
+        if len(self.members) <= 0 or leader is None or leader.character is None or leader.character.getSkill("Leadership").level * 2 < len(self.members):
             self.broken = True
 
         if self.broken == False:
