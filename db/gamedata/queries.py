@@ -185,7 +185,7 @@ def searchItems(nameLike, where=None, join=None, eager=None):
     if not isinstance(nameLike, basestring):
         raise TypeError("Need string as argument")
     # Prepare our string for request
-    nameLike = "%{0}%".format(sqlizeString(nameLike))
+    nameLike = u"%{0}%".format(sqlizeString(nameLike))
 
     if join is None:
         join = tuple()
