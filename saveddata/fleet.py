@@ -45,6 +45,16 @@ class Fleet(object):
             #We only get our own bonuses *Sadface*
             store.apply(leader, "fleet")
 
+    def recalculateLinear(self, withBoosters=True):
+        self.store = Store()
+        if withBoosters is True:
+            if self.leader is not None and self.leader.character is not None and self.leader.character.getSkill("Fleet Command").level >= 1:
+                self.leader.calculateModifiedAttributes()
+                self.store.set(self.leader, "squad", clearingUpdate=True)
+            else:
+                self.store = Store()
+        self.wings[0].recalculateLinear(self.store, withBoosters=withBoosters)
+
     def count(self):
         total = 0
         for wing in self.wings:
@@ -92,6 +102,15 @@ class Wing(object):
             #We broke, don't go up
             self.gang.broken = True
 
+    def recalculateLinear(self, store, withBoosters=True):
+        if withBoosters is True:
+            if self.leader is not None and self.leader.character is not None and self.leader.character.getSkill("Wing Command").level >= 1:
+                self.leader.calculateModifiedAttributes()
+                store.set(self.leader, "squad", clearingUpdate=False)
+            else:
+                store = Store()
+        self.squads[0].recalculateLinear(store, withBoosters=withBoosters)
+
     def count(self):
         total = 0 if self.leader is None else 1
         for squad in self.squads:
@@ -133,6 +152,34 @@ class Squad(object):
         else:
             self.wing.broken = True
 
+    def recalculateLinear(self, store, withBoosters=True):
+        if withBoosters is True:
+            if self.leader is not None and self.leader.character is not None and self.leader.character.getSkill("Leadership").level >= 1:
+                self.leader.calculateModifiedAttributes()
+                store.set(self.leader, "squad", clearingUpdate=False)
+            else:
+                store = Store()
+        boosts = {}
+        dict = store.bonuses["squad"]
+        for boostedAttr, boostInfoList in dict.iteritems():
+            for boostInfo in boostInfoList:
+                effect, thing = boostInfo
+                # Get current boost value for given attribute, use 0 as fallback if
+                # no boosts applied yet
+                currBoostAmount = boosts.get(boostedAttr, (0,))[0]
+                # Attribute name which is used to get boost value
+                newBoostAttr = effect.getattr("gangBonus") or "commandBonus"
+                # Get boost amount for current boost
+                newBoostAmount = thing.getModifiedItemAttr(newBoostAttr) or 0
+                # If skill takes part in gang boosting, multiply by skill level
+                if type(thing) == Skill:
+                    newBoostAmount *= thing.level
+                # If new boost is more powerful, replace older one with it
+                if abs(newBoostAmount) > abs(currBoostAmount):
+                        boosts[boostedAttr] = (newBoostAmount, boostInfo)
+        self.members[0].clear()
+        self.members[0].calculateModifiedAttributes(gangBoosts=boosts)
+
     def count(self):
         return len(self.members)
 
@@ -154,15 +201,16 @@ class Store(object):
         # Container for boosted fits and corresponding boosts applied onto them
         self.boosts = {}
 
-    def set(self, fitBooster, layer):
+    def set(self, fitBooster, layer, clearingUpdate=True):
         """Add all gang boosts of given fit for given layer to boost store"""
         if fitBooster is None:
             return
 
         # This dict contains all bonuses for specified layer
         dict = self.bonuses[layer]
-        # Clear existing bonuses
-        dict.clear()
+        if clearingUpdate is True:
+            # Clear existing bonuses
+            dict.clear()
 
         # Go through everything which can be used as gang booster
         for thing in chain(fitBooster.modules, fitBooster.character.iterSkills(), (fitBooster.ship,)):

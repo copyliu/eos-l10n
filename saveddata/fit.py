@@ -25,7 +25,7 @@ from itertools import chain
 from eos import capSim
 from copy import deepcopy
 from math import sqrt, log, asinh
-from eos.types import Drone, Ship, Character, State, Slot, Module, Implant, Booster
+from eos.types import Drone, Ship, Character, State, Slot, Module, Implant, Booster, Skill
 import re
 import xml.dom
 import time
@@ -625,7 +625,7 @@ class Fit(object):
     def getModifier(self):
         return self.__modifier
 
-    def calculateModifiedAttributes(self, targetFit=None):
+    def calculateModifiedAttributes(self, targetFit=None, gangBoosts=None):
         # If we're not explicitly asked to project fit onto something,
         # set self as target fit
         if targetFit is None:
@@ -670,6 +670,20 @@ class Fit(object):
                     if forceProjected is True:
                         targetFit.register(item)
                         item.calculateModifiedAttributes(targetFit, runTime, True)
+            if gangBoosts is not None:
+                contextMap = {Skill: "skill",
+                              Ship: "ship",
+                              Module: "module"}
+                for name, info in gangBoosts.iteritems():
+                    # Unpack all data required to run effect properly
+                    effect, thing = info[1]
+                    if effect.runTime == runTime:
+                        context = ("gang", contextMap[type(thing)])
+                        # Run effect, and get proper bonuses applied
+                        try:
+                            effect.handler(targetFit, thing, context)
+                        except:
+                            pass
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 
