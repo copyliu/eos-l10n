@@ -643,7 +643,7 @@ class Fit(object):
         if self.fleet is not None and refreshBoosts is True:
             self.gangBoosts = self.fleet.recalculateLinear(withBoosters=withBoosters, dirtyStorage=dirtyStorage)
         elif self.fleet is None:
-            self.gangBoosts = {}
+            self.gangBoosts = None
         if dirtyStorage is not None:
             try:
                 dirtyStorage.remove(self.ID)
@@ -657,7 +657,7 @@ class Fit(object):
         # Else, we're checking all target projectee fits
         elif targetFit not in self.__calculatedTargets:
             self.__calculatedTargets.append(targetFit)
-            targetFit.calculateModifiedAttributes()
+            targetFit.calculateModifiedAttributes(dirtyStorage=dirtyStorage)
             forceProjected = True
         # Or do nothing if target fit is calculated
         else:
@@ -719,7 +719,7 @@ class Fit(object):
                             except:
                                 pass
         for fit in self.projectedFits:
-            fit.calculateModifiedAttributes(self)
+            fit.calculateModifiedAttributes(self, dirtyStorage=dirtyStorage)
 
     def fill(self):
         """
