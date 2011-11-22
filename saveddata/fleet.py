@@ -45,15 +45,23 @@ class Fleet(object):
             #We only get our own bonuses *Sadface*
             store.apply(leader, "fleet")
 
-    def recalculateLinear(self, withBoosters=True):
+    def recalculateLinear(self, withBoosters=True, dirtyStorage=None):
         self.store = Store()
+        self.linearBoosts = {}
         if withBoosters is True:
             if self.leader is not None and self.leader.character is not None and self.leader.character.getSkill("Fleet Command").level >= 1:
+                self.leader.boostsFits.add(self.wings[0].squads[0].members[0].ID)
                 self.leader.calculateModifiedAttributes()
                 self.store.set(self.leader, "squad", clearingUpdate=True)
             else:
                 self.store = Store()
-        self.wings[0].recalculateLinear(self.store, withBoosters=withBoosters)
+                if self.leader is not None:
+                    try:
+                        self.leader.boostsFits.remove(self.wings[0].squads[0].members[0].ID)
+                    except KeyError:
+                        pass
+        self.wings[0].recalculateLinear(self.store, withBoosters=withBoosters, dirtyStorage=dirtyStorage)
+        return self.linearBoosts
 
     def count(self):
         total = 0
@@ -102,14 +110,25 @@ class Wing(object):
             #We broke, don't go up
             self.gang.broken = True
 
-    def recalculateLinear(self, store, withBoosters=True):
+    def recalculateLinear(self, store, withBoosters=True, dirtyStorage=None):
         if withBoosters is True:
             if self.leader is not None and self.leader.character is not None and self.leader.character.getSkill("Wing Command").level >= 1:
+                self.leader.boostsFits.add(self.squads[0].members[0].ID)
                 self.leader.calculateModifiedAttributes()
                 store.set(self.leader, "squad", clearingUpdate=False)
             else:
                 store = Store()
-        self.squads[0].recalculateLinear(store, withBoosters=withBoosters)
+                if self.gang.leader is not None:
+                    try:
+                        self.gang.leader.boostsFits.remove(self.squads[0].members[0].ID)
+                    except KeyError:
+                        pass
+                if self.leader is not None:
+                    try:
+                        self.leader.boostsFits.remove(self.squads[0].members[0].ID)
+                    except KeyError:
+                        pass
+        self.squads[0].recalculateLinear(store, withBoosters=withBoosters, dirtyStorage=dirtyStorage)
 
     def count(self):
         total = 0 if self.leader is None else 1
@@ -152,13 +171,29 @@ class Squad(object):
         else:
             self.wing.broken = True
 
-    def recalculateLinear(self, store, withBoosters=True):
+    def recalculateLinear(self, store, withBoosters=True, dirtyStorage=None):
         if withBoosters is True:
             if self.leader is not None and self.leader.character is not None and self.leader.character.getSkill("Leadership").level >= 1:
-                self.leader.calculateModifiedAttributes()
+                self.leader.boostsFits.add(self.members[0].ID)
+                self.leader.calculateModifiedAttributes(dirtyStorage=dirtyStorage)
                 store.set(self.leader, "squad", clearingUpdate=False)
             else:
                 store = Store()
+                if self.leader is not None:
+                    try:
+                        self.leader.boostsFits.remove(self.members[0].ID)
+                    except KeyError:
+                        pass
+                if self.wing.leader is not None:
+                    try:
+                        self.wing.leader.boostsFits.remove(self.members[0].ID)
+                    except KeyError:
+                        pass
+                if self.wing.gang.leader is not None:
+                    try:
+                        self.wing.gang.leader.boostsFits.remove(self.members[0].ID)
+                    except KeyError:
+                        pass
         if getattr(self.wing.gang, "linearBoosts", None) is None:
             self.wing.gang.linearBoosts = {}
         dict = store.bonuses["squad"]
@@ -177,8 +212,7 @@ class Squad(object):
                     newBoostAmount *= thing.level
                 # If new boost is more powerful, replace older one with it
                 if abs(newBoostAmount) > abs(currBoostAmount):
-                        self.wing.gang.linearBoosts[boostedAttr] = (newBoostAmount, boostInfo)
-        self.members[0].calculateModifiedAttributes(gangBoosts=self.wing.gang.linearBoosts)
+                    self.wing.gang.linearBoosts[boostedAttr] = (newBoostAmount, boostInfo)
 
     def count(self):
         return len(self.members)
@@ -213,7 +247,7 @@ class Store(object):
             dict.clear()
 
         # Go through everything which can be used as gang booster
-        for thing in chain(fitBooster.modules, fitBooster.character.iterSkills(), (fitBooster.ship,)):
+        for thing in chain(fitBooster.modules, fitBooster.implants, fitBooster.character.iterSkills(), (fitBooster.ship,)):
             if thing.item is None:
                 continue
             for effect in thing.item.effects.itervalues():

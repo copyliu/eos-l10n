@@ -26,6 +26,7 @@ from eos import capSim
 from copy import deepcopy
 from math import sqrt, log, asinh
 from eos.types import Drone, Ship, Character, State, Slot, Module, Implant, Booster, Skill
+from eos.saveddata.module import State
 import re
 import xml.dom
 import time
@@ -62,6 +63,8 @@ class Fit(object):
         self.projected = False
         self.name = ""
         self.fleet = None
+        self.boostsFits = set()
+        self.gangBoosts = None
         self.timestamp = time.time()
         self.build()
 
@@ -455,6 +458,8 @@ class Fit(object):
         self.__calculatedTargets = []
         self.factorReload = False
         self.fleet = None
+        self.boostsFits = set()
+        self.gangBoosts = None
         self.extraAttributes = ModifiedAttributeDict(self)
         self.extraAttributes.original = self.EXTRA_ATTRIBUTES
         self.ship = Ship(db.getItem(self.shipID)) if self.shipID is not None else None
@@ -627,13 +632,23 @@ class Fit(object):
     def getModifier(self):
         return self.__modifier
 
-    def calculateModifiedAttributes(self, targetFit=None, gangBoosts=None, withBoosters=False):
-        import inspect
-        print "calculateModifiedAttributes called for fit", self.name, "\ncaller is",  inspect.stack()[2][3]
-        if self.fleet is not None and gangBoosts is None:
-            print "recalculateLinear called"
-            self.fleet.recalculateLinear(withBoosters=withBoosters)
-            return
+    def calculateModifiedAttributes(self, targetFit=None, withBoosters=False, dirtyStorage=None):
+        refreshBoosts = False
+        if withBoosters is True:
+            refreshBoosts = True
+        if dirtyStorage is not None and self.ID in dirtyStorage:
+            refreshBoosts = True
+        if dirtyStorage is not None:
+            dirtyStorage.update(self.boostsFits)
+        if self.fleet is not None and refreshBoosts is True:
+            self.gangBoosts = self.fleet.recalculateLinear(withBoosters=withBoosters, dirtyStorage=dirtyStorage)
+        elif self.fleet is None:
+            self.gangBoosts = {}
+        if dirtyStorage is not None:
+            try:
+                dirtyStorage.remove(self.ID)
+            except KeyError:
+                pass
         # If we're not explicitly asked to project fit onto something,
         # set self as target fit
         if targetFit is None:
@@ -678,20 +693,30 @@ class Fit(object):
                     if forceProjected is True:
                         targetFit.register(item)
                         item.calculateModifiedAttributes(targetFit, runTime, True)
-            if gangBoosts is not None:
+            if self.gangBoosts is not None:
                 contextMap = {Skill: "skill",
                               Ship: "ship",
-                              Module: "module"}
-                for name, info in gangBoosts.iteritems():
+                              Module: "module",
+                              Implant: "implant"}
+                for name, info in self.gangBoosts.iteritems():
                     # Unpack all data required to run effect properly
                     effect, thing = info[1]
                     if effect.runTime == runTime:
                         context = ("gang", contextMap[type(thing)])
-                        # Run effect, and get proper bonuses applied
-                        try:
-                            effect.handler(targetFit, thing, context)
-                        except:
-                            pass
+                        if isinstance(thing, Module):
+                            if effect.isType("offline") or (effect.isType("passive") and thing.state >= State.ONLINE) or \
+                            (effect.isType("active") and thing.state >= State.ACTIVE):
+                                # Run effect, and get proper bonuses applied
+                                try:
+                                    effect.handler(targetFit, thing, context)
+                                except:
+                                    pass
+                        else:
+                            # Run effect, and get proper bonuses applied
+                            try:
+                                effect.handler(targetFit, thing, context)
+                            except:
+                                pass
         for fit in self.projectedFits:
             fit.calculateModifiedAttributes(self)
 

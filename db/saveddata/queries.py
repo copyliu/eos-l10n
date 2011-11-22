@@ -20,6 +20,7 @@
 from eos.db.util import processEager, processWhere
 from eos.db import saveddata_session, sd_lock
 from eos.types import User, Character, Fit, Price, DamagePattern, Fleet, MiscData, Wing, Squad
+from eos.db.saveddata.fleet import squadmembers_table
 from sqlalchemy.sql import and_
 import eos.config
 
@@ -333,7 +334,6 @@ def searchFits(nameLike, where=None, eager=None):
         fits = saveddata_session.query(Fit).options(*eager).filter(filter).all()
     return fits
 
-from eos.db.saveddata.fleet import squadmembers_table
 def getSquadsIDsWithFitID(fitID):
     if isinstance(fitID, int):
         with sd_lock:
