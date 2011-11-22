@@ -159,14 +159,15 @@ class Squad(object):
                 store.set(self.leader, "squad", clearingUpdate=False)
             else:
                 store = Store()
-        boosts = {}
+        if getattr(self.wing.gang, "linearBoosts", None) is None:
+            self.wing.gang.linearBoosts = {}
         dict = store.bonuses["squad"]
         for boostedAttr, boostInfoList in dict.iteritems():
             for boostInfo in boostInfoList:
                 effect, thing = boostInfo
                 # Get current boost value for given attribute, use 0 as fallback if
                 # no boosts applied yet
-                currBoostAmount = boosts.get(boostedAttr, (0,))[0]
+                currBoostAmount = self.wing.gang.linearBoosts.get(boostedAttr, (0,))[0]
                 # Attribute name which is used to get boost value
                 newBoostAttr = effect.getattr("gangBonus") or "commandBonus"
                 # Get boost amount for current boost
@@ -176,8 +177,8 @@ class Squad(object):
                     newBoostAmount *= thing.level
                 # If new boost is more powerful, replace older one with it
                 if abs(newBoostAmount) > abs(currBoostAmount):
-                        boosts[boostedAttr] = (newBoostAmount, boostInfo)
-        self.members[0].calculateModifiedAttributes(gangBoosts=boosts)
+                        self.wing.gang.linearBoosts[boostedAttr] = (newBoostAmount, boostInfo)
+        self.members[0].calculateModifiedAttributes(gangBoosts=self.wing.gang.linearBoosts)
 
     def count(self):
         return len(self.members)
