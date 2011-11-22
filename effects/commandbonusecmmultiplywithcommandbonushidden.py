@@ -1,11 +1,12 @@
 # Used by:
 # Variations of module: Information Warfare Link - Electronic Superiority I (2 of 2)
+gangBonus = "commandBonusECM"
+gangBoost = "commandBonusECM"
 type = "active", "gang"
 def handler(fit, module, context):
     if "gang" not in context: return
-    mult = module.getModifiedItemAttr("commandBonusHidden")
     for scanType in ("Magnetometric", "Radar", "Ladar", "Gravimetric"):
         fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "ECM",
                                       "scan%sStrengthBonus" % scanType,
-                                      module.getModifiedItemAttr("commandBonusECM") * mult,
+                                      module.getModifiedItemAttr("commandBonusECM"),
                                       stackingPenalties = True)

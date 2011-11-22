@@ -694,6 +694,7 @@ class Fit(object):
                         targetFit.register(item)
                         item.calculateModifiedAttributes(targetFit, runTime, True)
             if self.gangBoosts is not None:
+                #print self.gangBoosts
                 contextMap = {Skill: "skill",
                               Ship: "ship",
                               Module: "module",
