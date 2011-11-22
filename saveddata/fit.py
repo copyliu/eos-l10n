@@ -628,6 +628,9 @@ class Fit(object):
         return self.__modifier
 
     def calculateModifiedAttributes(self, targetFit=None, gangBoosts=None):
+        if self.fleet is not None and gangBoosts is None:
+            self.fleet.recalculateLinear(withBoosters=True)
+            return
         # If we're not explicitly asked to project fit onto something,
         # set self as target fit
         if targetFit is None:
