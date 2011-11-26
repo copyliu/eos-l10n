@@ -1,5 +1,6 @@
 # Used by:
 # Implants named like: Hardwiring Eifyr and Co. 'Alchemist' XA (2 of 2)
+# Skill: Neurotoxin Recovery
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1
