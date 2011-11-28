@@ -1,4 +1,4 @@
-version = "0.2.2.3"
+version = "0.2.3"
 tag = "git"
 
 def test():
