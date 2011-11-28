@@ -5,4 +5,5 @@
 runTime = "early"
 type = ("projected", "offline")
 def handler(fit, beacon, context):
-    fit.ship.boostItemAttr("armorKineticDamageResonance", beacon.getModifiedItemAttr("armorKineticDamageResistanceBonus"))
+    fit.ship.boostItemAttr("armorKineticDamageResonance", beacon.getModifiedItemAttr("armorKineticDamageResistanceBonus"),
+                           stackingPenalties = True)

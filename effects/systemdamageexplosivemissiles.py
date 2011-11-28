@@ -3,5 +3,6 @@
 runTime = "early"
 type = ("projected", "offline")
 def handler(fit, beacon, context):
-    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
-                                    "explosiveDamage", beacon.getModifiedItemAttr("damageMultiplierMultiplier"))
+    fit.modules.filteredChargeMultiply(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+                                       "explosiveDamage", beacon.getModifiedItemAttr("damageMultiplierMultiplier"),
+                                       stackingPenalties = True)
