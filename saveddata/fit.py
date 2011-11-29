@@ -838,7 +838,12 @@ class Fit(object):
     def probeSize(self):
         sigRad = self.ship.getModifiedItemAttr("signatureRadius")
         sensorStr = float(self.scanStrength)
-        return sigRad / sensorStr if sensorStr != 0 else None
+        probeSize = sigRad / sensorStr if sensorStr != 0 else None
+        # http://www.eveonline.com/ingameboard.asp?a=topic&threadID=1532170&page=2#42
+        if probeSize is not None:
+            # Let's assume it's 1.1, though it can be anywhere from 1.08 to 1.15
+            probeSize = max(probeSize, 1.1)
+        return probeSize
 
     @property
     def warpSpeed(self):
