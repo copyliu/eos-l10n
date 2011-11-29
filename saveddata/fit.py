@@ -841,8 +841,11 @@ class Fit(object):
         probeSize = sigRad / sensorStr if sensorStr != 0 else None
         # http://www.eveonline.com/ingameboard.asp?a=topic&threadID=1532170&page=2#42
         if probeSize is not None:
-            # Let's assume it's 1.1, though it can be anywhere from 1.08 to 1.15
-            probeSize = max(probeSize, 1.1)
+            # http://forum.eve-ru.com/index.php?showtopic=74195&view=findpost&p=1333691
+            # http://forum.eve-ru.com/index.php?showtopic=74195&view=findpost&p=1333763
+            # Tests by tester128 and several conclusions by me, prove that cap is in range
+            # from 1.1 to 1.12, we're picking average value
+            probeSize = max(probeSize, 1.11)
         return probeSize
 
     @property
