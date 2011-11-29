@@ -3,4 +3,4 @@
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Afterburner",
-                                  "speedFactor", implant.getItemAttr("speedFBonus"))
+                                  "speedFactor", implant.getModifiedItemAttr("speedFBonus"))
