@@ -7,6 +7,3 @@ def handler(fit, module, context):
         return
 
     fit.ship.increaseItemAttr("warpScrambleStatus", module.getModifiedItemAttr("warpScrambleStrength"))
-    for module in fit.modules:
-        if module.item.requiresSkill("High Speed Maneuvering"):
-            module.block()
