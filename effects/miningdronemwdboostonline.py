@@ -3,4 +3,4 @@
 type = "passive"
 def handler(fit, module, context):
     fit.drones.filteredItemBoost(lambda drone: drone.item.requiresSkill("Mining Drone Operation"), "maxVelocity",
-                                 module.getModifiedItemAttr("speedBoostFactor"))
+                                 module.getModifiedItemAttr("speedBoostFactor"), stackingPenalties = True)
