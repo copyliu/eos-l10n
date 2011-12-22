@@ -107,37 +107,13 @@ class Character(object):
         for skill in self.__skills:
             self.__skillIdMap[skill.itemID] = skill
 
-    def apiCharList(self):
-        proxy = None
-        proxydict = urllib2.ProxyHandler().proxies
-        if "https" in proxydict:
-            proxyline = proxydict["https"]
-            if proxyline[:8] == "https://":
-                proxyline = proxyline[8:]
-            proxy = tuple(proxyline.split(":"))
-        elif "http" in proxydict:
-            proxyline = proxydict["http"]
-            if proxyline[:7] == "http://":
-                proxyline = proxyline[7:]
-            proxy = tuple(proxyline.split(":"))
+    def apiCharList(self, proxy=None):
         api = eveapi.EVEAPIConnection(proxy=proxy)
         auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
         apiResult = auth.account.Characters()
         return map(lambda c: unicode(c.name), apiResult.characters)
 
-    def apiFetch(self, charName):
-        proxy = None
-        proxydict = urllib2.ProxyHandler().proxies
-        if "https" in proxydict:
-            proxyline = proxydict["https"]
-            if proxyline[:8] == "https://":
-                proxyline = proxyline[8:]
-            proxy = tuple(proxyline.split(":"))
-        elif "http" in proxydict:
-            proxyline = proxydict["http"]
-            if proxyline[:7] == "http://":
-                proxyline = proxyline[7:]
-            proxy = tuple(proxyline.split(":"))
+    def apiFetch(self, charName, proxy=None):
         api = eveapi.EVEAPIConnection(proxy=proxy)
         auth = api.auth(keyID=self.apiID, vCode=self.apiKey)
         apiResult = auth.account.Characters()
