@@ -1,4 +1,5 @@
 # Used by:
+# Ship: Harpy
 # Ship: Merlin
 # Ship: Raptor
 type = "passive"

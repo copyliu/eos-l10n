@@ -1,6 +1,6 @@
 # Used by:
+# Variations of ship: Rifter (3 of 3)
 # Ship: Republic Fleet Firetail
-# Ship: Rifter
 # Ship: Slasher
 # Ship: Stiletto
 type = "passive"

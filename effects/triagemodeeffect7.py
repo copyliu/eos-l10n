@@ -1,5 +1,5 @@
 # Used by:
-# Module: Triage Module I
+# Module: Triage Module II
 type = "active"
 def handler(fit, module, context):
     # Remote armor reps
@@ -56,3 +56,11 @@ def handler(fit, module, context):
     # Block EWAR & projected effects
     fit.ship.forceItemAttr("disallowOffensiveModifiers", module.getModifiedItemAttr("disallowOffensiveModifiers"))
     fit.ship.forceItemAttr("disallowAssistance", module.getModifiedItemAttr("disallowAssistance"))
+
+    # RR cap consumption
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Armor Repair Systems"),
+                                  "capacitorNeed", module.getModifiedItemAttr("triageRemoteModuleCapNeed"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Remote Hull Repair Systems"),
+                                  "capacitorNeed", module.getModifiedItemAttr("triageRemoteModuleCapNeed"))
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Emission Systems"),
+                                  "capacitorNeed", module.getModifiedItemAttr("triageRemoteModuleCapNeed"))

@@ -1,5 +1,4 @@
 # Used by:
-# Ship: Harpy
 # Ship: Ibis
 type = "passive"
 def handler(fit, ship, context):
