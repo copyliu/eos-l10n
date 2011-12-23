@@ -64,7 +64,7 @@ class Price(object):
         return validity
 
     @classmethod
-    def fetchPrices(cls, proxy=None, *prices):
+    def fetchPrices(cls, prices, proxy=None):
         """Fetch all prices passed to this method"""
         # Set time of the request
         # We have to pass this time to all of our used methods and validity checks
@@ -172,7 +172,7 @@ class Price(object):
                 # Attempt to send request and process it
                 try:
                     if proxy is not None:
-                        proxyHandler = urllib2.ProxyHandler({"http": "{0}:{1}".format(*proxy)})
+                        proxyHandler = urllib2.ProxyHandler({"http": proxy})
                         opener = urllib2.build_opener(proxyHandler)
                         urllib2.install_opener(opener)
                     data = urllib2.urlopen(request)
@@ -278,7 +278,7 @@ class Price(object):
         # Attempt to send request and process returned data
         try:
             if proxy is not None:
-                proxyHandler = urllib2.ProxyHandler({"http": "{0}:{1}".format(*proxy)})
+                proxyHandler = urllib2.ProxyHandler({"http": proxy})
                 opener = urllib2.build_opener(proxyHandler)
                 urllib2.install_opener(opener)
             data = urllib2.urlopen(request)
