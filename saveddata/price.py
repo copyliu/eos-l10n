@@ -64,7 +64,7 @@ class Price(object):
         return validity
 
     @classmethod
-    def fetchPrices(cls, *prices):
+    def fetchPrices(cls, proxy=None, *prices):
         """Fetch all prices passed to this method"""
         # Set time of the request
         # We have to pass this time to all of our used methods and validity checks
@@ -79,8 +79,8 @@ class Price(object):
             if not price.isValid(rqtime=rqtime):
                 priceMap[price.typeID] = price
         # List our price service methods
-        services = ((cls.fetchEveCentral, (priceMap,), {"rqtime": rqtime}),
-                    (cls.fetchC0rporation, (priceMap,), {"rqtime": rqtime}))
+        services = ((cls.fetchEveCentral, (priceMap,), {"rqtime": rqtime, "proxy": proxy}),
+                    (cls.fetchC0rporation, (priceMap,), {"rqtime": rqtime, "proxy": proxy}))
         # Cycle through services
         for svc, args, kwargs in services:
             # Stop cycling if we don't need price data anymore
@@ -109,7 +109,7 @@ class Price(object):
             priceobj.failed = None
 
     @classmethod
-    def fetchEveCentral(cls, priceMap, rqtime=time.time()):
+    def fetchEveCentral(cls, priceMap, rqtime=time.time(), proxy=None):
         """Use Eve-Central price service provider"""
         # This set will contain typeIDs which were requested but no data has been fetched for them
         noData = set()
@@ -171,6 +171,10 @@ class Price(object):
                 request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
                 # Attempt to send request and process it
                 try:
+                    if proxy is not None:
+                        proxyHandler = urllib2.ProxyHandler({"http": "{0}:{1}".format(*proxy)})
+                        opener = urllib2.build_opener(proxyHandler)
+                        urllib2.install_opener(opener)
                     data = urllib2.urlopen(request)
                     xml = minidom.parse(data)
                     types = xml.getElementsByTagName("marketstat").item(0).getElementsByTagName("type")
@@ -206,7 +210,7 @@ class Price(object):
         return (noData, abortedData)
 
     @classmethod
-    def fetchC0rporation(cls, priceMap, rqtime=time.time()):
+    def fetchC0rporation(cls, priceMap, rqtime=time.time(), proxy=None):
         """Use c0rporation.com price service provider"""
         # it must be here, otherwise eos doesn't load miscData in time
         from eos.types import MiscData
@@ -273,6 +277,10 @@ class Price(object):
         request = urllib2.Request(requrl, headers={"User-Agent" : "eos"})
         # Attempt to send request and process returned data
         try:
+            if proxy is not None:
+                proxyHandler = urllib2.ProxyHandler({"http": "{0}:{1}".format(*proxy)})
+                opener = urllib2.build_opener(proxyHandler)
+                urllib2.install_opener(opener)
             data = urllib2.urlopen(request)
             # Parse the data we've got
             xml = minidom.parse(data)
