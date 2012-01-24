@@ -2,6 +2,7 @@
 # Implants named like: Hardwiring Zainou 'Gypsy' KSB (6 of 6)
 # Skill: Weapon Disruption
 type = "passive"
-def handler(fit, skill, context):
+def handler(fit, container, context):
+    level = container.level if "skill" in context else 1
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Weapon Disruption"),
-                                  "capacitorNeed", skill.getModifiedItemAttr("capNeedBonus") * skill.level)
+                                  "capacitorNeed", container.getModifiedItemAttr("capNeedBonus") * level)
