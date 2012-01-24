@@ -738,12 +738,15 @@ class Fit(object):
 
             if amount < 0:
                 #Look for any dummies of that type to remove
+                toRemove = []
                 for mod in self.modules:
                     if mod.isEmpty and mod.slot == slotType:
-                        self.modules.remove(mod)
+                        toRemove.append(mod)
                         amount += 1
                         if amount == 0:
                             break
+                for mod in toRemove:
+                    self.modules.remove(mod)
 
     def unfill(self):
         for i in xrange(len(self.modules) - 1, -1, -1):
