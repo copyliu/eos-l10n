@@ -220,6 +220,8 @@ class Price(object):
         abortedData = set()
         # Set with types for which we've got data
         fetchedTypeIDs = set()
+        # Container for prices we'll re-request from eve central.
+        eveCentralUpdate = {}
         # Check when we updated prices last time
         fieldName = "priceC0rpTime"
         lastUpdatedField = eos.db.getMiscData(fieldName)
@@ -316,6 +318,21 @@ class Price(object):
                         priceobj.price = medprice
                         priceobj.time = rqtime
                         priceobj.failed = None
+                        # Check if item has market group assigned
+                        item = eos.db.getItem(typeID)
+                        if item is not None and item.marketGroupID:
+                            eveCentralUpdate[typeID] = priceobj
+            # If any items need to be re-requested from EVE-Central, do so
+            # We need to do this because c0rp returns prices for lot of items;
+            # if returned price is one of requested, it's fetched from eve-central
+            # first, which is okay; if it's not, price from c0rp will be written
+            # which will prevent further updates from eve-central. As we consider
+            # eve-central as more accurate source, ask to update prices for all
+            # items we got
+            if eveCentralUpdate:
+                # We do not need any feedback from it, we just want it to update
+                # prices
+                cls.fetchEveCentral(eveCentralUpdate, rqtime=rqtime, proxy=proxy)
             # Save current time for the future use
             lastUpdatedField.fieldValue = rqtime
             # Clear the last failed field
