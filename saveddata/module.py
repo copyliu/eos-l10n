@@ -201,6 +201,13 @@ class Module(HandledItem, HandledCharge, ItemAttrShortcut, ChargeAttrShortcut):
             maxRange = self.getModifiedItemAttr(attr)
             if maxRange is not None: return maxRange
         if self.charge is not None:
+            try:
+                chargeName = self.charge.group.name
+            except AttributeError:
+                pass
+            else:
+                if chargeName in ("Scanner Probe", "Survey Probe"):
+                    return None
             # Source: http://www.eveonline.com/ingameboard.asp?a=topic&threadID=1307419&page=1#15
             # D_m = V_m * (T_m + T_0*[exp(- T_m/T_0)-1])
             maxVelocity = self.getModifiedChargeAttr("maxVelocity")
