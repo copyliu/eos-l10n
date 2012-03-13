@@ -1,7 +1,7 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Gnome' KVA (6 of 6)
-# Modules named like: Core Defence Field Extender (6 of 6)
-# Modules named like: TEST Damage Mod Players (4 of 4)
+# Implants named like: Zainou 'Gnome' Shield Management SM (6 of 6)
+# Modules named like: Core Defense Field Extender (6 of 6)
+# Modules named like: QA Multiship Module Players (4 of 4)
 # Implant: Sansha Modified 'Gnome' Implant
 # Skill: Shield Management
 type = "passive"

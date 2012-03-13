@@ -1,6 +1,6 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Gypsy' KMB (6 of 6)
-# Implant: Hardwiring - Genolution Core Augmentation CA-2
+# Implants named like: Zainou 'Gypsy' Electronics EE (6 of 6)
+# Implant: Genolution Core Augmentation CA-2
 # Skill: Electronics
 type = "passive"
 def handler(fit, container, context):

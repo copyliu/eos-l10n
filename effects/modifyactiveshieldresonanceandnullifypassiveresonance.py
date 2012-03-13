@@ -1,5 +1,5 @@
 # Used by:
-# Modules from group: Shield Hardener (91 of 91)
+# Modules from group: Shield Hardener (97 of 97)
 type = "active"
 def handler(fit, module, context):
     for damageType in ("kinetic", "thermal", "explosive", "em"):

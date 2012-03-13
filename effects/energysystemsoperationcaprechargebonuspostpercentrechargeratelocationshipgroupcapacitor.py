@@ -1,7 +1,7 @@
 # Used by:
-# Implants named like: Hardwiring Inherent Implants 'Squire' CR (6 of 6)
+# Implants named like: Inherent Implants 'Squire' Energy Systems Operation EO (6 of 6)
 # Modules named like: Capacitor Control Circuit (6 of 6)
-# Implant: Hardwiring - Genolution Core Augmentation CA-2
+# Implant: Genolution Core Augmentation CA-2
 # Skill: Energy Systems Operation
 type = "passive"
 def handler(fit, container, context):

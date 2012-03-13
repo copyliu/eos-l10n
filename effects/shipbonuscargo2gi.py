@@ -1,7 +1,7 @@
 # Used by:
-# Ships named like: Iteron (5 of 5)
+# Ships named like: Iteron Mark (5 of 5)
+# Variations of ship: Iteron (2 of 2)
 # Ship: Occator
-# Ship: Viator
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Industrial").level

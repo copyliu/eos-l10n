@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Inherent Implants 'Yeti' BX (3 of 3)
+# Implants named like: Inherent Implants 'Yeti' Ice Harvesting IH (3 of 3)
 # Ship: Mackinaw
 # Skill: Ice Harvesting
 type = "passive"

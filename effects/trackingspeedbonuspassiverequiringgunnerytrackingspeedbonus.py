@@ -1,6 +1,6 @@
 # Used by:
 # Implants named like: Drop Booster (4 of 4)
-# Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' AX (6 of 6)
+# Implants named like: Eifyr and Co. 'Gunslinger' Motion Prediction MR (6 of 6)
 # Implant: Ogdin's Eye Coordination Enhancer
 # Skill: Motion Prediction
 type = "passive"

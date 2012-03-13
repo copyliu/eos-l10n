@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Deadeye' ZMM (6 of 6)
+# Implants named like: Zainou 'Deadeye' Rapid Launch RL (6 of 6)
 # Implant: Cerebral Accelerator
 # Implant: Whelan Machorin's Ballistic Smartlink
 # Skill: Missile Launcher Operation

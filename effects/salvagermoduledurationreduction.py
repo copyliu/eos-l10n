@@ -1,5 +1,5 @@
 # Used by:
-# Implant: Hardwiring - Poteque Pharmaceuticals 'Prospector' PPZ-1
+# Implant: Poteque 'Prospector' Environmental Analysis EY-1005
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Salvager",

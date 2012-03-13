@@ -1,6 +1,6 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Gnome' KYA (6 of 6)
-# Modules named like: Core Defence Field Purger (6 of 6)
+# Implants named like: Zainou 'Gnome' Shield Operation SP (6 of 6)
+# Modules named like: Core Defense Field Purger (6 of 6)
 # Implant: Sansha Modified 'Gnome' Implant
 # Skill: Shield Operation
 type = "passive"

@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Eifyr and Co. 'Alchemist' WA (2 of 2)
+# Implants named like: Eifyr and Co. 'Alchemist' Biology BY (2 of 2)
 # Skill: Biology
 type = "passive"
 def handler(fit, container, context):

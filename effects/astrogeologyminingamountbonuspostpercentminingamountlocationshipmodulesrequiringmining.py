@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Inherent Implants 'Highwall' HX (3 of 3)
+# Implants named like: Inherent Implants 'Highwall' Mining MX (3 of 3)
 # Implant: Michi's Excavation Augmentor
 # Skill: Astrogeology
 # Skill: Mining

@@ -1,6 +1,6 @@
 # Used by:
+# Implants named like: Inherent Implants 'Noble' Repair Systems RS (6 of 6)
 # Modules named like: Nanobot Accelerator (6 of 6)
-# Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 6 > Armor Implants (6 of 6)
 # Implant: Numon Family Heirloom
 # Skill: Repair Systems
 type = "passive"

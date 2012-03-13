@@ -1,5 +1,7 @@
 # Used by:
-# Modules from group: Magnetic Field Stabilizer (24 of 24)
+# Modules from group: Magnetic Field Stabilizer (19 of 19)
+# Modules named like: QA Multiship Module Players (4 of 4)
+# Module: QA Damage Module
 type = "passive"
 def handler(fit, module, context):
     fit.modules.filteredItemMultiply(lambda mod: mod.item.group.name == "Hybrid Weapon",

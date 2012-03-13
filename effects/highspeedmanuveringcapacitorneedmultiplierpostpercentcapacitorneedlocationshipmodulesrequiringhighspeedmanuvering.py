@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Eifyr and Co. 'Rogue' GY (6 of 6)
+# Implants named like: Eifyr and Co. 'Rogue' High Speed Maneuvering HS (6 of 6)
 # Skill: High Speed Maneuvering
 type = "passive"
 def handler(fit, container, context):

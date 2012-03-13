@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Eifyr and Co. 'Alchemist' YA (2 of 2)
+# Implants named like: Eifyr and Co. 'Alchemist' Nanite Control NC (2 of 2)
 # Implants named like: Low grade Edge (5 of 6)
 # Skill: Nanite Control
 type = "passive"

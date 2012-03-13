@@ -1,6 +1,6 @@
 # Used by:
 # Modules from group: Ballistic Control system (21 of 21)
-# Modules named like: TEST Damage Mod (5 of 5)
+# Modules named like: QA Multiship Module Players (4 of 4)
 type = "passive"
 def handler(fit, container, context):
     for dmgType in ("em", "kinetic", "explosive", "thermal"):

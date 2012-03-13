@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' CX (6 of 6)
+# Implants named like: Eifyr and Co. 'Gunslinger' Surgical Strike SS (6 of 6)
 # Implant: Cerebral Accelerator
 type = "passive"
 def handler(fit, implant, context):

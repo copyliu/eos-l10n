@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Inherent Implants 'Squire' EE (6 of 6)
+# Implants named like: Inherent Implants 'Squire' Energy Emission Systems ES (6 of 6)
 # Modules named like: Egress Port Maximizer (6 of 6)
 # Skill: Energy Emission Systems
 type = "passive"

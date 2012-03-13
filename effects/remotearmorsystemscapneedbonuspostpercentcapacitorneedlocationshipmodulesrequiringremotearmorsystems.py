@@ -1,6 +1,6 @@
 # Used by:
+# Implants named like: Inherent Implants 'Noble' Remote Armor Repair Systems RA (6 of 6)
 # Modules named like: Remote Repair Augmentor (6 of 6)
-# Items from market group: Implants & Boosters > Implants > Skill Hardwiring > Implant Slot 7 > Armor Implants (6 of 6)
 # Skill: Remote Armor Repair Systems
 type = "passive"
 def handler(fit, container, context):

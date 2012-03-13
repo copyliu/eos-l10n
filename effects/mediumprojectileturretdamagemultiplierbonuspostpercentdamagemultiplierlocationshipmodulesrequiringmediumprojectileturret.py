@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Eifyr and Co. 'Gunslinger' MX (6 of 6)
+# Implants named like: Eifyr and Co. 'Gunslinger' Medium Projectile Turret MP (6 of 6)
 # Skill: Medium Projectile Turret
 type = "passive"
 def handler(fit, container, context):

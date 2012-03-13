@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Genolution Core Augmentation CA (2 of 2)
+# Implants named like: Genolution Core Augmentation CA (2 of 2)
 runTime = "early"
 type = "passive"
 def handler(fit, implant, context):

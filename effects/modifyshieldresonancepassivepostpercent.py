@@ -1,5 +1,5 @@
 # Used by:
-# Modules from group: Shield Hardener (91 of 91)
+# Modules from group: Shield Hardener (97 of 97)
 from eos.types import State
 type = "passive"
 def handler(fit, module, context):

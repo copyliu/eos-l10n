@@ -1,7 +1,7 @@
 # Used by:
 # Modules from group: Scan Probe Launcher (4 of 7)
-# Implants named like: Hardwiring Poteque Pharmaceuticals 'Prospector' PPH (3 of 3)
 # Implants named like: Low grade Virtue (5 of 6)
+# Implants named like: Poteque 'Prospector' Astrometric Rangefinding AR (3 of 3)
 # Modules named like: Gravity Capacitor Upgrade (6 of 6)
 # Skill: Astrometric Rangefinding
 type = "passive"

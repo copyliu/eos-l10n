@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Inherent Implants 'Squire' GU (6 of 6)
+# Implants named like: Inherent Implants 'Squire' Energy Grid Upgrades EU (6 of 6)
 # Modules named like: Powergrid Subroutine Maximizer (6 of 6)
 # Skill: Energy Grid Upgrades
 type = "passive"

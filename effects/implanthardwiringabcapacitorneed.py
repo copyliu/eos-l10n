@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Eifyr and Co. 'Rogue' DY (6 of 6)
+# Implants named like: Eifyr and Co. 'Rogue' Fuel Conservation FC (6 of 6)
 type = "passive"
 def handler(fit, implant, context):
     fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Propulsion Module"),

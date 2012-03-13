@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Snapshot' ZMF (6 of 6)
+# Implants named like: Zainou 'Snapshot' FOF Explosion Radius FR (6 of 6)
 type = "passive"
 def handler(fit, container, context):
     level = container.level if "skill" in context else 1

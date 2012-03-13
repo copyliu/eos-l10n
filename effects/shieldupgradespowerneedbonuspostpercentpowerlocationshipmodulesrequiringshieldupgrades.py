@@ -1,6 +1,6 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Gnome' KUA (6 of 6)
-# Modules named like: Core Defence Charge Economizer (6 of 6)
+# Implants named like: Zainou 'Gnome' Shield Upgrades SU (6 of 6)
+# Modules named like: Core Defense Charge Economizer (6 of 6)
 # Skill: Shield Upgrades
 type = "passive"
 def handler(fit, container, context):

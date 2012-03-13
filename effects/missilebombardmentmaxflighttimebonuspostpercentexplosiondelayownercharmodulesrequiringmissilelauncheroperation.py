@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Deadeye' ZMC (6 of 6)
+# Implants named like: Zainou 'Deadeye' Missile Bombardment MB (6 of 6)
 # Modules named like: Rocket Fuel Cache Partition (6 of 6)
 # Skill: Missile Bombardment
 type = "passive"

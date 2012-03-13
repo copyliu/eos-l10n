@@ -1,5 +1,4 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Sprite' KXX (3 of 3)
 # Skill: Capital Shield Emission Systems
 type = "passive"
 def handler(fit, container, context):

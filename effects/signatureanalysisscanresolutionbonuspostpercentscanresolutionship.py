@@ -1,5 +1,5 @@
 # Used by:
-# Implants named like: Hardwiring Zainou 'Gypsy' KNB (6 of 6)
+# Implants named like: Zainou 'Gypsy' Signature Analysis SA (6 of 6)
 # Implant: Quafe Zero
 # Skill: Signature Analysis
 type = "passive"

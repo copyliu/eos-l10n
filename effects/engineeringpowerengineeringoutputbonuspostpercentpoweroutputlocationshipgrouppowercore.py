@@ -1,7 +1,7 @@
 # Used by:
-# Implants named like: Hardwiring Inherent Implants 'Squire' PG (6 of 6)
+# Implants named like: Inherent Implants 'Squire' Engineering EG (6 of 6)
 # Modules named like: Ancillary Current Router (6 of 6)
-# Implant: Hardwiring - Genolution Core Augmentation CA-1
+# Implant: Genolution Core Augmentation CA-1
 # Skill: Engineering
 type = "passive"
 def handler(fit, container, context):
