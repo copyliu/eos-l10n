@@ -1,5 +1,5 @@
 # Used by:
-# Ships named like: Iteron Mark (5 of 5)
+# Ships named like: Iteron Mark (6 of 6)
 # Variations of ship: Iteron (2 of 2)
 # Ship: Occator
 type = "passive"
