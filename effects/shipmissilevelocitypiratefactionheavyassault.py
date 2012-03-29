@@ -2,5 +2,5 @@
 # Ship: Gila
 type = "passive"
 def handler(fit, ship, context):
-    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Heavy Assault Missiles"),
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Assault Missiles"),
                                     "maxVelocity", ship.getModifiedItemAttr("shipBonusPirateFaction"))
