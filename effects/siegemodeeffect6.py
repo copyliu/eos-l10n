@@ -4,18 +4,25 @@ type = "active"
 runTime = "early"
 def handler(fit, module, context):
     #Turrets
-    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Energy Turret") or \
+                                  mod.item.requiresSkill("Capital Hybrid Turret") or \
+                                  mod.item.requiresSkill("Capital Projectile Turret"),
                                   "damageMultiplier", module.getModifiedItemAttr("damageMultiplierBonus"))
-    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Gunnery"),
+
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Energy Turret") or \
+                                  mod.item.requiresSkill("Capital Hybrid Turret") or \
+                                  mod.item.requiresSkill("Capital Projectile Turret"),
                                   "trackingSpeed", module.getModifiedItemAttr("trackingSpeedBonus"))
 
     #Missiles
     for type in ("kinetic", "thermal", "explosive", "em"):
-        fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
+        fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Citadel Torpedoes") or \
+                                        mod.charge.requiresSkill("Citadel Cruise Missiles"),
                                         "%sDamage" % type, module.getModifiedItemAttr("damageMultiplierBonus"))
 
-    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Missile Launcher Operation"),
-                                     "aoeVelocity", module.getModifiedItemAttr("aoeVelocityBonus"))
+    fit.modules.filteredChargeBoost(lambda mod: mod.charge.requiresSkill("Citadel Torpedoes") or \
+                                    mod.charge.requiresSkill("Citadel Cruise Missiles"),
+                                    "aoeVelocity", module.getModifiedItemAttr("aoeVelocityBonus"))
 
     #Shield Boosters
     fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
