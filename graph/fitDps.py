@@ -72,10 +72,15 @@ class FitDpsGraph(Graph):
         chanceToHit = self.calculateTurretChanceToHit(mod, data)
         if chanceToHit > 0.01:
             #AvgDPS = Base Damage * [ ( ChanceToHit^2 + ChanceToHit + 0.0499 ) / 2 ]
-            return (chanceToHit ** 2 + chanceToHit + 0.0499) / 2
+            multiplier = (chanceToHit ** 2 + chanceToHit + 0.0499) / 2
         else:
             #All hits are wreckings
-            return chanceToHit * 3
+            multiplier = chanceToHit * 3
+        dmgScaling = mod.getModifiedItemAttr("turretDamageScalingRadius")
+        if dmgScaling:
+            targetSigRad = data["signatureRadius"]
+            multiplier = min(1, (float(targetSigRad) / dmgScaling) ** 2)
+        return multiplier
 
     def calculateTurretChanceToHit(self, mod, data):
         distance = data["distance"] * 1000
