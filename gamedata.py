@@ -253,10 +253,9 @@ class Item(EqBase):
             # Check primary and secondary required skills' races
             if race is None:
                 skills = self.requiredSkills.keys()
-                skillPrimaryRace = skills[0].raceID if len(skills) >= 1 else 0
-                skillSecondaryRace = skills[1].raceID if len(skills) >= 2 else 0
+                skillPrimaryRace = (skills[0].raceID if len(skills) >= 1 else 0) or 0
+                skillSecondaryRace = (skills[1].raceID if len(skills) >= 2 else 0) or 0
                 skillRaces = (skillPrimaryRace, skillSecondaryRace)
-
                 if sum(skillRaces) in map:
                     race = map[sum(skillRaces)]
                     if race == "angelserp":
