@@ -45,13 +45,14 @@ if __name__ == "__main__":
     destination = os.path.expanduser(options.destination)
 
     i = 0
+    gitData = (".git", ".gitignore", ".gitmodules")
     def loginfo(path, names):
         global i
         i += 1
         if i % 10 == 0:
             sys.stdout.write(".")
             sys.stdout.flush()
-        return [".git"]
+        return gitData
 
     try:
         print "copying skeleton to ", dst
@@ -66,7 +67,9 @@ if __name__ == "__main__":
         for stuff in os.listdir(os.path.expanduser(options.base)):
             currSource = os.path.join(os.path.expanduser(options.base), stuff)
             currDest = os.path.join(base, stuff)
-            if os.path.isdir(currSource):
+            if stuff in gitData:
+                continue
+            elif os.path.isdir(currSource):
                 shutil.copytree(currSource, currDest, ignore=loginfo)
             else:
                 shutil.copy2(currSource, currDest)
@@ -82,15 +85,15 @@ if __name__ == "__main__":
             static = os.path.expanduser(options.static)
             shutil.copytree(static, os.path.join(base, "staticdata"), ignore=loginfo)
 
-        print "removing .git folder(s)"
-        if os.path.exists(os.path.join(dst, ".git")):
-            shutil.rmtree(os.path.join(dst, ".git"))
+        print "removing development data"
+        paths = []
+        paths.append(os.path.join(base, "eos", "tests"))
+        paths.append(os.path.join(base, "eos", "utils", "scripts"))
+        for path in paths:
+            if os.path.exists(path):
+                print path
+                shutil.rmtree(path)
 
-        if os.path.exists(os.path.join(base, ".git")):
-            shutil.rmtree(os.path.join(base, ".git"))
-
-        if os.path.exists(os.path.join(base, "staticdata", ".git")):
-            shutil.rmtree(os.path.join(base, "staticdata", ".git"))
 
         print "copying done, making archive: ", tmpFile
         archive = tarfile.open(tmpFile, "w:bz2")
