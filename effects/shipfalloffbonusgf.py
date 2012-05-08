@@ -1,7 +1,6 @@
 # Used by:
 # Ship: Atron
 # Ship: Daredevil
-# Ship: Incursus
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Gallente Frigate").level

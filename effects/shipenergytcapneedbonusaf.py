@@ -4,8 +4,8 @@
 # Ship: Crusader
 # Ship: Executioner
 # Ship: Impairor
-# Ship: Punisher
 # Ship: Retribution
+# Ship: Tormentor
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Amarr Frigate").level
