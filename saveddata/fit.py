@@ -919,12 +919,14 @@ class Fit(object):
                 groupAttrMap = {"Armor Repair Unit": "armorDamageAmount",
                      "Hull Repair Unit": "structureDamageAmount",
                      "Shield Booster": "shieldBonus",
+                     "Fueled Shield Booster": "shieldBonus",
                      "Armor Repair Projector": "armorDamageAmount",
                      "Shield Transporter": "shieldBonus"}
                 #Map repairer type to attribute
                 groupStoreMap = {"Armor Repair Unit": "armorRepair",
                                  "Hull Repair Unit": "hullRepair",
                                  "Shield Booster": "shieldRepair",
+                                 "Fueled Shield Booster": "shieldRepair",
                                  "Armor Repair Projector": "armorRepair",
                                  "Shield Transporter": "shieldRepair"}
 
