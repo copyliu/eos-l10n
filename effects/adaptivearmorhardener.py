@@ -2,4 +2,6 @@
 # Module: Armor Adaptive Hardener I
 type = "active"
 def handler(fit, module, context):
-    pass
+    for type in ("kinetic", "thermal", "explosive", "em"):
+        attr = "armor%sDamageResonance" % type.capitalize()
+        fit.ship.multiplyItemAttr(attr, module.getModifiedItemAttr(attr), stackingPenalties = True)
