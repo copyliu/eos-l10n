@@ -20,6 +20,8 @@
 from math import exp
 import collections
 
+defaultValuesCache = {}
+
 class ItemAttrShortcut(object):
     def getModifiedItemAttr(self, key):
         if key in self.itemModifiedAttributes:
@@ -137,7 +139,17 @@ class ModifiedAttributeDict(collections.MutableMapping):
 
         # Grab initial value, priorities are:
         # Results of ongoing calculation > preAssign > original > 0
-        val = self.__intermediary[key] if key in self.__intermediary else self.__preAssigns[key] if key in self.__preAssigns else self.getOriginal(key) if key in self.__original else 0
+        try:
+            default = defaultValuesCache[key]
+        except KeyError:
+            from eos.db.gamedata.queries import getAttributeInfo
+            attrInfo = getAttributeInfo(key)
+            if attrInfo is None:
+                default = defaultValuesCache[key] = 0.0
+            else:
+                dv = attrInfo.defaultValue
+                default = defaultValuesCache[key] = dv if dv is not None else 0.0
+        val = self.__intermediary[key] if key in self.__intermediary else self.__preAssigns[key] if key in self.__preAssigns else self.getOriginal(key) if key in self.__original else default
 
         # We'll do stuff in the following order:
         # preIncrease > multiplier > stacking penalized multipliers > postIncrease

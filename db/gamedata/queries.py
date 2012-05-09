@@ -20,7 +20,7 @@
 from eos.db import gamedata_session
 from eos.db.gamedata.metaGroup import metatypes_table, items_table
 from sqlalchemy.sql import and_, or_, select, func
-from sqlalchemy.orm import join
+from sqlalchemy.orm import join, exc
 from eos.types import Item, Category, Group, MarketGroup, AttributeInfo, MetaData, MetaGroup
 from eos.db.util import processEager, processWhere
 import eos.config
@@ -220,8 +220,10 @@ def getAttributeInfo(attr, eager=None):
         filter = AttributeInfo.ID == attr
     else:
         raise TypeError("Need integer or string as argument")
-
-    result = gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
+    try:
+        result = gamedata_session.query(AttributeInfo).options(*processEager(eager)).filter(filter).one()
+    except exc.NoResultFound:
+        result = None
     return result
 
 @cachedQuery(1, "field")
