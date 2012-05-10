@@ -25,9 +25,9 @@ def handler(fit, module, context):
                                     "aoeVelocity", module.getModifiedItemAttr("aoeVelocityBonus"))
 
     #Shield Boosters
-    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Operation"),
                                   "duration", module.getModifiedItemAttr("shieldBonusDurationBonus"))
-    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Operation"),
                                   "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"))
 
     #Armor Reppers

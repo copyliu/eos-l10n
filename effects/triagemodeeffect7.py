@@ -27,9 +27,9 @@ def handler(fit, module, context):
                                   "duration", module.getModifiedItemAttr("powerTransferDurationBonus"))
 
     # Shield boosters
-    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Operation"),
                                   "shieldBonus", module.getModifiedItemAttr("shieldBoostMultiplier"))
-    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Capital Shield Operation"),
                                   "duration", module.getModifiedItemAttr("shieldBonusDurationBonus"))
 
     # Armor reps

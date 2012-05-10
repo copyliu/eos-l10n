@@ -3,5 +3,5 @@
 type = "passive"
 def handler(fit, ship, context):
     level = fit.character.getSkill("Transport Ships").level
-    fit.modules.filteredItemBoost(lambda mod: mod.item.group.name == "Shield Booster",
+    fit.modules.filteredItemBoost(lambda mod: mod.item.requiresSkill("Shield Operation"),
                                   "shieldBonus", ship.getModifiedItemAttr("eliteBonusIndustrial1") * level)
