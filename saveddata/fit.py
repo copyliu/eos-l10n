@@ -348,7 +348,7 @@ class Fit(object):
 
         return fits
 
-    EXPORT_ORDER_EFT = [Slot.SUBSYSTEM, Slot.HIGH, Slot.MED, Slot.LOW, Slot.RIG]
+    EXPORT_ORDER_EFT = [Slot.LOW, Slot.MED, Slot.HIGH, Slot.RIG, Slot.SUBSYSTEM]
     def exportEft(self):
         offineSuffix = " /OFFLINE"
         export = "[%s, %s]\n" % (self.ship.item.name, self.name)
@@ -371,10 +371,19 @@ class Fit(object):
                 for curr in data:
                     export += curr
 
-        export += "\n\n"
-        for drone in self.drones:
-            export += "%s x%s\n" % (drone.item.name, drone.amount)
+        if len(self.drones) > 0:
+            export += "\n\n"
+            for drone in self.drones:
+                export += "%s x%s\n" % (drone.item.name, drone.amount)
 
+        return export
+
+    def exportEftImps(self):
+        export = self.exportEft()
+        if len(self.implants) > 0:
+            export += "\n\n"
+            for implant in self.implants:
+                export += "%s\n" % (implant.item.name)
         return export
 
     def exportDna(self):
