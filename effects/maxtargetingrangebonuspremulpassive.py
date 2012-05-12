@@ -3,4 +3,4 @@
 type = "passive"
 def handler(fit, module, context):
     fit.ship.multiplyItemAttr("maxTargetRange", module.getModifiedItemAttr("maxTargetRangeMultiplier"),
-                              stackingPenalties = True)
+                              stackingPenalties = True, penaltyGroup="preMul")
