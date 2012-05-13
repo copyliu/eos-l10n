@@ -161,6 +161,8 @@ class Fit(object):
                 if not modName in droneMap:
                     droneMap[modName] = 0
                 droneMap[modName] += droneAmount
+            elif item.category.name == "Implant":
+                fit.implants.append(Implant(item))
             else:
                 m = Module(item)
                 if ammoName:
