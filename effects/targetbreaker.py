@@ -1,5 +1,5 @@
 # Used by:
-# Module: Target Spectrum Breaker I
+# Module: MagSheath Target Breaker I
 type = "active"
 def handler(fit, module, context):
     pass
