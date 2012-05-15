@@ -1,5 +1,5 @@
 # Used by:
-# Module: Armor Adaptive Hardener I
+# Module: Reactive Armor Hardener I
 type = "active"
 def handler(fit, module, context):
     for type in ("kinetic", "thermal", "explosive", "em"):
