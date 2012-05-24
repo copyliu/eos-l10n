@@ -22,10 +22,12 @@ from sqlalchemy.orm import relation, mapper, synonym, deferred
 
 from eos.db import gamedata_meta
 from eos.types import Category, Icon
-
-categories_table = Table("invcategories", gamedata_meta,
+import wx
+_ = wx.GetTranslation
+categories_table = Table(_("invcategories_en"), gamedata_meta,
                          Column("categoryID", Integer, primary_key = True),
                          Column("categoryName", String),
+                            Column("trncategoryName", String),
                          Column("description", String),
                          Column("published", Boolean),
                          Column("iconID", Integer, ForeignKey("icons.iconID")))
@@ -34,4 +36,5 @@ mapper(Category, categories_table,
        properties = {"icon" : relation(Icon),
                      "ID" : synonym("categoryID"),
                      "name" : synonym("categoryName"),
+                     "trnname" : synonym("trncategoryName"),
                      "description" : deferred(categories_table.c.description)})

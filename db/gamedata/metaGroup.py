@@ -23,14 +23,15 @@ from eos.db import gamedata_meta
 from eos.db.gamedata.item import items_table
 from eos.types import MetaGroup, Item, MetaType
 from sqlalchemy.ext.associationproxy import association_proxy
-
+import wx
+_ = wx.GetTranslation
 metagroups_table = Table("invmetagroups", gamedata_meta,
                          Column("metaGroupID", Integer, primary_key = True),
                          Column("metaGroupName", String))
 
 metatypes_table = Table("invmetatypes", gamedata_meta,
-                        Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key = True),
-                        Column("parentTypeID", Integer, ForeignKey("invtypes.typeID")),
+                        Column("typeID", Integer, ForeignKey(_("invtypes_en.typeID")), primary_key = True),
+                        Column("parentTypeID", Integer, ForeignKey(_("invtypes_en.typeID"))),
                         Column("metaGroupID", Integer, ForeignKey("invmetagroups.metaGroupID")))
 
 mapper(MetaGroup, metagroups_table,

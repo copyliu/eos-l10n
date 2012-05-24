@@ -22,9 +22,10 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import mapper, synonym, relation, deferred
 from eos.types import Effect, EffectInfo
 from eos.db import gamedata_meta
-
+import wx
+_ = wx.GetTranslation
 typeeffects_table = Table("dgmtypeeffects", gamedata_meta,
-                          Column("typeID", Integer, ForeignKey("invtypes.typeID"), primary_key=True, index=True),
+                          Column("typeID", Integer, ForeignKey(_("invtypes_en.typeID")), primary_key=True, index=True),
                           Column("effectID", Integer, ForeignKey("dgmeffects.effectID"), primary_key=True))
 
 effects_table = Table("dgmeffects", gamedata_meta,

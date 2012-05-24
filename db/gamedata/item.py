@@ -24,8 +24,9 @@ from sqlalchemy.orm.collections import attribute_mapped_collection
 
 from eos.db import gamedata_meta
 from eos.types import Icon, Attribute, Item, Effect, MetaType, Group
-
-items_table = Table("invtypes", gamedata_meta,
+import wx
+_ = wx.GetTranslation
+items_table = Table(_("invtypes_en"), gamedata_meta,
                     Column("typeID", Integer, primary_key = True),
                     Column("typeName", String, index=True),
                     Column("description", String),
@@ -34,9 +35,10 @@ items_table = Table("invtypes", gamedata_meta,
                     Column("mass", Float),
                     Column("capacity", Float),
                     Column("published", Boolean),
-                    Column("marketGroupID", Integer, ForeignKey("invmarketgroups.marketGroupID")),
+                    Column("marketGroupID", Integer, ForeignKey(_("invmarketgroups_en.marketGroupID"))),
                     Column("iconID", Integer, ForeignKey("icons.iconID")),
-                    Column("groupID", Integer, ForeignKey("invgroups.groupID"), index=True))
+                    Column("groupID", Integer, ForeignKey(_("invgroups_en.groupID")), index=True),
+    Column("trntypeName", String),)
 
 
 
@@ -52,6 +54,7 @@ mapper(Item, items_table,
                                             uselist = False),
                      "ID" : synonym("typeID"),
                      "name" : synonym("typeName"),
+                     "trnname" : synonym("trntypeName"),
                      "description" : deferred(items_table.c.description)})
 
 Item.category = association_proxy("group", "category")

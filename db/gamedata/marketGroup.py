@@ -22,13 +22,15 @@ from sqlalchemy.orm import relation, mapper, synonym, deferred
 
 from eos.db import gamedata_meta
 from eos.types import Item, MarketGroup, Icon
-
-marketgroups_table = Table("invmarketgroups", gamedata_meta,
+import wx
+_ = wx.GetTranslation
+marketgroups_table = Table(_("invmarketgroups_en"), gamedata_meta,
                            Column("marketGroupID", Integer, primary_key = True),
                            Column("marketGroupName", String),
+                            Column("trnmarketGroupName", String),
                            Column("description", String),
                            Column("hasTypes", Boolean),
-                           Column("parentGroupID", Integer, ForeignKey("invmarketgroups.marketGroupID", initially="DEFERRED", deferrable=True)),
+                           Column("parentGroupID", Integer, ForeignKey(_("invmarketgroups_en.marketGroupID"), initially="DEFERRED", deferrable=True)),
                            Column("iconID", Integer, ForeignKey("icons.iconID")))
 
 mapper(MarketGroup, marketgroups_table,
@@ -37,4 +39,5 @@ mapper(MarketGroup, marketgroups_table,
                      "icon" : relation(Icon),
                      "ID" : synonym("marketGroupID"),
                      "name" : synonym("marketGroupName"),
+                     "trnname" : synonym("trnmarketGroupName"),
                      "description" : deferred(marketgroups_table.c.description)})
